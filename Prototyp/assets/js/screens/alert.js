@@ -4,6 +4,8 @@ game.AlertScreen = me.ScreenObject.extend({
         this.staticfont = null;
     },
 
+    //test
+
     onResetEvent: function() {
         //We have no alert!
         if (!game.alert.isAlert || game.alert.alertText == null) {
