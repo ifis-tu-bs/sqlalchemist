@@ -1,0 +1,162 @@
+%!TEX root = ../Pflichtenheft.tex
+
+\chapter{Zielbestimmung}\label{chap:zielbestimmung}
+
+%Hier Einleitungstext einfügen, dabei die Formatierungen selber erstellen
+
+%Dieser Abschnitt hat die Aufgabe, als eine Art Einleitung zu dienen. Es soll
+%ein kurzer Umriss über Ziel und Motivation des Gesamt- und ggf. der
+%Teilprojekte dargestellt werden. Beschrieben wird die Hauptaufgabe des Systems.
+%Wichtig ist, den Grund für die Systementwicklung (Probleme oder Geschäftsidee)
+%und damit ihre Ziele herauszuarbeiten. (Umfang ca. $\frac{1}{2} - 2$ Seiten)
+
+Es gibt heutzutage viele Möglichkeiten, sich über Nachrichten zu informieren.
+Neben Radio, Fernsehen und Zeitungen steht dem Nutzer mit dem Internet eine
+nahezu unendliche Informationsfülle zur Verfügung.
+
+Sie alle haben einen von zwei gewichtigen Nachteilen: Bei den klassischen
+Medien, wie Radio und TV, ist es kaum möglich zu wählen, welche Informationen
+man bekommt. Will man hingegen nicht-linear Nachrichten im Internet oder in
+Newsfeeds konsumieren, wird die komplette Aufmerksamkeit des Nutzers durch die
+Betrachtung von Bildschirmen und die Benutzung von Eingabegeräten in Anspruch
+genommen.
+
+\NewsGenie verbindet das Beste aus beiden Welten: Er erlaubt es dem Benutzer
+gezielt Anfragen in natürlicher Sprache an das System zu stellen und
+auf ihn zugeschnittene Antworten zu erhalten. Fragen wie: "`Was gibt es Neues?"'
+und auch spezifische Anfragen wie: "`Was ist mit der Ukraine?"' werden vom
+\NewsGenie analysiert und beantwortet. Dabei sind die Antworten immer aktuell,
+denn der \NewsGenie bezieht seine Informationen aus zahlreichen vom Nutzer
+festlegbaren Quellen aus dem Internet. Diese werden fortlaufend aktualisiert und
+analysiert.
+
+Das System besteht aus zwei Teilen. Kleine und günstige Clients, die man
+überall platzieren kann, sind für den direkten Dialog mit dem Benutzer
+zuständig. Über ein Netzwerk kommunizieren diese mit einem leistungsfähigen
+Server, der die Anfragen analysiert, Daten zur Verfügung stellt und Antworten
+generiert.
+
+Jeder kann den \NewsGenie benutzen, man braucht nicht zu wissen, wie das Internet 
+funktioniert oder wie man das Thema genau schreibt. Man muss keine speziellen 
+Befehle lernen oder sich an eine neue grafische Darstellung gewöhnen. 
+Es reicht aus, Fragen stellen und zuhören zu können.
+
+%Welt stressiger --> informationen besser filtern, besser nach wünschen ausrichten
+%TV, Radio: Vorauswahl, die nicht zu den Wünschen des Nutzers passen muss
+%Rechtschreibung! Suchprobleme...
+%Persönliche Ansprache, "Person" zum Reden (sozialer Aspekt)
+%Schnittstelle für alle, zugänglich, die Sprechen (+ Hören) können, sehr geringe Hürden, Oma, Legastheniker...
+%Zeitersparnis (Auto) nicht manuell Auswählen, einparen von Seitenbesuchen
+%Unsichtbares, versteckes Gerät, Designvorteil
+%(Stromersparnis *g*)
+
+\pagebreak
+
+\section{Musskriterien}\label{sec:musskriterien}
+
+%Hier wird aufgeführt, welche Funktionalitäten/Leistungen das Softwareprodukt in
+%jedem Fall erfüllen muss, damit es genutzt werden kann.
+
+\must{1}{
+Ein- und Ausgabe in natürlicher Sprache:
+Das System muss es dem Nutzer erlauben, gesprochene Anfragen in natürlicher Sprache zu stellen. 
+Alle Ausgaben den Systems erfolgen ebenfalls in gesprochener Sprache.
+%Natural Language Input/Output: The system must allow the user to provide queries in
+%spoken natural language. All system output will also be provided in spoken language.
+}
+\must{2}{
+Interaktives Verhalten: 
+Das System muss unklare Anfragen mit Hilfe einer Reihe von Ja-/Nein-Fragen eingrenzen. 
+Außerdem muss es einen Stopp-Befehl und die Möglichkeit zu negativem Feedback geben. 
+%Interactive behavior: The system must lead discussion through questions in case of unclear query: ask clarification “yes/no” questions like “Do you mean politics news?”. The system must consider stopping commands and negative feedback and connect it with following questions with suggestions.
+}
+\must{3}{
+Das System muss die englische Sprache unterstützen.
+%Languages: The system must support the English language
+}
+\must{4}{
+Benutzerschnittstelle: 
+Das System muss ein einfaches Web-Interface zur Verfügung stellen, in dem der Benutzer schriftliche Anfragen in natürlicher Sprache stellen kann und in dem die Resultate dargestellt werden. Diese sollen vom Benutzer manuell validiert werden können.
+%Interface: The system must provide a simple (Web)-interface where the user can write
+%queries in natural language, browse through the results and manually validate/invalidate cor-
+%rect answers.
+}
+\must{5}{
+Backend: Im Backend müssen die gesammelten Nachrichtendaten gespeichert und zum Durchsuchen aufbereitet werden.
+Es stellt die Funktionalität zum Finden einer relevanten Beantwortung von Nutzeranfragen zur Verfügung.
+%Backend: The backend is the heart of the system. It must be able to store pre-crawled
+%news data, build inverted indexes, and offer text search functionality (Lucene based) to iden-
+%tify relevance towards user queries.
+}
+
+\section{Sollkriterien}\label{sec:sollkriterien}
+
+%Dies sind Kriterien, die für die Lauffähigkeit des Produkts nicht zwingend
+%erforderlich sind, für die Erreichung der Projektziele aber erfüllt werden
+%sollten.
+
+\should{1}{
+Entitäts-Erkennung: 
+Das System soll Zusammenhänge und Verknüpfungen von Artikeln erkennen und diese zur Verbesserung der Antworten einsetzen.
+%Entity Detection: The system should use LOD (linked open data) 1 or respectively Virtuoso
+%Triple Stores 2 in order to boost entity detection and link the news article with each other
+%(to allow deeper relational queries)
+}
+\should{2}{
+News Crawling: Das System soll RSS-Feeds verschiedener News-Seiten crawlen. 
+Es soll möglich sein, dynamisch weitere Informationsquellen hinzuzufügen.
+Dazu soll eine verbale Anfrage des Nutzers ausreichen.
+%News Crawling: The System should be able to crawl various news sources provided as RSS
+%URLs in a source files should. Be able to add new information sources dynamically at user
+%request. (“Please add wired.com as a data source.”)
+}
+\should{3}{
+Sprache:
+Das System soll auch die deutsche Sprache unterstützen.
+%Language: The system should also support the German language
+}
+\should{4}{
+Feedback:
+Der Benutzer soll Themen vertiefen können, indem er dem System Feedback darüber gibt, z.\,B.\, durch Nachfragen.
+%Feedback: The user should be able to dive deeper into topics by providing feedback to the
+%system (e.g. “can you tell me more about this topic?”).
+}
+\should{5}{
+Persönlichkeit: Das System soll eine Persönlichkeit haben, die mit dem Benutzer eine rudimentäre Unterhaltung führen kann. 
+%Personality: It would be a cool addition if the speech system has a personality, that allows
+%conversations with the user (e.g. Cortana or Siri)
+}
+
+\section{Kannkriterien}\label{sec:kannkriterien}
+
+%Die Erfüllung dieser Kriterien ist nicht unbedingt notwendig, sollten nur angestrebt werden, 
+%falls noch ausreichend Kapazitäten vorhanden sind.
+
+\could{1}{
+News Crawling: Das Crawling kann gleichzeitig zur Anfragebearbeitung laufen, ohne diese zu behindern.
+%News Crawling: It would be nice if the news crawling process would show reasonable performance and be able to work while the main system is running.
+}
+\could{2}{
+Trend-Erkennung: Das System kann erkennen welche Themen gerade wichtig sind, und diese höher bewerten.
+%Trending Topics: While the system is crawling news and processing results, it would be
+%nice if the system is able to identify trending topics and rank those higher in the results.
+}
+\could{3}{
+Personalisierung: Das System speichert Benutzerdaten und lernt die Interessen der verschiedenen Nutzer.
+%Personalization: It would be a cool feature if the system stores user data and learns the in-
+%terests of the different users
+}
+
+%\pagebreak
+
+\section{Abgrenzungskriterien}\label{sec:abgrenzungskriterien}
+
+%Hier ist zu verdeutlichen, welche Ziele mit dem Produkt bewusst nicht erreicht werden sollen oder werden können. Speziell sind hier Funktionen zur erwähnen, die sich der Kunde ursprünglich gewünscht (oder genannt) hat, die aber, nach Einigung, doch nicht umgesetzt werden sollen. Auch Funktionen, die im Allgemeinen von ähnlichen Systemen zu erwarten wären, hier aber explizit nicht umzusetzen sind (z.B. Login in einem Forum), sollten erwähnt werden. Zu jedem System gehört normalerweise auch ein Benutzerhandbuch. Wird ein Handbuch nicht benötigt, sollte aus dies hier festgehalten werden, sonst kann der Kunde später ein Handbuch verlangen.
+
+\wont{1}{Das System soll die Sprachen nicht automatisch unterschieden können.}
+\wont{2}{Das System soll keine komplexen Fragen stellen.}
+\wont{3}{Das System umfasst keine künstliche Intelligenz, Antworten werden nicht umformuliert}
+\wont{4}{Artikel, die nicht im RSS-Feed verlinkt sind, werden nicht verarbeitet.}
+
+
+

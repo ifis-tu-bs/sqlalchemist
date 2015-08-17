@@ -1,0 +1,48 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2012-04-02)}
+
+
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Testfall} & \textit{Eine Aufgabe zur Bearbeitung markieren\textbf{T100}} \\
+\hline
+\textbf{Tester} & \textit{Stefan Hanisch} \\
+\hline
+\textbf{Eingaben} & \textit{@Before \newline
+public void app() \{ \newline
+\hspace*{1mm}FakeApplication fakeApplication \newline
+\hspace*{4mm}= fakeApplication(inMemoryDatabase("'test"'));\newline
+\hspace*{1mm}start(fakeApplication); \newline
+\} \newline
+\newline
+@Test \newline
+public void testTaskFile\_rateEdit() \{\newline
+\hspace*{1mm}boolean testSuccessful = true; \newline
+\hspace*{1mm}try \{\newline
+\hspace*{3mm}Profile profile = Profile.create("'test"');\newline
+\hspace*{3mm}TaskFile task = TaskFile.create(profile, "'test"', true);\newline
+\hspace*{3mm}task.rateEdit(profile);\newline
+\hspace*{3mm}assertEquals(task.getRating().getEditRatings(), 1);\newline
+\hspace*{1mm}\} catch (Throwable e) \{ \newline
+\hspace*{3mm}testSuccessful = false; \newline 
+\hspace*{1mm}\} \newline
+\hspace*{1mm}assertTrue(testSuccessful);\newline
+\hspace*{1mm}Logger.info("'testTaskFile\_rateEdit successfull"');\newline
+\}
+} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung:\newline "'testTaskFile\_rateEdit successfull"'
+} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung:\newline "'testTaskFile\_rateEdit successfull"'} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten } & \textit{--} \\
+\hline
+\end{longtable}

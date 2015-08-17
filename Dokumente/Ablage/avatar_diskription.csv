@@ -1,0 +1,119 @@
+id;character;stat;discription
+0;"Alastor
+Moody";+2 DEFENSE;"„Mad-Eye“ not only has an imposing personality, 
+but is also wise and strong."
+1;"Albus 
+Dumbledore";"+2 HEALTH
++6 JUMP
++2 SPEED
++1 DEFENSE";"Holding the Elder-wand in his hands,
+the magic grows inside of him."
+2;"Arthur
+Weasley";"+2 HEALTH
++3 JUMP";
+3;"Cho
+Chang";+6 JUMP;The one that got away. As a Ravenclaw she just likes to be airborne.
+4;"Colin
+Creevey";+2 SPEED;HP Fanboy of the first hour. He is quick on his feet.
+5;"Crabbe 
+and Goyle";"+3 JUMP
++1 DEFENSE";Dracos Henchmen known for their strength, they always stay at their side.
+6;"Dolores 
+Umbridge";"+1 SPEED
++1 DEFENSE";Little women in pink. Just dont underestimate her, she is really robust.
+7;"Draco 
+Malfoy";+3 SPEED;Not the nicest guy around, quiet a big mouth and if push comes to shove, he is off in no time.
+8;"Filius
+Flitwick";+4 SPEED -2 HEALTH +6 JUMP;Mr.“Swish and Flick“ himself! The Charms Master isn’t the toughest of the bunch but he has unmatched agility.
+9;"Fleur
+Delacour";"+6 JUMP
++1 SPEED";With her silver blond hair she has been drawing everyones attention to herself.
+10;"Fred
+and George";+4 HEALTH;Inseparable, the two Weasleys are really though. Together they are unstoppable.
+11;"Gilderoy
+Lockhart";LOOSER;The brightest smile you have ever seen on a dumb face.
+12;"Ginny
+Weasley";"+1 HEALTH
++3 JUMP
++1 SPEED";
+13;"Harry 
+Potter __";"+3 JUMP
++1 SPEED
++1 DEFENSE";
+14;"Harry
+Potter";+3 JUMP;
+15;"Hermione
+Granger __";"+1 HEALTH
++3 JUMP
++1 DEFENSE";
+16;"Hermione
+Granger";+1 SPEED;
+17;"Horace
+Slughorn";"+1 HEALTH
++3 JUMP
++2 SPEED";
+18;"Kingsley
+Shacklebolt";"+1 HEALTH
++1 DEFENSE";
+19;"Lavender
+Brown";"+1 HEALTH
++1 SPEED";
+20;"Lucius
+Malfoy";"+2 HEALTH
++1 SPEED";
+21;"Luna
+Lovegood";"+1 HEALTH
++3 JUMP";
+22;"Minerva
+McGonagel";"+2 HEALTH
++6 JUMP";The Professor for Transfiguration, is also an Animagus, she got the velocity of a cat and maybe some lives to spare as well.
+23;"Moaning
+Myrtle";+12 JUMP;"Myrtle is a ghost. She likes to get lost in great heights,
+but remember for the purpose of this game she is not immortal."
+24;"Molly Weasley";+3 HEALTH;"Having 7 children, she knows how to take care of even 
+the smallest injuries."
+25;Mr Binns;+9 JUMP;"Mr Binns is so boring, that all students fall asleep. 
+He often dreams of flying through the clouds."
+26;"Narcissa
+Malfoy";"+1 HEALTH
++2 SPEED";
+27;"Neville
+Longbottom";+1 DEFENSE;wie er sich im ersten seinen freunden gegenüber gestellt hat.
+28;"Nymphadora
+Tonks";"+3 JUMP
++3 SPEED";The girl off many colors, she is an Auror with a bad temper but great tempo.
+29;"Padma 
+and Parvati";"+3 JUMP
++1 SPEED";
+30;"Fred
+and George";"+1 HEALTH
++1 DEFENSE";Uniform seam to make one weak. Yeah, maybe, but those two are still some formidable runners.
+31;"Pomona
+Sprout";"+1 HEALTH
++6 JUMP";
+32;"Remus
+Lupin";"+6 JUMP
++2 SPEED";
+33;"Ron
+Weasley __";"+2 HEALTH
++1 DEFENSE";
+34;"Ron 
+Weasley";+1 HEALTH;
+35;"Rubeus
+Hagrid";"+5 HEALTH
+-2 SPEED
++2 DEFENSE";
+36;"Seasmus
+Finnigan";+2 HEALTH;
+37;"Severus
+Snape";"+1 HEALTH
++3 JUMP
++1 SPEED
++1 DEFENSE";
+38;"Sybill
+Trelawney";"+3 JUMP
++2 SPEED";
+39;Voldemort;"+7 HEALTH
++3 JUMP
++1 SPEED
++1 DEFENSE";Lord Voldemort, the mightiest black magician of all time. He spread fear and terror 

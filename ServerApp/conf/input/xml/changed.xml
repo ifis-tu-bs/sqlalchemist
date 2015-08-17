@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="recipe.xsd">
+
+       <task taskid="carls-taskfile-1" querylanguage="SQL">
+
+              <titles>
+                     <title language="EN">Carl and Nicole</title>
+              </titles>
+
+              <flufftexts>
+                     <flufftext language="EN">Super Heros und Super Villains.</flufftext>
+              </flufftexts>
+
+              <schema>
+                     <relation>
+                            <intension>
+                                   CREATE TABLE Book(
+                                   no INTEGER NOT NULL PRIMARY KEY,
+                                   title VARCHAR(255) NOT NULL,
+                                   pages INTEGER,
+                                   publisher VARCHAR(255)
+                                   );
+                            </intension>
+                            <extension>
+                                   <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (12, 'Wonderboy''s Comeback',1, 'Zeus');</tuple>
+                                   <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (13, 'Superman Returns',2, 'DC');</tuple>
+                                   <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (15, 'The Revenge of Locks', 3, 'Zeus');</tuple>
+                                   <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (18, 'Wonderboy Rocks',4, 'Marvel');</tuple>
+                                   <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (21, 'Lockhard''s Adventure',5, 'Zeus');</tuple>
+                            </extension>
+                     </relation>
+                     <relation>
+                            <intension>
+                                   CREATE TABLE Person(
+                                   alias VARCHAR(255) NOT NULL PRIMARY KEY,
+                                   firstname VARCHAR(100) NOT NULL,
+                                   lastname VARCHAR(100),
+                                   age INTEGER
+                                   );
+                            </intension>
+                            <extension>
+                                   <tuple>INSERT INTO Person VALUES ('Wonderboy', 'KG', NULL, 25);</tuple>
+                                   <tuple>INSERT INTO Person VALUES ('Magneto', 'Erik Magnus', 'Lensherr', 26);</tuple>
+                                   <tuple>INSERT INTO Person VALUES ('Superman', 'Clark', 'Kent', 24);</tuple>
+                                   <tuple>INSERT INTO Person VALUES ('Professor X', 'Charles', 'Xavier', 25);</tuple>
+                                   <tuple>INSERT INTO Person VALUES ('Lockhard', 'Gilderoy', 'Lockhart', 26);</tuple>
+                                   <tuple>INSERT INTO Person VALUES ('Mystique', 'Raven', 'Darkholme', 24);</tuple>
+                            </extension>
+                     </relation>
+                     <relation>
+                            <intension>
+                                   CREATE TABLE AdventureOf (
+                                   book INTEGER NOT NULL REFERENCES Book(no),
+                                   alias VARCHAR(255) NOT NULL REFERENCES Person (alias),
+                                   spellUsed VARCHAR(100),
+                                   PRIMARY KEY (book, alias)
+                                   );
+                            </intension>
+                            <extension>
+                                   <tuple>INSERT INTO AdventureOf VALUES (13, 'Lockhard', 'Flight');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (12, 'Professor X', 'Telepathy');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (15, 'Mystique', 'Shapeshifting');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (13, 'Superman', 'Telepathy');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (18, 'Wonderboy', 'Telekinesis');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (12, 'Magneto', 'Magnetism');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (21, 'Lockhard', 'Mind Bullets');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (21, 'Superman', 'Flight');</tuple>
+                                   <tuple>INSERT INTO AdventureOf VALUES (12, 'Wonderboy', 'Levitation');</tuple>
+                            </extension>
+                     </relation>
+                     <relation>
+                            <intension>
+                                   CREATE TABLE Wizard(
+                                   alias VARCHAR(255) NOT NULL REFERENCES Person(alias),
+                                   cape BOOLEAN,
+                                   PRIMARY KEY(alias)
+                                   );
+                            </intension>
+                            <extension>
+                                   <tuple>INSERT INTO Wizard VALUES ('Wonderboy', TRUE);</tuple>
+                                   <tuple>INSERT INTO Wizard VALUES ('Superman', TRUE);</tuple>
+                                   <tuple>INSERT INTO Wizard VALUES ('Professor X', FALSE);</tuple>
+                            </extension>
+                     </relation>
+                     <relation>
+                            <intension>
+                                   CREATE TABLE Deatheater(
+                                   alias VARCHAR(255) NOT NULL REFERENCES Person(alias),
+                                   PRIMARY KEY(alias)
+                                   );
+                            </intension>
+                            <extension>
+                                   <tuple>INSERT INTO Deatheater VALUES ('Magneto');</tuple>
+                                   <tuple>INSERT INTO Deatheater VALUES ('Mystique');</tuple>
+                                   <tuple>INSERT INTO Deatheater VALUES ('Lockhard');</tuple>
+                            </extension>
+                     </relation>
+              </schema>
+
+              <subtasks>
+
+                     <subtask>
+                            <subtaskid>1</subtaskid>        <tasktexts>
+                            <tasktext language="EN">How many pages have been published by the publisher Zeus?</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT SUM(pages)
+                                          FROM Book
+                                          WHERE publisher = 'Zeus';
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>2</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>12</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Select all aliases from all Deatheaters.</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT alias
+                                          FROM Deatheater;
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>1</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>2</subtaskid>        <tasktexts>
+                            <tasktext language="EN">What is the average age of all person in the database?</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT AVG(age)
+                                          FROM Person;
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>1</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>3</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Select all aliases of all persons who are not old (age bigger than avg(age)) and not young (age smaller than avg(age)).</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT alias
+                                          FROM Person
+                                          WHERE age = (SELECT AVG(age)
+                                          FROM Person);
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>4</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Which books are the ones written by all persons with average age?</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT a.book
+                                          FROM Person AS p
+                                          JOIN AdventureOf AS a ON a.alias = p.alias
+                                          WHERE age = (SELECT AVG(age)
+                                          FROM Person);
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>4</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>5</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Return all not wizards who are not old (age bigger than avg(age)) and not young (age smaller than avg(age)).</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT d.alias
+                                          FROM Person AS p
+                                          JOIN AdventureOf AS a ON a.alias = p.alias
+                                          LEFT JOIN Wizard AS d ON d.alias = p.alias
+                                          WHERE age = (SELECT AVG(age)
+                                          FROM Person) AND d.cape IS NULL;
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>5</points>
+                     </subtask>
+<!-- FROM HERE -->
+                     <subtask>
+                            <subtaskid>6</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Return all first- and lastnames of all person who used the Flight-Spell.</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT *
+                                          FROM Person AS p
+                                          JOIN AdventureOf AS a ON a.alias = p.alias
+                                          WHERE spellUsed = 'Flight';
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>2</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>7</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Return all person who have an 'Y' in their fisrtname.</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT firstname
+                                          FROM Person AS p
+                                          WHERE firstname LIKE '%y%';
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>8</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Find the wizard's alias who wrote the 'Superman Returns'!</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT w.alias
+                                          FROM Wizard AS w
+                                          JOIN Person As p ON w.alias = p.alias
+                                          JOIN AdventureOf AS a ON a.alias = p.alias
+                                          JOIN Book AS b ON b.no = a.book
+                                          WHERE w.cape = 'true' AND b.title = 'Superman Returns'
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+                     <subtask>
+<!--HIER IST DAS RESULTSET LEER -->
+                            <subtaskid>9</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Find the alias of a cape wearing wizard who appears in the book 'Wonderboy Rocks' and the publisher!</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT w.alias, b.publisher
+                                          FROM Wizard AS w
+                                          JOIN Person As p ON w.alias = p.alias
+                                          JOIN AdventureOf AS a ON a.alias = p.alias
+                                          JOIN Book AS b ON b.no = a.book
+                                          WHERE w.cape = 'true' AND b.title = 'Wonderboy Rocks';
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>10</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Find the title of all books having 2-4 pages.</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT b.title
+                                          FROM Book AS b
+                                          WHERE b.pages BETWEEN 2 AND 4;
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+                     <subtask>
+                            <subtaskid>11</subtaskid>        <tasktexts>
+                            <tasktext language="EN">Find the amount of all books having 2-4 pages.</tasktext>
+                     </tasktexts>
+                            <solution>
+                                   <referencestatement>
+                                          SELECT count(*)
+                                          FROM Book AS b
+                                          WHERE b.pages BETWEEN 2 AND 4;
+                                   </referencestatement>
+                                   <evaluationstrategy>SET</evaluationstrategy>
+                            </solution>
+                            <points>3</points>
+                     </subtask>
+
+<!-- TILL HERE -->
+
+
+
+              </subtasks>
+
+       </task>
+
+</tasks>

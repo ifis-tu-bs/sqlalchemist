@@ -1,0 +1,109 @@
+%!TEX root = ../Testprotokolle.tex
+\chapter{Testdurchführung (2015-07-12)}
+
+Art des Tests: Integrationstest\\
+Testfall: T1100\\
+Beteiligte Tester: Fabio Mazzone \& Gabriel Ahlers\\
+
+Folgende Methode wird zum initializieren der Testumgebung vor jedem der Tests durchgeführt:\\\\
+\hspace*{0mm}@BeforeClass \\
+\hspace*{0mm}public static void app()\{ \\
+\hspace*{3mm}FakeApplication fakeApplication = fakeApplication(inMemoryDatabase("test")); \\
+\hspace*{3mm}start(fakeApplication); \\
+\hspace*{3mm}Avatar.init();¸\\
+\hspace*{3mm}ShopItem.init(); \\
+\hspace*{0mm}\} \\\\
+
+\newpage
+\section{Tesprotokoll}
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test \newline
+\hspace*{0mm}public void testUserCreate()\{ \newline
+\hspace*{3mm}boolean testSuccessful= true; \newline
+\hspace*{3mm}try \{ \newline
+\hspace*{6mm}User.create(\grqq UserCreate\grqq, \grqq UserCreate@local.de\grqq, \grqq empty\grqq); \newline
+\hspace*{3mm}\} \newline
+\hspace*{3mm}catch (UsernameTakenException | EmailTakenException e) \{ \newline
+\hspace*{6mm}testSuccessful = false; \newline
+\hspace*{3mm}\} \newline\newline
+\hspace*{3mm}assertTrue(testSuccessful); \newline
+\hspace*{3mm}Logger.info(\grqq UserCreate successfull\grqq); \newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq UserCreate successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq UserCreate successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test(expected = UsernameTakenException.class) \newline
+\hspace*{0mm}public void testUserCreateNameTaken() throws EmailTakenException, UsernameTakenException \{ \newline
+\hspace*{3mm}try \{ \newline
+\hspace*{6mm}User.create(\grqq UserTaken\grqq, \grqq UserTaken1@local.de\grqq, \grqq empty\grqq); \newline
+\hspace*{6mm}User.create(\grqq UserTaken\grqq, \grqq UserTaken2@local.de\grqq, \grqq empty\grqq); \newline
+\hspace*{3mm}\} catch (UsernameTakenException | EmailTakenException e) \{ \newline
+\hspace*{6mm}Logger.info(\grqq UserNameTaken successfull\grqq); \newline
+\hspace*{6mm}throw e; \newline
+\hspace*{3mm}\} \newline\newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq UserNameTaken successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq UserNameTaken successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test(expected = EmailTakenException.class) \newline
+\hspace*{0mm}public void testUserCreateEmailTaken() throws EmailTakenException, UsernameTakenException \{ \newline
+\hspace*{3mm}try \{ \newline
+\hspace*{6mm}User.create(\grqq EmailTaken1\grqq, \grqq EmailTaken@local.de\grqq, \grqq empty\grqq); \newline
+\hspace*{6mm}User.create(\grqq EmailTaken2\grqq, \grqq EmailTaken@local.de\grqq, \grqq empty\grqq); \newline
+\hspace*{3mm}\} catch (UsernameTakenException | EmailTakenException e) \{ \newline
+\hspace*{6mm}Logger.info(\grqq EmailNameTaken successfull\grqq); \newline
+\hspace*{6mm}throw e; \newline
+\hspace*{3mm}\} \newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq EmailTaken successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq EmailTaken successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf ergab keine Fehler.

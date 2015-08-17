@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<subTasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="subTasks.xsd">
+    <subTask taskid="1" querylanguage="SQL"><!--querylanguage one of [SQL]-->
+
+        <titles>
+            <title language="DE">Titel des Tasks</title><!--language one of [DE, EN]-->
+        </titles>
+
+        <flufftexts>
+            <flufftext language="DE">Beschreibung zum Rendern im Spiel.</flufftext><!--(optional); language one of [DE, EN]-->
+        </flufftexts>
+
+        <schema>
+            <relation><!--(1..n)-->
+                <intension>CREATE TABLE Empolyee(id not null primary key, firstname varchar(255) NOT NULL, lastname varchar(255));</intension>
+                <extension>
+                    <tuple>INSERT TABLE()</tuple><!--(1..n)-->
+                    <tuple>INSERT TABLE()</tuple>
+                </extension>
+            </relation>
+        </schema>
+
+        <subtasks>
+            <subtask><!--(1..n)-->
+                <tasktexts><!--(1..n)-->
+                    <tasktext language="DE">Natürlichsprachliche Beschreibung der Query</tasktext><!--language one of [DE, EN]-->
+                    <tasktext language="EN">Natural language description</tasktext>
+                </tasktexts>
+                <solution>
+                    <referencestatement>SELECT statement als Musterlösung</referencestatement>
+                    <evaluationstrategy>SET</evaluationstrategy><!--one of [SET, LIST]-->
+                </solution>
+                <requiredterms><!--(optional)-->
+                    <term>SELECT</term><!--(1..n); one of [SELECT, FROM, WHERE, ...]-->
+                    <term>FROM</term>
+                </requiredterms>
+                <bannedterms><!--(optional)-->
+                    <term>HAVING</term><!--(1..n); one of [SELECT, FROM, WHERE, ...]-->
+                </bannedterms>
+                <points>1</points>
+            </subtask>
+        </subtasks>
+
+    </subTask>
+
+</subTasks>

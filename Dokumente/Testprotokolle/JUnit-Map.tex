@@ -1,0 +1,70 @@
+%!TEX root = ../Testprotokolle.tex
+\chapter{Testdurchführung (2015-07-12)}
+
+Art des Tests: Integrationstest\\
+Testfall: T1100\\
+Beteiligte Tester: Fabio Mazzone \& Gabriel Ahlers\\
+
+Folgende Methode wird zum initializieren der Testumgebung vor jedem der Tests durchgeführt:\\\\
+\hspace*{0mm}@BeforeClass \\
+\hspace*{0mm}public static void app()\{ \\
+\hspace*{3mm}FakeApplication fakeApplication = fakeApplication(inMemoryDatabase("test")); \\
+\hspace*{3mm}start(fakeApplication); \\
+\hspace*{3mm}Avatar.init();¸\\
+\hspace*{3mm}ShopItem.init(); \\
+\hspace*{0mm}\} \\\\
+
+\section{Testprotokoll}
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test \newline
+\hspace*{0mm}public void testMapCreate()\{ \newline
+\hspace*{3mm}Map map = Map.create(2, \grqq path\grqq, true);\newline\newline
+\hspace*{3mm}assertTrue(map != null); \newline
+\hspace*{3mm}Logger.info("MapCreate successfull"); \newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq MapCreate successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq MapCreate successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test \newline
+\hspace*{0mm}public void testMapCreateDouble() \{ \newline
+\hspace*{3mm}Map map1 = Map.create(3, \grqq path\grqq, true);\newline
+\hspace*{3mm}Map map2 = Map.create(3, \grqq path\grqq, true);\newline\newline
+\hspace*{3mm}assertTrue(map1 == map2);\newline
+\hspace*{3mm}Logger.info(\grqq MapCreateDouble successfull\grqq);\newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq MapCreateDouble successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq MapCreateDouble successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf ergab keine Fehler.

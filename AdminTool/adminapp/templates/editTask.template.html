@@ -1,0 +1,21 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title"><span ng-bind="title"></span></h4>
+</div>
+<div class="modal-body"style="width=100%;height=80%">
+    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+    <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+
+    <textarea  ui-codemirror="{mode: 'xml', lineNumbers: true}" id="inputCodeMirror" ng-model="textAreaData" style="resize:none"></textarea>
+</div>
+<div class="modal-footer">
+    <div ng-show="isCreate || isHomeWork">
+        <input type="checkbox" ng-model="isHomeWork"> Is Homework...?
+    </div>
+    <button type="button" class="btn btn-primary btn-lg" ng-click="ok()" >
+        Submit
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" ng-click="close()">
+        Cancel
+    </button>
+</div>

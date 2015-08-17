@@ -1,0 +1,202 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2015-07-09)}
+
+Art des Tests: Unit-Test\\
+Abgedeckte Klasse: \textbf{CL10}
+Beteiligte Tester: Denis Nagel\\
+
+\section{Testumgebung}
+
+Die Rankings-Methoden der Klasse wurden unter Windows 8.1, über IntelliJ und mittels JUnit getestet. Es wurde eine deutsche Systemumgebung verwendet. Die Applikation wurde über Firefox 39.0 gestartet.
+
+\section{Testprotokoll}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{toJsonHighScore}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt ein Profil, auf dem die Methode ausgeführt wird.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Vom Profil wird ein Json-Objekt erzeugt.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Vom Profil wurde ein Json-Objekt erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{toJsonHighScoreAll}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es müssen Profil-Datensätze in der Datenbank angelegt sein und es muss ein einzelnes Profil angegeben werden.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Von den Profilen in der Datenbank werden Json-Objekte in Form eines Arrays und vom einzelnen Profil ein eigenständiges Json-Objekt erzeugt.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Von den Profilen in der Datenbank wurden Json-Objekte in Form eines Arrays und vom einzelnen Profil ein eigenständiges Json-Objekt erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortByScore}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird absteigend nach erspielten Punkten sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde absteigend nach erspielten Punkten sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortByTime}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird absteigend nach gespielter Zeit sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde absteigend nach gespielter Zeit sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortByRuns}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird aufsteigend nach gespielten Durchläufen sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde aufsteigend nach gespielten Durchläufen sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortBySQL}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird absteigend nach gelösten SQL-Statements sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde absteigend nach gelösten SQL-Statements sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortByRate}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird absteigend nach der Erfolgsquote beim Lösen von SQL-Statements sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde absteigend nach der Erfolgsquote beim Lösen von SQL-Statements sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL10}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{sortByCoins}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Es werden eine Liste von Profildatensätzen und ein einzelnes Profil benötigt.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Liste wird absteigend nach erspielten Lofi-Coins sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wird gefunden.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Liste wurde absteigend nach erspielten Lofi-Coins sortiert, sowie auf 10 Einträge reduziert und das einzelne Profil wurde gefunden.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf hat gezeigt, dass die Ranking-Methoden der Klasse "Profile" wie gewünscht funktionieren.
+\end{itemize}

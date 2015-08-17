@@ -1,0 +1,75 @@
+Action & URL                | Method            | Send              | HTTP  - Response Success     | Response Error        |
+
+#Application
+GET     /                   | .index            |                | ok   -                      |                       | X
+GET     /admin              | .admin            |                | ok   -                      |                       | X
+
+#SessionController
+POST    /login              | .create           | JSON.login     | ok   - redirect(/profile)   | 401(JSON.sign.error)  | X
+GET     /logout             | .delete           |                | ok   -                      |                       | X
+
+#UserController
+POST    /signup             | .create           | JSON.signup    | ok   - redirect(/login)     | 400(JSON.sign.error)  | X
+POST    /users              | .edit             | JSON.user      | ok   -                      |                       | X
+DELETE  /users              | .delete           |                | ok   -                      |                       |
+GET     /users/verify/:code | .verifyEmail      |                | ok   -                      |                       | X
+
+#ItemController
+GET     /profile/inventory  | .inventory        |                | ok   - JSON.inventory       |                       | X
+GET     /profile/scrolls    | .scrollCollection |                | ok   - JSON.Scrolls         |                       | X
+GET     /profile/belt       | .belt             |                | ok   - JSON.belt            |                       | X
+POST    /profile/belt       | .edit             | JSON.belt      | ok   -                      |                       | X
+GET     /profile/used/:id   | .used             |                | ok   -                      |                       | X
+POST    /profile/collected  | .collected        | JSON.collected | ok   -                      |                       |
+
+#SettingsController
+GET     /profile/settings   | .index            |                | ok   - JSON.settings        |                       | X
+POST    /profile/settings   | .edit             | JSON.settings  | ok   -                      |                       | X
+
+#ChallengeController
+GET     /challenge          | .index            |                | ok   - JSON.challenges      |                       |
+GET     /challenge/:id      | .view             |                | ok   - JSON.challenge       |                       |
+POST    /challenge          | .create           | JSON.challenge | ok   -                      |                       |
+GET     /challenge/story    | .story            |                | ok   - JSON.story           |                       | X
+GET     /challenge/trivia   | .trivia           |                | ok   - JSON.task            |                       | -
+GET     /challenge/homework | .homework         |                | ok   - JSON.task            |                       | -
+
+#TaskFileController
+GET     /taskFile           | .index            |                | ok   - JSON.TaskFiles       |                       | X
+POST    /taskFile           | .create           | JSON.TaskFile  | ok   - JSON.TaskFile        |                       | X
+GET     /taskFile/:id       | .view             |                | ok   - JSON.TaskFile        |                       | X
+POST    /taskFile/:id       | .edit             |                | ok   - JSON.TaskFile        |                       |
+POST    /taskFile/:id/rate  | .rate             | JSON.Rating    | ok   -                      |                       | X
+POST    /taskFile/:id/comm  | .comment          | JSON.Text      | ok   -                      |
+
+#SubTaskController
+GET     /task               | .index            |                | ok   - JSON.tasks           |                       | X
+GET     /task/:id           | .view             |                | ok   - JSON.task            |                       |
+POST    /task/:id/rat       | .rate             | JSON.rating    | ok   -                      |                       |
+POST    /task/:id/comment   | .comment          | JSON.comment   | ok   -                      |                       |
+GET     /task/story/:id     | .story            |                | ok   - JSON.taskExercise    |                       | X
+POST    /task/story/:id     | .storySolve       | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+GET     /task/trivia        | .trivia           |                | ok   - JSON.taskExercise    |                       | X
+POST    /task/trivia/:id    | .triviaSolve      | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+GET     /task/homework      | .homework         |                | ok   - JSON.taskExercise    |                       | X
+POST    /task/homework/:id  | .homeworkSolve    | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+
+#ProfileController
+GET     /profile            | .index            |                | ok   - JSON.playerstate     |                       | X
+GET     /profile/:id        | .view             |                | ok   - JSON.profile         |                       | X
+GET     /profile/character  | .character        |                | ok   - JSON.characterState  |                       | X
+POST    /profile/avatar/:id | .avatar           |                | ok   - JSON.attributes      |                       | X
+
+#ShopController
+GET     /shop               | .avatarList       |                | ok   - JSON.shopitems       |                       | X
+GET     /shop/avatar        | .avatarList       |                | ok   - JSON.shopitems       |                       | X
+GET     /shop/belt          | .beltList         |                | ok   - JSON.shopitems       |                       | X
+POST    /shop/:id           | .buy              |                | ok   -                      | 400                   | X
+
+#HighScoreController
+GET     /highscore/points   | .byPoints         |                | ok   - JSON.highscores      |                       | X
+GET     /highscore/time     | .byTime           |                | ok   - JSON.highscores      |                       | X
+GET     /highscore/runs     | .byRuns           |                | ok   - JSON.highscores      |                       | X
+GET     /highscore/sql      | .bySQL            |                | ok   - JSON.highscores      |                       | X
+GET     /highscore/rate     | .byRate           |                | ok   - JSON.highscores      |                       | X
+GET     /highscore/coins    | .byCoins          |                | ok   - JSON.highscores      |                       | X

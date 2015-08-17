@@ -1,0 +1,95 @@
+%!TEX root = ../Pflichtenheft.tex
+
+% Kapitel 6
+%-------------------------------------------------------------------------------
+
+\chapter{Nichtfunktionale Anforderungen}
+
+\section{Funktionalität}
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Produktqualität} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\ \hline
+	Angemessenheit           &         x         &              &                 &                         \\ \hline
+	Richtigkeit              &         x         &              &                 &                         \\ \hline
+	Interoperabilität        &                   &              &                 &             x            \\ \hline
+	Ordnungsmäßigkeit        &                   &              &                 &             x          \\ \hline
+	Sicherheit		 		 &                   &              &         x       &                         \\ \hline
+\end{tabular}
+
+	Da es sich um ein Nachrichtenprogramm handelt, ist es besonders wichtig, dass die Nachrichten aktuell sind.
+	Wenn der Anwender direkt nach speziellen Informationen fragt, sollte dieser auch nur Nachrichten bekommen, die für ihn von Relevanz sind.
+	Die Genauigkeit wird noch erhöht, indem der Anwender die Möglichkeit bekommt, eigene Informationsquellen anzulegen.
+	Die Informationen werden dabei direkt und ohne Zensur aus den Nachrichten entnommen, weshalb diese immer korrekt die tatsächlichen Nachrichten widerspiegeln.
+	Auf die Ordnungsmäßigkeit des Inhalts kann dabei jedoch nicht geachtet werden.
+	Wenn sensible Anwenderdaten anfallen, müssen diese durch entsprechende Sicherheitsmechanismen geschützt werden.
+	
+\section{Zuverlässigkeit}
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Produktqualität} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\ \hline
+	Reife                    &                   &       x      &                 &                         \\ \hline
+	Fehlertoleranz           &                   &       x      &                 &                         \\ \hline
+	Wiederherstellbarkeit    &                   &              &        x        &                        \\ \hline
+	Robustheit               &                   &       x      &                 &           				\\ \hline
+\end{tabular}
+
+Das Programm sollte reif genug sein alle geforderten Funktionen umzusetzen.
+Bei fehlerhafter oder unverständlicher Eingabe muss das System stabil bleiben und ggf. eine für den Anwender verständliche Fehlermeldung ausgeben, oder Rückfragen stellen.
+
+\section{Benutzbarkeit}
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Produktqualität} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\ \hline
+	Verständlichkeit         &        x          &              &                 &                         \\ \hline
+	Erlernbarkeit            &        x          &              &                 &                         \\ \hline
+	Bedienbarkeit            &        x          &              &                 &                         \\ \hline
+\end{tabular}
+
+Die Bedienung des Sprachinterfaces muss so einfach und intuitiv sein, dass es mit natürlicher Sprache, ohne  spezielle Kommandos, zu bedienen ist.
+Das Webinterface muss selbst für normale Anwender ohne vorherige EDV-Vorkenntnisse bedienbar sein.
+Alle für den Anwender verfügbaren Funktionen müssen unkompliziert, anwendbar und selbsterklärend sein.
+
+\section{Effizienz}
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Produktqualität} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\ \hline
+	Zeitverhalten            &          x        &              &                 &                         \\ \hline
+	Verbrauchsverhalten      &                   &              &        x        &                         \\ \hline
+\end{tabular}
+
+Auf Benutzereingaben soll innerhalb von fünf Sekunden reagiert werden.
+Alle beim Anwender ausgeführten Funktionen sollten so leichtgewichtig sein, dass sie auf kleinen Computern, wie z.B. dem Raspberry Pi laufen können.
+
+\section{Änderbarkeit}
+\begin{tabular}{|l|c|c|c|c|}
+	\hline
+	\textbf{Produktqualität} & \textbf{sehr gut} & \textbf{gut} & \textbf{normal} & \textbf{nicht relevant} \\ \hline
+	Analysierbarkeit         &         x         &              &                 &                         \\ \hline
+	Modifizierbarkeit        &                   &      x       &                 &                         \\ \hline
+	Stabilität               &                   &              &         x       &                         \\ \hline
+	Prüfbarkeit              &                   &              &         x       &                         \\ \hline
+\end{tabular}
+
+Da Software von Fremdanbietern eingebunden wird, muss die Software besonders analysierbar sein, 
+um unter Umständen schnell Anpassungen vornehmen zu können.
+Modifikationen, wie z.B. weitere Sprachpakete, oder zusätzliche Chat-Funktionen, sollten ohne großen Aufwand hinzufügbar sein.
+
+\pagebreak[4]
+
+\section{Konkrete Qualitätsanforderungen}
+
+\qualityReq{10}{
+Die Antwortzeit auf Benutzereingaben darf nicht mehr als fünf Sekunden betragen.
+}
+\qualityReq{20}{
+Das Produkt muss anwenderfreundlich sein (intuitive Bedienbarkeit für Benutzer ohne EDV-Vorkenntnisse).
+}
+\qualityReq{30}{
+Fehlerhafte Eingaben dürfen das Programm nicht zum Absturz bringen.
+}
+\qualityReq{40}{
+Der Anwender soll nur für ihn relevante Nachrichten erhalten.
+}
+\qualityReq{50}{
+Beim Anwender ausgeführte Programme müssen so ressourcenschonend sein, dass sie auch auf einem Raspberry Pi laufen können.
+}

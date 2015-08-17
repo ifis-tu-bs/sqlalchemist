@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="recipe.xsd">
+
+  <task taskid="PotionTask" querylanguage="SQL">
+
+     <titles>
+       <title language="EN">YourTitle</title>
+     </titles>
+
+     <schema>
+      <relation>
+        <intension>
+          CREATE TABLE Recipe(
+              name VARCHAR(100) NOT NULL PRIMARY KEY,
+              complexity INTEGER
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO Recipe (name, complexity) VALUES ('Dizzyness', 1);</tuple> 
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('A', 1);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('B', 2);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('C', 3);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('D', 4);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('E', 5);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('F', 6);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('G', 7);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('H', 8);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('I', 9);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('J', 10);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('K', 3);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('L', 5);</tuple>
+		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('M', 7);</tuple>
+        </extension>
+      </relation>
+             <relation>
+        <intension>
+          CREATE TABLE Potion(
+              id INT NOT NULL PRIMARY KEY, 
+              name VARCHAR(100), 
+              strength INT, 
+              price INT, 
+              color VARCHAR(100), 
+              recipe VARCHAR(100) NOT NULL,
+              FOREIGN KEY (recipe) REFERENCES Recipe(name)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO potion VALUES (2, 'B', 1, 1, 'red', 'B')</tuple>
+		  <tuple>INSERT INTO potion VALUES (3, 'C', 1, 1, 'red', 'C')</tuple>
+		  <tuple>INSERT INTO potion VALUES (4, 'D', 1, 1, 'yellow', 'D')</tuple>
+		  <tuple>INSERT INTO potion VALUES (5, 'E', 1, 1, 'orange', 'E')</tuple>
+		  <tuple>INSERT INTO potion VALUES (6, 'F', 1, 1, 'blue', 'F')</tuple>
+		  <tuple>INSERT INTO potion VALUES (7, 'G', 1, 1, 'black', 'G')</tuple>
+		  <tuple>INSERT INTO potion VALUES (9, 'I', 1, 1, 'green', 'I')</tuple>
+		  <tuple>INSERT INTO potion VALUES (10, 'J', 10, 13, 'blue', 'J')</tuple>
+		  <tuple>INSERT INTO potion VALUES (11, 'K', 10, 25, 'blue', 'K')</tuple>
+		  <tuple>INSERT INTO potion VALUES (12, 'L', 9, 300, 'white', 'L')</tuple>
+		  <tuple>INSERT INTO potion VALUES (8, 'weakness', 1, 1, 'yellow', 'H')</tuple>
+		  <tuple>INSERT INTO potion VALUES (1, 'strength', 1, 1, 'red', 'A')</tuple>
+        </extension>
+     </relation>
+             <relation>
+      	<intension>
+          CREATE TABLE Book(
+              id INT NOT NULL PRIMARY KEY,
+              title VARCHAR(100), 
+              author VARCHAR(100),
+              year INT
+          );
+        </intension>
+      	<extension>
+      		<tuple>INSERT INTO book VALUES (1, 'A', 'A', 2000)</tuple>
+			<tuple>INSERT INTO book VALUES (2, 'B', 'B', 1980)</tuple>
+			<tuple>INSERT INTO book VALUES (3, 'C', 'C', 2015)</tuple>
+			<tuple>INSERT INTO book VALUES (4, 'D', 'D', 2016)</tuple>
+			<tuple>INSERT INTO book VALUES (5, 'E', 'E', 2002)</tuple>
+			<tuple>INSERT INTO book VALUES (6, 'F', 'F', 1999)</tuple>
+			<tuple>INSERT INTO book VALUES (7, 'F', 'F', 2010)</tuple>
+      	</extension>
+      </relation>
+             <relation>
+      	<intension>
+          CREATE TABLE Recipe_is_in_Book(
+            recipe VARCHAR(100) NOT NULL,
+            book INT NOT NULL,
+            page INT,
+            PRIMARY KEY (recipe, book), 
+            FOREIGN KEY (recipe) REFERENCES Recipe(name), 
+            FOREIGN KEY (book)   REFERENCES Book(id)
+            );
+          </intension>
+      	<extension>
+            <tuple>INSERT INTO recipe_is_in_book VALUES ('A', 1, 1)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('B', 1, 10)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('C', 2, 8)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('D', 3, 15)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('E', 4, 290)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('F', 4, 12)</tuple>
+			<tuple>INSERT INTO recipe_is_in_book VALUES ('G', 5, 23)</tuple>
+        </extension>
+      </relation>
+	  <relation>
+        <intension>
+          CREATE TABLE Ingredient(
+            name VARCHAR(100) NOT NULL PRIMARY KEY,
+            size VARCHAR(100),
+            poisonous BOOLEAN,
+            color VARCHAR(100),
+            type VARCHAR(100)
+            );
+          </intension>
+        <extension>
+            <tuple>INSERT INTO Ingredient VALUES ('Bezoar', 'small', 'false', 'brown', 'stone'); </tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Horned Slugs', 'small', 'false', 'green', 'animal');</tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Lethe River Water', 'medium', 'false', 'blue', 'liqiud');</tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Mistletoe Berries', 'small', 'true', 'red', 'berry');</tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Porcupine Quills', 'large', 'false', 'undefiened', 'spike');</tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Unicorn Horn', 'large', 'false', 'white', 'horn');</tuple>
+            <tuple>INSERT INTO Ingredient VALUES ('Snake Fangs', 'small', 'true', 'white', 'tooth');</tuple>
+        </extension>
+      </relation>
+	  <relation>
+        <intension>
+          CREATE TABLE Potion_has_Ingredient(
+            potion INT NOT NULL,
+            ingredient VARCHAR(100) NOT NULL,
+            PRIMARY KEY (potion, ingredient),
+            FOREIGN KEY (potion) REFERENCES Potion(id),
+            FOREIGN KEY (ingredient) REFERENCES Ingredient(name)
+            );
+          </intension>
+        <extension>
+            <tuple>INSERT INTO potion_has_ingredient VALUES (1, 'Bezoar')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (2, 'Horned Slugs')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (1, 'Snake Fangs')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (3, 'Unicorn Horn')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (10, 'Mistletoe Berries')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (12, 'Snake Fangs')</tuple>
+			<tuple>INSERT INTO potion_has_ingredient VALUES (11, 'Bezoar')</tuple>
+        </extension>
+      </relation>
+	  <relation>
+        <intension>
+          CREATE TABLE Potion_is_antidote_to(
+            potion INT NOT NULL,
+            antidote INT NOT NULL,
+            PRIMARY KEY (potion, antidote),
+            FOREIGN KEY (potion) REFERENCES Potion(id),
+            FOREIGN KEY (antidote) REFERENCES Potion(id)
+            );
+          </intension>
+        <extension>
+            <tuple>INSERT INTO potion_is_antidote_to VALUES (1, 2)</tuple>
+			<tuple>INSERT INTO potion_is_antidote_to VALUES (1, 3)</tuple>
+			<tuple>INSERT INTO potion_is_antidote_to VALUES (2, 3)</tuple>
+			<tuple>INSERT INTO potion_is_antidote_to VALUES (5, 8)</tuple>
+			<tuple>INSERT INTO potion_is_antidote_to VALUES (3, 5)</tuple>
+        </extension>
+      </relation>
+	  <relation>
+        <intension>
+          CREATE TABLE potion_has_recipe(
+			potion INT NOT NULL,
+            recipe VARCHAR(100) NOT NULL,
+            PRIMARY KEY (potion, recipe),
+            FOREIGN KEY (potion) REFERENCES Potion(id),
+            FOREIGN KEY (recipe) REFERENCES Recipe(name)
+			);
+          </intension>
+       </relation>
+     </schema>
+
+     <subtasks>
+       <subtask>
+        <subtaskid>1</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Ohhkey...to start simple, just create a result set of with the ID of all "red" potions.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT ID FROM Potion WHERE color = 'red'
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      <subtask>
+        <subtaskid>2</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a result set with the names and prices of all potions, which are not red.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT ID FROM Potion WHERE color NOT LIKE 'red'
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>3</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a result set with the several types of the ingredients.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT type FROM ingredient
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>4</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a result set with the title of the books written between 2000 and 2015, but not in 2002.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT title 
+				FROM book 
+				WHERE year IN (2000, 2001, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015)
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>5</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find out the quantity of all ingredients for the potion with the ID = 1.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT COUNT(ingredient) FROM potion_has_ingredient WHERE potion = 1
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>6</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find all ingredients for all potions.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+              SELECT potion.name, ingredient.name
+              FROM potion
+              JOIN potion_has_ingredient AS p_h_i ON potion.id = p_h_i.potion
+              JOIN ingredient ON p_h_i.ingredient = ingredient.name
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>7</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find out the names of the ingredients, which appear in books at page 10.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT name
+				FROM ingredient
+				JOIN potion_has_ingredient AS p_h_i ON p_h_i.ingredient = ingredient.name
+				JOIN potion_has_recipe AS p_h_r ON p_h_i.potion = p_h_r.potion
+				JOIN recipe_is_in_book AS r_is_in_b ON p_h_r.recipe = r_is_in_b.recipe
+				WHERE r_is_in_b.page = 10
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+	  	  <subtask>
+        <subtaskid>8</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a list with the books and their recipes, with the corresponding pages.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT book.id, r_is_in_b.recipe, r_is_in_b.page
+				FROM book
+				JOIN recipe_is_in_book AS r_is_in_b ON r_is_in_b.book = book.id
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>9</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a list with the books by their titles and their quantity of recipes sorted in descending order.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+				SELECT * FROM
+                (SELECT title, COUNT(recipe) AS quantity
+				FROM recipe_is_in_book
+				JOIN book ON book = id
+				GROUP BY title ) AS a
+				ORDER BY quantity desc
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>10</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the titles of the books in alphabetic order with the most recipes.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT title FROM(
+				SELECT book, COUNT(recipe) AS quantity
+				FROM recipe_is_in_book
+				GROUP BY book) AS a
+				JOIN book on id = book
+				WHERE quantity IN (
+				SELECT MAX(quantity) FROM
+				(SELECT book, COUNT(recipe) AS quantity
+				FROM recipe_is_in_book
+				GROUP BY book) AS b)
+				ORDER BY title asc
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+    
+		  <subtask>
+        <subtaskid>11</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the quantitiy of colors from the potions with the lowest quantity of
+              ingredients.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT COUNT(DISTINCT color) FROM
+				(SELECT potion, COUNT(ingredient) AS quantitiy
+				FROM potion_has_ingredient
+				GROUP BY potion) AS a
+				JOIN potion ON id = potion
+				WHERE quantitiy IN
+				(SELECT MIN(quantitiy) FROM
+				(SELECT potion, COUNT(ingredient) AS quantitiy
+				FROM potion_has_ingredient
+				GROUP BY potion) AS b)
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>12</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Create a list with the average prices (in ascending order) of the poisonous and
+              non-poisonous potions.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+				SELECT * FROM (
+				SELECT poisonous, AVG(price) as average
+				FROM potion_has_ingredient
+				JOIN ingredient ON potion_has_ingredient.ingredient = ingredient.name
+				JOIN potion ON potion.id = potion_has_ingredient.potion
+				GROUP BY poisonous
+				) AS a
+				ORDER BY average asc
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+	  	  <subtask>
+        <subtaskid>13</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the quantitiy of ingredients, which are not required for potions.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+				SELECT COUNT(name)
+				FROM ingredient
+				LEFT JOIN potion_has_ingredient ON name = ingredient
+				WHERE potion IS NULL
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>4</points>
+      </subtask>
+	   <subtask>
+        <subtaskid>14</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the names of all ingredients of potions, which can not be found in recipe books.
+              You have to use a set operator.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			SELECT DISTINCT ingredient
+			FROM
+			(SELECT id
+			FROM potion
+			EXCEPT
+			SELECT potion
+			FROM potion_has_recipe AS phr
+			RIGHT JOIN recipe_is_in_book AS riib ON phr.recipe = riib.recipe ) AS a
+			JOIN potion_has_ingredient AS phi ON phi.potion = a.id
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+		  <requiredterms>
+			<term>EXCEPT</term>
+		  </requiredterms>
+        </solution>
+        <points>4</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>15</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the names of the potions, which can not be found in recipes. You have to use
+              a set operator.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			SELECT name
+			FROM potion
+			EXCEPT
+			(SELECT name
+			FROM potion_has_recipe
+			JOIN potion ON id = potion)
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+		  <requiredterms>
+			<term>EXCEPT</term>
+		  </requiredterms>
+        </solution>
+        <points>4</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>16</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the names of all potions, which don't have an antidote. You have to use a set
+              operator.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			SELECT name
+			FROM
+			(SELECT ID
+			FROM potion
+			EXCEPT
+			SELECT antidote
+			FROM potion_is_antidote_to ) AS a
+			JOIN potion ON a.id = potion.id
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+		  <requiredterms>
+			<term>EXCEPT</term>
+		  </requiredterms>
+        </solution>
+        <points>4</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>17</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Imagine, the potions and their antidotes can be used transitively. Find the names
+              of the antidotes to the potion 'weakness' and sort their names alphabetically.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			WITH RECURSIVE heals(potion) AS (
+			SELECT potion
+			FROM potion_is_antidote_to AS piat
+			JOIN potion ON potion.id = piat.antidote
+			WHERE potion.name LIKE 'weakness'
+			UNION ALL
+			SELECT fi.potion
+			FROM potion_is_antidote_to AS fi
+			JOIN heals ON fi.antidote = heals.potion)
+			SELECT name 
+			FROM heals
+			JOIN potion ON potion.id = potion
+			ORDER BY name asc
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>5</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>18</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Imagine, the potions and their antidotes can be used transitively. Find the names of
+              the potions, which can be neutralized by the antidote 'strength' and sort their names alphabetically.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			WITH RECURSIVE heals(antidote) AS (
+			SELECT antidote
+			FROM potion_is_antidote_to AS piat
+			JOIN potion ON potion.id = piat.potion
+			WHERE potion.name LIKE 'strength'
+			UNION ALL
+			SELECT fi.antidote
+			FROM potion_is_antidote_to AS fi
+			JOIN heals ON fi.potion = heals.antidote)
+			SELECT name 
+			FROM heals
+			JOIN potion ON potion.id = antidote
+			ORDER BY name asc
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>5</points>
+      </subtask>
+	  <subtask>
+        <subtaskid>19</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Find the title of the books and their quantity of editions, if they are having
+              more than one edition. You have to use the 'having' expression.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			SELECT title, COUNT(year)
+			FROM book
+			GROUP BY title
+			HAVING COUNT(year) > 1
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+		  <requiredterms>
+			<term>HAVING</term>
+		  </requiredterms>
+        </solution>
+        <points>5</points>
+      </subtask>
+    <subtask>
+      <subtaskid>20</subtaskid>
+      <tasktexts>
+        <tasktext language="EN">Create a result set of names of all "blue" ingredients.</tasktext>
+      </tasktexts>
+      <solution>
+        <referencestatement>
+          SELECT name FROM Ingredient WHERE color = 'blue'
+        </referencestatement>
+        <evaluationstrategy>SET</evaluationstrategy>
+      </solution>
+      <points>1</points>
+    </subtask>
+    <subtask>
+      <subtaskid>21</subtaskid>
+      <tasktexts>
+        <tasktext language="EN">List all ingredients from the potions with the most ingredients. But i want to have a
+            red ingredient in each potion.</tasktext>
+      </tasktexts>
+      <solution>
+        <referencestatement>
+            SELECT in.* FROM ingredient AS in
+                JOIN Potion_has_Ingredient AS phasi ON in.name = phasi.ingredient
+                JOIN
+                (   SELECT potion FROM
+
+                        (   SELECT potion, count(ingredient) AS c FROM
+
+                                (   SELECT potion FROM Potion_has_Ingredient AS pi
+                                        JOIN ingredient i ON pi.ingredient = i.name
+                                    WHERE i.color = 'red'
+                                ) AS pr
+
+                            JOIN Potion_has_Ingredient AS phi ON phi.potion = pr.potion
+                            GROUP BY potion
+                        ) AS pc
+
+                        JOIN
+                        (   SELECT max(c) AS max FROM
+
+                                (   SELECT potion, count(ingredient) AS c FROM
+
+                                        (   SELECT potion FROM Potion_has_Ingredient AS pi
+                                                JOIN ingredient i ON pi.ingredient = i.name
+                                            WHERE i.color = 'red'
+                                        ) AS pr
+
+                                        JOIN Potion_has_Ingredient AS phi ON phi.potion = pr.potion
+                                    GROUP BY potion
+                                )
+
+                        ) AS pm ON pm.max = pc.c
+                ) AS pgm ON pgm.potion = phasi.potion
+                ;
+        </referencestatement>
+        <evaluationstrategy>SET</evaluationstrategy>
+       </solution>
+      <points>2</points>
+    </subtask>
+       <subtask>
+         <subtaskid>22</subtaskid>
+         <tasktexts>
+             <tasktext language="EN">Find the titles of the books that were written in the time from 2000 and 2010.</tasktext>
+           </tasktexts>
+           <solution>
+               <referencestatement>
+                   SELECT title
+                   FROM Book
+                   WHERE year BETWEEN 2000 AND 2010;
+               </referencestatement>
+               <evaluationstrategy>SET</evaluationstrategy>
+           </solution>
+           <points>2</points>
+         </subtask>
+
+	  
+     </subtasks>
+
+   </task>
+
+</tasks>
+

@@ -1,0 +1,114 @@
+%!TEX root = ../Systementwurf.tex
+
+\chapter{Erfüllung der Kriterien}
+
+In diesem Abschnitt wird beschrieben, wie die im Pflichtenheft aufgeführten Kriterien erfüllt
+werden und worauf geachtet wird. Es wird zuerst auf die Musskriterien, dann auf die Soll und Kann-Kriterien und zuletzt auf die Abgrenzungskriterien eingegangen.
+
+
+\section{Musskriterien}
+
+Die folgenden Kriterien sind unabdingbar und müssen durch das Produkt erfüllt
+werden:
+
+\ref{RM1} Ein- und Ausgabe in natürlicher Sprache
+
+Die Spracheingabe erfolgt durch ein am Raspberry Pi angebrachtes Mikrofon. Der \textit{Client}\ref{C10} nimmt gesprochene Sprache auf und wandelt diese mithilfe der Google-Speech-Api in Text um.
+Auf dem Server wird der Text dann im \textit{Query-Processor}\ref{C50} mithilfe von Natural Language Proccessing und Named Entity Recognition analysiert und erkannt.
+Die Sprachausgabe erfolgt durch einem Lautsprecher am Raspberry Pi. Der \textit{Client}\ref{C10} erhält auszugebendes als Text, wandelt es in Sprache um und gibt es anschließend aus.
+
+\ref{RM2} Interaktives Verhalten
+
+Durch drücken des Aufnahmeknopfes während einer Sprachausgabe, kann der Nutzer diese unterbrechen, um seine vorherige Suchanfrage noch weiter zu spezifizieren oder negatives Feedback (z.B. "`Stop"') zu geben.
+Falls der \textit{Query-Processor}\ref{C50} eine Anfrage nicht klar verstehen konnte, kann der \textit{Client}\ref{C10} dem Nutzer eine Reihe von vordefinierten Ja/Nein Fragen stellen, um die Anfrage einzugrenzen.
+
+\ref{RM3} Das System muss die englische Sprache unterstützen
+
+\NewsGenie ist standardmäßig auf die englische Sprache eingestellt.
+Jeder Nutzer kann am \textit{Webinterface}\ref{C20} einstellen, welche Sprache er verwenden möchte. 
+Alle für die Lokalisierung verantwortlichen Inhalte werden in externe Textdateien verlagert, was das einbauen weiterer Sprachen stark vereinfacht.
+Jeder Artikel in der \textit{Datenbank}\ref{C30} erhält einen Sprach-Tag, um zu
+gewährleisten, dass jeder Nutzer nur Artikel seiner eingestellten Sprache entsprechend erhält.
+Jegliche von uns verwendete Fremdanbietersoftware unterstützt auch standardmäßig die englische Sprache.
+
+\pagebreak
+
+\ref{RM4} Benutzerschnittstelle
+
+Das \textit{Webinterface}\ref{C20} wird mit Hilfe des Play-Frameworks auf dem Server umgesetzt.
+
+\ref{RM5} Backend
+
+Artikel werden als Tripel in der \textit{Datenbank}\ref{C30} gespeichert und durch Lucene zur Suche aufbereitet.
+Außerdem erhalten Artikel zusätzlich einen Zeitstempel um das Erkennen von veralteten Artikeln zu ermöglichten.
+
+\section{Sollkriterien}
+
+Die Erfüllung folgender Kriterien für das abzugebende Produkt wird angestrebt:
+
+\ref{RS1} Entitäts-Erkennung
+
+Mit dem Named Entity Recognizer aus Stanford NLP können Entitäten in gecrawlten Artikeln erkannt werden. 
+Anschließend werden diese in der \textit{Datenbank}\ref{C30} abgelegt und durch die Tripelspeicherweise miteinander verknüpft. 
+Dieses Verknüpfen ermöglicht es, Zusammenhänge zwischen Artikeln besser zu erkennen um so eine höhere Antwortqualität 
+zu erreichen.
+
+\ref{RS2} News Crawling
+
+Der Crawler durchsucht regelmäßig die RSS-Feed-Quellen nach neuen Artikeln und speist diese anschließend in die \textit{Datenbank}\ref{C30} ein.
+Neue Quellen können sowohl im \textit{Webinterface}\ref{C20} als auch per Spracheingabe am \textit{Client}\ref{C10} dynamisch dem Crawler hinzugefügt werden.
+
+\ref{RS3} Deutsche Sprache
+
+Die deutsche Sprache wird vollkommen unterstützt.
+Auch die von uns verwendete Fremdanbietersoftware unterstützt die deutsche Sprache.
+
+\ref{RS5} Persönlichkeit
+
+Der \textit{Client}\ref{C10} kann rudimentäre Fragen wie z.B. {\glqq Hi, how are
+you?\grqq} stellen, sowie auf einer kleinen Anzahl von Spaßfragen wie z.B.
+{\glqq What does the Fox say?\grqq}  antworten.
+
+\section{Kannkriterien}
+
+Die Erfüllung folgender Kriterien für das abzugebende Produkt wird angestrebt:
+
+\ref{RC1} Konkurrentes News-Crawling
+
+Das Crawling findet auf dem Server in einem separatem Prozess statt, weswegen es die normalen Funktionen von \NewsGenie nicht beeinträchtigt.
+
+\ref{RC2} Trend-Erkennung
+
+Trends können auf zwei Arten gefunden werden:
+Zum einem durch die Analyse, wie häufig welche Themen von Nutzern abgefragt wurden, 
+und zum anderen beim crawlen, wenn zu einem Zeitpunkt bestimmte Themen besonders häufig in unterschiedlichen RSS-Feeds auftauchen.
+
+\ref{RC3} Personalisierung
+
+Zu jedem Nutzer werden in der \textit{Datenbank}\ref{C30} Nutzerdaten inklusive seiner Suchhistorie gespeichert.
+Aus der Häufigkeit des Vorkommens von bestimmen Themen in der Suchhistorie eines Nutzers können dessen Interessen abgeleitet werden.
+
+\section{Abgrenzungskriterien}
+
+Folgende Funktionalitäten werden nicht durch das Produkt, sondern wie folgt
+beschrieben anderweitig erfüllt
+
+\ref{RW1} Das System soll die Sprachen nicht automatisch unterscheiden können
+
+Der Nutzer kann am \textit{Webinterface}\ref{C20} die Sprache einstellen (Deutsch und Englisch).
+
+\ref{RW2} Das System soll keine komplexen Fragen stellen
+
+Zu komplexe Fragen mit vielen Nebensätzen sind äußerst schwer zu erkennen, was den Umfang dieses Praktikums 
+übertreffen würde.
+Des Weiteren genügen in den meisten Fällen einfache Fragen, um auszudrücken wonach man sucht.
+
+\ref{RW3} Das System umfasst keine künstliche Intelligenz, Antworten werden
+nicht umformuliert
+
+Artikel werden in eine Auswahl von vordefinierten Sätzen eingepackt, aber sonst unverändert ausgeben, um dennoch natürlich wirken zu können.
+
+\ref{RW4} Artikel, die nicht im RSS-Feed verlinkt sind, werden nicht
+verarbeitet
+
+Da fast jede Nachrichtenseite im Internet einen RSS-Feed anbietet, ist die Wahrscheinlichkeit groß, dass sich das gesuchte Thema in den dort verlinkenden Artikeln befindet.

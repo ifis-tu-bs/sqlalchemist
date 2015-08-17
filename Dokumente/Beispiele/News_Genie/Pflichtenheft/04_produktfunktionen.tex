@@ -1,0 +1,302 @@
+%!TEX root = ../Pflichtenheft.tex
+
+% Kapitel 4
+%-------------------------------------------------------------------------------
+
+\chapter{Produktfunktionen}\label{test1}
+
+\begin{function}{10}{Sprachausgabe}
+\item[Geschäftsprozess:] Ausgabe von natürlicher Sprache
+\item[Anforderung:] \lfk{1}
+\item[Ziel:] Der Client gibt den Inhalt einer Sprachdatei akustisch aus.
+\item[Vorbedingung:] Der Client erhält eine Sprachdatei, die ausgegeben werden soll.
+\item[Nachbedingung Erfolg:] Die Sprachdatei wurde vom Client ausgegeben.
+\item[Nachbedingung Fehlschlag:] Die Sprachdatei wurde nicht ausgegeben.
+\item[Akteure:] Client
+\item[Beschreibung:] Bei Eingang einer Sprachdatei wird diese akustisch in natürlicher Sprache ausgegeben.
+\end{function} ~
+
+\begin{function}{11}{Sprachaufnahme}
+\item[Geschäftsprozess:] Aufnahme von natürlicher Sprache
+\item[Anforderung:] \lfk{1}
+\item[Ziel:] Benutzeranfragen in natürlicher Sprache werden aufgenommen und temporär gespeichert.
+\item[Vorbedingung:] Der Benutzer betätigt den Aufnahmeknopf.
+\item[Nachbedingung Erfolg:] Die Anfrage wurde vom Client aufgenommen und in einer Sprachdatei gespeichert.
+\item[Nachbedingung Fehlschlag:] Die Anfrage konnte nicht aufgenommen werden.
+\item[Akteure:] Client, Benutzer
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer betätigt den Aufnahme-Knopf am Client.
+\item Der Benutzer spricht seine Anfrage in das Mikrofon.
+\item Die Anfrage wird in einer Sprachdatei zur Weiterverarbeitung gespeichert.
+\end{enumerate}
+\end{function} ~
+
+\pagebreak[2]
+
+\begin{function}{12}{Umwandlung von Sprache in Text}
+\item[Geschäftsprozess:] Umwandlung einer Sprachdatei in einen String
+\item[Anforderung:] \lfk{1}, \lfk{2}
+\item[Ziel:] Der Inhalt einer Sprachdatei wird ausgelesen und in Form eines Strings zurückgegeben.
+\item[Vorbedingung:] Der Client erhält eine Sprachdatei, die übersetzt werden soll.
+\item[Nachbedingung Erfolg:] Ein String mit dem Inhalt der Sprachdatei wurde zurückgegeben.
+\item[Nachbedingung Fehlschlag:] Die Sprachdatei wurde nicht in einen String übersetzt.
+\item[Akteure:] Client, Google-Speech-API
+\item[Beschreibung:] Bei Eingang einer Sprachdatei wird deren Inhalt in Text übersetzt und als String zurückgegeben. Hierfür wird die Google-Speech-API verwendet.
+\end{function} ~
+
+\begin{function}{13}{Umwandlung von Text in Sprache}
+\item[Geschäftsprozess:] Umwandlung eines Strings in eine Sprachdatei
+\item[Anforderung:] \lfk{1}, \lfk{2}
+\item[Ziel:] Ein String mit natürlicher Sprache wird in eine Sprachdatei übersetzt.
+\item[Vorbedingung:] Der Client erhält einen String, der übersetzt werden soll.
+\item[Nachbedingung Erfolg:] Eine Sprachdatei mit dem Inhalt des Strings wurde zurückgegeben.
+\item[Nachbedingung Fehlschlag:] Der String konnte nicht in eine Sprachdatei übersetzt werden.
+\item[Akteure:] Client
+\item[Beschreibung:] Bei Eingang eines Strings wird dieser in eine Sprachdatei übersetzt.
+\end{function} ~
+
+\begin{function}{20}{Anfrage stellen}
+\item[Geschäftsprozess:] Stellen einer Anfrage an das System
+\item[Anforderung:] \lfk{5}
+\item[Ziel:] Der Benutzer stellt eine Anfrage an das System und erhält eine dementsprechende Antwort.
+\item[Vorbedingung:] Der Benutzer ist am Client eingeloggt.
+\item[Nachbedingung Erfolg:] Der Benutzer erhält eine, zu seiner Anfrage passende, Antwort.
+\item[Nachbedingung Fehlschlag:] Der Benutzer wird gebeten, seine Anfrage zu präzisieren.
+\item[Akteure:] Benutzer, Client, Query-Processor, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer nennt dem Client seine Anfrage. \ref{F11}
+\item Der Inhalt der Sprachdatei wird in einen String übersetzt. \ref{F12}
+\item Der String wird von dem Query-Processor verarbeitet.
+\item Die generierte Antwort wird in eine Sprachdatei übersetzt. \ref{F13}
+\item Die Antwort wird dem Benutzer akustisch ausgegeben. \ref{F10}
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{30}{Client Login}
+\item[Geschäftsprozess:] Login am Client
+\item[Anforderung:] \lfk{1}, \lfk{2}
+\item[Ziel:] Der Benutzer loggt sich am Client ein, um Queries stellen zu können.
+\item[Vorbedingung:] Der Benutzer muss einen Account besitzen.
+\item[Nachbedingung Erfolg:] Der Benutzer ist eingeloggt und kann Queries stellen.
+\item[Nachbedingung Fehlschlag:] Der Benutzer ist nicht eingeloggt.
+\item[Akteure:] Benutzer, Client, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer nennt dem Client seinen Namen. \ref{F11}
+\item Der Inhalt der Sprachdatei wird in einen String übersetzt. \ref{F12}
+\item Der String wird mit der Benutzer-Tabelle der Datenbank abgeglichen.
+\item Bei Übereinstimmung wird der Benutzer eingeloggt.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{31}{Client Logout}
+\item[Geschäftsprozess:] Logout aus dem Client
+\item[Anforderung:] \lfk{1}, \lfk{2}
+\item[Ziel:] Der Benutzer ist nicht länger am Client eingeloggt.
+\item[Vorbedingung:] Der Benutzer muss am Client eingeloggt sein.
+\item[Nachbedingung Erfolg:] Der Benutzer ist nicht mehr am Client eingeloggt.
+\item[Nachbedingung Fehlschlag:] Der Benutzer ist weiterhin am Client eingeloggt.
+\item[Akteure:] Benutzer, Client
+\item[Beschreibung:] Sobald der Benutzer eine bestimmte Zeit inaktiv war, wird er automatisch aus dem Client ausgeloggt.
+\end{function} ~
+
+\begin{function}{40}{News-Crawling}
+\item[Geschäftsprozess:] Abrufen neuer Nachrichten der Feeds
+\item[Anforderung:] \lfk{5}
+\item[Ziel:] Die Datenbank wird regelmäßig um neu erschienene Nachrichten erweitert.
+\item[Vorbedingung:] Es gibt keine Vorbedingung.
+\item[Nachbedingung Erfolg:] Für alle Feeds wurden alle neuen Nachrichten eingelesen und in der Datenbank gespeichert.
+\item[Nachbedingung Fehlschlag:] Es wurden nicht alle neuen Nachrichten eingelesen.
+\item[Akteure:] Backend, Datenbank
+\item[Beschreibung:] In regelmäßigen Abständen wird für jeden in der Datenbank gespeicherten Feed die folgende Prozedur ausgeführt:
+\begin{enumerate}
+\item Der neueste Artikel des Feeds wird abgerufen.
+\item Falls der Artikel in der Datenbank vorhanden ist, wird die Prozedur für den Feed beendet.
+\item Ansonsten wird der neue Artikel in der Datenbank gespeichert und die Prozedur für den nächsten Artikel wiederholt.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{50}{Registrierung}
+\item[Geschäftsprozess:] Registrierung eines neuen Nutzers
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Ein neuer Nutzer erstellt einen Account, der in der Datenbank gespeichert wird.
+\item[Vorbedingung:] Es gibt keine Vorbedingung.
+\item[Nachbedingung Erfolg:] Der neue Account wurde in der Datenbank gespeichert.
+\item[Nachbedingung Fehlschlag:] Es wurde kein neuer Account angelegt.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer gibt seinen Namen, sein Passwort und seine E-Mail-Adresse an.
+\item Sind entweder der Name oder die E-Mail-Adresse bereits in der Datenbank vorhanden, können diese nicht verwedet werden.
+\item Der Name, die E-Mail-Adresse und das gehashte Passwort werden als neuer Account in der Datenbank gespeichert.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{60}{Webinterface Login}
+\item[Geschäftsprozess:] Login am Webinterface
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Der Benutzer loggt sich am Webinterface ein.
+\item[Vorbedingung:] Der Benutzer muss einen Account besitzen.
+\item[Nachbedingung Erfolg:] Der Benutzer ist eingeloggt und kann somit auf seine persönlichen Feeds zugreifen und diese verwalten.
+\item[Nachbedingung Fehlschlag:] Der Benutzer ist nicht eingeloggt.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer gibt seinen Namen und sein Passwort an.
+\item Das Passwort wird mit einem passenden Algorithmus gehasht.
+\item Die Daten werden mit der Datenbank abgeglichen.
+\item Bei Übereinstimmung wird der Benutzer eingeloggt.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{61}{Webinterface Logout}
+\item[Geschäftsprozess:] Logout aus dem Webinterface
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Der Benutzer ist nicht länger am Webinterface eingeloggt.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Der Benutzer ist nicht mehr am Webinterface eingeloggt.
+\item[Nachbedingung Fehlschlag:] Der Benutzer ist weiterhin am Webinterface eingeloggt.
+\item[Akteure:] Benutzer, Webinterface
+\item[Beschreibung:] Der eingeloggte Benutzer betätigt den \glqq Logout\grqq\ Knopf und ist nicht länger im Webinterface eingeloggt. Außerdem wird ein Benutzer nach einer bestimmten Zeit automatisch ausgeloggt.
+\end{function} ~
+
+\begin{function}{70}{Feed-Liste anzeigen}
+\item[Geschäftsprozess:] Anzeige einer Liste der Feeds eines Benutzers
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Es wird eine Liste aller Feeds eines Benutzers angezeigt.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Eine Liste der Feeds des Benutzers wird angezeigt.
+\item[Nachbedingung Fehlschlag:] Es wird keine Liste angezeigt.
+\item[Akteure:] Webinterface, Datenbank
+\item[Beschreibung:] Bei erfolgreichem Login am Webinterface wird dem Benutzer eine Liste seiner abonnierten Feeds angezeigt. Er hat die Möglichkeit weitere Feeds hinzuzufügen und abonnierte Feeds zu entfernen.
+\end{function} ~
+
+\begin{function}{71}{Feed hinzufügen}
+\item[Geschäftsprozess:] Hinzufügen eines Feeds zur Abonnementliste
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Der Benutzer fügt der Liste seiner Feeds einen neuen Feed hinzu.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Ein neuer Feed wurde, falls noch nicht geschehen, in der Datenbank angelegt und der Benutzer mit ihm verknüpft.
+\item[Nachbedingung Fehlschlag:] Es wurde kein neuer Feed angelegt.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer gibt die URL des hinzuzufügenden Feeds in das dafür vorgesehene Textfeld ein.
+\item Der Benutzer betätigt den Knopf \glqq Add\grqq.
+\item Der Feed wird in der Datenbank hinzugefügt und mit dem Benutzer verknüpft.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{72}{Feeds entfernen}
+\item[Geschäftsprozess:] Entfernen eines Feeds aus der Abonnementliste
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Der Benutzer entfernt Feeds aus seiner Abonnementliste.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Die Verknüpfung zwischen den ausgewählten Feeds und dem Benutzer wurde aus der Datenbank gelöscht.
+\item[Nachbedingung Fehlschlag:] Die Verknüpfungen wurden nicht gelöscht.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer setzt in seiner Feed-Liste einen Haken an alle Feeds, die er entfernen möchte.
+\item Der Benutzer betätigt den \glqq Unsubscribe Selected\grqq\ Knopf.
+\item Der Benutzer wird aufgefordert, das Entfernen der Feeds zu bestätigen.
+\item Bei Bestätigung werden die Verknüpfungen zwischen dem Benutzer und den Feeds aus der Datenbank gelöscht.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{80}{Passwort ändern}
+\item[Geschäftsprozess:] Ändern des Passworts
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Das Passwort eines Benutzers wird geändert.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Das neue Passwort des Benutzers wurde in der Datenbank gespeichert.
+\item[Nachbedingung Fehlschlag:] Das Passwort des Benutzers wurde nicht verändert.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer betätigt den \glqq Change Password\grqq\ Knopf.
+\item Der Benutzer gibt sein bisheriges Passwort, sein neues Passwort und eine Bestätigung des neuen Passworts in die dafür vorgesehenen Textfelder ein.
+\item Der Benutzer betätigt den \glqq Change Password\grqq\ Knopf.
+\item Wenn der Hash des bisherigen Passworts mit dem Hash aus der Datenbank und die beiden neuen Passwörter übereinstimmen, wird der Hash des neuen Passworts in der Datenbank gespeichert.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{81}{Passwort Wiederherstellung}
+\item[Geschäftsprozess:] Wiederherstellung eines vergessenen Passworts
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Einem Benutzer, der sein Passwort vergessen hat, wird ein neues Passwort zugewiesen.
+\item[Vorbedingung:] Der Benutzer muss einen Account besitzen.
+\item[Nachbedingung Erfolg:] Der Benutzer hat ein neues, zufällig generiertes Passwort per E-Mail erhalten und der Hash des Passworts wurde in der Datenbank gespeichert.
+\item[Nachbedingung Fehlschlag:] Das Passwort in der Datenbank wurde nicht geändert.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer betätigt den \glqq Recover Password\grqq\ Knopf.
+\item Der Benutzer gibt seinen Namen und seine E-Mail-Adresse in die dafür vorgesehenen Textfelder ein.
+\item Der Benutzer betätigt den \glqq Request Password\grqq\ Knopf.
+\item Der Benutzer erhält ein temporäres, zufällig generiertes Passwort per E-Mail zugeschickt.
+\item Der Hash des temporären Passworts wird in der Datenbank gespeichert.
+\item Beim nächsten Login am Webinterface wird der Benutzer aufgefordert, sein Passwort zu ändern.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{90}{Rolle wechseln}
+\item[Geschäftsprozess:] Annehmen der Rolle eines anderen Benutzers
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Ein Administrator nimmt die Rolle eines anderen Benutzers an.
+\item[Vorbedingung:] Der Administrator muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Der Administrator hat die Rolle des Benutzers angenommen.
+\item[Nachbedingung Fehlschlag:] Der Administrator hat die Rolle nicht gewechselt.
+\item[Akteure:] Administrator, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Administrator gibt den Namen, des Benutzers dessen Rolle er einnehmen möchte, in das dafür vorgesehene Textfeld ein.
+\item Der Administrator betätigt den \glqq Sudo\grqq\ Knopf.
+\item Der Administrator nimmt die Rolle des angegebenen Benutzers an.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{100}{Benutzer-Liste anzeigen}
+\item[Geschäftsprozess:] Anzeige einer Liste aller Benutzer
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Einem Administrator wird eine Liste aller Benutzer angezeigt.
+\item[Vorbedingung:] Der Administrator muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Eine Liste aller Benutzer wird angezeigt.
+\item[Nachbedingung Fehlschlag:] Es wird keine Liste angezeigt.
+\item[Akteure:] Webinterface, Datenbank
+\item[Beschreibung:] Einem Administrator wird eine Liste aller Benutzer angezeigt. Er hat die Möglichkeit in die Rolle eines Benutzers zu wechseln oder einen Benutzer zu löschen.
+\end{function} ~
+
+\begin{function}{110}{Benutzer löschen}
+\item[Geschäftsprozess:] Löschen eines Benutzers
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Ein Benutzeraccount wird endgültig aus der Datenbank gelöscht.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Der Benutzeraccount wurde aus der Datenbank gelöscht und der Benutzer ist nicht länger eingeloggt.
+\item[Nachbedingung Fehlschlag:] Der Account wurde nicht gelöscht und der Benutzer ist weiterhin eingeloggt.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer betätigt den \glqq Delete Account\grqq\ Knopf.
+\item Der Benutzer wird aufgefordert, das Löschen des Accounts zu bestätigen.
+\item Bei Bestätigung wird der Account endgültig aus der Datenbank gelöscht.
+\end{enumerate}
+\end{function} ~
+
+\begin{function}{120}{Text-Anfrage}
+\item[Geschäftsprozess:] Stellen einer Anfrage am Webinterface
+\item[Anforderung:] \lfk{4}
+\item[Ziel:] Der Benutzer stellt eine Anfrage in Textform aus dem Webinterface heraus. Anschließend kann er einzelne Ergebnisse bestätigen oder verwerfen.
+\item[Vorbedingung:] Der Benutzer muss am Webinterface eingeloggt sein.
+\item[Nachbedingung Erfolg:] Dem Benutzer wird eine Liste von Artikeln angezeigt, die zu seiner Anfrage passen.
+\item[Nachbedingung Fehlschlag:] Der Benutzer wird aufgefordert, seine Anfrge zu präzisieren.
+\item[Akteure:] Benutzer, Webinterface, Datenbank
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item Der Benutzer gibt seine Anfrage in das dafür vorgesehene Textfeld ein.
+\item Der Benutzer betätigt den \glqq Anfrage stellen\grqq~Knopf.
+\item Dem Benutzer wird eine Liste der gefundenen Artikel angezeigt, in der er Artikel bewerten kann oder er wird aufgefordert, die Anfrage zu präzisieren.
+\end{enumerate}
+\end{function} ~

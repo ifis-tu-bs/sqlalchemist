@@ -1,0 +1,50 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Make HomeWork</h4>
+</div>
+<div class="modal-body">
+    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+    <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+
+    <div class="contatiner-fluid" style="float:left; width: 47%; text-align:left">
+        <label>Name</label>
+        <br>
+        <label>From &#60;inclusive&#62;</label><br>
+        <datepicker id="date1" ng-model="datePickerFromData" style="resize:none"></datepicker>
+    </div>
+
+    <div class="contatiner-fluid" style="float:left; width: 6%"></div>
+
+    <div class="contatiner-fluid" style="float:right; width:47%; text-align:right">
+        <input type="text" style="text-align: right" ng-model="name"/>
+        <br>
+        <label>To &#60;inclusive&#62;</label><br>
+        <datepicker id="date2" ng-model="datePickerToData" style="resize:none;height: 100%"></datepicker>
+    </div>
+
+    <span hide="true">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </span>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-lg" ng-click="ok()" >
+        Submit
+    </button>
+    <button type="button" class="btn btn-primary btn-lg" ng-click="close()">
+        Cancel
+    </button>
+</div>

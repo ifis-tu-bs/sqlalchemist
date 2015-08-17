@@ -1,0 +1,35 @@
+%Dies ist die Hauptseite des Dokumentes. Es werden u. a. alle Kapitel,
+%Einstellung im Header eingebunden.
+%Veränderungen müssen in folgenden Dateien vorgenommen werden:
+      %- config.tex
+      %- einzelne Kapitel (evtl. erweitern)
+
+\input{common/layout.tex}          % Diese Datei enthält alle
+                                          % Layouteinstellungen
+\newcommand{\dokumentTitel}{Angebot}
+\input{common/config.tex}
+
+
+%------Beginn des Gesamtdokumentes----------------------------------------------
+\begin{document}
+
+%------Eingebundene Seiten, Verzeichnisse bzw. Kapitel--------------------------
+\include{common/titelseite}                      % Titelseite
+
+\tableofcontents                          % Inhaltsverzeichnis wird automatisch
+                                          % generiert
+\listoffigures                            % ebenso das Abbildungsverzeichnis
+
+%----Kapitel des Feinentwurfs, die mit Inhalt zu füllen sind--------------------
+\include{Angebot/01_einleitung}
+\include{Angebot/02_formalegrundlagen}
+\include{Angebot/03_projektablauf}
+\include{Angebot/04_projektumfang}
+\include{Angebot/05_entwicklungsrichtlinien}
+\include{Angebot/06_projektorganisation}
+\include{Angebot/07_glossar}
+
+
+
+%------Ende des Dokumentes------------------------------------------------------
+\end{document}

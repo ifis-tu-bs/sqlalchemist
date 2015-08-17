@@ -1,0 +1,347 @@
+﻿#################################################################################################################
+
+Die Klassen in domManipulation.js (im Fluss)
+
+#################################################################################################################
+
+Klasse: TextInputElement
+
+game.TextInputElement
+
+-----------------------------------------------------------------------------------------------------------------
+
+new game.TextInputElement(tag, type, wrapperId, fieldId, width, height, left, top, rows)
+
+Eine Klasse für skalierbare Eingabeobjekte
+
+Parameter:
+
+	Name		Typ		Beschreibung
+
+	tag		string		Der Name des html Tags. Zur Zeit nur 'input' oder 'textarea' möglich.
+	type		string		Der Typ (bei 'input') oder der Name (bei 'textarea').
+	wrapperId	string		Ein alphanumerischer String. Für css Dateien. 
+	fieldId		string		Ein alphanumerischer String. Für css Dateien.
+	width		number		Die Breite des Objektes in Prozent der Breite des canvas.
+	height		number		Die Höhe des Objektes in Prozent der Höhe des canvas.
+	left		number		Der linke Abstand in Prozent der Breite des canvas.
+	top		number		Der obere Abstand in Prozent der Höhe des canvas.
+	row		number		Die Anzahl der Zeilen des Objektes.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Extends:
+
+	me.Renderable
+
+-----------------------------------------------------------------------------------------------------------------
+
+Members:
+
+	visibility
+	
+	Objekt sichtbar oder nicht?
+
+	Type : Boolean
+
+	Default Wert: true
+
+-----------------------------------------------------------------------------------------------------------------
+
+Methoden:
+
+	getNode()
+
+	Gibt den DOM Knoten des Objektes zurück.
+
+	Typ: object
+
+	---------------------------------------------------------------------------------------------------------
+
+	changeType()
+
+	Ändert den input-Typ des Objektes.	
+
+	---------------------------------------------------------------------------------------------------------
+
+	display()
+
+	Das Objekt wird angezeigt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	hide()
+
+	Das Objekt wird unsichtbar; es wird nicht aus dem DOM entfernt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	insertText(text)
+
+	Fügt Text in das Objekt ein.
+
+	Parameter: 
+
+		Name		Typ		Beschreibung
+		
+		text		string		Text, der in das Objekt eingefügt werden soll. Befindet sich
+						bereits Text im Objekt, so wird der neue Text angefügt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	clear()
+
+	Eventueller Text wird aus dem Objekt gelöscht. Das Objekt selbst bleibt erhalten.
+
+	---------------------------------------------------------------------------------------------------------
+
+	getText()
+
+	Gibt den Text des Objektes zurück
+
+	Typ: string
+
+	---------------------------------------------------------------------------------------------------------
+
+	addEvent(event, callback)
+
+	Fügt dem Objekt ein Event hinzu.
+
+	Parameter:
+
+		Name		Typ		Beschreibung
+
+		event		string		Das Event, das dem Objekt hinzugefügt werden soll.
+		callback	function	Die Funktion, die ausgeführt werden soll.
+
+	---------------------------------------------------------------------------------------------------------
+
+	removeEvent(event, callback)
+
+	Entfernt vom Objekt ein Event.
+
+	Parameter:
+
+		Name		Typ		Beschreibung
+
+		event		string		Das Event, das vom Objekt entfert werden soll.
+		callback	function	Die Funktion, die ausgeführt werden soll.
+
+	---------------------------------------------------------------------------------------------------------
+
+	update()
+
+	Aktualisiert Größe und Position des Objektes.
+
+	---------------------------------------------------------------------------------------------------------
+
+	destroy()
+
+	Löscht das Objekt aus dem DOM.
+
+
+#################################################################################################################
+
+
+Klasse: TextOutputElement
+
+game.TextOutputElement
+
+-----------------------------------------------------------------------------------------------------------------
+
+new game.TextOutputElement(id, width, height, left, top, rows)
+
+Eine Klasse für skalierbare Ausgabeobjekte
+
+Parameter:
+
+	Name		Typ		Beschreibung
+
+	id		string		Ein alphanumerischer String. Für css Dateien.
+	width		number		Die Breite des Objektes in Prozent der Breite des canvas.
+	height		number		Die Höhe des Objektes in Prozent der Höhe des canvas.
+	left		number		Der linke Abstand in Prozent der Breite des canvas.
+	top		number		Der obere Abstand in Prozent der Höhe des canvas.
+	row		number		Die Anzahl der Zeilen des Objektes.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Extends:
+
+	me.Renderable
+
+-----------------------------------------------------------------------------------------------------------------
+
+Members:
+
+	visibility
+	
+	Objekt sichtbar oder nicht?
+
+	Type : Boolean
+
+	Default Wert: true
+
+-----------------------------------------------------------------------------------------------------------------
+
+Methoden:
+
+	getNode()
+
+	Gibt den DOM Knoten des Objektes zurück.
+
+	Typ: object
+
+	---------------------------------------------------------------------------------------------------------
+
+	display()
+
+	Das Objekt wird angezeigt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	hide()
+
+	Das Objekt wird unsichtbar; es wird nicht aus dem DOM entfernt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	writeHTML(html, id)
+
+	Fügt html-Code in das Objekt ein.
+
+	Parameter: 
+
+		Name		Typ		Beschreibung
+		
+		html		string		Der html-Code, der in das Objekt eingefügt werden soll.
+		id		string		Ein alphanumerischer String. Für css Dateien.
+
+	---------------------------------------------------------------------------------------------------------
+
+	write(text, id)
+
+	Fügt Text in das Objekt ein.
+
+	Parameter: 
+
+		Name		Typ		Beschreibung
+		
+		text		string		Text, der in das Objekt eingefügt werden soll. Befindet sich
+						bereits Text im Objekt, so wird der neue Text angefügt.
+		id		string		Ein alphanumerischer String. Für css Dateien.
+
+	---------------------------------------------------------------------------------------------------------
+
+	writePara(text, id)
+
+	Fügt Text in das Objekt ein.
+
+	Parameter: 
+
+		Name		Typ		Beschreibung
+		
+		text		string		Text, der in das Objekt eingefügt werden soll. Der Text wird
+						als Absatz in das Objekt eingefügt.
+		id		string		Ein alphanumerischer String. Für css Dateien.
+
+	---------------------------------------------------------------------------------------------------------
+
+	clear()
+
+	Eventueller Text wird aus dem Objekt gelöscht. Das Objekt selbst bleibt erhalten.
+
+
+	---------------------------------------------------------------------------------------------------------
+
+
+	update()
+
+	Aktualisiert Größe und Position des Objektes.
+
+	---------------------------------------------------------------------------------------------------------
+
+	destroy()
+
+	Löscht das Objekt aus dem DOM.
+
+
+#################################################################################################################
+
+
+Klasse: ClickableElement
+
+game.ClickableElement
+
+-----------------------------------------------------------------------------------------------------------------
+
+new game.ClickableElement(id, name, callback, width, height, left, top, rows)
+
+Eine Klasse für skalierbare Klickbuttons.
+
+Parameter:
+
+	Name		Typ		Beschreibung
+
+	id		string		Ein alphanumerischer String. Für css Dateien. (Button)
+	name		string		Der text, der auf dem Button angezeigt werden soll.
+	callback	function	Funktion, die beim Klick ausgeführt werden soll.
+	width		number		Die Breite des Objektes in Prozent der Breite des canvas.
+	height		number		Die Höhe des Objektes in Prozent der Höhe des canvas.
+	left		number		Der linke Abstand in Prozent der Breite des canvas.
+	top		number		Der obere Abstand in Prozent der Höhe des canvas.
+	row		number		Die Anzahl der Zeilen des Objektes.
+
+-----------------------------------------------------------------------------------------------------------------
+
+Extends:
+
+	me.Renderable
+
+-----------------------------------------------------------------------------------------------------------------
+
+Members:
+
+	visibility
+	
+	Objekt sichtbar oder nicht?
+
+	Type : Boolean
+
+	Default Wert: true
+
+-----------------------------------------------------------------------------------------------------------------
+
+Methoden:
+
+	getNode()
+
+	Gibt den DOM Knoten des Objektes zurück.
+
+	Typ: object
+
+	---------------------------------------------------------------------------------------------------------
+
+	display()
+
+	Das Objekt wird angezeigt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	hide()
+
+	Das Objekt wird unsichtbar; es wird nicht aus dem DOM entfernt.
+
+	---------------------------------------------------------------------------------------------------------
+
+	update()
+
+	Aktualisiert Größe und Position des Objektes.
+
+	---------------------------------------------------------------------------------------------------------
+
+	destroy()
+
+	Löscht das Objekt aus dem DOM.
+
+#################################################################################################################

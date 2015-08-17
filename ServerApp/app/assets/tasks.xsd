@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="tasks" type="tasks_type" />
+
+    <xs:complexType name="tasks_type">
+        <xs:sequence>
+            <xs:element name="task" maxOccurs="unbounded" type="task_type" />
+        </xs:sequence>
+        <xs:attribute name="schemaversion" type="int_type" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="task_type">
+        <xs:sequence>
+            <xs:element name="titles" type="titles_type" />
+            <xs:element name="flufftexts" minOccurs="0" maxOccurs="1" type="flufftexts_type" />
+            <xs:element name="schema" type="schema_type"/>
+            <xs:element name="subtasks" type="subtasks_type"/>
+        </xs:sequence>
+        <xs:attribute name="taskid" type="string_type" use="required" />
+        <xs:attribute name="querylanguage" type="querylanguage_type" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="schema_type">
+        <xs:sequence>
+            <xs:element name="relation" maxOccurs="unbounded" type="relation_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="relation_type">
+        <xs:sequence>
+            <xs:element name="intension" type="string_type"/>
+            <xs:element name="extension" minOccurs="0" maxOccurs="1" type="extension_type"/>
+            <xs:element name="extensiongeneration" minOccurs="0" maxOccurs="1" type="extensiongeneration_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="extension_type">
+        <xs:sequence>
+            <xs:element name="tuple" maxOccurs="unbounded" type="string_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="extensiongeneration_type">
+        <xs:sequence>
+            <xs:element name="generationtuple" minOccurs="0" maxOccurs="unbounded" type="string_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="subtasks_type">
+        <xs:sequence>
+            <xs:element name="subtask" maxOccurs="unbounded" type="subtask_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="subtask_type">
+        <xs:sequence>
+            <xs:element name="subtaskid" type="subtaskid_type"/>
+            <xs:element name="tasktexts" type="tasktexts_type"/>
+            <xs:element name="solution" type="solution_type"/>
+            <xs:element name="requiredterms" minOccurs="0" maxOccurs="1" type="terms_type"/>
+            <xs:element name="bannedterms" minOccurs="0" maxOccurs="1" type="terms_type"/>
+            <xs:element name="points" type="points_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="terms_type">
+        <xs:sequence>
+            <xs:element name="term" maxOccurs="unbounded" type="term_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="subtaskid_type">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="100000"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="tasktexts_type">
+        <xs:sequence>
+            <xs:element name="tasktext" minOccurs="1" maxOccurs="unbounded" type="multilanguage_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="flufftexts_type">
+        <xs:sequence>
+            <xs:element name="flufftext" minOccurs="1" maxOccurs="unbounded" type="multilanguage_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="titles_type">
+        <xs:sequence>
+            <xs:element name="title" minOccurs="1" maxOccurs="unbounded" type="multilanguage_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="multilanguage_type">
+        <xs:simpleContent>
+            <xs:extension base="string_type">
+                <xs:attribute name="language" type="language_type" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:simpleType name="querylanguage_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SQL" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="solution_type">
+        <xs:sequence>
+            <xs:element name="referencestatement" type="string_type"/>
+            <xs:element name="evaluationstrategy" type="evaluationstrategy_type"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="language_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DE" />
+            <xs:enumeration value="EN" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="evaluationstrategy_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="LIST" />
+            <xs:enumeration value="SET" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="points_type">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1"/>
+            <xs:maxInclusive value="10"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="int_type">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="string_type">
+        <xs:restriction base="xs:string"/>
+    </xs:simpleType>
+
+    <xs:simpleType name="term_type">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="WITH" />
+            <xs:enumeration value="AS" />
+            <xs:enumeration value="SELECT" />
+            <xs:enumeration value="FROM" />
+            <xs:enumeration value="JOIN" />
+            <xs:enumeration value="ON" />
+            <xs:enumeration value="WHERE" />
+            <xs:enumeration value="GROUP BY" />
+            <xs:enumeration value="HAVING" />
+            <xs:enumeration value="ORDER BY" />
+            <xs:enumeration value="COUNT" />
+            <xs:enumeration value="SUM" />
+            <xs:enumeration value="LEFT OUTER JOIN" />
+            <xs:enumeration value="RIGHT OUTER JOIN" />
+            <xs:enumeration value="AVG" />
+            <xs:enumeration value="MAX" />
+            <xs:enumeration value="MIN" />
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>

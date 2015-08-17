@@ -1,0 +1,177 @@
+%!TEX root = ../Testspezifikation.tex
+
+\chapter{Unit-Tests}
+
+Das Ziel der Unit-Tests ist es, jede Komponente auf ihre korrekte Funktionsweise
+zu testen. Hierbei werden besonders die Teile des Systems, die
+für den Nutzer bzw. für die Verarbeitung seiner Anfagen relevant sind,
+ausgiebig getestet. In den Tests werden mögliche Anfragen und Methodenparameter
+an die entsprechenden Methoden übergeben und die Ausgabe mit einem erwarteten
+Ergebnis verglichen. 
+
+Nicht getestet werden vorallem die Semantik und Funktionen,
+welche aus fertigen Bibliotheken als fertige .jar in das Projekt importiert
+werden.
+Aber auch das Webinterface wird nicht gesondert getestet, da Typesafe Activator
+nach jeder Veränderung die Website nochmals erstellt und überprüft wird, sowie der Searcher
+und Result-Processor, da diese keine Verarbeitung sondern nur Verteilung und
+Aufbereitung von Daten übernehmen.
+
+\section{Zu testende Komponenten}
+
+Im Paket \textit{Server} sind folgende Komponenten zu testen:
+\begin{itemize}
+\item \textit{Linked Open Data}
+\item \textit{Datenbank}
+\item \textit{Query Processor}
+\item \textit{Crawler}
+\item \textit{Language}
+\item \textit{Cache}
+\end{itemize}
+
+Weiterhin ist das Verständnis für Eingaben und die Ausgabe des
+\textit{Servers} sicherzustellen.
+
+\section{Testverfahren}
+
+Alle zu testenden Komponenten und Methoden werden mit JUnit-Tests getestet.
+Diese werden automatisch bei jeden Build durchgeführt und brechen bei
+Nichterfüllung den Build-Vorgang ab.
+
+\subsection{Testskripte}
+
+Folgende Tests sind für den Server auszuführen:
+\begin{itemize}
+  \item AnalyserTest.java
+  \item DatabaseTest.java
+  \item CrawlerTest.java
+  \item LanguageTest.java
+  \item LinkedOpenData.java
+  \item ManagmentCacheTest.java
+\end{itemize}
+
+Für den Server sollen folgende Tests durchgeführt werden:
+\begin{itemize}
+  \item BasicAnalyzedRequestTest.java
+\end{itemize}
+
+
+\section{Testfälle}
+
+\begin{testcase}{1000}{Klasse LinkedOpenData}
+\item[Ziel] Das Ziel des Tests ist es, die Erstellung einer korrekten
+Suchanfrage mit den Daten des Analyser zu überprüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test wird die Methode searchfor
+getestet. Dafür wird eine neue \textit{LinkedOpenData}-Instanz, wenn nicht schon
+vorhanden angelegt.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] Es besteht eine Internetverbindung
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] -
+\item[Abhängigkeiten] -
+\end{testcase}
+
+\begin{testcase}{1100}{Klasse Database}
+\item[Ziel] Das Ziel des Tests ist es, die Datenbank auf ihre Funktionalität zu
+prüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test werden die wesentlichen
+Funktionen der Datenbank überprüft sowie die Antwortzeit.
+Dafür wird eine neue \textit{Database}-Instanz mittels Akka-Actors erstellt.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] Es besteht eine Verbindung zur Datenbank.
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] Der Test erstellt Daten in der Datenbank, löscht diese
+allerdings als einen weiteren Testpunkt wieder.
+\item[Abhängigkeiten] Der Test ist abhängig von der Datenbank
+\end{testcase}
+
+\begin{testcase}{1200}{Klasse Crawler}
+\item[Ziel] Das Ziel des Tests ist es, den Crawler auf seine Crawl-Eigenschaft
+zu überprüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test wird die wesentliche
+Funktion des Cawlers überprüft.
+Dafür wird eine neue \textit{Crawler}-Instanz, ein englischer und ein deutscher
+Feed erstellt .
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] Es besteht eine Internetverbindung.
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] Der Test überprüft nicht die Semantik der gecrawlten
+Artikel, sondern nur, ob der Crawler Artikel empfängt.
+\item[Abhängigkeiten] -
+\end{testcase}
+
+\begin{testcase}{1300}{Klasse Language}
+\item[Ziel] Das Ziel des Tests ist es, die Sprachabfrage aus der Sprachdatei auf
+ihre Funktionalität zu prüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test werden die wesentlichen
+Funktionen für die Sprachdateiauslese überprüft.
+Dafür werden alle Sprachen durch die \textit{Language}-Klasse geladen.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] -
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] -
+\item[Abhängigkeiten] Der Test ist abhängig von den Sprachdateien.
+\end{testcase}
+
+\begin{testcase}{1400}{Klasse Analyser und Natural Language Processing}
+\item[Ziel] Das Ziel des Tests ist es, die Funktion der Erkennung der Eingaben
+des Benutzers auf ihre Funktionalität zu prüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test werden die Funktionen des
+Analysers sowie des Natural Language Processing überprüft. Dafür werden
+Instanzen von \textit{Standfort-NLP} und des \textit{Analysers} neu erstellt,
+wenn diese nicht bereits vorhanden sind.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] -
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] -
+\item[Abhängigkeiten] -
+\end{testcase}
+
+\begin{testcase}{1300}{Klasse ManagmentCache}
+\item[Ziel] Das Ziel des Tests ist es, den Cache auf seine Funktion zu
+überprüfen.
+\item[Objekte/Methoden/Funktionen] Mit diesem Test werden die wesentlichen
+Funktionen des Caches überprüft.
+Dafür werden verschiedene Akka-Messages erstellt und in den Cache geladen, damit
+die Funktionen des Caches benutzt werden können.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] -
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] -
+\item[Abhängigkeiten] -
+\end{testcase}
+
+\begin{testcase}{1400}{Klasse Client}
+\item[Ziel] Das Ziel des Tests ist es, die Übereinstimmung eines gegebenen
+Srings mit einer Anzahl von Strings zu vergleichen
+\item[Objekte/Methoden/Funktionen] Mit diesem Test wird die wesentliche
+Funktion für den Vergleich von mehreren Strings überprüft.
+Dafür wird eine Instanz der Klasse \textit{BasicAnalyzedRequest} erstellt und
+genutzt.
+\item[Pass/Fail Kriterien] Der Test war erfolgreich, wenn der JUnit-Test ohne
+Failure durchgelaufen ist.
+\item[Vorbedingung] -
+\item[Einzelschritte] Starten des JUnit-Testes und Überprüfung der Ausgabe 
+\item[Beobachtungen / Log / Umgebung] Es wird eine Entwicklungsumgebung für Java
+benötigt.
+\item[Besonderheiten] -
+\item[Abhängigkeiten] -
+\end{testcase}

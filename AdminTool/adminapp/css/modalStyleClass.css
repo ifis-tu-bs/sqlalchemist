@@ -1,0 +1,5 @@
+.app-modal-window .modal-dialog {
+  width: 500px;
+  height: 800px;
+  max-height: 800px;
+}

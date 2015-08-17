@@ -1,0 +1,133 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2015-07-10)}
+
+Art des Tests: Integrationstest\\
+Abgedeckte Funktionen: \textbf{F10}
+Beteiligte Tester: Denis Nagel\\
+
+\section{Testumgebung}
+
+Die Funktion wurde unter Windows 8.1 auf einem Webserver  getestet. Es wurde eine deutsche Systemumgebung verwendet. Die Applikation wurde über Firefox 39.0 gestartet.
+
+\section{Testprotokoll}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Funktion} & \textit{\textbf{F10}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Username: Testnutzer\\
+E-Mail-Adresse: testnutzer@local.de\\
+Passwort: password1234} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Es wird ein neuer Nutzerdatensatz mit den eingegebenen Daten erstellt und der Nutzer erhält die Nachricht, dass er sich erfolgreich registriert hat. Außerdem wird er in das Hauptmenü weitergeleitet.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Der Datensatz wurde erfolgreich angelegt, die Registrationsmeldung wurde angezeigt und die Weiterleitung wurde ebenfalls durchgeführt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Funktion} & \textit{\textbf{F10}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Username: Teststudent\\
+y-Nummer: valide y-Nummer\\
+Passwort: password1234} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Es wird ein neuer Nutzerdatensatz mit den eingegebenen Daten erstellt und der Nutzer wird als Student erkannt. Weiterhin erhält der Nutzer die Nachricht, dass er sich erfolgreich registriert hat und er wird in das Hauptmenü weitergeleitet.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Der Datensatz wurde erfolgreich angelegt und der Nutzer wurde als Student erkannt. Weiterhin wurde die Registrationsmeldung angezeigt und die Weiterleitung durchgeführt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Funktion} & \textit{\textbf{F10}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Username: Testnutzer\\
+E-Mail-Adresse: neuernutzer@local.de\\
+Passwort: password1234} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Das Programm soll ausgeben, dass der Nutzername bereits vergeben ist.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die korrekte Meldung wurde ausgegeben.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Funktion} & \textit{\textbf{F10}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Username: Neuernutzer\\
+E-Mail-Adresse: testnutzer@local.de\\
+Passwort: password1234} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Das Programm soll ausgeben, dass die E-Mail-Adresse bereits vergeben ist.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die korrekte Meldung wurde ausgegeben.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Funktion} & \textit{\textbf{F10}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Username: Neuernutzer\\
+y-Nummer: invalide y-Nummer\\
+Passwort: password1234} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Das Programm soll ausgeben, dass die y-Nummer nicht valide ist.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die korrekte Meldung wurde ausgegeben.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf hat gezeigt, dass die Registrierung wie gewünscht funktioniert.
+

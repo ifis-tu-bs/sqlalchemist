@@ -1,0 +1,156 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2015-07-09)}
+
+Art des Tests: Unit-Test\\
+Abgedeckte Klasse: \textbf{CL300}
+Beteiligte Tester: Denis Nagel\\
+
+\section{Testumgebung}
+
+Die Methoden der Klasse wurden unter Windows 8.1, über IntelliJ und mittels JUnit getestet. Es wurde eine deutsche Systemumgebung verwendet. Die Applikation wurde über Firefox 39.0 gestartet.
+
+\section{Testprotokoll}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{byPoints}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach erspielten Punkten, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach erspielten Punkten sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{byTime}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach gespielter Zeit, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach gespielter Zeit sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{byRuns}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach gespielten Durchläufen, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach gespielten Durchläufen sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{bySQL}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach gelösten SQL-Statements, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach gelösten SQL-Statements sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{byRate}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach der Erfolgsquote bei der Bearbeitung der SQL-Statements, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach der Erfolgsquote bei der Bearbeitung der SQL-Statements sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Klasse} & \textit{\textbf{CL300}} \\
+\hline
+\textbf{Methode} & \textit{\textbf{byCoins}} \\
+\hline
+\textbf{Tester} & \textit{Denis Nagel} \\
+\hline
+\textbf{Eingaben} & \textit{Man benötigt Profildatensätze in der Datenbank und ein einzelnes Profil.} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Die Methode findet das einzelne Profil, sortiert die Profile aus der Datenbank nach erspielten Lofi-Coins, findet den Rang des einzelnen Profils und erzeugt aus allen Datensätzen Json-Objekte.} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Die Methode hat das einzelne Profil gefunden, die die Profile aus der Datenbank nach erspielten Lofi-Coins sortiert, den Rang des einzelnen Profils gefunden und aus allen Datensätzen Json-Objekte erzeugt.} \\
+\hline
+\textbf{Ergebnis} & \textit{Der Testlauf ist erfolgreich abgeschlossen worden.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{} \\
+\hline
+\textbf{Nacharbeiten } & \textit{} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf hat gezeigt, dass die Methoden der Klasse "HighScoreController" wie gewünscht funktionieren.
+\end{itemize}

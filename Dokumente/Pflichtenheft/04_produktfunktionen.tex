@@ -1,0 +1,408 @@
+%!TEX root = ../Pflichtenheft.tex
+
+% Kapitel 4
+%-------------------------------------------------------------------------------
+
+\chapter{Produktfunktionen}\label{test1}
+
+\section{Nutzer registrieren}
+\begin{function}{10}{Nutzer registrieren}
+\item[Anwendungsfall:] Ein neuer Benutzer möchte Zugang zum Spiel erhalten.
+\item[Anforderung:] \ref{RM4}, \ref{RM8}, \ref{RC2}
+\item[Ziel:] Der Benutzer wird registriert und erhält eigene Login-Daten.
+\item[Vorbedingung:] Der Nutzer ist noch nicht registriert.
+\item[Nachbedingung Erfolg:] Der Nutzer verfügt über eigene eindeutige Login-Daten und wird zum Login-Bereich weitergeleitet.
+\item[Nachbedingung Fehlschlag:] Die eingegebenen Daten waren nicht vollständig und die Registrierung schlägt fehl; es wird eine entsprechende Fehlermeldung angezeigt.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat die zum Spiel gehörende URL eingegeben und klickt auf „Sign Up“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Nutzer gibt in die vorgesehenen Texteingabefelder einen Benutzernamen, ein Passwort, sowie eine E-Mail-Adresse oder y-Nummer ein.
+  \item  Der Nutzer bestätigt seine Eingaben mit einem Klick auf einen Button.
+  \item Verfügt der Nutzer über eine y-Nummer, so ist er automatisch verifiziert, andernfalls erhält er eine E-Mail mit einem Aktivierungslink, den er zur Verifikation anklicken muss.
+  \item  Der Nutzer wird anschließend zum Login-Bereich weitergeleitet.
+\end{enumerate}
+\end{function}
+
+\section{Nutzer anmelden}
+\begin{function}{20}{Nutzer anmelden}
+\item[Anwendungsfall:] Einloggen des Nutzers um Zugang zum Spiel zu erhalten.
+\item[Anforderung:] \ref{RM8}, \ref{RC2}
+\item[Ziel:] Der Nutzer wird angemeldet.
+\item[Vorbedingung:] Der Nutzer muss sich registriert und dadurch einen Account erstellt haben.
+\item[Nachbedingung Erfolg:]  Die eingegebenen Daten wurden als korrekt verifiziert und der Nutzer wird auf den Hauptbildschirm weitergeleitet.
+\item[Nachbedingung Fehlschlag:] Die eingegebenen Daten waren nicht korrekt und dem Nutzer wird der Zugang verweigert; es wird eine entsprechende Fehlermeldung angezeigt.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat die zum Spiel gehörende URL eingegeben und wurde zum Login-Bildschirm weitergeleitet.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Nutzer gibt seine Email-Adresse/y-Nummer in das dafür vorgegebene Feld ein.
+  \item  Der Nutzer gibt sein Passwort in das dafür vorgesehene Feld ein.
+  \item Der Nutzer klickt auf „Einloggen“.
+  \item  Das System gleicht die eingegebenen Daten mit den Nutzerdaten in der Datenbank ab.
+  \item Der Nutzer wird zum Hauptbildschirm weitergeleitet.
+\end{enumerate}
+\end{function}
+
+\section{Nutzer abmelden}
+\begin{function}{30}{Nutzer abmelden}
+\item[Anwendungsfall:] Der Nutzer will das Spiel verlassen und sich abmelden.
+\item[Anforderung:] -
+\item[Ziel:] Der Nutzer wird abgemeldet.
+\item[Vorbedingung:] Der Nutzer muss sich im Hauptmenü befinden.
+\item[Nachbedingung Erfolg:]  Die Abmeldung ist erfolgt und der Nutzer wird zum Anmeldebereich weitergeleitet. Ohne erneute Anmeldung ist keine Aktivität im Spiel mehr möglich.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Ausführen der Abmeldung und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat im Hauptmenü auf den „Logout“-Button geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Nutzer wird abgemeldet und verlässt das Spiel
+\end{enumerate}
+\end{function}
+
+\section{Profil einsehen}
+\begin{function}{40}{Profil einsehen}
+\item[Anwendungsfall:] Der Nutzer möchte seine bisher gemachten Fortschritte nachverfolgen und ruft zu diesem Zweck sein Profilfenster auf.
+\item[Anforderung:] \ref{RM2}, \ref{RM4}, \ref{RS4}, \ref{RS5}
+\item[Ziel:] Der Nutzer kann sein Profil einsehen.
+\item[Vorbedingung:] Der Nutzer muss sich eingeloggt haben.
+\item[Nachbedingung Erfolg:]  Dem Nutzer wird sein Profilfenster, in welchem dessen Fortschritte in Form von Statistiken festgehalten werden, angezeigt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Aufruf und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat auf seinen Avatar geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Das Profilfenster wird geöffnet
+  \item  Der Nutzer sieht seine Statistiken und Nutzerdaten ein.
+\end{enumerate}
+\end{function}
+
+\section{Benutzernamen \"andern}
+\begin{function}{50}{Benutzernamen ändern}
+\item[Anwendungsfall:] Der Nutzer will seinen Benutzernamen ändern.
+\item[Anforderung:] \ref{RM4}
+\item[Ziel:] Der Benutzername, der im Spiel und in den Ranglisten verwendet wird, wird geändert.
+\item[Vorbedingung:] Der Nutzer muss sich eingeloggt haben und sich im „Settings“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Dem Nutzer wird sein Profilfenster mit dem neuen Benutzernamen angezeigt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Ändern des Benutzernamens und eine entsprechende Meldung wird ausgegeben. Der Nutzer behält seinen alten Nutzernamen.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt auf den „Change Username“-Button.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es öffnet sich ein Texteingabefenster, in dem der Nutzer seinen neuen Benutzernamen eingibt.
+  \item  Er bestätigt seine Eingabe, anschließend prüft das Programm, ob der Benutzername verwendet werden darf (also noch nicht vergeben ist).
+\end{enumerate}
+\end{function}
+
+\section{Passwort \"andern}
+\begin{function}{60}{Passwort ändern}
+\item[Anwendungsfall:] Ein Nutzer will sein Passwort ändern.
+\item[Anforderung:] \ref{RM6}
+\item[Ziel:] Das Passwort wird geändert.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Settings“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Der Nutzer hat sein neues Passwort zugewiesen bekommen und gelangt zurück ins „Settings“-Menü.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. Der Nutzer behält sein bisheriges Passwort.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im „Settings“-Menü auf den Button „Change Password“
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es öffnet sich ein Texteingabefeld, in das der Nutzer das neue Passwort eingibt.
+  \item  Der Benutzer muss sein altes Passwort zur Verifikation in einem weiteren Texteingabefeld eingeben.
+  \item Der Nutzer bestätigt seine Eingaben.
+\end{enumerate}
+\end{function}
+
+\section{Avatar \"andern}
+\begin{function}{70}{Avatar ändern}
+\item[Anwendungsfall:] Ein Nutzer will seinen Avatar (Spielfigur) ändern.
+\item[Anforderung:]\ref{RM4}, \ref{RS3}
+\item[Ziel:] Der Avatar des Nutzers wird geändert.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Profile“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Der neue Avatar des Nutzers wird übernommen.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. Der Nutzer behält seinen bisherigen Avatar.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im „Profile“-Menü auf den Button „Change Avatar“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es wird eine Liste angezeigt, die alle möglichen Avatare enthält.
+  \item  Der Nutzer wählt einen Avatar aus der Liste aus.
+  \item Die Auswahl wird über einen Button bestätigt.
+\end{enumerate}
+\end{function}
+
+\section{Benutzer l\"oschen}
+\begin{function}{80}{Benutzer löschen}
+\item[Anwendungsfall:] Ein Nutzer will seinen Account löschen.
+\item[Anforderung:] \ref{RM4}, \ref{RM5}
+\item[Ziel:] Der Nutzeraccount wird gelöscht.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Settings“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Der Account des Nutzers wurde, inklusive aller auf diesen bezogenen Daten (ausgenommen die von diesem Nutzer erstellten SQL-Abfragen), aus der Nutzerverwaltung gelöscht. Der Nutzer wird automatisch ausgeloggt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. Der Account bleibt unverändert.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im „Settings“-Menü auf den Button „Delete User“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Nutzer wird gefragt, ob er wirklich seinen Account löschen möchte.
+  \item  Der Nutzer bestätigt sein Vorhaben und  sein Account wird gelöscht, außerdem wird er automatisch ausgeloggt.
+\end{enumerate}
+\end{function}
+
+\section{Audioeinstellungen bearbeiten}
+\begin{function}{90}{Audioeinstellungen bearbeiten}
+\item[Anwendungsfall:] Ein Nutzer will die  Soundeffekte oder die Musik aktivieren/deaktivieren.
+\item[Anforderung:] -
+\item[Ziel:] Die Audioeinstellungen werden geändert.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Settings“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Die Audioeinstellungen wurden geändert und deren Status wurde im Back-End gespeichert.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. Die bisherigen Einstellungen bleiben bestehen.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im „Settings“-Menü auf den Button „Audio Settings“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es öffnet sich ein Fenster, in dem der Nutzer die Soundeffekte und die Musik unabhängig voneinander an- und abschalten kann. 
+  \item  Der Nutzer bestätigt die Änderungen.
+\end{enumerate}
+\end{function}
+
+\section{Spielstand zurücksetzen}
+\begin{function}{100}{Spielstand zurücksetzen}
+\item[Anwendungsfall:] Ein Nutzer möchte das Spiel erneut von vorne beginnen.
+\item[Anforderung:] -
+\item[Ziel:] Der Spielstand wird zurückgesetzt.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Settings“-Menü befinden.
+\item[Nachbedingung Erfolg:]  Der Spielstand ist zurückgesetzt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. Der bisherige Speicherstand bleibt bestehen.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im „Settings“-Menü auf den Button „Reset Story“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Nutzer wird gefragt, ob er wirklich seinen Spielstand zurücksetzen möchte.
+  \item  Der Nutzer bestätigt das Löschen.
+\end{enumerate}
+\end{function}
+
+\section{Tutorial spielen}
+\begin{function}{110}{Tutorial spielen}
+\item[Anwendungsfall:] Ein Nutzer startet den "`Story-Mode"´.
+\item[Anforderung:] -
+\item[Ziel:] Der Nutzer lernt die Grundsteuerung des Spieles kennen.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und den "`Story-Mode"´ gestartet haben. Außerdem muss das Tutorial aktiviert sein.
+\item[Nachbedingung Erfolg:]  Der Nutzer hat das Tutorial erfolgreich absolviert und der Anfang der Story wird gestartet.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und das Tutorial konnte nicht gestartet werden.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer startet den „Story-Mode“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Das Tutorial wird gestartet.
+  \item  Der Nutzer erhält Anweisungen, die dieser befolgen muss.
+  \item Nach Abschluss aller Aufgaben wird das Tutorial abgeschlossen.
+\end{enumerate}
+\end{function}
+
+\section{Story spielen}
+\begin{function}{120}{Story spielen}
+\item[Anwendungsfall:] Ein Nutzer möchte den „Story-Mode“ spielen. 
+\item[Anforderung:] \ref{RM7}
+\item[Ziel:] Der Nutzer spielt die Story.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im Hauptmenü befinden.
+\item[Nachbedingung Erfolg:]  Der Nutzer spielt den „Story-Mode“ bis er von selbst abbricht oder die Story bis zum Ende absolviert hat.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und die Story konnte nicht gestartet werden. Eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im Hauptmenü auf den Button „Story-Mode“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Story-Durchlauf wird gestartet.
+  \item  Der Nutzer spielt die Story, bis er sie zu einem beliebigen Zeitpunkt abbricht.
+\end{enumerate}
+\end{function}
+
+\section{SQL-Trainer spielen}
+\begin{function}{130}{SQL-Trainer spielen}
+\item[Anwendungsfall:] Der Nutzer spielt den „Trivia-“ oder „Story-Mode“ oder er bearbeitet seine Hausaufgaben.
+\item[Anforderung:] \ref{RM3}
+\item[Ziel:] Der Nutzer löst, abhängig vom Modus, zufällige oder vorher festgelegte Aufgaben.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und einen der Spielmodi spielen.
+\item[Nachbedingung Erfolg:]  Der Nutzer löst die verschiedenen Aufgaben und die Ergebnisse werden in einer Nachbesprechung angezeigt.
+\item[Nachbedingung Fehlschlag:] Das Spiel weist einen Fehler beim Aufruf der Aufgaben auf und wirft eine Fehlermeldung aus.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer startet einen der verschiedenen Spielmodi.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Das Nutzer wird zum SQL-Modul weitergeleitet.
+  \item  Die erste Aufgabe wird angezeigt und vom Spieler bearbeitet.
+  \item Es folgen weitere Aufgaben, bis das aktuelle Aufgabenpaket abgeschlossen ist.
+  \item Dem Nutzer werden die Ergebnisse angezeigt.
+\end{enumerate}
+\end{function}
+
+\section{Minispiel spielen}
+\begin{function}{140}{Minispiel spielen}
+\item[Anwendungsfall:] Der Nutzer spielt den "`Story-Mode"´.
+\item[Anforderung:]\ref{RM1}, \ref{RS1}, \ref{RC5}
+\item[Ziel:] Der Nutzer spielt das Minispiel und versucht die jeweiligen Level zu lösen.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und den vorhergehenden SQL-Abschnitt gelöst haben. Zusätzlich muss er sich „Story-Mode“ befinden.
+\item[Nachbedingung Erfolg:]  Der Nutzer spielt die jeweils gestellten Level und die Ergebnisse werden in einer Nachbedingung angezeigt. Dann wird er in den nächsten SQL-Abschnitt weitergeleitet.
+\item[Nachbedingung Fehlschlag:] Das Spiel weist einen Fehler beim Aufruf des Minispiels auf und wirft eine entsprechende Meldung aus.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat den vorhergehenden SQL-Abschnitt gelöst.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Das Minispiel wird gestartet.
+  \item  Die ersten vier Level werden nacheinander vom Spieler gelöst.
+  \item Ein Endlevel wird aufgerufen und vom Spieler gelöst.
+\end{enumerate}
+\end{function}
+
+\section{Hausaufgaben bearbeiten}
+\begin{function}{150}{Hausaufgaben bearbeiten}
+\item[Anwendungsfall:] Der Nutzer ruft die ihm zugeordneten Hausaufgaben auf um diese zu bearbeiten.
+\item[Anforderung:] \ref{RM3}, \ref{RM7}
+\item[Ziel:] Der Nutzer bearbeitet die vom Spiel gestellten Aufgaben.
+\item[Vorbedingung:] Der Nutzer muss eingeloggt sein und sich im „Homework-Mode“ befinden.
+\item[Nachbedingung Erfolg:]  Der Nutzer bearbeitet die gestellten Aufgaben und die Ergebnisse werden in einer Nachbesprechung angezeigt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Aufruf der Aufgaben und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat im „Homework“-Menü auf den Button „Do Homework“ geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Hausaufgabenmodus wird gestartet.
+  \item  Die erste Aufgabe wird angezeigt und vom Spieler bearbeitet.
+  \item Es folgen weiter Aufgaben solange bis das komplette Hausaufgabenpaket abgearbeitet wurde.
+  \item Die Nachbesprechung wird angezeigt.
+\end{enumerate}
+\end{function}
+
+\section{Ranglisten einsehen}
+\begin{function}{160}{Ranglisten einsehen}
+\item[Anwendungsfall:] Aufruf der Ranglisten durch den Nutzer.
+\item[Anforderung:] \ref{RM4}, \ref{RM7}, \ref{RS4}, \ref{RS5}
+\item[Ziel:] Die Ranglisten wird dem Nutzer angezeigt.
+\item[Vorbedingung:] Der Nutzer muss sich eingeloggt haben und sich im Hauptmenü befinden.
+\item[Nachbedingung Erfolg:]  : Dem Nutzer werden die Ranglisten angezeigt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Aufruf der Ranglisten und es wird eine entsprechende Meldung angezeigt.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat auf den „Leaderboard“-Button geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Das Ranglistenfenster wird geöffnet.
+\end{enumerate}
+\end{function}
+
+\section{Spieler suchen}
+\begin{function}{170}{Spieler suchen}
+\item[Anwendungsfall:] Der Nutzer möchte einen Nutzer anhand des Benutzernamens suchen.
+\item[Anforderung:] \ref{RM4}
+\item[Ziel:] Dem Nutzer werden die Ergebnisse des gesuchten Benutzers angezeigt.
+\item[Vorbedingung:] Der Nutzer muss sich eingeloggt haben und sich im Hauptmenü befinden. Er muss den Benutzernamen kennen, nach dem er suchen will.
+\item[Nachbedingung Erfolg:]  : Dem Nutzer wird den gefundenen Nutzer angezeigt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler beim Suchen der Nutzer in den Ranglisten und es wird eine entsprechende Meldung angezeigt.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer hat auf den „Search User“-Button geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es öffnet sich ein Texteingabefeld, in dem der zu suchende Benutzername eingetragen wird.
+  \item  Der Nutzer bestätigt seine Eingabe.
+  \item  Ihm wird das Ergebnis der Suche angezeigt.
+\end{enumerate}
+\end{function}
+
+\section{Hausaufgabenergebnisse einsehen}
+\begin{function}{180}{Hausaufgabenergebnisse einsehen}
+\item[Anwendungsfall:] Ein Nutzer will seinen Stand bei den Hausaufgaben abrufen.
+\item[Anforderung:] \ref{RM4}, \ref{RM6}, \ref{RM7}
+\item[Ziel:]  Die Hausaufgabenergebnisse werden angezeigt.
+\item[Vorbedingung:] Der Nutzer muss sich im Administrationstool angemeldet haben.
+\item[Nachbedingung Erfolg:]  Der Student erhält eine Übersicht über seine bisherigen Ergebnisse bei den Hausaufgaben.
+\item[Nachbedingung Fehlschlag:] Bei der Ausgabe der Ergebnisse gab es einen Fehler und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im Administrationstool auf „View Results“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Es wird eine Liste angezeigt, die die Ergebnisse aller bisher bearbeiteten Hausaufgaben anzeigt.
+\end{enumerate}
+\end{function}
+
+\section{Benutzer bef\"ordern}
+\begin{function}{190}{Benutzer befördern}
+\item[Anwendungsfall:] Ein Admin will einen Studenten oder einen regulären Nutzer befördern, damit dieser eigene SQL-Aufgaben erstellen darf.
+\item[Anforderung:] \ref{RM4}, \ref{RM5}
+\item[Ziel:] Der beförderte Nutzer kann eigenständig SQL-Aufgaben erstellen.
+\item[Vorbedingung:] Der zu befördernde Nutzer muss registriert sein und der Admin muss Zugang zum Admin-Tool haben.
+\item[Nachbedingung Erfolg:]  : Der Student oder regulärer Nutzer ist befördert und wird nun als beförderter Nutzer behandelt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Admin und Programm
+\item[Auslösendes Ereignis:] Der Admin hat im Admin-Tool auf den Button „Promote User“ geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Admin gibt in einem Texteingabefeld den Benutzernamen des zu befördernden Studenten oder regulären Nutzers ein.
+  \item  Die Eingabe wird mit einem Button bestätigt.
+\end{enumerate}
+\end{function}
+
+\section{Einem Benutzer Adminrechte geben}
+\begin{function}{200}{Benutzer Adminrechte geben}
+\item[Anwendungsfall:] Ein Admin will einem anderen Nutzer Adminrechte geben.
+\item[Anforderung:] \ref{RM4}, \ref{RM5}
+\item[Ziel:] Der ausgewählte Nutzer wird zum Admin.
+\item[Vorbedingung:] Der zu befördernde Nutzer muss registriert sein und der Admin muss Zugang zum Admin-Tool haben.
+\item[Nachbedingung Erfolg:]  Der Nutzer ist befördert und wird nun als Admin behandelt.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~Admin und Programm
+\item[Auslösendes Ereignis:] Der Admin hat im Admin-Tool auf den Button „Promote User“ geklickt.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Admin gibt in einem Texteingabefeld den Benutzernamen des zu befördernden Studenten oder regulären Nutzers ein.
+  \item  Die Eingabe wird mit einem Button bestätigt.
+\end{enumerate}
+\end{function}
+
+\section{Eine Trivia-Aufgabe erstellen}
+\begin{function}{210}{Trivia-Aufgabe erstellen}
+\item[Anwendungsfall:] Ein beförderter Nutzer will eigene Aufgaben für den "`Trivia-Mode"´ erstellen.
+\item[Anforderung:] \ref{RM6}, \ref{RM7}
+\item[Ziel:] Die bestehende Aufgabensammlung wird um die erstellte Aufgabe erweitert.
+\item[Vorbedingung:] Der beförderte Nutzer muss sich im Admin-Tool angemeldet haben.
+\item[Nachbedingung Erfolg:]  Der beförderte Nutzer hat seine Aufgabe erstellt und gelangt zurück ins Admin-Tool.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben.
+\item[Akteure:] ~beförderter Nutzer und Programm
+\item[Auslösendes Ereignis:] Der Nutzer klickt im Admin-Tool auf den Button „Create New Task“.
+\item[Beschreibung:] ~
+\begin{enumerate}
+\item  Es öffnet sich ein Texteingabefeld, in das der Nutzer die Aufgabenstellung mit der entsprechenden Lösung eingibt.
+\item  Anschließend bestätigt der Nutzer seine Eingaben.
+\end{enumerate}
+\end{function}
+
+\section{Benutzeraufgaben bewerten}
+\begin{function}{220}{Benutzeraufgaben bewerten}
+\item[Anwendungsfall:] Ein Admin oder ein beförderter Nutzer möchte von anderen beförderten Benutzern erstellte Aufgaben bewerten.
+\item[Anforderung:] \ref{RM4}, \ref{RM5}
+\item[Ziel:] Von beförderten Nutzern erstellte Aufgaben sollen bewertet werden.
+\item[Vorbedingung:] Der Admin oder beförderte Nutzer muss sich im Admin-Tool befinden.
+\item[Nachbedingung Erfolg:]  Die Aufgabe ist bewertet und die neue Bewertung wird mit den bereits vorhandenen Bewertungen verrechnet und der Nutzer wird auf den Hauptbildschirm weitergeleitet.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. 
+\item[Akteure:] ~Admin (oder beförderter Nutzers) und Programm
+\item[Auslösendes Ereignis:] Der Admin oder beförderte Nutzer klickt im Admin-Tool auf den „Rate Tasks“-Button.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Dem Admin oder befördertem Benutzer erscheint eine Liste an (von beförderten Nutzern erstellte) Fragen.
+  \item  Beim Klick auf eine Frage öffnet sich ein Fenster, in dem die Bewertung vorgenommen werden kann.
+\end{enumerate}
+\end{function}
+
+\section{Hausaufgaben erstellen}
+\begin{function}{230}{Hausaufgaben erstellen}
+\item[Anwendungsfall:] Ein Admin erstellt neue Hausaufgaben, die von den Nutzern bearbeitet werden sollen.
+\item[Anforderung:] \ref{RM6}, \ref{RM7}
+\item[Ziel:] Die Hausaufgaben müssen allen Studenten zugänglich sein.
+\item[Vorbedingung:] Der Admin muss sich im Admin-Tool befinden.
+\item[Nachbedingung Erfolg:]  Die Hausaufgabe ist erstellt, wird in der Datenbank gespeichert und kann von den Studenten abgerufen werden.
+\item[Nachbedingung Fehlschlag:] Es gab einen Fehler und eine entsprechende Meldung wird ausgegeben. 
+\item[Akteure:] ~Admin und Programm
+\item[Auslösendes Ereignis:] Der Admin klickt im Admin-Tool auf den „Create Homework“-Button.
+\item[Beschreibung:] ~
+\begin{enumerate}
+  \item  Der Admin gibt die Aufgabenstellung, die Lösung, die Anzahl möglicher Bearbeitungsversuche je Student und den Bearbeitungszeitraum in Eingabefelder ein.
+  \item  Er bestätigt seine Eingabe.
+\end{enumerate}
+\end{function}

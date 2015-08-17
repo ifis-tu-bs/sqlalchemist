@@ -1,0 +1,68 @@
+%!TEX root = ../Testprotokolle.tex
+\chapter{Testdurchführung (2015-07-12)}
+
+Art des Tests: Integrationstest\\
+Testfall: T1100\\
+Beteiligte Tester: Fabio Mazzone \& Gabriel Ahlers\\
+
+Folgende Methode wird zum initializieren der Testumgebung vor jedem der Tests durchgeführt:\\\\
+\hspace*{0mm}@BeforeClass \\
+\hspace*{0mm}public static void app()\{ \\
+\hspace*{3mm}FakeApplication fakeApplication = fakeApplication(inMemoryDatabase(\grqq test\grqq)); \\
+\hspace*{3mm}start(fakeApplication); \\
+\hspace*{0mm}\} \\\\
+
+\section{Testprotokoll}
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test \newline
+\hspace*{0mm}public void testPotionCreate()\{ \newline
+\hspace*{3mm}Potion potion = Potion.create(\grqq TestPotion\grqq,1 , 3, 4);\newline\newline
+\hspace*{3mm}assertTrue(potion != null); \newline
+\hspace*{3mm}Logger.info("PotionCreate successfull"); \newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq PotionCreate successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq PotionCreate successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\newpage
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Tester} & \textit{Gabriel Ahlers \& Fabio Mazzone} \\
+\hline
+\textbf{Eingaben} & \hspace*{0mm}@Test \newline
+\hspace*{0mm}public void testPotionCreateDouble() \{ \newline
+\hspace*{3mm}Potion Potion1 = Potion.create(\grqq TestPotion1\grqq,1 , 3, 4);\newline
+\hspace*{3mm}Potion Potion2 = Potion.create(\grqq TestPotion1\grqq,1 , 3, 4);\newline\newline
+\hspace*{3mm}assertTrue(Potion1 == Potion2);\newline
+\hspace*{3mm}Logger.info(\grqq PotionCreateDouble successfull\grqq);\newline
+\hspace*{0mm}\} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: \grqq PotionCreateDouble successfull\grqq} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: \grqq PotionCreateDouble successfull\grqq} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten} & \textit{--} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Testlauf ergab keine Fehler.

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Admin Tool</title>
+
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+        <link href="adminapp/css/app.css" rel="stylesheet" />
+        <link href="adminapp/css/modalStyleClass.css" rel="stylesheet" />
+        <link rel="stylesheet" href="adminapp/css/codemirror.css">
+    </head>
+    <body ng-app="app">
+
+        <navigation></navigation>
+
+        <div class="jumbotron">
+            <div class="container">
+                <div class="container-fluid" style="align:center">
+                    <div ng-view></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AngularJS Scripts -->
+
+        <script src="adminapp/scripts/libraries/angular.js"></script>
+        <script src="adminapp/scripts/libraries/angular-cookies.js"></script>
+        <script src="adminapp/scripts/libraries/angular-route.js"></script>
+
+        <!-- UI Scripts -->
+
+        <script src="adminapp/scripts/libraries/jquery-2.0.3.min.js"></script>
+        <script src="adminapp/scripts/libraries/ui-bootstrap-tpls-0.13.0.min.js"></script>
+        <script src="adminapp/scripts/libraries/ui-codemirror.js"></script>
+
+        <!-- CodeMirror Scripts -->
+
+        <script src="adminapp/scripts/libraries/codemirror.js"></script>
+        <script src="adminapp/scripts/libraries/matchbrackets.js"></script>
+        <script src="adminapp/scripts/libraries/sql.js"></script>
+        <script src="adminapp/scripts/libraries/xml.js"></script>
+
+
+
+        <!-- App minified -->
+        <!-- build:js adminapp/scripts/app.js -->
+
+        <!-- Local scripts -->
+
+        <script src="adminapp/scripts/app.js"></script>
+        <script src="adminapp/scripts/services/authentication.service.js"></script>
+        <script src="adminapp/scripts/services/flash.service.js"></script>
+        <script src="adminapp/scripts/services/task.service.js"></script>
+        <script src="adminapp/scripts/services/user.service.local-storage.js"></script>
+        <script src="adminapp/scripts/services/navigation.service.js"></script>
+
+
+        <script src="adminapp/scripts/controllers/navigation.controller.js"></script>
+        <script src="adminapp/scripts/controllers/challenge.controller.js"></script>
+        <script src="adminapp/scripts/controllers/einsicht.controller.js"></script>
+        <script src="adminapp/scripts/controllers/task.controller.js"></script>
+        <script src="adminapp/scripts/controllers/home.controller.js"></script>
+        <script src="adminapp/scripts/controllers/login.controller.js"></script>
+
+        <!-- /build -->
+    </body>
+</html>

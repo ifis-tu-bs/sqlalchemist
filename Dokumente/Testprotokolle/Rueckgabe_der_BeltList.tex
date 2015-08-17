@@ -1,0 +1,67 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2012-04-02)}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Testfall} & \textit{Rückgabe der Beltliste \textbf{T100}} \\
+\hline
+\textbf{Tester} & \textit{Stefan Hanisch} \\
+\hline
+\textbf{Eingaben} & \textit{@Before \newline
+public void app() \{ \newline
+\hspace*{1mm}FakeApplication fakeApplication \newline
+\hspace*{4mm}= fakeApplication(inMemoryDatabase("'test"'));\newline
+\hspace*{1mm}start(fakeApplication); \newline
+\} \newline
+\newline
+@Test \newline
+public void testShopItemGetBeltList() \{\newline
+\hspace*{1mm}boolean testSuccessful = true; \newline
+\hspace*{1mm}try \{\newline
+\hspace*{3mm}List list = ShopItem.getBeltList();\newline
+\hspace*{3mm}// Check, if all ListItems are Avatars and in the correct order \newline
+\hspace*{3mm}//(price asc) \newline
+\hspace*{3mm}ShopItem shopItem; \newline
+\hspace*{3mm}int higherPrice; \newline
+\hspace*{3mm}int lowerPrice = -1;\newline
+\hspace*{3mm}int correctOrder;\newline
+\hspace*{3mm}for (Object shopItemObject : list) \{\newline
+\hspace*{5mm}correctOrder = 0;\newline
+\hspace*{5mm}shopItem = (ShopItem) shopItemObject;\newline
+\hspace*{5mm}if (lowerPrice == -1) \{\newline
+\hspace*{7mm}lowerPrice = shopItem.getPrice();\newline
+\hspace*{7mm}continue;\newline
+\hspace*{5mm}\} else \{\newline
+\hspace*{7mm}higherPrice = shopItem.getPrice();\newline
+\hspace*{7mm}if (higherPrice >= lowerPrice) \{\newline
+\hspace*{9mm}correctOrder = 1;\newline
+\hspace*{7mm}\} else \{\newline
+\hspace*{9mm}correctOrder = 0;\newline
+\hspace*{7mm}\}\newline
+\hspace*{7mm}lowerPrice = higherPrice;\newline
+\hspace*{5mm}\}\newline
+\hspace*{5mm}assertEquals(1, correctOrder);\newline
+\hspace*{3mm}\}\newline
+\hspace*{1mm}\} catch (Throwable e) \{ \newline
+\hspace*{3mm}testSuccessful = false; \newline 
+\hspace*{1mm}\} \newline
+\hspace*{1mm}assertTrue(testSuccessful);\newline
+\hspace*{1mm}Logger.info("'ShopItemGetBeltList successfull"');\newline
+\}
+} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Konsole zeigt Meldung: "'ShopItemGetBeltList successfull"'
+} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Konsole zeigt Meldung: "'ShopItemGetBeltList successfull"'
+} \\
+\hline
+\textbf{Ergebnis} & \textit{Test erfolgreich durchgeführt} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{--} \\
+\hline
+\textbf{Nacharbeiten } & \textit{--} \\
+\hline
+\end{longtable}

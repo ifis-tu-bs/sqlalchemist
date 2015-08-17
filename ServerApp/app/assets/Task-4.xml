@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<subTasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="subTasks.xsd">
+    <subTask taskid="2" querylanguage="SQL">
+        <titles>
+            <title language="DE">Weak Speed Potion</title>
+        </titles>
+        <schema>
+            <relation>
+                <intension>CREATE TABLE Rezept(id not null primary key, pid int, name)</intension>
+                <extension>
+                    <tuple>INSERT INTO Rezept(id, pid, name) VALUES (1, 6, 'Rezept der Weltherrschaft')</tuple>
+                </extension>
+            </relation>
+            <relation>
+                <intension>CREATE TABLE needsIngredient(pid int not null primary key, iid int not null primary key)</intension>
+                <extension>
+                    <tuple>INSERT INTO needsIngredient(pid, iid) VALUES (1, 1), (1, 2)</tuple>
+                </extension>
+            </relation>
+            <relation>
+                <intension>CREATE TABLE Ingredients(id int not null primary key, name varchar(100))</intension>
+                <extension>
+                    <tuple>INSERT INTO Ingredients(id, name) VALUES (1, 'Spinnenbeine'), (2, 'Keine Regenschirme')</tuple>
+                </extension>
+            </relation>
+        </schema>
+
+        <subtasks>
+            <subtask>
+                <tasktexts>
+                    <tasktext language="DE">Gebe alle Zutaten aus, die man für die Herstellung eines 'Weak Health Potion' benötigt</tasktext>
+                </tasktexts>
+                <solution>
+                    <referencestatement>SELECT id, name FROM Ingredients JOIN needsIngredient ON Ingredient.id = needsIngredient.iid JOIN Potions ON Potions.id = needsIngredient.pid WHERE Potions.name = 'Weak Health Potion' </referencestatement>
+                    <evaluationstrategy>SET</evaluationstrategy><!-- ToDo  -  LIST? SET?  -->
+                </solution>
+                <points>1</points>
+            </subtask>
+        </subtasks>
+    </subTask>
+</subTasks>

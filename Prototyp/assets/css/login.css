@@ -1,0 +1,134 @@
+#wId { /** für den Rand overflow immer hidden*/
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+#fId {
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: none;
+    border-width: 1px;
+    color: #00031f;
+    font-family: LinBiolinum, sans-serif;
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+    overflow: auto;
+    position: absolute;
+    resize: none;
+    z-index: 3;
+}
+
+#wPassword {
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+#fPassword {
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: none;
+    border-width: 1px;
+    color: #00031f;
+    font-family: LinBiolinum, sans-serif;
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+    overflow: auto;
+    position: absolute;
+    resize: none;
+    z-index: 3;
+}
+
+
+
+#loginButton {
+    background-color : transparent;
+    border-style : none;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    color : transparent;
+    cursor : pointer;
+    overflow : visible;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}
+
+
+#signUpFirst {
+    background-color : transparent;
+    border-style : none;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    color: #00031f;
+    cursor : pointer;
+    overflow : visible;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}
+
+#forgotPassword {
+    background-color : transparent;
+    border-style : none;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    color: #00031f;
+    cursor : pointer;
+    overflow : visible;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}
+
+#mainMenu {
+    background-color : transparent;
+    border-style : none;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    color : white;
+    cursor : pointer;
+    overflow : visible;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}

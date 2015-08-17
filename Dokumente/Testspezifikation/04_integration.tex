@@ -1,0 +1,142 @@
+%!TEX root = ../Testspezifikation.tex
+
+\chapter{Integrationstest}
+
+Integrationstests dienen dazu, das Zusammenspiel einzelner Komponenten zu testen. Dabei wird speziell in dieser Software darauf Wert gelegt, dass die einzelnen Schnittstellen die richtigen Daten sichtbar machen und diese auch, solange keine Änderungen vorgenommen werden, auch konsistent bleiben. Die soll zum einen mit Einblick auf die Datenbank als auch mit mehrmaligen Ausführen der zur zu testenden Schnittstelle passenden Funktionen gewährleistet werden.
+
+\section{Zu testende Komponenten}
+
+Da im Projekt nur zwei Komponenten vorhanden sind und diese wenig aussagekräftig erscheinen werden hier, anstatt der Komponenten, die zu testenden Schnittstellen aufeführt:
+
+\begin{center}
+	\begin{longtable}{|m{0,5cm}|m{6,29cm}|m{2,9cm}|m{4,65cm}|}
+		\hline
+		\textbf{Nr} & \textbf{Schnittstelle} & \textbf{Testfälle} & \textbf{Kommentar}\\
+		\hline
+		1  & <I10> Session  &  \hyperref[T700]{T700}   &    \\ 
+		\hline
+          		2  & <I20> Userdaten &  \hyperref[T700]{T700}      & \\ 
+		\hline
+		3  & <I40> SQL-Aufgaben &  \hyperref[T800]{T800}       & \\ 
+		\hline
+		4  & <I50> Ranglisten &  \hyperref[T900]{T900}       & \\ 
+		\hline
+		5  & <I60> Profildaten &  \hyperref[T1000]{T1000}       & \\ 
+		\hline
+	\end{longtable}
+\end{center}
+
+\section{Testverfahren}
+Die Tests wurden manuell und mit Einsicht auf die Datenbank durchgeführt.
+
+\subsection{Testskripte}
+Es wurden keine Testskripte verwendet.
+
+\section{Testfälle}
+\begin{testcase}{700}{I10, Session und I20, Userdaten}
+\label{T700}
+\item[Ziel]~\\
+Ziel des Tests ist es, die dauerhaft korrekte Erstellung und Schließung von Sessions zu überprüfen. Da dafür unter anderem das Einloggen nötig ist, wird dabei gleichzeitig die korrekte Speicherung der Userdaten getestet.
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F20}\rangle, \langle\textbf{F30}\rangle$
+\item[Pass/Fail Kriterien]~\\
+Mehrfaches an- und abmelden induziert korrektes erstellen und schließen von Sessions sowie korrekte Speicherung und Kontrolle der Userdaten. Der Tester sollte also nach dem Einloggen in das Hauptmenü und nach dem Ausloggen in den Startscreen weitergeleitet werden. Geschieht dies fehlerfrei gelten beide Tests als bestanden.
+\item[Vorbedingung]~\\
+Der Tester muss sich in der Software registriert haben. 
+\item[Einzelschritte]~\\
+\begin{enumerate}
+	\item Auf die Seite des SQL-Alchemist gehen\\
+	\item Den Start-Screen bestätigen\\
+	\item Accountdaten eingeben\\
+	\item Zum Hauptmenü weitergeleitet werden\\
+	\item Logout-Button betätigen\\
+	\item Zum Start-Screen weitergeleitet werden\\
+	\item Wiederhole ab 2. \\
+\end{enumerate}
+\item[Beobachtungen / Log / Umgebung]~\\ 
+Dem Tester sollte nach dem Einloggen das Hauptmenü und nach dem Ausloggen der Startscreen angezeigt werden.
+\item[Besonderheiten]~\\
+--
+\item[Abhängigkeiten]~\\
+--
+\end{testcase}
+
+\begin{testcase}{800}{I40, SQL-Aufgaben}
+\label{T800}
+\item[Ziel]~\\
+Ziel des Tests ist es, die richtige Verteilung von SQL-Aufgaben auf die verschiedenen Schwierigkeitsgerade und den Informationsaustausch zwischen Front-End und Teamprojekt zu testen. Die Kontrolle der SQL-Lösungen gehört in die Zuständigkeit des Teamprojekts und wird hier nicht getestet.
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F130}\rangle$
+\item[Pass/Fail Kriterien]~\\
+Es wird getestet, ob nach der Auswahl eines Scwierigkeitsgrads eine passende Aufgabe angezeigt wird und ob auf eine eingegebene Lösung eine Antwort des Programms erfolgt. Geschieht dies ohne Probleme gilt der Test als bestanden
+\item[Vorbedingung]~\\
+Der Tester muss sich in die Software eingeloggt haben. 
+\item[Einzelschritte]~\\
+\begin{enumerate}
+	\item Den Trivia-Mode starten\\
+	\item Einen Schwierigkeitsgrad auswählen \\
+	\item Anwort auf Aufgabenstellung eingeben\\
+	\item Wiederhole ab 2. mit neuem Schwierigkeitsgrad\\
+\end{enumerate}
+\item[Beobachtungen / Log / Umgebung]~\\ 
+Dem Tester sollte nach abschicken der potentiellen Antwort ausgegeben werden, ob die Antwort falsch oder richtig ist.
+\item[Besonderheiten]~\\
+Die korrektheit der Ausgabe wird hierbei nicht beachtet.
+\item[Abhängigkeiten]~\\
+Mit diesem Test werden gleichzeitig die Funktionen für die SQL-Aufgaben in der Story und die Kommunikation für den Hausaufgabenmodus getestet, da sie nach dem gleichen Schema funtkionieren.
+\end{testcase}
+
+\newpage
+\begin{testcase}{900}{I50, Ranglisten}
+\label{T900}
+\item[Ziel]~\\
+Ziel des Tests ist es, die korrekte Sortierung der Spielstände zu testen.
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F160}\rangle$
+\item[Pass/Fail Kriterien]~\\
+Wenn die Spieler in der richtigen Reihenfolge, bezogen auf das ausgewählte Kriterium, aufgelistet werden, gilt der Test als bestanden. 
+\item[Vorbedingung]~\\
+Der Tester muss sich in die Software eingeloggt haben. 
+\item[Einzelschritte]~\\
+\begin{enumerate}
+	\item Die Rankings aufrufen\\
+	\item Die Rankings nach \glqq Lofi-Coins\grqq sortieren\\
+	\item Die Rankings nach \glqq Spend Time\grqq sortieren\\
+	\item Die Rankings nach \glqq Runs\grqq sortieren\\
+	\item Die Rankings nach \glqq SQL-Statements\grqq sortieren\\
+	\item Die Rankings nach \glqq Success Rate\grqq sortieren\\
+	\item Die Rankings nach \glqq Score\grqq sortieren\\
+\end{enumerate}
+\item[Beobachtungen / Log / Umgebung]~\\ 
+Die Ranglisten sollten sich anhand des ausgewählten Kriteriums, absteigend sortieren.
+\item[Besonderheiten]~\\
+--
+\item[Abhängigkeiten]~\\
+--
+\end{testcase}
+
+\newpage
+\begin{testcase}{1000}{I60, Profil}
+\label{T1000}
+\item[Ziel]~\\
+In diesem Test so überprüft werden, dass die Profildaten des eingeloggten Users korrekt angezeigt werden.
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F40}\rangle$
+\item[Pass/Fail Kriterien]~\\
+Wenn dem Tester sein aktueller Avatar, Username, aktuellen und insgesamt verdienten Coins, seine Gesamtpunktzahl, Run-Anzahl, mit SQL-Aufgaben verbrachte Zeit, die Anzahl an gelösten Statements und die Erfolgsrate für SQL-Aufgaben angezeigt werden, gilt der Test als bestanden.
+\item[Vorbedingung]~\\
+Der Tester muss sich in die Software eingeloggt haben. 
+\item[Einzelschritte]~\\
+\begin{enumerate}
+	\item Die Rankings aufrufen\\
+
+\end{enumerate}
+\item[Beobachtungen / Log / Umgebung]~\\ 
+Dem Tester sollten seine Profildaten angezeigt werden.
+\item[Besonderheiten]~\\
+--
+\item[Abhängigkeiten]~\\
+--
+\end{testcase}
+
+

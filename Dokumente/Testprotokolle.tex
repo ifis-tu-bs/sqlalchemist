@@ -1,0 +1,36 @@
+%Dies ist die Hauptseite des Dokumentes. Es werden u. a. alle Kapitel,
+%Einstellung im Header eingebunden.
+%Veränderungen müssen in folgenden Dateien vorgenommen werden:
+      %- config.tex
+      %- einzelne Kapitel (evtl. erweitern)
+
+\input{common/layout.tex}          % Diese Datei enthält alle
+                                          % Layouteinstellungen
+\newcommand{\dokumentTitel}{Testprotokolle}
+\input{common/config.tex}
+
+%------Beginn des Gesamtdokumentes----------------------------------------------
+\begin{document}
+
+%------Eingebundene Seiten, Verzeichnisse bzw. Kapitel--------------------------
+\include{common/titelseite}                      % Titelseite
+\tableofcontents
+
+
+%----Kapitel des Feinentwurfs, die mit Inhalt zu füllen sind--------------------
+\include{Testprotokolle/2015-07-10-F20}
+\include{Testprotokolle/2015-07-13-F30}
+\include{Testprotokolle/2015-07-13-F130}
+\include{Testprotokolle/2015-07-07-F160}
+\include{Testprotokolle/2015-07-10-F40}
+\include{Testprotokolle/2015-07-09-JUnit-Rankings-CL10_junit}
+\include{Testprotokolle/JUnit-User}
+\include{Testprotokolle/JUnit-Potion}
+\include{Testprotokolle/JUnit-Map}
+\include{Testprotokolle/JUnit-Inventory}
+\include{Testprotokolle/JUnit-Avatar}
+% Hier soviele Dateien hinzufügen wie Testläufe durchgeführt wurden.
+
+
+%------Ende des Dokumentes------------------------------------------------------
+\end{document}

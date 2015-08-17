@@ -1,0 +1,89 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2012-04-02)}
+
+In diesem Abschnitt werden die einzelnen Durchführungen (=Testläufe) protokolliert.
+Der Testlauf beschreibt eine Durchführung eines Testfalls. Derselbe
+Testfall kann mit verschiedenen Eingabedaten oder auch mit verschiedenen
+Softwareversionen mehrmals durchgeführt werden. Für jeden Testlauf wird diese .tex-Datei kopiert\\
+
+Zunächst wird eine Aufstellung der durchgeführten Testfälle, der abgedeckten Funktionen, Komponenten, Klassen und Methoden sowie der beteiligten Test gegeben.
+
+Beispiel:\\
+Art des Tests: Abnahmetest\\
+Ausgeführte Testfälle: \ref{T100}, \ref{T200}\\ 
+Beteiligte Tester: Max Mustermann\\
+Abgedeckte Funktionen: \ref{F10}, \ref{F20}
+
+\section{Testumgebung}
+
+Kurze Beschreibung der Testumgebung in der die Tests durchgeführt wurden, so dass eine Reproduktion der Ergebnisse möglich ist.
+
+Beispiel\\
+Die Testfälle wurden unter Windows 7 auf einem lokalen Webserver (Apache Tomcat 7.0.39) durchgeführt. Es wurde eine deutsche Systemumgebung verwendet. Die Seiten wurden mit Firefox 19.0.2 geöffnet.
+
+\section{Testprotokoll}
+
+Die folgenden Tabellen beschreiben, wie der Testfall ausgeführt wurde und
+welches Ergebnis er geliefert hat. Da es bei Korrektur von Softwarefehlern oder
+anderen Gegebenheiten notwendig ist, einen Test mehrfach durchzuführen
+(Testläufe), ist jede Testdurchführung zu dokumentieren. Daher ist diese
+Tabelle für \textbf{jeden Testlauf} zu erstellen und \textbf{fortlaufend zu
+nummerieren}. \\
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Testfall} & \textit{Beispiel: \ref{T100}} \\
+\hline
+\textbf{Tester} & \textit{Beispiel: Max Mustermann} \\
+\hline
+\textbf{Eingaben} & \textit{Es sind alle Eingabedaten bzw. andere Aktionen
+aufzufüh-ren, die für die Ausführung des Testfalls notwendig sind.
+Diese können sowohl als Wert angegeben werden (ggf. mit Toleranzen) als auch
+als Name, falls es sich um konstante Tabellen oder um Dateien handelt. Außerdem
+sind alle betroffenen Datenbanken, Dateien, Terminal Meldungen, etc. anzugeben.
+Hinweis: Es sind nicht noch mal die Einzelschritte aus 3.1.3 zu wiederholen.
+Während jene allgemeiner sind (z.B. "`Ein-loggen über das Login-Formular"')
+sind hier die konkreten eingegebenen Testdaten aufzuführen (z.B. "`Loginname:
+test; Passwort: xxxtest"'`). } \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Hier ist anzugeben, welches Ergebnis bzw.
+Ausgabe der Test haben soll.
+Hinweis: Es sind nicht noch mal die Erfolgskriterien aus 3.1.2 zu wiederholen.
+Während jene allgemeiner sind (z.B. "`Testnachricht wird über Netzwerkkanal
+empfangen"') sind hier die konkreten erhaltenen Testdaten aufzuführen (z.B.
+Konsole zeigt Meldung: "`Testnachricht 123 erhalten"').
+} \\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Hier ist anzugeben, welches Ergebnisdaten
+bzw. Ausgaben dieser Testlauf geliefert hat.} \\
+\hline
+\textbf{Ergebnis} & \textit{Für jeden Testlauf ist zu vermerken, ob der Test
+erfolgreich durchgeführt werden konnte oder nicht. Einen missglückten Test
+bitte begründen, sofern der Grund des Fehlschlags bekannt oder offensichtlich
+ist.} \\
+\hline
+\textbf{Unvorhergesehene Ereignisse} &
+\textit{optional; nur anzugeben, falls es unvorhergesehene Ereignisse gab} \\
+\hline
+\textbf{Nacharbeiten } & \textit{Ist ein Testlauf nicht erfolgreich
+durchgeführt worden, so werden hier die erforderlichen Nacharbeiten aufgeführt
+(z.B. Bugfixes).} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Hier wird eine Zusammenfassung der Testergebnisse aufgelistet. Dabei sind alle
+behandelten Probleme aufzulisten und darzustellen, wie ihre Lösungen erreicht
+wurden. Dabei kann auf folgendes eingegangen werden:
+\begin{itemize}
+\item Zusammenfassung aller Hauptaktivitäten und der wichtigsten Ereignisse und Ergebnisse der Tests
+\item Abweichungen der vorliegenden Software von der Aufgabenstellung. Aber auch Abweichung vom Testplan oder den Testfällen während des Testens (z.B.
+   aufgrund von veränderter Funktionalität während der Nacharbeiten). Die
+   Abweichungen sollten begründet werden.
+\item Umfang des Testverlaufs (Vollständigkeit) im Vergleich zu Umfangskriterien
+   des Testplans. Auflistung der Funktionalitäten, die nicht getestet wurden.
+   Selbstversändlich mit Begründung.
+\item Bewertung der Softwarequalität
+\end{itemize}

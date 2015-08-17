@@ -1,0 +1,49 @@
+%!TEX root = ../Pflichtenheft.tex
+
+
+\chapter{Produkteinsatz}
+%Dieser Abschnitt hat die Aufgabe, den Einsatzbereich, die Zielgruppen und die
+%Betriebsbedingungen des zu entwickelnden Systems klarzustellen. (Umfang mit Unterkapiteln ca. 1,5 - 4 Seiten)
+
+\NewsGenie ist ein Programm, welches dem Nutzer Nachrichtenartikel bereitstellt, um ihn über Neuigkeiten und Geschehnisse der Welt zu informieren, wobei potentielle Quellen vom Nutzer selbst hinzugefügt und gelöscht werden können. Einzige Voraussetzung zur Nutzung des \NewsGenie ist ein Endgerät, welches Zugang zum Internet hat.
+
+Die Eingabe der Anfrage erfolgt dabei in natürlicher, gesprochener Sprache, woraufhin ein Dialog mit dem \NewsGenie entsteht, in dessen Rahmen die gesuchten Informationen präsentiert werden, oder die Frage des Nutzers gegebenenfalls präzisiert wird. Der Nutzer kann nach erfolgreicher Anfrage nach mehr Informationen zu der Thematik nachfragen.
+
+Durch das Hinzufügen und Löschen von Quellen hat der Nutzer selbst Einfluss auf die von ihm präferierten Quellen, aus welchen der \NewsGenie seine Antworten generieren soll. Die Ergebnisse werden darüber hinaus in einem Ranking angeordnet, wobei im Trend liegende Artikel weiter oben stehen. Der \NewsGenie lernt über den im System angemeldeten Nutzer und kann ihn somit direkt über die für ihn interessanten Themenbereiche informieren.
+
+Weiterhin denkbar sind Anfragen, welche sich direkt auf Fakten oder Informationen bezüglich fester Entitäten beziehen.
+Beispielsweise könnte die Höhe des Mount Everests erfragt werden, oder auch Informationen zu der Person Angela Merkel.
+
+\section{Anwendungsbereiche}
+%Hier wird der Bereich beschrieben, in dem das Produkt eingesetzt werden soll,
+%bzw. Bereiche, für die das Produkt nicht gedacht ist. Zum Beispiel könnte hier beschrieben werden, dass ein zu %entwickelndes Bibliotheksystem nur für den Einsatz in einer speziellen Bibliothek des Kunden und nicht für öffentliche %Bibliotheken geeignet ist. Natürlich muss dann auch die Bibliothek des Kunden (und deren Besonderheiten) beschrieben werden.
+
+Der \NewsGenie ist ausgelegt für die private Nutzung durch eine Einzelperson, welche sich über die Neuigkeiten in der Welt informieren möchte. Eine Nutzung in Personengruppen ist nicht möglich, da für die Spracherkennung eine deutliche Stimme in einer relativ ruhigen Umgebung notwendig ist. Extrem laute Plätze sind somit nicht geeignet, so könnte es Probleme in Flughäfen, oder vor Baustellen geben.
+Der \NewsGenie ist allerdings durch die sprachbasierte Eingabe der Anfragen in Situationen anwendbar, in welchen der Nutzer normalerweise keine, oder nur unkomfortabel, Nachrichten individuell abrufen kann. Beispielsweise beim Autofahren, im Gehen, oder auch während an einem Computer gearbeitet wird.
+
+Voraussetzung ist lediglich ein Endgerät mit Zugang zum Internet.
+
+
+\section{Zielgruppen}
+%Hier wird angegeben, für welche Anwender (z. B. Sekretärin, andere Entwickler)
+%das Produkt im Wesentlichen gedacht bzw. nicht gedacht ist. Zum Beispiel:
+%\begin{itemize}
+%\item Sekretärin: Beschafft Bücher und legt diese in der Bibliothek an.
+%\item wiss. Mitarbeiter: Leiht Bücher aus und gibt diese zurück.
+%\item Student: ...
+%\end{itemize}
+
+Der \NewsGenie richtet sich an alle, die sich über Nachrichten und Neuigkeiten informieren und sich das Suchen nach diesen erleichtern möchten. Die Arbeit des Suchens und Auswählens geeigneter Artikel erfolgt durch den \NewsGenie, womit der Nutzer Zeit spart und schnell an gewünschte Informationen kommt. So ist das Programm speziell dazu geeignet gestresste Personen bei der Nachrichtensuche zu unterstützen, indem die Anfragen auch neben anderen Aktivitäten, wie Autofahren, oder Arbeiten an einem Computer, gestellt werden können. Ein Nutzer des \NewsGenies kann sich somit ohne erhöhten Zeitaufwand umfassend über seine Interessengebiete informieren.
+Vorkenntnisse sind durch die einfache und intuitive sprachbasierte Eingabe nicht notwendig, sodass sowohl regelmäßige, als auch gelegentliche Nutzer angesprochen werden.
+
+\section{Betriebsbedingungen}
+%Hier werden die unterschiedlichen Bedürfnisse und Anforderungen an das Produkt
+%aufgelistet. Dies können folgenden Punkte sein:
+%\begin{itemize}
+%\item physikalische Umgebung des Systems (z. B. Büroumgebung, mobiler Einsatz)
+%\item tägliche Betriebszeit (z. B. Dauerbetrieb)
+%\item ständige Beobachtung des Systems durch einen Bediener oder unbeaufsichtigter Betrieb
+%\end{itemize}
+
+Das Backend des Produktes läuft im Dauerbetrieb auf einem zentralen Server, bedarf keiner Aufsicht und läuft vollautomatisch. Als Standard-Client ist ein Raspberry Pi vorgesehen, sodass dessen Leistung als Mindestanforderung betrachtet werden kann. Für administrative Aufgaben ist ein Endgerät mit lauffähigen Webbrowser nötig, um auf die Internetschnittstelle zugreifen zu können.
+

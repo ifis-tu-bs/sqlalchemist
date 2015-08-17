@@ -1,0 +1,263 @@
+#wOld, #wNew, #wNewAck { /** für den Rand overflow immer hidden*/
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: solid;
+    border-width: 1px;
+    overflow: hidden;
+}
+
+
+#fOld, #fNew, #fNewAck {
+    background-color: transparent;
+    border-color: #00031f;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -o-border-radius: 8px;
+    -ms-border-radius: 8px;
+    mso-border-radius: 8px;
+    -atsc-border-radius: 8px;
+    -wap-border-radius: 8px;
+    border-radius: 8px;
+    border-style: none;
+    border-width: 1px;
+    color: #00031f;
+    font-family: LinBiolinum, sans-serif;
+    text-align: center;
+    font-size: 100%;
+    font-weight: normal;
+    overflow: auto;
+    position: absolute;
+    resize: none;
+    z-index: 3;
+}
+
+
+#changePassword{
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    border:solid 2px #919191;
+    -moz-border-radius-topleft: 46px;
+    -moz-border-radius-topright:46px;
+    -moz-border-radius-bottomleft:45px;
+    -moz-border-radius-bottomright:47px;
+    -webkit-border-top-left-radius:46px;
+    -webkit-border-top-right-radius:46px;
+    -webkit-border-bottom-left-radius:45px;
+    -webkit-border-bottom-right-radius:47px;
+    border-top-left-radius:46px;
+    border-top-right-radius:46px;
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:47px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+#changePassword:hover, #changePassword:focus, #changePassword:active {
+    background-color: #919191;
+    color: white;
+}
+
+#submitPassword{
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    border:solid 2px #a40202;
+    -moz-border-radius-topleft: 46px;
+    -moz-border-radius-topright:46px;
+    -moz-border-radius-bottomleft:45px;
+    -moz-border-radius-bottomright:47px;
+    -webkit-border-top-left-radius:46px;
+    -webkit-border-top-right-radius:46px;
+    -webkit-border-bottom-left-radius:45px;
+    -webkit-border-bottom-right-radius:47px;
+    border-top-left-radius:46px;
+    border-top-right-radius:46px;
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:47px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+
+
+#submitPassword:hover, #submitPassword:focus, #submitPassword:active {
+    background-color: #a40202;
+    color: white;
+}
+
+#submitReset, #studentRequest{
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    border:solid 2px #a40202;
+    -moz-border-radius-topleft: 46px;
+    -moz-border-radius-topright:46px;
+    -moz-border-radius-bottomleft:45px;
+    -moz-border-radius-bottomright:47px;
+    -webkit-border-top-left-radius:46px;
+    -webkit-border-top-right-radius:46px;
+    -webkit-border-bottom-left-radius:45px;
+    -webkit-border-bottom-right-radius:47px;
+    border-top-left-radius:46px;
+    border-top-right-radius:46px;
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:47px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+
+#submitReset:hover, #submitReset:focus, #submitReset:active {
+    background-color: #a40202;
+    color: white;
+}
+
+#studentRequest:hover, #studentRequest:focus, #studentRequest:active {
+    background-color: #a40202;
+    color: white;
+}
+
+#storyReset{
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: pointer;
+    text-align: center;
+    border:solid 2px #919191;
+    -moz-border-radius-topleft: 46px;
+    -moz-border-radius-topright:46px;
+    -moz-border-radius-bottomleft:45px;
+    -moz-border-radius-bottomright:47px;
+    -webkit-border-top-left-radius:46px;
+    -webkit-border-top-right-radius:46px;
+    -webkit-border-bottom-left-radius:45px;
+    -webkit-border-bottom-right-radius:47px;
+    border-top-left-radius:46px;
+    border-top-right-radius:46px;
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:47px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+#storyReset:hover, #storyReset:focus, #storyReset:active {
+    background-color: #919191;
+    color: white;
+}
+
+#changeHeader, #resetHeader, #keyBindingsHeader {
+    background-color: transparent;
+    border-style: none;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    z-Index: 4;
+}
+
+#verifyGreen{
+    font-family: Trajan_Pro_Regular, sans-serif;
+    background-color: green;
+    color: white;
+    cursor: inherit;
+    text-align: center;
+    border:solid 2px green;
+    -moz-border-radius-topleft: 46px;
+    -moz-border-radius-topright:46px;
+    -moz-border-radius-bottomleft:45px;
+    -moz-border-radius-bottomright:47px;
+    -webkit-border-top-left-radius:46px;
+    -webkit-border-top-right-radius:46px;
+    -webkit-border-bottom-left-radius:45px;
+    -webkit-border-bottom-right-radius:47px;
+    border-top-left-radius:46px;
+    border-top-right-radius:46px;
+    border-bottom-left-radius:45px;
+    border-bottom-right-radius:47px;
+    display: inline-block;
+    vertical-align: middle;
+    position: absolute;
+    overflow: hidden;
+    z-Index: 4;
+}
+
+#keyBindings {
+    background-color: transparent;
+    border-style: none;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    line-height: 10px;
+    color: black;
+    overflow: hidden;
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    z-Index: 4;
+}
+
+#keyBindingsDisc {
+    background-color: transparent;
+    border-style: none;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    line-height: 10px;
+    color: black;
+    overflow: hidden;
+    position: absolute;
+    text-align: right;
+    vertical-align: middle;
+    z-Index: 4;
+}
+
+

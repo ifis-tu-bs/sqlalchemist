@@ -1,0 +1,46 @@
+%!TEX root = ../Testprotokolle.tex
+
+\chapter{Testdurchführung (2014-07-06)}
+
+Art des Tests: Integrations-Test\\
+Ausgeführte Testfälle: \ref{T900}\\ 
+Beteiligte Tester: Philipp Dittrich\\
+Getestete Funktionalitäten: \textit{ClientQuery} vom \textit{Client} an
+\textit{ManagementHandler} und umgekehrt \textit{ClientAnswer} vom
+\textit{ManagementHandler} an den \textit{Client}.
+
+\section{Testumgebung}
+
+Die Testfälle wurden unter MacOS X mit Eclipse SDk (Version 4.3.2) ausgeführt.
+
+\section{Testprotokoll}
+
+\begin{longtable}{|p{4cm}|p{11cm}|}
+\hline
+\textbf{Testfall} & \ref{T900} \\
+\hline
+\textbf{Tester} & \textit{Beispiel: Philipp Dittrich} \\
+\hline
+\textbf{Eingaben} & \textit{``Hi, my name is Phil.'',
+``Please give me news about the ukraine.'',
+``Read the first article''} \\
+\hline
+\textbf{Soll - Reaktion} & \textit{Der Benutzer wird eingeloggt, es werden
+Artikel zum Thema Ukraine zurückgeliefert und der erste Artikel wird
+anschließend vorgelesen}
+\\
+\hline
+\textbf{Ist -- Reaktion} & \textit{Der Benutzer wurde eingeloggt, drei Artikel
+zum Thema Ukraine zurückgegeben und der erste vorgelesen.}
+\\
+\hline
+\textbf{Ergebnis} & \textit{Der Test war erfolgreich.} \\
+\hline
+\textbf{Nacharbeiten } & \textit{Keine} \\
+\hline
+\end{longtable}
+
+\section{Zusammenfassung}
+
+Der Test hat gezeigt, dass die Kommunikation zwischen \textit{Client} und
+\textit{ManagementHandler} erfolgreich abgewickelt werden kann.

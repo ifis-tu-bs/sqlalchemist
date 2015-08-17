@@ -1,0 +1,45 @@
+
+<div class="container-fluid">
+  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+  <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+
+  <div class="container-fluid" style="float:right;width:30%">
+    <form>
+      <div class="form-group">
+        <div class="input-group">
+          <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+          <input type="text" class="form-control" placeholder="Search..." ng-model="search">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th ng-click="orderPredicate = 'role'; orderReverse = !orderReverse" style="cursor: pointer">Role</th>
+        <th ng-click="orderPredicate = 'profile.solvedSQL'; orderReverse = !orderReverse" style="cursor: pointer">Statements solved</th>
+        <th ng-click="orderPredicate = 'profile.quote'; orderReverse = !orderReverse" style="cursor: pointer">Success rate</th>
+        <th ng-click="orderPredicate = 'email'; orderReverse = !orderReverse" style="cursor: pointer">Email</th>
+        <th>Change role to...</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="user in vm.users | orderBy:orderPredicate:orderReverse | filter:search">
+        <td>{{user.role}}</td>
+        <td style="text-align: right">{{user.profile.solvedSQL}}</td>
+        <td style="text-align: right">{{user.profile.quote}}</td>
+        <td>{{user.email}}</td>
+        <td>
+          <div class="btn-group" role="group" style="text-align: center">
+            <button type="button" class="btn btn-default" ng-click="promote(user, 1)">User</button>
+            <button type="button" class="btn btn-default" ng-click="promote(user, 2)">Creator</button>
+            <button type="button" class="btn btn-default" ng-click="promote(user, 3)">Admin</button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+

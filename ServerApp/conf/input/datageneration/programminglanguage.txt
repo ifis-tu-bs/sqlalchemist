@@ -1,0 +1,1 @@
+ActiveVFP;WebDNA;SMX;OpenEdge ABL;Lasso;Brainfuck;Rexx;Synergy;Smalltalk;Forth;OCaml;Tcl;Fortran;Erlang;Clojure;Lisp;Cobol;Scheme;Haskell;Pascal;Ada;Lua;ColdFusion;Actionscript;Scala;Delphi;Visual Basic;D;ASP;Perl;SQL;Assembly;C#;Objective C;Ruby;Shell;Python;C++;JavaScript;PHP;Java;C;R

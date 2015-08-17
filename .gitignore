@@ -1,0 +1,8 @@
+#######
+# git ignore file
+#
+
+.svn
+.DS_Store
+*/.DS_Store
+**/.DS_Store

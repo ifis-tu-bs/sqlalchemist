@@ -1,0 +1,317 @@
+%!TEX root = ../Abnahmetestspezifikation.tex
+
+\chapter{Abnahmetest}
+
+Der Abnahmetest für den SQL-Alchemist hat den Zweck die vom Auftragnehmer im Pflichtenheft festgelegten Anforderungen an das fertige Produkt auf ihre Vollständigkeit zu überprüfen. Dabei sollen sowohl die vom Auftraggeber geforderten technischen Funktionen als auch die eigentliche Ausführung des Produktes bewertet werden. Das Produkt soll dem Kunden samt aller Funktionen vorgestellt werden um einen Abgleich mit dessen Forderungen zu ermöglichen. Das Ziel ist es, dem Kunden das von ihm geforderte Produkt zu liefern, sodass dieser vollständig zufrieden ist und die Software abnehmen kann.
+
+\section{Zu testende Anforderungen}
+
+In diesem Abschnitt werden alle zu testenden Funktionen aufgeführt werden, die im Rahmen des Abnahmetests vom Kunden ausgeführt werden. Die Reihenfolge der aufgeführten Funktionen spiegelt eine beispielhafte Nutzungsabfolge wider, welche auch ein zukünftiger Nutzer bzw. Admin durchlaufen würde.
+
+\begin{center}
+	\begin{longtable}{|m{0,5cm}|m{6,29cm}|m{2,9cm}|m{4,65cm}|}
+		\hline
+		\textbf{Nr} & \textbf{Anforderung} & \textbf{Testfälle} & \textbf{Kommentar}\\ 
+		\hline
+		1  & \textbf{$\langle$F10$\rangle$ Nutzer registrieren }  &  $\langle$T300$\rangle$   &     \\ 
+		\hline
+      2  & \textbf{$\langle$F20$\rangle$ Nutzer anmelden } &  $\langle$T300$\rangle$   &    \\ 
+		\hline
+		3  & \textbf{$\langle$F110$\rangle$ Tutorial spielen } &  $\langle$T500$\rangle$   &     \\ 
+		\hline
+		4  & \textbf{$\langle$F120$\rangle$ Story spielen } &  $\langle$T500$\rangle$   &     \\ 
+		\hline
+		5  & \textbf{$\langle$F130$\rangle$ SQL-Trainer spielen } &  $\langle$T500$\rangle$, $\langle$T600$\rangle$   &    \\ 
+		\hline
+		6  & \textbf{$\langle$F140$\rangle$ Minispiel spielen } &  $\langle$T500$\rangle$   &    \\ 
+		\hline
+		7  & \textbf{$\langle$F100$\rangle$ Spielstand zurücksetzen } &  $\langle$T500$\rangle$   &     \\ 
+		\hline
+		8  & \textbf{$\langle$F90$\rangle$ Audioeinstellungen bearbeiten } &  $\langle$T400$\rangle$   &     \\ 
+		\hline
+		9  & \textbf{$\langle$F230$\rangle$ Hausaufgaben erstellen } &  $\langle$T100$\rangle$   &  \\ 
+		\hline
+		10  & \textbf{$\langle$F150$\rangle$ Hausaufgaben bearbeiten } &  $\langle$T600$\rangle$   &     \\ 
+		\hline
+		11  & \textbf{$\langle$F180$\rangle$ Hausaufgabenergebnisse einsehen } &  $\langle$T200$\rangle$   &     \\ 
+		\hline
+		12 & \textbf{$\langle$F40$\rangle$ Profil einsehen } &  $\langle$T400$\rangle$   &     \\ 
+		\hline
+		13  & \textbf{$\langle$F50$\rangle$ Benutzername ändern } &  $\langle$T400$\rangle$   &     \\ 
+		\hline
+		14  & \textbf{$\langle$F60$\rangle$ Passwort ändern } &  $\langle$T400$\rangle$   &   \\ 
+		\hline
+		15  & \textbf{$\langle$F70$\rangle$ Avatar ändern } &  $\langle$T400$\rangle$   &    \\ 
+		\hline
+		16  & \textbf{$\langle$F160$\rangle$ Rangliste einsehen } &  $\langle$T400$\rangle$   &     \\ 
+		\hline
+		17  & \textbf{$\langle$F170$\rangle$ Spieler suchen } &  $\langle$T400$\rangle$   &    \\ 
+		\hline
+		18  & \textbf{$\langle$F190$\rangle$ Benutzer befördern } &  $\langle$T100$\rangle$   &     \\ 
+		\hline
+		19  & \textbf{$\langle$F200$\rangle$ Benutzer Adminrechte geben } &  $\langle$T100$\rangle$   &    \\ 
+		\hline
+		20  & \textbf{$\langle$F210$\rangle$ Trivia-Aufgabe erstellen } &  $\langle$T100$\rangle$, $\langle$T200$\rangle$   &     \\ 
+		\hline
+		21  & \textbf{$\langle$F220$\rangle$ Benutzeraufgaben bewerten } &  $\langle$T100$\rangle$, $\langle$T200$\rangle$   &    \\ 
+		\hline
+		22  & \textbf{$\langle$F30$\rangle$ Nutzer abmelden } &  $\langle$T300$\rangle$   &     \\ 
+		\hline
+		23 & \textbf{$\langle$F20$\rangle$ Nutzer anmelden } &  $\langle$T300$\rangle$   &   Diese Funktion muss erneut ausgeführt werden, um das Löschen zu testen \\ 
+		\hline
+		24 & \textbf{$\langle$F80$\rangle$ Benutzer löschen } &  $\langle$T400$\rangle$   &     \\ 
+		\hline
+	\end{longtable}
+\end{center}
+
+\section{Testverfahren}
+
+Für das Back-End werden in JUnit Test-Funktionen programmiert, die die Funktionen automatisiert überprüft.\\
+Front-End-Funktionen, in denen es sich um Eingabe-Ausgabe-Abläufe handelt, werden auf Basis von Äquivalenz-Klassen manuell getestet.  
+
+
+\section{Testfälle}
+
+Im Folgenden werden die Testfälle aufgelistet, die Reihenfolge der Durchführung ergibt sich nach der in Kapitel 3.1 genannten Reihenfolge.
+
+\begin{testcase}{100}{Administrationstool - Adminoperationen}
+
+\item[Ziel]~\\
+Der Zweck des Tests ist es alle Funktionen, welche das Administrationstool den Admins zur Verfügung stellt, ausführlich zu testen. Dabei werden auch gleich die Funktionen Trivia-Aufgaben erstellen und Trivia-Aufgaben bewerten getestet, die allen beförderten Nutzern zur Verfügung stehen.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F190}\rangle, \langle\textbf{F200}\rangle, \langle\textbf{F210}\rangle, \langle\textbf{F220}\rangle, \langle\textbf{F230}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Es meldet sich ein Admin zum Administrationstool an. Dieser führt die beschriebenen Funktionen aus. Falls alle Operationen erfolgreich ausgeführt werden können, gilt der Test als erfolgreich. Sollte der Admin aufgrund falscher Rechtevergabe eine der Funktionen nicht ausführen können oder sollte eine Operation nicht erfolgreich beendet werden können, gilt der Test als fehlgeschlagen.
+
+\item[Vorbedingung]~\\
+Um den Test durchzuführen muss der testende Nutzer Adminrechte haben. Außerdem muss für die Funktionen $\langle\textbf{F190}\rangle$ und $\langle\textbf{F200}\rangle$ bereits ein Benutzerdatensatz in der Datenbank vorhanden sein.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Als Admin zum Administrationstool anmelden
+\item Auf den Button "`Promote User"´ klicken
+\item Den zu befördernden Nutzer über Eingabe des Benutzernamens beziehungsweise der y-Nummer suchen.
+\item Benutzer befördern
+\item Benutzer Adminrechte geben
+\item Auf den Button "`Create Task"´ klicken und eine Trivia-Aufgabe erstellen
+\item Auf den Button "`Rate Task"´ klicken, die eben erstellte Aufgabe suchen und bewerten
+\item Auf den Button "`Create Homework"´ klicken und Hausaufgabenpaket erstellen
+\item vom Admintool abmelden
+\end{enumerate}
+Ausgabe:
+Zu den Ausgaben gehören die Bestätigungen, dass die Operationen erfolgreich ausgeführt wurden, sowie die erstellten Aufgaben samt Bewertung. Der beförderte Nutzer hat zudem seine neuen Rechte erhalten. 
+Bei einem Fehlschlag werden Fehlermeldungen als Ausgaben gegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+
+\item[Besonderheiten]~\\
+
+\item[Abhängigkeiten]~\\
+Der Testfall ist von $\langle\textbf{F300}\rangle$ abhängig, da die Registrierung von Nutzern ordnungsgemäß funktionieren muss.
+
+\end{testcase}
+
+\begin{testcase}{200}{Administrationstool - Studentenoperationen}
+
+\item[Ziel]~\\
+Der Zweck des Tests ist es alle Funktionen, welche das Administrationstool den Studenten zur Verfügung stellt, ausführlich zu testen. Dabei werden auch gleich die Funktionen Trivia-Aufgaben erstellen und Trivia-Aufgaben bewerten getestet, die allen beförderten Nutzern zur Verfügung stehen.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F180}\rangle, \langle\textbf{F210}\rangle, \langle\textbf{F220}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Es meldet sich ein Student zum Administrationstool an. Dieser führt die beschriebenen Funktionen aus. Falls alle Operationen erfolgreich ausgeführt werden können, gilt der Test als erfolgreich. Sollte der Student aufgrund falscher Rechtevergabe eine der Funktionen nicht ausführen sowie Funktionen für die er nicht berechtigt ist ausführen können oder sollte eine Operation nicht erfolgreich beendet werden können, gilt der Test als fehlgeschlagen.
+
+\item[Vorbedingung]~\\
+Um den Test durchzuführen muss der testende Nutzer als Student registriert sein. Außerdem muss für die Funktion $\langle\textbf{F180}\rangle$ bereits ein Hausaufgabenpaket bearbeitet worden sein.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Als Student zum Administrationstool anmelden
+\item Auf den Button "`View Results"´ klicken
+\item Ergebnisse überprüfen
+\item Auf den Button "`Create Task"´ klicken und eine Trivia-Aufgabe erstellen
+\item Auf den Button "`Rate Task"´ klicken, die eben erstellte Aufgabe suchen und bewerten
+\item Vom Admintool abmelden
+\end{enumerate}
+Ausgabe:
+Zu den Ausgaben gehören die Bestätigungen, dass die Operationen erfolgreich ausgeführt wurden, sowie die erstellten Aufgaben samt Bewertung. Zudem werden die Hausaufgabenergebnisse angezeigt. 
+Bei einem Fehlschlag werden Fehlermeldungen als Ausgaben gegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+
+\item[Besonderheiten]~\\
+
+\item[Abhängigkeiten]~\\
+Der Testfall ist von $\langle\textbf{T300}\rangle$ abhängig, da die Registrierung von Nutzern ordnungsgemäß funktionieren muss.
+Außerdem ist er von $\langle\textbf{T100}\rangle$ und $\langle\textbf{T600}\rangle$ abhängig, da die Erstellung und Bearbeitung von Hausaufgaben im Vorfeld einmal durchgeführt werden müssen.
+
+\end{testcase}
+
+\begin{testcase}{300}{Registrierung und Zugang zum Spiel}
+
+\item[Ziel]~\\
+Der Zweck dieses Tests ist es alle Funktionen, welche die Registrierung und den Zugang zum Spiel betreffen, ausführlich zu testen.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F10}\rangle, \langle\textbf{F20}\rangle, \langle\textbf{F30}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Ein Nutzer führt die Registrierung zum Spiel durch. Wenn er sich mit seinen gewählten Nutzerdaten zum Spiel anmelden kann (und auch nur mit diesen Daten) und danach auch ordnungsgemäß abgemeldet wird, gilt der Test als bestanden. Falls er allerdings auch mit falschen Daten Zugang erhält, sich mit seinen gewählten Daten nicht anmelden kann oder die Registrierung beziehungsweise die Abmeldung nicht korrekt ausgeführt werden, gilt der Test als fehlgeschlagen.
+
+\item[Vorbedingung]~\\
+Es gibt keine Vorbedingungen.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Die URL des Spiels aufrufen
+\item Gewünschte Nutzerdaten eingeben
+\item Auf den Button "`Sign Up"´
+\item Mit den registrierten Daten über "`Login"´ anmelden 
+\item Über den Button "`Sign Out"´ abmelden
+\end{enumerate}
+Ausgabe:
+Es werden bei einem Fehlschlag Fehlermeldungen ausgegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+\item[Besonderheiten]~\\
+Wenn sich ein Student über seine y-Nummer registriert, muss er als Student erkannt werden.
+
+\item[Abhängigkeiten]~\\
+Es gibt keine weiteren Abhängigkeiten.
+
+\end{testcase}
+
+\begin{testcase}{400}{The SQL-Alchemist - Oberfläche und Einstellungen}
+
+\item[Ziel]~\\
+Der Zweck dieses Tests ist es alle Funktionen, die in den verschiedenen Menüs angeboten werden zu testen. Dabei werden die direkt auf die Spielmodi bezogenen Funktionen nicht berücksichtigt.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F40}\rangle, \langle\textbf{F50}\rangle, \langle\textbf{F60}\rangle, \langle\textbf{F70}\rangle, \langle\textbf{F80}\rangle, \langle\textbf{F90}\rangle, \langle\textbf{F160}\rangle, \langle\textbf{F170}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Ein Nutzer führt die verschiedenen Funktionen aus. Da es sich bei diesen ausschließlich um Optionen zur Änderung bestimmter Elemente des Spiels, beziehungsweise einfache Anzeigen handelt gilt der Test als Erfolg, falls Änderungen in den Optionen korrekt übernommen werden und alle Anzeigen wie gefordert angezeigt werden. Ein Fehlschlag tritt auf, wenn eine der gerade genannten Bedingungen nicht zutrifft.
+
+\item[Vorbedingung]~\\
+Der Nutzer muss sich bereits einen Account erstellt haben und im Spiel angemeldet sein.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Auf "`Profile"´ klicken und Anzeige überprüfen
+\item Ins Hauptmenü wechseln und auf "`Settings"´ klicken
+\item Auf "`Change Username"´ klicken
+\item Neuen Benutzernamen eingeben und bestätigen
+\item Kontrollieren ob Änderungen übernommen wurden 
+\item Auf "`Change Password"´ klicken
+\item Neues Passwort eingeben und bestätigen
+\item Kontrollieren ob Änderungen übernommen wurden
+\item Auf den Avatar klicken und diesen ändern
+\item Kontrollieren ob Änderungen übernommen wurden
+\item Auf "`Sound On/Off"´ und "`Music On/Off"´ klicken 
+\item Ins Hauptmenü wechseln und auf "`Leaderboards"´ klicken
+\item Im Textfeld den Benutzernamen des aktuellen Nutzers eingeben und bestätigen
+\item Zu "`Settings"´ wechseln und über "`Delete User"´ den eigenen Account löschen
+\end{enumerate}
+Ausgabe:
+Die geänderten Einstellungen werden vom Spiel übernommen und dargestellt. Außerdem werden die Ranglisten und das Profil angezeigt. Bei Fehlern werden entsprechende Meldungen ausgegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+\item[Besonderheiten]~\\
+
+\item[Abhängigkeiten]~\\
+Der Testfall ist von $\langle\textbf{T300}\rangle$ abhängig, da die Registrierung von Nutzern ordnungsgemäß funktionieren muss.
+
+\end{testcase}
+
+\begin{testcase}{500}{The SQL-Alchemist - Story-Modus}
+
+\item[Ziel]~\\
+Der Zweck dieses Tests ist es diejenigen Funktionen, welche zum Spielen der Story verwendet werden zu überprüfen. Dabei werden die bereits in $\langle\textbf{T300}\rangle$ getesteten Funktionen nicht betrachtet.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F100}\rangle, \langle\textbf{F110}\rangle, \langle\textbf{F120}\rangle, \langle\textbf{F130}\rangle, \langle\textbf{F140}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Ein Nutzer spielt den Story-Modus. Dabei gilt der Testlauf als Erfolg, falls der Nutzer einen Durchlauf durch den SQL-Trainer und das Minispiel, ohne Zwischenfälle, absolvieren kann. Als Fehlschlag zählt er, wenn es zu Fehlern in der Ausführung kommt und eine der Funktionen nicht durchgeführt werden kann. 
+
+\item[Vorbedingung]~\\
+Der Nutzer muss sich bereits einen Account erstellt haben und im Spiel angemeldet sein.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Auf "`Story-Mode"´ klicken
+\item Das automatisch gestartete Tutorial absolvieren
+\item Die Anzeige des "`Laboratory"´ überprüfen
+\item Den SQL-Trainer über die "`Scrollcollection"´ starten
+\item Ein SQL-Statement bearbeiten
+\item Das Minispiel über das "`Dungeon"´ starten
+\item Die ersten vier Level abschließen
+\item Überprüfen ob das fünfte Level ein "`Endlevel"´ ist
+\item Zurück zum "`Laboratory"´ wechseln
+\item Den "`Story-Mode"´ verlassen
+\item Die begonnene Story im "`Settings"´-Menü über "`Story reset"´ zurücksetzen 
+\item Überprüfen ob die Änderung übernommen wurden
+\end{enumerate}
+Ausgabe:
+Im SQL-Trainer und im Minispiel werden die erreichten Ergebnisse angezeigt. Außerdem werden die einzelnen Menüs und die Spielbereiche grafisch dargestellt. Bei einem Fehlschlag werden entsprechende Meldungen ausgegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+\item[Besonderheiten]~\\
+
+\item[Abhängigkeiten]~\\
+Der Testfall ist von $\langle\textbf{T300}\rangle$ abhängig, da die Registrierung von Nutzern ordnungsgemäß funktionieren muss.
+
+\end{testcase}
+
+\begin{testcase}{600}{The SQL-Alchemist - Hausaufgaben- und Trivia-Modus}
+
+\item[Ziel]~\\
+Der Zweck dieses Tests ist es, die auf den Hausaufgaben- und den Trivia-Modus bezogenen Funktionen zu prüfen. Dabei werden die bereits in $\langle\textbf{T300}\rangle$ getesteten Funktionen nicht betrachtet.
+
+\item[Objekte/Methoden/Funktionen]~\\
+$\langle\textbf{F130}\rangle, \langle\textbf{F150}\rangle$ 
+
+\item[Pass/Fail Kriterien]~\\
+Ein Nutzer spielt den Hausaufgaben-Modus. Dabei gilt der Testlauf als Erfolg, falls der Nutzer einen Durchlauf durch den SQL-Trainer  ohne Zwischenfälle, absolvieren und auch die Hausaufgaben wie geplant bearbeiten kann. Als Fehlschlag zählt er, wenn es zu Fehlern in der Ausführung kommt und eine der Funktionen nicht durchgeführt werden kann. 
+
+\item[Vorbedingung]~\\
+Der Nutzer muss sich einen Account erstellt haben und im Spiel als Student angemeldet sein. Außerdem muss bereits ein Hausaufgabenpaket erstellt worden sein.
+
+\item[Einzelschritte]~\\
+
+Eingabe:
+\begin{enumerate}
+\item Auf "`Homework"´ klicken
+\item Die gestellten SQL-Statements bearbeiten bis das Aufgabenpaket vollständig gelöst wurde
+\item Überprüfen ob die bearbeiteten Aufgaben richtig analysiert werden
+\end{enumerate}
+Ausgabe:
+Im SQL-Trainer werden die erreichten Ergebnisse angezeigt. Außerdem werden die einzelnen Menüs grafisch dargestellt. Bei einem Fehlschlag werden entsprechende Meldungen ausgegeben.
+
+\item[Beobachtungen / Log / Umgebung]~\\
+
+\item[Besonderheiten]~\\
+
+\item[Abhängigkeiten]~\\
+Der Testfall ist von $\langle\textbf{T300}\rangle$ abhängig, da die Registrierung von Nutzern ordnungsgemäß funktionieren muss. Zudem ist der Testfall von $\langle\textbf{T100}\rangle$, genauer vom Erstellen der Hausaufgabenpakete abhängig. 
+
+\end{testcase}
+

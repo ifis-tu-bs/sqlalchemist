@@ -1,0 +1,34 @@
+%!TEX root = ../TechnischerEntwurf.tex
+
+\chapter{Erfüllung der Kriterien}
+
+In diesem Kapitel wird beschrieben, wie die einzelnen Kriterien, die im Pflichtenheft genannt sind, in der Software umgesetzt wurden. Dabei wird auf die Nutzung bei der Umsetzung eingegangen. Da in der Software zwei Komponenten vorhanden sind und diese dadurch sehr oft auftauchen werden, wird das Front-End nachfolgend mit seiner Bezeichnung \glqq C10\grqq~und das Back-End mit seiner Bezeichnung \glqq C10\grqq~genannt. 
+
+\section{Musskriterien}\label{sec:musskriterien}
+\must{1}{Das geforderte Minispiel wird in C10 angezeigt und die Daten dafür in C20 gespeichert}
+\must{2}{Das grafisch aufbereitete Webinterface ist durch C10 komplett realisiert.}
+\must{3}{Die Fenster für Aufgabenstellung und eingaben sind Teil von C10. Dabei werden die Daten für die Aufgabenstellung vom C20 angefordert und die Daten aus dem Eingabefeld werden zur Kontrolle zurück an C20 gesendet }
+\must{4}{C20 besteht zum Großteil aus einer Datenbank die die anfallenden Nutzerden speichert.}
+\must{5}{C20 stellt eine Benutzeroberfläche zur Verfügung, die administrative Tätigkeiten ermöglicht}
+\must{6}{Die in RM5 Benutzerobfläche beinhaltet auch die Möglichkeit, Aufgaben zu erstellen.}
+\must{7}{C10 bietet drei Spielmodi (Trivia-, Story und Homework-Mode).}
+\must{8}{C20 hat eine Anbindung an das LDAP der Technischen Universit\"at Braunschweig.}
+\must{9}{Die Game-Engine ist in C20 integriert.}
+
+
+\section{Sollkriterien}\label{sec:sollkriterien}
+\should{1}{Die gestellten SQL-Aufgaben haben fünf Schwierigkeitgrade.}
+\should{2}{Die Gesamtsoftware ist mit leichten Leistungseinbußen auf moblien Endgeräten funktionabel.}
+\should{3}{Die Software bietet verschiedene Avatare mit verschiedenen Eigenschaften die im Shop erworben werden können.}
+\should{4}{Das Spielerprofil speichert verschiedene Höchstleistung des Spielers.}
+\should{5}{Es werden verschiedene Ranglisten unterstützt.}
+
+
+\section{Kannkriterien}\label{sec:kannkriterien}
+\could{1}{Mit den entsprechenden Rechten kann jeglicher Aufgabentyp erstellt werden.}
+\could{2}{Das Nutzen der Software von anderen Universitäten ist nicht vorgesehen, kann jedoch besprochen werden.}
+\could{3}{Es k\"onnte ein abgespecktes Tutorial f\"ur den Trivia-Mode geben. Dies wurde nicht umgesetzt.}
+\could{4}{Im Shop können, gegen Ingame-Währung, Avatare und \glqq Belt-Slots\grqq~erworben werden.} 
+\could{5}{Im Minispiel erfolgen Sprünge über die Leertaste oder die linke Maustaste. Die Beltslots zum Nutzen der darin befindlichen Tränke werden mit den Tasten 1 bis 7 angewählt.}
+\could{6}{Freundeslisten wird es vorerst nicht geben.}
+
