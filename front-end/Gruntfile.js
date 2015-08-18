@@ -67,7 +67,7 @@ module.exports = function(grunt) {
         files: [{
           cwd: 'build/',
           src: '**/*',
-          dest: '../ServerApp/public/game/',
+          dest: '../back-end/public/game/',
           expand: true
         }]
       }
@@ -178,5 +178,5 @@ module.exports = function(grunt) {
   grunt.registerTask('dist', ['default', 'download-electron', 'asar']);
   grunt.registerTask('serve', ['resources', 'connect', 'watch']);
   grunt.registerTask('move', ['default', 'copy']);
-  
+
 }

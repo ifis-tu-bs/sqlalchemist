@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                 files: [{
                     cwd: 'build/',
                     src: '**/*',
-                    dest: '../ServerApp/public/admintool/',
+                    dest: '../back-end/public/admintool/',
                     expand: true
                 }]
             }
