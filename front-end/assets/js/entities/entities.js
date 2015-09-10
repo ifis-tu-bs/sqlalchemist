@@ -11,14 +11,14 @@ game.LevelEntity = me.LevelEntity.extend({
 
         this.nextlevel = this.findNextLevel(Math.floor(game.persistent.depth / 5));
 
-        //play the background sound
+        //Play the background music
         var title;
         if(game.persistent.depth % 5 === 1 && game.persistent.depth !== 1 ){
-            title = "boss".concat(Math.floor(Math.random() * 5)+1);
+            title = "boss".concat(Math.ceil(Math.random() * 5));
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
         }else if(game.persistent.depth % 5 === 2 && game.persistent.depth !== 2 ){
-            title = "level".concat(Math.floor(Math.random() * 7)+1);
+            title = "level".concat(Math.ceil(Math.random() * 7));
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
         }else if(game.persistent.depth === 52){
@@ -26,6 +26,8 @@ game.LevelEntity = me.LevelEntity.extend({
             me.audio.playTrack("credits", game.data.musicVolume);
         }
         game.data.recentTitle = title;
+
+        //fading settings
         this.fade = "#333333";
         this.duration = settings.duration;
         this.fading = false;
@@ -82,7 +84,7 @@ game.PlayerEntity = me.Entity.extend({
     init:function (x, y, settings) {
         //set name from sprite
         settings.image = game.data.sprite;
-       // call the constructor
+        // call the constructor
         this._super(me.Entity, 'init', [x, y, settings]);
 
         // set the default horizontal & vertical speed (accel vector)
@@ -90,6 +92,8 @@ game.PlayerEntity = me.Entity.extend({
 
         // set the display to follow our position on both axis
         me.game.viewport.follow(this.pos , me.game.viewport.AXIS.BOTH);
+
+        // set the Deadzone to zero so the player is always in the middle of the canvas
         me.game.viewport.setDeadzone(0, 0);
 
         // ensure the player is updated even when outside of the viewport
@@ -100,7 +104,7 @@ game.PlayerEntity = me.Entity.extend({
 
         // define a basic walking animation (using all frames)
         this.renderable.addAnimation("walk",  [0, 1, 2]);
-        // set the standing animation as default
+        // set the walking animation as default
         this.renderable.setCurrentAnimation("walk");
     },
 
@@ -109,11 +113,11 @@ game.PlayerEntity = me.Entity.extend({
      */
     update : function (dt) {
 
-            // update the entity velocity
-            this.body.vel.x += this.body.accel.x * me.timer.tick;
-            this.body.setVelocity(game.stats.speed + game.stats.addspeed, game.stats.jump + game.stats.addjump);
+        // update the entity velocity
+        this.body.vel.x += this.body.accel.x * me.timer.tick;
+        this.body.setVelocity(game.stats.speed + game.stats.addspeed, game.stats.jump + game.stats.addjump);
 
-
+        // eventlistener for the key named jump set in screen/play.js
         if (me.input.isKeyPressed('jump')) {
             // make sure we are not already jumping or falling
             if (!this.body.jumping && !this.body.falling) {
@@ -191,6 +195,7 @@ game.PlayerEntity = me.Entity.extend({
                     if(damage > 0){
                         game.stats.hp -= damage;
                         this.renderable.flicker(1500);
+                        //play audio
                         if(game.data.sound){
                             if(Math.floor(Math.random() * 4) === 3){
                                 me.audio.play("thathurts", false, null, game.data.soundVolume);
@@ -199,13 +204,13 @@ game.PlayerEntity = me.Entity.extend({
                             }
                         }
                     }
-
+                    // change state if hitpoints drop to zero or below
                     if (game.stats.hp < 1 ){
                         setTimeout(function(){
                             me.state.change(me.state.GAMEOVER);
                         }, 300)
                     }
-
+                    // after a given time it sets hurt back to false to allow another triggering
                     setTimeout(function(){
                         self.hurt = false;
                     }, 1500);
@@ -264,8 +269,6 @@ game.CoinEntity = me.CollectableEntity.extend({
  ------------------------ */
 game.EnemyEntity = me.Entity.extend({
     init: function(x, y, settings) {
-        // define this here instead of tiled
-        //settings.image = "wheelie_right";
 
         // save the area size defined in Tiled
         var width = settings.width;
@@ -299,14 +302,11 @@ game.EnemyEntity = me.Entity.extend({
         // manually update the entity bounds as we manually change the position
         this.updateBounds();
 
-        // to remember which side we were walking
+        // to remember which side we were jumping
         this.jump = false;
 
         // to remember which side we were walking
         this.walkLeft = false;
-
-        //if hurt
-        this.hurt = false;
 
         // walking & jumping speed
         this.body.setVelocity( runpower, jumppower);
@@ -436,6 +436,9 @@ game.SpikeEntity = me.CollectableEntity.extend({
     }
 });
 
+/*----------------
+ a damaging entity
+ ----------------- */
 game.FireEntity = me.CollectableEntity.extend({
     // extending the init function is not mandatory
     // unless you need to add some extra initialization
@@ -451,7 +454,7 @@ game.FireEntity = me.CollectableEntity.extend({
     onCollision : function () {
         // do something when collected
 
-        // give some score
+        // lose health
         game.stats.hp = game.stats.hp - 1 ;
 
         if (game.stats.hp < 1 ){
@@ -460,7 +463,7 @@ game.FireEntity = me.CollectableEntity.extend({
             }, 100)
         }
 
-        // play a "coin collected" sound
+        // play a "fire" sound
         if(game.data.sound){
             me.audio.play("fire", false, null, game.data.soundVolume);
         }
@@ -472,6 +475,3 @@ game.FireEntity = me.CollectableEntity.extend({
         me.game.world.removeChild(this);
     }
 });
-
-
-
