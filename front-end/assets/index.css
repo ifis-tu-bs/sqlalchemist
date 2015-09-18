@@ -109,3 +109,14 @@ body {
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Amethysta-Regular';
+    src: url('data/img/font/Amethysta-Regular.eot');
+    src: url('data/img/font/Amethysta-Regular.eot?#iefix') format('embedded-opentype'),
+    url('data/img/font/Amethysta-Regular.woff') format('woff'),
+    url('data/img/font/Amethysta-Regular.ttf') format('truetype'),
+    url('data/img/font/Amethysta-Regular.svg#Amethysta-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
