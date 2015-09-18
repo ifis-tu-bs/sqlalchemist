@@ -106,12 +106,6 @@ var game = {
 
     // Run on page load.
     "onload" : function () {
-        me.input.unbindKey(me.input.KEY.LEFT);
-
-
-
-
-
         // Initialize the video.
         if (!me.video.init("screen", me.video.CANVAS, 1320, 768, true, 'auto')) {
             alert("Your browser does not support HTML5 canvas.");
@@ -193,87 +187,4 @@ var game = {
         me.state.change(STATE_START);
     }
 };
-//Data that is covert to Objects in Dataobjects
-game.input = {
-    skins : {
-        available: [0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-
-                    0, 0
-        ],
-        name: [
-            //alphabetical start
-            "alastor_moody",
-            "albus_dumbledore",
-            "arthur_weasley",
-            "cho_chang",
-            "colin_creevey",
-
-            "crabbe_and_goyle",
-            "dolores_umbridge",
-            "draco_malfoy",
-            "filius_flitwick",
-            "fleur_delacour",
-
-            "fred_and_george",
-            "fred_and_george_2",
-            "gilderoy_lockhart",
-            "ginny_weasley", 
-            "harry__potter",
-
-            "harry_potter",
-            "hermione__granger",
-            "hermione_granger",
-            "horace_slughorn",
-            "kingsley_shacklebolt",
-
-            "lavender_brown",
-            "lucius_malfoy",
-            "luna_lovegood", 
-            "minerva_mcGonagel",
-            "moaning_myrtle2",
-
-            "molly_weasley",
-            "mr_binns2",
-            "narcissa_malfoy", 
-            "neville_longbottom",
-            "nymphadora_tonks",
-
-            "padma_and_parvati_patil",
-            "pomona_sprout",
-            "remus_lupin",
-            "ron__weasley",
-            "ron_weasley",
-
-            "rubeus_hagrid",
-            "seamus_finnigan",
-            "severus_snape",
-            "sirius_black",
-            "sybill_trelawney",
-
-            "voldemort"
-        ]
-    },
-    potions : {
-        amount :  [10,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1],
-        power:   [0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4],
-        type :   ["hp", "hp", "hp", "hp", "hp", "speed","speed","speed","speed","speed", "jump", "jump", "jump", "jump", "jump", "defense","defense","defense","defense","defense"],
-        available:  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    },
-    //Default belt
-    belt : [],
-    enchantments : {
-        difficulty : [1,1,1,2,2,2,3,3,4,4,1,1,2,2,3,3,3,4,4,4,1,1,1,2,2,2,3,3,4,4,1,1,2,2,3,3,3,4,4,4],
-        type :  ["health","health","health","health","health","health","health","health","health","health",
-            "speed","speed","speed","speed","speed","speed","speed","speed","speed","speed",
-            "jump","jump","jump","jump","jump","jump","jump","jump","jump","jump",
-            "defense","defense","defense","defense","defense","defense","defense","defense","defense","defense"],
-        available : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-        used : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    }
-}
-
 
