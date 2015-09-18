@@ -5,9 +5,9 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import models.Exception.SOLAlchemistException;
 import models.helper.*;
 
-import de.tu_bs.cs.ifis.sqlgame.sandbox.*;
-import de.tu_bs.cs.ifis.sqlgame.xmlparse.*;
-import de.tu_bs.cs.ifis.sqlgame.exception.MySQLAlchemistException;
+import sqlgame.sandbox.*;
+import sqlgame.xmlparse.*;
+import sqlgame.exception.MySQLAlchemistException;
 
 import play.Logger;
 import play.Play;

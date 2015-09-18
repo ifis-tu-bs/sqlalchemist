@@ -37,7 +37,6 @@ game.ReadyScreen = me.ScreenObject.extend({
 
             }
             game.data.scollLimit = stat.characterState.scrollLimit;
-            console.log(game.data.scollLimit);
 
             //get Potions 1-20
             for (var i = 0; i < stat.characterState.inventory.potions.length; i++) {
