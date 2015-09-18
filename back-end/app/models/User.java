@@ -15,7 +15,6 @@ import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
-import play.mvc.Http;
 
 import javax.naming.CommunicationException;
 import javax.persistence.*;
@@ -330,58 +329,6 @@ public class User extends Model {
     }
 
 //////////////////////////////////////////////////
-//  Object Getter Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param email
-     * @return
-     */
-    public static User getByEmail(String email) {
-        if(email == null) {
-            return null;
-        }
-        return find.where().eq("email", email).findUnique();
-    }
-
-    /**
-     *
-     * @param session
-     * @return
-     */
-    public static Profile getProfile(Http.Session session) {
-        UserSession userSession = null;
-        if( (userSession = UserSession.getSession(session))  == null ) {
-            Logger.warn("User.getProfile(Http.Session) - no UserSession found");
-            return null;
-        }
-        return userSession.getUser().getProfile();
-    }
-
-    /**
-     *
-     * @param y_ID
-     * @return
-     */
-    private static User getByY_ID(String y_ID) {
-        if(y_ID == null) {
-            return null;
-        }
-        return find.where().eq("y_ID",y_ID).findUnique();
-    }
-
-    public static List<User> getAllStudendts() {
-        List<User> studentList = find.where().eq("isStudent", true).findList();
-
-        if (studentList.size() == 0) {
-            return null;
-        }
-
-        return studentList;
-    }
-
-//////////////////////////////////////////////////
 //  Actions Methods
 //////////////////////////////////////////////////
 
@@ -415,7 +362,7 @@ public class User extends Model {
             }
         }
            */
-        User user = getByEmail(id);
+        User user = dao.UserDAO.getByEmail(id);
         if (user != null &&  BCrypt.checkpw(password, user.passwordHash)) {
             if (adminTool && user.getRole() > ROLE_USER || !adminTool) {
                 return user;
@@ -503,13 +450,5 @@ public class User extends Model {
         this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
-    }
-
-    public static User getById(long id) {
-        return find.byId(id);
-    }
-
-    public static List<User> getAllUsers() {
-        return find.all();
     }
 }

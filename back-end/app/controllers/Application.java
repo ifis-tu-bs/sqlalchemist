@@ -9,6 +9,7 @@ import play.mvc.*;
 import play.Play;
 
 import models.*;
+import dao.UserDAO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class Application extends Controller {
      * @return ok
      */
     public static Result init() {
-        if(User.getAllUsers().size() == 0) {
+        if(UserDAO.getAllUsers().size() == 0) {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
             Map.init();

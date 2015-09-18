@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
+import dao.UserDAO;
 import play.*;
 import play.libs.Json;
 import play.mvc.*;
@@ -21,7 +22,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public static Result collected() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
         JsonNode body = request().body().asJson();
         StoryChallenge challenge = StoryChallenge.getForProfile(profile);
 
@@ -87,7 +88,7 @@ public class ItemController extends Controller {
      */
 
     public static Result scrollCollection() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
         if(profile == null) {
             Logger.warn("ProfileController.scrollCollection - No profile found");
             return badRequest("no profile found");
@@ -101,7 +102,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public static Result belt() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         return ok(Inventory.getJson_Belt(profile));
     }
@@ -113,7 +114,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public static Result edit() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
         JsonNode belt = request().body().asJson().path("slots");
 
         if (belt == null) {
@@ -140,7 +141,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public static Result used(int id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         Inventory inventory = Inventory.getBeltSlot(profile, id);
         if(inventory == null){
@@ -158,7 +159,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public static Result inventory() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
         return ok(Inventory.getJson_Inventory(profile));
     }
 }

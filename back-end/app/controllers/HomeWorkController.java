@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
+import dao.UserDAO;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -66,7 +67,7 @@ public class HomeWorkController extends Controller {
     }
 
     public static Result getAll() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getProfile(session()).getUser();
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");
@@ -91,7 +92,7 @@ public class HomeWorkController extends Controller {
      * @return
      */
     public static Result create() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getProfile(session()).getUser();
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");
@@ -133,7 +134,7 @@ public class HomeWorkController extends Controller {
         //                                                  |
         //                                                  v
         //
-        if (HomeWorkChallenge.create(name, User.getProfile(session()), 0, 0, taskFiles, 0, start, end) == null) {
+        if (HomeWorkChallenge.create(name, UserDAO.getProfile(session()), 0, 0, taskFiles, 0, start, end) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return badRequest("Data did not match constraints");
         }
@@ -142,7 +143,7 @@ public class HomeWorkController extends Controller {
     }
 
     public static Result delete(Long id) {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getProfile(session()).getUser();
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");

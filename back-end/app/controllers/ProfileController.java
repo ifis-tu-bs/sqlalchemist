@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
+import dao.UserDAO;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
@@ -26,7 +27,7 @@ public class ProfileController extends Controller {
      * @return returns the PlayerState as JSON Object
      */
     public static Result index() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         if(profile == null){
             Logger.warn("ProfileController - no profile found");
@@ -54,7 +55,7 @@ public class ProfileController extends Controller {
      * @return  returns the CharacterState as JSON Object
      */
     public static Result character() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         if(profile == null) {
             Logger.warn("ProfileController.character - No profile found");
@@ -71,7 +72,7 @@ public class ProfileController extends Controller {
      * @return  returns the new playerStats
      */
     public static Result avatar(long id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         if(profile == null || !profile.setAvatar(id)) {
             Logger.warn("ProfileController.avatar - No profile found or no Avatar Found");
@@ -83,7 +84,7 @@ public class ProfileController extends Controller {
 
 
     public static Result reset() {
-        Profile profile = User.getProfile(session());
+        Profile profile = UserDAO.getProfile(session());
 
         profile.resetStory();
 
@@ -93,7 +94,7 @@ public class ProfileController extends Controller {
     }
 
     public static Result getUserHomeworks() {
-        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(User.getProfile(session()));
+        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(UserDAO.getProfile(session()));
         List<HomeWorkChallenge> homeWorks = HomeWorkChallenge.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 

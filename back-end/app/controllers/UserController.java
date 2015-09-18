@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
+
+import dao.UserDAO;
+import models.User;
+import models.UserSession;
 
 import Exception.EmailTakenException;
 import Exception.UsernameTakenException;
@@ -57,21 +60,21 @@ public class UserController extends Controller {
             email = email.trim();
             password = password.trim();
 
-            /*
+
             // Check the availability of the username
-            if(UserDAO.findByUsername(username) != null) {
+            if(UserDAO.getByUsername(username) != null) {
               node.put("username", 1);
             } else {
               node.put("username", 0);
             }
 
             // Check the availability of the email
-            if(UserDAO.findByEmail(email) != null) {
+            if(UserDAO.getByUsername(email) != null) {
               node.put("id", 1);
             } else {
               node.put("id", 0);
             }
-*/
+
   //          return badRequest(node);
 
             try {
@@ -166,7 +169,7 @@ public class UserController extends Controller {
             return badRequest("Could not retrieve Json from POST body!");
         }
 
-        User user = User.getByEmail(json.findPath("id").textValue());
+        User user = UserDAO.getByEmail(json.findPath("id").textValue());
 
         user.sendResetPasswordMail();
 
@@ -201,7 +204,7 @@ public class UserController extends Controller {
     }
 
     public static Result checkStudent() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getProfile(session()).getUser();
 
         if (user == null) {
             return badRequest("No User found");
@@ -221,7 +224,7 @@ public class UserController extends Controller {
     @Security.Authenticated(AdminSecured.class)
     public static Result getAllUsers() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<User> userList = User.getAllUsers();
+        List<User> userList = UserDAO.getAllUsers();
 
 
         for(User user : userList) {
@@ -236,8 +239,8 @@ public class UserController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result promote(long id) {
-        User        user    = User.getProfile(session()).getUser();
-        User        user1   = User.getById(id);
+        User        user    = UserDAO.getProfile(session()).getUser();
+        User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();
 
         if(user == null) {
