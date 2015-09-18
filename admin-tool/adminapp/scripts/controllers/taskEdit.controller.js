@@ -55,7 +55,7 @@ angular
                             FlashService.Error(data.message);
                         } else {
                             FlashService.Clear();
-                            $modalInstance.close(null);
+                            $modalInstance.close(true);
                         }
                     }
                 );
@@ -67,7 +67,7 @@ angular
                             FlashService.Error(data.message);
                         } else {
                             FlashService.Clear();
-                            $modalInstance.close(null);
+                            $modalInstance.close(true);
                         }
                     }
                 );

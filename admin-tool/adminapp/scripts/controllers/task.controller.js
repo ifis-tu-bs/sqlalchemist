@@ -20,24 +20,36 @@ angular
         $scope.orderReverseTaskFile = false;
         $scope.orderReverseSubTask = false;
 
-        initController();
+
 
         function initController() {
+            var activeTask = vm.selectedTask;
+
             FlashService.Clear();
-            getAllTasks();
+            getAllTasks(activeTask);
+
         }
 
-        function getAllTasks() {
+        function getAllTasks(oldSelectedTask) {
             TaskService.getAllTasks().then(function(data) {
-                vm.tasks = data;
-                vm.selectedTask = vm.tasks[0];
-            });
+                var index = 0;
 
+                vm.tasks = data;
+
+                if ((index = findInArray(vm.tasks, oldSelectedTask)) != -1) {
+                    $scope.selectTask(vm.tasks[index]);
+                } else {
+                    $scope.selectTask(vm.tasks[0]);
+                }
+
+            });
         }
 
         $scope.selectTask = function(selectTask) {
             vm.selectedTask = selectTask;
         }
+
+        initController();
 
         /* ~~~~~~~~~~~~~~~~~~~~ Rating  ~~~~~~~~~~~~~~~~~~~~ */
 
@@ -238,7 +250,17 @@ angular
 
         }
 
+        function findInArray(array, item) {
+            for (var i = 0; i < array.length; i++) {
+                if (array[i].id === item.id) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
     }
+
 
 
 })();
