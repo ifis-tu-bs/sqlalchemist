@@ -1,6 +1,15 @@
 /**
+ * The entities describe all the element which are used in the game.
+ * They are added to each map with the tiled-editor.
+ *
+ */
+
+//-----------------------------------------------------------------------------
+/**
  * Our own LevelEntity
- * We need Random next maps, so we instanciate our own LevelEntity
+ * We need Random next maps, so we instanciate our own LevelEntity.
+ * This one also changes the current background music randomly,
+ * according the kind of the map.
  */
 game.LevelEntity = me.LevelEntity.extend({
 
