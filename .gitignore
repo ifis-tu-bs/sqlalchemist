@@ -6,3 +6,11 @@
 .DS_Store
 */.DS_Store
 **/.DS_Store
+
+########
+# Back-End
+
+########
+# Front-End
+front-end/build
+front-end/node_modules
