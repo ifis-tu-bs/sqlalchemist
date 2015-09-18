@@ -40,7 +40,6 @@ public class Profile extends Model {
     @Embedded
     public Settings settings;
 
-
     private boolean tutorialDone;
     private boolean storyDone;
 
