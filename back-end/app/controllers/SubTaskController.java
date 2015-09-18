@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
 
-import de.tu_bs.cs.ifis.sqlgame.exception.MySQLAlchemistException;
+import sqlgame.exception.MySQLAlchemistException;
 import models.*;
 
 import models.Exception.SOLAlchemistException;
