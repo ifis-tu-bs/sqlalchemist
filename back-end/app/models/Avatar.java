@@ -1,7 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.helper.PlayerStats;
+import helper.PlayerStats;
 import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;
@@ -554,7 +554,7 @@ public class Avatar extends Model {
                 2,
                 0,
                 0);
-        
+
         Avatar.create(
                 "Neville Longbottom",
                 "I've always hoped that he is\\nthe one from the prophecy.\\nChoose him, he is really good.",

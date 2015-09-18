@@ -5,9 +5,9 @@ import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 
-import models.Exception.UsernameTakenException;
-import models.helper.*;
-import models.helper.Random;
+import Exception.UsernameTakenException;
+import helper.Random;
+import helper.*;
 import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;

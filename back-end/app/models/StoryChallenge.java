@@ -6,7 +6,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.helper.SimpleText;
+import helper.SimpleText;
 import play.Logger;
 import play.libs.Json;
 

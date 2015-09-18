@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 
-import models.Exception.EmailTakenException;
-import models.Exception.UsernameTakenException;
+import Exception.EmailTakenException;
+import Exception.UsernameTakenException;
 
 import play.Logger;
 import play.mvc.*;
@@ -83,12 +83,12 @@ public class UserController extends Controller {
     /**
      * This method handle password changes
      * POST /users
-     * 
+     *
      * Needs a JSON Body Request with values:
      *  password_old:    String
-     *  password_new:    String 
+     *  password_new:    String
      *
-     * @return returns a ok if the old password is valid or a badRequest Status 
+     * @return returns a ok if the old password is valid or a badRequest Status
      */
     @Security.Authenticated(UserSecured.class)
     public static Result edit() {
@@ -113,7 +113,7 @@ public class UserController extends Controller {
      * This method delete the user
      * DELETE /users
      *
-     * @return ok 
+     * @return ok
      */
     @Security.Authenticated(UserSecured.class)
     public static Result destroy() {

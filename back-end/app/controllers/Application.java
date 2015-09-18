@@ -1,9 +1,9 @@
 package controllers;
 
-import models.Exception.EmailTakenException;
-import models.Exception.UsernameTakenException;
-import models.helper.HMSAccessor;
-import models.helper.SimpleText;
+import Exception.EmailTakenException;
+import Exception.UsernameTakenException;
+import helper.HMSAccessor;
+import helper.SimpleText;
 import play.Logger;
 import play.mvc.*;
 import play.Play;
@@ -52,7 +52,7 @@ public class Application extends Controller {
                     User user = User.create("admin", "admin@local.de", "password1234", User.ROLE_ADMIN);
                     user.setStudent();
                     user.update();
-                    
+
                     User.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
                     User.create("test2", "test2@test.de", "test");
                     User.create("test3", "test3@test.de", "test");

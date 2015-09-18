@@ -1,4 +1,4 @@
-package models.helper;
+package helper;
 
 /**
  * Helper class for RATable.java

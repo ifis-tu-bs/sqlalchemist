@@ -2,8 +2,8 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import models.Exception.SOLAlchemistException;
-import models.helper.*;
+import Exception.SOLAlchemistException;
+import helper.*;
 
 import sqlgame.sandbox.*;
 import sqlgame.xmlparse.*;

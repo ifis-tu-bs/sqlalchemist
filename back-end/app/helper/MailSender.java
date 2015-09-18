@@ -1,4 +1,4 @@
-package models.helper;
+package helper;
 
 import models.User;
 import play.Logger;
