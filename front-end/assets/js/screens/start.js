@@ -3,15 +3,20 @@ game.StartScreen = me.ScreenObject.extend({
     /**
      *  action to perform on state change
      */
+
     onResetEvent: function() {
+
         me.game.world.addChild(
-            new me.Sprite(
-                0, 0,
-                me.loader.getImage('title_screen')
+            new me.Sprite (
+                0,0,
+                me.loader.getImage('black')
             ),
             1
         );
-
+        
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'inline');
+        background.setImage("assets/data/img/gui/title_screen.png", "back");
+        me.game.world.addChild(background);
 
         //get the users settings
         function getSettings(xmlHttpRequest) {
@@ -46,17 +51,21 @@ game.StartScreen = me.ScreenObject.extend({
         ajaxSendProfileRequest(checkSession);
 
 
-
         /**
          * these functions are called when buttons are clicked.
          * Here: simple state change.
          */
-        onStart = function() {
-            if(game.data.gotSession){
-                me.state.change(me.state.MENU);
-            }else {
-                me.state.change(STATE_LOGIN);
-            }
+
+
+        this.onStart = function() {
+            $("#background").fadeOut();
+            setTimeout( function() {
+                if(game.data.gotSession){
+                    me.state.change(me.state.MENU);
+                } else {
+                    me.state.change(STATE_LOGIN);
+                }
+            },100);
         };
 
         /**
@@ -70,7 +79,7 @@ game.StartScreen = me.ScreenObject.extend({
          *          top      : the top margin of the element in percent of the height of the canvas
          *          rows     : the number of rows
          */
-        var startButton  = new game.ClickableElement('startButton', 'start', onStart, 20, 8.7, 43, 50, 1);
+        var startButton  = new game.ClickableElement('startButton', 'start', this.onStart, 20, 8.7, 43, 50, 1);
         me.game.world.addChild(startButton);
 
     }
