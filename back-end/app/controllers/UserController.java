@@ -1,7 +1,7 @@
 package controllers;
 
+import play.libs.Json;
 import com.fasterxml.jackson.databind.JsonNode;
-
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,11 +12,13 @@ import models.UserSession;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
-import play.Logger;
-import play.mvc.*;
-import play.libs.*;
+import secured.UserSecured;
+import secured.AdminSecured;
 
-import secured.*;
+import play.Logger;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
@@ -87,7 +89,7 @@ public class UserController extends Controller {
      *
      * @return returns a ok if the old password is valid or a badRequest Status
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result edit() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
@@ -112,7 +114,7 @@ public class UserController extends Controller {
      *
      * @return ok
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result destroy() {
     	return ok("Test");
     }
@@ -200,7 +202,7 @@ public class UserController extends Controller {
         return ok();
     }
 
-    @Security.Authenticated(AdminSecured.class)
+    @Authenticated(AdminSecured.class)
     public static Result getAllUsers() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         List<User> userList = UserDAO.getAllUsers();
@@ -216,7 +218,7 @@ public class UserController extends Controller {
         return ok(arrayNode);
     }
 
-    @Security.Authenticated(AdminSecured.class)
+    @Authenticated(AdminSecured.class)
     public static Result promote(long id) {
         User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);

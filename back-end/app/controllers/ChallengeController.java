@@ -1,18 +1,22 @@
 package controllers;
 
-import models.*;
+import models.Profile;
+import models.StoryChallenge;
+
 import dao.UserDAO;
 import dao.ProfileDAO;
+
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
+
 import secured.UserSecured;
 
 /**
  * @author fabiomazzone
  */
 
-@Security.Authenticated(UserSecured.class)
+@Authenticated(UserSecured.class)
 public class ChallengeController extends Controller {
 
     /**

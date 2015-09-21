@@ -1,19 +1,22 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.*;
+import models.Profile;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.Logger;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 /**
  * This is the controller class for the settings
  *
  * @author fabiomazzone
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class SettingsController extends Controller {
     /**
      * GET      /profile/settings

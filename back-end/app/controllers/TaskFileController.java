@@ -3,13 +3,18 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
-import models.*;
+import models.Profile;
+import models.TaskFile;
+import models.Comment;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
 import Exception.SQLAlchemistException;
 import play.Logger;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 import secured.CreatorSecured;
 
@@ -21,7 +26,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 
-@Security.Authenticated(CreatorSecured.class)
+@Authenticated(CreatorSecured.class)
 public class TaskFileController extends Controller {
 
     /**

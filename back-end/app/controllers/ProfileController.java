@@ -9,7 +9,10 @@ import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.Logger;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 import play.libs.Json;
 
 import java.util.List;
@@ -25,7 +28,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  *
  * @author fabiomazzone
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class ProfileController extends Controller {
 
     /**

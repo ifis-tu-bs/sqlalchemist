@@ -4,17 +4,25 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
+import models.Profile;
+import models.StoryChallenge;
+import models.Scroll;
+import models.ScrollCollection;
+import models.Inventory;
+import models.Potion;
 import dao.UserDAO;
 import dao.ProfileDAO;
-import play.*;
+import play.Logger;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class ItemController extends Controller {
 
     /**

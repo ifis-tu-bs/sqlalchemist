@@ -1,11 +1,17 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.*;
+import models.UserSession;
+import models.User;
 import dao.ProfileDAO;
 import dao.UserSessionDAO;
-import play.*;
-import play.mvc.*;
+import play.Logger;
+
+import play.Play;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 import secured.*;
 
@@ -64,7 +70,7 @@ public class SessionController extends Controller {
      *
      * @return
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result delete() {
         String sessionID = session().get("sessionID");
         UserSession userSession = UserSessionDAO.getBySessionID(sessionID);

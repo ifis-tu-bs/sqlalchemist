@@ -5,7 +5,13 @@ import com.fasterxml.jackson.databind.node.*;
 
 
 import sqlgame.exception.MySQLAlchemistException;
-import models.*;
+import models.Profile;
+import models.SubTask;
+import models.SolvedSubTask;
+import models.Comment;
+import models.Scroll;
+import models.ScrollCollection;
+import models.SubmittedHomeWork;
 
 import dao.UserDAO;
 import dao.ProfileDAO;
@@ -13,7 +19,9 @@ import dao.ProfileDAO;
 import Exception.SQLAlchemistException;
 import play.Logger;
 import play.libs.Json;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 import secured.UserSecured;
 
 import java.util.List;
@@ -22,7 +30,7 @@ import java.util.List;
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(UserSecured.class)
+@Authenticated(UserSecured.class)
 public class SubTaskController extends Controller {
 
     /**

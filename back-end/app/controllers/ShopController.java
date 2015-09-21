@@ -9,14 +9,14 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
 /**
  * @author Stefan Hanisch
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class ShopController extends Controller {
 
     /**

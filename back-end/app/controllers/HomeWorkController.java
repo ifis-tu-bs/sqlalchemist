@@ -5,13 +5,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
+import models.User;
+import models.HomeWorkChallenge;
+import models.TaskFile;
+import models.SubTask;
+import models.SubmittedHomeWork;
 import dao.UserDAO;
 import dao.ProfileDAO;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
 import secured.AdminSecured;
 import secured.UserSecured;
 
@@ -27,7 +31,7 @@ import static play.mvc.Results.ok;
 /**
  * Created by Invisible on 30.06.2015.
  */
-@Security.Authenticated(AdminSecured.class)
+@Authenticated(AdminSecured.class)
 public class HomeWorkController extends Controller {
 
     public static Result getSubmitsForHomeworkTaskFile() {

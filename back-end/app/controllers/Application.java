@@ -3,7 +3,8 @@ package controllers;
 import helper.HMSAccessor;
 import helper.SimpleText;
 import play.Logger;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
 import play.Play;
 
 import models.*;

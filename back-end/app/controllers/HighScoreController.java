@@ -2,14 +2,19 @@ package controllers;
 
 import models.Profile;
 import models.User;
+
 import dao.UserDAO;
 import dao.ProfileDAO;
-import play.mvc.*;
+
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 import secured.UserSecured;
 
 import java.util.List;
 
-@Security.Authenticated(UserSecured.class)
+@Authenticated(UserSecured.class)
 public class HighScoreController extends Controller {
     /**
      * GET      /highscore/points
