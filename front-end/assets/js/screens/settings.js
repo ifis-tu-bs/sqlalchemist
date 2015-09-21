@@ -13,6 +13,9 @@ game.SettingsScreen = me.ScreenObject.extend({
         /**
          *  set settings_screen
          */
+
+
+
         me.game.world.addChild(
             new me.Sprite (
                 0,0,
@@ -24,14 +27,14 @@ game.SettingsScreen = me.ScreenObject.extend({
         /**
          *  add all necessary buttons to screen
          */
-
-        onMenu = function(){
-            me.state.change(STATE_MENU);
-        };
         me.game.world.addChild(new music(450,195),3);
         me.game.world.addChild(new sound(450,295),4);
         me.game.world.addChild(new game.HUD.SettingsElements(125, 195),5);
         me.game.world.addChild(new backToMenu(950,-40),2);
+
+        /**var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        background.setImage("assets/data/img/gui/settings_screen.png", "back");
+        me.game.world.addChild(background);*/
 
 
         var oldPassword         = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
