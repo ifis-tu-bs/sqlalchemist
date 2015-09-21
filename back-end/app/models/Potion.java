@@ -1,7 +1,6 @@
 package models;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.helper.PlayerStats;
 import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;

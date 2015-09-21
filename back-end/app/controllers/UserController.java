@@ -7,8 +7,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 
-import models.Exception.EmailTakenException;
-import models.Exception.UsernameTakenException;
+import Exception.EmailTakenException;
+import Exception.UsernameTakenException;
 
 import play.Logger;
 import play.mvc.*;
@@ -33,36 +33,52 @@ public class UserController extends Controller {
      *  username:   String
      *  id:         String (y-ID or E-Mail)
      *  password:   String
-     *  role:       int
+     *  [role:       int]
      *
      * @return this method returns a user
      */
     public static Result create() {
-
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
         String    username  = json.findPath("username").textValue();
-        String    id        = json.findPath("id").textValue();
+        String    email     = json.findPath("id").textValue();
         String    password  = json.findPath("password").textValue();
         int       role      = json.findPath("role").asInt();
 
         ObjectNode node = Json.newObject();
-        node.put("username", 0);
         node.put("id", 0);
 
-        if(username == null || id == null || password == null) {
+        if(username == null || email == null || password == null) {
             return badRequest("Expecting Json data");
         } else {
             username = username.trim();
-            id = id.trim();
+            email = email.trim();
             password = password.trim();
+
+            /*
+            // Check the availability of the username
+            if(UserDAO.findByUsername(username) != null) {
+              node.put("username", 1);
+            } else {
+              node.put("username", 0);
+            }
+
+            // Check the availability of the email
+            if(UserDAO.findByEmail(email) != null) {
+              node.put("id", 1);
+            } else {
+              node.put("id", 0);
+            }
+*/
+  //          return badRequest(node);
+
             try {
                 if (role == 0) {
-                    User.create(username, id, password);
+                    User.create(username, email, password);
                 } else {
-                    User.create(username, id, password, role);
+                    User.create(username, email, password, role);
                 }
                 return controllers.SessionController.create();
             } catch (UsernameTakenException e) {
@@ -76,19 +92,18 @@ public class UserController extends Controller {
                 node.put("id", 1);
                 return badRequest(node);
             }
-
         }
     }
 
     /**
      * This method handle password changes
      * POST /users
-     * 
+     *
      * Needs a JSON Body Request with values:
      *  password_old:    String
-     *  password_new:    String 
+     *  password_new:    String
      *
-     * @return returns a ok if the old password is valid or a badRequest Status 
+     * @return returns a ok if the old password is valid or a badRequest Status
      */
     @Security.Authenticated(UserSecured.class)
     public static Result edit() {
@@ -113,7 +128,7 @@ public class UserController extends Controller {
      * This method delete the user
      * DELETE /users
      *
-     * @return ok 
+     * @return ok
      */
     @Security.Authenticated(UserSecured.class)
     public static Result destroy() {

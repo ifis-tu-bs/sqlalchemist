@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.*;
 
 import models.*;
 
-import models.Exception.SOLAlchemistException;
+import Exception.SOLAlchemistException;
 import play.Logger;
 import play.mvc.*;
 

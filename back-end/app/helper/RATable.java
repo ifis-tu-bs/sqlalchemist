@@ -1,4 +1,4 @@
-package models.helper;
+package helper;
 
 import play.Logger;
 
@@ -27,7 +27,7 @@ public class RATable {
     ) {
         this.statement = statement.toLowerCase().trim();
         this.tableColumn = new ArrayList<>();
-        
+
         int posOfFirstBracket = this.statement.indexOf('(');
         int posOfLastBracket = this.statement.lastIndexOf(')');
 

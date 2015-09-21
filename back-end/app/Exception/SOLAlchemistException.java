@@ -1,4 +1,4 @@
-package models.Exception;
+package Exception;
 
 /**
  * @author fabiomazzon

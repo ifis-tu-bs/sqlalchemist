@@ -1,4 +1,4 @@
-package models.helper;
+package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

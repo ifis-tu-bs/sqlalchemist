@@ -1,4 +1,4 @@
-package models.helper;
+package helper;
 
 import play.Logger;
 

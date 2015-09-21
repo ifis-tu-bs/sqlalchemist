@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.node.*;
 import sqlgame.exception.MySQLAlchemistException;
 import models.*;
 
-import models.Exception.SOLAlchemistException;
+import Exception.SOLAlchemistException;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
