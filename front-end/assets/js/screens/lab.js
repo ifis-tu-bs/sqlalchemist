@@ -1,3 +1,8 @@
+/**
+ * The ReadyScreen is really important for the game.
+ * All of the players information will be saved locally every time the player passes the lab.
+ */
+
 game.ReadyScreen = me.ScreenObject.extend({
 
     /**
