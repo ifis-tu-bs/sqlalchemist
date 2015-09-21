@@ -4,7 +4,6 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  *

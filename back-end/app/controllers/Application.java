@@ -1,6 +1,5 @@
 package controllers;
 
-import helper.HMSAccessor;
 import helper.SimpleText;
 import play.Logger;
 import play.mvc.Controller;
@@ -11,7 +10,6 @@ import models.*;
 import dao.UserDAO;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -41,7 +39,6 @@ public class Application extends Controller {
             TaskFile.init();
 
             // Init residual Classes
-            Profile profile = null;
             if(play.api.Play.isProd(play.api.Play.current())) {
                 String username = Play.application().configuration().getString("admin.username");
                 String email = Play.application().configuration().getString("admin.email");
@@ -407,7 +404,7 @@ public class Application extends Controller {
                     storyChallenge2,
                     1);
 
-            StoryChallenge storyChallenge0 = StoryChallenge.create(
+            StoryChallenge.create(
                     "Tutorial",
                     true,
                     texts0,

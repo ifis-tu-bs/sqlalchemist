@@ -1,7 +1,6 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -17,14 +16,10 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import secured.AdminSecured;
-import secured.UserSecured;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import static play.mvc.Results.ok;
 

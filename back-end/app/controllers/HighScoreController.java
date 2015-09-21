@@ -1,9 +1,7 @@
 package controllers;
 
 import models.Profile;
-import models.User;
 
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.mvc.Controller;

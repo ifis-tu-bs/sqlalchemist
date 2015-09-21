@@ -3,7 +3,6 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.UserSession;
 import models.User;
-import dao.ProfileDAO;
 import dao.UserSessionDAO;
 import play.Logger;
 

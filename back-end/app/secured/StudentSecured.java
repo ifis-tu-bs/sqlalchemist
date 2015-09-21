@@ -1,6 +1,5 @@
 package secured;
 
-import models.User;
 import models.UserSession;
 
 import dao.UserSessionDAO;

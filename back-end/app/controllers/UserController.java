@@ -7,10 +7,8 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import models.User;
-import models.UserSession;
 
 import dao.UserDAO;
-import dao.ProfileDAO;
 
 import secured.UserSecured;
 import secured.AdminSecured;

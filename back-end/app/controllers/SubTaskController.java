@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
 
-import sqlgame.exception.MySQLAlchemistException;
 import models.Profile;
 import models.SubTask;
 import models.SolvedSubTask;
@@ -13,7 +12,6 @@ import models.Scroll;
 import models.ScrollCollection;
 import models.SubmittedHomeWork;
 
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import Exception.SQLAlchemistException;
@@ -94,6 +92,7 @@ public class SubTaskController extends Controller {
      * @param id    the id of the SubTask
      * @return      returns a http code with a result of the operation
      */
+    @SuppressWarnings("UnusedAssignment")
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
         SubTask subTask     = SubTask.getById(id);
@@ -108,7 +107,7 @@ public class SubTaskController extends Controller {
         int n = body.findPath("negative").asInt();
         int e = body.findPath("needReview").asInt();
 
-        boolean status = false;
+        boolean status;
 
 
         if(p > 0 || n > 0 || e > 0) {
@@ -206,6 +205,7 @@ public class SubTaskController extends Controller {
      * @param id task-id
      * @return
      */
+    @SuppressWarnings("UnusedAssignment")
     public static Result storySolve(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
@@ -227,7 +227,7 @@ public class SubTaskController extends Controller {
         ObjectNode node = Json.newObject();
         profile.addStatement();
         profile.addTime(time);
-        Result result = null;
+        Result result;
         try {
             if(subTask.solve(statement)) {
                 SolvedSubTask.update(profile, subTask, true);
@@ -289,6 +289,7 @@ public class SubTaskController extends Controller {
      * @param id
      * @return
      */
+    @SuppressWarnings("UnusedAssignment")
     public static Result triviaSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
@@ -307,7 +308,7 @@ public class SubTaskController extends Controller {
             return badRequest("Expecting Json data");
         }
 
-        Result result = null;
+        Result result;
         profile.addStatement();
         profile.addTime(time);
         ObjectNode node = Json.newObject();

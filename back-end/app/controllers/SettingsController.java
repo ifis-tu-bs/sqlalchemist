@@ -2,7 +2,6 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Profile;
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.Logger;

@@ -1,6 +1,5 @@
 package sqlgame.exception;
 
-import java.util.ArrayList;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.ErrorHandler;

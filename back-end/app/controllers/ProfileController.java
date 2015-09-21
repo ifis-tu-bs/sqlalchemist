@@ -1,11 +1,9 @@
 package controllers;
 
-import models.User;
 import models.Profile;
 import models.SubmittedHomeWork;
 import models.HomeWorkChallenge;
 
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.Logger;

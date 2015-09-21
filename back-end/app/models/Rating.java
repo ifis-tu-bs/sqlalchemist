@@ -1,6 +1,5 @@
 package models;
 
-import com.avaje.ebeaninternal.server.deploy.generatedproperty.GeneratedInsertTimestamp;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.Logger;
 import play.Play;

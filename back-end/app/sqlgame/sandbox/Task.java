@@ -511,7 +511,7 @@ public class Task {
                                     equal = true;
                                 }
                             }
-                            if (equal == false) {
+                            if (!equal) {
                                 return false;
                             } else {
                                 equal = false;

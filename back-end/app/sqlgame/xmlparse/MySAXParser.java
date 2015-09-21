@@ -209,8 +209,8 @@ public class MySAXParser extends DefaultHandler {
             String createTableStatement = rel.getIntension().trim();
             createTableStatement = createTableStatement.replace("\n", "");
             createTableStatement = createTableStatement.replaceAll(" +", " ");
-            ArrayList<ArrayList> resultList = new ArrayList();
-            ArrayList<String> foreignColumns = new ArrayList();
+            ArrayList<ArrayList> resultList = new ArrayList<>();
+            ArrayList<String> foreignColumns = new ArrayList<>();
 
             String compPrimaryKey = "";
 
@@ -231,7 +231,7 @@ public class MySAXParser extends DefaultHandler {
                 }
                 String lastElement = foreignColumns.get(foreignColumns.size() - 1);
                 foreignColumns.set(foreignColumns.size() - 1, lastElement.substring(0, lastElement.length() - 1));
-                ArrayList<String> foreignColumnsClone = (ArrayList) foreignColumns.clone();
+                ArrayList<String> foreignColumnsClone = (ArrayList<String>) foreignColumns.clone();
                 foreignColumns.clear();
                 for (String str : foreignColumnsClone) {
                     String[] elements = str.split(" ");
@@ -254,7 +254,7 @@ public class MySAXParser extends DefaultHandler {
                 beforeStatement = createTableStatement;
             }
             String[] st = beforeStatement.split(",");
-            ArrayList<String> columns = new ArrayList();
+            ArrayList<String> columns = new ArrayList<>();
             String info = "";
             String columninfo = st[0];
             columninfo = columninfo.replaceFirst("\\(", "|");
@@ -308,7 +308,7 @@ public class MySAXParser extends DefaultHandler {
                 partsOfColumnInfo.add(containsPrimary);
                 partsOfColumnInfo.add(refContent);
 
-                resultList.add((ArrayList) partsOfColumnInfo);
+                resultList.add(partsOfColumnInfo);
             }
 
             String[] primaryColumns = compPrimaryKey.split(", ");
@@ -458,9 +458,9 @@ public class MySAXParser extends DefaultHandler {
             //add it to the list
             this.myHeader.add(this.tempHeader);
             this.myTasks.add(new Task(this.tempHeader.getTaskId(), this.myHeader, this.myRelation, this.myExercise));
-            this.myHeader = new ArrayList();
-            this.myExercise = new ArrayList();
-            this.myRelation = new ArrayList();
+            this.myHeader = new ArrayList<>();
+            this.myExercise = new ArrayList<>();
+            this.myRelation = new ArrayList<>();
         } else if (qName.equalsIgnoreCase("title")) {
             this.tempHeader.setTitle(this.sb.toString());
         } else if (qName.equalsIgnoreCase("flufftext")) {

@@ -1,11 +1,8 @@
 package models;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.sun.javafx.tk.Toolkit;
-import org.springframework.context.annotation.Primary;
 import play.Logger;
 import play.libs.Json;
 

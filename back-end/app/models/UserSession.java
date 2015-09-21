@@ -1,6 +1,5 @@
 package models;
 
-import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 

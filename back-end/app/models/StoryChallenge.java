@@ -166,8 +166,9 @@ public class StoryChallenge extends Challenge {
 //  Object Getter Methods
 //////////////////////////////////////////////////
 
+    @SuppressWarnings("UnusedAssignment")
     public static StoryChallenge getForProfile(Profile profile) {
-        StoryChallenge challenge = null;
+        StoryChallenge challenge;
         if (!profile.isTutorialDone()) {
             challenge = find.where().eq("type", TYPE_TUTORIAL).findList().get(0);
             profile.setCurrentStory(challenge);

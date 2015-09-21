@@ -2,11 +2,8 @@ package controllers;
 
 import models.Profile;
 import models.ShopItem;
-import models.User;
-import dao.UserDAO;
 import dao.ProfileDAO;
 import play.Logger;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;

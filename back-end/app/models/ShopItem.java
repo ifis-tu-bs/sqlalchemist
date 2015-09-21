@@ -3,12 +3,9 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import com.fasterxml.jackson.core.JsonFactory;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.Logger;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
 
@@ -33,7 +30,7 @@ public class ShopItem extends Model{
     @Column(name = "type")
     int type;
 
-    @Column(name = "ShopItemname")
+    @Column(name = "ShopItemName")
     private String name;
 
     @Column(name ="ShopItem_desc")

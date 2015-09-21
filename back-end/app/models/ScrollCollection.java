@@ -13,7 +13,6 @@ import play.libs.Json;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,11 +53,7 @@ public class ScrollCollection extends Model {
     public ScrollCollection(Profile profile, Scroll scroll) {
         this.profile    = profile;
         this.scroll     = scroll;
-        if(scroll.isRecipe()) {
-            this.isActive = true;
-        } else {
-            this.isActive = false;
-        }
+        this.isActive = scroll.isRecipe();
         this.added = Calendar.getInstance();
     }
 
@@ -218,7 +213,7 @@ public class ScrollCollection extends Model {
             return null;
         }
 
-        List<Scroll> scrollList = new ArrayList<Scroll>();
+        List<Scroll> scrollList = new ArrayList<>();
 
         for(ScrollCollection scrollCollection : scrollCollectionList) {
             scrollList.add(scrollCollection.scroll);

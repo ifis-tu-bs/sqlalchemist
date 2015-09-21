@@ -264,7 +264,7 @@ public class SubTask extends Model {
             Logger.warn("SubTask.solve - catches MySQLAlchemistException: " + e.getMyMessage());
             try {
                 task.closeTask();
-            } catch (MySQLAlchemistException e1) {       }
+            } catch (MySQLAlchemistException e1) {}
             throw new SQLAlchemistException(e.getMyMessage());
         }
     }

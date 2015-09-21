@@ -7,7 +7,6 @@ import play.Logger;
 import play.test.FakeApplication;
 
 import static org.junit.Assert.assertTrue;
-import static play.mvc.Http.Status.PARTIAL_CONTENT;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;

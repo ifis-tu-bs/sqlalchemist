@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.*;
 import models.Profile;
 import models.TaskFile;
 import models.Comment;
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import Exception.SQLAlchemistException;

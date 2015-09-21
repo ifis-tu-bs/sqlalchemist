@@ -3,7 +3,6 @@ package controllers;
 import models.Profile;
 import models.StoryChallenge;
 
-import dao.UserDAO;
 import dao.ProfileDAO;
 
 import play.mvc.Controller;

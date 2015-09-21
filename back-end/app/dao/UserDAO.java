@@ -2,12 +2,10 @@ package dao;
 
 import models.User;
 import models.Profile;
-import models.UserSession;
 
 import helper.MailSender;
 
 import play.Logger;
-import play.mvc.Http;
 
 import javax.persistence.PersistenceException;
 import java.util.List;
@@ -31,7 +29,7 @@ public class UserDAO {
       try {
           user.save();
 
-          Profile profile = null;
+          Profile profile;
           if(( profile = Profile.create(username)) == null) {
               user.delete();
           } else {

@@ -10,7 +10,6 @@ import models.Scroll;
 import models.ScrollCollection;
 import models.Inventory;
 import models.Potion;
-import dao.UserDAO;
 import dao.ProfileDAO;
 import play.Logger;
 import play.libs.Json;
