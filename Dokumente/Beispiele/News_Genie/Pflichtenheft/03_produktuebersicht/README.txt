@@ -1,1 +1,0 @@
-Erstellt mit Dia, http://dia-installer.de
