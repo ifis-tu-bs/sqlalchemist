@@ -31,21 +31,10 @@ public class UserDAO {
   }
 
   public static User getByUsername(String username) {
-    return null;
-  }
-
-  /**
-   *
-   * @param session
-   * @return
-   */
-  public static Profile getProfile(Http.Session session) {
-    UserSession userSession = null;
-    if( (userSession = UserSession.getSession(session))  == null ) {
-      Logger.warn("UserDAO.getProfile(Http.Session) - no UserSession found");
+    if(username == null) {
       return null;
     }
-    return userSession.getUser().getProfile();
+    return ProfileDAO.getByUsername(username).getUser();
   }
 
   /**

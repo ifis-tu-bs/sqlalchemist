@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import dao.UserDAO;
+import dao.ProfileDAO;
 
 import play.Logger;
 import play.mvc.*;
@@ -20,7 +21,7 @@ public class SettingsController extends Controller {
      * @return  returns the Player Settings as JSON Object
      */
     public static Result index() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         return ok(profile.settings.getSettings());
     }
 
@@ -30,7 +31,7 @@ public class SettingsController extends Controller {
      * @return  returns a http responds code if the action was successfully or not
      */
     public static Result edit() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode json = request().body().asJson();
         if(json == null || json.get("music") == null && json.get("sound") == null) {
             Logger.warn("SettingsController.edit - not Valid");

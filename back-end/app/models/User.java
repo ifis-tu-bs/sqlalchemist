@@ -16,6 +16,8 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
 
+import dao.ProfileDAO;
+
 import javax.naming.CommunicationException;
 import javax.persistence.*;
 import java.sql.SQLTimeoutException;
@@ -296,7 +298,7 @@ public class User extends Model {
             throw new EmailTakenException();
         }
 
-        Profile usernameCheck = Profile.getByUsername(username);
+        Profile usernameCheck = ProfileDAO.getByUsername(username);
         if(usernameCheck != null) {
             Logger.warn("User.create - Username TAKEN");
             throw new UsernameTakenException();

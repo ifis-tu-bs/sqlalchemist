@@ -1,17 +1,24 @@
 package controllers;
 
+import models.User;
+import models.Profile;
+import models.SubmittedHomeWork;
+import models.HomeWorkChallenge;
+
+import dao.UserDAO;
+import dao.ProfileDAO;
+
+import play.Logger;
+import play.mvc.*;
+import play.libs.Json;
+
+import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
-import dao.UserDAO;
-import play.Logger;
-import play.libs.Json;
-import play.mvc.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  *
@@ -27,7 +34,7 @@ public class ProfileController extends Controller {
      * @return returns the PlayerState as JSON Object
      */
     public static Result index() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null){
             Logger.warn("ProfileController - no profile found");
@@ -44,7 +51,7 @@ public class ProfileController extends Controller {
      * @return  returns the Profile as JSON Object
      */
     public static Result view(Long id) {
-        Profile profile = Profile.getById(id);
+        Profile profile = ProfileDAO.getById(id);
 
         return ok(profile.toJsonProfile());
     }
@@ -55,7 +62,7 @@ public class ProfileController extends Controller {
      * @return  returns the CharacterState as JSON Object
      */
     public static Result character() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null) {
             Logger.warn("ProfileController.character - No profile found");
@@ -72,7 +79,7 @@ public class ProfileController extends Controller {
      * @return  returns the new playerStats
      */
     public static Result avatar(long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null || !profile.setAvatar(id)) {
             Logger.warn("ProfileController.avatar - No profile found or no Avatar Found");
@@ -84,7 +91,7 @@ public class ProfileController extends Controller {
 
 
     public static Result reset() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.resetStory();
 
@@ -94,7 +101,7 @@ public class ProfileController extends Controller {
     }
 
     public static Result getUserHomeworks() {
-        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(UserDAO.getProfile(session()));
+        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
         List<HomeWorkChallenge> homeWorks = HomeWorkChallenge.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 

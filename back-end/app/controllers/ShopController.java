@@ -4,6 +4,7 @@ import models.Profile;
 import models.ShopItem;
 import models.User;
 import dao.UserDAO;
+import dao.ProfileDAO;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -25,7 +26,7 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result avatarList() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItem.getAvatarList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
@@ -37,7 +38,7 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result beltList() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItem.getBeltList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
@@ -49,7 +50,7 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result buy(Long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         ShopItem shopItem = ShopItem.getById(id);
 
         if(profile == null || shopItem == null) {

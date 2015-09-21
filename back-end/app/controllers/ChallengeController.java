@@ -2,6 +2,7 @@ package controllers;
 
 import models.*;
 import dao.UserDAO;
+import dao.ProfileDAO;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -19,7 +20,7 @@ public class ChallengeController extends Controller {
      * @return
      */
     public static Result story() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         StoryChallenge challenge = StoryChallenge.getForProfile(profile);
 
@@ -27,7 +28,7 @@ public class ChallengeController extends Controller {
     }
 
     public static Result skipChallenge() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         profile.setTutorialDone(true);
 
         profile.setCurrentStory(StoryChallenge.getFirstLevel());
@@ -37,7 +38,7 @@ public class ChallengeController extends Controller {
     }
 
     public static Result reset() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.setCurrentStory(StoryChallenge.getFirstLevel());
         profile.setTutorialDone(false);

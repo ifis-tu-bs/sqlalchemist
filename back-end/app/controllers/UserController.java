@@ -6,9 +6,11 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import dao.UserDAO;
 import models.User;
 import models.UserSession;
+
+import dao.UserDAO;
+import dao.ProfileDAO;
 
 import Exception.EmailTakenException;
 import Exception.UsernameTakenException;
@@ -115,7 +117,7 @@ public class UserController extends Controller {
             return badRequest("Could not retrieve Json from POST body!");
         }
 
-        User user = UserSession.getSession(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user.changePassword(
                 json.findPath("password_old").textValue(),
@@ -204,7 +206,7 @@ public class UserController extends Controller {
     }
 
     public static Result checkStudent() {
-        User user = UserDAO.getProfile(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user == null) {
             return badRequest("No User found");
@@ -239,7 +241,7 @@ public class UserController extends Controller {
 
     @Security.Authenticated(AdminSecured.class)
     public static Result promote(long id) {
-        User        user    = UserDAO.getProfile(session()).getUser();
+        User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.*;
 
 import models.*;
 import dao.UserDAO;
+import dao.ProfileDAO;
 
 import Exception.SOLAlchemistException;
 import play.Logger;
@@ -57,7 +58,7 @@ public class TaskFileController extends Controller {
      */
 
     public static Result create() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode jsonNode = request().body().asJson();
 
         String xml = jsonNode.get("text").textValue();
@@ -137,7 +138,7 @@ public class TaskFileController extends Controller {
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
         TaskFile taskFile   = TaskFile.getById(id);
-        Profile profile     = UserDAO.getProfile(session());
+        Profile     profile = ProfileDAO.getByUsername(request().username());
 
         if (taskFile == null) {
             Logger.warn("TaskFileController.rate("+id+") - no TaskFile found");
@@ -177,7 +178,7 @@ public class TaskFileController extends Controller {
      * @return      returns a http code with a result message
      */
     public static Result comment(Long id) {
-        Profile     profile = UserDAO.getProfile(session());
+        Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
         TaskFile    taskFile= TaskFile.getById(id);
 

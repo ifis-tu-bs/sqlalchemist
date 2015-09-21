@@ -80,7 +80,7 @@ public class Profile extends Model {
     @Transient
     long ownRank;
 
-    private static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+    public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
 
 
 //////////////////////////////////////////////////
@@ -453,14 +453,7 @@ public class Profile extends Model {
             throw e;
         }
     }
-    public static Profile getById(long id) {
-        return Profile.find.byId(id);
-    }
-
-    public static Profile getByUsername(String username) {
-        return find.where().eq("username", username).findUnique();
-    }
-
+    
 //////////////////////////////////////////////////
 //  Ranking Methods
 //////////////////////////////////////////////////

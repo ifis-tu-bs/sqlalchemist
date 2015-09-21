@@ -6,7 +6,9 @@ import com.fasterxml.jackson.databind.node.*;
 
 import sqlgame.exception.MySQLAlchemistException;
 import models.*;
+
 import dao.UserDAO;
+import dao.ProfileDAO;
 
 import Exception.SOLAlchemistException;
 import play.Logger;
@@ -87,7 +89,7 @@ public class SubTaskController extends Controller {
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
         SubTask subTask     = SubTask.getById(id);
-        Profile profile     = UserDAO.getProfile(session());
+        Profile profile     = ProfileDAO.getByUsername(request().username());
 
         if (subTask == null) {
             Logger.warn("SubTaskController.rate("+id+") - no SubTask found");
@@ -127,7 +129,7 @@ public class SubTaskController extends Controller {
      * @return      returns a http code with a result message
      */
     public static Result comment(Long id) {
-        Profile     profile = UserDAO.getProfile(session());
+        Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
         SubTask     subTask= SubTask.getById(id);
 
@@ -165,7 +167,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result story(long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         Scroll scroll   = Scroll.getById(id);
 
         if(profile == null) {
@@ -197,7 +199,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result storySolve(long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
 
         if (body == null) {
@@ -258,7 +260,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result trivia(Long difficulty) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         int points = difficulty.intValue();
         if(difficulty >= 5) {
             points = 5;
@@ -280,7 +282,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result triviaSolve(Long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
         SubTask subTask = SubTask.getById(id);
 
@@ -341,7 +343,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result homework() {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         SubTask subTask = SubTask.getByChallengeID(1L, profile);
 
         return ok(subTask.toJsonExercise());
@@ -353,7 +355,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result homeworkSolve(Long id) {
-        Profile profile = UserDAO.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
         SubTask subTask = SubTask.getById(id);
 
