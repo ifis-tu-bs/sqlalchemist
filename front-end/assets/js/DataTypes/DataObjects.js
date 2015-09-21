@@ -26,8 +26,8 @@ game.skin.skins = new Array();
 game.skin.currentSkin = 0;
 
 //Load Skins into game.skin.skins (INPUT)
-for (var i = 0; i <= game.input.skins.available.length; i++) {
-    game.skin.skins[i] = new Skin(0, game.input.skins.name[i]);
+for (var i = 0; i <= 42; i++) {
+    game.skin.skins[i] = new Skin(0, "default");
 }
 
 
@@ -134,15 +134,15 @@ game.potion.potions = new Array();
 game.potion.currentPotion = 0;
 
 //Load Potions into game.potion.potions (INPUT)
-for (var i = 0; i <= game.input.potions.available.length; i++) {
+for (var i = 0; i <= 20; i++) {
     game.potion.potions[i] = new Potion(
-            game.input.potions.type[i],
-            game.input.potions.power[i],
-            game.input.potions.amount[i],
+            "default",
+            0,
+            0,
             false,
             i,
             "Potionname"
-        );
+    );
 }
 
 /*
@@ -154,8 +154,8 @@ game.belt = new Object();
 game.belt.beltSlots = new Array();
 
 //Load Potions into game.belt.beltSlots
-for (var i = 0; i < game.input.belt.length; i++) {
-    game.belt.beltSlots[i] = game.potion.potions[game.input.belt[i]];
+for (var i = 0; i < 1; i++) {
+    game.belt.beltSlots[i] = "default";
 }
 
 //beltSlotIndex to point to current beltSlot

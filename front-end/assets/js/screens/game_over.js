@@ -35,6 +35,7 @@ game.GameOverScreen = me.ScreenObject.extend({
                 }
             }
 
+            //converts the collected Scrolls to their names and the score to coins
             function collectedOnload(xmlHttpRequest) {
                 console.log(xmlHttpRequest);
                 var gotten = JSON.parse(xmlHttpRequest.responseText);

@@ -96,8 +96,8 @@ var game = {
     },
     level: {
         scrolls :  [
-            [1,11,21,31,11,16],[2,12,22,32,1,6],[3,13,23,33,7,12],[4,14,24,34,2,17],[5,15,25,35,3,8],
-            [6,16,26,36,13,18],[7,17,27,37,9,19],[8,18,28,38,4,14],[9,19,29,39,5,15],[10,20,30,40,10,20]
+            [0,10,20,30,11,16],[1,11,21,31,1,6],[2,12,22,32,7,12],[3,13,23,33,2,17],[4,14,24,34,3,8],
+            [5,15,25,35,13,18],[6,16,26,36,9,19],[7,17,27,37,4,14],[8,18,28,38,5,15],[9,19,29,39,10,20]
         ]
     },
 
@@ -106,12 +106,6 @@ var game = {
 
     // Run on page load.
     "onload" : function () {
-        me.input.unbindKey(me.input.KEY.LEFT);
-
-
-
-
-
         // Initialize the video.
         if (!me.video.init("screen", me.video.CANVAS, 1320, 768, true, 'auto')) {
             alert("Your browser does not support HTML5 canvas.");
@@ -126,7 +120,7 @@ var game = {
         }
 
         // Initialize the audio.
-        me.audio.init("ogg,mp3");
+        me.audio.init("mp3");
 
         // Set a callback to run when loading is complete.
         me.loader.onload = this.loaded.bind(this);
@@ -193,87 +187,4 @@ var game = {
         me.state.change(STATE_START);
     }
 };
-//Data that is covert to Objects in Dataobjects
-game.input = {
-    skins : {
-        available: [0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-                    0, 0, 0, 0, 0,    0, 0, 0, 0, 0,
-
-                    0, 0
-        ],
-        name: [
-            //alphabetical start
-            "alastor_moody",
-            "albus_dumbledore",
-            "arthur_weasley",
-            "cho_chang",
-            "colin_creevey",
-
-            "crabbe_and_goyle",
-            "dolores_umbridge",
-            "draco_malfoy",
-            "filius_flitwick",
-            "fleur_delacour",
-
-            "fred_and_george",
-            "fred_and_george_2",
-            "gilderoy_lockhart",
-            "ginny_weasley", 
-            "harry__potter",
-
-            "harry_potter",
-            "hermione__granger",
-            "hermione_granger",
-            "horace_slughorn",
-            "kingsley_shacklebolt",
-
-            "lavender_brown",
-            "lucius_malfoy",
-            "luna_lovegood", 
-            "minerva_mcGonagel",
-            "moaning_myrtle2",
-
-            "molly_weasley",
-            "mr_binns2",
-            "narcissa_malfoy", 
-            "neville_longbottom",
-            "nymphadora_tonks",
-
-            "padma_and_parvati_patil",
-            "pomona_sprout",
-            "remus_lupin",
-            "ron__weasley",
-            "ron_weasley",
-
-            "rubeus_hagrid",
-            "seamus_finnigan",
-            "severus_snape",
-            "sirius_black",
-            "sybill_trelawney",
-
-            "voldemort"
-        ]
-    },
-    potions : {
-        amount :  [10,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1],
-        power:   [0,1,2,3,4,0,1,2,3,4,0,1,2,3,4,0,1,2,3,4],
-        type :   ["hp", "hp", "hp", "hp", "hp", "speed","speed","speed","speed","speed", "jump", "jump", "jump", "jump", "jump", "defense","defense","defense","defense","defense"],
-        available:  [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    },
-    //Default belt
-    belt : [],
-    enchantments : {
-        difficulty : [1,1,1,2,2,2,3,3,4,4,1,1,2,2,3,3,3,4,4,4,1,1,1,2,2,2,3,3,4,4,1,1,2,2,3,3,3,4,4,4],
-        type :  ["health","health","health","health","health","health","health","health","health","health",
-            "speed","speed","speed","speed","speed","speed","speed","speed","speed","speed",
-            "jump","jump","jump","jump","jump","jump","jump","jump","jump","jump",
-            "defense","defense","defense","defense","defense","defense","defense","defense","defense","defense"],
-        available : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false],
-        used : [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-    }
-}
-
 
