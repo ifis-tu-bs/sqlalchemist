@@ -1,6 +1,15 @@
 /**
+ * The entities describe all the element which are used in the game.
+ * They are added to each map with the tiled-editor.
+ *
+ */
+
+//-----------------------------------------------------------------------------
+/**
  * Our own LevelEntity
- * We need Random next maps, so we instanciate our own LevelEntity
+ * We need Random next maps, so we instanciate our own LevelEntity.
+ * This one also changes the current background music randomly,
+ * according the kind of the map.
  */
 game.LevelEntity = me.LevelEntity.extend({
 
@@ -84,7 +93,7 @@ game.PlayerEntity = me.Entity.extend({
     init:function (x, y, settings) {
         //set name from sprite
         settings.image = game.data.sprite;
-       // call the constructor
+        // call the constructor
         this._super(me.Entity, 'init', [x, y, settings]);
 
         // set the default horizontal & vertical speed (accel vector)
@@ -475,6 +484,3 @@ game.FireEntity = me.CollectableEntity.extend({
         me.game.world.removeChild(this);
     }
 });
-
-
-

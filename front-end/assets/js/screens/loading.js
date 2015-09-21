@@ -54,7 +54,7 @@
      * @constructor
      */
     me.DefaultLoadingScreen = me.ScreenObject.extend({
-        // call when the loader is resetted
+        // call when the loader is reseted
         onResetEvent : function () {
             me.game.reset();
 
