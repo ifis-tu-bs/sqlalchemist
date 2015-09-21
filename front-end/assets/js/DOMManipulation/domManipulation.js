@@ -589,7 +589,7 @@ game.ClickableElement = me.Renderable.extend ({
 
         // create text node
         var text = document.createTextNode(name);
-       
+
         // append text node
         this.elem.appendChild(text);
 
@@ -663,3 +663,77 @@ game.ClickableElement = me.Renderable.extend ({
     }
 
 });
+
+
+game.BackgroundElement = me.Renderable.extend ({
+
+    /**
+     * constructor
+     * @param : id       : a unique alphanumeric string
+     *          width    : the width of the element in percent of the width of the canvas
+     *          height   : the height of the element in percent of the height of the canvas
+     *          left     : the left margin of the element in percent of the width of the canvas
+     *          top      : the top margin of the element in percent of the height of the canvas
+     */
+    init : function (id, width, height, left, top) {
+
+        // get parent
+        var parent = document.getElementById('screen');
+
+        // create child
+        this.elem                = document.createElement('div');
+        this.elem.id             = id;
+        this.elem.style.position = 'absolute';
+
+        // scale element
+        this.relWidth  = width;
+        this.relHeight = height;
+        this.relLeft   = left;
+        this.relTop    = top;
+        game.scaleElement(this);
+
+        // visibility
+        this.visibility = true;
+
+        // append child
+        parent.appendChild(this.elem);
+
+    },
+
+    getNode : function () {
+        return this.elem;
+
+    },
+
+    update : function () {
+
+        // scale element
+        game.scaleElement(this);
+
+
+    },
+
+    setImage : function (src, id) {
+        var image = document.createElement("img");
+        image.src = src;
+        image.id = id;
+        image.style.height = 'inherit';
+        image.style.width = 'inherit';
+        this.elem.appendChild(image);
+
+    },
+
+    destroy : function () {
+        // remove element
+        this.elem.parentNode.removeChild(this.elem);
+
+    }
+
+});
+
+/**
+function setBackgroungImage(src, id) {
+    this.elem  = document.createElement('div');
+    this.elem.setImage(src, id);
+};
+*/
