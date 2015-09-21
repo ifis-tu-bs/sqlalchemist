@@ -10,7 +10,7 @@ import models.*;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
-import Exception.SOLAlchemistException;
+import Exception.SQLAlchemistException;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
@@ -241,7 +241,7 @@ public class SubTaskController extends Controller {
 
                 result = badRequest(node);
             }
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             Logger.info("SOL");
             SolvedSubTask.update(profile, subTask, false);
 
@@ -324,7 +324,7 @@ public class SubTaskController extends Controller {
 
                 result = badRequest(node);
             }
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             SolvedSubTask.update(profile, subTask, false);
 
             node.put("terry",       "syntax error");
@@ -376,7 +376,7 @@ public class SubTaskController extends Controller {
         boolean correct;
         try {
             correct = subTask.solve(statement);
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             correct = false;
         }
 

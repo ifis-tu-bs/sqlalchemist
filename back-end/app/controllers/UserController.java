@@ -12,9 +12,6 @@ import models.UserSession;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
-import Exception.EmailTakenException;
-import Exception.UsernameTakenException;
-
 import play.Logger;
 import play.mvc.*;
 import play.libs.*;
@@ -47,56 +44,36 @@ public class UserController extends Controller {
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
-        String    username  = json.findPath("username").textValue();
-        String    email     = json.findPath("id").textValue();
-        String    password  = json.findPath("password").textValue();
-        int       role      = json.findPath("role").asInt();
 
-        ObjectNode node = Json.newObject();
-        node.put("id", 0);
+        String    username  = json.findPath("username").textValue().trim();
+        String    email     = json.findPath("id").textValue().trim();
+        String    password  = json.findPath("password").textValue().trim();
+        int       role      = json.findPath("role").asInt();
+        ObjectNode node     = Json.newObject();
 
         if(username == null || email == null || password == null) {
             return badRequest("Expecting Json data");
         } else {
-            username = username.trim();
-            email = email.trim();
-            password = password.trim();
-
-
+            boolean isValid = true;
             // Check the availability of the username
             if(UserDAO.getByUsername(username) != null) {
               node.put("username", 1);
             } else {
               node.put("username", 0);
             }
-
             // Check the availability of the email
             if(UserDAO.getByUsername(email) != null) {
               node.put("id", 1);
             } else {
               node.put("id", 0);
             }
-
-  //          return badRequest(node);
-
-            try {
-                if (role == 0) {
-                    User.create(username, email, password);
-                } else {
-                    User.create(username, email, password, role);
-                }
-                return controllers.SessionController.create();
-            } catch (UsernameTakenException e) {
-                Logger.warn("User.create - Username Taken");
-                node.remove("username");
-                node.put("username", 1);
-                return badRequest(node);
-            } catch (EmailTakenException e) {
-                Logger.warn("User.create - Id Taken");
-                node.remove("id");
-                node.put("id", 1);
+            if(!isValid) {
                 return badRequest(node);
             }
+
+            UserDAO.create(username, email, password, role);
+
+            return controllers.SessionController.create();
         }
     }
 

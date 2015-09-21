@@ -7,7 +7,7 @@ import models.*;
 import dao.UserDAO;
 import dao.ProfileDAO;
 
-import Exception.SOLAlchemistException;
+import Exception.SQLAlchemistException;
 import play.Logger;
 import play.mvc.*;
 
@@ -73,7 +73,7 @@ public class TaskFileController extends Controller {
         try {
             taskFile = TaskFile.create(profile, xml, isHomeWork);
 
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             return badRequest(e.getMessage());
         }
         return ok(taskFile.toJson());

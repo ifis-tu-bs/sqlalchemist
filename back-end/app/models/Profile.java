@@ -5,7 +5,6 @@ import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 
-import Exception.UsernameTakenException;
 import helper.Random;
 import helper.*;
 import play.Logger;
@@ -440,7 +439,7 @@ public class Profile extends Model {
      * @param username asd
      * @return asd
      */
-    public static Profile create(String username) throws UsernameTakenException {
+    public static Profile create(String username) {
 
         Profile profile = new Profile(username);
 
@@ -450,10 +449,10 @@ public class Profile extends Model {
             return profile;
         } catch (PersistenceException e) {
             Logger.warn("Profile.create UsernameTaken: " + e.getMessage());
-            throw e;
+            return null;
         }
     }
-    
+
 //////////////////////////////////////////////////
 //  Ranking Methods
 //////////////////////////////////////////////////

@@ -4,12 +4,54 @@ import models.User;
 import models.Profile;
 import models.UserSession;
 
+import helper.MailSender;
+
 import play.Logger;
 import play.mvc.Http;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class UserDAO {
+
+  /**
+   *
+   * @param username  Player Username
+   * @param id        User Identifier
+   * @param password  User Password
+   * @param role      User role
+   * @return returns the user object
+   */
+  public static User create(
+          String username,
+          String id,
+          String password,
+          int    role) {
+      User user = new User(id, password, role);
+      try {
+          user.save();
+
+          Profile profile = null;
+          if(( profile = Profile.create(username)) == null) {
+              user.delete();
+          } else {
+              user.setProfile(profile);
+              profile.setUser(user);
+
+              user.update();
+              profile.update();
+
+              if(play.api.Play.isProd(play.api.Play.current())) {
+                  MailSender.getInstance().sendVerifyEmail(user.getEmail(), user.getEmailVerifyCode());
+              }
+          }
+
+          return user;
+      } catch (PersistenceException ex) {
+          Logger.warn("User.create PersistenceExcretion: " + ex.getMessage());
+          return null;
+      }
+  }
 
   /**
    *

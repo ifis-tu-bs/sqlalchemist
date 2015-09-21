@@ -1,7 +1,5 @@
 package controllers;
 
-import Exception.EmailTakenException;
-import Exception.UsernameTakenException;
 import helper.HMSAccessor;
 import helper.SimpleText;
 import play.Logger;
@@ -43,27 +41,24 @@ public class Application extends Controller {
 
             // Init residual Classes
             Profile profile = null;
-            try {
-                if(play.api.Play.isProd(play.api.Play.current())) {
-                    String username = Play.application().configuration().getString("admin.username");
-                    String email = Play.application().configuration().getString("admin.email");
-                    String password = Play.application().configuration().getString("admin.password");
-                    User.create(username, email, password, User.ROLE_ADMIN);
-                } else {
-                    User user = User.create("admin", "admin@local.de", "password1234", User.ROLE_ADMIN);
-                    user.setStudent();
-                    user.update();
+            if(play.api.Play.isProd(play.api.Play.current())) {
+                String username = Play.application().configuration().getString("admin.username");
+                String email = Play.application().configuration().getString("admin.email");
+                String password = Play.application().configuration().getString("admin.password");
+                UserDAO.create(username, email, password, User.ROLE_ADMIN);
+            } else {
+                User user = UserDAO.create("admin", "admin@local.de", "password1234", User.ROLE_ADMIN);
+                user.setStudent();
+                user.update();
 
-                    User.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
-                    User.create("test2", "test2@test.de", "test");
-                    User.create("test3", "test3@test.de", "test");
-                }
-
-                HomeWorkChallenge.init();
-                SubmittedHomeWork.init();
-            } catch (UsernameTakenException | EmailTakenException e) {
-                Logger.error("Cannot Create user");
+                UserDAO.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
+                UserDAO.create("test2", "test2@test.de", "test", User.ROLE_USER);
+                UserDAO.create("test3", "test3@test.de", "test", User.ROLE_USER);
             }
+
+            HomeWorkChallenge.init();
+            SubmittedHomeWork.init();
+
 
 
             List<SimpleText> texts0 = new ArrayList<>();

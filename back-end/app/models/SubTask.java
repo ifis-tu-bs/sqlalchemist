@@ -5,7 +5,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 import sqlgame.exception.MySQLAlchemistException;
 import sqlgame.sandbox.*;
-import Exception.SOLAlchemistException;
+import Exception.SQLAlchemistException;
 import helper.Random;
 import play.*;
 import play.db.ebean.Model;
@@ -247,12 +247,12 @@ public class SubTask extends Model {
      * @param statement
      * @return
      */
-    public boolean solve(String statement) throws SOLAlchemistException {
+    public boolean solve(String statement) throws SQLAlchemistException {
         Task task = this.taskFile.getTask();
         try {
             task.startTask("local");
         } catch (MySQLAlchemistException e) {
-            throw new SOLAlchemistException("Database Exception, try later");
+            throw new SQLAlchemistException("Database Exception, try later");
         }
         try {
             boolean status = task.isUserStatementCorrect(statement, this.index);
@@ -265,7 +265,7 @@ public class SubTask extends Model {
             try {
                 task.closeTask();
             } catch (MySQLAlchemistException e1) {       }
-            throw new SOLAlchemistException(e.getMyMessage());
+            throw new SQLAlchemistException(e.getMyMessage());
         }
     }
 

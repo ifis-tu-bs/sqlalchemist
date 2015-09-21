@@ -6,16 +6,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.mysql.jdbc.CommunicationsException;
 import com.sun.mail.iap.ConnectionException;
 import controllers.Application;
-import Exception.EmailTakenException;
-import Exception.UsernameTakenException;
 import helper.HMSAccessor;
-import helper.MailSender;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
-
+import helper.MailSender;
 import dao.ProfileDAO;
 
 import javax.naming.CommunicationException;
@@ -97,7 +94,7 @@ public class User extends Model {
      * @param password  password
      * @param role      user-role
      */
-    private User(
+    public User(
             String id,
             String password,
             int    role) {
@@ -219,11 +216,15 @@ public class User extends Model {
         return this.email;
     }
 
+    public String getEmailVerifyCode() {
+        return this.emailVerifyCode;
+    }
+
     /**
      *
      * @param profile User Profile
      */
-    private void setProfile(Profile profile) {
+    public void setProfile(Profile profile) {
         if(profile == null) {
             throw new IllegalArgumentException();
         }
@@ -254,80 +255,6 @@ public class User extends Model {
         this.edited_at = new Date();
 
         super.update();
-    }
-
-//////////////////////////////////////////////////
-//  Class Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param username  Player Username
-     * @param id        User Identifier
-     * @param password  User Password
-     * @return returns the user object
-     */
-    public static User create(
-            String username,
-            String id,
-            String password)
-            throws UsernameTakenException, EmailTakenException{
-
-        return User.create(username, id, password, User.ROLE_USER);
-    }
-
-    /**
-     *
-     * @param username  Player Username
-     * @param id        User Identifier
-     * @param password  User Password
-     * @param role      User role
-     * @return returns the user object
-     */
-    public static User create(
-            String username,
-            String id,
-            String password,
-            int    role)
-            throws UsernameTakenException, EmailTakenException {
-
-
-        User IDCheck = find.where().eq("email", id).findUnique();
-        if(IDCheck != null) {
-            Logger.warn("User.create - ID TAKEN");
-            throw new EmailTakenException();
-        }
-
-        Profile usernameCheck = ProfileDAO.getByUsername(username);
-        if(usernameCheck != null) {
-            Logger.warn("User.create - Username TAKEN");
-            throw new UsernameTakenException();
-        }
-
-        User user = new User(id, password, role);
-        try {
-            user.save();
-
-            Profile profile = Profile.create(username);
-
-            user.setProfile(profile);
-            profile.setUser(user);
-
-            user.update();
-            profile.update();
-
-            if(play.api.Play.isProd(play.api.Play.current())) {
-                MailSender.getInstance().sendVerifyEmail(user.email, user.emailVerifyCode);
-            }
-
-            return user;
-        } catch (PersistenceException e) {
-            Logger.warn("User.create PersistenceExcretion: " + e.getMessage());
-            e.printStackTrace();
-            user.delete();
-
-            throw new EmailTakenException();
-        }
     }
 
 //////////////////////////////////////////////////

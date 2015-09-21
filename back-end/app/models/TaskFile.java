@@ -2,7 +2,7 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import Exception.SOLAlchemistException;
+import Exception.SQLAlchemistException;
 import helper.*;
 
 import sqlgame.sandbox.*;
@@ -314,7 +314,7 @@ public class TaskFile extends Model {
             String  xmlContent,
             boolean isHomeWork
     )
-            throws SOLAlchemistException
+            throws SQLAlchemistException
     {
         // Create XMLFile via MySQLAlchemist
         InputFile inputFile;
@@ -330,16 +330,16 @@ public class TaskFile extends Model {
             else
             {
                 Logger.warn("TaskFile.create - No Tasks in the TaskFile");
-                throw new SOLAlchemistException("You have created no Tasks in the your TaskFile");
+                throw new SQLAlchemistException("You have created no Tasks in the your TaskFile");
             }
         }
         catch (MySQLAlchemistException e)
         {
             Logger.error("TaskFile.create - catches MySQLAlchemistException: " + e.getMyMessage());
-            throw new SOLAlchemistException(e.getMyMessage());
+            throw new SQLAlchemistException(e.getMyMessage());
         } catch (Exception e) {
             Logger.error("TaskFile.create - catches MySQLAlchemistException: " + e.getMessage());
-            throw new SOLAlchemistException(e.getMessage());
+            throw new SQLAlchemistException(e.getMessage());
         }
 
         // Get metadata from MySQLAlchemist
@@ -366,7 +366,7 @@ public class TaskFile extends Model {
             TaskFile taskFile_comp = TaskFile.getByFileName(fileName);
             if (taskFile_comp != null)
             {
-                throw new SOLAlchemistException("A TaskFile with this name is already in our database");
+                throw new SQLAlchemistException("A TaskFile with this name is already in our database");
             }
         }
 
@@ -418,7 +418,7 @@ public class TaskFile extends Model {
                     }
                 }
                 taskFile.delete();
-                throw new SOLAlchemistException("cannot save SubTasks of TaskFile, please set SubTaskIds");
+                throw new SQLAlchemistException("cannot save SubTasks of TaskFile, please set SubTaskIds");
             }
         }
         taskFile.addSubTask(subTaskList);
@@ -709,7 +709,7 @@ public class TaskFile extends Model {
 
         try {
             TaskFile.create(null, xml, false);
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             Logger.info(e.getMessage());
         }
 
