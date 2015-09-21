@@ -1,7 +1,7 @@
 game.BeltScreen = me.ScreenObject.extend({
 
     onResetEvent: function() {
-        console.log("background");
+
         me.game.world.addChild(
             new me.Sprite(
                 0, 0,
@@ -9,6 +9,11 @@ game.BeltScreen = me.ScreenObject.extend({
             ),
             1
         );
+
+        /**var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        background.setImage("assets/data/img/gui/belt_screen.png", "back");
+        me.game.world.addChild(background);*/
+
 
         //gets the playerstate
         function getAmount(xmlHttpRequest) {

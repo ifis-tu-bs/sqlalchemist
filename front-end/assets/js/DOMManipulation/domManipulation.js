@@ -675,7 +675,7 @@ game.BackgroundElement = me.Renderable.extend ({
      *          left     : the left margin of the element in percent of the width of the canvas
      *          top      : the top margin of the element in percent of the height of the canvas
      */
-    init : function (id, width, height, left, top) {
+    init : function (id, width, height, left, top, display) {
 
         // get parent
         var parent = document.getElementById('screen');
@@ -695,6 +695,9 @@ game.BackgroundElement = me.Renderable.extend ({
         // visibility
         this.visibility = true;
 
+        //display background
+        this.elem.style.display = display;
+
         // append child
         parent.appendChild(this.elem);
 
@@ -706,7 +709,6 @@ game.BackgroundElement = me.Renderable.extend ({
     },
 
     update : function () {
-
         // scale element
         game.scaleElement(this);
 
@@ -730,10 +732,3 @@ game.BackgroundElement = me.Renderable.extend ({
     }
 
 });
-
-/**
-function setBackgroungImage(src, id) {
-    this.elem  = document.createElement('div');
-    this.elem.setImage(src, id);
-};
-*/

@@ -102,13 +102,18 @@ game.ReadyScreen = me.ScreenObject.extend({
         ajaxSendProfileBeltRequest(getBelt);
 
         // lab_screen
-        me.game.world.addChild(
+        /**me.game.world.addChild(
             new me.Sprite (
                 0,0,
                 me.loader.getImage('lab_screen')
             ),
             1
-        );
+        );*/
+
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        background.setImage("assets/data/img/gui/lab_screen.png", "back");
+        me.game.world.addChild(background);
+
 
         //buttons for menu movement
         //me.game.world.addChild(new menu(1104,93),5);
@@ -118,61 +123,61 @@ game.ReadyScreen = me.ScreenObject.extend({
          * these functions are called when buttons are clicked.
          * here: simple state change.
          */
-        onRun = function(){
+        this.onRun = function(){
             if(game.data.sound){
                 me.audio.play("door", false, null, game.data.soundVolume);
             }
             me.state.change(me.state.PLAY);
         };
-        onCollector = function(){
+        this.onCollector = function(){
             if(game.data.sound){
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
             me.state.change(STATE_COLLECTOR);
         };
-        onSheet = function(){
+        this.onSheet = function(){
             if(game.data.sound){
                 me.audio.play("switch", false, null, game.data.soundVolume);
             }
             me.state.change(STATE_SHEET);
         };
-        onScrollCol = function(){
+        this.onScrollCol = function(){
             if(game.data.sound){
                 me.audio.play("switch", false, null, game.data.soundVolume);
             }
             me.state.change(STATE_BELT);
         };
-        onMenu = function(){
+        this.onMenu = function(){
             if(game.data.sound){
                 me.audio.play("door", false, null, game.data.soundVolume);
             }
             me.state.change(me.state.MENU);
         };
-        onBooks = function(){
+        this.onBooks = function(){
             if(game.data.sound){
                 me.audio.play("page", false, null, game.data.soundVolume);
             }
             me.state.change(STATE_LEGEND);
         };
-        stopDouble = function() {
+        this.stopDouble = function() {
             game.data.playing = false;
         };
-        onCat = function() {
+        this.onCat = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;
-                me.audio.play("cat", false, stopDouble, game.data.soundVolume);
+                me.audio.play("cat", false, this.stopDouble, game.data.soundVolume);
             }
         };
 
 
         //HIER TERRY BUTTON FUNCTION
-        onTerry = function() {
+        this.onTerry = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 var number = Math.floor(Math.random() * 4 + 1);
                 var sound = "lofi";
                 sound = sound.concat(number);
-                me.audio.play(sound, false, stopDouble, game.data.soundVolume);
+                me.audio.play(sound, false, this.stopDouble, game.data.soundVolume);
             }
         };
 
@@ -188,14 +193,14 @@ game.ReadyScreen = me.ScreenObject.extend({
          *          top      : the top margin of the element in percent of the height of the canvas
          *          rows     : the number of rows
          */
-        var runButton        = new game.ClickableElement('runButton', 'R U N', onRun, 15, 50, 33, 15, 4);
-        var colButton        = new game.ClickableElement('colButton', 'Coll ector', onCollector, 20, 13, 60, 70, 2);
-        var sheetButton      = new game.ClickableElement('sheetButton', 'Sh eet', onSheet, 9, 22, 18, 11, 3);
-        var scrollColButton  = new game.ClickableElement('scrollColButton', 'Be lt', onScrollCol, 28, 25, 17, 75, 2);
-        var backButton       = new game.ClickableElement('backButton', 'BACK', onMenu, 15, 34, 81, 14, 4);
-        var bookButton       = new game.ClickableElement('bookButton', 'Bo ok', onBooks, 16, 37, 83, 59, 2);
-        var catButton        = new game.ClickableElement('catButton', 'c a t', onCat, 10, 30, 49, 49, 3);
-        var terryButton      = new game.ClickableElement('terryButton', 'terry', onTerry, 18, 40, 56, 12, 5);
+        var runButton        = new game.ClickableElement('runButton', 'R U N', this.onRun, 15, 50, 33, 15, 4);
+        var colButton        = new game.ClickableElement('colButton', 'Coll ector', this.onCollector, 20, 13, 60, 70, 2);
+        var sheetButton      = new game.ClickableElement('sheetButton', 'Sh eet', this.onSheet, 9, 22, 18, 11, 3);
+        var scrollColButton  = new game.ClickableElement('scrollColButton', 'Be lt', this.onScrollCol, 28, 25, 17, 75, 2);
+        var backButton       = new game.ClickableElement('backButton', 'BACK', this.onMenu, 15, 34, 81, 14, 4);
+        var bookButton       = new game.ClickableElement('bookButton', 'Bo ok', this.onBooks, 16, 37, 83, 59, 2);
+        var catButton        = new game.ClickableElement('catButton', 'c a t', this.onCat, 10, 30, 49, 49, 3);
+        var terryButton      = new game.ClickableElement('terryButton', 'terry', this.onTerry, 18, 40, 56, 12, 5);
 
         me.game.world.addChild(runButton);
         me.game.world.addChild(sheetButton);
@@ -206,14 +211,6 @@ game.ReadyScreen = me.ScreenObject.extend({
         me.game.world.addChild(catButton);
         me.game.world.addChild(terryButton);
 
-
-        // HIER IST DIE CHEAT FUNCTION CARL :D Muss nach tdse raus
-        onCheat = function(){
-            game.data.cheat = true;
-        };
-
-        var cheatButton = new game.ClickableElement('cheatButton', 'cheat', onCheat, 8, 4, 3, 3, 1);
-        me.game.world.addChild(cheatButton);
 
     }
 });

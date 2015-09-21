@@ -5,8 +5,16 @@ game.StartScreen = me.ScreenObject.extend({
      */
 
     onResetEvent: function() {
+
+        me.game.world.addChild(
+            new me.Sprite (
+                0,0,
+                me.loader.getImage('black')
+            ),
+            1
+        );
         
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'inline');
         background.setImage("assets/data/img/gui/title_screen.png", "back");
         me.game.world.addChild(background);
 
@@ -43,17 +51,21 @@ game.StartScreen = me.ScreenObject.extend({
         ajaxSendProfileRequest(checkSession);
 
 
-
         /**
          * these functions are called when buttons are clicked.
          * Here: simple state change.
          */
+
+
         this.onStart = function() {
-            if(game.data.gotSession){
-                me.state.change(me.state.MENU);
-            } else {
-                me.state.change(STATE_LOGIN);
-            }
+            $("#background").fadeOut();
+            setTimeout( function() {
+                if(game.data.gotSession){
+                    me.state.change(me.state.MENU);
+                } else {
+                    me.state.change(STATE_LOGIN);
+                }
+            },100);
         };
 
         /**
