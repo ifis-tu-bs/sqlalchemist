@@ -19,21 +19,26 @@ game.AlertScreen = me.ScreenObject.extend({
 
 
 
-        me.game.world.addChild(
+        /**me.game.world.addChild(
             new me.Sprite(
                 0, 0,
                 me.loader.getImage('game_over_screen')
             ),
             1
-        );
+        );*/
+
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        background.setImage("assets/data/img/gui/game_over_screen.png", "back");
+        me.game.world.addChild(background);
+
 
         me.game.world.addChild(new game.HUD.OverlayAlert(300, 150, game.alert.alertText));
 
-        function onAlertOkClick() {
+        this.onAlertOkClick = function() {
             me.state.change(game.alert.toState);
         }
 
-        var alertOk = new game.ClickableElement("alertOk", "Ok", onAlertOkClick, 40, 12, 33, 25, 1);
+        var alertOk = new game.ClickableElement("alertOk", "Ok", this.onAlertOkClick, 40, 12, 33, 25, 1);
 
         me.game.world.addChild(alertOk);
 
