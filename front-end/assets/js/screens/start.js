@@ -14,9 +14,11 @@ game.StartScreen = me.ScreenObject.extend({
             1
         );
         
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'inline');
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/title_screen.png", "back");
         me.game.world.addChild(background);
+
+        $("#background").fadeIn("slow");
 
         //get the users settings
         function getSettings(xmlHttpRequest) {
@@ -36,7 +38,6 @@ game.StartScreen = me.ScreenObject.extend({
             if (game.data.sound) {
                 me.audio.play("switch", false, null, game.data.soundVolume);
             }
-
         }
 
         function checkSession(xmlHttpRequest){
@@ -58,14 +59,14 @@ game.StartScreen = me.ScreenObject.extend({
 
 
         this.onStart = function() {
-            $("#background").fadeOut();
+            $("#background").fadeOut(100);
             setTimeout( function() {
                 if(game.data.gotSession){
                     me.state.change(me.state.MENU);
                 } else {
                     me.state.change(STATE_LOGIN);
                 }
-            },100);
+            }, 100);
         };
 
         /**
