@@ -91,9 +91,11 @@ game.HUDII.Container = me.Container.extend({
 
 });
 
+
+//needs to be KICKED
 game.HUDIII = game.HUDIII || {};
 
-//this Container is used in game.collectorScreen
+//this Container is used in game.collectorScreen.  NO!!
 game.HUDIII.Container = me.Container.extend({
 
     init: function() {
@@ -122,7 +124,7 @@ game.HUDIII.Container = me.Container.extend({
 });
 
 /**
- * a basic HUD item to display score
+ * a basic HUD item to display score in Game
  */
 game.HUD.ScoreItem = me.Renderable.extend( {
     /**
@@ -155,14 +157,14 @@ game.HUD.ScoreItem = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         this.font.draw (renderer, game.data.score, this.pos.x, this.pos.y);
     }
 });
 
-
+//Used in Game
 game.HUD.HealthScore = me.Renderable.extend( {
     /**
      * constructor
@@ -202,14 +204,14 @@ game.HUD.HealthScore = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         this.font.draw (renderer, this.string , this.pos.x, this.pos.y);
     }
 });
 
-
+//Used in charactersheet, Profilescreen
 game.SkinFront = me.Sprite.extend({
     init: function (x,y,filename, team) {
         this.currentSkin = game.skin.currentSkin;
@@ -237,7 +239,7 @@ game.SkinFront = me.Sprite.extend({
     }
 });
 
-
+//Used in Scrollcolletion
 game.Scroll = me.Sprite.extend({
     init: function (x,y,filename) {
         this._super(me.Sprite, "init", [x, y, me.loader.getImage(filename), 32, 32]);
@@ -245,6 +247,7 @@ game.Scroll = me.Sprite.extend({
     }
 });
 
+//Used in charactersheet, shows name and stats of the choosen skin
 game.HUD.SkinName = me.Renderable.extend( {
     /**
      * constructor
@@ -276,7 +279,7 @@ game.HUD.SkinName = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, this.name.substring(0,20), this.pos.x, this.pos.y+100);
@@ -287,6 +290,7 @@ game.HUD.SkinName = me.Renderable.extend( {
     }
 });
 
+//Used in Settings
 game.HUD.SettingsElements = me.Renderable.extend( {
     /**
      * constructor
@@ -321,7 +325,7 @@ game.HUD.SettingsElements = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
 
     draw : function (renderer) {
@@ -338,6 +342,7 @@ game.HUD.SettingsElements = me.Renderable.extend( {
     }
 });
 
+//Used in Shop
 game.HUD.LofiCoins = me.Renderable.extend( {
     /**
      * constructor
@@ -352,13 +357,14 @@ game.HUD.LofiCoins = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, game.data.lofiCoins, this.pos.x, this.pos.y);
     }
 });
 
+//Used in the Scrollcollection
 game.HUD.Collector = me.Renderable.extend( {
     /**
      * constructor
@@ -376,7 +382,7 @@ game.HUD.Collector = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, this.level + " of 10 Levels cleared", this.pos.x, this.pos.y);
@@ -385,7 +391,7 @@ game.HUD.Collector = me.Renderable.extend( {
     }
 });
 
-
+//Used in Gameoverscreen
 game.HUD.GameOver = me.Renderable.extend( {
     /**
      * constructor
@@ -402,7 +408,7 @@ game.HUD.GameOver = me.Renderable.extend( {
     },
 
     /**renderer.drawFont(this.font, "USERNAME: " + this.user_object.username.toUpperCase(), this.pos.x + 760, this.pos.y);
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, "Depth: " + game.persistent.depth , this.pos.x + 600 , this.pos.y + 55);
@@ -427,6 +433,7 @@ game.HUD.GameOver = me.Renderable.extend( {
     }
 });
 
+//Used in Beltscreen, shows the amount of potions already created
 game.HUD.PotionAmount = me.Renderable.extend( {
     /**
      * constructor
@@ -442,7 +449,7 @@ game.HUD.PotionAmount = me.Renderable.extend( {
     },
 
     /**renderer.drawFont(this.font, "USERNAME: " + this.user_object.username.toUpperCase(), this.pos.x + 760, this.pos.y);
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         for(var i = 1; i < 6; i++) {
@@ -463,6 +470,7 @@ game.HUD.PotionAmount = me.Renderable.extend( {
     }
 });
 
+//Used in Resultscreen
 game.HUD.Result = me.Renderable.extend( {
     /**
      * constructor
@@ -485,7 +493,7 @@ game.HUD.Result = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, "Time: "           + convertTime(this.time),   this.pos.x -  30, this.pos.y - 100);
@@ -526,7 +534,7 @@ game.HUD.Buy = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, "Name: " + game.data.shop[game.data.shopId].name, this.pos.x - 100, this.pos.y - 50);
@@ -553,7 +561,7 @@ game.HUD.BuyBelt = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         renderer.drawFont(this.font, "Name: " + game.data.beltShop[game.data.shopId].name, this.pos.x - 100, this.pos.y - 50);
@@ -581,7 +589,7 @@ game.HUD.Text = me.Renderable.extend( {
     },
 
     /**
-     * draw the score
+     * draw the elements
      */
     draw : function (renderer) {
         for(var i = 0; i < this.res.length; i++) {
@@ -591,6 +599,7 @@ game.HUD.Text = me.Renderable.extend( {
     }
 });
 
+//TRASH??!!
 game.HUD.Profile = me.Renderable.extend( {
     /**
      * constructor
@@ -603,8 +612,6 @@ game.HUD.Profile = me.Renderable.extend( {
 
         // create a font
         this.font = new me.Font("Trajan_Pro_Regular", 50, "white", "right");
-
-
 
     }
 
@@ -645,6 +652,16 @@ game.Icon = me.Sprite.extend({
     }
 });
 
+/**Two badly placed functions
+ * which are useed by the HUDs
+ */
+/**
+ * Used to get the name of the image according to the potion
+ * should be kicked and the name of the images change according
+ * to the names used in the Database
+ * @param potion
+ * @returns the name of the image
+ */
 function getPotionName(potion){
     var rank = 0;
     var kind = 0;
@@ -686,7 +703,12 @@ function getPotionName(potion){
         return res;
     }
 }
-
+/**
+ * Used in Profile and Highscore to convert seconds into
+ * @param seconds
+ * @returns a string of the structure
+ *          years:month:days:hours:minutes:seconds
+ */
 function convertTime(seconds){
     var minutes = Math.floor(seconds/60);
     var hours =  Math.floor(minutes/60);

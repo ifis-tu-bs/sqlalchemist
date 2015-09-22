@@ -1,5 +1,5 @@
 /*
- *  all the buttons
+ *  The buttons which contain pictures or a update fuction.
  */
 
 // used in trivia does save the information for the task
@@ -18,7 +18,6 @@ var task = me.GUI_Object.extend(
             this.z = 4;
         },
 
-        // output something in the console
         // when the object is clicked
         onClick:function (event)
         {
@@ -30,7 +29,7 @@ var task = me.GUI_Object.extend(
     });
 
 
-// used in CharacterSheet
+// used in the CharacterSheet
 var skinRight = me.GUI_Object.extend(
     {
         init:function (x, y)
@@ -45,11 +44,9 @@ var skinRight = me.GUI_Object.extend(
             this.z = 4;
         },
 
-        // output something in the console
         // when the object is clicked
         onClick:function (event)
         {
-            //console.log("clicked! skinRight");
             //cycle through the game.skins.available and find next skin available
             do {
                 game.skin.currentSkin = (game.skin.currentSkin + 1) % game.skin.skins.length ;
@@ -74,7 +71,7 @@ var skinRight = me.GUI_Object.extend(
         }
     });
 
-// used in CharacterSheet
+// used in the CharacterSheet
 var skinLeft = me.GUI_Object.extend(
     {
         init:function (x, y)
@@ -91,7 +88,6 @@ var skinLeft = me.GUI_Object.extend(
 
         },
 
-        // output something in the console
         // when the object is clicked
         onClick:function (event)
         {
@@ -137,12 +133,12 @@ var exit = me.GUI_Object.extend(
             this.z = -1;
         },
 
-        // output something in the console
         // when the object is clicked
         onClick:function (event)
         {
             me.state.change(me.state.GAMEOVER);
         },
+        // catches the event exit which is declared in play.js
         update :function (){
             if (me.input.isKeyPressed("exit")) {
                 me.state.change(me.state.GAMEOVER);

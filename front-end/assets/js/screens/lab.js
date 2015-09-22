@@ -1,3 +1,8 @@
+/**
+ * The ReadyScreen is really important for the game.
+ * All of the players information will be saved locally every time the player passes the lab.
+ */
+
 game.ReadyScreen = me.ScreenObject.extend({
 
     /**
@@ -37,7 +42,6 @@ game.ReadyScreen = me.ScreenObject.extend({
 
             }
             game.data.scollLimit = stat.characterState.scrollLimit;
-            console.log(game.data.scollLimit);
 
             //get Potions 1-20
             for (var i = 0; i < stat.characterState.inventory.potions.length; i++) {
