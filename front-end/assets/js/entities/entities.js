@@ -20,14 +20,18 @@ game.LevelEntity = me.LevelEntity.extend({
 
         this.nextlevel = this.findNextLevel(Math.floor(game.persistent.depth / 5));
 
+        console.log(game.persistent.depth % 5)
+
         //Play the background music
         var title;
         if(game.persistent.depth % 5 === 1 && game.persistent.depth !== 1 ){
             title = "boss".concat(Math.ceil(Math.random() * 5));
+            console.log(title);
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
-        }else if(game.persistent.depth % 5 === 2 && game.persistent.depth !== 2 ){
+        }else if((game.persistent.depth % 5 === 2 && game.persistent.depth % 50 !== 2 ) || game.persistent.depth === 1 ){
             title = "level".concat(Math.ceil(Math.random() * 7));
+            console.log(title);
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
         }else if(game.persistent.depth === 52){
