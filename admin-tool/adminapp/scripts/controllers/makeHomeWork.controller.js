@@ -1,3 +1,10 @@
+/**********************************************************************************************************************
+*   Controller for templates/makeHomeWork.template.html
+*
+*   Builds a Homework out of the Selected TaskFiles in /tasks.
+*   The TaskService is used for the actual creation.
+**********************************************************************************************************************/
+
 (function () {
 
 
