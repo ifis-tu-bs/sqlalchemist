@@ -24,14 +24,12 @@ game.LevelEntity = me.LevelEntity.extend({
 
         //Play the background music
         var title;
-        if(game.persistent.depth % 5 === 1 && game.persistent.depth !== 1 ){
-            title = "boss".concat(Math.ceil(Math.random() * 5));
-            console.log(title);
+        if(game.persistent.depth % 5 === 2 && game.persistent.depth !== 52){
+            title = "level".concat(Math.ceil(Math.random() * 7));
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
-        }else if((game.persistent.depth % 5 === 2 && game.persistent.depth % 50 !== 2 ) || game.persistent.depth === 1 ){
-            title = "level".concat(Math.ceil(Math.random() * 7));
-            console.log(title);
+        }else if(game.persistent.depth % 5 === 1 && game.data.score !== 0){
+            title = "boss".concat(Math.ceil(Math.random() * 5));
             me.audio.stopTrack();
             me.audio.playTrack(title, game.data.musicVolume);
         }else if(game.persistent.depth === 52){
@@ -72,11 +70,10 @@ game.LevelEntity = me.LevelEntity.extend({
             //give a random number between 0 and 5 as map id called: next
             do {
                 next = Math.floor(Math.random() * 6);
-            } while (next === game.persistent.currentLevel[0] || next === game.persistent.currentLevel[1] || next === game.persistent.currentLevel[2] || next === game.persistent.currentLevel[3]);
+            } while (next === game.persistent.currentLevel[0] || next === game.persistent.currentLevel[1] || next === game.persistent.currentLevel[2]);
 
 
             //Save Level Persistantly
-            game.persistent.currentLevel[3] = game.persistent.currentLevel[2];
             game.persistent.currentLevel[2] = game.persistent.currentLevel[1];
             game.persistent.currentLevel[1] = game.persistent.currentLevel[0];
             game.persistent.currentLevel[0] = next;
