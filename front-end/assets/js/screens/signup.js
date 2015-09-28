@@ -4,25 +4,15 @@ game.SignUpScreen = me.ScreenObject.extend({
      *  Action to perform on state change: STATE_SIGNUP
      */
     onResetEvent: function() {
-
-        // workaround f�r android bug CB-4404
-        if (me.device.android || me.device.android2) {
-            if (me.device.isFullscreen) {
-                me.device.exitFullscreen();
-                document.body.style.minHeight = document.body.clientHeight + 'px';
-            }
-        }
-
+        
         /**
          * Load screen-image for Sign-Up
          */
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('sign_up_screen')
-            ),
-            1
-        );
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
+        background.setImage("assets/data/img/gui/sign_up_screen.png", "back");
+        me.game.world.addChild(background);
+
+        $("#background").fadeIn("slow");
 
 
         /**
@@ -51,39 +41,41 @@ game.SignUpScreen = me.ScreenObject.extend({
         passwordAckSignUp.insertText('password confirmation');
 
 
-        clearUserIDField = function () {
+        this.clearUserIDField = function () {
             useridSignUp.clear();
-            useridSignUp.removeEvent('click', clearUserIDField);
+            useridSignUp.removeEvent('click', this.clearUserIDField);
         };
-        useridSignUp.addEvent('click', clearUserIDField);
+        useridSignUp.addEvent('click', this.clearUserIDField);
 
 
-        clearUsernameField = function () {
+        this.clearUsernameField = function () {
             usernameSignUp.clear();
-            usernameSignUp.removeEvent('click', clearUsernameField);
+            usernameSignUp.removeEvent('click', this.clearUsernameField);
         };
-        usernameSignUp.addEvent('click', clearUsernameField);
+        usernameSignUp.addEvent('click', this.clearUsernameField);
 
 
-        clearPasswordField = function () {
+        this.clearPasswordField = function () {
             passwordSignUp.clear();
             passwordSignUp.changeType('password');
-            passwordSignUp.removeEvent('click', clearPasswordField);
+            passwordSignUp.removeEvent('click', this.clearPasswordField);
         };
-        passwordSignUp.addEvent('focus', clearPasswordField);
+        passwordSignUp.addEvent('focus', this.clearPasswordField);
 
 
-        clearPasswordAckField = function () {
+        this.clearPasswordAckField = function () {
             passwordAckSignUp.clear();
             passwordAckSignUp.changeType('password');
-            passwordAckSignUp.removeEvent('click', clearPasswordAckField);
+            passwordAckSignUp.removeEvent('click', this.clearPasswordAckField);
         };
-        passwordAckSignUp.addEvent('focus', clearPasswordAckField);
+        passwordAckSignUp.addEvent('focus', this.clearPasswordAckField);
 
-        function toStart() {
-            me.state.change(me.state.MENU);
-        }
-
+        toStart = function () {
+            $("#background").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(me.state.MENU);
+            }, 100);
+        };
 
 
         /**
@@ -142,9 +134,12 @@ game.SignUpScreen = me.ScreenObject.extend({
         };
 
 
-        function toLogin() {
-            me.state.change(STATE_LOGIN);
-        }
+        this.toLogin = function() {
+            $("#background").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(STATE_LOGIN);
+            }, 100);
+        };
 
         /**
          * Create all necessary ClickableElements for Sign-UP
@@ -159,7 +154,7 @@ game.SignUpScreen = me.ScreenObject.extend({
          */
 
         var submitButton      = new game.ClickableElement('submitButton', 'Enter', this.submitReply, 20, 6.5, 58.5, 64.5, 1);
-        var backToLoginButton = new game.ClickableElement('backToLoginButton', 'Back', toLogin, 20, 6.5, 19.5, 64.5, 1);
+        var backToLoginButton = new game.ClickableElement('backToLoginButton', 'Back', this.toLogin, 20, 6.5, 19.5, 64.5, 1);
 
         /**
          * add children to container
