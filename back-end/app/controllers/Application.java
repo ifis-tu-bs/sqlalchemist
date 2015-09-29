@@ -9,6 +9,8 @@ import play.Play;
 import models.*;
 import dao.UserDAO;
 
+import bootstrap.BootstrapDB;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class Application extends Controller {
             Map.init();
             Potion.init();
             Scroll.init();
-            Avatar.init();
+            BootstrapDB.init();
             ShopItem.init();
             TaskFile.init();
 

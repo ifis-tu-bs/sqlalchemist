@@ -12,6 +12,8 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
 
+import dao.AvatarDAO;
+
 import javax.persistence.*;
 import java.util.*;
 
@@ -148,7 +150,7 @@ public class Profile extends Model {
 //////////////////////////////////////////////////
 
     public boolean setAvatar(long id) {
-        Avatar avatar_temp = Avatar.getById(id);
+        Avatar avatar_temp = AvatarDAO.getById(id);
 
         if(avatar_temp == null)
             return false;
