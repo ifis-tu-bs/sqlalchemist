@@ -1,4 +1,11 @@
-﻿(function () {
+﻿/**********************************************************************************************************************
+*   Controller for views/passwordReset.view.html
+*
+*   Manages the reset of the password.
+*   For the actual reset, the UserService is used.
+**********************************************************************************************************************/
+
+(function () {
     'use strict';
 
     angular
