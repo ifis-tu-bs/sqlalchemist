@@ -291,7 +291,7 @@
   </object>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="7" name="EnemyEntity" x="1890" y="277" width="1859" height="72">
+  <object id="7" name="EnemyEntity" x="1894" y="283" width="1859" height="72">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy12"/>
@@ -301,7 +301,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="34" name="EnemyEntity" x="1132" y="835" width="415" height="26">
+  <object id="34" name="EnemyEntity" x="1124" y="840" width="415" height="26">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="frog"/>
@@ -321,7 +321,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="118" name="EnemyEntity" x="2037" y="834" width="415" height="26">
+  <object id="118" name="EnemyEntity" x="2041" y="841" width="415" height="26">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="frog"/>
@@ -331,7 +331,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="119" name="EnemyEntity" x="2678" y="835" width="415" height="26">
+  <object id="119" name="EnemyEntity" x="2684" y="841" width="415" height="26">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="frog"/>
@@ -341,7 +341,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="120" name="EnemyEntity" x="3349" y="836" width="415" height="26">
+  <object id="120" name="EnemyEntity" x="3330" y="843" width="415" height="26">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="frog"/>

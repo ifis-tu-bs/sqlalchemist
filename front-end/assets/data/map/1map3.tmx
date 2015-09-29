@@ -404,7 +404,7 @@
   </object>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="7" name="EnemyEntity" x="787" y="418" width="795" height="67">
+  <object id="7" name="EnemyEntity" x="786" y="420" width="795" height="67">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="gorilla"/>
@@ -414,7 +414,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="58" name="EnemyEntity" x="1002" y="737" width="594" height="31">
+  <object id="58" name="EnemyEntity" x="996" y="741" width="594" height="31">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="gorilla"/>
@@ -424,7 +424,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="125" name="EnemyEntity" x="1694" y="706.5" width="594" height="31">
+  <object id="125" name="EnemyEntity" x="1694" y="707.5" width="594" height="31">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="gorilla"/>
@@ -444,7 +444,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="127" name="EnemyEntity" x="2396" y="706.5" width="594" height="31">
+  <object id="127" name="EnemyEntity" x="2396" y="707.5" width="594" height="31">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="gorilla"/>

@@ -238,7 +238,7 @@
   </object>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="34" name="EnemyEntity" x="1578" y="959" width="379" height="29">
+  <object id="34" name="EnemyEntity" x="1575" y="967" width="379" height="29">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="walking_stone"/>
@@ -248,7 +248,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="55" name="EnemyEntity" x="2466" y="284" width="474" height="32">
+  <object id="55" name="EnemyEntity" x="2477" y="294" width="474" height="32">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="walking_stone"/>
@@ -258,7 +258,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="121" name="EnemyEntity" x="2692.5" y="701.5" width="371" height="29">
+  <object id="121" name="EnemyEntity" x="2706.5" y="713.5" width="371" height="29">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="walking_stone"/>
