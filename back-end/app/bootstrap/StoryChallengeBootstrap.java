@@ -2,6 +2,8 @@ package bootstrap;
 
 import helper.SimpleText;
 
+import dao.MapDAO;
+
 import models.StoryChallenge;
 import models.Map;
 
@@ -264,17 +266,17 @@ public class StoryChallengeBootstrap {
             SimpleText.SIMPLE_TEXT_PREREQUISITE_BOSSMAP_10, 1));
 
 
-    List<Map> maps0 = Map.getByLevel(0);
-    List<Map> maps1 = Map.getByLevel(1);
-    List<Map> maps2 = Map.getByLevel(2);
-    List<Map> maps3 = Map.getByLevel(3);
-    List<Map> maps4 = Map.getByLevel(4);
-    List<Map> maps5 = Map.getByLevel(5);
-    List<Map> maps6 = Map.getByLevel(6);
-    List<Map> maps7 = Map.getByLevel(7);
-    List<Map> maps8 = Map.getByLevel(8);
-    List<Map> maps9 = Map.getByLevel(9);
-    List<Map> maps10 = Map.getByLevel(10);
+    List<Map> maps0 = MapDAO.getByLevel(0);
+    List<Map> maps1 = MapDAO.getByLevel(1);
+    List<Map> maps2 = MapDAO.getByLevel(2);
+    List<Map> maps3 = MapDAO.getByLevel(3);
+    List<Map> maps4 = MapDAO.getByLevel(4);
+    List<Map> maps5 = MapDAO.getByLevel(5);
+    List<Map> maps6 = MapDAO.getByLevel(6);
+    List<Map> maps7 = MapDAO.getByLevel(7);
+    List<Map> maps8 = MapDAO.getByLevel(8);
+    List<Map> maps9 = MapDAO.getByLevel(9);
+    List<Map> maps10 = MapDAO.getByLevel(10);
 
 
     StoryChallenge storyChallenge10 = StoryChallenge.create(

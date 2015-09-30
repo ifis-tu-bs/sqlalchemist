@@ -30,7 +30,6 @@ public class Application extends Controller {
         if(UserDAO.getAllUsers().size() == 0) {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
-            Map.init();
             Potion.init();
             Scroll.init();
             BootstrapDB.init();
