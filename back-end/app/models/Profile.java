@@ -90,7 +90,7 @@ public class Profile extends Model {
     /**
      * @param username the username
      */
-    private Profile(String username) {
+    public Profile(String username) {
         super();
         this.setUsername(username);
         this.setPlayerStats(PlayerStats.defaultValues);
@@ -429,29 +429,6 @@ public class Profile extends Model {
         node.put("ownRank",     profile.ownRank + 1);
 	node.put("own",		profile.toJsonHighScore());
         return node;
-    }
-
-//////////////////////////////////////////////////
-//  Class Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param username asd
-     * @return asd
-     */
-    public static Profile create(String username) {
-
-        Profile profile = new Profile(username);
-
-        try {
-            profile.save();
-
-            return profile;
-        } catch (PersistenceException e) {
-            Logger.warn("Profile.create UsernameTaken: " + e.getMessage());
-            return null;
-        }
     }
 
 //////////////////////////////////////////////////

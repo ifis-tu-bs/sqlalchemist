@@ -7,6 +7,9 @@ import sqlgame.exception.MySQLAlchemistException;
 import sqlgame.sandbox.*;
 import Exception.SQLAlchemistException;
 import helper.Random;
+
+import dao.CommentDAO;
+
 import play.*;
 import play.db.ebean.Model;
 import play.libs.Json;
@@ -193,7 +196,7 @@ public class SubTask extends Model {
 
     public boolean comment(Profile profile, String text) {
         Comment comment;
-        if((comment = Comment.create(profile, text)) != null) {
+        if((comment = CommentDAO.create(profile, text)) != null) {
             this.commentList.add(comment);
             return true;
         }

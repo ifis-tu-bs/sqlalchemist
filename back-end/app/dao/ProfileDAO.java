@@ -1,11 +1,33 @@
 package dao;
 
+import play.Logger;
+
 import models.Profile;
+
+import javax.persistence.PersistenceException;
 
 /**
  * This class containes all database getter & setters for profile objects
  */
 public class ProfileDAO {
+  /**
+   *
+   * @param username asd
+   * @return asd
+   */
+  public static Profile create(String username) {
+    Profile profile = new Profile(username);
+    try {
+      profile.save();
+
+      return profile;
+    } catch (PersistenceException e) {
+      Logger.warn("Profile.create UsernameTaken: " + e.getMessage());
+      return null;
+    }
+  }
+
+
   public static Profile getById(long id) {
     return Profile.find.where().eq("id", id).findUnique();
   }

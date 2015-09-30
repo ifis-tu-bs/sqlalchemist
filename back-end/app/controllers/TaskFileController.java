@@ -7,6 +7,7 @@ import models.Profile;
 import models.TaskFile;
 import models.Comment;
 import dao.ProfileDAO;
+import dao.CommentDAO;
 
 import Exception.SQLAlchemistException;
 import play.Logger;
@@ -198,7 +199,7 @@ public class TaskFileController extends Controller {
             return badRequest("Invalid json or empty text");
         }
 
-        Comment comment = Comment.create(profile, text);
+        Comment comment = CommentDAO.create(profile, text);
         if (comment == null) {
             Logger.warn("TaskFileController.comment - can't create comment");
             return badRequest("can't create comment");

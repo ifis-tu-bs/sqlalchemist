@@ -13,6 +13,7 @@ import models.ScrollCollection;
 import models.SubmittedHomeWork;
 
 import dao.ProfileDAO;
+import dao.CommentDAO;
 
 import Exception.SQLAlchemistException;
 import play.Logger;
@@ -155,7 +156,7 @@ public class SubTaskController extends Controller {
             return badRequest("Text is either null or empty");
         }
 
-        Comment comment = Comment.create(profile, text);
+        Comment comment = CommentDAO.create(profile, text);
         if (comment == null) {
             Logger.warn("TaskFileController.comment - can't create comment");
             return badRequest("can't create comment");

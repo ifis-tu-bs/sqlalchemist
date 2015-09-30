@@ -218,16 +218,4 @@ public class HomeWorkChallenge extends Challenge {
         }
         return homeWorkChallenge;
     }
-
-//////////////////////////////////////////////////
-//  Init Method
-//////////////////////////////////////////////////
-
-    public static void init() {
-        Logger.info("Initialize 'HomeWorkController' data");
-
-        Logger.info("Done initializing");
-    }
-
-
 }
