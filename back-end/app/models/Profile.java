@@ -13,6 +13,7 @@ import play.db.ebean.Model;
 import play.libs.Json;
 
 import dao.AvatarDAO;
+import dao.InventoryDAO;
 
 import javax.persistence.*;
 import java.util.*;
@@ -286,7 +287,7 @@ public class Profile extends Model {
     public void addCurrentScroll() {
         Scroll scroll = this.currentScroll;
         if(scroll.isRecipe()) {
-            Inventory.create(this, scroll.getPotion());
+            InventoryDAO.create(this, scroll.getPotion());
         }  else {
             ScrollCollection.setActive(this, scroll);
         }
@@ -316,7 +317,7 @@ public class Profile extends Model {
         this.setCurrentScroll(null);
         this.setTutorialDone(false);
         ScrollCollection.reset(this);
-        Inventory.reset(this);
+        InventoryDAO.reset(this);
 
         this.setDepthReset(0);
     }
@@ -382,8 +383,8 @@ public class Profile extends Model {
         node.put("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
-        node.put("inventory",       Inventory.getJson_Inventory(this));
-        node.put("belt",            Inventory.getJson_Belt(this));
+        node.put("inventory",       InventoryDAO.getJson_Inventory(this));
+        node.put("belt",            InventoryDAO.getJson_Belt(this));
         node.put("scrollCollection",ScrollCollection.toJsonAll(this));
 
         return node;

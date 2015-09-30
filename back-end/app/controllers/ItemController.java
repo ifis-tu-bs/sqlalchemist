@@ -11,6 +11,7 @@ import models.ScrollCollection;
 import models.Inventory;
 import models.Potion;
 import dao.ProfileDAO;
+import dao.InventoryDAO;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -112,7 +113,7 @@ public class ItemController extends Controller {
     public static Result belt() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
-        return ok(Inventory.getJson_Belt(profile));
+        return ok(InventoryDAO.getJson_Belt(profile));
     }
 
 
@@ -129,7 +130,7 @@ public class ItemController extends Controller {
             Logger.warn("ItemController.edit - could not retrieve Json from POST body");
             return badRequest("could not retrieve Json from POST body");
         }
-        Inventory.clearBelt(profile);
+        InventoryDAO.clearBelt(profile);
 
         int size = belt.size();
         for(int i = 1; i <= size; i++) {
@@ -137,10 +138,10 @@ public class ItemController extends Controller {
             int id = beltSlot.findPath("potion").asInt();
             Potion potion = Potion.getById(id);
             if (potion != null) {
-                Inventory.updateBeltSlot(profile, potion, i);
+                InventoryDAO.updateBeltSlot(profile, potion, i);
             }
         }
-        return ok(Inventory.getJson_Belt(profile));
+        return ok(InventoryDAO.getJson_Belt(profile));
     }
 
     /**
@@ -151,7 +152,7 @@ public class ItemController extends Controller {
     public static Result used(int id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
-        Inventory inventory = Inventory.getBeltSlot(profile, id);
+        Inventory inventory = InventoryDAO.getBeltSlot(profile, id);
         if(inventory == null){
             Logger.warn("ItemController.used - no beltSlot for profile and id found");
             return badRequest("no beltSlot for profile and id found");
@@ -168,6 +169,6 @@ public class ItemController extends Controller {
      */
     public static Result inventory() {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        return ok(Inventory.getJson_Inventory(profile));
+        return ok(InventoryDAO.getJson_Inventory(profile));
     }
 }
