@@ -14,6 +14,7 @@ import play.libs.Json;
 
 import dao.AvatarDAO;
 import dao.InventoryDAO;
+import dao.LofiCoinFlowLogDAO;
 
 import javax.persistence.*;
 import java.util.*;
@@ -164,7 +165,7 @@ public class Profile extends Model {
     private int addCoinsFromScore(int score) {
         int coins = score;
 
-        int collected = LofiCoinFlowLog.getCollectedCoinsSinceYesterday(this);
+        int collected = LofiCoinFlowLogDAO.getCollectedCoinsSinceYesterday(this);
         collected = coins + collected;
 
         int coinLimit = Play.application().configuration().getInt("Game.CoinLimit");
@@ -177,7 +178,7 @@ public class Profile extends Model {
         if(this.coins >= 1000000) {
             this.coins = 999999;
         }
-        LofiCoinFlowLog.add(this, coins);
+        LofiCoinFlowLogDAO.add(this, coins);
 
         return coins;
     }
