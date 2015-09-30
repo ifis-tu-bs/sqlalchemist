@@ -11,6 +11,7 @@ import models.SubTask;
 import models.SubmittedHomeWork;
 import dao.UserDAO;
 import dao.ProfileDAO;
+import dao.HomeWorkChallengeDAO;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -42,7 +43,7 @@ public class HomeWorkController extends Controller {
             return badRequest("Invalid json data");
         }
 
-        HomeWorkChallenge homeWorkChallenge = HomeWorkChallenge.getById(json.findPath("homework").longValue());
+        HomeWorkChallenge homeWorkChallenge = HomeWorkChallengeDAO.getById(json.findPath("homework").longValue());
         TaskFile taskFile = TaskFile.getByFileName(json.findPath("taskFile").textValue());
 
         if (homeWorkChallenge == null || taskFile == null) {
@@ -74,7 +75,7 @@ public class HomeWorkController extends Controller {
         }
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<HomeWorkChallenge> homeWorkList = HomeWorkChallenge.getAll();
+        List<HomeWorkChallenge> homeWorkList = HomeWorkChallengeDAO.getAll();
 
         if (homeWorkList == null) {
             return badRequest("No HomeWorks found");
@@ -134,7 +135,7 @@ public class HomeWorkController extends Controller {
         //                                                  |
         //                                                  v
         //
-        if (HomeWorkChallenge.create(name, ProfileDAO.getByUsername(request().username()), 0, 0, taskFiles, 0, start, end) == null) {
+        if (HomeWorkChallengeDAO.create(name, ProfileDAO.getByUsername(request().username()), 0, 0, taskFiles, 0, start, end) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return badRequest("Data did not match constraints");
         }
@@ -149,7 +150,7 @@ public class HomeWorkController extends Controller {
             return badRequest("Need to be higher Level User");
         }
 
-        HomeWorkChallenge.getById(id).delete();
+        HomeWorkChallengeDAO.getById(id).delete();
 
         return ok("Deleted");
     }

@@ -5,6 +5,9 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import dao.HomeWorkChallengeDAO;
+
 import play.Logger;
 import play.libs.Json;
 
@@ -104,17 +107,17 @@ public class SubmittedHomeWork extends SolvedSubTask {
             boolean solve,
             String statement) {
 
-        if (HomeWorkChallenge.getCurrent() == null) {
+        if (HomeWorkChallengeDAO.getCurrent() == null) {
             Logger.warn("Trying to submit without having an active HomeWork!!!");
             return null;
         }
 
-        if (!HomeWorkChallenge.getCurrent().contains(subTask)) {
+        if (!HomeWorkChallengeDAO.getCurrent().contains(subTask)) {
             Logger.info("SubmittedHomeWork.submit - SomeOne got Late");
             return null;
         }
 
-        SubmittedHomeWork existed = find.where().eq("profile_id", profile.getId()).eq("sub_task_id", subTask.getId()).eq("home_work_id", HomeWorkChallenge.getCurrent().getId()).findUnique();
+        SubmittedHomeWork existed = find.where().eq("profile_id", profile.getId()).eq("sub_task_id", subTask.getId()).eq("home_work_id", HomeWorkChallengeDAO.getCurrent().getId()).findUnique();
 
         if (existed != null) {
             try {
@@ -132,7 +135,7 @@ public class SubmittedHomeWork extends SolvedSubTask {
         SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
                 profile,
                 subTask,
-                HomeWorkChallenge.getCurrent(),
+                HomeWorkChallengeDAO.getCurrent(),
                 solve,
                 statement);
 
