@@ -55,7 +55,7 @@ public class InventoryDAO {
        * @return returns the inventory as an ArrayNode
        */
       public static ObjectNode getJson_Inventory(Profile profile){
-          List<Potion> potionList = Potion.getAll();
+          List<Potion> potionList = PotionDAO.getAll();
           ObjectNode json = Json.newObject();
           ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 

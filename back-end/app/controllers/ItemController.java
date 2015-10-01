@@ -12,6 +12,7 @@ import models.Inventory;
 import models.Potion;
 import dao.ProfileDAO;
 import dao.InventoryDAO;
+import dao.PotionDAO;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -136,7 +137,7 @@ public class ItemController extends Controller {
         for(int i = 1; i <= size; i++) {
             JsonNode beltSlot = belt.get(i-1);
             int id = beltSlot.findPath("potion").asInt();
-            Potion potion = Potion.getById(id);
+            Potion potion = PotionDAO.getById(id);
             if (potion != null) {
                 InventoryDAO.updateBeltSlot(profile, potion, i);
             }

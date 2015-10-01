@@ -5,6 +5,8 @@ import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;
 
+import dao.PotionDAO;
+
 import javax.persistence.*;
 
 /**
@@ -189,7 +191,7 @@ public class Scroll extends  Model {
      * @return Scroll with the id
      */
     public static Scroll getById(long id) {
-        return find.byId(id);
+        return Scroll.find.byId(id);
     }
 
     /**
@@ -227,48 +229,48 @@ public class Scroll extends  Model {
         Logger.info("Initializing 'Scroll - Recipe' data");
 
         Scroll.create(0, "Recipe for the Weak Health Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_1));
+                PotionDAO.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_1));
         Scroll.create(1, "Recipe for the Moderate Health Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_2));
+                PotionDAO.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_2));
         Scroll.create(2, "Recipe for the Great Health Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_3));
+                PotionDAO.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_3));
         Scroll.create(3, "Recipe for the Powerful Health Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_4));
+                PotionDAO.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_4));
         Scroll.create(4, "Recipe for the Insane Health Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_5));
+                PotionDAO.getByTypeAndPowerLevel(Potion.HEALTH_POTION, Potion.POWER_LEVEL_5));
 
         Scroll.create(5, "Recipe for the Weak Speed Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_1));
+                PotionDAO.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_1));
         Scroll.create(6, "Recipe for the Moderate Speed Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_2));
+                PotionDAO.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_2));
         Scroll.create(7, "Recipe for the Great Speed Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_3));
+                PotionDAO.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_3));
         Scroll.create(8 ,"Recipe for the Powerful Speed Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_4));
+                PotionDAO.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_4));
         Scroll.create(9, "Recipe for the Insane Speed Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_5));
+                PotionDAO.getByTypeAndPowerLevel(Potion.SPEED_POTION, Potion.POWER_LEVEL_5));
 
         Scroll.create(10, "Recipe for the Weak Jump Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_1));
+                PotionDAO.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_1));
         Scroll.create(11, "Recipe for the Moderate Jump Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_2));
+                PotionDAO.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_2));
         Scroll.create(12, "Recipe for the Great Jump Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_3));
+                PotionDAO.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_3));
         Scroll.create(13, "Recipe for the Powerful Jump Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_4));
+                PotionDAO.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_4));
         Scroll.create(14, "Recipe for the Insane Jump Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_5));
+                PotionDAO.getByTypeAndPowerLevel(Potion.JUMP_POTION, Potion.POWER_LEVEL_5));
 
         Scroll.create(15, "Recipe for the Weak Defense Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_1));
+                PotionDAO.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_1));
         Scroll.create(16, "Recipe for the Moderate Defense Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_2));
+                PotionDAO.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_2));
         Scroll.create(17, "Recipe for the Great Defense Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_3));
+                PotionDAO.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_3));
         Scroll.create(18, "Recipe for the Powerful Defense Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_4));
+                PotionDAO.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_4));
         Scroll.create(19, "Recipe for the Insane Defense Potion", TYPE_RECIPE,
-                Potion.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_5));
+                PotionDAO.getByTypeAndPowerLevel(Potion.DEFENSE_POTION, Potion.POWER_LEVEL_5));
 
         Logger.info("Initializing 'Scroll - Enchantment' data");
 

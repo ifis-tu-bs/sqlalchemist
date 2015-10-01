@@ -1,6 +1,5 @@
 package controllers;
 
-import helper.SimpleText;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -30,9 +29,8 @@ public class Application extends Controller {
         if(UserDAO.getAllUsers().size() == 0) {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
-            Potion.init();
-            Scroll.init();
             BootstrapDB.init();
+            Scroll.init();
             ShopItem.init();
             TaskFile.init();
 

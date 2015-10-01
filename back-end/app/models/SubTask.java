@@ -309,7 +309,7 @@ public class SubTask extends Model {
         float points = 0;
 
         if(scroll.isRecipe()) {
-            points = scroll.getPotion().getLevel();
+            points = scroll.getPotion().getPowerLevel();
         } else {
             List<ScrollCollection> scrollList = ScrollCollection.getScrollCollection(profile);
             for(ScrollCollection scrollCollection : scrollList) {
