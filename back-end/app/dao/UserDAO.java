@@ -32,6 +32,7 @@ public class UserDAO {
           Profile profile;
           if(( profile = ProfileDAO.create(username)) == null) {
               user.delete();
+              return null;
           } else {
               user.setProfile(profile);
               profile.setUser(user);

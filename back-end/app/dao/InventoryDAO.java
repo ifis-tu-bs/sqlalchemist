@@ -1,8 +1,8 @@
 package dao;
 
-import models.Profile;
 import models.Inventory;
 import models.Potion;
+import models.Profile;
 import models.Scroll;
 import models.ScrollCollection;
 

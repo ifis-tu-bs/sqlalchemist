@@ -3,11 +3,15 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
-import models.Profile;
-import models.TaskFile;
-import models.Comment;
-import dao.ProfileDAO;
 import dao.CommentDAO;
+import dao.ProfileDAO;
+import dao.RatingDAO;
+
+import models.Comment;
+import models.Profile;
+import models.Rating;
+import models.SubTask;
+import models.TaskFile;
 
 import Exception.SQLAlchemistException;
 import play.Logger;
@@ -140,36 +144,37 @@ public class TaskFileController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
-    public static Result rate(Long id) {
-        JsonNode body       = request().body().asJson();
-        TaskFile taskFile   = TaskFile.getById(id);
-        Profile     profile = ProfileDAO.getByUsername(request().username());
+     public static Result rate(Long id) {
+         JsonNode body       = request().body().asJson();
+         SubTask subTask     = SubTask.getById(id);
+         Profile profile     = ProfileDAO.getByUsername(request().username());
 
-        if (taskFile == null) {
-            Logger.warn("TaskFileController.rate("+id+") - no TaskFile found");
-            return badRequest("no TaskFile found");
-        }
+         if (subTask == null) {
+             Logger.warn("SubTaskController.rate("+id+") - no SubTask found");
+             return badRequest("no SubTask found");
+         }
 
-        int p = body.findPath("positive").asInt();
-        int n = body.findPath("negative").asInt();
-        int e = body.findPath("needReview").asInt();
+         boolean p = body.findPath("positive").asInt() > 0;
+         boolean n = body.findPath("negative").asInt() > 0;
+         boolean r = body.findPath("needReview").asInt() > 0;
 
-        boolean status;
-
-        if(p > 0 || n > 0 || e > 0) {
-            status = taskFile.rate(profile, p > 0, e > 0, n > 0);
-        } else {
-            Logger.warn("TaskFileController.rate - json body was empty");
-            return badRequest("json body was empty");
-        }
-        taskFile.update();
-        if(!status) {
-            Logger.warn("TaskFileController.rate - already rated");
-            return badRequest("try again later");
-        }
-        taskFile.update();
-        return ok();
-    }
+         if( p && !n && !r ||
+            !p &&  n && !r ||
+            !p && !n && r) {
+           Rating rating = RatingDAO.create(profile, p, n, r);
+           if(rating != null) {
+             subTask.addRating(rating);
+           } else {
+             Logger.warn("SubTaskController.rate - Rating cannot be saved");
+             return badRequest("Please try again later");
+           }
+         } else {
+           Logger.warn("SubTaskController.rate - Json body was invalid");
+           return badRequest("Please try again later");
+         }
+         subTask.update();
+         return ok();
+     }
 
 
     /**

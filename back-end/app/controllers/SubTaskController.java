@@ -1,30 +1,32 @@
 package controllers;
 
+import dao.CommentDAO;
+import dao.ProfileDAO;
+import dao.RatingDAO;
+
+import Exception.SQLAlchemistException;
+
+import models.Comment;
+import models.Profile;
+import models.Rating;
+import models.Scroll;
+import models.ScrollCollection;
+import models.SolvedSubTask;
+import models.SubmittedHomeWork;
+import models.SubTask;
+
+import secured.UserSecured;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
-
-import models.Profile;
-import models.SubTask;
-import models.SolvedSubTask;
-import models.Comment;
-import models.Scroll;
-import models.ScrollCollection;
-import models.SubmittedHomeWork;
-
-import dao.ProfileDAO;
-import dao.CommentDAO;
-
-import Exception.SQLAlchemistException;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-import secured.UserSecured;
 
 import java.util.List;
-
 
 /**
  * @author fabiomazzone
@@ -93,7 +95,6 @@ public class SubTaskController extends Controller {
      * @param id    the id of the SubTask
      * @return      returns a http code with a result of the operation
      */
-    @SuppressWarnings("UnusedAssignment")
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
         SubTask subTask     = SubTask.getById(id);
@@ -104,23 +105,23 @@ public class SubTaskController extends Controller {
             return badRequest("no SubTask found");
         }
 
-        int p = body.findPath("positive").asInt();
-        int n = body.findPath("negative").asInt();
-        int e = body.findPath("needReview").asInt();
+        boolean p = body.findPath("positive").asInt() > 0;
+        boolean n = body.findPath("negative").asInt() > 0;
+        boolean r = body.findPath("needReview").asInt() > 0;
 
-        boolean status;
-
-
-        if(p > 0 || n > 0 || e > 0) {
-            status = subTask.rate(profile, p > 0, e > 0, n > 0);
+        if( p && !n && !r ||
+           !p &&  n && !r ||
+           !p && !n && r) {
+          Rating rating = RatingDAO.create(profile, p, n, r);
+          if(rating != null) {
+            subTask.addRating(rating);
+          } else {
+            Logger.warn("SubTaskController.rate - Rating cannot be saved");
+            return badRequest("Please try again later");
+          }
         } else {
-            Logger.warn("SubTaskController.rate - json body was empty");
-            return badRequest("json body was empty");
-        }
-        subTask.update();
-        if(!status) {
-            Logger.warn("SubTaskController.rate - already rated");
-            return badRequest("try again later");
+          Logger.warn("SubTaskController.rate - Json body was invalid");
+          return badRequest("Please try again later");
         }
         subTask.update();
         return ok();

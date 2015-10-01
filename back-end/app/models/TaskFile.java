@@ -184,16 +184,16 @@ public class TaskFile extends Model {
      */
     public ObjectNode toJson()
     {
-        ObjectNode  objectNode  = Json.newObject();
-        ArrayNode   arrayNode   = JsonNodeFactory.instance.arrayNode();
-
-        Rating      rating_sum  = new Rating();
-        rating_sum.add(this.ratings);
+        ObjectNode  objectNode = Json.newObject();
+        ArrayNode   subTasks   = JsonNodeFactory.instance.arrayNode();
+        List<Rating> ratings   = new ArrayList <>(this.ratings);
 
         for(SubTask subTask : this.subTasks) {
-            arrayNode.add(subTask.toJson());
-            rating_sum.add(subTask.getRatings());
+            subTasks.add(subTask.toJson());
+            ratings.addAll(subTask.getRatings());
         }
+
+        Rating      rating_sum  = Rating.sum(ratings);
 
         objectNode.put("id", this.id);
         if(this.creator != null) {
@@ -207,7 +207,7 @@ public class TaskFile extends Model {
         objectNode.put("schema",        this.schema);
         objectNode.put("rating",        rating_sum.toJson());
         objectNode.put("created_at",    String.valueOf(this.created_at));
-        objectNode.put("subTasks",      arrayNode);
+        objectNode.put("subTasks",      subTasks);
 
         return objectNode;
     }
@@ -240,41 +240,21 @@ public class TaskFile extends Model {
     }
 
     /**
-     * This is the method to rate this TaskFile
-     *
-     * @param profile       the profile that's rate
-     * @param positive      if the rating for positive
-     * @param needReview    if the rating for needReview
-     * @param negative      if the rating for negative
-     * @return              return true if the rating process is successful
+     * This is the methode to add a rating to this entity
      */
-    public boolean rate(Profile profile, boolean positive, boolean needReview, boolean negative) {
-        Rating rating = null;
-
-        if(this.ratings != null && this.ratings.size() > 0) {
-            for (Rating ratingI : this.ratings) {
-                if (ratingI.getProfile().getId() == profile.getId()) {
-                    rating = ratingI;
-                    break;
-                }
-
-            }
-        } else {
-            this.ratings = new ArrayList<>();
+    public void addRating(Rating rating) {
+      if(this.ratings != null && this.ratings.size() > 0) {
+        for(Rating ratingI : this.ratings) {
+          if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+            ratingI.delete();
+            break;
+          }
         }
+      } else {
+        this.ratings = new ArrayList<>();
+      }
 
-        if(rating != null) {
-            rating.rate(positive, needReview, negative);
-            rating.update();
-        } else {
-            rating = Rating.create(profile, positive, needReview, negative);
-            if(rating == null) {
-                return false;
-            }
-            this.ratings.add(rating);
-        }
-        this.checkTaskFile();
-        return true;
+      this.ratings.add(rating);
     }
 
     private void checkTaskFile() {
