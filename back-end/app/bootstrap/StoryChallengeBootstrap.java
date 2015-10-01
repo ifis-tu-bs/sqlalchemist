@@ -3,6 +3,7 @@ package bootstrap;
 import helper.SimpleText;
 
 import dao.MapDAO;
+import dao.StoryChallengeDAO;
 
 import models.StoryChallenge;
 import models.Map;
@@ -279,7 +280,7 @@ public class StoryChallengeBootstrap {
     List<Map> maps10 = MapDAO.getByLevel(10);
 
 
-    StoryChallenge storyChallenge10 = StoryChallenge.create(
+    StoryChallenge storyChallenge10 = StoryChallengeDAO.create(
             "10. Level",
             false,
             texts10,
@@ -287,7 +288,7 @@ public class StoryChallengeBootstrap {
             null,
             10);
 
-    StoryChallenge storyChallenge9 = StoryChallenge.create(
+    StoryChallenge storyChallenge9 = StoryChallengeDAO.create(
             "9. Level",
             false,
             texts9,
@@ -295,7 +296,7 @@ public class StoryChallengeBootstrap {
             storyChallenge10,
             9);
 
-    StoryChallenge storyChallenge8 = StoryChallenge.create(
+    StoryChallenge storyChallenge8 = StoryChallengeDAO.create(
             "8. Level",
             false,
             texts8,
@@ -303,7 +304,7 @@ public class StoryChallengeBootstrap {
             storyChallenge9,
             8);
 
-    StoryChallenge storyChallenge7 = StoryChallenge.create(
+    StoryChallenge storyChallenge7 = StoryChallengeDAO.create(
             "7. Level",
             false,
             texts7,
@@ -311,7 +312,7 @@ public class StoryChallengeBootstrap {
             storyChallenge8,
             7);
 
-    StoryChallenge storyChallenge6 = StoryChallenge.create(
+    StoryChallenge storyChallenge6 = StoryChallengeDAO.create(
             "6. Level",
             false,
             texts6,
@@ -319,7 +320,7 @@ public class StoryChallengeBootstrap {
             storyChallenge7,
             6);
 
-    StoryChallenge storyChallenge5 = StoryChallenge.create(
+    StoryChallenge storyChallenge5 = StoryChallengeDAO.create(
             "5. Level",
             false,
             texts5,
@@ -327,7 +328,7 @@ public class StoryChallengeBootstrap {
             storyChallenge6,
             5);
 
-    StoryChallenge storyChallenge4 = StoryChallenge.create(
+    StoryChallenge storyChallenge4 = StoryChallengeDAO.create(
             "4. Level",
             false,
             texts4,
@@ -335,7 +336,7 @@ public class StoryChallengeBootstrap {
             storyChallenge5,
             4);
 
-    StoryChallenge storyChallenge3 = StoryChallenge.create(
+    StoryChallenge storyChallenge3 = StoryChallengeDAO.create(
             "3. Level",
             false,
             texts3,
@@ -343,7 +344,7 @@ public class StoryChallengeBootstrap {
             storyChallenge4,
             3);
 
-    StoryChallenge storyChallenge2 = StoryChallenge.create(
+    StoryChallenge storyChallenge2 = StoryChallengeDAO.create(
             "2. Level",
             false,
             texts2,
@@ -351,7 +352,7 @@ public class StoryChallengeBootstrap {
             storyChallenge3,
             2);
 
-    StoryChallenge storyChallenge1 = StoryChallenge.create(
+    StoryChallenge storyChallenge1 = StoryChallengeDAO.create(
             "1. Level",
             false,
             texts1,
@@ -359,7 +360,7 @@ public class StoryChallengeBootstrap {
             storyChallenge2,
             1);
 
-    StoryChallenge.create(
+    StoryChallengeDAO.create(
             "Tutorial",
             true,
             texts0,

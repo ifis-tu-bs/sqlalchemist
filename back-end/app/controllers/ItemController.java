@@ -5,6 +5,7 @@ import dao.PotionDAO;
 import dao.ProfileDAO;
 import dao.ScrollDAO;
 import dao.ScrollCollectionDAO;
+import dao.StoryChallengeDAO;
 
 import models.Inventory;
 import models.Potion;
@@ -39,7 +40,7 @@ public class ItemController extends Controller {
     public static Result collected() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
-        StoryChallenge challenge = StoryChallenge.getForProfile(profile);
+        StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
 
         if( profile == null) {
             Logger.warn("ItemController.collected - not a valid User");
@@ -66,7 +67,7 @@ public class ItemController extends Controller {
 
         if(calcLevel > currentLevel) {
             Logger.info("ItemController set next");
-            profile.setCurrentStory(challenge.next);
+            profile.setCurrentStory(challenge.getNext());
         }
 
 

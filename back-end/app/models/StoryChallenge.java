@@ -37,15 +37,15 @@ public class StoryChallenge extends Challenge {
     private int level;
 
     @OneToOne
-    public StoryChallenge next;
+    private StoryChallenge next;
 
-    private static final Finder<Long, StoryChallenge> find = new Finder<>(Long.class, StoryChallenge.class);
+    public static final Finder<Long, StoryChallenge> find = new Finder<>(Long.class, StoryChallenge.class);
 
 //////////////////////////////////////////////////
 //  Constructor
 //////////////////////////////////////////////////
 
-    protected StoryChallenge(
+    public StoryChallenge(
             String          name,
             boolean         tutorial,
             List<Map>       maps,
@@ -101,6 +101,10 @@ public class StoryChallenge extends Challenge {
 //  Getter & Setter
 //////////////////////////////////////////////////
 
+    public List<Text> getTexts() {
+      return this.texts;
+    }
+
     public boolean setTexts(List<SimpleText> texts) {
         for(int i = 0; i < texts.size(); i++) {
             SimpleText simpleText = texts.get(i);
@@ -115,91 +119,11 @@ public class StoryChallenge extends Challenge {
         return true;
     }
 
-//////////////////////////////////////////////////
-//  Create Method
-//////////////////////////////////////////////////
-
-    public static StoryChallenge create(
-            String          name,
-            boolean         isTutorial,
-            List<SimpleText>texts,
-            List<Map>       maps,
-            StoryChallenge  next,
-            int             level) {
-
-        if(name == null
-                || texts == null || texts.size() == 0
-                || maps == null || maps.size() == 0 ) {
-            Logger.warn("StoryChallenge.create - null Values not Accepted");
-            return null;
-        }
-
-        StoryChallenge storyChallenge = new StoryChallenge(
-                name,
-                isTutorial,
-                maps,
-                next,
-                level);
-
-        try {
-            storyChallenge.save();
-
-            if(!storyChallenge.setTexts(texts)) {
-                Logger.warn("StoryChallenge.create - Can't save all Texts");
-
-                if(storyChallenge.texts != null) {
-                    for(Text text : storyChallenge.texts) {
-                        text.delete();
-                    }
-                }
-
-                storyChallenge.delete();
-            }
-            storyChallenge.update();
-        } catch (PersistenceException pe) {
-            Logger.warn(pe.getMessage());
-        }
-        return storyChallenge;
-    }
-
-//////////////////////////////////////////////////
-//  Object Getter Methods
-//////////////////////////////////////////////////
-
-    @SuppressWarnings("UnusedAssignment")
-    public static StoryChallenge getForProfile(Profile profile) {
-        StoryChallenge challenge;
-        if (!profile.isTutorialDone()) {
-            challenge = find.where().eq("type", TYPE_TUTORIAL).findList().get(0);
-            profile.setCurrentStory(challenge);
-        } else {
-            challenge = profile.getCurrentStory();
-        }
-
-
-        profile.update();
-        if(challenge != null)
-            challenge.player = profile;
-
-        return challenge;
-    }
-
-    public static StoryChallenge getFirstLevel() {
-        StoryChallenge challenge = find.where().eq("type", TYPE_TUTORIAL).findList().get(0);
-        if(challenge == null) {
-            Logger.warn("StoryChallenge.getFirstLevel - No Element found");
-            return null;
-        }
-        challenge = challenge.getNext();
-        if(challenge == null) {
-            Logger.warn("StoryChallenge.getFirstLevel - Challenge is null");
-            return null;
-        }
-        return challenge;
-    }
-
     public StoryChallenge getNext() {
+        return this.next;
+    }
 
-        return next;
+    public void setNext(StoryChallenge next) {
+      this.next = next;
     }
 }

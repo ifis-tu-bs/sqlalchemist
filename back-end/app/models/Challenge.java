@@ -77,4 +77,8 @@ public class Challenge extends Model {
         super.update();
     }
 
+    public void setPlayer(Profile player) {
+      this.player = player;
+    }
+
 }
