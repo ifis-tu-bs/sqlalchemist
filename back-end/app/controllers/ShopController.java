@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.ProfileDAO;
+import dao.ShopItemDAO;
 
 import models.Profile;
 import models.ShopItem;
@@ -26,7 +27,7 @@ public class ShopController extends Controller {
      */
     public static Result avatarList() {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        List<ShopItem> shopItems = ShopItem.getAvatarList();
+        List<ShopItem> shopItems = ShopItemDAO.getAvatarList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
     }
@@ -38,7 +39,7 @@ public class ShopController extends Controller {
      */
     public static Result beltList() {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        List<ShopItem> shopItems = ShopItem.getBeltList();
+        List<ShopItem> shopItems = ShopItemDAO.getBeltList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
     }
@@ -50,7 +51,7 @@ public class ShopController extends Controller {
      */
     public static Result buy(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        ShopItem shopItem = ShopItem.getById(id);
+        ShopItem shopItem = ShopItemDAO.getById(id);
 
         if(profile == null || shopItem == null) {
             Logger.warn("ShopController.buy - No ShopItem or Profile found");

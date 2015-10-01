@@ -31,7 +31,6 @@ public class Application extends Controller {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
             BootstrapDB.init();
-            ShopItem.init();
             TaskFile.init();
 
             // Init residual Classes

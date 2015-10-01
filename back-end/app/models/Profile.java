@@ -4,6 +4,7 @@ import dao.AvatarDAO;
 import dao.InventoryDAO;
 import dao.LofiCoinFlowLogDAO;
 import dao.ScrollCollectionDAO;
+import dao.ShopItemDAO;
 
 import helper.Random;
 
@@ -105,7 +106,7 @@ public class Profile extends Model {
 
         this.setShopItems(new ArrayList<>());
 
-        List<ShopItem> defaultAvatar = ShopItem.getByPrice(0);
+        List<ShopItem> defaultAvatar = ShopItemDAO.getByPrice(0);
 
         for (ShopItem shopItem : defaultAvatar) {
             this.buy(shopItem);
