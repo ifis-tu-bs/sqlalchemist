@@ -2,6 +2,7 @@ package controllers;
 
 import dao.HomeWorkChallengeDAO;
 import dao.ProfileDAO;
+import dao.SubmittedHomeWorkDAO;
 
 import models.HomeWorkChallenge;
 import models.Profile;
@@ -103,7 +104,7 @@ public class ProfileController extends Controller {
     }
 
     public static Result getUserHomeworks() {
-        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
+        List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
         List<HomeWorkChallenge> homeWorks = HomeWorkChallengeDAO.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 

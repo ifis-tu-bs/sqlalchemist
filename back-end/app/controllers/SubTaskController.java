@@ -6,6 +6,7 @@ import dao.RatingDAO;
 import dao.ScrollDAO;
 import dao.ScrollCollectionDAO;
 import dao.SolvedSubTaskDAO;
+import dao.SubmittedHomeWorkDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -394,7 +395,7 @@ public class SubTaskController extends Controller {
             correct = false;
         }
 
-        SubmittedHomeWork.submit(profile, subTask, correct, statement);
+        SubmittedHomeWorkDAO.submit(profile, subTask, correct, statement);
 
         return ok("HomeWork Has Been Submitted");
     }

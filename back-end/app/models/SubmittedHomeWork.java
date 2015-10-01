@@ -34,7 +34,7 @@ public class SubmittedHomeWork extends SolvedSubTask {
     String statement;
     boolean solve;
 
-    private static Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
+    public static Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
 
 
 //////////////////////////////////////////////////
@@ -53,22 +53,6 @@ public class SubmittedHomeWork extends SolvedSubTask {
 
         this.solve = solve;
         this.statement = statement;
-    }
-
-//////////////////////////////////////////////////
-//  Getter Object
-//////////////////////////////////////////////////
-
-    public static List<SubmittedHomeWork> getSubmitsForSubtask(SubTask subTask) {
-        return find.where().eq("sub_task_id", subTask.getId()).findList();
-    }
-
-    public static List<Object> getSubmitsForProfile(Profile profile) {
-        return find.where().eq("profile_id", profile.getId()).findIds();
-    }
-
-    public static List<SubmittedHomeWork> getSubmitsForSubtaskAndHomeWorkChallenge(long subTaskId, long homeWorkChallengeId) {
-        return find.where().eq("sub_task_id", subTaskId).eq("home_work_id", homeWorkChallengeId).findList();
     }
 
 //////////////////////////////////////////////////
@@ -97,68 +81,23 @@ public class SubmittedHomeWork extends SolvedSubTask {
         return objectNode;
     }
 
-//////////////////////////////////////////////////
-//  Submit Method
-//////////////////////////////////////////////////
-
-    public static SubmittedHomeWork submit(
-            Profile profile,
-            SubTask subTask,
-            boolean solve,
-            String statement) {
-
-        if (HomeWorkChallengeDAO.getCurrent() == null) {
-            Logger.warn("Trying to submit without having an active HomeWork!!!");
-            return null;
-        }
-
-        if (!HomeWorkChallengeDAO.getCurrent().contains(subTask)) {
-            Logger.info("SubmittedHomeWork.submit - SomeOne got Late");
-            return null;
-        }
-
-        SubmittedHomeWork existed = find.where().eq("profile_id", profile.getId()).eq("sub_task_id", subTask.getId()).eq("home_work_id", HomeWorkChallengeDAO.getCurrent().getId()).findUnique();
-
-        if (existed != null) {
-            try {
-                existed.solve = solve;
-                existed.statement = statement;
-
-                existed.update();
-                return existed;
-            } catch (PersistenceException pe) {
-                Logger.warn("Cannot Submit: " + pe.getMessage());
-            }
-        }
-
-
-        SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
-                profile,
-                subTask,
-                HomeWorkChallengeDAO.getCurrent(),
-                solve,
-                statement);
-
-        try {
-            submittedHomeWork.save();
-
-            return submittedHomeWork;
-        } catch (PersistenceException pe) {
-            Logger.warn("Not saving: " + pe.getMessage());
-            return null;
-        }
+    public HomeWorkChallenge getHomeWork() {
+      return this.homeWork;
     }
 
-//////////////////////////////////////////////////
-//  Init Method
-//////////////////////////////////////////////////
-
-    public static void init () {
-
-        Logger.info("Initialize 'SubmittedHW' data");
-
-
-        Logger.info("Done initializing");
+    public String getStatement() {
+      return this.statement;
     }
 
+    public void setStatement(String statement) {
+      this.statement = statement;
+    }
+
+    public boolean getSolve() {
+      return this.solve;
+    }
+
+    public void setSolve(boolean solve) {
+      this.solve = solve;
+    }
 }

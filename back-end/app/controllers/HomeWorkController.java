@@ -3,6 +3,7 @@ package controllers;
 
 import dao.HomeWorkChallengeDAO;
 import dao.ProfileDAO;
+import dao.SubmittedHomeWorkDAO;
 import dao.UserDAO;
 
 import models.HomeWorkChallenge;
@@ -56,7 +57,7 @@ public class HomeWorkController extends Controller {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         for (SubTask subTask : taskFile.getSubTasks()) {
-            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWork.getSubmitsForSubtask(subTask));
+            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWorkDAO.getSubmitsForSubtask(subTask));
             ObjectNode objectNode = subTask.toJson();
             objectNode.put("submits", submits);
 
@@ -161,7 +162,7 @@ public class HomeWorkController extends Controller {
     public static Result getForSubTask(Long subTaskId, Long homeWorkChallengeId) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        List<SubmittedHomeWork> submits = SubmittedHomeWork.getSubmitsForSubtaskAndHomeWorkChallenge(subTaskId, homeWorkChallengeId);
+        List<SubmittedHomeWork> submits = SubmittedHomeWorkDAO.getSubmitsForSubtaskAndHomeWorkChallenge(subTaskId, homeWorkChallengeId);
 
         for (SubmittedHomeWork submittedHomeWork : submits) {
             arrayNode.add(submittedHomeWork.toJson());
