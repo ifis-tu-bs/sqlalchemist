@@ -1,8 +1,8 @@
 package dao;
 
-import play.Logger;
-
 import models.Profile;
+
+import play.Logger;
 
 import javax.persistence.PersistenceException;
 

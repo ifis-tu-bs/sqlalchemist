@@ -1,14 +1,14 @@
 package controllers;
 
+import dao.ProfileDAO;
+
 import models.Profile;
 
-import dao.ProfileDAO;
+import secured.UserSecured;
 
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-
-import secured.UserSecured;
 
 import java.util.List;
 

@@ -1,20 +1,22 @@
 package models;
 
+import dao.AvatarDAO;
+import dao.InventoryDAO;
+import dao.LofiCoinFlowLogDAO;
+import dao.ScrollCollectionDAO;
+
+import helper.Random;
+
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 
-import helper.Random;
 import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
-
-import dao.AvatarDAO;
-import dao.InventoryDAO;
-import dao.LofiCoinFlowLogDAO;
 
 import javax.persistence.*;
 import java.util.*;
@@ -209,7 +211,7 @@ public class Profile extends Model {
         playerStats_sum.add(this.playerStats);
         playerStats_sum.add(this.avatar.getPlayerStats());
 
-        List<Scroll> scrollList = ScrollCollection.getActiveScrolls(this);
+        List<Scroll> scrollList = ScrollCollectionDAO.getActiveScrolls(this);
 
         for(Scroll scroll : scrollList) {
             playerStats_sum.add(scroll.getPlayerStats());
@@ -290,7 +292,7 @@ public class Profile extends Model {
         if(scroll.isRecipe()) {
             InventoryDAO.create(this, scroll.getPotion());
         }  else {
-            ScrollCollection.setActive(this, scroll);
+            ScrollCollectionDAO.setActive(this, scroll);
         }
 
     }
@@ -302,10 +304,10 @@ public class Profile extends Model {
     }
 
     public void addScroll(Scroll scroll) {
-        this.scrollLimit = ScrollCollection.getLimit(this);
+        this.scrollLimit = ScrollCollectionDAO.getLimit(this);
         if(this.scrollLimit > 0) {
-            ScrollCollection.add(this, scroll);
-            this.scrollLimit = ScrollCollection.getLimit(this);
+            ScrollCollectionDAO.add(this, scroll);
+            this.scrollLimit = ScrollCollectionDAO.getLimit(this);
         }
     }
 
@@ -317,7 +319,7 @@ public class Profile extends Model {
         this.setCurrentStory(null);
         this.setCurrentScroll(null);
         this.setTutorialDone(false);
-        ScrollCollection.reset(this);
+        ScrollCollectionDAO.reset(this);
         InventoryDAO.reset(this);
 
         this.setDepthReset(0);

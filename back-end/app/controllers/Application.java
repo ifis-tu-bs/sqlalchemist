@@ -1,14 +1,15 @@
 package controllers;
 
+import bootstrap.BootstrapDB;
+
+import dao.UserDAO;
+
+import models.*;
+
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.Play;
-
-import models.*;
-import dao.UserDAO;
-
-import bootstrap.BootstrapDB;
 
 
 /**
@@ -30,7 +31,6 @@ public class Application extends Controller {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
             BootstrapDB.init();
-            Scroll.init();
             ShopItem.init();
             TaskFile.init();
 

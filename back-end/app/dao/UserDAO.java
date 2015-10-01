@@ -1,9 +1,9 @@
 package dao;
 
-import models.User;
-import models.Profile;
-
 import helper.MailSender;
+
+import models.Profile;
+import models.User;
 
 import play.Logger;
 

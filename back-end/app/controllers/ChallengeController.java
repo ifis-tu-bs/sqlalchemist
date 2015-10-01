@@ -1,9 +1,9 @@
 package controllers;
 
+import dao.ProfileDAO;
+
 import models.Profile;
 import models.StoryChallenge;
-
-import dao.ProfileDAO;
 
 import play.mvc.Controller;
 import play.mvc.Result;

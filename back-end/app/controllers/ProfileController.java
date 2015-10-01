@@ -1,11 +1,11 @@
 package controllers;
 
+import dao.HomeWorkChallengeDAO;
+import dao.ProfileDAO;
+
+import models.HomeWorkChallenge;
 import models.Profile;
 import models.SubmittedHomeWork;
-import models.HomeWorkChallenge;
-
-import dao.ProfileDAO;
-import dao.HomeWorkChallengeDAO;
 
 import play.Logger;
 import play.mvc.Controller;
@@ -14,13 +14,13 @@ import play.mvc.Security.Authenticated;
 
 import play.libs.Json;
 
-import java.util.List;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  *

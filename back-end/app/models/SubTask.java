@@ -1,14 +1,18 @@
 package models;
 
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import com.fasterxml.jackson.databind.node.*;
-import sqlgame.exception.MySQLAlchemistException;
-import sqlgame.sandbox.*;
+import dao.CommentDAO;
+import dao.ScrollCollectionDAO;
+
 import Exception.SQLAlchemistException;
 import helper.Random;
 
-import dao.CommentDAO;
+import sqlgame.exception.MySQLAlchemistException;
+import sqlgame.sandbox.*;
+
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
+import com.fasterxml.jackson.databind.node.*;
+
 
 import play.*;
 import play.db.ebean.Model;
@@ -286,7 +290,7 @@ public class SubTask extends Model {
         if(scroll.isRecipe()) {
             points = scroll.getPotion().getPowerLevel();
         } else {
-            List<ScrollCollection> scrollList = ScrollCollection.getScrollCollection(profile);
+            List<ScrollCollection> scrollList = ScrollCollectionDAO.getScrollCollection(profile);
             for(ScrollCollection scrollCollection : scrollList) {
                 Scroll singleScroll = scrollCollection.scroll;
                 if( !singleScroll.isRecipe() && singleScroll.getType() == scroll.getType()) {

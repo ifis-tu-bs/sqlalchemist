@@ -1,11 +1,13 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import models.UserSession;
-import models.User;
 import dao.UserSessionDAO;
-import play.Logger;
 
+import models.User;
+import models.UserSession;
+
+import com.fasterxml.jackson.databind.JsonNode;
+
+import play.Logger;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;

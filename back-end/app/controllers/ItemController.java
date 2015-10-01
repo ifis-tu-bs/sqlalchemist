@@ -1,18 +1,23 @@
 package controllers;
 
+import dao.InventoryDAO;
+import dao.PotionDAO;
+import dao.ProfileDAO;
+import dao.ScrollDAO;
+import dao.ScrollCollectionDAO;
+
+import models.Inventory;
+import models.Potion;
+import models.Profile;
+import models.Scroll;
+import models.ScrollCollection;
+import models.StoryChallenge;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Profile;
-import models.StoryChallenge;
-import models.Scroll;
-import models.ScrollCollection;
-import models.Inventory;
-import models.Potion;
-import dao.ProfileDAO;
-import dao.InventoryDAO;
-import dao.PotionDAO;
+
 import play.Logger;
 import play.libs.Json;
 import play.mvc.Controller;
@@ -71,8 +76,8 @@ public class ItemController extends Controller {
         for(int i = 0; i < scrolls.size(); i++) {
             JsonNode singleScroll = scrolls.get(i);
             int posId = singleScroll.asInt();
-            Scroll scroll = Scroll.getByPosId(posId);
-            if (scroll != null && !ScrollCollection.contains(profile, scroll)) {
+            Scroll scroll = ScrollDAO.getByPosId(posId);
+            if (scroll != null && !ScrollCollectionDAO.contains(profile, scroll)) {
                 profile.addScroll(scroll);
                 arrayNode.add(scroll.toJson());
             }

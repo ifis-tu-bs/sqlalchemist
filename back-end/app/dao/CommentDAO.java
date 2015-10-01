@@ -3,9 +3,9 @@ package dao;
 import models.Comment;
 import models.Profile;
 
-import javax.persistence.PersistenceException;
-
 import play.Logger;
+
+import javax.persistence.PersistenceException;
 
 public class CommentDAO {
 

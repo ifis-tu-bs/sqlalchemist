@@ -3,6 +3,8 @@ package controllers;
 import dao.CommentDAO;
 import dao.ProfileDAO;
 import dao.RatingDAO;
+import dao.ScrollDAO;
+import dao.ScrollCollectionDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -177,14 +179,14 @@ public class SubTaskController extends Controller {
      */
     public static Result story(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        Scroll scroll   = Scroll.getById(id);
+        Scroll scroll   = ScrollDAO.getById(id);
 
         if(profile == null) {
             Logger.warn("SubTaskController.story - no valid profile found");
             return badRequest("no valid profile found");
         }
 
-        if(ScrollCollection.contains(profile, scroll)) {
+        if(ScrollCollectionDAO.contains(profile, scroll)) {
             profile.setCurrentScroll(scroll);
         } else {
             Logger.warn("SubTaskController.story - Scroll not in the collection: " + scroll.toJson());

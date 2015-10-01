@@ -1,7 +1,8 @@
 package bootstrap;
 
-import models.Map;
 import dao.MapDAO;
+
+import models.Map;
 
 import play.Logger;
 

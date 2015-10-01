@@ -4,7 +4,6 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 
-
 /**
  * Class for the user-inventory
  * @author gabrielahlers

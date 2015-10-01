@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.libs.Json;
-
 import play.Logger;
 
 import javax.persistence.PersistenceException;
@@ -70,8 +69,8 @@ public class InventoryDAO {
               objectNode.put("potion",    potion.toJson());
               objectNode.put("count",     count);
 
-              Scroll scroll = Scroll.getByPotion(potion);
-              if(ScrollCollection.isActive(profile, scroll)) {
+              Scroll scroll = ScrollDAO.getByPotion(potion);
+              if(ScrollCollectionDAO.isActive(profile, scroll)) {
                   objectNode.put("scroll", scroll.toJson());
               } else {
                   objectNode.put("scroll", "empty");

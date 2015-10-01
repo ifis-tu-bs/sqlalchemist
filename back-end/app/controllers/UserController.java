@@ -1,18 +1,18 @@
 package controllers;
 
-import play.libs.Json;
+import dao.UserDAO;
+
+import models.User;
+
+import secured.UserSecured;
+import secured.AdminSecured;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import models.User;
-
-import dao.UserDAO;
-
-import secured.UserSecured;
-import secured.AdminSecured;
-
+import play.libs.Json;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;

@@ -1,8 +1,8 @@
 package bootstrap;
 
-import models.Potion;
-
 import dao.PotionDAO;
+
+import models.Potion;
 
 import play.Logger;
 

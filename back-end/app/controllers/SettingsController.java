@@ -1,8 +1,10 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import models.Profile;
 import dao.ProfileDAO;
+
+import models.Profile;
+
+import com.fasterxml.jackson.databind.JsonNode;
 
 import play.Logger;
 import play.mvc.Controller;

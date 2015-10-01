@@ -1,8 +1,10 @@
 package controllers;
 
+import dao.ProfileDAO;
+
 import models.Profile;
 import models.ShopItem;
-import dao.ProfileDAO;
+
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
