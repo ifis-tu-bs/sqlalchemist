@@ -5,6 +5,7 @@ import dao.ProfileDAO;
 import dao.RatingDAO;
 import dao.ScrollDAO;
 import dao.ScrollCollectionDAO;
+import dao.SolvedSubTaskDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -234,7 +235,7 @@ public class SubTaskController extends Controller {
         Result result;
         try {
             if(subTask.solve(statement)) {
-                SolvedSubTask.update(profile, subTask, true);
+                SolvedSubTaskDAO.update(profile, subTask, true);
                 profile.addSuccessfully();
                 int coins = profile.addScore(subTask.getScore() / time);
                 profile.addCurrentScroll();
@@ -246,7 +247,7 @@ public class SubTaskController extends Controller {
 
                 result = ok(node);
             } else {
-                SolvedSubTask.update(profile, subTask, false);
+                SolvedSubTaskDAO.update(profile, subTask, false);
 
                 node.put("terry", "SEMANTIC");
                 node.put("time",        time);
@@ -254,8 +255,8 @@ public class SubTaskController extends Controller {
                 result = badRequest(node);
             }
         } catch (SQLAlchemistException e) {
-            Logger.info("SOL");
-            SolvedSubTask.update(profile, subTask, false);
+            Logger.info("SQL");
+            SolvedSubTaskDAO.update(profile, subTask, false);
 
             node.put("terry",       "SYNTAX");
             node.put("time",        time);
@@ -319,7 +320,7 @@ public class SubTaskController extends Controller {
         Logger.info(statement);
         try {
             if(subTask.solve(statement)) {
-                SolvedSubTask.update(profile, subTask, true);
+                SolvedSubTaskDAO.update(profile, subTask, true);
                 int coins = profile.addScore(subTask.getScore() / time);
                 profile.addSuccessfully();
 
@@ -330,7 +331,7 @@ public class SubTaskController extends Controller {
 
                 result = ok(node);
             } else {
-                SolvedSubTask.update(profile, subTask, false);
+                SolvedSubTaskDAO.update(profile, subTask, false);
 
                 node.put("terry",   "symantic error");
                 node.put("time",    time);
@@ -338,7 +339,7 @@ public class SubTaskController extends Controller {
                 result = badRequest(node);
             }
         } catch (SQLAlchemistException e) {
-            SolvedSubTask.update(profile, subTask, false);
+            SolvedSubTaskDAO.update(profile, subTask, false);
 
             node.put("terry",       "syntax error");
             node.put("time",        time);

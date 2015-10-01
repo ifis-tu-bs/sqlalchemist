@@ -2,6 +2,7 @@ package models;
 
 import dao.CommentDAO;
 import dao.ScrollCollectionDAO;
+import dao.SolvedSubTaskDAO;
 
 import Exception.SQLAlchemistException;
 import helper.Random;
@@ -62,7 +63,7 @@ public class SubTask extends Model {
     private Date created_at;
     private Date edited_at;
 
-    private static final Finder<Long, SubTask> find = new Finder<>(Long.class, SubTask.class);
+    public static final Finder<Long, SubTask> find = new Finder<>(Long.class, SubTask.class);
 
 //////////////////////////////////////////////////
 //  constructor
@@ -304,7 +305,7 @@ public class SubTask extends Model {
 
     public static SubTask getByDifficulty(Profile profile, int points) {
         List<SubTask> subTaskList           = find.where().eq("available", true).eq("points", points).findList(); //.eq("is_home_work", false).findList();
-        List<SolvedSubTask> solvedSubTasks  = SolvedSubTask.getAllDoneSubTask(profile);
+        List<SolvedSubTask> solvedSubTasks  = SolvedSubTaskDAO.getAllDoneSubTask(profile);
 
         if(subTaskList == null || subTaskList.size() == 0) {
             Logger.warn("SubTask.getByDifficulty - No isAvailable SubTasks found");
