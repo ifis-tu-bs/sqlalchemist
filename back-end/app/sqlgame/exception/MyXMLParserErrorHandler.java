@@ -13,9 +13,9 @@ public class MyXMLParserErrorHandler {
 
     private static boolean error = false;
 
-    private static ArrayList<String> errorList = new ArrayList();
+    private static ArrayList<String> errorList = new ArrayList<>();
 
-    private static ArrayList<String> warningList = new ArrayList();
+    private static ArrayList<String> warningList = new ArrayList<>();
 
     /*
      * Getter and setter

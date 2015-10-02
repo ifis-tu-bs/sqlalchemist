@@ -1,23 +1,34 @@
 package controllers;
 
+import dao.HomeWorkChallengeDAO;
+import dao.ProfileDAO;
+import dao.SubmittedHomeWorkDAO;
+
+import models.HomeWorkChallenge;
+import models.Profile;
+import models.SubmittedHomeWork;
+
+import play.Logger;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
+import play.libs.Json;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
-import play.Logger;
-import play.libs.Json;
-import play.mvc.*;
 
+import java.util.List;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  *
  *
  * @author fabiomazzone
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class ProfileController extends Controller {
 
     /**
@@ -26,7 +37,7 @@ public class ProfileController extends Controller {
      * @return returns the PlayerState as JSON Object
      */
     public static Result index() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null){
             Logger.warn("ProfileController - no profile found");
@@ -43,7 +54,7 @@ public class ProfileController extends Controller {
      * @return  returns the Profile as JSON Object
      */
     public static Result view(Long id) {
-        Profile profile = Profile.getById(id);
+        Profile profile = ProfileDAO.getById(id);
 
         return ok(profile.toJsonProfile());
     }
@@ -54,7 +65,7 @@ public class ProfileController extends Controller {
      * @return  returns the CharacterState as JSON Object
      */
     public static Result character() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null) {
             Logger.warn("ProfileController.character - No profile found");
@@ -71,7 +82,7 @@ public class ProfileController extends Controller {
      * @return  returns the new playerStats
      */
     public static Result avatar(long id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null || !profile.setAvatar(id)) {
             Logger.warn("ProfileController.avatar - No profile found or no Avatar Found");
@@ -83,7 +94,7 @@ public class ProfileController extends Controller {
 
 
     public static Result reset() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.resetStory();
 
@@ -93,8 +104,8 @@ public class ProfileController extends Controller {
     }
 
     public static Result getUserHomeworks() {
-        List<Object> submits = SubmittedHomeWork.getSubmitsForProfile(User.getProfile(session()));
-        List<HomeWorkChallenge> homeWorks = HomeWorkChallenge.getHomeWorksForSubmits(submits);
+        List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
+        List<HomeWorkChallenge> homeWorks = HomeWorkChallengeDAO.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();

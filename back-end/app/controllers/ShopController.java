@@ -1,20 +1,22 @@
 package controllers;
 
+import dao.ProfileDAO;
+import dao.ShopItemDAO;
+
 import models.Profile;
 import models.ShopItem;
-import models.User;
+
 import play.Logger;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
 /**
  * @author Stefan Hanisch
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class ShopController extends Controller {
 
     /**
@@ -24,8 +26,8 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result avatarList() {
-        Profile profile = User.getProfile(session());
-        List<ShopItem> shopItems = ShopItem.getAvatarList();
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        List<ShopItem> shopItems = ShopItemDAO.getAvatarList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
     }
@@ -36,8 +38,8 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result beltList() {
-        Profile profile = User.getProfile(session());
-        List<ShopItem> shopItems = ShopItem.getBeltList();
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        List<ShopItem> shopItems = ShopItemDAO.getBeltList();
 
         return ok(ShopItem.toJsonAll(profile, shopItems));
     }
@@ -48,8 +50,8 @@ public class ShopController extends Controller {
      * @return ok
      */
     public static Result buy(Long id) {
-        Profile profile = User.getProfile(session());
-        ShopItem shopItem = ShopItem.getById(id);
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        ShopItem shopItem = ShopItemDAO.getById(id);
 
         if(profile == null || shopItem == null) {
             Logger.warn("ShopController.buy - No ShopItem or Profile found");

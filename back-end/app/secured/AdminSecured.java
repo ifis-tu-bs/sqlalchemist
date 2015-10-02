@@ -1,24 +1,31 @@
 package secured;
 
-import models.*;
-import play.mvc.*;
+import models.User;
+import models.UserSession;
+
+import dao.UserSessionDAO;
+
+import play.mvc.Http.Context;
+import play.mvc.Security.Authenticator;
+import play.mvc.Result;
 
 /**
- * The Security Class to verify AppKey
+ * The Security Class to verify
  *
  * @author fabiomazzone
  */
-public class AdminSecured extends Security.Authenticator {
+public class AdminSecured extends Authenticator {
     /**
      *
      * @param cxt http context
      * @return returns an Result
      */
     @Override
-    public String getUsername(Http.Context cxt) {
-        UserSession session = UserSession.getSession(cxt.session());
+    public String getUsername(Context cxt) {
+      String sessionID = cxt.session().get("sessionID");
+      UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) && session.getUser().getRole() >= User.ROLE_ADMIN ) {
-            return session.getSessionID();
+            return session.getUser().getProfile().getUsername();
         }
         return null;
     }
@@ -29,7 +36,7 @@ public class AdminSecured extends Security.Authenticator {
      * @return returns an Result
      */
     @Override
-    public Result onUnauthorized(Http.Context context) {
+    public Result onUnauthorized(Context context) {
         return forbidden("restricted page, you need higher permissions, than ");
     }
 }

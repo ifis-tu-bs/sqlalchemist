@@ -1,6 +1,5 @@
 package ClassTests;
 
-import models.Potion;
 import models.Scroll;
 import org.junit.BeforeClass;
 import org.junit.Test;

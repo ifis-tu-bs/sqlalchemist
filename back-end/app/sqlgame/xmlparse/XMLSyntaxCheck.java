@@ -11,7 +11,6 @@ import sqlgame.exception.MyParserExceptionHandler;
 import sqlgame.exception.MySQLAlchemistException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.StringTokenizer;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;

@@ -405,7 +405,7 @@ public class GenerateSpecificData {
             BufferedReader br = new BufferedReader(fr);
             String content = br.readLine();
             StringTokenizer st = new StringTokenizer(content, ";");
-            ArrayList<String> values = new ArrayList();
+            ArrayList<String> values = new ArrayList<>();
             while (st.hasMoreTokens()) {
                 values.add(st.nextToken());
             }
