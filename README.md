@@ -1,75 +1,35 @@
-# SQL-Alchemist
+## Synopsis
 
-This is the Repository of the SQL-Alchemist project
+This project provides important backend functions for the SQL-Alchemist-Game.
 
-## Requirements
+## Code Example
 
-- nodejs >= 0.12.7
-- grunt-cli
-- Typesafe activator >= 1.3.5
+Main function: Create a task - check, validate and parse the given xml-file and create a new taskinstance with an associated db. Furthermore the user can now manage the task with the given functions from class "Task":
+
+Task test = new Task("alchemy-task", "alchemy-task");
+test.startTask();
+test.closeTask();
+
+## Motivation
+
+The project is part of the SQL-Alchemist-Game. Declared as a "Teamprojekt", the prject states the backendfunctions of the game.
 
 ## Installation
-```bash
-# Download the Repository
-git clone https://github.com/ifis-tu-bs/SQL-Alchemist-Teamprojekt.git
-```
 
-## Usage
+Simply insert the project to the sbt-builder.
 
-We need to compile and move the front-end sources to our back-end application
-
-```bash
-# switch to the front-end directory
-cd front-end
-
-# install all node-modules
-npm install
-
-# with this command the source code will be compiled and moved
-grunt move
-
-# switching back to the repository-root
-cd ..
-```
-now we should do the same with the source of the admin-tool
-
-```bash
-# switch to the admin-tool directory
-cd admin-tool
-
-# install all node-modules
-npm install
-
-# compile & move the source code
-grunt move
-
-# switching back to the repository-root
-cd ..
-```
-
-### 1. Running development mode
-
-```bash
-# switch to the back-end directory
-cd back-end
-
-# launching the project
-activator run
-```
-
-### 2. how to packaging the project
-
-```bash
-# switch to the back-end directory
-cd back-end
-
-# packaging the
-activator compile stage dist
-```
 ## API Reference
 
-A detailed description can be found in the [API directory](API)
+Following...
+
+## Tests
+
+JUnit-Tests can be performed.
+
+## Contributors
+
+Create a new instance of a Task with the name of the given XML-file and start the task (startTask()).
 
 ## License
 
-The license is placed in the [LICENSE.md](LICENSE.md)
+We use free java-downloadpackages (com.h2database, org.apache.logging.log4j, com.typesafe, com.novocode)

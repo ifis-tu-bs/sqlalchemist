@@ -1,0 +1,5 @@
+CREATE TABLE Task(
+    name varchar(200) PRIMARY KEY,
+    db_name varchar(200) NOT NULL,
+    players int(10) NOT NULL
+)

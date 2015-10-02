@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tasks.xsd">
+
+  <task taskid="API-Testgame" querylanguage="SQL"><!--querylanguage one of [SQL]-->
+    
+    <titles>
+      <title language="EN">Welcome to the API-Testgame!</title>
+    </titles>
+    
+    <flufftexts>
+      <flufftext language="EN">Welcome to the test task of the SQL-Alchemist-API-Team. It will teach you the basics of the API by presenting the various functions step per step.</flufftext><!--(optional)-->
+    </flufftexts>
+    
+    <schema>
+        
+      <relation>
+        <intension>CREATE TABLE Relation(id int not null primary key, firstname varchar(100), lastname varchar(100), birthday date)</intension>
+        <extension>
+          <tuple>INSERT INTO Relation(id, firstname, lastname, birthday) VALUES (1, 'Max', 'Musterspieler', '2000-01-01')</tuple>
+        </extension>
+        <metadata>
+          <tablename>relation</tablename>
+          <primarykey>id</primarykey>
+          <datageneration>10;none;max,int,100;random,firstname;random,lastname;random,date</datageneration>
+        </metadata>
+      </relation>
+      
+      <relation>
+        <intension>CREATE TABLE Exercise(id int not null primary key, businessname varchar(100), street varchar(50), city varchar(50))</intension>
+        <extension>
+          <tuple>INSERT INTO Exercise(id, businessname, street, city) VALUES (1, 'Geschäft', 'Teststrasse', 'Teststadt')</tuple>
+        </extension>
+        <metadata>
+          <tablename>exercise</tablename>
+          <primarykey>id</primarykey>
+          <datageneration>10;none;max,int,100;random,businessname,80;random,street,random,city</datageneration>
+        </metadata>
+      </relation>
+      
+    </schema>
+    
+  </task>
+  
+</tasks>

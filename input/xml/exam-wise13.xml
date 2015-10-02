@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="recipe.xsd">
+
+  <task taskid="lecture-wise13" querylanguage="SQL">
+    
+    <titles>
+      <title language="EN">Sotchi Olympic Games</title>
+    </titles>
+    
+    <flufftexts>
+      <flufftext language="DE">Das Datenbankschema beinhaltet (Sport-)Veranstaltungen, die zu einem bestimmten Wettbewerb gehören und an einem bestimmten Ort und zu einem bestimmten Datum stattfinden.</flufftext>
+    </flufftexts>
+    
+    <schema>
+      
+      <relation>
+        <intension>
+          CREATE TABLE Ort (
+            koordinaten VARCHAR(13) NOT NULL PRIMARY KEY,
+            name VARCHAR(100) NOT NULL,
+            land VARCHAR(255)
+          );
+        </intension>
+        <extension>
+          <tuple>
+            INSERT INTO Ort VALUES
+              ('4324080395722', 'Fisht Olympic Stadium', 'Russia'),
+              ('4324160395700', 'Bolshoy Ice Dome', 'Russia'),
+              ('4324080395707', 'Shayba Arena', 'Russia'),
+              ('4324310395710', 'Adler Arena Skating Center', 'Russia'),
+              ('4324240395657', 'Ice Cube Curling Center', 'Ukraine'),
+              ('4341330401931', 'Laura Biathlon and Ski Complex', 'Russia'),
+              ('4339270401911', 'Rosa Khutor Extreme Park', 'Russia'),
+              ('4338470401956', 'Rosa Khutor Alpine Resort', 'Russia'),
+              ('4340330401428', 'RusSki Gorki Jumping Center', 'Russia');
+          </tuple>
+        </extension>
+      </relation>
+      
+      <relation>
+        <intension>
+          CREATE TABLE Wettbewerb (
+            name VARCHAR(255) NOT NULL PRIMARY KEY
+          );
+        </intension>
+        <extension>
+          <tuple>
+            INSERT INTO Wettbewerb VALUES
+              ('Alpine skiing'),
+              ('Biathlon'),
+              ('Bobsleigh'),
+              ('Cross-country skiing'),
+              ('Curling'),
+              ('Figure skating'),
+              ('Freestyle skiing'),
+              ('Ice hockey'),
+              ('Luge'),
+              ('Nordic combined'),
+              ('Short track speed skating'),
+              ('Skeleton'),
+              ('Ski jumping'),
+              ('Snowboarding'),
+              ('Speed skating');
+          </tuple>
+        </extension>
+      </relation>
+      
+      <relation>
+        <intension>
+          CREATE TABLE Veranstaltung (
+            wettbewerb VARCHAR(255) NOT NULL REFERENCES Wettbewerb(name),
+            name VARCHAR(100) NOT NULL,
+            PRIMARY KEY(wettbewerb, name),
+            ort VARCHAR(13) NOT NULL REFERENCES Ort(koordinaten),
+            datum DATE NOT NULL,
+            sportart VARCHAR(100) NOT NULL
+          );
+        </intension>
+        <extension>
+          <tuple>
+            INSERT INTO Veranstaltung VALUES
+              ('Alpine skiing', 'Men''s downhill', '4338470401956', '2014-02-09', 'Skiing'),
+              ('Alpine skiing', 'Women''s combined', '4338470401956', '2014-02-10', 'Skiing'),
+              ('Biathlon', 'Men''s sprint', '4341330401931', '2014-02-08', 'Skiing'),
+              ('Biathlon', 'Women''s sprint', '4341330401931', '2014-02-09', 'Skiing'),
+              ('Biathlon', 'Men''s pursuit', '4341330401931', '2014-02-10', 'Skiing'),
+              ('Biathlon', 'Women''s pursuit', '4341330401931', '2014-02-10', 'Skiing'),
+              ('Cross-country skiing', 'Women''s skiathlon', '4338470401956', '2014-02-08', 'Skiing'),
+              ('Cross-country skiing', 'Men''s skiathlon', '4338470401956', '2014-02-08', 'Skiing'),
+              ('Figure skating', 'Team trophy', '4324310395710', '2014-02-09', 'Skating'),
+              ('Freestyle skiing', 'Women''s moguls', '4324310395710', '2014-02-08', 'Skiing'),
+              ('Freestyle skiing', 'Men''s moguls', '4324310395710', '2014-02-10', 'Skiing'),
+              ('Short track speed skating', 'Men''s 1500m', '4339270401911', '2014-02-10', 'Skating'),
+              ('Ski jumping', 'Men''s individual normal hill', '4340330401428', '2014-02-09', 'Ski jumping'),
+              ('Snowboarding', 'Men''s slopestyle', '4324310395710', '2014-02-08', 'Snowboarding'),
+              ('Snowboarding', 'Women''s slopestyle', '4324310395710', '2014-02-09', 'Snowboarding'),
+              ('Speed skating', 'Men''s 5000m', '4339270401911', '2014-02-08', 'Skating'),
+              ('Speed skating', 'Women''s 3000m', '4339270401911', '2014-02-09', 'Skating'),
+              ('Speed skating', 'Men''s 500m', '4339270401911', '2014-02-10', 'Skating');
+          </tuple>
+        </extension>
+      </relation>
+      
+    </schema>
+    
+    <subtasks>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Geben Sie die Namen aller Veranstaltungen in der Sportart Skiing zurück.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            simple SELECT
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Geben Sie die Namen, Wettbewerbe und Sportarten aller Veranstaltungen aus, deren Austragungsort irgendwo in Sotschi lag.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            LIKE %
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Finden Sie für jedes Land die Anzahl der Veranstaltungen in der Sportart Ski jumping.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            outer join
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>4</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Geben Sie die Namen der internationalsten Wettbewerbe zurück – also die Wettbewerbe, die in den meisten verschiedenen Ländern stattfanden. Geben Sie zu jedem Wettbewerb auch die Anzahl der verschiedenen Länder an.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>5</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Geben Sie alle Wettbewerbe zurück, für die noch keine Veranstaltungen eingetragen sind.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            outer join
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>4</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="DE">Finden Sie den Namen und den Wettbewerb aller Veranstaltungen in der Sportart Biathlon die im selben Land am gleichen Tag stattfinden. Geben Sie außerdem den Namen und den Ort dieser Veranstaltungen zurück.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+      
+    </subtasks>
+    
+  </task>
+  
+</tasks>

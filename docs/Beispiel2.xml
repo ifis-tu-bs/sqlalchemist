@@ -1,0 +1,18 @@
+<relation>
+    <intension>
+        CREATE TABLE p2e(pid int not null, eid int not null, 
+        strength int, PRIMARY KEY (pid, eid), 
+        FOREIGN KEY (pid) REFERENCES Powders(id), 
+        FOREIGN KEY (eid) REFERENCES Effects(id))
+    </intension>
+    <extension>
+        <tuple>
+            INSERT INTO p2e VALUES (1, 1, 4)
+        </tuple>
+    </extension>
+    <extensiongeneration>
+        <generationtuple>
+            5;none;ref,powders,id;ref,effects,id;max,int,200
+        </generationtuple>
+    </extensiongeneration>
+</relation>

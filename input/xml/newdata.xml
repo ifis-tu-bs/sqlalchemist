@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="recipe.xsd">
+
+  <task taskid="exercises-wise13" querylanguage="SQL">
+    
+    <titles>
+      <title language="EN">Super Heros</title>
+    </titles>
+    
+    <flufftexts>
+      <flufftext language="EN">Super Heros und Super Villains.</flufftext>
+    </flufftexts>
+    
+    <schema>
+      <relation>
+        <intension>
+          CREATE TABLE Comic (
+            no INTEGER NOT NULL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            pages INTEGER,
+            publisher VARCHAR(255)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO Comic(no, title, publisher) VALUES (12, 'Wonderboy''s Comeback', 'Marvel');</tuple>
+          <tuple>INSERT INTO Comic(no, title, publisher) VALUES (13, 'Superman Returns', 'DC');</tuple>
+          <tuple>INSERT INTO Comic(no, title, publisher) VALUES (15, 'The Revenge of Young Nastyman', 'Marvel');</tuple>
+          <tuple>INSERT INTO Comic(no, title, publisher) VALUES (18, 'Wonderboy Rocks', 'Marvel');</tuple>
+          <tuple>INSERT INTO Comic(no, title, publisher) VALUES (21, 'Young Nastyman''s Revenge', 'Marvel');</tuple>
+        </extension>
+        <metadata>         <tablename>comic</tablename>          <primarykey>no</primarykey>          <datageneration>5$none;max$1,int;random$string;max$1,int;random$string</datageneration>        </metadata>      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE PoweredPerson (
+            alias VARCHAR(255) NOT NULL PRIMARY KEY,
+            firstname VARCHAR(100) NOT NULL,
+            lastname VARCHAR(100),
+            evilness_level INTEGER
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Wonderboy', 'KG', NULL, -25);</tuple>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Magneto', 'Erik Magnus', 'Lensherr', 46);</tuple>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Superman', 'Clark', 'Kent', -63);</tuple>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Professor X', 'Charles', 'Xavier', -41);</tuple>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Young Nastyman', 'JB', NULL, 39);</tuple>
+          <tuple>INSERT INTO PoweredPerson VALUES ('Mystique', 'Raven', 'Darkholme', 43);</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE HasPowerSince (
+            comic INTEGER NOT NULL REFERENCES Comic(no),
+            alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson(alias),
+            power VARCHAR(100) NOT NULL,
+            PRIMARY KEY (comic, alias, power)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO HasPowerSince VALUES (13, 'Young Nastyman', 'Flight');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (12, 'Professor X', 'Telepathy');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (15, 'Mystique', 'Shapeshifting');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (13, 'Superman', 'Telepathy');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (18, 'Wonderboy', 'Telekinesis');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (12, 'Magneto', 'Magnetism');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (21, 'Young Nastyman', 'Mind Bullets');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (21, 'Superman', 'Flight');</tuple>
+          <tuple>INSERT INTO HasPowerSince VALUES (12, 'Wonderboy', 'Levitation');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE SuperHero (
+            alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson(alias),
+            cape BOOLEAN,
+            PRIMARY KEY (alias)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO SuperHero VALUES ('Wonderboy', NULL);</tuple>
+          <tuple>INSERT INTO SuperHero VALUES ('Superman', TRUE);</tuple>
+          <tuple>INSERT INTO SuperHero VALUES ('Professor X', FALSE);</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE SuperVillain (
+            alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson(alias),
+            PRIMARY KEY (alias)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO SuperVillain VALUES ('Magneto');</tuple>
+          <tuple>INSERT INTO SuperVillain VALUES ('Mystique');</tuple>
+          <tuple>INSERT INTO SuperVillain VALUES ('Young Nastyman');</tuple>
+        </extension>
+      </relation>
+    </schema>
+    
+    <subtasks>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="EN">The super villain table is an excerpt of the powered person table. Provide a query on the powered person table that reproduces the super villain table.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT alias
+            FROM PoweredPerson
+            WHERE evilness_level > 0;
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="EN">A query for all super heroes having no cape.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT *
+            FROM SuperHero
+            WHERE cape = 'FALSE';
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="EN">A query for the names of all powers of Young Nastyman and the number of the comic they first appeared in, ordered by their appearance (newest first). If two powers appeared at the same time, sort them alphabetically by their name.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT power, comic
+            FROM HasPowerSince
+            WHERE alias = 'Young Nastyman'
+            ORDER BY comic DESC, power ASC;
+          </referencestatement>
+          <evaluationstrategy>LIST</evaluationstrategy>
+        </solution>
+        <requiredterms>
+          <term>ORDER BY</term>
+        </requiredterms>
+        <points>2</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="EN">A query for the number of pages I would have to read if I wanted to read all Marvel comics in the database.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT SUM(pages) AS sum
+            FROM comic
+            WHERE publisher = 'Marvel';
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <requiredterms>
+          <term>SUM</term>
+        </requiredterms>
+        <points>2</points>
+      </subtask>
+      
+      <subtask>
+        <tasktexts>
+          <tasktext language="EN">A query that states if the average powered person is evil (evilness > 0) or good (evilness = 0), depending on all powered persons evilness levels.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT AVG(evilness_level)
+            FROM PoweredPerson;
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>2</points>
+      </subtask>
+      
+      
+      
+    </subtasks>
+    
+  </task>
+  
+</tasks>

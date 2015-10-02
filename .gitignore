@@ -1,34 +1,11 @@
-#######
-# git ignore file
-#
-
-.svn
 .DS_Store
-*/.DS_Store
-**/.DS_Store
-
-########
-# Back-End
-back-end/logs
-back-end/project/project
-back-end/project/target
-back-end/target
-back-end/tmp
-back-end/.history
-back-end/dist
-back-end/.idea
-back-end/*.iml
-back-end/out
-back-end/.idea_modules
-back-end/.classpath
-back-end/.project
-back-end/RUNNING_PID
-back-end/.settings
-back-end/public/game
-back-end/.sbtserver
-back-end/public/admintool
-
-########
-# Front-End
-front-end/build
-front-end/node_modules
+/nbproject/
+/build/
+build.xml
+manifest.mf
+/dist/
+/dbs/sql-alchemist-teamprojekt.trace.db
+/target
+/project/target
+/project/project/target/
+.classpath_nb

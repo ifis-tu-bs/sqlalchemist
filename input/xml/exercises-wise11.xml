@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tasks.xsd">
+
+  <task taskid="1" querylanguage="SQL">
+    
+    <titles>
+      <title language="EN">Movies</title>
+    </titles>
+    
+    <flufftexts>
+      <flufftext language="EN">Movies and Genres</flufftext>
+    </flufftexts>
+    
+    <schema>
+      <relation>
+        <intension>
+          CREATE TABLE Movie (
+            mid INTEGER NOT NULL PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            year INTEGER,
+        	country VARCHAR(255),
+        	box_office_takings INTEGER,
+        	type VARCHAR(255)
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO Movie VALUES (1, 'The Godfather', 1972, 'USA', 10000000, 'cinema');</tuple>
+          <tuple>INSERT INTO Movie VALUES (2, 'The Godfather 2', 1975, 'USA', 20000000, 'cinema');</tuple>
+          <tuple>INSERT INTO Movie VALUES (3, 'The Godfather 3', 1979, 'USA', 10000000, 'cinema');</tuple>
+          <tuple>INSERT INTO Movie VALUES (4, 'Fight Club', 1999, 'USA', 10000000, 'cinema');</tuple>
+          <tuple>INSERT INTO Movie VALUES (5, 'Batman Returns', 1980, 'USA', 100000, 'TV');</tuple>
+          <tuple>INSERT INTO Movie VALUES (6, 'Titanic', 1990, 'USA', 90000000, 'cinema');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE Person (
+            pid INTEGER NOT NULL PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            sex VARCHAR(255),
+        	birthdate DATE
+          );
+        </intension>
+        <extension>
+          	<tuple>INSERT INTO Person VALUES (1, 'Al Pacino', 'male', '1900-01-01');</tuple>
+  			<tuple>INSERT INTO Person VALUES (2, 'Marlon Brando', 'male', '1950-01-01');</tuple>
+  			<tuple>INSERT INTO Person VALUES (3, 'Leonardo DiCaprio', 'male', '1990-01-01');</tuple>
+  			<tuple>INSERT INTO Person VALUES (4, 'Martin Scorsese', 'male', '1956-01-01');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE Crew (
+            id INTEGER NOT NULL PRIMARY KEY,
+            person INTEGER NOT NULL REFERENCES Person(pid),
+            movie INTEGER NOT NULL REFERENCES Movie(mid),
+        	type VARCHAR(255) NOT NULL
+          );
+        </intension>
+        <extension>
+          <tuple>INSERT INTO Crew VALUES (1, 1, 1, 'actor');</tuple>
+          <tuple>INSERT INTO Crew VALUES (2, 1, 2, 'actor');</tuple>
+          <tuple>INSERT INTO Crew VALUES (3, 2, 3, 'director');</tuple>
+          <tuple>INSERT INTO Crew VALUES (4, 3, 4, 'director');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE Plays (
+            person VARCHAR(255) NOT NULL REFERENCES Person(pid),
+        	movie VARCHAR(255) NOT NULL REFERENCES Movie(mid),
+            role VARCHAR(100),
+        	PRIMARY KEY(person, movie)
+          );
+        </intension>
+        <extension>
+        	<tuple>INSERT INTO Plays VALUES (2, 4, 'enemy');</tuple>
+        	<tuple>INSERT INTO Plays VALUES (3, 1, 'super hero');</tuple>
+        	<tuple>INSERT INTO Plays VALUES (1, 1, 'super hero');</tuple>
+        	<tuple>INSERT INTO Plays VALUES (1, 3, 'police officer');</tuple>
+        	<tuple>INSERT INTO Plays VALUES (1, 2, 'Don Corleone');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE Genre (
+            name VARCHAR(255) NOT NULL PRIMARY KEY,
+        	description VARCHAR(500) NOT NULL
+          );
+        </intension>
+        <extension>
+         <tuple>INSERT INTO Genre VALUES ('Action', 'BOOM BOOM Movies');</tuple>
+         <tuple>INSERT INTO Genre VALUES ('Comedy', 'Funny Movies');</tuple>
+        </extension>
+      </relation>
+      <relation>
+        <intension>
+          CREATE TABLE Has_Genre (
+            movie VARCHAR(255) NOT NULL REFERENCES Movie(mid),
+        	genre VARCHAR(255) NOT NULL REFERENCES Genre(name),
+        	PRIMARY KEY(movie, genre)
+          );
+        </intension>
+        <extension>
+         <tuple>INSERT INTO Has_Genre VALUES (1, 'Action');</tuple>
+         <tuple>INSERT INTO Has_Genre VALUES (2, 'Action');</tuple>
+         <tuple>INSERT INTO Has_Genre VALUES (3, 'Action');</tuple>
+         <tuple>INSERT INTO Has_Genre VALUES (4, 'Comedy');</tuple>
+         <tuple>INSERT INTO Has_Genre VALUES (5, 'Action');</tuple>
+         <tuple>INSERT INTO Has_Genre VALUES (5, 'Comedy');</tuple>
+        </extension>
+      </relation>
+    </schema>
+    
+    <subtasks>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">Show a list including all cinema movies.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT *
+            FROM Movie
+            WHERE TYPE = 'cinema'
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">Show a list of all genres (name) in whoes description the word 'hero' occurs.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT name
+            FROM Genre
+            WHERE description LIKE ('%hero%')
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">Show the names of all actors playing in any 'Fantasy' movie in 1980.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+           SELECT p.NAME
+		FROM person p
+			 JOIN plays ps
+			 ON p.pid = ps.person
+			 JOIN movie m
+			 ON ps.movie = m.mid
+			 JOIN has_genre hg
+			 ON m.mid = hg.movie
+		WHERE hg.genre = 'Fantasy'
+			 AND m.year = 1980
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">Show a list including the number of movies for each genre. Please note, your list should also include genres having no movies..</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+          	SELECT hg.genre,
+				COUNT(m.mid)
+			FROM
+				has_genre hg
+				LEFT OUTER JOIN movie m
+					ON hg.movie = m.mid
+                                        GROUP BY hg.genre
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <requiredterms>
+          <term>COUNT</term>
+          <term>LEFT OUTER JOIN</term>
+        </requiredterms>
+        <points>2</points>
+      </subtask>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">How many female actors played a 'killer' (role) in a Steven Spielberg (director) movie?</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+            SELECT COUNT(p.pid)
+			FROM person p
+				JOIN plays ps
+				ON p.pid = ps.person
+				JOIN crew c
+				ON ps.movie = c.movie
+				JOIN person p2
+				ON c.person = p2.pid
+			WHERE ps.ROLE = 'killer'
+				AND p.sex = 'f'
+				AND c.TYPE = 'director'
+				AND p2.NAME = 'Steven Spielberg';
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <requiredterms>
+          <term>COUNT</term>
+        </requiredterms>
+        <points>2</points>
+      </subtask>
+      
+      <subtask>
+      	<tasktexts>
+        <tasktext language="EN">Show the titles of all movies where „Terence Hill‟ (actor) played without „Bud Spencer‟ (ac-tor).</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+           	SELECT m.title
+			FROM movie m
+				JOIN plays ps
+				ON m.mid = ps.movie
+				JOIN person p
+				ON ps.person = p.pid
+			WHERE p.NAME = 'Terence Hill'
+				AND m.mid NOT IN (
+          			SELECT m2.mid
+					FROM
+						movie m2
+						JOIN plays ps2
+						ON m2.mid = ps2.movie
+						JOIN person p2
+						ON ps2.person = p2.pid
+					WHERE p2.NAME = 'Bud Spencer')
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>3</points>
+      </subtask>
+      
+        <subtask>
+        <tasktexts>
+        <tasktext language="EN">Find the titles of all movies whose box-office takings are higher than the average box-officetakings regarding all movies.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+			SELECT m.title
+			FROM movie m
+			WHERE m.box_office_takings > (
+          		SELECT Avg(box_office_takings) average
+				FROM movie)
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+         <requiredterms>
+          <term>GROUP BY</term>
+          <term>AVG</term>
+        </requiredterms>
+        <points>3</points>
+      </subtask>
+      
+    <subtask>
+    	<tasktexts>
+        <tasktext language="EN">Which actor played in the most movies?</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+          	WITH RECURSIVE co (name, nom) AS (SELECT p.name name,  COUNT(ps.movie) nom
+                        FROM plays ps
+                        JOIN person p WHERE p.pid = ps.person
+                        GROUP BY ps.person)
+                SELECT co.name, co.nom FROM co
+                        WHERE (SELECT MAX(co.nom) FROM co) = co.nom
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+         <requiredterms>
+          <term>GROUP BY</term>
+          <term>MAX</term>
+        </requiredterms>
+        <points>3</points>
+      </subtask>
+   
+    </subtasks>
+    
+  </task>
+  
+</tasks>

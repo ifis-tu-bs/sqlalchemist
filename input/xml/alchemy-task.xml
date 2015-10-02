@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<tasks schemaversion="1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="tasks.xsd">
+
+  <task taskid="Alechmistic_Stuff_1" querylanguage="SQL"><!--querylanguage one of [SQL]-->
+    
+    <titles>
+      <title language="EN">Welcome to SQL Alchemist!</title>
+    </titles>
+    
+    <flufftexts>
+      <flufftext language="EN">Welcome to your first task in SQL-Alchemist. It will teach you the basics of this game by presenting several challanges you have to solve using your impressive SQL skills.</flufftext><!--(optional)-->
+    </flufftexts>
+    
+    <schema>
+      <relation>
+        <intension>CREATE TABLE Powders(id int not null primary key, pname varchar(100), color varchar(50), price int)</intension>
+        <extension>
+          <tuple>INSERT INTO Powders(id, pname, color) VALUES (1, 'Magic Glitter', 'red')</tuple>
+        </extension>
+        <extensiongeneration>
+          <generationtuple>10;none;max,int,100;random,chemical element,80;random,colour;random,int</generationtuple>
+        </extensiongeneration>
+      </relation>
+      <relation>
+      	<intension>CREATE TABLE Effects(id int not null primary key, ename varchar(100), description varchar(1000))</intension>
+      	<extension>
+      		<tuple>INSERT INTO Effects(id, ename) VALUES (1, 'Dizzyness')</tuple>
+      	</extension>
+        <extensiongeneration>
+          <generationtuple>10;none;max,int,100;random,effect,80;random,string,200</generationtuple>
+        </extensiongeneration>
+      </relation>
+      <relation>
+      	<intension>CREATE TABLE WIZARDS(name varchar(100) not null, pid int not null, PRIMARY KEY(name, pid), FOREIGN KEY (pid) REFERENCES Powders(id))</intension>
+      	<extension>
+      		<tuple>INSERT INTO WIZARDS(name, pid) VALUES ('Big Magician', 1)</tuple>
+      	</extension>
+        <extensiongeneration>
+          <generationtuple>span,0,5;none;random,fullname;ref,powders,id</generationtuple>
+        </extensiongeneration>
+      </relation>
+      <relation>
+      	<intension>CREATE TABLE p2e(pid int not null, eid int not null, strength int, PRIMARY KEY(pid, eid), FOREIGN KEY (pid) REFERENCES Powders(id), FOREIGN KEY (eid) REFERENCES Effects(id))</intension>
+      	<extension>
+            <tuple>
+                 INSERT INTO p2e VALUES (1, 1, 4)
+            </tuple>
+        </extension>
+        <extensiongeneration>
+          <generationtuple>5;refAll,powders,id;ref,powders,id;ref,effects,id;max,int,200</generationtuple>
+        </extensiongeneration>
+      </relation>
+    </schema>
+    
+    <subtasks>
+      <subtask>
+        <subtaskid>1</subtaskid>
+        <tasktexts>
+          <tasktext language="EN">Ohhkey...to start simple, just create a result set of with the ID of all "red" powders.</tasktext>
+        </tasktexts>
+        <solution>
+          <referencestatement>
+                SELECT * FROM Powders WHERE color = 'red'
+          </referencestatement>
+          <evaluationstrategy>SET</evaluationstrategy>
+        </solution>
+        <points>1</points>
+      </subtask>
+    </subtasks>
+  </task>
+</tasks>

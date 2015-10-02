@@ -1,0 +1,18 @@
+<relation>
+    <intension>
+        CREATE TABLE Effects(id int not null primary key, 
+        ename varchar(100), 
+        description varchar(1000))
+    </intension>
+    <extension>
+        <tuple>
+            INSERT INTO Effects(id, ename) VALUES (1, 'Dizzyness')
+        </tuple>
+    </extension>
+    <extensiongeneration>
+        <generationtuple>
+            10;none;max,int,20;random,effect,80;random,string,200
+        </generationtuple>
+	<generationtuple>weitere</generationtuple>
+    </extensiongeneration>
+</relation>
