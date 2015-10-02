@@ -10,3 +10,8 @@
     vertical-align : middle;
     z-Index : 4;
 }
+
+#background {
+    z-Index: 2;
+}
+

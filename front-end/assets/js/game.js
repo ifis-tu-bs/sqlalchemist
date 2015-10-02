@@ -51,7 +51,8 @@ var game = {
         text : 0,
         nextText: true,
         cheat: false,
-        count: 0
+        count: 0,
+        profile: 0
     },
     //informations for the Task
     task : {
@@ -171,7 +172,7 @@ var game = {
         me.state.set(me.state.READY, new game.ReadyScreen());
 
         // set a global fading transition for the screen
-        //me.state.transition("fade", "#000000", 100);
+        me.state.transition("fade", "#000000", 100);
 
         // add our player entity in the entity pool
         me.pool.register("mainPlayer", game.PlayerEntity);

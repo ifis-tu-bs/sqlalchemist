@@ -13,6 +13,7 @@ game.StartScreen = me.ScreenObject.extend({
             ),
             1
         );
+
         
         var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/title_screen.png", "back");
@@ -60,6 +61,7 @@ game.StartScreen = me.ScreenObject.extend({
 
         this.onStart = function() {
             $("#background").fadeOut(100);
+            $("#startButton").fadeOut(100);
             setTimeout( function() {
                 if(game.data.gotSession){
                     me.state.change(me.state.MENU);
@@ -82,6 +84,7 @@ game.StartScreen = me.ScreenObject.extend({
          */
         var startButton  = new game.ClickableElement('startButton', 'start', this.onStart, 20, 8.7, 43, 50, 1);
         me.game.world.addChild(startButton);
+        $("#startButton").fadeIn(100);
 
     }
 });

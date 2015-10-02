@@ -56,7 +56,8 @@ game.LoginScreen = me.ScreenObject.extend({
          */
         var userid   = new game.TextInputElement('input', 'text', 'wId', 'fId', 55, 12, 22, 25, 2);
         var password = new game.TextInputElement('input', 'text', 'wPassword', 'fPassword', 55, 12, 22, 42, 2);
-
+        me.game.world.addChild(userid);
+        me.game.world.addChild(password);
 
         /**
          * Insert Text in TextInputElement as placeholder and workaround for clearing it by clicking in TextInputElement
@@ -80,6 +81,9 @@ game.LoginScreen = me.ScreenObject.extend({
 
         this.toSignUp = function () {
             $("#background").fadeOut(100);
+            $("#loginButton").fadeOut(100);
+            $("#signUpFirst").fadeOut(100);
+            $("#forgotPassword").fadeOut(100);
             setTimeout( function() {
                 me.state.change(STATE_SIGNUP);
             }, 100);
@@ -87,6 +91,9 @@ game.LoginScreen = me.ScreenObject.extend({
 
         this.toPasswordReset = function () {
             $("#background").fadeOut(100);
+            $("#loginButton").fadeOut(100);
+            $("#signUpFirst").fadeOut(100);
+            $("#forgotPassword").fadeOut(100);
             setTimeout( function() {
                 me.state.change(STATE_FORGOTPASSWORD);
             }, 100);
@@ -107,14 +114,13 @@ game.LoginScreen = me.ScreenObject.extend({
         var loginButton     = new game.ClickableElement('loginButton', 'Enter', this.loginReply, 20, 6.5, 42.5, 64.5, 1);
         var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', this.toSignUp, 25, 2, 25, 58.5, 1);
         var forgotPassword  = new game.ClickableElement('forgotPassword', 'Forgot Password? Click here!', this.toPasswordReset, 22, 2, 52, 58.5, 1);
-
+        $("#loginButton").fadeIn(100);
+        $("#signUpFirst").fadeIn(100);
+        $("#forgotPassword").fadeIn(100);
 
         /**
          * add children to container
          */
-        me.game.world.addChild(userid);
-        me.game.world.addChild(password);
-
         me.game.world.addChild(loginButton);
         me.game.world.addChild(signUpFirst);
         me.game.world.addChild(forgotPassword);
