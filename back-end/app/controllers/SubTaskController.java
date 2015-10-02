@@ -7,6 +7,7 @@ import dao.ScrollDAO;
 import dao.ScrollCollectionDAO;
 import dao.SolvedSubTaskDAO;
 import dao.SubmittedHomeWorkDAO;
+import dao.SubTaskDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -47,7 +48,7 @@ public class SubTaskController extends Controller {
      */
     public static Result index() {
         ArrayNode       arrayNode= JsonNodeFactory.instance.arrayNode();
-        List<SubTask>   subTasks = SubTask.getAll();
+        List<SubTask>   subTasks = SubTaskDAO.getAll();
 
         if (subTasks == null) {
             Logger.warn("SubTaskController.index - no SubTasks found");
@@ -70,7 +71,7 @@ public class SubTaskController extends Controller {
      * @return      returns a SubTask
      */
     public static Result view(long id) {
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (subTask == null) {
             Logger.warn("SubTaskController.view("+id+") - no subTask found");
@@ -101,7 +102,7 @@ public class SubTaskController extends Controller {
      */
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
-        SubTask subTask     = SubTask.getById(id);
+        SubTask subTask     = SubTaskDAO.getById(id);
         Profile profile     = ProfileDAO.getByUsername(request().username());
 
         if (subTask == null) {
@@ -144,7 +145,7 @@ public class SubTaskController extends Controller {
     public static Result comment(Long id) {
         Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
-        SubTask     subTask= SubTask.getById(id);
+        SubTask     subTask= SubTaskDAO.getById(id);
 
         if (subTask == null) {
             Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
@@ -195,7 +196,7 @@ public class SubTaskController extends Controller {
             return badRequest("Scroll not in the collection");
         }
 
-        SubTask subTask             = SubTask.getByScroll(profile, scroll);
+        SubTask subTask             = SubTaskDAO.getByScroll(profile, scroll);
 
         if(subTask == null) {
             Logger.warn("SubTaskController.story - no subTask found for ScrollID: " + id);
@@ -226,7 +227,7 @@ public class SubTaskController extends Controller {
             return badRequest("Expecting Json data");
         }
 
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         Logger.info(body.toString());
 
@@ -282,7 +283,7 @@ public class SubTaskController extends Controller {
             points = 1;
         };
 
-        SubTask subTask = SubTask.getByDifficulty(profile, points);
+        SubTask subTask = SubTaskDAO.getByDifficulty(profile, points);
 
         if(subTask != null) {
             return ok(subTask.toJsonExercise());
@@ -299,7 +300,7 @@ public class SubTaskController extends Controller {
     public static Result triviaSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (profile == null || body == null) {
             Logger.warn("SubTaskController.triviaSolve - no profile or no jsonBody or wrong SubTaskId");
@@ -359,7 +360,7 @@ public class SubTaskController extends Controller {
      */
     public static Result homework() {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        SubTask subTask = SubTask.getByChallengeID(1L, profile);
+        SubTask subTask = SubTaskDAO.getByChallengeID(1L, profile);
 
         return ok(subTask.toJsonExercise());
     }
@@ -372,7 +373,7 @@ public class SubTaskController extends Controller {
     public static Result homeworkSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (profile == null || body == null) {
             Logger.warn("SubTaskController.homeworkSolve - no profile or no jsonBody or wrong SubTaskId");

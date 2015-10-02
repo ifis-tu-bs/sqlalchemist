@@ -3,6 +3,7 @@ package controllers;
 import dao.CommentDAO;
 import dao.ProfileDAO;
 import dao.RatingDAO;
+import dao.SubTaskDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -146,7 +147,7 @@ public class TaskFileController extends Controller {
      */
      public static Result rate(Long id) {
          JsonNode body       = request().body().asJson();
-         SubTask subTask     = SubTask.getById(id);
+         SubTask subTask     = SubTaskDAO.getById(id);
          Profile profile     = ProfileDAO.getByUsername(request().username());
 
          if (subTask == null) {

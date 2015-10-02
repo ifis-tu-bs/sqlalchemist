@@ -1,20 +1,23 @@
 package models;
 
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
+import dao.SubTaskDAO;
+
 import Exception.SQLAlchemistException;
+
 import helper.*;
 
 import sqlgame.sandbox.*;
 import sqlgame.xmlparse.*;
 import sqlgame.exception.MySQLAlchemistException;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
+import com.fasterxml.jackson.databind.node.*;
+
 import play.Logger;
 import play.Play;
 import play.db.ebean.Model;
 import play.libs.Json;
-
-import com.fasterxml.jackson.databind.node.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -382,7 +385,7 @@ public class TaskFile extends Model {
             catch (PersistenceException pe)
             {
                 Logger.warn("TaskFile.create - catches PersistenceException at saving SubTask");
-                SubTask subTask_comp = SubTask.getByIndexOfTaskFile(taskFile, index);
+                SubTask subTask_comp = SubTaskDAO.getByIndexOfTaskFile(taskFile, index);
                 if(subTask_comp == null)
                 {
                     Logger.warn("TaskFile.create - cannot save SubTask, exception: " + pe.getMessage());
