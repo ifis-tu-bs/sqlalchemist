@@ -7,7 +7,7 @@ public class BootstrapDB {
     ScrollBootstrap.init();
     AvatarBootstrap.init();
     ShopItemBootstrap.init();
-    
+    TaskFileBootstrap.init();
     MapBootstrap.init();
     StoryChallengeBootstrap.init();
   }

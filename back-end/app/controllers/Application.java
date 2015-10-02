@@ -31,7 +31,6 @@ public class Application extends Controller {
             Logger.info("Application.init - Start initializing");
             // Init final Classes
             BootstrapDB.init();
-            TaskFile.init();
 
             // Init residual Classes
             if(play.api.Play.isProd(play.api.Play.current())) {

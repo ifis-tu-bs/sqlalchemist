@@ -4,6 +4,7 @@ package controllers;
 import dao.HomeWorkChallengeDAO;
 import dao.ProfileDAO;
 import dao.SubmittedHomeWorkDAO;
+import dao.TaskFileDAO;
 import dao.UserDAO;
 
 import models.HomeWorkChallenge;
@@ -48,7 +49,7 @@ public class HomeWorkController extends Controller {
         }
 
         HomeWorkChallenge homeWorkChallenge = HomeWorkChallengeDAO.getById(json.findPath("homework").longValue());
-        TaskFile taskFile = TaskFile.getByFileName(json.findPath("taskFile").textValue());
+        TaskFile taskFile = TaskFileDAO.getByFileName(json.findPath("taskFile").textValue());
 
         if (homeWorkChallenge == null || taskFile == null) {
             return badRequest("Homework or taskfile have not been specified correctly");
@@ -119,7 +120,7 @@ public class HomeWorkController extends Controller {
 
         ArrayList<TaskFile> taskFiles = new ArrayList<>();
         for (JsonNode taskFileJson : json.findPath("tasks")) {
-            taskFiles.add(TaskFile.getByFileName(taskFileJson.textValue()));
+            taskFiles.add(TaskFileDAO.getByFileName(taskFileJson.textValue()));
         }
 
         if (utcTimeFrom > utcTimeTo || utcTimeTo < new Date().getTime()) {

@@ -4,6 +4,7 @@ import dao.CommentDAO;
 import dao.ProfileDAO;
 import dao.RatingDAO;
 import dao.SubTaskDAO;
+import dao.TaskFileDAO;
 
 import Exception.SQLAlchemistException;
 
@@ -43,7 +44,7 @@ public class TaskFileController extends Controller {
      */
     public static Result index() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<TaskFile> taskFileList = TaskFile.getAll();
+        List<TaskFile> taskFileList = TaskFileDAO.getAll();
 
         if (taskFileList == null) {
             Logger.warn("TaskFile.index - no TaskFiles found");
@@ -81,7 +82,7 @@ public class TaskFileController extends Controller {
 
         TaskFile taskFile;
         try {
-            taskFile = TaskFile.create(profile, xml, isHomeWork);
+            taskFile = TaskFileDAO.create(profile, xml, isHomeWork);
 
         } catch (SQLAlchemistException e) {
             return badRequest(e.getMessage());
@@ -98,7 +99,7 @@ public class TaskFileController extends Controller {
      * @return      returns a TaskFile
      */
     public static Result view(Long id) {
-        TaskFile taskFile = TaskFile.getById(id);
+        TaskFile taskFile = TaskFileDAO.getById(id);
 
         if (taskFile == null) {
             Logger.warn("TaskFileController.view("+id+") - no TaskFile found");
@@ -122,7 +123,7 @@ public class TaskFileController extends Controller {
             return result;
         }
 
-        TaskFile taskFile = TaskFile.getById(id);
+        TaskFile taskFile = TaskFileDAO.getById(id);
 
         if(taskFile == null) {
             Logger.warn("TaskFileController.edit - no TaskFile found");
@@ -191,7 +192,7 @@ public class TaskFileController extends Controller {
     public static Result comment(Long id) {
         Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
-        TaskFile    taskFile= TaskFile.getById(id);
+        TaskFile    taskFile= TaskFileDAO.getById(id);
 
         if (taskFile == null) {
             Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
