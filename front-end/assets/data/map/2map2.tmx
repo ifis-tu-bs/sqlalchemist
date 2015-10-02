@@ -439,12 +439,12 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="196" name="EnemyEntity" x="542" y="609" width="79" height="320">
+  <object id="196" name="EnemyEntity" x="544" y="659" width="79" height="320">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
-    <property name="jump" value="4"/>
-    <property name="speed" value="0"/>
+    <property name="jump" value="9"/>
+    <property name="speed" value="1"/>
     <property name="spriteheight" value="44"/>
     <property name="spritewidth" value="45"/>
    </properties>
