@@ -1,12 +1,15 @@
 package models;
 
+import dao.TextDAO;
+
+import helper.SimpleText;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import helper.SimpleText;
+
 import play.Logger;
 import play.libs.Json;
 
@@ -108,7 +111,7 @@ public class StoryChallenge extends Challenge {
     public boolean setTexts(List<SimpleText> texts) {
         for(int i = 0; i < texts.size(); i++) {
             SimpleText simpleText = texts.get(i);
-            Text text = Text.create(this.type, i, simpleText.prerequisite, simpleText.text, simpleText.sound_url, simpleText.lines);
+            Text text = TextDAO.create(this.type, i, simpleText.prerequisite, simpleText.text, simpleText.sound_url, simpleText.lines);
 
             if(text != null) {
                 this.texts.add(text);

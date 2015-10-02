@@ -24,9 +24,9 @@ public class Text extends Model {
     private
     long id;
 
-    private static final int TEXT_TYPE_TERRY_SUCCESSFUL = 200;
-    private static final int TEXT_TYPE_TERRY_FAILURE = 201;
-    private static final int TEXT_TYPE_TERRY_URGE = 202;
+    public static final int TEXT_TYPE_TERRY_SUCCESSFUL = 200;
+    public static final int TEXT_TYPE_TERRY_FAILURE = 201;
+    public static final int TEXT_TYPE_TERRY_URGE = 202;
     @Column(name = "type")
     private final int type;
 
@@ -43,14 +43,14 @@ public class Text extends Model {
     @Column(name = "count_of_lines")
     private final int lines;
 
-    private static final Finder<Long, Text> find = new Finder<>(Long.class, Text.class);
+    public static final Finder<Long, Text> find = new Finder<>(Long.class, Text.class);
 
 
 //////////////////////////////////////////////////
 //  Constructor
 //////////////////////////////////////////////////
 
-    private Text(
+    public Text(
             int type,
             String text,
             String sound_url,
@@ -89,78 +89,4 @@ public class Text extends Model {
 
         return node;
     }
-
-//////////////////////////////////////////////////
-//  Create Method
-//////////////////////////////////////////////////
-
-    public static Text create(
-            int type,
-            int chronology,
-            int prerequisite,
-            String text,
-            String sound_url,
-            int lines) {
-
-        if(text == null) {
-            return null;
-        }
-
-        Text item = new Text(type, text, sound_url, prerequisite, chronology, lines);
-
-        try {
-            item.save();
-        } catch (PersistenceException pe) {
-            Logger.warn("Text.create - caught PersistenceException: " + pe.getMessage());
-            Text text_comp = find.where().eq("text", text).findUnique();
-            if(text_comp != null) {
-                Logger.warn("Text.create - found alternative \"Text\"");
-                return text_comp;
-            }
-            Logger.error("Text.create - no alternative \"Text\" found");
-            return null;
-        }
-
-        return item;
-    }
-
-
-//////////////////////////////////////////////////
-//  Object Getter Methods
-//////////////////////////////////////////////////
-
-    private static Text getTextByType(int type) {
-        List<Text> texts = find.where().eq("type", type).findList();
-
-        int size = texts.size();
-        if(size != 0) {
-            int i = Random.randomInt(0, size - 1);
-            return texts.get(i);
-        }
-        Logger.warn("Text.getTextByType - found no texts");
-        return null;
-    }
-
-    /**
-     *
-     */
-    public static Text getTerrySuccessful() {
-        return getTextByType(TEXT_TYPE_TERRY_SUCCESSFUL);
-    }
-    /**
-     *
-     */
-    public static Text getTerryFailure() {
-        return getTextByType(TEXT_TYPE_TERRY_FAILURE);
-    }
-
-    /**
-     *
-     */
-    public static Text getTerryUrge() {
-        return getTextByType(TEXT_TYPE_TERRY_URGE);
-    }
-
-
-
 }
