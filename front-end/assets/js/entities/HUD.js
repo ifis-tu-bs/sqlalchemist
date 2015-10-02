@@ -306,6 +306,7 @@ game.HUD.SettingsElements = me.Renderable.extend( {
 
         this.sound = game.data.sound;
         this.music = game.data.music;
+
     },
 
     /**
