@@ -5,18 +5,34 @@ game.ProfileScreen = me.ScreenObject.extend({
      */
     onResetEvent : function() {
 
-        // profile_screen
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('profile_screen')
-            ),
-            1
-        );
+        /**
+         * Create background-div and add image to it.
+         */
+        var backgroundProfile = new game.BackgroundElement('backgroundProfileId', 100, 100, 0, 0, 'none');
+        backgroundProfile.setImage("assets/data/img/gui/profile_screen.png", "backgroundprofile");
+        me.game.world.addChild(backgroundProfile);
+        $("#backgroundProfileId").fadeIn(100);
 
-        //Back to Menubutton
-        me.game.world.addChild(new backToMenu(950,-40),2);
+        /**
+         * Create button for state change back to the menu with corresponding callback function.
+         */
+        this.backToMenu = function () {
+            $("#backgroundProfileId").fadeOut(100);
+            $("#backFromProfile").fadeOut(100);
+            $("#avatar").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(me.state.MENU);
+            }, 100);
+        };
+        var backFromProfile = new game.ClickableElement('backFromProfile','', this.backToMenu, 18.1818, 17.7083, 72, -5, 1);
+        backFromProfile.setImage("assets/data/img/buttons/new_back_button.png", "back");
+        me.game.world.addChild(backFromProfile);
+        $("#backFromProfile").fadeIn(100);
 
+
+        /**
+         * Create TextOutputElements to
+         */
         var attribute = new game.TextOutputElement('attribute', 36, 58, 14, 34, 9);
         var values    = new game.TextOutputElement('valuesProfile', 36, 58, 48, 33.1, 9);
         me.game.world.addChild(attribute);
@@ -55,10 +71,14 @@ game.ProfileScreen = me.ScreenObject.extend({
                 //console.log(profile_JSON);
                 var filename = profile_JSON.avatar.avatarFilename;
                 var isTeam = profile_JSON.avatar.isTeam;
-                if (isTeam == false) {
-                    me.game.world.addChild(new game.SkinFront(349, 144, filename, isTeam));
+                if (!isTeam) {
+                    var avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'inline');
+                    avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    me.game.world.addChild(avatar);
                 } else {
-                    me.game.world.addChild(new game.SkinFront(339, 144, filename, isTeam));
+                    var avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'inline');
+                    avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    me.game.world.addChild(avatar);
                 }
 
                 var currentCoins = profile_JSON.coins;
@@ -79,16 +99,9 @@ game.ProfileScreen = me.ScreenObject.extend({
                 values.writeHTML(valuesText + valuesStats, "valuesPara");
                 }
 
-
-            /**
-             *
-             */
             ajaxSendProfileIdRequest(id, profileID_Reply);
         }
 
-        /**
-         *
-         */
         ajaxSendProfileRequest(profileReply);
 
     }
