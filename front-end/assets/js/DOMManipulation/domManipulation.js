@@ -57,18 +57,19 @@ function getTextFromNode(node) {
  * @param : elem : a object
  */
 game.scaleElement = function(object) {
-    
+
+
     var canvasWidth      = me.video.getPos().width;
     var canvasHeight     = me.video.getPos().height;
     var canvasOffsetLeft = me.video.getPos().left;
     var canvasOffsetTop  = me.video.getPos().top;
-    
+
     // get values
     var width      = canvasWidth * object.relWidth / 100;
     var height     = canvasHeight * object.relHeight / 100;
     var leftMargin = canvasWidth * object.relLeft / 100;
     var topMargin  = canvasHeight * object.relTop / 100;
-    
+
     if (object.row == 1) {
     	var lineHeight = height * 0.9;
     }
@@ -586,6 +587,8 @@ game.ClickableElement = me.Renderable.extend ({
 
         // visibility
         this.visibility = true;
+
+        this.elem.style.display = 'none';
 
         // create text node
         var text = document.createTextNode(name);
