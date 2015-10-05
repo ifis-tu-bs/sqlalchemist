@@ -1,25 +1,30 @@
 package secured;
 
-import models.*;
-import play.Logger;
-import play.mvc.*;
+import models.UserSession;
+
+import dao.UserSessionDAO;
+
+import play.mvc.Http.Context;
+import play.mvc.Security.Authenticator;
+import play.mvc.Result;
 
 /**
- * The Security Class to verify AppKey
+ * The Security Class to verify
  *
  * Created by fabiomazzone on 27/04/15.
  */
-public class UserSecured extends Security.Authenticator {
+public class UserSecured extends Authenticator {
     /**
      *
      * @param cxt
      * @return
      */
     @Override
-    public String getUsername(Http.Context cxt) {
-        UserSession session = UserSession.getSession(cxt.session());
+    public String getUsername(Context cxt) {
+      String sessionID = cxt.session().get("sessionID");
+      UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) ) {
-            return session.getSessionID();
+            return session.getUser().getProfile().getUsername();
         }
         return null;
     }
@@ -30,7 +35,7 @@ public class UserSecured extends Security.Authenticator {
      * @return
      */
     @Override
-    public Result onUnauthorized(Http.Context context) {
+    public Result onUnauthorized(Context context) {
         return forbidden("restricted page, you need User permissions");
     }
 }

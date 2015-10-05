@@ -1,15 +1,28 @@
 package controllers;
 
+import dao.CommentDAO;
+import dao.ProfileDAO;
+import dao.RatingDAO;
+import dao.SubTaskDAO;
+import dao.TaskFileDAO;
+
+import Exception.SQLAlchemistException;
+
+import models.Comment;
+import models.Profile;
+import models.Rating;
+import models.SubTask;
+import models.TaskFile;
+
+import secured.CreatorSecured;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
-import models.*;
-
-import Exception.SOLAlchemistException;
 import play.Logger;
-import play.mvc.*;
-
-import secured.CreatorSecured;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
@@ -19,7 +32,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 
-@Security.Authenticated(CreatorSecured.class)
+@Authenticated(CreatorSecured.class)
 public class TaskFileController extends Controller {
 
     /**
@@ -31,7 +44,7 @@ public class TaskFileController extends Controller {
      */
     public static Result index() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<TaskFile> taskFileList = TaskFile.getAll();
+        List<TaskFile> taskFileList = TaskFileDAO.getAll();
 
         if (taskFileList == null) {
             Logger.warn("TaskFile.index - no TaskFiles found");
@@ -56,7 +69,7 @@ public class TaskFileController extends Controller {
      */
 
     public static Result create() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode jsonNode = request().body().asJson();
 
         String xml = jsonNode.get("text").textValue();
@@ -69,9 +82,9 @@ public class TaskFileController extends Controller {
 
         TaskFile taskFile;
         try {
-            taskFile = TaskFile.create(profile, xml, isHomeWork);
+            taskFile = TaskFileDAO.create(profile, xml, isHomeWork);
 
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             return badRequest(e.getMessage());
         }
         return ok(taskFile.toJson());
@@ -86,7 +99,7 @@ public class TaskFileController extends Controller {
      * @return      returns a TaskFile
      */
     public static Result view(Long id) {
-        TaskFile taskFile = TaskFile.getById(id);
+        TaskFile taskFile = TaskFileDAO.getById(id);
 
         if (taskFile == null) {
             Logger.warn("TaskFileController.view("+id+") - no TaskFile found");
@@ -110,7 +123,7 @@ public class TaskFileController extends Controller {
             return result;
         }
 
-        TaskFile taskFile = TaskFile.getById(id);
+        TaskFile taskFile = TaskFileDAO.getById(id);
 
         if(taskFile == null) {
             Logger.warn("TaskFileController.edit - no TaskFile found");
@@ -133,36 +146,37 @@ public class TaskFileController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
-    public static Result rate(Long id) {
-        JsonNode body       = request().body().asJson();
-        TaskFile taskFile   = TaskFile.getById(id);
-        Profile profile     = User.getProfile(session());
+     public static Result rate(Long id) {
+         JsonNode body       = request().body().asJson();
+         SubTask subTask     = SubTaskDAO.getById(id);
+         Profile profile     = ProfileDAO.getByUsername(request().username());
 
-        if (taskFile == null) {
-            Logger.warn("TaskFileController.rate("+id+") - no TaskFile found");
-            return badRequest("no TaskFile found");
-        }
+         if (subTask == null) {
+             Logger.warn("SubTaskController.rate("+id+") - no SubTask found");
+             return badRequest("no SubTask found");
+         }
 
-        int p = body.findPath("positive").asInt();
-        int n = body.findPath("negative").asInt();
-        int e = body.findPath("needReview").asInt();
+         boolean p = body.findPath("positive").asInt() > 0;
+         boolean n = body.findPath("negative").asInt() > 0;
+         boolean r = body.findPath("needReview").asInt() > 0;
 
-        boolean status;
-
-        if(p > 0 || n > 0 || e > 0) {
-            status = taskFile.rate(profile, p > 0, e > 0, n > 0);
-        } else {
-            Logger.warn("TaskFileController.rate - json body was empty");
-            return badRequest("json body was empty");
-        }
-        taskFile.update();
-        if(!status) {
-            Logger.warn("TaskFileController.rate - already rated");
-            return badRequest("try again later");
-        }
-        taskFile.update();
-        return ok();
-    }
+         if( p && !n && !r ||
+            !p &&  n && !r ||
+            !p && !n && r) {
+           Rating rating = RatingDAO.create(profile, p, n, r);
+           if(rating != null) {
+             subTask.addRating(rating);
+           } else {
+             Logger.warn("SubTaskController.rate - Rating cannot be saved");
+             return badRequest("Please try again later");
+           }
+         } else {
+           Logger.warn("SubTaskController.rate - Json body was invalid");
+           return badRequest("Please try again later");
+         }
+         subTask.update();
+         return ok();
+     }
 
 
     /**
@@ -176,9 +190,9 @@ public class TaskFileController extends Controller {
      * @return      returns a http code with a result message
      */
     public static Result comment(Long id) {
-        Profile     profile = User.getProfile(session());
+        Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
-        TaskFile    taskFile= TaskFile.getById(id);
+        TaskFile    taskFile= TaskFileDAO.getById(id);
 
         if (taskFile == null) {
             Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
@@ -192,7 +206,7 @@ public class TaskFileController extends Controller {
             return badRequest("Invalid json or empty text");
         }
 
-        Comment comment = Comment.create(profile, text);
+        Comment comment = CommentDAO.create(profile, text);
         if (comment == null) {
             Logger.warn("TaskFileController.comment - can't create comment");
             return badRequest("can't create comment");

@@ -1,9 +1,6 @@
 package ClassTests;
 
-import models.Exception.EmailTakenException;
-import models.Exception.UsernameTakenException;
 import models.*;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;

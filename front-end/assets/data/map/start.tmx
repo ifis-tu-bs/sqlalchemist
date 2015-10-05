@@ -67,11 +67,11 @@
   </object>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="73" name="EnemyEntity" x="1142" y="159.125" width="566" height="63.75">
+  <object id="73" name="EnemyEntity" x="1142" y="159.125" width="566" height="100">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="crow70x80"/>
-    <property name="jump" value="0"/>
+    <property name="jump" value="1"/>
     <property name="speed" value="4"/>
     <property name="spriteheight" value="80"/>
     <property name="spritewidth" value="70"/>

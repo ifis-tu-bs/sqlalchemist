@@ -1,25 +1,42 @@
 package controllers;
 
+import dao.CommentDAO;
+import dao.ProfileDAO;
+import dao.RatingDAO;
+import dao.ScrollDAO;
+import dao.ScrollCollectionDAO;
+import dao.SolvedSubTaskDAO;
+import dao.SubmittedHomeWorkDAO;
+import dao.SubTaskDAO;
+
+import Exception.SQLAlchemistException;
+
+import models.Comment;
+import models.Profile;
+import models.Rating;
+import models.Scroll;
+import models.ScrollCollection;
+import models.SolvedSubTask;
+import models.SubmittedHomeWork;
+import models.SubTask;
+
+import secured.UserSecured;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
 
-
-import sqlgame.exception.MySQLAlchemistException;
-import models.*;
-
-import Exception.SOLAlchemistException;
 import play.Logger;
 import play.libs.Json;
-import play.mvc.*;
-import secured.UserSecured;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
-
 
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(UserSecured.class)
+@Authenticated(UserSecured.class)
 public class SubTaskController extends Controller {
 
     /**
@@ -31,7 +48,7 @@ public class SubTaskController extends Controller {
      */
     public static Result index() {
         ArrayNode       arrayNode= JsonNodeFactory.instance.arrayNode();
-        List<SubTask>   subTasks = SubTask.getAll();
+        List<SubTask>   subTasks = SubTaskDAO.getAll();
 
         if (subTasks == null) {
             Logger.warn("SubTaskController.index - no SubTasks found");
@@ -54,7 +71,7 @@ public class SubTaskController extends Controller {
      * @return      returns a SubTask
      */
     public static Result view(long id) {
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (subTask == null) {
             Logger.warn("SubTaskController.view("+id+") - no subTask found");
@@ -85,31 +102,31 @@ public class SubTaskController extends Controller {
      */
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
-        SubTask subTask     = SubTask.getById(id);
-        Profile profile     = User.getProfile(session());
+        SubTask subTask     = SubTaskDAO.getById(id);
+        Profile profile     = ProfileDAO.getByUsername(request().username());
 
         if (subTask == null) {
             Logger.warn("SubTaskController.rate("+id+") - no SubTask found");
             return badRequest("no SubTask found");
         }
 
-        int p = body.findPath("positive").asInt();
-        int n = body.findPath("negative").asInt();
-        int e = body.findPath("needReview").asInt();
+        boolean p = body.findPath("positive").asInt() > 0;
+        boolean n = body.findPath("negative").asInt() > 0;
+        boolean r = body.findPath("needReview").asInt() > 0;
 
-        boolean status = false;
-
-
-        if(p > 0 || n > 0 || e > 0) {
-            status = subTask.rate(profile, p > 0, e > 0, n > 0);
+        if( p && !n && !r ||
+           !p &&  n && !r ||
+           !p && !n && r) {
+          Rating rating = RatingDAO.create(profile, p, n, r);
+          if(rating != null) {
+            subTask.addRating(rating);
+          } else {
+            Logger.warn("SubTaskController.rate - Rating cannot be saved");
+            return badRequest("Please try again later");
+          }
         } else {
-            Logger.warn("SubTaskController.rate - json body was empty");
-            return badRequest("json body was empty");
-        }
-        subTask.update();
-        if(!status) {
-            Logger.warn("SubTaskController.rate - already rated");
-            return badRequest("try again later");
+          Logger.warn("SubTaskController.rate - Json body was invalid");
+          return badRequest("Please try again later");
         }
         subTask.update();
         return ok();
@@ -126,9 +143,9 @@ public class SubTaskController extends Controller {
      * @return      returns a http code with a result message
      */
     public static Result comment(Long id) {
-        Profile     profile = User.getProfile(session());
+        Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
-        SubTask     subTask= SubTask.getById(id);
+        SubTask     subTask= SubTaskDAO.getById(id);
 
         if (subTask == null) {
             Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
@@ -145,7 +162,7 @@ public class SubTaskController extends Controller {
             return badRequest("Text is either null or empty");
         }
 
-        Comment comment = Comment.create(profile, text);
+        Comment comment = CommentDAO.create(profile, text);
         if (comment == null) {
             Logger.warn("TaskFileController.comment - can't create comment");
             return badRequest("can't create comment");
@@ -164,22 +181,22 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result story(long id) {
-        Profile profile = User.getProfile(session());
-        Scroll scroll   = Scroll.getById(id);
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        Scroll scroll   = ScrollDAO.getById(id);
 
         if(profile == null) {
             Logger.warn("SubTaskController.story - no valid profile found");
             return badRequest("no valid profile found");
         }
 
-        if(ScrollCollection.contains(profile, scroll)) {
+        if(ScrollCollectionDAO.contains(profile, scroll)) {
             profile.setCurrentScroll(scroll);
         } else {
             Logger.warn("SubTaskController.story - Scroll not in the collection: " + scroll.toJson());
             return badRequest("Scroll not in the collection");
         }
 
-        SubTask subTask             = SubTask.getByScroll(profile, scroll);
+        SubTask subTask             = SubTaskDAO.getByScroll(profile, scroll);
 
         if(subTask == null) {
             Logger.warn("SubTaskController.story - no subTask found for ScrollID: " + id);
@@ -195,8 +212,9 @@ public class SubTaskController extends Controller {
      * @param id task-id
      * @return
      */
+    @SuppressWarnings("UnusedAssignment")
     public static Result storySolve(long id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
 
         if (body == null) {
@@ -209,17 +227,17 @@ public class SubTaskController extends Controller {
             return badRequest("Expecting Json data");
         }
 
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         Logger.info(body.toString());
 
         ObjectNode node = Json.newObject();
         profile.addStatement();
         profile.addTime(time);
-        Result result = null;
+        Result result;
         try {
             if(subTask.solve(statement)) {
-                SolvedSubTask.update(profile, subTask, true);
+                SolvedSubTaskDAO.update(profile, subTask, true);
                 profile.addSuccessfully();
                 int coins = profile.addScore(subTask.getScore() / time);
                 profile.addCurrentScroll();
@@ -231,16 +249,16 @@ public class SubTaskController extends Controller {
 
                 result = ok(node);
             } else {
-                SolvedSubTask.update(profile, subTask, false);
+                SolvedSubTaskDAO.update(profile, subTask, false);
 
                 node.put("terry", "SEMANTIC");
                 node.put("time",        time);
 
                 result = badRequest(node);
             }
-        } catch (SOLAlchemistException e) {
-            Logger.info("SOL");
-            SolvedSubTask.update(profile, subTask, false);
+        } catch (SQLAlchemistException e) {
+            Logger.info("SQL");
+            SolvedSubTaskDAO.update(profile, subTask, false);
 
             node.put("terry",       "SYNTAX");
             node.put("time",        time);
@@ -257,7 +275,7 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result trivia(Long difficulty) {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         int points = difficulty.intValue();
         if(difficulty >= 5) {
             points = 5;
@@ -265,7 +283,7 @@ public class SubTaskController extends Controller {
             points = 1;
         };
 
-        SubTask subTask = SubTask.getByDifficulty(profile, points);
+        SubTask subTask = SubTaskDAO.getByDifficulty(profile, points);
 
         if(subTask != null) {
             return ok(subTask.toJsonExercise());
@@ -278,10 +296,11 @@ public class SubTaskController extends Controller {
      * @param id
      * @return
      */
+    @SuppressWarnings("UnusedAssignment")
     public static Result triviaSolve(Long id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (profile == null || body == null) {
             Logger.warn("SubTaskController.triviaSolve - no profile or no jsonBody or wrong SubTaskId");
@@ -296,14 +315,14 @@ public class SubTaskController extends Controller {
             return badRequest("Expecting Json data");
         }
 
-        Result result = null;
+        Result result;
         profile.addStatement();
         profile.addTime(time);
         ObjectNode node = Json.newObject();
         Logger.info(statement);
         try {
             if(subTask.solve(statement)) {
-                SolvedSubTask.update(profile, subTask, true);
+                SolvedSubTaskDAO.update(profile, subTask, true);
                 int coins = profile.addScore(subTask.getScore() / time);
                 profile.addSuccessfully();
 
@@ -314,15 +333,15 @@ public class SubTaskController extends Controller {
 
                 result = ok(node);
             } else {
-                SolvedSubTask.update(profile, subTask, false);
+                SolvedSubTaskDAO.update(profile, subTask, false);
 
                 node.put("terry",   "symantic error");
                 node.put("time",    time);
 
                 result = badRequest(node);
             }
-        } catch (SOLAlchemistException e) {
-            SolvedSubTask.update(profile, subTask, false);
+        } catch (SQLAlchemistException e) {
+            SolvedSubTaskDAO.update(profile, subTask, false);
 
             node.put("terry",       "syntax error");
             node.put("time",        time);
@@ -340,8 +359,8 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result homework() {
-        Profile profile = User.getProfile(session());
-        SubTask subTask = SubTask.getByChallengeID(1L, profile);
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        SubTask subTask = SubTaskDAO.getByChallengeID(1L, profile);
 
         return ok(subTask.toJsonExercise());
     }
@@ -352,9 +371,9 @@ public class SubTaskController extends Controller {
      * @return
      */
     public static Result homeworkSolve(Long id) {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
-        SubTask subTask = SubTask.getById(id);
+        SubTask subTask = SubTaskDAO.getById(id);
 
         if (profile == null || body == null) {
             Logger.warn("SubTaskController.homeworkSolve - no profile or no jsonBody or wrong SubTaskId");
@@ -373,11 +392,11 @@ public class SubTaskController extends Controller {
         boolean correct;
         try {
             correct = subTask.solve(statement);
-        } catch (SOLAlchemistException e) {
+        } catch (SQLAlchemistException e) {
             correct = false;
         }
 
-        SubmittedHomeWork.submit(profile, subTask, correct, statement);
+        SubmittedHomeWorkDAO.submit(profile, subTask, correct, statement);
 
         return ok("HomeWork Has Been Submitted");
     }

@@ -80,7 +80,7 @@ var game = {
     },
     //Ingame Memory
     persistent : {
-        currentLevel: [7,7,7,7],
+        currentLevel: [7,7,7],
         depth : 0,
         maxDepth: 5,
         jumpOn: false,

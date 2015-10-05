@@ -1,15 +1,6 @@
 package ServerTests;
 
-import org.junit.Test;
-
-import play.mvc.*;
-import play.test.*;
-import play.libs.F.*;
-
-import static org.junit.Assert.*;
 import static play.test.Helpers.*;
-
-import static org.fluentlenium.core.filter.FilterConstructor.*;
 
 public class IntegrationTest {
 

@@ -1,20 +1,22 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import dao.UserDAO;
 
+import models.User;
+
+import secured.UserSecured;
+import secured.AdminSecured;
+
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
 
-import Exception.EmailTakenException;
-import Exception.UsernameTakenException;
-
+import play.libs.Json;
 import play.Logger;
-import play.mvc.*;
-import play.libs.*;
-
-import secured.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
@@ -42,56 +44,36 @@ public class UserController extends Controller {
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
-        String    username  = json.findPath("username").textValue();
-        String    email     = json.findPath("id").textValue();
-        String    password  = json.findPath("password").textValue();
-        int       role      = json.findPath("role").asInt();
 
-        ObjectNode node = Json.newObject();
-        node.put("id", 0);
+        String    username  = json.findPath("username").textValue().trim();
+        String    email     = json.findPath("id").textValue().trim();
+        String    password  = json.findPath("password").textValue().trim();
+        int       role      = json.findPath("role").asInt();
+        ObjectNode node     = Json.newObject();
 
         if(username == null || email == null || password == null) {
             return badRequest("Expecting Json data");
         } else {
-            username = username.trim();
-            email = email.trim();
-            password = password.trim();
-
-            /*
+            boolean isValid = true;
             // Check the availability of the username
-            if(UserDAO.findByUsername(username) != null) {
+            if(UserDAO.getByUsername(username) != null) {
               node.put("username", 1);
             } else {
               node.put("username", 0);
             }
-
             // Check the availability of the email
-            if(UserDAO.findByEmail(email) != null) {
+            if(UserDAO.getByUsername(email) != null) {
               node.put("id", 1);
             } else {
               node.put("id", 0);
             }
-*/
-  //          return badRequest(node);
-
-            try {
-                if (role == 0) {
-                    User.create(username, email, password);
-                } else {
-                    User.create(username, email, password, role);
-                }
-                return controllers.SessionController.create();
-            } catch (UsernameTakenException e) {
-                Logger.warn("User.create - Username Taken");
-                node.remove("username");
-                node.put("username", 1);
-                return badRequest(node);
-            } catch (EmailTakenException e) {
-                Logger.warn("User.create - Id Taken");
-                node.remove("id");
-                node.put("id", 1);
+            if(!isValid) {
                 return badRequest(node);
             }
+
+            UserDAO.create(username, email, password, role);
+
+            return controllers.SessionController.create();
         }
     }
 
@@ -105,14 +87,14 @@ public class UserController extends Controller {
      *
      * @return returns a ok if the old password is valid or a badRequest Status
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result edit() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
 
-        User user = UserSession.getSession(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user.changePassword(
                 json.findPath("password_old").textValue(),
@@ -130,7 +112,7 @@ public class UserController extends Controller {
      *
      * @return ok
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result destroy() {
     	return ok("Test");
     }
@@ -166,7 +148,7 @@ public class UserController extends Controller {
             return badRequest("Could not retrieve Json from POST body!");
         }
 
-        User user = User.getByEmail(json.findPath("id").textValue());
+        User user = UserDAO.getByEmail(json.findPath("id").textValue());
 
         user.sendResetPasswordMail();
 
@@ -201,7 +183,7 @@ public class UserController extends Controller {
     }
 
     public static Result checkStudent() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user == null) {
             return badRequest("No User found");
@@ -218,10 +200,10 @@ public class UserController extends Controller {
         return ok();
     }
 
-    @Security.Authenticated(AdminSecured.class)
+    @Authenticated(AdminSecured.class)
     public static Result getAllUsers() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<User> userList = User.getAllUsers();
+        List<User> userList = UserDAO.getAllUsers();
 
 
         for(User user : userList) {
@@ -234,10 +216,10 @@ public class UserController extends Controller {
         return ok(arrayNode);
     }
 
-    @Security.Authenticated(AdminSecured.class)
+    @Authenticated(AdminSecured.class)
     public static Result promote(long id) {
-        User        user    = User.getProfile(session()).getUser();
-        User        user1   = User.getById(id);
+        User        user    = UserDAO.getByUsername(request().username());
+        User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();
 
         if(user == null) {

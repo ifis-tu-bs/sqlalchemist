@@ -1,11 +1,11 @@
 package models;
 
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
-import play.mvc.Http;
+
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -46,7 +46,7 @@ public class UserSession extends Model {
     /**
      * Need for Database Communication
      */
-    private static final Finder<Long,UserSession> find = new Finder<>(
+    public static final Finder<Long,UserSession> find = new Finder<>(
             Long.class, UserSession.class
     );
 
@@ -83,21 +83,12 @@ public class UserSession extends Model {
     }
 
     /**
-     * 
+     *
      * @return returns boolean value
      */
     public boolean isValid(String remoteAddress) {
         Date today = new Date();
 
         return this.expires_at.compareTo(today) > 0 && this.remoteAddress.equals(remoteAddress);
-    }
-
-    public static UserSession getSession(Http.Session session) {
-        if(session == null || session.get("sessionID") == null) {
-            return null;
-        }
-
-        String sessionID = session.get("sessionID");
-        return find.where().eq("sessionID", sessionID).findUnique();
     }
 }

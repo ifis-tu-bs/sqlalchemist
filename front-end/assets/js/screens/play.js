@@ -4,10 +4,23 @@ game.PlayScreen = me.ScreenObject.extend({
      */
     onResetEvent: function() {
 
+        if(game.data.music) {
+            me.audio.stopTrack();
+            me.audio.playTrack("credits", game.data.musicVolume);
+        }
         //reset the Ingame Memory
         game.data.scrolls = [];
         game.data.collectedScrolls = 0;
         game.persistent.depth = 0;
+        game.data.score = 0;
+
+        var cheat = 2;
+        game.persistent.depth += cheat*5;
+        game.stats.defense += cheat;
+        game.stats.health += cheat;
+        game.stats.speed += cheat;
+        game.stats.jump += cheat;
+
         for( var i = 0; i < 10; i++) {
             console.log("I:"+i);
             console.log(game.persistent.maxDepth,Math.floor(game.persistent.maxDepth / 5),i);
@@ -30,10 +43,8 @@ game.PlayScreen = me.ScreenObject.extend({
         }
 
         // reset the hp
-        game.data.score = 0;
         game.stats.hp = game.stats.health;
         game.data.runs++;
-
 
         // add our HUD to the game world
         this.HUD = new game.HUD.Container();

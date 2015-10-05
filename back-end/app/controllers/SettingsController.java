@@ -1,17 +1,23 @@
 package controllers;
 
+import dao.ProfileDAO;
+
+import models.Profile;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import models.*;
 
 import play.Logger;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 /**
  * This is the controller class for the settings
  *
  * @author fabiomazzone
  */
-@Security.Authenticated(secured.UserSecured.class)
+@Authenticated(secured.UserSecured.class)
 public class SettingsController extends Controller {
     /**
      * GET      /profile/settings
@@ -19,7 +25,7 @@ public class SettingsController extends Controller {
      * @return  returns the Player Settings as JSON Object
      */
     public static Result index() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         return ok(profile.settings.getSettings());
     }
 
@@ -29,7 +35,7 @@ public class SettingsController extends Controller {
      * @return  returns a http responds code if the action was successfully or not
      */
     public static Result edit() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode json = request().body().asJson();
         if(json == null || json.get("music") == null && json.get("sound") == null) {
             Logger.warn("SettingsController.edit - not Valid");
