@@ -33,6 +33,7 @@ game.ProfileScreen = me.ScreenObject.extend({
         /**
          * Create TextOutputElements to
          */
+
         var attribute = new game.TextOutputElement('attribute', 36, 58, 14, 34, 9);
         var values    = new game.TextOutputElement('valuesProfile', 36, 58, 48, 33.1, 9);
         me.game.world.addChild(attribute);
@@ -72,12 +73,14 @@ game.ProfileScreen = me.ScreenObject.extend({
                 var filename = profile_JSON.avatar.avatarFilename;
                 var isTeam = profile_JSON.avatar.isTeam;
                 if (!isTeam) {
-                    var avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'inline');
+                    var avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    $("#avatar").fadeIn(100);
                     me.game.world.addChild(avatar);
                 } else {
-                    var avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'inline');
+                    var avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    $("#avatar").fadeIn(100);
                     me.game.world.addChild(avatar);
                 }
 
