@@ -6,17 +6,35 @@ game.HighscoreScreen = me.ScreenObject.extend({
     onResetEvent : function() {
 
         /**
-         * Load screen-image for Rankings-Screen
+         * Set screen-image for Rankings-Screen
          */
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('ranking_screen')
-            ),
-            1
-        );
+        var backgroundRanking = new game.BackgroundElement('backgroundRankingId', 100, 100, 0, 0, 'none');
+        backgroundRanking.setImage("assets/data/img/gui/ranking_screen.png", "backgroundRanking");
+        me.game.world.addChild(backgroundRanking);
+        $("#backgroundRankingId").fadeIn(100);
 
-        me.game.world.addChild(new backFromRankings(1080,20),2);
+        this.backToMenu = function() {
+            $("#backgroundRanking").fadeOut(100);
+            $("#backFromRankings").fadeOut(100);
+            $("#mostScore").fadeOut(100);
+            $("#mostCoins").fadeOut(100);
+            $("#timeSpent").fadeOut(100);
+            $("#numberOfRuns").fadeOut(100);
+            $("#sqlStatements").fadeOut(100);
+            $("#sqlRate").fadeOut(100);
+            setTimeout(function () {
+                me.state.change(me.state.MENU);
+            }, 100);
+        };
+
+        var backFromRankings = new game.ClickableElement('backFromRankings','', this.backToMenu, 14.01515, 19.53125, 82, 0, 1);
+        backFromRankings.setImage("assets/data/img/buttons/back_button_ink.png", "back");
+        me.game.world.addChild(backFromRankings);
+        $("#backFromRankings").fadeIn(100);
+
+        /**
+         * Create header element
+         */
         var headers = new game.TextOutputElement('headers', 55, 9, 15, 11, 1);
         me.game.world.addChild(headers);
 
@@ -29,13 +47,13 @@ game.HighscoreScreen = me.ScreenObject.extend({
         stopDouble = function() {
             game.data.playing = false;
         };
-        function scoreReply() {
+        this.scoreReply = function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscorePointsRequest(drawScore);
-        }
+        };
         function drawScore(xmlHttpRequest) {
             //console.log(xmlHttpRequest.responseText);
             headers.clear();
@@ -43,65 +61,65 @@ game.HighscoreScreen = me.ScreenObject.extend({
             drawHighscore(xmlHttpRequest, 1, header);
         }
 
-        function coinsReply() {
+        this.coinsReply= function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscoreCoinsRequest(drawCoins);
-        }
+        };
         function drawCoins(xmlHttpRequest) {
             headers.clear();
             var header = "LOFI-COINS";
             drawHighscore(xmlHttpRequest, 2, header);
         }
 
-        function timeSpentReply() {
+        this.timeSpentReply = function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscoreTimeRequest(drawTimeSpent);
-        }
+        };
         function drawTimeSpent(xmlHttpRequest) {
             headers.clear();
             var header = "TIME SPENT";
             drawHighscore(xmlHttpRequest, 3, header);
         }
 
-        function runsReply() {
+        this.runsReply = function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscoreRunsRequest(drawRuns);
-        }
+        };
         function drawRuns(xmlHttpRequest) {
             headers.clear();
             var header = "RUNS NEEDED";
             drawHighscore(xmlHttpRequest, 4, header);
         }
 
-        function sqlStatementsReply() {
+        this.sqlStatementsReply = function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscoreSQLRequest(drawSqlStatements);
-        }
+        };
         function drawSqlStatements(xmlHttpRequest) {
             headers.clear();
             var header = "STATEMENTS";
             drawHighscore(xmlHttpRequest, 5, header);
         }
 
-        function sqlRateReply() {
+        this.sqlRateReply = function () {
             if (game.data.sound && !game.data.playing){
                 game.data.playing = true;
                 me.audio.play("page", false, stopDouble, game.data.soundVolume);
             }
             ajaxSendHighscoreRateRequest(drawSQLRate);
-        }
+        };
         function drawSQLRate(xmlHttpRequest) {
             headers.clear();
             var header = "SUCCESS RATE";
@@ -119,7 +137,6 @@ game.HighscoreScreen = me.ScreenObject.extend({
         var ownValue    = new game.TextOutputElement('ownValue', 15, 9, 55.5, 88, 2);
         var position    = new game.TextOutputElement('position', 50, 5, 17, 80.5, 1);
         position.writeHTML("your position:");
-
         me.game.world.addChild(ranks);
         me.game.world.addChild(usernames);
         me.game.world.addChild(values);
@@ -201,7 +218,6 @@ game.HighscoreScreen = me.ScreenObject.extend({
                     break;
             }
 
-
             ranks.writeHTML("" +
                 "1. <br>" +
                 "2. <br>" +
@@ -223,56 +239,28 @@ game.HighscoreScreen = me.ScreenObject.extend({
         }
 
         /**
-         * Create necessary ClickableElements for Sign-UP
-         * @param : id       : a unique alphanumeric string
-         *          name     : text to display on screen
-         *          callback : the callback function
-         *          width    : the width of the element in percent of the width of the canvas
-         *          height   : the height of the element in percent of the height of the canvas
-         *          left     : the left margin of the element in percent of the width of the canvas
-         *          top      : the top margin of the element in percent of the height of the canvas
-         *          rows     : the number of rows
+         * Create necessary ClickableElements for Rankings
          */
-        var mostScore     = new game.ClickableElement('mostScore', 'score', scoreReply, 10, 4, 83.5, 25, 1);
-        var mostCoins     = new game.ClickableElement('mostCoins', 'lofi-coins', coinsReply, 16, 4, 81, 35, 1);
-        var timeSpent     = new game.ClickableElement('timeSpent', 'time spent', timeSpentReply, 16, 4, 81, 45, 1);
-        var numberOfRuns  = new game.ClickableElement('numberOfRuns', 'runs', runsReply, 9, 4, 84, 55, 1);
-        var sqlStatements = new game.ClickableElement('sqlStatements', 'statements', sqlStatementsReply, 18, 4, 80, 65, 1);
-        var sqlRate       = new game.ClickableElement('sqlRate', 'success rate', sqlRateReply, 19, 4, 79.5, 75, 1);
-
-        /**
-         * add children to container
-         */
-        me.game.world.addChild(mostCoins);
+        var mostScore     = new game.ClickableElement('mostScore', 'score', this.scoreReply, 10, 4, 83.5, 25, 1);
+        var mostCoins     = new game.ClickableElement('mostCoins', 'lofi-coins', this.coinsReply, 16, 4, 81, 35, 1);
+        var timeSpent     = new game.ClickableElement('timeSpent', 'time spent', this.timeSpentReply, 16, 4, 81, 45, 1);
+        var numberOfRuns  = new game.ClickableElement('numberOfRuns', 'runs', this.runsReply, 9, 4, 84, 55, 1);
+        var sqlStatements = new game.ClickableElement('sqlStatements', 'statements', this.sqlStatementsReply, 18, 4, 80, 65, 1);
+        var sqlRate       = new game.ClickableElement('sqlRate', 'success rate', this.sqlRateReply, 19, 4, 79.5, 75, 1);
         me.game.world.addChild(mostScore);
+        me.game.world.addChild(mostCoins);
         me.game.world.addChild(timeSpent);
         me.game.world.addChild(numberOfRuns);
         me.game.world.addChild(sqlStatements);
         me.game.world.addChild(sqlRate);
+        $("#mostScore").fadeIn(100);
+        $("#mostCoins").fadeIn(100);
+        $("#timeSpent").fadeIn(100);
+        $("#numberOfRuns").fadeIn(100);
+        $("#sqlStatements").fadeIn(100);
+        $("#sqlRate").fadeIn(100);
 
-        scoreReply();
-
-        if(game.data.cheat) {
-            setTimeout(function () {
-                coinsReply();
-                setTimeout(function () {
-                    timeSpentReply();
-                    setTimeout(function () {
-                        runsReply();
-                        setTimeout(function () {
-                            sqlStatementsReply();
-                            setTimeout(function () {
-                                sqlRateReply();
-                                setTimeout(function () {
-                                    me.state.change(me.state.HIGHSCORE);
-                                }, 15000)
-                            }, 15000)
-                        }, 15000)
-                    }, 15000)
-                }, 15000)
-            }, 15000)
-        }
-
+        this.scoreReply();
 
     }
 });
