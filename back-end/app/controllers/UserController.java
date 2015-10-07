@@ -71,7 +71,11 @@ public class UserController extends Controller {
                 return badRequest(node);
             }
 
-            UserDAO.create(username, email, password, role);
+            try {
+                UserDAO.create(username, email, password, role);
+            } catch (IllegalArgumentException ex) {
+                return badRequest(ex.getMessage());
+            }
 
             return controllers.SessionController.create();
         }

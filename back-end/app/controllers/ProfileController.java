@@ -37,6 +37,7 @@ public class ProfileController extends Controller {
      * @return returns the PlayerState as JSON Object
      */
     public static Result index() {
+        Logger.info(request().username());
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null){
