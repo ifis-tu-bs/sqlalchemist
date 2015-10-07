@@ -18,10 +18,15 @@ game.CollectorScreen = me.ScreenObject.extend({
             if(game.data.sound){
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
-            me.state.change(me.state.READY);
+            $("#backToLabButton").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(me.state.READY);
+            }, 100);
         };
+
         var backToLabButton = new game.ClickableElement('backToLabButton', 'Back', backToLab, 15, 7.3, 3, 6, 1);
         me.game.world.addChild(backToLabButton);
+        $("#backToLabButton").fadeIn(100);
 
         var progress = 0;
         var level = 0;
