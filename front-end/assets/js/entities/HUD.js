@@ -600,35 +600,6 @@ game.HUD.Text = me.Renderable.extend( {
     }
 });
 
-//TRASH??!!
-game.HUD.Profile = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 50, "white", "right");
-
-    }
-
-
-    /**
-     * draw profile information
-     * renderer.drawFont(this.font, "melon", 100, 100);
-
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Username: " + this.user_object.username, this.pos.x + 160, this.pos.y);
-        renderer.drawFont(this.font, "Lofi-Coins: " + this.user_object.coins, this.pos.x + 160, this.pos.y + 50);
-        //renderer.drawFont(this.font, "Points: " + this.user_object.points, this.pos.x + 160, this.pos.y + 100);
-        //renderer.drawFont(this.font, "Avatar: " + this.user_object.avatar, this.pos.x + 160, this.pos.y + 150);
-    }*/
-});
-
 
 game.HUD.Homework = me.Renderable.extend( {
     /**
