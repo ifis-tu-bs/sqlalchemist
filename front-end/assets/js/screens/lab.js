@@ -106,22 +106,11 @@ game.ReadyScreen = me.ScreenObject.extend({
         ajaxSendProfileBeltRequest(getBelt);
 
         // lab_screen
-        /**me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('lab_screen')
-            ),
-            1
-        );*/
 
         var background = new game.BackgroundElement('background', 100, 100, 0, 0);
         background.setImage("assets/data/img/gui/lab_screen.png", "back");
+        $("#background").fadeIn(100);
         me.game.world.addChild(background);
-
-
-        //buttons for menu movement
-        //me.game.world.addChild(new menu(1104,93),5);
-
 
         /**
          * these functions are called when buttons are clicked.
@@ -173,8 +162,6 @@ game.ReadyScreen = me.ScreenObject.extend({
             }
         };
 
-
-        //HIER TERRY BUTTON FUNCTION
         this.onTerry = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;
@@ -188,14 +175,6 @@ game.ReadyScreen = me.ScreenObject.extend({
 
         /**
          * Add all needed buttons to Lab screen
-         * @param : id       : a unique alphanumeric string
-         *          name     : text to display on screen
-         *          callback : the callback function
-         *          width    : the width of the element in percent of the width of the canvas
-         *          height   : the height of the element in percent of the height of the canvas
-         *          left     : the left margin of the element in percent of the width of the canvas
-         *          top      : the top margin of the element in percent of the height of the canvas
-         *          rows     : the number of rows
          */
         var runButton        = new game.ClickableElement('runButton', 'R U N', this.onRun, 15, 50, 33, 15, 4);
         var colButton        = new game.ClickableElement('colButton', 'Coll ector', this.onCollector, 20, 13, 60, 70, 2);
@@ -205,7 +184,6 @@ game.ReadyScreen = me.ScreenObject.extend({
         var bookButton       = new game.ClickableElement('bookButton', 'Bo ok', this.onBooks, 16, 37, 83, 59, 2);
         var catButton        = new game.ClickableElement('catButton', 'c a t', this.onCat, 10, 30, 49, 49, 3);
         var terryButton      = new game.ClickableElement('terryButton', 'terry', this.onTerry, 18, 40, 56, 12, 5);
-
         me.game.world.addChild(runButton);
         me.game.world.addChild(sheetButton);
         me.game.world.addChild(colButton);
@@ -214,7 +192,13 @@ game.ReadyScreen = me.ScreenObject.extend({
         me.game.world.addChild(bookButton);
         me.game.world.addChild(catButton);
         me.game.world.addChild(terryButton);
-
-
+        $("#runButton").fadeIn(100);
+        $("#colButton").fadeIn(100);
+        $("#sheetButton").fadeIn(100);
+        $("#scrollColButton").fadeIn(100);
+        $("#backButton").fadeIn(100);
+        $("#bookButton").fadeIn(100);
+        $("#catButton").fadeIn(100);
+        $("#terryButton").fadeIn(100);
     }
 });
