@@ -23,3 +23,19 @@
     vertical-align : middle;
     z-Index : 4;
 }
+
+#sheetName, #sheetAttribute, #sheetValues  {
+    background-color : lawngreen;
+    border-style : none;
+    color : black;
+    display : block;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    line-height : 1;
+    margin : 0 auto;
+    max-width : 100%;
+    overflow : hidden;
+    position : absolute;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index : 3;
+}
