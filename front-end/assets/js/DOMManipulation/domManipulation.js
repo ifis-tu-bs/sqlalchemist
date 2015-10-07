@@ -117,6 +117,9 @@ game.TextInputElement = me.Renderable.extend ({
         // get parent
         var divScreen = document.getElementById("screen");
 
+        this.updateWhenPaused = true;
+
+
         // create nodes
         this.elem    = document.createElement('div');
         this.field   = document.createElement(tag);
@@ -415,6 +418,8 @@ game.TextOutputElement = me.Renderable.extend ({
         // get parent
         var div = document.getElementById("screen");
 
+        this.updateWhenPaused = true;
+
         // create nodes
         this.elem                = document.createElement("div");
         this.wrapper             = document.createElement("div");
@@ -572,6 +577,9 @@ game.ClickableElement = me.Renderable.extend ({
         // get parent
         var parent = document.getElementById('screen');
 
+        this.updateWhenPaused = true;
+
+
         // create child
         this.elem                = document.createElement('div');
         this.elem.id             = id;
@@ -598,7 +606,7 @@ game.ClickableElement = me.Renderable.extend ({
 
         // append child
         parent.appendChild(this.elem);
-        
+
         // make element clickable
         myAddEvent(this.elem, 'click', callback);
 
@@ -650,7 +658,6 @@ game.ClickableElement = me.Renderable.extend ({
         // scale element
         game.scaleElement(this);
 
-
     },
 
     destroy : function () {
@@ -682,6 +689,8 @@ game.BackgroundElement = me.Renderable.extend ({
 
         // get parent
         var parent = document.getElementById('screen');
+        this.updateWhenPaused = true;
+
 
         // create child
         this.elem                = document.createElement('div');
