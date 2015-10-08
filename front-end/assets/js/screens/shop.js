@@ -4,30 +4,38 @@ game.ShopScreen = me.ScreenObject.extend({
      */
     onResetEvent: function () {
 
-        me.game.world.addChild(
-            new me.Sprite(
-                0, 0,
-                me.loader.getImage('shop_screen')
-            ),
-            1
-        );
+        /**
+         * Create background-div and add image to it.
+         */
+        var backgroundShop = new game.BackgroundElement('backgroundShopId', 100, 100, 0, 0, 'none');
+        backgroundShop.setImage("assets/data/img/gui/shop_screen.png", "backgroundshop");
+        me.game.world.addChild(backgroundShop);
+        $("#backgroundShopId").fadeIn(100);
+
 
         function getCash(xmlHttpRequest) {
             var profile = JSON.parse(xmlHttpRequest.responseText);
             game.data.lofiCoins = profile.coins;
 
-            me.game.world.addChild(new game.HUD.LofiCoins(230, 660),3);
+            var lofiCoins = new game.TextOutputElement('lofiCoins', 15, 6, 2.7, 86, 1);
+            me.game.world.addChild(lofiCoins);
+            lofiCoins.writeHTML(game.data.lofiCoins, 'lofiCoinsPara');
         }
         ajaxSendProfileRequest(getCash);
 
 
         this.backToMenu = function () {
-
-            //$("#avatar").fadeOut(100);
+            for (var i = 0; i < 38; i++) {
+                $("#shopItem" + i).fadeOut(100);
+            }
+            $("#backgroundShopId").fadeOut(100);
+            $("#lofiCoins").fadeOut(100);
+            $("#backFromShop").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.MENU);
             }, 100);
         };
+
         var backFromShop = new game.ClickableElement('backFromShop','', this.backToMenu, 18.1818, 17.7083, 77, -5, 1);
         backFromShop.setImage("assets/data/img/buttons/new_back_button.png", "back");
         me.game.world.addChild(backFromShop);

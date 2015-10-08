@@ -68,8 +68,7 @@ game.BuyScreen = me.ScreenObject.extend({
 
         }
 
-
-        toShop = function() {
+        this.toShop = function() {
             $("#backToShop").fadeOut(100);
             $("#buyButton").fadeOut(100);
             setTimeout( function() {
@@ -81,7 +80,7 @@ game.BuyScreen = me.ScreenObject.extend({
             game.data.playing = false;
         };
 
-        onBuy = function() {
+        this.onBuy = function() {
             function bought(xmlHttpRequest) {
 
                 console.log(xmlHttpRequest);
@@ -108,8 +107,8 @@ game.BuyScreen = me.ScreenObject.extend({
             ajaxSendShopIdRequest(game.data.spriteId, bought);
         };
 
-        var backToShop = new game.ClickableElement('backToShop','Back', toShop, 20, 7, 30, 73, 1);
-        var buyButton  = new game.ClickableElement('buyButton','Buy', onBuy, 20, 7, 60, 73, 1);
+        var backToShop = new game.ClickableElement('backToShop','Back',this. toShop, 20, 7, 30, 73, 1);
+        var buyButton  = new game.ClickableElement('buyButton','Buy', this.onBuy, 20, 7, 60, 73, 1);
         me.game.world.addChild(backToShop);
         me.game.world.addChild(buyButton);
         $("#backToShop").fadeIn(100);
