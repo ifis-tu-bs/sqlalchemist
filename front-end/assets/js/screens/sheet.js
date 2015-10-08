@@ -11,7 +11,7 @@ game.SheetScreen = me.ScreenObject.extend({
             1
         );
 
-        onLab = function () {
+        this.onLab = function () {
             me.state.change(me.state.READY);
         };
 
@@ -26,30 +26,22 @@ game.SheetScreen = me.ScreenObject.extend({
             game.data.sprite = stat.characterState.currentAvatar.avatarFilename;
             console.log(stat.characterState.currentAvatar.id);
 
-            // Text and Image off the Avatare
-            me.game.world.addChild(new game.HUD.SkinName(380, 150, avatarName));
 
-
-
-            this.sheetName      = new game.TextOutputElement('sheetName',      36, 5.6, 48, 33.1, 5);
-            this.sheetAttribute = new game.TextOutputElement('sheetAttribute', 36, 50, 24, 50, 8);
-            this.sheetValues    = new game.TextOutputElement('sheetValues',    36, 50, 78, 50, 8);
+            this.sheetName      = new game.TextOutputElement('sheetName',      42, 11.25, 28.5, 30, 2);
+            this.sheetAttribute = new game.TextOutputElement('sheetAttribute', 20, 45,    30.5, 45, 8);
+            this.sheetValues    = new game.TextOutputElement('sheetValues',    10, 45,    58.5, 45, 8);
             me.game.world.addChild(sheetAttribute);
             me.game.world.addChild(sheetValues);
             me.game.world.addChild(sheetName);
-            this.sheetAttribute.writeHTML("HEALTH: " + "<br><br>" +
-                                          "SPEED: " + "<br><br>" +
-                                          "JUMP: " + "<br><br>" +
-                                          "DEFENSE: ", 'sheetAttributePara');
-
-
-
-
-
-
-
-
-
+            this.sheetName.writeHTML(avatarName, 'sheetNamePara');
+            this.sheetAttribute.writeHTML("Health: " + "<br><br>" +
+                                          "Speed: " + "<br><br>" +
+                                          "Jump: " + "<br><br>" +
+                                          "Defense: ", 'sheetAttributePara');
+            this.sheetValues.writeHTML(game.stats.health + "<br><br>" +
+            game.stats.speed + "<br><br>" +
+            game.stats.jump + "<br><br>" +
+            game.stats.defense, 'sheetValuesPara');
 
 
             if (!team) {
@@ -63,16 +55,13 @@ game.SheetScreen = me.ScreenObject.extend({
                 $("#avatar").fadeIn(100);
                 me.game.world.addChild(avatar);
             }
-
-
         }
-
         ajaxSendChallengeStoryRequest(getStats);
 
 
         // Back to Lab Buttons
-        var backButton1  = new game.ClickableElement('backButton1', 'B a c k', onLab, 15, 95,  1, 2.5, 4);
-        var backButton2  = new game.ClickableElement('backButton2', 'B a c k', onLab, 15, 95, 84, 2.5, 4);
+        var backButton1  = new game.ClickableElement('backButton1', 'B a c k', this.onLab, 15, 95,  1, 2.5, 4);
+        var backButton2  = new game.ClickableElement('backButton2', 'B a c k', this.onLab, 15, 95, 84, 2.5, 4);
         me.game.world.addChild(backButton1);
         me.game.world.addChild(backButton2);
         $("#backButton1").fadeIn(100);
@@ -82,9 +71,32 @@ game.SheetScreen = me.ScreenObject.extend({
 
         for (var i = 0; i < game.scroll.enchantments.length; i++){
             var j = Math.floor(i/10);
-            console.log(game.scroll.enchantments[i].name, game.scroll.enchantments[i].id,"  used: " + game.scroll.enchantments[i].used," availible: " + game.scroll.enchantments[i].available, "position: " + kind[j]);
+            console.log(game.scroll.enchantments[i].name,
+                        game.scroll.enchantments[i].id,
+                        "  used: " + game.scroll.enchantments[i].used,
+                        " availible: " + game.scroll.enchantments[i].available,
+                        "position: " + kind[j]);
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
-                me.game.world.addChild(new upgrade(760, 345 + 100*j,game.scroll.enchantments[i].name,game.scroll.enchantments[i].id));
+
+                var name = game.scroll.enchantments[i].name;
+                var id   = game.scroll.enchantments[i].id;
+
+                function onUpgrade(name, enchantment){
+                    return function () {
+                        game.task.potionId = enchantment;
+                        game.task.name = name;
+                        game.task.kind = 1;
+                        console.log("Upgrade: " + game.task.potionId, "Name: " + game.task.name , "Result" + game.scroll.enchantments[game.task.potionId].name)
+                        me.state.change(STATE_TASK);
+                    }
+
+                }
+                var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(i), 4.848485, 8.333333, 57.575757, 44.921875 + 13.020833 * j, 1);
+                upgrade.setImage("assets/data/img/collectables/upgrade_scroll.png", "scroll");
+                me.game.world.addChild(upgrade);
+                $("#upgrade" + i).fadeIn(100);
+
+                //me.game.world.addChild(new upgrade(760, 345 + 100*j,game.scroll.enchantments[i].name,game.scroll.enchantments[i].id));
                 kind[j] = 1;
                 console.log("painted");
             }
@@ -112,10 +124,8 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
                 me.state.change(STATE_SHEET);
-
             }
-
-            ajaxSendProfileAvatarIdRequest(game.skin.currentSkin ,getAvatarId);
+            ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
         };
 
 
@@ -128,7 +138,6 @@ game.SheetScreen = me.ScreenObject.extend({
 
             //updates the avatar stats
             function getAvatarId(xmlHttpRequest) {
-
                 var avatarId = JSON.parse(xmlHttpRequest.responseText);
                 console.log(avatarId);
                 console.log(game.skin.currentSkin);
@@ -137,10 +146,8 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
                 me.state.change(STATE_SHEET);
-
             }
-
-            ajaxSendProfileAvatarIdRequest(game.skin.currentSkin,getAvatarId);
+            ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
         };
 
         var skinLeft  = new game.ClickableElement('skinLeft', '', this.onLeft, 4.848485, 8.333333,  33.33333, 16.927083, 1);
