@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="374">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="376">
  <tileset firstgid="1" name="castle1" tilewidth="32" tileheight="32">
   <image source="../img/map/castle1.png" width="512" height="1344"/>
  </tileset>
@@ -45,10 +45,10 @@
     <property name="to" value="3"/>
    </properties>
   </object>
-  <object id="13" name="ScrollEntity" x="1874" y="721" width="32" height="32">
+  <object id="13" name="ScrollEntity" x="3359" y="510" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="44"/>
+    <property name="scrollIndex" value="43"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -66,7 +66,7 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
-  <object id="235" name="SpikeEntity" x="992.5" y="160.5" width="223" height="10" rotation="90"/>
+  <object id="235" name="SpikeEntity" x="993.5" y="168.5" width="223" height="10" rotation="90"/>
   <object id="241" name="CoinEntity" x="1410" y="777" width="32" height="32">
    <properties>
     <property name="image" value="spinning_coin_gold"/>
@@ -351,18 +351,20 @@
   <object id="1" name="Ground" x="-0.3333" y="384.333" width="479" height="253"/>
   <object id="33" name="Ground" x="994.67" y="225.333" width="444" height="159"/>
   <object id="77" name="Ground" x="2368" y="896" width="350" height="63"/>
-  <object id="124" name="Ground" x="0" y="1.5" width="3843" height="61"/>
+  <object id="124" name="Ground" x="0" y="1.5" width="3843" height="55"/>
   <object id="215" name="Ground" x="1024" y="895" width="351" height="63"/>
   <object id="217" name="Ground" x="1503" y="801" width="734" height="64"/>
   <object id="285" name="Ground" x="2848.5" y="799.5" width="416" height="62"/>
   <object id="288" name="Ground" x="3391.5" y="769.5" width="447" height="127"/>
-  <object id="289" name="Ground" x="1023.5" y="577.5" width="2304" height="61"/>
-  <object id="290" name="Ground" x="2689.5" y="225.5" width="1151" height="190"/>
+  <object id="289" name="Ground" x="1023.5" y="577.5" width="2304" height="52"/>
+  <object id="290" name="Ground" x="2689.5" y="225.5" width="1200" height="180"/>
   <object id="333" name="Ground" x="480.5" y="769" width="415" height="62"/>
-  <object id="339" name="Ground" x="603.5" y="385.5" width="420" height="252"/>
+  <object id="339" name="Ground" x="603.5" y="385.5" width="420" height="244"/>
   <object id="340" name="Ground" x="1569" y="224.5" width="381" height="355"/>
   <object id="341" name="Ground" x="2080" y="224" width="479" height="353"/>
   <object id="361" name="Ground" x="2560" y="545" width="768" height="32"/>
-  <object id="363" name="Ground" x="994" y="161.5" width="28" height="64"/>
+  <object id="363" name="Ground" x="995" y="165.5" width="28" height="54"/>
+  <object id="374" name="Ground" x="3106.5" y="64.5" width="40" height="160"/>
+  <object id="375" name="Ground" x="714.5" y="1060" width="3000" height="30"/>
  </objectgroup>
 </map>

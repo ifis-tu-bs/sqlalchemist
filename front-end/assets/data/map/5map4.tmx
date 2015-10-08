@@ -39,7 +39,7 @@
   <object id="13" name="ScrollEntity" x="1909" y="400" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="26"/>
+    <property name="scrollIndex" value="25"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -395,6 +395,6 @@
   <object id="75" name="Ground" x="2016" y="928" width="320" height="160"/>
   <object id="76" name="Ground" x="2336" y="864" width="256" height="224"/>
   <object id="77" name="Ground" x="2592" y="777" width="1247" height="312"/>
-  <object id="88" name="Ground" x="1665" y="786.5" width="638" height="44"/>
+  <object id="88" name="Ground" x="1665" y="786.5" width="638" height="30"/>
  </objectgroup>
 </map>

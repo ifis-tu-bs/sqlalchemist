@@ -14,7 +14,8 @@ game.PlayScreen = me.ScreenObject.extend({
         game.persistent.depth = 0;
         game.data.score = 0;
 
-        var cheat = 2;
+        //is used for balancing purposes
+        var cheat = 6;
         game.persistent.depth += cheat*5;
         game.stats.defense += cheat;
         game.stats.health += cheat;
@@ -25,8 +26,7 @@ game.PlayScreen = me.ScreenObject.extend({
             console.log("I:"+i);
             console.log(game.persistent.maxDepth,Math.floor(game.persistent.maxDepth / 5),i);
             console.log(game.scroll.enchantments[game.level.scrolls[i][0]].used, game.scroll.enchantments[game.level.scrolls[i][1]].used,game.scroll.enchantments[game.level.scrolls[i][2]].used,
-                game.scroll.enchantments[game.level.scrolls[i][3]].used, game.potion.potions[game.level.scrolls[i][4]].available, game.potion.potions[game.level.scrolls[i][5]].available, (i + 1) < Math.ceil(game.persistent.maxDepth / 5));
-
+                        game.scroll.enchantments[game.level.scrolls[i][3]].used, game.potion.potions[game.level.scrolls[i][4]].available, game.potion.potions[game.level.scrolls[i][5]].available, (i + 1) < Math.ceil(game.persistent.maxDepth / 5));
             if (game.scroll.enchantments[game.level.scrolls[i][0]].used && game.scroll.enchantments[game.level.scrolls[i][1]].used && game.scroll.enchantments[game.level.scrolls[i][2]].used &&
                 game.scroll.enchantments[game.level.scrolls[i][3]].used && game.potion.potions[game.level.scrolls[i][4]].available && game.potion.potions[game.level.scrolls[i][5]].available && (i + 1) < Math.ceil((game.persistent.maxDepth - 1) / 5)) {
                 game.persistent.depth += 5;

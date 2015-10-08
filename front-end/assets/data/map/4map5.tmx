@@ -448,13 +448,13 @@
  </objectgroup>
  <objectgroup name="collision">
   <object id="1" name="Ground" x="-0.3333" y="736.333" width="397" height="24"/>
-  <object id="77" name="Ground" x="2411" y="768" width="133" height="57"/>
+  <object id="77" name="Ground" x="2406" y="769" width="140" height="57"/>
   <object id="215" name="Ground" x="1327" y="896" width="130" height="54"/>
   <object id="217" name="Ground" x="1666" y="831" width="426" height="61"/>
-  <object id="285" name="Ground" x="2862.5" y="704.5" width="126" height="58"/>
-  <object id="288" name="Ground" x="3305.5" y="640.5" width="134" height="55"/>
-  <object id="290" name="Ground" x="2694.5" y="383.5" width="720" height="63"/>
-  <object id="341" name="Ground" x="1703" y="384" width="720" height="62"/>
+  <object id="285" name="Ground" x="2855.5" y="703.5" width="140" height="58"/>
+  <object id="288" name="Ground" x="3304.5" y="638.5" width="140" height="55"/>
+  <object id="290" name="Ground" x="2694.5" y="383.5" width="720" height="23"/>
+  <object id="341" name="Ground" x="1703" y="384" width="720" height="50"/>
   <object id="361" name="Ground" x="3490" y="512" width="348" height="63"/>
   <object id="374" name="Ground" x="3514" y="576" width="325" height="82"/>
   <object id="375" name="Ground" x="3546.5" y="659" width="291" height="427"/>
