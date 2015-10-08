@@ -75,6 +75,7 @@ game.GameOverScreen = me.ScreenObject.extend({
 
             var nextButton = new game.ClickableElement('next', 'NEXT', onLab, 25, 10, 37, 80.5, 1);
             me.game.world.addChild(nextButton);
+            $("#next").fadeIn(100);
 
             //maxdepth verwenden
             if (Math.floor((game.persistent.depth - 1) % 5) === 0 && game.persistent.depth > game.data.playerStat.characterState.maxDepth && game.persistent.depth !== 1) {
