@@ -1,0 +1,86 @@
+Columns:
+{
+  ColumnName: String
+  Type:       String
+  PrimaryKey: boolean
+  NotNull:    boolean
+  datagenSet: [Colour | City | Country | ... ]
+}
+
+Intension:
+{
+  TableName: String
+  Columns: Columns[]
+}
+
+Relation:
+{
+  intension: Intension
+  extension: String[]
+}
+
+Schema:
+{
+  relation: Relation[]
+}
+
+Task:
+{
+  TaskText:     String
+  RefStatement: String
+  evalstrategy: [SET, LIST]
+  points:       int
+  requiredterm: [WITH | AS | SELECT | FROM | JOIN | ON | WHERE | GROUP BY | HAVING | ORDER BY | COUNT | SUM | LEFT OUTER JOIN | RIGHT OUTER JOIN | AVG | MAX | MIN]
+}
+
+TaskSet:
+{
+  schema: Schema,
+  tasks:  Task[]
+}
+
+Example:
+{
+  schema: {
+    relation: [
+      {
+        intension: {
+          TableName: "Recipe",
+          Columns:  [
+            {
+              ColumnName: "name"
+              Type:       "VARCHAR(100)"
+              PrimaryKey: true
+              NotNull:    true
+              datagenSet: RecepieName
+            },
+            {
+              ColumnName: "complexity"
+              Type:       "INTEGER"
+              PrimaryKey: false
+              NotNull:    false
+              datagenSet: numberTo10
+            }
+          ]
+        }
+        extension: [
+          "INSERT INTO Recipe(name, complexity) VALUES ("Dizzyness", 1);"
+        ]
+      }
+    ]
+  }
+  tasks: [
+    {
+      TaskText: "All Recipes Names as 'RecipeName' with an complexity with 3 or higher"
+      RefStatemnt: "Select name AS RecipeName FROM Recipe WHERE complexity >= 3"
+      evalstrategy: SET ?????
+      points: 1
+      requiredterm: [
+        SELECT,
+        AS,
+        WHERE
+      ]
+      isHomework: true 
+    }
+  ]
+}
