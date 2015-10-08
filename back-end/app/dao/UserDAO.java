@@ -75,7 +75,11 @@ public class UserDAO {
     if(username == null) {
       return null;
     }
-    return ProfileDAO.getByUsername(username).getUser();
+    Profile userProfile = ProfileDAO.getByUsername(username);
+    if (userProfile == null) {
+      return null;
+    }
+    return userProfile.getUser();
   }
 
   /**

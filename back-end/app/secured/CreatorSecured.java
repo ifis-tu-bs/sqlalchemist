@@ -5,6 +5,7 @@ import models.UserSession;
 
 import dao.UserSessionDAO;
 
+import play.Logger;
 import play.mvc.Http.Context;
 import play.mvc.Security.Authenticator;
 import play.mvc.Result;
@@ -22,6 +23,8 @@ public class CreatorSecured extends Authenticator {
      */
     @Override
     public String getUsername(Context cxt) {
+
+        Logger.info("Check for Creator: ");
       String sessionID = cxt.session().get("sessionID");
       UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) && session.getUser().getRole() >= User.ROLE_CREATOR ) {

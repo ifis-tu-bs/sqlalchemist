@@ -92,7 +92,7 @@ public class User extends Model {
             String password,
             int    role) {
         if( id == null || password == null || !Pattern.matches(".+@.+\\..+", id)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("Email is invalid");
         }
 
         this.email = id;
