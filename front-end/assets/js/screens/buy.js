@@ -94,7 +94,7 @@ game.BuyScreen = me.ScreenObject.extend({
                 var session = JSON.parse(xmlHttpRequest.responseText);
 
                 console.log(game.data.lofiCoins);
-                if (game.data.sound && game.data.lofiCoins > session.coins) {
+                if (game.data.lofiCoins > session.coins) {
                     me.audio.play("cash", false, null, game.data.soundVolume);
                     me.state.change(STATE_SHOP);
                 } else if (game.data.sound && !game.data.playing){
