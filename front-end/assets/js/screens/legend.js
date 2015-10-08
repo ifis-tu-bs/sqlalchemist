@@ -185,5 +185,16 @@ game.LegendScreen = me.ScreenObject.extend({
         me.game.world.addChild(tutorial);
         me.game.world.addChild(task);
         me.game.world.addChild(rating);
+        $("#fatLady").fadeIn(100);
+        $("#scrollCol").fadeIn(100);
+        $("#door").fadeIn(100);
+        $("#mirror").fadeIn(100);
+        $("#belt").fadeIn(100);
+        $("#tutorial").fadeIn(100);
+        $("#triviamode").fadeIn(100);
+        $("#rating").fadeIn(100);
+
+
+
     }
 });
