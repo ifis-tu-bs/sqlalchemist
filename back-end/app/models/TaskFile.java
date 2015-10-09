@@ -222,7 +222,25 @@ public class TaskFile extends Model {
     public ObjectNode toFileNameJson() {
         ObjectNode objectNode = Json.newObject();
 
-        objectNode.put("fileName", this.fileName);
+
+
+        objectNode.put("fileName",      this.fileName);
+
+        return objectNode;
+    }
+
+    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
+        ObjectNode  objectNode = Json.newObject();
+
+        ArrayNode   subTasks   = JsonNodeFactory.instance.arrayNode();
+
+        for(SubTask subTask : this.subTasks) {
+            subTasks.add(subTask.toHomeWorkJsonForProfile(profile));
+        }
+
+        objectNode.put("fileName",      this.fileName);
+        objectNode.put("schema",        this.schema);
+        objectNode.put("subTasks",      subTasks);
 
         return objectNode;
     }

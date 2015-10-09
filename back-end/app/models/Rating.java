@@ -45,6 +45,10 @@ public class Rating extends Model {
       this.positiveRatings = positive   ? votes : 0;
       this.negativeRatings = negative   ? votes : 0;
       this.editRatings     = needReview ? votes : 0;
+    } else {
+      this.positiveRatings = 0;
+      this.negativeRatings = 0;
+      this.editRatings = 0;
     }
   }
 
@@ -68,7 +72,7 @@ public class Rating extends Model {
 
   public static Rating sum(List<Rating> ratings) {
     if(ratings == null || ratings.size() == 0) {
-      return null;
+      return new Rating();
     }
     Rating rating_sum = new Rating();
 

@@ -85,6 +85,7 @@ GET           /highscore/coins                  controllers.HighScoreController.
 #HomeWorkController
 GET           /homework                         controllers.HomeWorkController.getAll()
 POST          /homework                         controllers.HomeWorkController.create()
+GET           /homework/tasks                   controllers.HomeWorkController.getCurrentHomeWorkForCurrentSession()
 GET           /homework/students                controllers.HomeWorkController.getAllStudents()
 GET           /homework/delete/:id              controllers.HomeWorkController.delete(id: Long)
 POST          /homework/result                  controllers.HomeWorkController.getSubmitsForHomeworkTaskFile()

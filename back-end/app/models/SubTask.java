@@ -1,8 +1,6 @@
 package models;
 
-import dao.CommentDAO;
-import dao.ScrollCollectionDAO;
-import dao.SolvedSubTaskDAO;
+import dao.*;
 
 import Exception.SQLAlchemistException;
 import helper.Random;
@@ -166,6 +164,16 @@ public class SubTask extends Model {
         json.put("exercise",  this.exercise);
         json.put("points",    this.points);
         json.put("rating",    rating.toJson());
+
+        return json;
+    }
+
+    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
+        ObjectNode json = Json.newObject();
+
+        json.put("id",          this.id);
+        json.put("exercise",    this.exercise);
+        json.put("done",        SubmittedHomeWorkDAO.getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, this) != null);
 
         return json;
     }

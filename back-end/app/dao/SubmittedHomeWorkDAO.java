@@ -1,6 +1,7 @@
 package dao;
 
 
+import models.HomeWorkChallenge;
 import models.Profile;
 import models.SubmittedHomeWork;
 import models.SubTask;
@@ -32,6 +33,7 @@ public class SubmittedHomeWorkDAO  {
   //  Submit Method
   //////////////////////////////////////////////////
 
+
       public static SubmittedHomeWork submit(
               Profile profile,
               SubTask subTask,
@@ -48,7 +50,8 @@ public class SubmittedHomeWorkDAO  {
               return null;
           }
 
-          SubmittedHomeWork existed = SubmittedHomeWork.find.where().eq("profile_id", profile.getId()).eq("sub_task_id", subTask.getId()).eq("home_work_id", HomeWorkChallengeDAO.getCurrent().getId()).findUnique();
+          SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, subTask);
+
 
           if (existed != null) {
               try {
@@ -79,4 +82,28 @@ public class SubmittedHomeWorkDAO  {
               return null;
           }
       }
+
+
+    /**
+     * Returns current the Submit for given Subtask and Profile HomeWork
+     * (Only on the Current HomeWork: See HomeWorkChallengeDAO.getCurrent())
+     * @param profile Profile of the Submitter
+     * @param subTask subTask being submitted
+     * @return The given Object, or null if none exists
+     */
+    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndSubTask(
+            Profile profile,
+            SubTask subTask) {
+
+        HomeWorkChallenge currentHomeWorkChallenge;
+        if ((currentHomeWorkChallenge = HomeWorkChallengeDAO.getCurrent()) == null ) {
+            return null;
+        }
+
+        return SubmittedHomeWork.find.where()
+                .eq("profile_id", profile.getId())
+                .eq("sub_task_id", subTask.getId())
+                .eq("home_work_id", currentHomeWorkChallenge.getId())
+                .findUnique();
+    }
 }
