@@ -66,7 +66,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.948 + this.size, 8.433, 23.436 - this.difference, 18.129167 + i * 10.9375, 1);
+                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.948 + this.size,
+                                                            8.433, 23.436 - this.difference, 18.129167 + i * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
@@ -82,7 +83,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i), 4.848 + this.size, 8.333, 33.330 - this.difference, 18.129167 + (i - 7) * 10.9375, 1);
+                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                                                            8.333, 33.330 - this.difference, 18.129167 + (i - 7) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
@@ -98,7 +100,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i), 4.848 + this.size, 8.333, 38.942 - this.difference, 18.129167 + (i - 14) * 10.9375, 1);
+                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                                                            8.333, 38.942 - this.difference, 18.129167 + (i - 14) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
@@ -114,7 +117,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i), 4.848 + this.size, 8.333, 51.994 - this.difference, 29.06666 + (i - 21) * 10.9375, 1);
+                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                                                            8.333, 51.994 - this.difference, 29.06666 + (i - 21) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
@@ -130,7 +134,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                     var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i), 4.848 + this.size, 8.333, 57.782 - this.difference, 40.00417 + (i - 27) * 10.9375, 1);
+                     var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                                                             8.333, 57.782 - this.difference, 40.00417 + (i - 27) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
@@ -146,7 +151,8 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i), 4.848 + this.size, 8.333, 70.2545 - this.difference, 29.06666 + (i - 32) * 10.9375, 1);
+                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                                                            8.333, 70.2545 - this.difference, 29.06666 + (i - 32) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
