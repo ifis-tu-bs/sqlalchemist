@@ -466,34 +466,6 @@ var backToTheLab = me.GUI_Object.extend(
         }
     });
 
-var upgrade = me.GUI_Object.extend(
-    {
-        init:function (x, y, name, id)
-        {
-            var settings = {};
-            settings.image = "spinning_scrolls";
-            settings.spritewidth = 32;
-            settings.spriteheight = 32;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 5;
-            this.id = id;
-            this.name = name;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            game.task.potionId = this.id;
-            game.task.kind = 1;
-            game.task.name = this.name;
-            console.log("Upgrade: " + game.task.potionId, "Name: " + game.task.name , "Result" + game.scroll.enchantments[game.task.potionId].name)
-            me.state.change(STATE_TASK);
-        }
-    });
-
 //tutorial Buttons
 
 var skipTutorial = me.GUI_Object.extend(
