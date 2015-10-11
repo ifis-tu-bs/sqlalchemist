@@ -68,7 +68,7 @@ activator compile stage dist
 ```
 ## API Reference
 
-A detailed description can be found in the [API directory](API)
+A detailed description can be found in the [API directory](https://github.com/ifis-tu-bs/sqlalchemist/wiki/JSON-Schema)
 
 ## License
 
