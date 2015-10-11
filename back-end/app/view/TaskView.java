@@ -27,6 +27,7 @@ public class TaskView {
         json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("refStatement",        task.getRefStatement());
+        json.put("evalstrategy",        task.getEvaluationstrategy());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
