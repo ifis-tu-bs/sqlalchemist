@@ -14,14 +14,14 @@
     
     <schema>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Comic(
             no INTEGER NOT NULL PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
             pages INTEGER,
             publisher VARCHAR(255)
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO Comic(no, title, publisher) VALUES (12, 'Wonderboy''s Comeback', 'Marvel');</tuple>
           <tuple>INSERT INTO Comic(no, title, publisher) VALUES (13, 'Superman Returns', 'DC');</tuple>
@@ -31,14 +31,14 @@
         </extension>
       </relation>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE PoweredPerson(
             alias VARCHAR(255) NOT NULL PRIMARY KEY,
             firstname VARCHAR(100) NOT NULL,
             lastname VARCHAR(100),
             evilness_level INTEGER
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO PoweredPerson VALUES ('Wonderboy', 'KG', NULL, -25);</tuple>
           <tuple>INSERT INTO PoweredPerson VALUES ('Magneto', 'Erik Magnus', 'Lensherr', 46);</tuple>
@@ -49,14 +49,14 @@
         </extension>
       </relation>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE HasPowerSince (
             comic INTEGER NOT NULL REFERENCES Comic(no),
             alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson (alias),
             power VARCHAR(100) NOT NULL,
             PRIMARY KEY (comic, alias, power)
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO HasPowerSince VALUES (13, 'Young Nastyman', 'Flight');</tuple>
           <tuple>INSERT INTO HasPowerSince VALUES (12, 'Professor X', 'Telepathy');</tuple>
@@ -70,13 +70,13 @@
         </extension>
       </relation>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE SuperHero(
             alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson(alias),
             cape BOOLEAN,
             PRIMARY KEY(alias)
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO SuperHero VALUES ('Wonderboy', NULL);</tuple>
           <tuple>INSERT INTO SuperHero VALUES ('Superman', TRUE);</tuple>
@@ -84,12 +84,12 @@
         </extension>
       </relation>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE SuperVillain(
             alias VARCHAR(255) NOT NULL REFERENCES PoweredPerson(alias),
             PRIMARY KEY(alias)
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO SuperVillain VALUES ('Magneto');</tuple>
           <tuple>INSERT INTO SuperVillain VALUES ('Mystique');</tuple>

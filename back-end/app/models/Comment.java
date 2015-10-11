@@ -1,20 +1,10 @@
 package models;
 
-import play.Logger;
 import play.db.ebean.Model;
-import play.libs.Json;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by stefa_000 on 16.06.2015.
- */
 
 /**
  * This model describes the comment.
@@ -57,27 +47,22 @@ public class Comment extends Model{
 
 
 //////////////////////////////////////////////////
-//  Json Method
+//  Getter & Setter
 //////////////////////////////////////////////////
 
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("profile", this.profile.toJsonProfile());
-        node.put("text",    this.text);
-        node.put("written", String.valueOf(this.created_at));
-
-        return node;
+    public long getId() {
+        return id;
     }
 
+    public Profile getProfile() {
+        return profile;
+    }
 
-    public static ArrayNode toJsonAll(List<Comment> commentList) {
-        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+    public String getText() {
+        return text;
+    }
 
-        for(Comment comment : commentList) {
-            arrayNode.add(comment.toJson());
-        }
-
-        return arrayNode;
+    public Date getCreated_at() {
+        return created_at;
     }
 }

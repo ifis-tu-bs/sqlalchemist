@@ -7,19 +7,19 @@
         </titles>
         <schema>
             <relation>
-                <intension>CREATE TABLE Potions(id int not null primary key, type int, name varchar(100))</intension>
+                <tableDefinition>CREATE TABLE Potions(id int not null primary key, type int, name varchar(100))</tableDefinition>
                 <extension>
                     <tuple>INSERT INTO Potions(id, type, name) VALUES (1, 0, 'Weak Health Potion')</tuple>
                 </extension>
             </relation>
             <relation>
-                <intension>CREATE TABLE NeedsIngredient(pid int not null primary key, iid int not null primary key)</intension>
+                <tableDefinition>CREATE TABLE NeedsIngredient(pid int not null primary key, iid int not null primary key)</tableDefinition>
                 <extension>
                     <tuple>INSERT INTO NeedsIngredient(pid, iid) VALUES (1, 1), (1, 2)</tuple>
                 </extension>
             </relation>
             <relation>
-                <intension>CREATE TABLE Ingredients(id int not null primary key, name varchar(100))</intension>
+                <tableDefinition>CREATE TABLE Ingredients(id int not null primary key, name varchar(100))</tableDefinition>
                 <extension>
                     <tuple>INSERT INTO Ingredients(id, name) VALUES (1, 'Spinnenbeine'), (2, 'Keine Regenschirme')</tuple>
                 </extension>

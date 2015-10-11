@@ -14,7 +14,7 @@
 
     <schema>
       <relation>
-        <intension>CREATE TABLE Animal(name varchar(100) not null primary key, colour varchar(100), size int, poisonous boolean, pet boolean, maxage int);</intension>
+        <tableDefinition>CREATE TABLE Animal(name varchar(100) not null primary key, colour varchar(100), size int, poisonous boolean, pet boolean, maxage int);</tableDefinition>
         <extension>
           <tuple>INSERT INTO Animal(name, colour, size, poisonous, pet, maxage) VALUES ('Unicorn', 'white', 170, false, false, NULL);</tuple>
 		  <tuple>INSERT INTO Animal(name, colour, size, poisonous, pet, maxage) VALUES ('Flubberworm', 'brown', 8, false, true, 2);</tuple>
@@ -36,7 +36,7 @@
         </extensiongeneration> -->
       </relation>
       <relation>
-      	<intension>CREATE TABLE Power(name varchar(100) not null primary key, description varchar(300), effect varchar(100));</intension>
+      	<tableDefinition>CREATE TABLE Power(name varchar(100) not null primary key, description varchar(300), effect varchar(100));</tableDefinition>
       	<extension>
       		<tuple>INSERT INTO Power(name, description, effect) VALUES ('flying', 'This animal can fly.', 'No effect on someone else.');</tuple>
 			<tuple>INSERT INTO Power(name, description, effect) VALUES ('killing', 'This animal can kill you.', 'Death.');</tuple>
@@ -48,7 +48,7 @@
         </extensiongeneration> -->
       </relation>
       <relation>
-      	<intension>CREATE TABLE Animal_has_Power(animal varchar(100) not null, power varchar(100) not null, PRIMARY KEY(animal, power), FOREIGN KEY (animal) REFERENCES Animal(name), FOREIGN KEY (power) REFERENCES Power(name));</intension>
+      	<tableDefinition>CREATE TABLE Animal_has_Power(animal varchar(100) not null, power varchar(100) not null, PRIMARY KEY(animal, power), FOREIGN KEY (animal) REFERENCES Animal(name), FOREIGN KEY (power) REFERENCES Power(name));</tableDefinition>
       	<extension>
       		<tuple>INSERT INTO Animal_has_Power(animal, power) VALUES ('Unicorn', 'immortality');</tuple>
 			<tuple>INSERT INTO Animal_has_Power(animal, power) VALUES ('Sphinx', 'immortality');</tuple>
@@ -69,7 +69,7 @@
         </extensiongeneration> -->
       </relation>
       <relation>
-      	<intension>CREATE TABLE COUNTRY(name varchar(100) not null primary key, continent varchar(100), language varchar(100));</intension>
+      	<tableDefinition>CREATE TABLE COUNTRY(name varchar(100) not null primary key, continent varchar(100), language varchar(100));</tableDefinition>
       	<extension>
             <tuple>INSERT INTO COUNTRY (name, continent, language) VALUES ('United Kingdom', 'Europe', 'English');</tuple>
 			<tuple>INSERT INTO COUNTRY (name, continent, language) VALUES ('Germany', 'Europe', 'German');</tuple>
@@ -87,7 +87,7 @@
         </extensiongeneration> -->
       </relation>
 	   <relation>
-      	<intension>CREATE TABLE Animal_from_Country(animal varchar(100) not null, country varchar(100) not null, PRIMARY KEY(animal, country), FOREIGN KEY (animal) REFERENCES Animal(name), FOREIGN KEY (country) REFERENCES Country(name));</intension>
+      	<tableDefinition>CREATE TABLE Animal_from_Country(animal varchar(100) not null, country varchar(100) not null, PRIMARY KEY(animal, country), FOREIGN KEY (animal) REFERENCES Animal(name), FOREIGN KEY (country) REFERENCES Country(name));</tableDefinition>
       	<extension>
       		<tuple>INSERT INTO Animal_from_Country(animal, country) VALUES ('Unicorn', 'United Kingdom');</tuple>
 			<tuple>INSERT INTO Animal_from_Country(animal, country) VALUES ('Unicorn', 'Poland');</tuple>

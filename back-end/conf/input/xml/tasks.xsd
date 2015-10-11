@@ -30,7 +30,7 @@
 
     <xs:complexType name="relation_type">
         <xs:sequence>
-            <xs:element name="intension" type="string_type"/>
+            <xs:element name="tableDefinition" type="string_type"/>
             <xs:element name="extension" minOccurs="0" maxOccurs="1" type="extension_type"/>
             <xs:element name="extensiongeneration" minOccurs="0" maxOccurs="1" type="extensiongeneration_type"/>
         </xs:sequence>

@@ -6,7 +6,6 @@ import dao.SubmittedHomeWorkDAO;
 
 import models.HomeWorkChallenge;
 import models.Profile;
-import models.SubmittedHomeWork;
 
 import play.Logger;
 import play.mvc.Controller;
@@ -57,7 +56,7 @@ public class ProfileController extends Controller {
     public static Result view(Long id) {
         Profile profile = ProfileDAO.getById(id);
 
-        return ok(profile.toJsonProfile());
+        return ok(profile.toJson());
     }
 
     /**

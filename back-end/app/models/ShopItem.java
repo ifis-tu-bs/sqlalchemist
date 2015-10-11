@@ -1,7 +1,5 @@
 package models;
 
-import dao.AvatarDAO;
-
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -10,7 +8,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.db.ebean.Model;
 import play.libs.Json;
-import play.Logger;
 
 import javax.persistence.*;
 import java.util.List;

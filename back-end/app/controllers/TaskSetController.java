@@ -1,30 +1,22 @@
 package controllers;
 
-import dao.CommentDAO;
 import dao.ProfileDAO;
-import dao.RatingDAO;
-import dao.SubTaskDAO;
-import dao.TaskFileDAO;
 
-import Exception.SQLAlchemistException;
-
-import models.Comment;
 import models.Profile;
-import models.Rating;
-import models.SubTask;
-import models.TaskFile;
+import models.TaskSet;
 
 import secured.CreatorSecured;
 
+import view.TaskSetView;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.*;
 
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 
-import java.util.List;
+import javax.persistence.PersistenceException;
 
 /**
  * This controller is for the TaskFiles
@@ -33,7 +25,37 @@ import java.util.List;
  */
 
 @Authenticated(CreatorSecured.class)
-public class TaskFileController extends Controller {
+public class TaskSetController extends Controller {
+    /**
+     * This method creates TaskFile objects from Json
+     *
+     * POST     /TaskSet/
+     * Needs a TaskSet Json Object
+     *
+     * @return returns the created TaskSet
+     */
+
+    public static Result create() {
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        JsonNode jsonNode = request().body().asJson();
+
+        TaskSet taskSet = TaskSetView.fromJson(profile, jsonNode);
+
+        if (taskSet == null) {
+            Logger.warn("TaskSetController.create - The request body doesn't contain a valid TaskSet Json Object");
+            return badRequest("JsonBody is corrupted");
+        }
+
+        try {
+            taskSet.save();
+        } catch (PersistenceException pe) {
+            Logger.warn(pe.getMessage());
+            return badRequest("taskSet can't be saved");
+        }
+
+        return ok(TaskSetView.toJson(taskSet));
+    }
+
 
     /**
      * This method returns all created TaskFiles
@@ -42,7 +64,7 @@ public class TaskFileController extends Controller {
      *
      * @return returns a JSON Array filled with all taskFiles
      */
-    public static Result index() {
+    /*public static Result index() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         List<TaskFile> taskFileList = TaskFileDAO.getAll();
 
@@ -57,38 +79,7 @@ public class TaskFileController extends Controller {
 
         return ok(arrayNode);
     }
-
-    /**
-     * This method creates TaskFile objects from Json
-     *
-     * POST     /taskFile
-     * Needs a JSON Body Request with values:
-     *  text: String
-     *
-     * @return returns the created TaskFile
-     */
-
-    public static Result create() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        JsonNode jsonNode = request().body().asJson();
-
-        String xml = jsonNode.get("text").textValue();
-        boolean isHomeWork = jsonNode.get("isHomeWork").asBoolean();
-
-        if (xml == null) {
-            Logger.warn("TaskFileController.create - no text in Json.text");
-            return badRequest("no text in Json.text");
-        }
-
-        TaskFile taskFile;
-        try {
-            taskFile = TaskFileDAO.create(profile, xml, isHomeWork);
-
-        } catch (SQLAlchemistException e) {
-            return badRequest(e.getMessage());
-        }
-        return ok(taskFile.toJson());
-    }
+*/
 
     /**
      * This method returns the TaskFile that matches to the given id
@@ -98,7 +89,7 @@ public class TaskFileController extends Controller {
      * @param id    the id of a TaskFile as long
      * @return      returns a TaskFile
      */
-    public static Result view(Long id) {
+/*    public static Result view(Long id) {
         TaskFile taskFile = TaskFileDAO.getById(id);
 
         if (taskFile == null) {
@@ -107,7 +98,7 @@ public class TaskFileController extends Controller {
         }
         ObjectNode taskFileJsoned = taskFile.toJson();
         taskFileJsoned.put("xmlContent", taskFile.getXmlContent());
-        taskFileJsoned.put("commentList", Comment.toJsonAll(taskFile.getCommentList()));
+        taskFileJsoned.put("commentList", Comment.toJsonAll(taskFile.getComments()));
         return ok(taskFileJsoned);
     }
 
@@ -133,7 +124,7 @@ public class TaskFileController extends Controller {
 
         return ok();
     }
-
+*/
     /**
      * this method controls the rating of the TaskFiles
      *
@@ -146,13 +137,14 @@ public class TaskFileController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
+     /*
      public static Result rate(Long id) {
          JsonNode body       = request().body().asJson();
          SubTask subTask     = SubTaskDAO.getById(id);
          Profile profile     = ProfileDAO.getByUsername(request().username());
 
          if (subTask == null) {
-             Logger.warn("SubTaskController.rate("+id+") - no SubTask found");
+             Logger.warn("TaskController.rate("+id+") - no SubTask found");
              return badRequest("no SubTask found");
          }
 
@@ -167,18 +159,18 @@ public class TaskFileController extends Controller {
            if(rating != null) {
              subTask.addRating(rating);
            } else {
-             Logger.warn("SubTaskController.rate - Rating cannot be saved");
+             Logger.warn("TaskController.rate - Rating cannot be saved");
              return badRequest("Please try again later");
            }
          } else {
-           Logger.warn("SubTaskController.rate - Json body was invalid");
+           Logger.warn("TaskController.rate - Json body was invalid");
            return badRequest("Please try again later");
          }
          subTask.update();
          return ok();
      }
 
-
+*/
     /**
      * this method handels the comments for TaskFiles
      *
@@ -189,6 +181,7 @@ public class TaskFileController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result message
      */
+     /*
     public static Result comment(Long id) {
         Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
@@ -215,5 +208,5 @@ public class TaskFileController extends Controller {
         taskFile.update();
         return ok();
     }
-
+*/
 }

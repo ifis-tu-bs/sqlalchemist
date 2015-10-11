@@ -13,6 +13,7 @@ import java.util.Properties;
 /**
  * @author Invisible
  */
+@SuppressWarnings("ALL")
 public class MailSender {
     private Properties props;
 
@@ -86,8 +87,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -130,8 +129,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -176,8 +173,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -213,8 +208,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }

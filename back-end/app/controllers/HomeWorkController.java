@@ -4,13 +4,13 @@ package controllers;
 import dao.HomeWorkChallengeDAO;
 import dao.ProfileDAO;
 import dao.SubmittedHomeWorkDAO;
-import dao.TaskFileDAO;
+import dao.TaskSetDAO;
 import dao.UserDAO;
 
 import models.HomeWorkChallenge;
 import models.SubmittedHomeWork;
-import models.SubTask;
-import models.TaskFile;
+import models.Task;
+import models.TaskSet;
 import models.User;
 
 import secured.AdminSecured;
@@ -25,6 +25,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 import secured.StudentSecured;
+import view.TaskView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +37,7 @@ import java.util.List;
 public class HomeWorkController extends Controller {
 
     @Authenticated(AdminSecured.class)
-    public static Result getSubmitsForHomeworkTaskFile() {
+    public static Result getSubmitsForHomeworkTaskSet() {
         /*
             TODO: Make JSON with all Students and their done HW, that are expired!
             TODO: Make senseful rating of success of their tasks
@@ -50,7 +51,7 @@ public class HomeWorkController extends Controller {
         }
 
         HomeWorkChallenge homeWorkChallenge = HomeWorkChallengeDAO.getById(json.findPath("homework").longValue());
-        TaskFile taskFile = TaskFileDAO.getByFileName(json.findPath("taskFile").textValue());
+        TaskSet taskFile = TaskSetDAO.getById(json.findPath("taskFile").longValue());
 
         if (homeWorkChallenge == null || taskFile == null) {
             return badRequest("Homework or taskfile have not been specified correctly");
@@ -58,9 +59,9 @@ public class HomeWorkController extends Controller {
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        for (SubTask subTask : taskFile.getSubTasks()) {
-            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWorkDAO.getSubmitsForSubtask(subTask));
-            ObjectNode objectNode = subTask.toJson();
+        for (Task task : taskFile.getTasks()) {
+            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWorkDAO.getSubmitsForSubtask(task));
+            ObjectNode objectNode = TaskView.toJson(task);
             objectNode.put("submits", submits);
 
             arrayNode.add(objectNode);
@@ -122,9 +123,9 @@ public class HomeWorkController extends Controller {
             return badRequest("Name must be specified");
         }
 
-        ArrayList<TaskFile> taskFiles = new ArrayList<>();
+        ArrayList<TaskSet> taskSets = new ArrayList<>();
         for (JsonNode taskFileJson : json.findPath("tasks")) {
-            taskFiles.add(TaskFileDAO.getByFileName(taskFileJson.textValue()));
+            taskSets.add(TaskSetDAO.getById(taskFileJson.longValue()));
         }
 
         if (utcTimeFrom > utcTimeTo || utcTimeTo < new Date().getTime()) {
@@ -134,7 +135,7 @@ public class HomeWorkController extends Controller {
 
         Date start = new Date(utcTimeFrom);
         Date end = new Date(utcTimeTo);
-        Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskFiles.toString());
+        Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskSets.toString());
 
         /*
             TODO: Make HomeWorkChallenge.create(); You May add your INTEGER CONSTANTS. i just set them to 0
@@ -144,7 +145,7 @@ public class HomeWorkController extends Controller {
         //                                                  |
         //                                                  v
         //
-        if (HomeWorkChallengeDAO.create(name, ProfileDAO.getByUsername(request().username()), 0, 0, taskFiles, 0, start, end) == null) {
+        if (HomeWorkChallengeDAO.create(name, ProfileDAO.getByUsername(request().username()), 0, 0, taskSets, 0, start, end) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return badRequest("Data did not match constraints");
         }
@@ -166,7 +167,7 @@ public class HomeWorkController extends Controller {
     }
 
     @Authenticated(AdminSecured.class)
-    public static Result getForSubTask(Long subTaskId, Long homeWorkChallengeId) {
+    public static Result getForTask(Long subTaskId, Long homeWorkChallengeId) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         List<SubmittedHomeWork> submits = SubmittedHomeWorkDAO.getSubmitsForSubtaskAndHomeWorkChallenge(subTaskId, homeWorkChallengeId);

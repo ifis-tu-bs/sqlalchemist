@@ -6,9 +6,6 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import dao.HomeWorkChallengeDAO;
-
-import play.Logger;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -23,7 +20,7 @@ import java.util.List;
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "sub_task_id, home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
-public class SubmittedHomeWork extends SolvedSubTask {
+public class SubmittedHomeWork extends SolvedTask {
     @Id
     long id;
 
@@ -43,12 +40,12 @@ public class SubmittedHomeWork extends SolvedSubTask {
 
     public SubmittedHomeWork (
             Profile profile,
-            SubTask subTask,
+            Task task,
             HomeWorkChallenge homeWork,
             boolean solve,
             String statement) {
 
-        super(profile, subTask);
+        super(profile, task);
         this.homeWork = homeWork;
 
         this.solve = solve;
@@ -76,7 +73,7 @@ public class SubmittedHomeWork extends SolvedSubTask {
         objectNode.put("statement", this.statement);
         objectNode.put("solve", this.solve);
         objectNode.put("student", this.profile.getUser().toJson());
-        objectNode.put("sub_task", this.subTask.getId());
+        objectNode.put("sub_task", this.task.getId());
 
         return objectNode;
     }

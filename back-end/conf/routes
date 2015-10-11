@@ -16,10 +16,10 @@ POST          /signup                           controllers.UserController.creat
 POST          /users                            controllers.UserController.edit()
 DELETE        /users                            controllers.UserController.destroy()
 GET           /users                            controllers.UserController.getAllUsers()
-GET           /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
-POST          /users/password                     controllers.UserController.sendResetPasswordMail()
-POST          /users/dopasswordreset/:code        controllers.UserController.doResetPassword(code: String)
-GET           /users/student                      controllers.UserController.checkStudent()
+GET           /users/verify/:code               controllers.UserController.verifyEmail(code: String)
+POST          /users/password                   controllers.UserController.sendResetPasswordMail()
+POST          /users/dopasswordreset/:code      controllers.UserController.doResetPassword(code: String)
+GET           /users/student                    controllers.UserController.checkStudent()
 POST          /users/:id                        controllers.UserController.promote(id :Long)
 
 #ItemController
@@ -39,26 +39,21 @@ GET           /challenge/story                  controllers.ChallengeController.
 GET           /challenge/skip                   controllers.ChallengeController.skipChallenge()
 GET           /challenge/reset                  controllers.ChallengeController.reset()
 
-GET           /taskFile                         controllers.TaskFileController.index()
-POST          /taskFile                         controllers.TaskFileController.create()
-GET           /taskFile/:id                     controllers.TaskFileController.view(id: Long)
-POST          /taskFile/:id                     controllers.TaskFileController.edit(id: Long)
-DELETE        /taskFile/:id                     controllers.TaskFileController.destroy(id: Long)
-POST          /taskFile/:id/rate                controllers.TaskFileController.rate(id: Long)
-POST          /taskFile/:id/comment             controllers.TaskFileController.comment(id: Long)
+#TaskSetController
+POST          /taskSet/                         controllers.TaskSetController.create()
 
-#SubTaskController
-GET           /task/story/:id                   controllers.SubTaskController.story(id: Long)
-POST          /task/story/:id                   controllers.SubTaskController.storySolve(id: Long)
-GET           /task/trivia/:id                  controllers.SubTaskController.trivia(id: Long)
-POST          /task/trivia/:id                  controllers.SubTaskController.triviaSolve(id: Long)
-GET           /task/homework                    controllers.SubTaskController.homework()
-POST          /task/homework/:id                controllers.SubTaskController.homeworkSolve(id: Long)
-GET           /task                             controllers.SubTaskController.index()
-GET           /task/:id                         controllers.SubTaskController.view(id: Long)
-DELETE        /task/:id                         controllers.SubTaskController.destroy(id: Long)
-POST          /task/:id/rate                    controllers.SubTaskController.rate(id: Long)
-POST          /task/:id/comment                 controllers.SubTaskController.comment(id: Long)
+#TaskController
+GET           /task/story/:id                   controllers.TaskController.story(id: Long)
+POST          /task/story/:id                   controllers.TaskController.storySolve(id: Long)
+GET           /task/trivia/:id                  controllers.TaskController.trivia(id: Long)
+POST          /task/trivia/:id                  controllers.TaskController.triviaSolve(id: Long)
+GET           /task/homework                    controllers.TaskController.homework()
+POST          /task/homework/:id                controllers.TaskController.homeworkSolve(id: Long)
+GET           /task                             controllers.TaskController.index()
+GET           /task/:id                         controllers.TaskController.view(id: Long)
+DELETE        /task/:id                         controllers.TaskController.destroy(id: Long)
+POST          /task/:id/rate                    controllers.TaskController.rate(id: Long)
+POST          /task/:id/comment                 controllers.TaskController.comment(id: Long)
 
 #ProfileController
 GET           /profile                          controllers.ProfileController.index()
@@ -88,8 +83,8 @@ POST          /homework                         controllers.HomeWorkController.c
 GET           /homework/tasks                   controllers.HomeWorkController.getCurrentHomeWorkForCurrentSession()
 GET           /homework/students                controllers.HomeWorkController.getAllStudents()
 GET           /homework/delete/:id              controllers.HomeWorkController.delete(id: Long)
-POST          /homework/result                  controllers.HomeWorkController.getSubmitsForHomeworkTaskFile()
-GET           /homework/result/:sid/:hid        controllers.HomeWorkController.getForSubTask(sid: Long, hid: Long)
+POST          /homework/result                  controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()
+GET           /homework/result/:sid/:hid        controllers.HomeWorkController.getForTask(sid: Long, hid: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                     controllers.Assets.at(path="/public/game/assets", file)

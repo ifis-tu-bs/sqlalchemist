@@ -1,6 +1,5 @@
 package ClassTests;
 
-import models.TaskFile;
 import org.junit.BeforeClass;
 import play.Logger;
 import play.test.FakeApplication;

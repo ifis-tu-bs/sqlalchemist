@@ -14,14 +14,14 @@
 
               <schema>
                      <relation>
-                            <intension>
+                            <tableDefinition>
                                    CREATE TABLE Book(
                                    no INTEGER NOT NULL PRIMARY KEY,
                                    title VARCHAR(255) NOT NULL,
                                    pages INTEGER,
                                    publisher VARCHAR(255)
                                    );
-                            </intension>
+                            </tableDefinition>
                             <extension>
                                    <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (12, 'Wonderboy''s Comeback',1, 'Zeus');</tuple>
                                    <tuple>INSERT INTO Book(no, title, pages, publisher) VALUES (13, 'Superman Returns',2, 'DC');</tuple>
@@ -31,14 +31,14 @@
                             </extension>
                      </relation>
                      <relation>
-                            <intension>
+                            <tableDefinition>
                                    CREATE TABLE Person(
                                    alias VARCHAR(255) NOT NULL PRIMARY KEY,
                                    firstname VARCHAR(100) NOT NULL,
                                    lastname VARCHAR(100),
                                    age INTEGER
                                    );
-                            </intension>
+                            </tableDefinition>
                             <extension>
                                    <tuple>INSERT INTO Person VALUES ('Wonderboy', 'KG', NULL, 25);</tuple>
                                    <tuple>INSERT INTO Person VALUES ('Magneto', 'Erik Magnus', 'Lensherr', 26);</tuple>
@@ -49,14 +49,14 @@
                             </extension>
                      </relation>
                      <relation>
-                            <intension>
+                            <tableDefinition>
                                    CREATE TABLE AdventureOf (
                                    book INTEGER NOT NULL REFERENCES Book(no),
                                    alias VARCHAR(255) NOT NULL REFERENCES Person (alias),
                                    spellUsed VARCHAR(100),
                                    PRIMARY KEY (book, alias)
                                    );
-                            </intension>
+                            </tableDefinition>
                             <extension>
                                    <tuple>INSERT INTO AdventureOf VALUES (13, 'Lockhard', 'Flight');</tuple>
                                    <tuple>INSERT INTO AdventureOf VALUES (12, 'Professor X', 'Telepathy');</tuple>
@@ -70,13 +70,13 @@
                             </extension>
                      </relation>
                      <relation>
-                            <intension>
+                            <tableDefinition>
                                    CREATE TABLE Wizard(
                                    alias VARCHAR(255) NOT NULL REFERENCES Person(alias),
                                    cape BOOLEAN,
                                    PRIMARY KEY(alias)
                                    );
-                            </intension>
+                            </tableDefinition>
                             <extension>
                                    <tuple>INSERT INTO Wizard VALUES ('Wonderboy', TRUE);</tuple>
                                    <tuple>INSERT INTO Wizard VALUES ('Superman', TRUE);</tuple>
@@ -84,12 +84,12 @@
                             </extension>
                      </relation>
                      <relation>
-                            <intension>
+                            <tableDefinition>
                                    CREATE TABLE Deatheater(
                                    alias VARCHAR(255) NOT NULL REFERENCES Person(alias),
                                    PRIMARY KEY(alias)
                                    );
-                            </intension>
+                            </tableDefinition>
                             <extension>
                                    <tuple>INSERT INTO Deatheater VALUES ('Magneto');</tuple>
                                    <tuple>INSERT INTO Deatheater VALUES ('Mystique');</tuple>
