@@ -61,44 +61,11 @@
                 }
             ],
             "extension": null
-        },
-        {
-            "tableName": "Mir",
-            "columns": [
-                {
-                    "columnName": "id",
-                    "dataType": "bigint",
-                    "primaryKey": true,
-                    "notNull": false,
-                    "datagenSet": 0
-                },
-                {
-                    "columnName": "user_id",
-                    "dataType": "bigint",
-                    "primaryKey": true,
-                    "notNull": false,
-                    "datagenSet": 0
-                },
-                {
-                    "columnName": "mirname",
-                    "dataType": "Varchar(255)",
-                    "primaryKey": true,
-                    "notNull": false,
-                    "datagenSet": 0
-                }
-            ],
-            "extension": null
         }
     ],
     "foreignKeys": [
         {
             "sourceTable":"Profile",
-            "sourceColumn":"user_id",
-            "destinationTable":"User",
-            "destinationColumn":"id"
-        },
-        {
-            "sourceTable":"Mir",
             "sourceColumn":"user_id",
             "destinationTable":"User",
             "destinationColumn":"id"

@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import helper.ForeignKeyRelation;
 import view.TableDefinitionView;
 
@@ -21,6 +23,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TaskSet")
+@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TaskSet extends Model {
     @Id
     @Column
@@ -87,21 +90,11 @@ public class TaskSet extends Model {
 
     @Override
     public void save() {
-        this.prepareSaving();
+        this.prepareStoring();
         super.save();
     }
-    /**
-     * this method updated the database entry with this entity
-     */
-    @Override
-    public void update() {
-        super.update();
-    }
 
-    /**
-     * This method prepare the objects data to be stored in the database
-     */
-    private void prepareSaving() {
+    public void prepareStoring() {
         if(this.foreignKeyRelations != null) {
             for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
                 TableDefinition sourceTable = null, destinationTable = null;
@@ -165,6 +158,10 @@ public class TaskSet extends Model {
 
     public long getId() {
         return this.id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public List<TableDefinition> getTableDefinitions() {
@@ -268,6 +265,4 @@ public class TaskSet extends Model {
         }
         return answer;
     }
-
-
 }

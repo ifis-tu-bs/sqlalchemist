@@ -3,6 +3,7 @@ package view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import models.Comment;
 import models.Profile;
 import models.Rating;
 import models.Task;
@@ -30,8 +31,8 @@ public class TaskView {
 
         Rating rating_sum = Rating.sum(task.getRatings());
 
-        for(int i = 0; i < task.getComments().size() && i < 100; i++) {
-            commentNode.add(CommentView.toJson(task.getComments().get(i)));
+        for(Comment comment : task.getComments()) {
+          commentNode.add(CommentView.toJson(comment));
         }
 
         json.put("id",                  task.getId());
@@ -52,5 +53,5 @@ public class TaskView {
         json.put("updated_at",          String.valueOf(task.getUpdated_at()));
         return json;
     }
-}
 
+}

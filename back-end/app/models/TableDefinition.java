@@ -14,16 +14,14 @@ public class TableDefinition extends Model {
     @Id
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private TaskSet                 taskSet;
 
     private String                  tableName;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "tableDefinition", cascade = CascadeType.ALL)
     private List<ColumnDefinition>  columnDefinitions;
     @Column(columnDefinition = "Text")
     private String                  extension;
-
-    public Finder<Long, TableDefinition> find = new Finder<>(Long.class, TableDefinition.class);
 
 //////////////////////////////////////////////////
 //  constructor

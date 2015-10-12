@@ -1,22 +1,23 @@
 package controllers;
 
 import dao.ProfileDAO;
+import dao.TaskSetDAO;
 
 import models.Profile;
 import models.TaskSet;
 
-import secured.CreatorSecured;
-
 import view.TaskSetView;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security.Authenticated;
 
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 /**
  * This controller is for the TaskFiles
@@ -57,74 +58,86 @@ public class TaskSetController extends Controller {
         return ok(TaskSetView.toJson(taskSet));
     }
 
-
     /**
      * This method returns all created TaskFiles
      *
-     * GET      /taskFile
+     * GET      /TaskSet/
      *
-     * @return returns a JSON Array filled with all taskFiles
+     * @return returns a JSON Array filled with all taskSets
      */
-    /*public static Result index() {
-        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<TaskFile> taskFileList = TaskFileDAO.getAll();
+    public static Result read() {
+        ArrayNode     taskSetNode = JsonNodeFactory.instance.arrayNode();
+        List<TaskSet> taskSetList = TaskSetDAO.getAll();
 
-        if (taskFileList == null) {
-            Logger.warn("TaskFile.index - no TaskFiles found");
-            return badRequest("no TaskFiles found");
+        if (taskSetList == null) {
+            Logger.warn("TaskSet.index - no TaskSet found");
+            return badRequest("no TaskSet found");
         }
 
-        for(TaskFile taskFile : taskFileList) {
-            arrayNode.add(taskFile.toJson());
+        for(TaskSet taskSet : taskSetList) {
+            taskSetNode.add(TaskSetView.toJson(taskSet));
         }
 
-        return ok(arrayNode);
+        return ok(taskSetNode);
     }
-*/
 
     /**
-     * This method returns the TaskFile that matches to the given id
+     * This method returns the TaskSet that matches to the given id
      *
-     *  GET      /taskFile/:id
+     *  GET      /taskSet/:id
      *
-     * @param id    the id of a TaskFile as long
-     * @return      returns a TaskFile
+     * @param id    the id of a TaskSet as long
+     * @return      returns a TaskSet
      */
-/*    public static Result view(Long id) {
-        TaskFile taskFile = TaskFileDAO.getById(id);
+    public static Result view(Long id) {
+        TaskSet taskSet = TaskSetDAO.getById(id);
 
-        if (taskFile == null) {
-            Logger.warn("TaskFileController.view("+id+") - no TaskFile found");
-            return badRequest("no TaskFile found");
+        if (taskSet == null) {
+            Logger.warn("TaskFileController.view("+id+") - no TaskSet found");
+            return badRequest("no TaskSet found");
         }
-        ObjectNode taskFileJsoned = taskFile.toJson();
-        taskFileJsoned.put("xmlContent", taskFile.getXmlContent());
-        taskFileJsoned.put("commentList", Comment.toJsonAll(taskFile.getComments()));
-        return ok(taskFileJsoned);
+        return ok(TaskSetView.toJson(taskSet));
     }
 
+    /**
+     * This method updates the TaskSet
+     *
+     * @param id
+     * @return
+     */
+    public static Result update(Long id) {
+        Profile     profile     = ProfileDAO.getByUsername("admin");
+        JsonNode    jsonNode    = request().body().asJson();
+        TaskSet     taskSet     = TaskSetDAO.getById(id);
+
+        TaskSet     taskSetEdit = TaskSetView.fromJsonForm(profile, jsonNode);
+
+        if(taskSet == null && taskSetEdit == null) {
+            Logger.warn("TaskSetController - no TaskSet found for id: " + id + " and invalid taskSetForm !");
+            return badRequest("no TaskSet found and no valid taskSetForm");
+        } else if(taskSet == null ) {
+            Logger.warn("TaskSetController - no TaskSet found for id: " + id);
+            return badRequest("no TaskSet found");
+        } else if(taskSetEdit == null) {
+            Logger.warn("TaskSetController - invalid taskSetForm !");
+            return badRequest("invalid taskSetForm");
+        }
+
+        taskSet.delete();
+
+        taskSetEdit.setId(id);
+        taskSetEdit.save();
+
+        return ok();
+    }
+
+
+    /*
     public static Result destroy(Long id) {
         return ok();
     }
 
-    // ToDO
-    public static Result edit(Long id) {
-        Result result = create();
 
-        if(result.toScala().header().status() != 200) {
-            return result;
-        }
-
-        TaskFile taskFile = TaskFileDAO.getById(id);
-
-        if(taskFile == null) {
-            Logger.warn("TaskFileController.edit - no TaskFile found");
-            return badRequest("no TaskFile found");
-        }
-        taskFile.delete();
-
-        return ok();
-    }
 */
     /**
      * this method controls the rating of the TaskFiles

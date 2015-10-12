@@ -3,6 +3,7 @@ package models;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author fabiomazzone
@@ -12,6 +13,9 @@ import javax.persistence.*;
 public class ColumnDefinition extends Model {
     @Id
     private long id;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "foreignKey")
+    private List<ColumnDefinition> referencedColumns;
 
     @ManyToOne
     private TableDefinition tableDefinition;
