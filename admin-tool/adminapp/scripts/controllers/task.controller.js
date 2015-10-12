@@ -49,7 +49,7 @@ angular
         //////////////////////////////777
 
         function getAllTaskSets() {
-            TaskService.getAllTaskSets().then(
+            /*TaskService.getAllTaskSets().then(
                 function (result) {
                     if (result.error) {
                         FlashService.Error(result.message);
@@ -59,7 +59,10 @@ angular
                         console.log(result);
                     }
                 }
-            );
+            );*/
+            vm.taskSets = JSON.parse('[{ "taskSetName": "yeah namen", "tableDefinitions":  [  {    "tableName":  "User",  "columns":    [ {                             "columnName": "FirstName",                                                "data_type":  "Varchar(255)",                                                "primaryKey": false,                                                "notNull":    true,                                                "foreignKey":  null,                                                "datagenSet": 1                                              }                                            ],                                            "extension":  "INSERT INTO User(FirstName) Values ('Kéqz');"                                          }                                        ],                                        "foreignKeys":       [],                                        "tasks":             [],                                        "isHomework":  false, }]');
+                  getCurrentPath();
+                  console.log(vm.taskSets);
         }
 
 
