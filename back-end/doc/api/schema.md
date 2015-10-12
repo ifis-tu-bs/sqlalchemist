@@ -1,41 +1,41 @@
-|Action|URL                |Controller |Method           |Send          |HTTP - Response Success |Http - Response Error   |
-|------|-------------------|-----------|-----------------|--------------|------------------------|------------------------|
-|||Application|
-|GET   |/                  |Application|.index           |              |200-                    |                        |
-|GET   |/admin             |Application|.admin           |              |200-                    |                        |
-|||Session|
-|POST  |/login             |Session    |.create          |Login.Form    |200- redirect(/profile) |401-Login.Error         |
-|GET   |/logout            |Session    |.delete          |              |200-                    |                        |
-|||User|
-|POST  |/signup                     |User       |.create               |Signup.Form   |200- redirect(/login)   |400-Signup.Error        |
-|POST  |/users                      |User       |.edit                 |User.Form     |200-                    |                        |
-|DELETE|/users                      |User       |.delete               |              |200-                    |                        |
-|GET   |/users/verify/:code         |User       |.verifyEmail          |              |200-                    |                        |
-|POST  |/users/password             |User       |.sendResetPasswordMail|              |200-                    |                        |
-|POST  |/users/dopasswordreset/:code|User       |.doResetPassword      |              |200-                    |                        |
-|GET   |/users/student              |User       |.checkStudent         |              |200-                    |                        |
-|POST  |/users/:id                  |User       |.promote              |              |200-                    |                        |
-|||Item|
-|GET   |/profile/inventory |Item       |.inventory       |              |200- Inventory          |                        |
-|GET   |/profile/scrolls   |Item       |.scrollCollection|              |200- Scroll[]           |                        |
-|GET   |/profile/belt      |Item       |.belt            |              |200- Belt[]             |                        |
-|POST  |/profile/belt      |Item       |.edit            |Belt.Form     |200-                    |                        |
-|GET   |/profile/used/:id  |Item       |.used            |              |200-                    |                        |
-|POST  |/profile/collected |Item       |.collected       |Collected.Form|200-                    |                        |
-|||Settings|
-|GET   |/profile/settings  |Settings   |.index           |              |200- Setting            |                        |
-|POST  |/profile/settings  |Settings   |.edit            |Settings.Form |200-                    |                        |
-|||Challenge|
-|GET   |/challenge/story   |Challenge  |.story           |              |200-                    |                        |
-|GET   |/challenge/skip    |Challenge  |.skip            |              |200-                    |                        |
-|GET   |/challenge/reset   |Challenge  |.reset           |              |200-                    |                        |
-#TaskFileController
-GET     /taskFile           | .index            |                | ok   - JSON.TaskFiles       |                       | X
-POST    /taskFile           | .create           | JSON.TaskFile  | ok   - JSON.TaskFile        |                       | X
-GET     /taskFile/:id       | .view             |                | ok   - JSON.TaskFile        |                       | X
-POST    /taskFile/:id       | .edit             |                | ok   - JSON.TaskFile        |                       |
-POST    /taskFile/:id/rate  | .rate             | JSON.Rating    | ok   -                      |                       | X
-POST    /taskFile/:id/comm  | .comment          | JSON.Text      | ok   -                      |
+|Action|URL                         |Controller |Method                |Send          |HTTP - Response Success|Http - Response Error|
+|------|----------------------------|-----------|----------------------|--------------|-----------------------|---------------------|
+|Application|
+|GET   |/                           |Application|.index                |              |200-                   |                     |
+|GET   |/admin                      |Application|.admin                |              |200-                   |                     |
+|Session|
+|POST  |/login                      |Session    |.create               |Login.Form    |200-redirect(/profile) |401-Login.Error      |
+|GET   |/logout                     |Session    |.delete               |              |200-                   |                     |
+|User|
+|POST  |/signup                     |User       |.create               |Signup.Form   |200-redirect(/login)   |400-Signup.Error     |
+|POST  |/users                      |User       |.edit                 |User.Form     |200-                   |                     |
+|DELETE|/users                      |User       |.delete               |              |200-                   |                     |
+|GET   |/users/verify/:code         |User       |.verifyEmail          |              |200-                   |                     |
+|POST  |/users/password             |User       |.sendResetPasswordMail|              |200-                   |                     |
+|POST  |/users/dopasswordreset/:code|User       |.doResetPassword      |              |200-                   |                     |
+|GET   |/users/student              |User       |.checkStudent         |              |200-                   |                     |
+|POST  |/users/:id                  |User       |.promote              |              |200-                   |                     |
+|Item|
+|GET   |/profile/inventory          |Item       |.inventory            |              |200-Inventory          |                     |
+|GET   |/profile/scrolls            |Item       |.scrollCollection     |              |200-Scroll[]           |                     |
+|GET   |/profile/belt               |Item       |.belt                 |              |200-Belt[]             |                     |
+|POST  |/profile/belt               |Item       |.edit                 |Belt.Form     |200-                   |                     |
+|GET   |/profile/used/:id           |Item       |.used                 |              |200-                   |                     |
+|POST  |/profile/collected          |Item       |.collected            |Collected.Form|200-                   |                     |
+|Settings|
+|GET   |/profile/settings           |Settings   |.index                |              |200-Setting            |                     |
+|POST  |/profile/settings           |Settings   |.edit                 |Settings.Form |200-                   |                     |
+|Challenge|
+|GET   |/challenge/story            |Challenge  |.story                |              |200-                   |                     |
+|GET   |/challenge/skip             |Challenge  |.skip                 |              |200-                   |                     |
+|GET   |/challenge/reset            |Challenge  |.reset                |              |200-                   |                     |
+|TaskSetController|
+|POST  |/TaskSet/                   |TaskSet    |.create               |TaskSet.Form  |200-                   |400-                 |
+|GET   |/TaskSet/                   |TaskSet    |.read                 |              |200-TaskSet[]          |400-                 |
+|GET   |/TaskSet/:id                |TaskSet    |.view                 |              |200-TaskSet            |400-                 |
+|POST  |/TaskSet/:id                |TaskSet    |.update               |TaskSet.Form  |200-                   |400-                 |
+|POST  |/TaskSet/:id/rate           |TaskSet    |.rate                 |Rating.Form   |200-                   |400-                 |
+|POST  |/TaskSet/:id/comment        |TaskSet    |.comment              |Comment.Form  |200-                   |400-                 |
 
 #SubTaskController
 GET     /task               | .index            |                | ok   - JSON.tasks           |                       | X
