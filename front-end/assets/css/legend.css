@@ -1,16 +1,4 @@
-#explanationHeaders {
-    background-color: transparent;
-    border-style: none;
-    font-family: Amethysta-Regular, sans-serif;
-    color: black;
-    overflow : hidden;
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    z-Index: 4;
-}
-
-#explanation {
+#explanationHeaders, #explanation {
     background-color: transparent;
     border-style: none;
     font-family: Amethysta-Regular, sans-serif;

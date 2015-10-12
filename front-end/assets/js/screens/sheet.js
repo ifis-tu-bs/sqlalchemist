@@ -142,7 +142,7 @@ game.SheetScreen = me.ScreenObject.extend({
             do {
                 game.skin.currentSkin = (game.skin.currentSkin - 1 + game.skin.skins.length) % game.skin.skins.length;
                 console.log(game.skin.currentSkin);
-            }while(game.skin.skins[game.skin.currentSkin].available === 0);
+            } while(game.skin.skins[game.skin.currentSkin].available === 0);
 
             /**
              * Ajax-call to get according skin-stats.
