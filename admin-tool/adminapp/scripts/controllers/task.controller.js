@@ -1,7 +1,14 @@
 /**********************************************************************************************************************
 *   Controller for views/task.view.html
 *
-*   Shows all tasks and subtasks. Also allows to Rate/Comment/Edit.
+*   Manages the displacement of all Homeworks.
+*
+*   Page is orderd via:
+*   Homeworks -> TaskFiles(in the selected HW) -> SubTasks(in the selected TF) -> Submits(of the selected ST)
+*
+*   Selected Items are stored in $scope, the recieved data from the server in vm
+*
+*   The Controller is handled in states to fit the current Selection
 **********************************************************************************************************************/
 
 (function () {
@@ -9,57 +16,182 @@
 
 angular
     .module('app')
-    .controller('TaskController', TaskController);
+    .controller('TasksController', TasksController);
 
-    TaskController.$inject = ['TaskService', '$scope', '$modal', 'FlashService'];
-    function TaskController(TaskService, $scope, $modal, FlashService) {
+    TasksController.$inject = ['$scope', '$modal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout'];
+    function TasksController($scope, $modal, TaskService, FlashService, $rootScope, $location, $filter, $timeout) {
         var vm = this;
 
-        vm.tasks = [{"subTasks": [{}]}];
-            //[{"a": "a", "b": "b", "c": "c", "d": "d", "e": "e", "f": "f", "subTasks": [{'a':'a', 'b':'b', 'c': 'c', 'd': 'd'}] },
-            //        {"a": "a", "b": "b", "c": "c", "d": "d", "e": "e", "f": "g", "subTasks": [{'a':'a', 'b':'b', 'c': 'c', 'd': 'd'},
-            //                                                                                  {'a':'a', 'b':'b', 'c': 'c', 'd': 'e'}] }];
-        vm.selectedTask = vm.tasks[0];
+        $scope.orderReverse = false;
+        $scope.orderTaskSetPredicate = 'taskSetName';
+        $scope.orderTaskPredicate = 'taskName';
+        $scope.search = '';
 
-        $scope.orderTaskFilePredicate = "fileName";
-        $scope.orderSubTaskPredicate = "id";
-        $scope.orderReverseTaskFile = false;
-        $scope.orderReverseSubTask = false;
+        var states = ['TaskSetSelection', 'TaskSelection', 'InspectTask'];
+        $scope.state = '';
 
+        //$scope.codemirrorOptions = { mode: 'text/x-mysql', readOnly: true};
+        $scope.animationsEnabled = true;
 
-
-        function initController() {
-            var activeTask = vm.selectedTask;
-
-            FlashService.Clear();
-            getAllTasks(activeTask);
-
-        }
-
-        function getAllTasks(oldSelectedTask) {
-            TaskService.getAllTasks().then(function(data) {
-                var index = 0;
-
-                vm.tasks = data;
-
-                if ((index = findInArray(vm.tasks, oldSelectedTask)) != -1) {
-                    $scope.selectTask(vm.tasks[index]);
-                } else {
-                    $scope.selectTask(vm.tasks[0]);
-                }
-
-            });
-        }
-
-        $scope.selectTask = function(selectTask) {
-            vm.selectedTask = selectTask;
-        }
+        vm.taskSets = [];
+        vm.tasks = [];
+        $scope.selectedTaskSet = {};
+        $scope.selectedTask = {};
 
         initController();
 
-        /* ~~~~~~~~~~~~~~~~~~~~ Rating  ~~~~~~~~~~~~~~~~~~~~ */
+        function initController() {
+            getAllTaskSets();
+        }
 
-        $scope.rateTaskFile = function (taskFile, decision) {
+        //////////////////////////////777
+        //  Select Stuff
+        //////////////////////////////777
+
+        function getAllTaskSets() {
+            TaskService.getAllTaskSets().then(
+                function (result) {
+                    if (result.error) {
+                        FlashService.Error(result.message);
+                    } else {
+                        vm.taskSets = result;
+                        getCurrentPath();
+                        console.log(result);
+                    }
+                }
+            );
+        }
+
+
+        $scope.selectTaskSet = function(taskSet) {
+            var index = findInArray(vm.taskSets, taskSet);
+            selectTaskSet(index);
+            $scope.state = 'TaskSelection';
+        }
+
+        $scope.selectTask = function(task) {
+            var index = findInArray(vm.tasks, task);
+            selectTask(index);
+            $scope.state = 'InspectTask';
+        }
+
+        //////////////////////////////777
+        //  Path Functions upon Selection
+        //////////////////////////////777
+
+        $scope.goSelectTaskSet = function() {
+            $scope.selectedTaskSet = undefined;
+            $scope.selectedTask = undefined;
+            vm.taskSets = undefined;
+            vm.tasks = undefined;
+            $rootScope.Tasks.selectedTaskSet = undefined;
+            $rootScope.Tasks.selectedTask = undefined;
+            getCurrentPath();
+        }
+
+        $scope.goSelectTask = function() {
+            $scope.selectedSubTask = undefined;
+            vm.tasks = undefined;
+            $rootScope.Tasks.selectedTask = undefined;
+            getCurrentPath();
+        }
+
+        function selectHomework (taskSetIndex) {
+            $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
+            vm.tasks = $scope.selectedTaskSet.tasks;
+            $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
+            $scope.state = 'TaskSelection';
+        }
+
+        function selectTaskFile (taskIndex) {
+            $scope.selectedTask = vm.tasks[taskIndex];
+            $rootScope.Tasks.selectedTask = $scope.selectedTask;
+            $scope.state = 'InspectTask';
+        }
+
+        //////////////////////////////777
+        //  Path Finding and Display organization
+        //////////////////////////////777
+
+        function getCurrentPath () {
+            var path = $rootScope.Tasks;
+
+            //Find out if a TaskSet is currently selected
+            if (path.selectedTaskSet) {
+                selectTaskSet(findInArray(vm.taskSets, path.selectedTaskSet));
+            } else {
+                $scope.state = 'TaskSetSelection';
+                return;
+            }
+
+            //Find out if a Task is currently selected
+            if (path.selectedTask) {
+                selectTask(findInArray(vm.tasks, path.selectedTask));
+            } else {
+                $scope.state = 'TaskSelection';
+                return;
+            }
+
+            $scope.state = 'InspectTask';
+        }
+
+        $scope.shouldIBeDisplayed = function(stateButton) {
+            var answer = false;
+            for (var i = states.length; i >= 0; i--) {
+                answer |= states[i] === $scope.state;
+                if (states[i] === stateButton) {
+                    break;
+                }
+            }
+            return answer;
+        }
+
+        /*
+        $scope.prevSubmit = function() {
+            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
+            currentSpot = (currentSpot + vm.submits.length - 1) % vm.submits.length;
+            selectSubmit(currentSpot);
+        }
+
+        $scope.nextSubmit = function() {
+            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
+            currentSpot = (currentSpot + 1) % vm.submits.length;
+            selectSubmit(currentSpot);
+        }*/
+
+        //////////////////////////////777
+        //  HomeWork Deletion
+        //////////////////////////////777
+
+/*
+        $scope.deleteHomework = function (taskSet) {
+            var taskSetIndex = findInArray(vm.taskSets, taskSet);
+            var modalInstance = $modal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/sure.template.html',
+                    controller: 'sureTemplateController',
+                    resolve: {
+                        sureTemplateMessage: function () {
+                                return "Are you sure you want to delete Homework: " + vm.taskSets[taskSetIndex].name + "?\nRemember, that only Homeworks with no submits until now can be deleted.";
+                            }
+                    }
+            });
+
+            modalInstance.result.then(function (result) {
+                if (result == true) {
+                    TaskService.deleteHomework(vm.taskSets[taskSetIndex].id).then(
+                        initController
+                    );
+                }
+            });
+        }
+*/
+        //////////////////////////////777
+        //  Rating stuff
+        //////////////////////////////777
+
+
+        $scope.rateTaskFile = function (taskSet, decision) {
             var ratingJson = {};
             switch (decision) {
                 case 'positive': {
@@ -76,7 +208,7 @@ angular
                 }
             }
 
-            TaskService.rateTaskFile(taskFile.id, ratingJson).then(
+            TaskService.rateTaskSet(taskSet.id, ratingJson).then(
                 function (result) {
                     if (result.error) {
                         FlashService.Error(result.message);
@@ -84,10 +216,9 @@ angular
                         initController();
                     }
             });
-
         }
 
-        $scope.rateSubTask = function (subTask, decision) {
+        $scope.rateTask = function (task, decision) {
 
             var ratingJson = {};
             switch (decision) {
@@ -104,7 +235,7 @@ angular
                     break;
                 }
             }
-            TaskService.rateSubTask(subTask.id, ratingJson).then(
+            TaskService.rateTask(task.id, ratingJson).then(
                 function (result) {
                     if (result.error) {
                         FlashService.Error(result.message)
@@ -114,147 +245,9 @@ angular
             });
         }
 
-        /* ~~~~~~~~~~~~~~~~~~~~ PopUps  ~~~~~~~~~~~~~~~~~~~~ */
-
-        $scope.animationsEnabled = true;
-
-        $scope.createTaskOpen = function (size) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/editTask.template.html',
-                controller: 'taskEditController',
-                resolve: {
-                     editTaskObject: function() {
-                         return null;
-                     }
-                },
-                windowClass: 'app-modal-window'
-            });
-
-            modalInstance.result.then(
-                initController,
-                FlashService.Clear
-            );
-        }
-
-        $scope.editTask = function(editTask) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/editTask.template.html',
-                controller: 'taskEditController',
-                resolve: {
-                    editTaskObject: function() {
-                        return editTask;
-                    }
-                },
-                windowClass: 'app-modal-window'
-            });
-
-            modalInstance.result.then(
-                initController,
-                FlashService.Clear
-            );
-        }
-
-
-        $scope.viewSubTask = function(viewSubTask) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/viewSubTask.template.html',
-                controller: 'viewSubTaskController',
-                resolve: {
-                    subTaskData: function() {
-                        return { task: viewSubTask.exercise,
-                                solve: viewSubTask.refStatement
-                            };
-                    }
-                }
-            });
-
-            modalInstance.result.then(
-                initController,
-                FlashService.Clear
-            );
-        }
-
-        $scope.viewSchema = function(viewSchemaTask) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/schemaView.template.html',
-                controller: 'schemaViewController',
-                resolve: {
-                    schemaObject: function() {
-                        return viewSchemaTask.schema;
-                    }
-                }
-            });
-        }
-
-        $scope.viewSubTaskComments = function(subTask) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/comment.template.html',
-                controller: 'CommentController',
-                resolve: {
-                    commentTaskObject: function() {
-                        return {content: subTask, type: "subtask"};
-                    }
-                }
-            });
-
-            modalInstance.result.then(
-                initController,
-                FlashService.Clear
-            );
-        }
-
-        $scope.viewTaskFileComments = function(taskFile) {
-            var modalInstance = $modal.open({
-                animation: $scope.animationsEnabled,
-                templateUrl: 'adminapp/templates/comment.template.html',
-                controller: 'CommentController',
-                resolve: {
-                    commentTaskObject: function() {
-                        return {content: taskFile, type: "taskfile"};
-                    }
-                }
-            });
-
-            modalInstance.result.then(
-                initController,
-                FlashService.Clear
-            );
-        }
-
-        $scope.makeHomeWork = function() {
-            var taskFilesForHomework = [];
-
-            FlashService.Clear();
-
-            for (i = 0; i < vm.tasks.length; i++) {
-                task = vm.tasks[i];
-                if (task.checked) {
-                    taskFilesForHomework.push(task.fileName);
-                }
-
-            }
-
-            if (taskFilesForHomework.length != 0) {
-                var modalInstance = $modal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/makeHomeWork.template.html',
-                    controller: 'makeHWController',
-                    resolve: {
-                        TaskFilesForHomeWork: function() {
-                            return taskFilesForHomework;
-                        }
-                    }
-                });
-            } else {
-                FlashService.Error("Pick at least one TaskFile");
-            }
-
-        }
+        //////////////////////////////777
+        //  Array functions
+        //////////////////////////////777
 
         function findInArray(array, item) {
             for (var i = 0; i < array.length; i++) {
@@ -264,9 +257,7 @@ angular
             }
             return -1;
         }
-
     }
-
 
 
 })();

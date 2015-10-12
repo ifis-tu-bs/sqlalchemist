@@ -47,7 +47,7 @@ create table Comment (
   id                        bigint auto_increment not null,
   task_id                   bigint not null,
   profile_id                bigint,
-  text                      varchar(255),
+  comment                   varchar(255),
   created_at                datetime,
   constraint pk_Comment primary key (id))
 ;
@@ -235,6 +235,7 @@ create table TableDefinition (
 create table Task (
   id                        bigint auto_increment not null,
   task_set_id               bigint,
+  task_name                 varchar(255),
   task_text                 varchar(255),
   ref_statement             varchar(255),
   evaluationstrategy        integer,
@@ -248,6 +249,7 @@ create table Task (
 
 create table TaskSet (
   id                        bigint auto_increment not null,
+  task_set_name             varchar(255),
   relations_formatted       varchar(255),
   is_homework               tinyint(1) default 0,
   creator_id                bigint,

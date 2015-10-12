@@ -35,7 +35,7 @@
             })
 
             .when('/task', {
-                controller: 'TaskController',
+                controller: 'TasksController',
                 templateUrl: 'adminapp/views/task.view.html',
                 controllerAs: 'vm',
                 name : 'Tasks',
@@ -72,6 +72,8 @@
         // bleibt der Benutzer nach der Aktualisierung der Seite angemeldet
         $rootScope.globals = $cookieStore.get('globals') || {};
         $rootScope.Homework = $rootScope.Homework || {};
+        $rootScope.Tasks = $rootScope.Tasks || {};
+
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
         }
