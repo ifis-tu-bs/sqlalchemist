@@ -38,33 +38,33 @@
 |POST  |/TaskSet/:id/comment        |TaskSet    |.comment              |Comment.Form  |200-                   |400-                 |
 
 #SubTaskController
-GET     /task               | .index            |                | ok   - JSON.tasks           |                       | X
-GET     /task/:id           | .view             |                | ok   - JSON.task            |                       |
-POST    /task/:id/rat       | .rate             | JSON.rating    | ok   -                      |                       |
-POST    /task/:id/comment   | .comment          | JSON.comment   | ok   -                      |                       |
-GET     /task/story/:id     | .story            |                | ok   - JSON.taskExercise    |                       | X
-POST    /task/story/:id     | .storySolve       | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
-GET     /task/trivia        | .trivia           |                | ok   - JSON.taskExercise    |                       | X
-POST    /task/trivia/:id    | .triviaSolve      | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
-GET     /task/homework      | .homework         |                | ok   - JSON.taskExercise    |                       | X
-POST    /task/homework/:id  | .homeworkSolve    | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
-
+|GET     /task               | .index            |                | ok   - JSON.tasks           |                       | X
+|GET     /task/:id           | .view             |                | ok   - JSON.task            |                       |
+|POST    /task/:id/rat       | .rate             | JSON.rating    | ok   -                      |                       |
+|POST    /task/:id/comment   | .comment          | JSON.comment   | ok   -                      |                       |
+|GET     /task/story/:id     | .story            |                | ok   - JSON.taskExercise    |                       | X
+|POST    /task/story/:id     | .storySolve       | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+|GET     /task/trivia        | .trivia           |                | ok   - JSON.taskExercise    |                       | X
+|POST    /task/trivia/:id    | .triviaSolve      | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+|GET     /task/homework      | .homework         |                | ok   - JSON.taskExercise    |                       | X
+|POST    /task/homework/:id  | .homeworkSolve    | JSON.task.solve| ok   - JSON.task.result     | 400(JSON.task.result) |
+|
 #ProfileController
-GET     /profile            | .index            |                | ok   - JSON.playerstate     |                       | X
-GET     /profile/:id        | .view             |                | ok   - JSON.profile         |                       | X
-GET     /profile/character  | .character        |                | ok   - JSON.characterState  |                       | X
-POST    /profile/avatar/:id | .avatar           |                | ok   - JSON.attributes      |                       | X
+|GET     /profile            | .index            |                | ok   - JSON.playerstate     |                       | X
+|GET     /profile/:id        | .view             |                | ok   - JSON.profile         |                       | X
+|GET     /profile/character  | .character        |                | ok   - JSON.characterState  |                       | X
+|POST    /profile/avatar/:id | .avatar           |                | ok   - JSON.attributes      |                       | X
 
 #ShopController
-GET     /shop               | .avatarList       |                | ok   - JSON.shopitems       |                       | X
-GET     /shop/avatar        | .avatarList       |                | ok   - JSON.shopitems       |                       | X
-GET     /shop/belt          | .beltList         |                | ok   - JSON.shopitems       |                       | X
-POST    /shop/:id           | .buy              |                | ok   -                      | 400                   | X
-
+|GET     /shop               | .avatarList       |                | ok   - JSON.shopitems       |                       | X
+|GET     /shop/avatar        | .avatarList       |                | ok   - JSON.shopitems       |                       | X
+|GET     /shop/belt          | .beltList         |                | ok   - JSON.shopitems       |                       | X
+|POST    /shop/:id           | .buy              |                | ok   -                      | 400                   | X
+|
 #HighScoreController
-GET     /highscore/points   | .byPoints         |                | ok   - JSON.highscores      |                       | X
-GET     /highscore/time     | .byTime           |                | ok   - JSON.highscores      |                       | X
-GET     /highscore/runs     | .byRuns           |                | ok   - JSON.highscores      |                       | X
-GET     /highscore/sql      | .bySQL            |                | ok   - JSON.highscores      |                       | X
-GET     /highscore/rate     | .byRate           |                | ok   - JSON.highscores      |                       | X
-GET     /highscore/coins    | .byCoins          |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/points   | .byPoints         |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/time     | .byTime           |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/runs     | .byRuns           |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/sql      | .bySQL            |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/rate     | .byRate           |                | ok   - JSON.highscores      |                       | X
+|GET     /highscore/coins    | .byCoins          |                | ok   - JSON.highscores      |                       | X
