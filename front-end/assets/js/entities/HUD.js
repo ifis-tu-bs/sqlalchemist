@@ -617,13 +617,6 @@ game.HUD.Homework = me.Renderable.extend( {
     }
 });
 
-game.Icon = me.Sprite.extend({
-    init: function () {
-        this._super(me.Sprite, "init", [0, 0, me.loader.getImage("arbitraryLoadingScreen"), 1320, 768]);
-        this.z = 1000;
-    }
-});
-
 /**Two badly placed functions
  * which are useed by the HUDs
  */

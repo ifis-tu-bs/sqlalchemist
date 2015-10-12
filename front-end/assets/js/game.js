@@ -163,7 +163,6 @@ var game = {
         me.state.set(STATE_LEGEND, new game.LegendScreen());
 
 
-
         // set the "Play/Ingame" Screen Object
         me.state.set(me.state.PLAY, new game.PlayScreen());
         me.state.set(me.state.SETTINGS, new game.SettingsScreen());
