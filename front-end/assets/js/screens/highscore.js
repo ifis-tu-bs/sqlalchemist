@@ -166,7 +166,9 @@ game.HighscoreScreen = me.ScreenObject.extend({
             var usernamesText = "";
             var valuesText = "";
 
-
+            /**
+             * Get values of the 10 best users
+             */
             for (var x = 0; x < highscore_object.highScore.length; x++) {
                 usernamesText += (highscore_object.highScore[x].username + " <br> ");
                 switch (i){
@@ -192,7 +194,7 @@ game.HighscoreScreen = me.ScreenObject.extend({
             }
 
             /**
-             * Get values of own Rank
+             * Get values of current user's rank
              * @type {string}
              */
             var ownValues = "";
@@ -218,6 +220,9 @@ game.HighscoreScreen = me.ScreenObject.extend({
                     break;
             }
 
+            /**
+             * Insert values into TextOutpuElemts
+             */
             ranks.writeHTML("" +
                 "1. <br>" +
                 "2. <br>" +
@@ -229,8 +234,6 @@ game.HighscoreScreen = me.ScreenObject.extend({
                 "8. <br>" +
                 "9. <br>" +
                 "10. <br>", 'ranksPara');
-
-
             usernames.writeHTML(usernamesText,'usernamesPara');
             values.writeHTML(valuesText,'valuesPara');
             ownRank.writeHTML(ownPlace + ".", 'ownRankPara');
