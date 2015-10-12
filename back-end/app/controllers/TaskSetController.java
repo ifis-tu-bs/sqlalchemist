@@ -3,9 +3,13 @@ package controllers;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
+import models.Comment;
 import models.Profile;
+import models.Rating;
 import models.TaskSet;
 
+import view.CommentView;
+import view.RatingView;
 import view.TaskSetView;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -128,21 +132,12 @@ public class TaskSetController extends Controller {
         taskSetEdit.setId(id);
         taskSetEdit.save();
 
-        return ok();
+        return ok(TaskSetView.toJson(taskSet));
     }
-
-
-    /*
-    public static Result destroy(Long id) {
-        return ok();
-    }
-
-
-*/
     /**
-     * this method controls the rating of the TaskFiles
+     * this method controls the rating of the TaskSet
      *
-     * POST      /taskFile/:id/rate
+     * POST      /TaskSet/:id/rate
      * Needs a JSON Body Request with values:
      *  positive    :int
      *  negative    :int
@@ -151,40 +146,27 @@ public class TaskSetController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
-     /*
      public static Result rate(Long id) {
-         JsonNode body       = request().body().asJson();
-         SubTask subTask     = SubTaskDAO.getById(id);
-         Profile profile     = ProfileDAO.getByUsername(request().username());
+         JsonNode   ratingBody  = request().body().asJson();
+         TaskSet    taskSet     = TaskSetDAO.getById(id);
+         Profile    profile     = ProfileDAO.getByUsername(request().username());
+         Rating     rating      = RatingView.fromJsonForm(ratingBody, profile);
 
-         if (subTask == null) {
-             Logger.warn("TaskController.rate("+id+") - no SubTask found");
+         if (taskSet == null) {
+             Logger.warn("TaskSetController.rate("+id+") - no task found");
              return badRequest("no SubTask found");
          }
-
-         boolean p = body.findPath("positive").asInt() > 0;
-         boolean n = body.findPath("negative").asInt() > 0;
-         boolean r = body.findPath("needReview").asInt() > 0;
-
-         if( p && !n && !r ||
-            !p &&  n && !r ||
-            !p && !n && r) {
-           Rating rating = RatingDAO.create(profile, p, n, r);
-           if(rating != null) {
-             subTask.addRating(rating);
-           } else {
-             Logger.warn("TaskController.rate - Rating cannot be saved");
-             return badRequest("Please try again later");
-           }
-         } else {
-           Logger.warn("TaskController.rate - Json body was invalid");
-           return badRequest("Please try again later");
+         if(rating == null) {
+             Logger.warn("TaskSetController.rate() - invalid json body");
+             return badRequest("invalid json body");
          }
-         subTask.update();
+
+         taskSet.addRating(rating);
+         taskSet.update();
+
          return ok();
      }
 
-*/
     /**
      * this method handels the comments for TaskFiles
      *
@@ -195,32 +177,40 @@ public class TaskSetController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result message
      */
-     /*
     public static Result comment(Long id) {
-        Profile     profile = ProfileDAO.getByUsername(request().username());
-        JsonNode    body    = request().body().asJson();
-        TaskFile    taskFile= TaskFileDAO.getById(id);
+        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        JsonNode    commentBody = request().body().asJson();
+        TaskSet     taskSet     = TaskSetDAO.getById(id);
+        Comment     comment     = CommentView.fromJsonForm(commentBody, profile);
 
-        if (taskFile == null) {
-            Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
-            return badRequest("no TaskFile found");
+        if (taskSet == null) {
+            Logger.warn("TaskSetController.comment("+id+") - no TaskSet found");
+            return badRequest("no TaskSet found");
         }
 
-        String  text = body.findPath("text").asText();
-
-        if (text == null || text.equals("")) {
-            Logger.warn("TaskFileController.comment - invalid json");
-            return badRequest("Invalid json or empty text");
+        if(comment == null) {
+            Logger.warn("TaskSetController.comment() - invalid json body");
+            return badRequest("invalid json body");
         }
 
-        Comment comment = CommentDAO.create(profile, text);
-        if (comment == null) {
-            Logger.warn("TaskFileController.comment - can't create comment");
-            return badRequest("can't create comment");
-        }
-        taskFile.addComment(comment);
-        taskFile.update();
+        taskSet.addComment(comment);
+        taskSet.update();
         return ok();
     }
-*/
+
+    /**
+     * This method deletes an TaskSet object
+     */
+    public static Result delete(Long id) {
+        TaskSet taskSet = TaskSetDAO.getById(id);
+
+        if(taskSet == null) {
+            Logger.warn("TaskSetController.delete - no TaskSet found for id: " + id);
+            return badRequest("no TaskSet found");
+        }
+
+        taskSet.delete();
+
+        return ok();
+    }
 }

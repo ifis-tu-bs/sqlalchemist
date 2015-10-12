@@ -44,6 +44,8 @@ POST        /TaskSet/                           controllers.TaskSetController.cr
 GET         /TaskSet/                           controllers.TaskSetController.read()
 GET         /TaskSet/:id                        controllers.TaskSetController.view(id: Long)
 POST        /TaskSet/:id                        controllers.TaskSetController.update(id: Long)
+POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
+POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
 
 #TaskController
 GET         /task/story/:id                     controllers.TaskController.story(id: Long)

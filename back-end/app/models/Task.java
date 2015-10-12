@@ -159,16 +159,7 @@ public class Task extends Model {
 //////////////////////////////////////////////////
 //  Action
 //////////////////////////////////////////////////
-
-    public boolean comment(Profile profile, String text) {
-        Comment comment;
-        if((comment = CommentDAO.create(profile, text)) != null) {
-            this.comments.add(comment);
-            return true;
-        }
-        return false;
-    }
-
+    
   /**
    * This is the methode to add a rating to this entity
    */

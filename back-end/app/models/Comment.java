@@ -23,8 +23,8 @@ public class Comment extends Model{
     private Profile profile;
 
     /** Content of the comment. */
-    @Column(name = "text")
-    private String text;
+    @Column(name = "comment")
+    private String comment;
 
     private final Date created_at;
 
@@ -38,9 +38,9 @@ public class Comment extends Model{
 //  Constructor
 //////////////////////////////////////////////////
 
-    public Comment(Profile profile, String text) {
+    public Comment(String comment, Profile profile) {
         this.profile    = profile;
-        this.text       = text;
+        this.comment    = comment;
 
         this.created_at = new Date();
     }
@@ -58,8 +58,8 @@ public class Comment extends Model{
         return profile;
     }
 
-    public String getText() {
-        return text;
+    public String getComment() {
+        return comment;
     }
 
     public Date getCreated_at() {

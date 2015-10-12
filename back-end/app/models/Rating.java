@@ -26,15 +26,11 @@ public class Rating extends Model {
     long negativeRatings;
     long editRatings;
 
-  private Rating() {
-    this(null, false, false, false);
-  }
-
   public Rating(
-      Profile profile,
       boolean positive,
       boolean negative,
-      boolean needReview) {
+      boolean needReview,
+      Profile profile) {
 
     if(profile != null) {
       this.profile = profile;
@@ -59,21 +55,23 @@ public class Rating extends Model {
         return this.profile;
     }
 
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("positive",    this.positiveRatings);
-        node.put("negative",    this.negativeRatings);
-        node.put("needReview",  this.editRatings);
-
-        return node;
+    public long getPositiveRatings() {
+        return positiveRatings;
     }
 
-  public static Rating sum(List<Rating> ratings) {
+    public long getNegativeRatings() {
+        return negativeRatings;
+    }
+
+    public long getEditRatings() {
+        return editRatings;
+    }
+
+    public static Rating sum(List<Rating> ratings) {
     if(ratings == null || ratings.size() == 0) {
-      return new Rating();
+      return new Rating(false, false, false, null);
     }
-    Rating rating_sum = new Rating();
+    Rating rating_sum = new Rating(false, false, false, null);
 
     for(Rating rating : ratings) {
       rating_sum.positiveRatings    += rating.positiveRatings;

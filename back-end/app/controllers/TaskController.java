@@ -1,8 +1,6 @@
 package controllers;
 
-import dao.CommentDAO;
 import dao.ProfileDAO;
-import dao.RatingDAO;
 import dao.ScrollDAO;
 import dao.ScrollCollectionDAO;
 import dao.SolvedTaskDAO;
@@ -27,6 +25,8 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import view.CommentView;
+import view.RatingView;
 import view.TaskView;
 
 import java.util.List;
@@ -99,32 +99,20 @@ public class TaskController extends Controller {
      */
     public static Result rate(Long id) {
         JsonNode body       = request().body().asJson();
-        Task task     = TaskDAO.getById(id);
+        Task task           = TaskDAO.getById(id);
         Profile profile     = ProfileDAO.getByUsername(request().username());
+        Rating rating       = RatingView.fromJsonForm(body, profile);
 
         if (task == null) {
             Logger.warn("TaskController.rate("+id+") - no Task found");
             return badRequest("no Task found");
         }
-
-        boolean p = body.findPath("positive").asInt() > 0;
-        boolean n = body.findPath("negative").asInt() > 0;
-        boolean r = body.findPath("needReview").asInt() > 0;
-
-        if( p && !n && !r ||
-           !p &&  n && !r ||
-           !p && !n && r) {
-          Rating rating = RatingDAO.create(profile, p, n, r);
-          if(rating != null) {
-            task.addRating(rating);
-          } else {
-            Logger.warn("TaskController.rate - Rating cannot be saved");
-            return badRequest("Please try again later");
-          }
-        } else {
-          Logger.warn("TaskController.rate - Json body was invalid");
-          return badRequest("Please try again later");
+        if(rating == null) {
+            Logger.warn("TaskController.rate - invalid json body");
+            return badRequest("invalid json body");
         }
+
+        task.addRating(rating);
         task.update();
         return ok();
     }
@@ -142,30 +130,20 @@ public class TaskController extends Controller {
     public static Result comment(Long id) {
         Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
-        Task     task= TaskDAO.getById(id);
+        Task        task    = TaskDAO.getById(id);
+        Comment     comment  = CommentView.fromJsonForm(body, profile);
 
         if (task == null) {
-            Logger.warn("TaskFileController.comment("+id+") - no TaskFile found");
-            return badRequest("no TaskFile found");
+            Logger.warn("TaskController.comment("+id+") - no Task found");
+            return badRequest("no Task found");
         }
 
-
-        String  text = body.findPath("text").asText();
-
-        //Logger.info("Text: " + text);
-
-        if (text == null || text.equals("")) {
-            Logger.warn("TaskFileController.comment - invalid json or empty text");
-            return badRequest("Text is either null or empty");
-        }
-
-        Comment comment = CommentDAO.create(profile, text);
         if (comment == null) {
-            Logger.warn("TaskFileController.comment - can't create comment");
-            return badRequest("can't create comment");
+            Logger.warn("TaskController.comment - invalid json body");
+            return badRequest("invalid json body");
         }
+
         task.addComment(comment);
-        Logger.info(task.getComments().toString());
         task.update();
         return ok();
     }
