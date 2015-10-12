@@ -22,7 +22,7 @@ import java.util.List;
 public class TaskSetView {
     public static TaskSet fromJsonForm(Profile profile, JsonNode jsonNode) {
         JsonNode tableDefinitionArray               = jsonNode.path("tableDefinitions");
-        JsonNode foreignKeyArray                    = jsonNode.path("foreignKey");
+        JsonNode foreignKeyArray                    = jsonNode.path("foreignKeys");
         JsonNode taskArray                          = jsonNode.path("tasks");
         List<TableDefinition> tableDefinitions      = new ArrayList<>();
         List<ForeignKeyRelation> foreignKeyRelations= new ArrayList<>();

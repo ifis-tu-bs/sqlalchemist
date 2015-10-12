@@ -1,0 +1,76 @@
+{
+    "tableDefinitions": [
+        {
+            "tableName": "User",
+            "columns": [
+                {
+                    "columnName": "id",
+                    "dataType": "bigint",
+                    "primaryKey": true,
+                    "notNull": false,
+                    "datagenSet": 0
+                },
+                {
+                    "columnName": "EMail",
+                    "dataType": "Varchar(255)",
+                    "primaryKey": true,
+                    "notNull": false,
+                    "datagenSet": 0
+                },
+                {
+                    "columnName": "FirstName",
+                    "dataType": "Varchar(255)",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "datagenSet": 0
+                },
+                {
+                    "columnName": "LastName",
+                    "dataType": "Varchar(255)",
+                    "primaryKey": false,
+                    "notNull": false,
+                    "datagenSet": 0
+                }
+
+            ],
+            "extension": null
+        },
+        {
+            "tableName": "Profile",
+            "columns": [
+                {
+                    "columnName": "id",
+                    "dataType": "bigint",
+                    "primaryKey": true,
+                    "notNull": false,
+                    "datagenSet": 0
+                },
+                {
+                    "columnName": "user_id",
+                    "dataType": "bigint",
+                    "primaryKey": true,
+                    "notNull": false,
+                    "datagenSet": 0
+                },
+                {
+                    "columnName": "username",
+                    "dataType": "Varchar(255)",
+                    "primaryKey": true,
+                    "notNull": false,
+                    "datagenSet": 0
+                }
+            ],
+            "extension": null
+        }
+    ],
+    "foreignKeys": [
+        {
+            "sourceTable":"Profile",
+            "sourceColumn":"user_id",
+            "destinationTable":"User",
+            "destinationColumn":"id"
+        }
+    ],
+    "tasks": [],
+    "isHomework":   true
+}
