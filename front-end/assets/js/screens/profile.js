@@ -31,7 +31,7 @@ game.ProfileScreen = me.ScreenObject.extend({
 
 
         /**
-         * Create TextOutputElements to
+         * Create TextOutputElements to draw some useful information
          */
 
         var attribute = new game.TextOutputElement('attribute', 36, 58, 14, 34, 9);

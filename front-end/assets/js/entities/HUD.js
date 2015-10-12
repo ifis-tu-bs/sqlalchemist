@@ -91,7 +91,6 @@ game.HUDII.Container = me.Container.extend({
 
 });
 
-
 //needs to be KICKED
 game.HUDIII = game.HUDIII || {};
 
@@ -365,33 +364,6 @@ game.HUD.LofiCoins = me.Renderable.extend( {
     }
 });
 
-//Used in the Scrollcollection
-game.HUD.Collector = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, progress, level) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        this.progress = progress;
-        this.level = level;
-
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, this.level + " of 10 Levels cleared", this.pos.x, this.pos.y);
-        renderer.drawFont(this.font, this.progress + " of 60 Scorlls collected", this.pos.x, this.pos.y + 50);
-        renderer.drawFont(this.font, "You can collect 100 Scrolls a day", this.pos.x, this.pos.y + 400);
-    }
-});
-
 //Used in Gameoverscreen
 game.HUD.GameOver = me.Renderable.extend( {
     /**
@@ -517,7 +489,6 @@ game.HUD.Result = me.Renderable.extend( {
     }
 });
 
-
 game.HUD.Buy = me.Renderable.extend( {
     /**
      * constructor
@@ -546,6 +517,7 @@ game.HUD.Buy = me.Renderable.extend( {
 
     }
 });
+
 game.HUD.BuyBelt = me.Renderable.extend( {
     /**
      * constructor
@@ -599,7 +571,6 @@ game.HUD.Text = me.Renderable.extend( {
 
     }
 });
-
 
 game.HUD.Homework = me.Renderable.extend( {
     /**
@@ -747,5 +718,3 @@ game.HUD.OverlayAlert = me.Renderable.extend( {
         renderer.drawFont(this.font, this.alertText, this.pos.x, this.pos.y);
     }
 });
-
-

@@ -5,71 +5,134 @@ game.CollectorScreen = me.ScreenObject.extend({
      *  action to perform on state change
      */
     onResetEvent: function() {
-        me.game.world.addChild(
-            new me.Sprite(
-                0, 0,
-                me.loader.getImage('scrollcollection_screen')
-            ),
-            1
-        );
 
 
-        backToLab = function(){
-            if(game.data.sound){
+        /**
+         * Create background-div and add image to it.
+         */
+        var backgroundCollector = new game.BackgroundElement('backgroundCollectorId', 100, 100, 0, 0, 'none');
+        backgroundCollector.setImage("assets/data/img/gui/scrollcollection_screen.png", "backgroundCollectorImg");
+        me.game.world.addChild(backgroundCollector);
+        $("#backgroundCollectorId").fadeIn(100);
+
+        /**
+         * Create element with according callback function to get back into the Laboratory.
+         */
+        this.backToLab = function(){
+            if (game.data.sound) {
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
+            for (var j = 0; j < 2; j++) {
+                for (var k = 0; k < 5; k++) {
+                    for (var i = 0; i < 6; i++) {
+                        $("#scrolls" + i).fadeOut(100);
+                        $("#scrollsRed" + i).fadeOut(100);
+                    }
+                    $("#checkSymbol" + k).fadeOut(100);
+                }
+                $("#collectionBox" + j).fadeOut(100);
+            }
+            $("#backgroundCollectorId").fadeOut(100);
             $("#backToLabButton").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backToLabButton', 'Back', backToLab, 15, 7.3, 3, 6, 1);
+        var backToLabButton = new game.ClickableElement('backToLabButton', 'Back', this.backToLab, 15, 7.3, 3, 6, 1);
         me.game.world.addChild(backToLabButton);
         $("#backToLabButton").fadeIn(100);
 
+        /**
+         * Init matrix to set symbols for enchantment and potion scrolls.
+         * @type {number}
+         */
         var progress = 0;
         var level = 0;
 
-        //hier kommt die Scrollcollection hin
+        /**
+         * Go trought the matrix and set images for every collected potion or enchantment entity.
+         */
         for (var j = 0; j < 2; j++) {
             for (var k = 0; k < 5; k++) {
-                console.log(game.scroll.enchantments,game.potion.potions);
-                //console.log(k + j * 5,game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].available, game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].available, game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].available ,game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].available , game.potion.potions[game.level.scrolls[k + j * 5][4]].available , game.potion.potions[game.level.scrolls[k + j * 5][5]].available )
-                if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used && game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used && game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used && game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used && game.potion.potions[game.level.scrolls[k + j * 5][4]].available && game.potion.potions[game.level.scrolls[k + j * 5][5]].available){
-                    level++;
-                    me.game.world.addChild(new me.Sprite(225 + 40 * 6 + j * 500, 305 + 50 * k,me.loader.getImage('check_symbol')),3);
-                }
+                //console.log(game.scroll.enchantments,game.potion.potions);
+                /*console.log(k + j * 5,game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].available,
+                  game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].available,
+                  game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].available,
+                  game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].available,
+                  game.potion.potions[game.level.scrolls[k + j * 5][4]].available,
+                  game.potion.potions[game.level.scrolls[k + j * 5][5]].available)*/
 
+                if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used
+                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used
+                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used
+                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used
+                    && game.potion.potions[game.level.scrolls[k + j * 5][4]].available
+                    && game.potion.potions[game.level.scrolls[k + j * 5][5]].available){
+
+                    level++;
+
+                    var checkSymbol = new game.BackgroundElement('check' + k, 2.424242, 4.166667,
+                        17.045455 + 3.030303 * 0.454545 + j * 37.878788, 39.713542 + 6.510417 * k, 'none');
+                    checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
+                    $("#checkSymbol" + k).fadeIn(100);
+                    me.game.world.addChild(checkSymbol);
+                    console.log('check' + k);
+
+                    //me.game.world.addChild(new me.Sprite(225 + 40 * 6 + j * 500, 305 + 50 * k, me.loader.getImage('check_symbol')),3);
+                }
                 for (var i = 0; i < 6; i++) {
-                    if(i < 4) {
+                    if (i < 4) {
                         if (game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available) {
-                            me.game.world.addChild(new game.Scroll(228 + 40 * i + j * 500, 320 + 50 * k, "spinning_scrolls"), 3);
+
+                            var scrolls = new game.BackgroundElement('scrolls' + i, 2.424243, 4.166668,
+                                17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
+                            scrolls.setImage("assets/data/img/stuff/spinning_scroll_32.png", "scrollImg");
+                            $("#scrolls" + i).fadeIn(100);
+                            me.game.world.addChild(scrolls);
+                            console.log('scrolls' + i);
+
                             progress++;
-                            console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
-                                    game.scroll.enchantments[game.level.scrolls[k+ j * 5][i]].name, k + j * 5);
+                            /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
+                                game.scroll.enchantments[game.level.scrolls[k+ j * 5][i]].name, k + j * 5);*/
                         }
-                    }
-                    else{
+                    } else {
                         if (game.potion.potions[game.level.scrolls[k + j * 5][i]].available){
-                            me.game.world.addChild(new game.Scroll(228 + 40 * i + j * 500, 320 + 50 * k, "spinning_scrolls_red"), 3);
+
+                            var scrollsRed = new game.BackgroundElement('scrollsRed' + i, 2.424243, 4.166668,
+                                17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
+                            scrollsRed.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "scrollRedImg");
+                            $("#scrollsRed" + i).fadeIn(100);
+                            me.game.world.addChild(scrollsRed);
+                            console.log('scrollsRed' + i);
+
                             progress++;
-                            console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,
-                                    game.potion.potions[game.level.scrolls[k + j * 5][i]].name, k + j * 5);
+                            /*console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,
+                                    game.potion.potions[game.level.scrolls[k + j * 5][i]].name, k + j * 5);*/
                         }
                     }
                     //console.log(game.level.scrolls[k+ j * 5][i],  "  k+ j * 5:"+(k + j * 5 ),"  i:"+i);
                 }
             }
-            me.game.world.addChild(
-                new me.Sprite(
-                    195 + j * 500, 275,
-                    me.loader.getImage('scroll_collection_box')
-                ),
-                2
-            );
+
+            /**
+             * Set image for checkBoxes.
+             */
+            var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 14.772727 + j * 37.878788, 37.307292, 'none');
+            collectionBox.setImage("assets/data/img/stuff/scroll_collection_box.png", "boxImg");
+            $("#collectionBox" + j).fadeIn(100);
+            me.game.world.addChild(collectionBox);
         }
 
-        me.game.world.addChild(new game.HUD.Collector(200, 200, progress, level),3);
+        /**
+         * Create TextOutPutElements to draw useful information and statistics.
+         */
+        var scrollProgress = new game.TextOutputElement('scrollProgress', 60, 10, 30.151515, 26.041667, 2);
+        me.game.world.addChild(scrollProgress);
+        scrollProgress.writeHTML(level + " of 10 levels cleared." + "<br>" + progress + " of 60 scrolls collected.", 'scrollProgressPara');
+
+        var scrollLimit = new game.TextOutputElement('scrollLimit', 80, 5, 19.151515, 78.125, 1);
+        me.game.world.addChild(scrollLimit);
+        scrollLimit.writeHTML("You can only collect 3 scrolls a day!", 'scrollLimitPara');
     }
 });
