@@ -1,16 +1,13 @@
-
-
-
 ### Column
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```id```                 | ```Number ```                                            |            |
-| ```columnName```         | ```String```                                             |            |
-| ```data_type```          | ```String```                                             |            |
-| ```primaryKey```         | ```Boolean```                                            |            |
-| ```foreignKey```         | [```Columns[]```](#column)                  |            |
-| ```notNull```            | ```Boolean```                                            |            |
-| ```datagenSet```         | ```Number```                                             |            |
+| Name                     | Type                   | Description|
+|--------------------------|------------------------|------------|
+| ```id```                 | ```Number ```          |            |
+| ```columnName```         | ```String```           |            |
+| ```data_type```          | ```String```           |            |
+| ```primaryKey```         | ```Boolean```          |            |
+| ```foreignKey```         | [```Column```](#column)|            |
+| ```notNull```            | ```Boolean```          |            |
+| ```datagenSet```         | ```Number```           |            |
 
 Example:
 ```json
@@ -26,13 +23,13 @@ Columns:
 }
 ```
 #### Column.Form
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```columnName```         | ```String```                                             |            |
-| ```data_type```          | ```String```                                             |            |
-| ```primaryKey```         | ```Boolean```                                            |            |
-| ```notNull```            | ```Boolean```                                            |            |
-| ```datagenSet```         | ```Number```                                             |            |
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```columnName```         | ```String```      |            |
+| ```data_type```          | ```String```      |            |
+| ```primaryKey```         | ```Boolean```     |            |
+| ```notNull```            | ```Boolean```     |            |
+| ```datagenSet```         | ```Number```      |            |
 
 Example:
 ```json
@@ -47,12 +44,12 @@ Columns:
 ```
 ### ForeignKey
 #### ForeignKey.Form
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```sourceTable```        | ```String```                                             |            |
-| ```sourceColumn```       | ```String```                                             |            |
-| ```destinationTable```   | ```String```                                             |            |
-| ```destinationColumn```  | ```String```                                             |            |
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```sourceTable```        | ```String```      |            |
+| ```sourceColumn```       | ```String```      |            |
+| ```destinationTable```   | ```String```      |            |
+| ```destinationColumn```  | ```String```      |            |
 
 Example:
 ```json
@@ -65,12 +62,12 @@ Columns:
 }
 ```
 ### TableDefinition
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```id```                 | ```Number ```                                            |            |
-| ```tableName```          | ```String```                                             |            |
-| ```columns```            | [```Columns[]```](#column)                  |            |
-| ```extension```          | ```String```                                             |            |
+| Name                     | Type                       |Description|
+|--------------------------|----------------------------|-----------|
+| ```id```                 | ```Number ```              |           |
+| ```tableName```          | ```String```               |           |
+| ```columns```            | [```Columns[]```](#column) |           |
+| ```extension```          | ```String```               |           |
 Example:
 ```json
 TableDefinition:
@@ -92,11 +89,11 @@ TableDefinition:
 }
 ```
 #### TableDefinition.Form
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```tableName```          | ```String```                                             |            |
-| ```columns```            | [```Column.Form[]```](#columnform)          |            |
-| ```extension```          | ```String```                                             |            |
+| Name                     | Type                               | Description|
+|--------------------------|------------------------------------|------------|
+| ```tableName```          | ```String```                       |            |
+| ```columns```            | [```Column.Form[]```](#columnform) |            |
+| ```extension```          | ```String```                       |            |
 Example:
 ```json
 TableDefinition:
@@ -115,22 +112,22 @@ TableDefinition:
 }
 ```
 ### Task
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```id```                 | ```Number ```                                            |            |
-| ```taskName```           | ```String```                                             |            |
-| ```taskSet```            | ```Number ```                                            |            |
-| ```relationsFormatted``` | ```String```                                             |            |
-| ```taskText```           | ```String```                                             |            |
-| ```refStatement```       | ```String```                                             |            |
-| ```evalstrategy```       | ```Number```                                             |[SET, LIST] |
-| ```points```             | ```Number```                                             |            |
-| ```requiredterm```       | ```Number```                                             |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
-| ```creator```            | [```Profile```](#user-content-profile)                   |            |
-| ```rating```             | [```Rating```](#user-content-rating)                     |            |
-| ```comments```           | [```Comment[]```](#user-content-comment)                 |            |
-| ```created_at```         | ```String```                                             |            |
-| ```updated_at```         | ```String```                                             |            |
+| Name                     | Type                        | Description|
+|--------------------------|-----------------------------|------------|
+| ```id```                 | ```Number ```               |            |
+| ```taskName```           | ```String```                |            |
+| ```taskSet```            | ```Number ```               |            |
+| ```relationsFormatted``` | ```String```                |            |
+| ```taskText```           | ```String```                |            |
+| ```refStatement```       | ```String```                |            |
+| ```evalstrategy```       | ```Number```                |[SET, LIST] |
+| ```points```             | ```Number```                |            |
+| ```requiredterm```       | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```creator```            | [```Profile```](#profile)   |            |
+| ```rating```             | [```Rating```](#rating)     |            |
+| ```comments```           | [```Comment[]```](#comment) |            |
+| ```created_at```         | ```String```                |            |
+| ```updated_at```         | ```String```                |            |
 
 Example:  
 ```json
@@ -155,14 +152,14 @@ Task:
 ```
 
 #### Task.Form
-| Name                     | Type                                                     | Description|
-|--------------------------|----------------------------------------------------------|------------|
-| ```taskSet```            | ```Number ```                                            |            |
-| ```taskText```           | ```String```                                             |            |
-| ```refStatement```       | ```String```                                             |            |
-| ```evalstrategy```       | ```Number```                                             |[SET, LIST] |
-| ```points```             | ```Number```                                             |            |
-| ```requiredterm```       | ```Number```                                             |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| Name                     | Type          | Description|
+|--------------------------|---------------|------------|
+| ```taskSet```            | ```Number```  |            |
+| ```taskText```           | ```String```  |            |
+| ```refStatement```       | ```String```  |            |
+| ```evalstrategy```       | ```Number```  |[SET, LIST] |
+| ```points```             | ```Number```  |            |
+| ```requiredterm```       | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
 
 Example:  
 ```json
@@ -228,13 +225,13 @@ TaskSet: {
 
 
 #### TaskSet.Form
-| Name                  | Type                                                              | Description|
-|-----------------------|-------------------------------------------------------------------|------------|
-| ```taskSetName```     | ```String```                                                      |            |
-| ```tableDefinitions```| [```TableDefinition.Form[]```](#user-content-tabledefinitionform) |            |
-| ```foreignKeys```     | [```ForeignKey.Form[]```](#user-content-foreignkeyform)           |            |
-| ```tasks```           | [```Task.Form```](#user-content-taskform)                         |            |
-| ```isHomework```      | ```String```                                                      |            |
+| Name                  | Type                                                 | Description|
+|-----------------------|------------------------------------------------------|------------|
+| ```taskSetName```     | ```String```                                         |            |
+| ```tableDefinitions```| [```TableDefinition.Form[]```](#tabledefinitionform) |            |
+| ```foreignKeys```     | [```ForeignKey.Form[]```](#foreignkeyform)           |            |
+| ```tasks```           | [```Task.Form```](#taskform)                         |            |
+| ```isHomework```      | ```String```                                         |            |
 Example:  
 ```json
 TaskSet: {
