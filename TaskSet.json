@@ -1,42 +1,50 @@
 Columns:
 {
-  ColumnName: String
-  Type:       String
-  PrimaryKey: boolean
-  NotNull:    boolean
-  datagenSet: [Colour | City | Country | ... ]
+  id:         long,
+  columnName: String,
+  data_type:  String,
+  primaryKey: boolean,
+  notNull:    boolean,
+  datagenSet: int
 }
 
-Intension:
+TableDefinition:
 {
-  TableName: String
-  Columns: Columns[]
-}
-
-Relation:
-{
-  intension: Intension
-  extension: String[]
-}
-
-Schema:
-{
-  relation: Relation[]
+  id:         long,
+  tableName:  String,
+  columns:    Columns[],
+  extension:  String,
 }
 
 Task:
 {
-  TaskText:     String
-  RefStatement: String
-  evalstrategy: [SET, LIST]
-  points:       int
-  requiredterm: [WITH | AS | SELECT | FROM | JOIN | ON | WHERE | GROUP BY | HAVING | ORDER BY | COUNT | SUM | LEFT OUTER JOIN | RIGHT OUTER JOIN | AVG | MAX | MIN]
+  id:                 long,
+  taskSet:            long,
+  relationsFormatted: String,
+  taskText:           String,
+  refStatement:       String,
+  evalstrategy:       [SET, LIST],
+  points:             int,
+  requiredterm:       [WITH | AS | SELECT | FROM | JOIN | ON | WHERE | GROUP BY | HAVING | ORDER BY | COUNT | SUM | LEFT OUTER JOIN | RIGHT OUTER JOIN | AVG | MAX | MIN],
+  creator:            Profile,
+  comments:           Comment[],
+  rating              Rating,
+  created_at:         Date,
+  updated_at:         Date
 }
 
 TaskSet:
-{
-  schema: Schema,
-  tasks:  Task[]
+{ 
+  id:                 long,
+  tableDefinitions:   TableDefinition[],
+  relationsFormatted: String,
+  tasks:              Task[],
+  creator:            Profile,
+  isHomework:         boolean,
+  rating:             Rating,
+  comments:           Comment[],
+  created_at:         Date,
+  updated_at:         Date
 }
 
 Example:

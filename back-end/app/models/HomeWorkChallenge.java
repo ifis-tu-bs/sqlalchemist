@@ -131,4 +131,26 @@ public class HomeWorkChallenge extends Challenge {
 
         return objectNode;
     }
+
+
+    /**
+     * Makes Json Object not containing any solutions or other Admin relative Information
+     * @param profile
+     * @return
+     */
+    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
+
+        ObjectNode objectNode = Json.newObject();
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+
+        for (TaskFile taskFile : taskFiles) {
+            arrayNode.add(taskFile.toHomeWorkJsonForProfile(profile));
+        }
+
+        objectNode.put("name",      this.getName());
+        objectNode.put("taskFiles", arrayNode);
+
+        return objectNode;
+    }
 }

@@ -24,6 +24,7 @@ import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import secured.StudentSecured;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -32,9 +33,9 @@ import java.util.List;
 /**
  * Created by Invisible on 30.06.2015.
  */
-@Authenticated(AdminSecured.class)
 public class HomeWorkController extends Controller {
 
+    @Authenticated(AdminSecured.class)
     public static Result getSubmitsForHomeworkTaskFile() {
         /*
             TODO: Make JSON with all Students and their done HW, that are expired!
@@ -68,10 +69,12 @@ public class HomeWorkController extends Controller {
         return ok(arrayNode);
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getAllStudents () {
         return ok("dummy");
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getAll() {
         User user = UserDAO.getByUsername(request().username());
 
@@ -97,6 +100,7 @@ public class HomeWorkController extends Controller {
      *  Create
      * @return
      */
+    @Authenticated(AdminSecured.class)
     public static Result create() {
         User user = UserDAO.getByUsername(request().username());
 
@@ -148,6 +152,7 @@ public class HomeWorkController extends Controller {
         return ok();
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result delete(Long id) {
         User user = UserDAO.getByUsername(request().username());
 
@@ -160,6 +165,7 @@ public class HomeWorkController extends Controller {
         return ok("Deleted");
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getForSubTask(Long subTaskId, Long homeWorkChallengeId) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
@@ -170,5 +176,20 @@ public class HomeWorkController extends Controller {
         }
 
         return ok(arrayNode);
+    }
+
+    @Authenticated(StudentSecured.class)
+    public static Result getCurrentHomeWorkForCurrentSession() {
+        User user = UserDAO.getByUsername(request().username());
+
+
+        HomeWorkChallenge homeWorkChallenge;
+        if((homeWorkChallenge = HomeWorkChallengeDAO.getCurrent()) == null) {
+            return badRequest("No Current HomeWork");
+        }
+
+        JsonNode jsonNode = homeWorkChallenge.toHomeWorkJsonForProfile(user.getProfile());
+
+        return ok(jsonNode);
     }
 }
