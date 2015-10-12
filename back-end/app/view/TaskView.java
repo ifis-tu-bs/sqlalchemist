@@ -15,14 +15,14 @@ import play.libs.Json;
  * @author fabiomazzone
  */
 public class TaskView {
-    public static Task fromJsonForm(JsonNode taskNode, Profile creator) {
+    public static Task fromJsonForm(JsonNode taskNode, String taskName, Profile creator) {
         String  taskText            = taskNode.get("taskText").asText();
         String  refStatement        = taskNode.get("refStatement").asText();
         int     evaluationstrategy  = taskNode.get("evaluationstrategy").asInt();
         int     points              = taskNode.get("points").asInt();
         int     requiredTerm        = taskNode.get("requiredTerm").asInt();
 
-        return new Task(taskText, refStatement, evaluationstrategy, points, requiredTerm, creator);
+        return new Task(taskName, taskText, refStatement, evaluationstrategy, points, requiredTerm, creator);
     }
 
     public static ObjectNode toJson(Task task) {
@@ -36,6 +36,7 @@ public class TaskView {
         }
 
         json.put("id",                  task.getId());
+        json.put("taskName",            task.getTaskName());
         json.put("taskSet",             task.getTaskSet().getId());
         json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
         json.put("taskText",            task.getTaskText());

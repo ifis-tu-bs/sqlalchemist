@@ -1,7 +1,5 @@
 package models;
 
-import dao.*;
-
 import Exception.SQLAlchemistException;
 
 import com.fasterxml.jackson.databind.node.*;
@@ -27,6 +25,7 @@ public class Task extends Model {
     @ManyToOne
     private TaskSet taskSet;
 
+    private String  taskName;
     private String  taskText;
     private String  refStatement;
     private int     evaluationstrategy;
@@ -59,6 +58,7 @@ public class Task extends Model {
      * @param creator
      */
     public Task(
+            String taskName,
             String taskText,
             String refStatement,
             int evaluationstrategy,
@@ -66,6 +66,7 @@ public class Task extends Model {
             int requiredTerm,
             Profile creator) {
 
+        this.taskName           = taskName;
         this.taskText           = taskText;
         this.refStatement       = refStatement;
         this.evaluationstrategy = evaluationstrategy;
@@ -117,6 +118,10 @@ public class Task extends Model {
 
     public TaskSet getTaskSet() {
         return taskSet;
+    }
+
+    public String getTaskName() {
+        return taskName;
     }
 
     public String getTaskText() {

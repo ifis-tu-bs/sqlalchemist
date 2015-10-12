@@ -29,6 +29,8 @@ public class TaskSet extends Model {
     @Column
     private long id;
 
+    private String                  taskSetName;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<TableDefinition>   tableDefinitions;
     private String                  relationsFormatted;
@@ -67,12 +69,14 @@ public class TaskSet extends Model {
      * @param isHomeWork            a flag
      */
     public TaskSet(
+            String                      taskSetName,
             List<TableDefinition>       tableDefinitions,
             List<ForeignKeyRelation>    foreignKeyRelations,
             List<Task>                  tasks,
             Profile                     creator,
             boolean                     isHomeWork) {
 
+        this.taskSetName            = taskSetName;
         this.tableDefinitions       = tableDefinitions;
         this.foreignKeyRelations    = foreignKeyRelations;
         this.tasks                  = tasks;
@@ -162,6 +166,10 @@ public class TaskSet extends Model {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getTaskSetName() {
+        return taskSetName;
     }
 
     public List<TableDefinition> getTableDefinitions() {

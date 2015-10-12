@@ -21,13 +21,14 @@ import java.util.List;
  */
 public class TaskSetView {
     public static TaskSet fromJsonForm(Profile profile, JsonNode jsonNode) {
-        JsonNode tableDefinitionArray               = jsonNode.path("tableDefinitions");
-        JsonNode foreignKeyArray                    = jsonNode.path("foreignKeys");
-        JsonNode taskArray                          = jsonNode.path("tasks");
-        List<TableDefinition> tableDefinitions      = new ArrayList<>();
-        List<ForeignKeyRelation> foreignKeyRelations= new ArrayList<>();
-        List<Task> tasks                            = new ArrayList<>();
-        boolean  isHomework                         = jsonNode.path("isHomework").asBoolean();
+        String                  taskSetName             = jsonNode.path("taskSetName").asText();
+        JsonNode                tableDefinitionArray    = jsonNode.path("tableDefinitions");
+        JsonNode                foreignKeyArray         = jsonNode.path("foreignKeys");
+        JsonNode                taskArray               = jsonNode.path("tasks");
+        List<TableDefinition>   tableDefinitions        = new ArrayList<>();
+        List<ForeignKeyRelation>foreignKeyRelations     = new ArrayList<>();
+        List<Task>              tasks                   = new ArrayList<>();
+        boolean                 isHomework              = jsonNode.path("isHomework").asBoolean();
 
 
         for(JsonNode tableDefinitionNode : tableDefinitionArray) {
@@ -50,11 +51,12 @@ public class TaskSetView {
             foreignKeyRelations.add(foreignKeyRelation);
         }
 
-        for(JsonNode taskNode : taskArray) {
-            tasks.add(TaskView.fromJsonForm(taskNode, profile));
+        for(int i = 0; i < taskArray.size(); i++) {
+            JsonNode taskNode = taskArray.get(i);
+            tasks.add(TaskView.fromJsonForm(taskNode, taskSetName + " " + i, profile));
         }
 
-        return  new TaskSet(tableDefinitions, foreignKeyRelations, tasks, profile, isHomework);
+        return  new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, tasks, profile, isHomework);
     }
 
     public static ObjectNode toJson(TaskSet taskSet) {
@@ -81,6 +83,7 @@ public class TaskSetView {
         Rating      rating_sum  = Rating.sum(ratings);
 
         taskSetJson.put("id",                   taskSet.getId());
+        taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
         taskSetJson.put("tableDefinitions",     tableDefNode);
         taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
         taskSetJson.put("tasks",                taskNode);
