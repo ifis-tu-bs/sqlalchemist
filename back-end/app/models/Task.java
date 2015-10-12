@@ -23,6 +23,7 @@ import java.util.List;
 public class Task extends Model {
     @Id
     private long id;
+
     @ManyToOne
     private TaskSet taskSet;
 
@@ -50,7 +51,6 @@ public class Task extends Model {
 
     /**
      *
-     * @param taskSet
      * @param taskText
      * @param refStatement
      * @param evaluationstrategy
@@ -58,17 +58,14 @@ public class Task extends Model {
      * @param requiredTerm
      * @param creator
      */
-    private Task(
-            TaskSet taskSet,
+    public Task(
             String taskText,
             String refStatement,
             int evaluationstrategy,
             int points,
             int requiredTerm,
             Profile creator) {
-        super();
 
-        this.taskSet            = taskSet;
         this.taskText           = taskText;
         this.refStatement       = refStatement;
         this.evaluationstrategy = evaluationstrategy;
@@ -78,7 +75,7 @@ public class Task extends Model {
         this.creator            = creator;
 
         // Initialize Social Components
-        this.comments = new ArrayList<>();
+        this.comments           = new ArrayList<>();
         this.ratings            = new ArrayList<>();
 
         this.created_at         = new Date();

@@ -4,11 +4,11 @@
 # --- !Ups
 
 create table avatar (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   avatar_name               varchar(255),
   Avatardesc                varchar(255),
   avatar_filename           varchar(255),
-  is_team                   boolean,
+  is_team                   tinyint(1) default 0,
   soundURL                  varchar(255),
   health                    integer,
   defense                   integer,
@@ -21,52 +21,53 @@ create table avatar (
 ;
 
 create table challenge (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   challenge_name            varchar(255),
   solve_type                integer,
   solve_type_extension      integer,
-  created_at                timestamp,
+  created_at                datetime,
   type                      integer,
-  modified_at               timestamp,
+  modified_at               datetime,
   constraint pk_challenge primary key (id))
 ;
 
 create table ColumnDefinition (
-  id                        bigint not null,
-  table_definition_id       bigint not null,
+  id                        bigint auto_increment not null,
+  table_definition_id       bigint,
   column_name               varchar(255),
   data_type                 varchar(255),
-  is_primary_key            boolean,
-  is_not_nullable           boolean,
+  is_primary_key            tinyint(1) default 0,
+  is_not_nullable           tinyint(1) default 0,
+  foreign_key_id            bigint,
   datagen_set               integer,
   constraint pk_ColumnDefinition primary key (id))
 ;
 
 create table Comment (
-  id                        bigint not null,
-  task_set_id               bigint not null,
+  id                        bigint auto_increment not null,
+  task_id                   bigint not null,
   profile_id                bigint,
   text                      varchar(255),
-  created_at                timestamp,
+  created_at                datetime,
   constraint pk_Comment primary key (id))
 ;
 
 create table homeWork_challenge (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   challenge_name            varchar(255),
   solve_type                integer,
   solve_type_extension      integer,
-  created_at                timestamp,
+  created_at                datetime,
   type                      integer,
-  modified_at               timestamp,
+  modified_at               datetime,
   creator_id                bigint,
-  start_at                  timestamp,
-  expires_at                timestamp,
+  start_at                  datetime,
+  expires_at                datetime,
   constraint pk_homeWork_challenge primary key (id))
 ;
 
 create table Inventory (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   profile_id                bigint,
   potion_id                 bigint,
   beltSlot                  integer,
@@ -74,24 +75,24 @@ create table Inventory (
 ;
 
 create table lofi_coin_flow_log (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   profile_id                bigint,
   lofi_coins_collected      integer,
-  collected                 timestamp,
+  collected                 datetime,
   constraint pk_lofi_coin_flow_log primary key (id))
 ;
 
 create table map (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   level                     integer,
   path                      varchar(255),
-  boss_map                  boolean,
+  boss_map                  tinyint(1) default 0,
   constraint uq_map_path unique (path),
   constraint pk_map primary key (id))
 ;
 
 create table potion (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   potionName                varchar(255),
   type                      integer,
   powerLevel                integer,
@@ -107,7 +108,7 @@ create table potion (
 ;
 
 create table profile (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   user_id                   bigint,
   username                  varchar(255),
   health                    integer,
@@ -115,10 +116,10 @@ create table profile (
   speed                     integer,
   jump                      integer,
   slot                      integer,
-  sound                     boolean,
-  music                     boolean,
-  tutorial_done             boolean,
-  story_done                boolean,
+  sound                     tinyint(1) default 0,
+  music                     tinyint(1) default 0,
+  tutorial_done             tinyint(1) default 0,
+  story_done                tinyint(1) default 0,
   avatar_id                 bigint,
   current_story_id          bigint,
   current_scroll_id         bigint,
@@ -133,16 +134,16 @@ create table profile (
   done_sql                  integer,
   solved_sql                integer,
   quote                     integer,
-  created_at                timestamp,
-  edited_at                 timestamp,
-  version                   timestamp not null,
+  created_at                datetime,
+  edited_at                 datetime,
+  version                   datetime not null,
   constraint uq_profile_username unique (username),
   constraint pk_profile primary key (id))
 ;
 
 create table rating (
-  id                        bigint not null,
-  task_set_id               bigint not null,
+  id                        bigint auto_increment not null,
+  task_id                   bigint not null,
   profile_id                bigint,
   positive_ratings          bigint,
   negative_ratings          bigint,
@@ -151,7 +152,7 @@ create table rating (
 ;
 
 create table scroll (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   posId                     integer,
   Scrollname                varchar(255),
   type                      integer,
@@ -167,16 +168,16 @@ create table scroll (
 ;
 
 create table Scroll_Collection (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   profile_id                bigint,
   scroll_id                 bigint,
-  is_active                 boolean,
-  added                     timestamp,
+  is_active                 tinyint(1) default 0,
+  added                     datetime,
   constraint pk_Scroll_Collection primary key (id))
 ;
 
 create table ShopItem (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   type                      integer,
   ShopItemName              varchar(255),
   ShopItem_desc             varchar(255),
@@ -187,52 +188,52 @@ create table ShopItem (
 ;
 
 create table solvedSubTask (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   profile_id                bigint,
   task_id                   bigint,
   solved                    integer,
   trys                      integer,
-  last_solved               timestamp,
+  last_solved               datetime,
   constraint pk_solvedSubTask primary key (id))
 ;
 
 create table story_challenge (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   challenge_name            varchar(255),
   solve_type                integer,
   solve_type_extension      integer,
-  created_at                timestamp,
+  created_at                datetime,
   type                      integer,
-  modified_at               timestamp,
+  modified_at               datetime,
   level                     integer,
   next_id                   bigint,
   constraint pk_story_challenge primary key (id))
 ;
 
 create table submitted_homework (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   profile_id                bigint,
   task_id                   bigint,
   solved                    integer,
   trys                      integer,
-  last_solved               timestamp,
+  last_solved               datetime,
   home_work_id              bigint,
   statement                 varchar(255),
-  solve                     boolean,
-  constraint uq_submitted_homework_1 unique (profile_id,sub_task_id, home_work_id),
+  solve                     tinyint(1) default 0,
+  constraint uq_submitted_homework_1 unique (profile_id,task_id, home_work_id),
   constraint pk_submitted_homework primary key (id))
 ;
 
 create table TableDefinition (
-  id                        bigint not null,
-  task_set_id               bigint not null,
+  id                        bigint auto_increment not null,
+  task_set_id               bigint,
   table_name                varchar(255),
   extension                 Text,
   constraint pk_TableDefinition primary key (id))
 ;
 
 create table Task (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   task_set_id               bigint,
   task_text                 varchar(255),
   ref_statement             varchar(255),
@@ -240,22 +241,23 @@ create table Task (
   points                    integer,
   required_term             integer,
   creator_id                bigint,
-  created_at                timestamp,
-  updated_at                timestamp,
+  created_at                datetime,
+  updated_at                datetime,
   constraint pk_Task primary key (id))
 ;
 
 create table TaskSet (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   relations_formatted       varchar(255),
-  is_homework               boolean,
-  created_at                timestamp,
-  updated_at                timestamp,
+  is_homework               tinyint(1) default 0,
+  creator_id                bigint,
+  created_at                datetime,
+  updated_at                datetime,
   constraint pk_TaskSet primary key (id))
 ;
 
 create table texts (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   type                      integer,
   prerequisite              integer,
   chronology                integer,
@@ -266,18 +268,18 @@ create table texts (
 ;
 
 create table user (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   email                     varchar(255),
-  email_verified            boolean,
+  email_verified            tinyint(1) default 0,
   email_verify_code         varchar(255),
   user_mnr                  varchar(255),
   user_ynr                  varchar(255),
-  is_student                boolean,
+  is_student                tinyint(1) default 0,
   password_hash             varchar(255),
   password_reset_code       varchar(255),
   user_role                 integer,
-  created_at                timestamp,
-  edited_at                 timestamp,
+  created_at                datetime,
+  edited_at                 datetime,
   constraint uq_user_email unique (email),
   constraint uq_user_email_verify_code unique (email_verify_code),
   constraint uq_user_user_mnr unique (user_mnr),
@@ -287,12 +289,12 @@ create table user (
 ;
 
 create table UserSession (
-  id                        bigint not null,
+  id                        bigint auto_increment not null,
   sessionID                 varchar(30),
   user_id                   bigint,
   remoteAddress             varchar(255),
-  created_at                timestamp,
-  expires_at                timestamp,
+  created_at                datetime,
+  expires_at                datetime,
   constraint uq_UserSession_sessionID unique (sessionID),
   constraint pk_UserSession primary key (id))
 ;
@@ -321,228 +323,164 @@ create table story_challenge_map (
   map_id                         bigint not null,
   constraint pk_story_challenge_map primary key (story_challenge_id, map_id))
 ;
-create sequence avatar_seq;
 
-create sequence challenge_seq;
+create table TaskSet_rating (
+  TaskSet_id                     bigint not null,
+  rating_id                      bigint not null,
+  constraint pk_TaskSet_rating primary key (TaskSet_id, rating_id))
+;
 
-create sequence ColumnDefinition_seq;
-
-create sequence Comment_seq;
-
-create sequence homeWork_challenge_seq;
-
-create sequence Inventory_seq;
-
-create sequence lofi_coin_flow_log_seq;
-
-create sequence map_seq;
-
-create sequence potion_seq;
-
-create sequence profile_seq;
-
-create sequence rating_seq;
-
-create sequence scroll_seq;
-
-create sequence Scroll_Collection_seq;
-
-create sequence ShopItem_seq;
-
-create sequence solvedSubTask_seq;
-
-create sequence story_challenge_seq;
-
-create sequence submitted_homework_seq;
-
-create sequence TableDefinition_seq;
-
-create sequence Task_seq;
-
-create sequence TaskSet_seq;
-
-create sequence texts_seq;
-
-create sequence user_seq;
-
-create sequence UserSession_seq;
-
-alter table ColumnDefinition add constraint fk_ColumnDefinition_TableDefin_1 foreign key (table_definition_id) references TableDefinition (id) on delete restrict on update restrict;
-create index ix_ColumnDefinition_TableDefin_1 on ColumnDefinition (table_definition_id);
-alter table Comment add constraint fk_Comment_TaskSet_2 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_Comment_TaskSet_2 on Comment (task_set_id);
-alter table Comment add constraint fk_Comment_profile_3 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Comment_profile_3 on Comment (profile_id);
-alter table homeWork_challenge add constraint fk_homeWork_challenge_creator_4 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_homeWork_challenge_creator_4 on homeWork_challenge (creator_id);
-alter table Inventory add constraint fk_Inventory_profile_5 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Inventory_profile_5 on Inventory (profile_id);
-alter table Inventory add constraint fk_Inventory_potion_6 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
-create index ix_Inventory_potion_6 on Inventory (potion_id);
-alter table lofi_coin_flow_log add constraint fk_lofi_coin_flow_log_profile_7 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_lofi_coin_flow_log_profile_7 on lofi_coin_flow_log (profile_id);
-alter table profile add constraint fk_profile_user_8 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_profile_user_8 on profile (user_id);
-alter table profile add constraint fk_profile_avatar_9 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
-create index ix_profile_avatar_9 on profile (avatar_id);
-alter table profile add constraint fk_profile_currentStory_10 foreign key (current_story_id) references story_challenge (id) on delete restrict on update restrict;
-create index ix_profile_currentStory_10 on profile (current_story_id);
-alter table profile add constraint fk_profile_currentScroll_11 foreign key (current_scroll_id) references scroll (id) on delete restrict on update restrict;
-create index ix_profile_currentScroll_11 on profile (current_scroll_id);
-alter table rating add constraint fk_rating_TaskSet_12 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_rating_TaskSet_12 on rating (task_set_id);
-alter table rating add constraint fk_rating_profile_13 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_rating_profile_13 on rating (profile_id);
-alter table scroll add constraint fk_scroll_potion_14 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
-create index ix_scroll_potion_14 on scroll (potion_id);
-alter table Scroll_Collection add constraint fk_Scroll_Collection_profile_15 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Scroll_Collection_profile_15 on Scroll_Collection (profile_id);
-alter table Scroll_Collection add constraint fk_Scroll_Collection_scroll_16 foreign key (scroll_id) references scroll (id) on delete restrict on update restrict;
-create index ix_Scroll_Collection_scroll_16 on Scroll_Collection (scroll_id);
-alter table ShopItem add constraint fk_ShopItem_avatar_17 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
-create index ix_ShopItem_avatar_17 on ShopItem (avatar_id);
-alter table solvedSubTask add constraint fk_solvedSubTask_profile_18 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_solvedSubTask_profile_18 on solvedSubTask (profile_id);
-alter table solvedSubTask add constraint fk_solvedSubTask_task_19 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_solvedSubTask_task_19 on solvedSubTask (task_id);
-alter table story_challenge add constraint fk_story_challenge_next_20 foreign key (next_id) references story_challenge (id) on delete restrict on update restrict;
-create index ix_story_challenge_next_20 on story_challenge (next_id);
-alter table submitted_homework add constraint fk_submitted_homework_profile_21 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_submitted_homework_profile_21 on submitted_homework (profile_id);
-alter table submitted_homework add constraint fk_submitted_homework_task_22 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_submitted_homework_task_22 on submitted_homework (task_id);
-alter table submitted_homework add constraint fk_submitted_homework_homeWor_23 foreign key (home_work_id) references homeWork_challenge (id) on delete restrict on update restrict;
-create index ix_submitted_homework_homeWor_23 on submitted_homework (home_work_id);
-alter table TableDefinition add constraint fk_TableDefinition_TaskSet_24 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_TableDefinition_TaskSet_24 on TableDefinition (task_set_id);
-alter table Task add constraint fk_Task_taskSet_25 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_Task_taskSet_25 on Task (task_set_id);
-alter table Task add constraint fk_Task_creator_26 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_Task_creator_26 on Task (creator_id);
-alter table UserSession add constraint fk_UserSession_user_27 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_UserSession_user_27 on UserSession (user_id);
+create table TaskSet_Comment (
+  TaskSet_id                     bigint not null,
+  Comment_id                     bigint not null,
+  constraint pk_TaskSet_Comment primary key (TaskSet_id, Comment_id))
+;
+alter table ColumnDefinition add constraint fk_ColumnDefinition_tableDefinition_1 foreign key (table_definition_id) references TableDefinition (id) on delete restrict on update restrict;
+create index ix_ColumnDefinition_tableDefinition_1 on ColumnDefinition (table_definition_id);
+alter table ColumnDefinition add constraint fk_ColumnDefinition_foreignKey_2 foreign key (foreign_key_id) references ColumnDefinition (id) on delete restrict on update restrict;
+create index ix_ColumnDefinition_foreignKey_2 on ColumnDefinition (foreign_key_id);
+alter table Comment add constraint fk_Comment_Task_3 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_Comment_Task_3 on Comment (task_id);
+alter table Comment add constraint fk_Comment_profile_4 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Comment_profile_4 on Comment (profile_id);
+alter table homeWork_challenge add constraint fk_homeWork_challenge_creator_5 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_homeWork_challenge_creator_5 on homeWork_challenge (creator_id);
+alter table Inventory add constraint fk_Inventory_profile_6 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Inventory_profile_6 on Inventory (profile_id);
+alter table Inventory add constraint fk_Inventory_potion_7 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
+create index ix_Inventory_potion_7 on Inventory (potion_id);
+alter table lofi_coin_flow_log add constraint fk_lofi_coin_flow_log_profile_8 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_lofi_coin_flow_log_profile_8 on lofi_coin_flow_log (profile_id);
+alter table profile add constraint fk_profile_user_9 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_profile_user_9 on profile (user_id);
+alter table profile add constraint fk_profile_avatar_10 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
+create index ix_profile_avatar_10 on profile (avatar_id);
+alter table profile add constraint fk_profile_currentStory_11 foreign key (current_story_id) references story_challenge (id) on delete restrict on update restrict;
+create index ix_profile_currentStory_11 on profile (current_story_id);
+alter table profile add constraint fk_profile_currentScroll_12 foreign key (current_scroll_id) references scroll (id) on delete restrict on update restrict;
+create index ix_profile_currentScroll_12 on profile (current_scroll_id);
+alter table rating add constraint fk_rating_Task_13 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_rating_Task_13 on rating (task_id);
+alter table rating add constraint fk_rating_profile_14 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_rating_profile_14 on rating (profile_id);
+alter table scroll add constraint fk_scroll_potion_15 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
+create index ix_scroll_potion_15 on scroll (potion_id);
+alter table Scroll_Collection add constraint fk_Scroll_Collection_profile_16 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Scroll_Collection_profile_16 on Scroll_Collection (profile_id);
+alter table Scroll_Collection add constraint fk_Scroll_Collection_scroll_17 foreign key (scroll_id) references scroll (id) on delete restrict on update restrict;
+create index ix_Scroll_Collection_scroll_17 on Scroll_Collection (scroll_id);
+alter table ShopItem add constraint fk_ShopItem_avatar_18 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
+create index ix_ShopItem_avatar_18 on ShopItem (avatar_id);
+alter table solvedSubTask add constraint fk_solvedSubTask_profile_19 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_solvedSubTask_profile_19 on solvedSubTask (profile_id);
+alter table solvedSubTask add constraint fk_solvedSubTask_task_20 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_solvedSubTask_task_20 on solvedSubTask (task_id);
+alter table story_challenge add constraint fk_story_challenge_next_21 foreign key (next_id) references story_challenge (id) on delete restrict on update restrict;
+create index ix_story_challenge_next_21 on story_challenge (next_id);
+alter table submitted_homework add constraint fk_submitted_homework_profile_22 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_submitted_homework_profile_22 on submitted_homework (profile_id);
+alter table submitted_homework add constraint fk_submitted_homework_task_23 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_submitted_homework_task_23 on submitted_homework (task_id);
+alter table submitted_homework add constraint fk_submitted_homework_homeWork_24 foreign key (home_work_id) references homeWork_challenge (id) on delete restrict on update restrict;
+create index ix_submitted_homework_homeWork_24 on submitted_homework (home_work_id);
+alter table TableDefinition add constraint fk_TableDefinition_taskSet_25 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_TableDefinition_taskSet_25 on TableDefinition (task_set_id);
+alter table Task add constraint fk_Task_taskSet_26 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_Task_taskSet_26 on Task (task_set_id);
+alter table Task add constraint fk_Task_creator_27 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_Task_creator_27 on Task (creator_id);
+alter table TaskSet add constraint fk_TaskSet_creator_28 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_TaskSet_creator_28 on TaskSet (creator_id);
+alter table UserSession add constraint fk_UserSession_user_29 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_UserSession_user_29 on UserSession (user_id);
 
 
 
-alter table homeWork_challenge_TaskSet add constraint fk_homeWork_challenge_TaskSet_01 foreign key (homeWork_challenge_id) references homeWork_challenge (id) on delete restrict on update restrict;
+alter table homeWork_challenge_TaskSet add constraint fk_homeWork_challenge_TaskSet_homeWork_challenge_01 foreign key (homeWork_challenge_id) references homeWork_challenge (id) on delete restrict on update restrict;
 
-alter table homeWork_challenge_TaskSet add constraint fk_homeWork_challenge_TaskSet_02 foreign key (TaskSet_id) references TaskSet (id) on delete restrict on update restrict;
+alter table homeWork_challenge_TaskSet add constraint fk_homeWork_challenge_TaskSet_TaskSet_02 foreign key (TaskSet_id) references TaskSet (id) on delete restrict on update restrict;
 
 alter table profile_ShopItem add constraint fk_profile_ShopItem_profile_01 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
 
 alter table profile_ShopItem add constraint fk_profile_ShopItem_ShopItem_02 foreign key (ShopItem_id) references ShopItem (id) on delete restrict on update restrict;
 
-alter table story_challenge_texts add constraint fk_story_challenge_texts_stor_01 foreign key (story_challenge_id) references story_challenge (id) on delete restrict on update restrict;
+alter table story_challenge_texts add constraint fk_story_challenge_texts_story_challenge_01 foreign key (story_challenge_id) references story_challenge (id) on delete restrict on update restrict;
 
-alter table story_challenge_texts add constraint fk_story_challenge_texts_text_02 foreign key (texts_id) references texts (id) on delete restrict on update restrict;
+alter table story_challenge_texts add constraint fk_story_challenge_texts_texts_02 foreign key (texts_id) references texts (id) on delete restrict on update restrict;
 
-alter table story_challenge_map add constraint fk_story_challenge_map_story__01 foreign key (story_challenge_id) references story_challenge (id) on delete restrict on update restrict;
+alter table story_challenge_map add constraint fk_story_challenge_map_story_challenge_01 foreign key (story_challenge_id) references story_challenge (id) on delete restrict on update restrict;
 
 alter table story_challenge_map add constraint fk_story_challenge_map_map_02 foreign key (map_id) references map (id) on delete restrict on update restrict;
 
+alter table TaskSet_rating add constraint fk_TaskSet_rating_TaskSet_01 foreign key (TaskSet_id) references TaskSet (id) on delete restrict on update restrict;
+
+alter table TaskSet_rating add constraint fk_TaskSet_rating_rating_02 foreign key (rating_id) references rating (id) on delete restrict on update restrict;
+
+alter table TaskSet_Comment add constraint fk_TaskSet_Comment_TaskSet_01 foreign key (TaskSet_id) references TaskSet (id) on delete restrict on update restrict;
+
+alter table TaskSet_Comment add constraint fk_TaskSet_Comment_Comment_02 foreign key (Comment_id) references Comment (id) on delete restrict on update restrict;
+
 # --- !Downs
 
-SET REFERENTIAL_INTEGRITY FALSE;
+SET FOREIGN_KEY_CHECKS=0;
 
-drop table if exists avatar;
+drop table avatar;
 
-drop table if exists challenge;
+drop table challenge;
 
-drop table if exists ColumnDefinition;
+drop table ColumnDefinition;
 
-drop table if exists Comment;
+drop table Comment;
 
-drop table if exists homeWork_challenge;
+drop table homeWork_challenge;
 
-drop table if exists homeWork_challenge_TaskSet;
+drop table homeWork_challenge_TaskSet;
 
-drop table if exists Inventory;
+drop table Inventory;
 
-drop table if exists lofi_coin_flow_log;
+drop table lofi_coin_flow_log;
 
-drop table if exists map;
+drop table map;
 
-drop table if exists potion;
+drop table potion;
 
-drop table if exists profile;
+drop table profile;
 
-drop table if exists profile_ShopItem;
+drop table profile_ShopItem;
 
-drop table if exists rating;
+drop table rating;
 
-drop table if exists scroll;
+drop table scroll;
 
-drop table if exists Scroll_Collection;
+drop table Scroll_Collection;
 
-drop table if exists ShopItem;
+drop table ShopItem;
 
-drop table if exists solvedSubTask;
+drop table solvedSubTask;
 
-drop table if exists story_challenge;
+drop table story_challenge;
 
-drop table if exists story_challenge_texts;
+drop table story_challenge_texts;
 
-drop table if exists story_challenge_map;
+drop table story_challenge_map;
 
-drop table if exists submitted_homework;
+drop table submitted_homework;
 
-drop table if exists TableDefinition;
+drop table TableDefinition;
 
-drop table if exists Task;
+drop table Task;
 
-drop table if exists TaskSet;
+drop table TaskSet;
 
-drop table if exists texts;
+drop table TaskSet_rating;
 
-drop table if exists user;
+drop table TaskSet_Comment;
 
-drop table if exists UserSession;
+drop table texts;
 
-SET REFERENTIAL_INTEGRITY TRUE;
+drop table user;
 
-drop sequence if exists avatar_seq;
+drop table UserSession;
 
-drop sequence if exists challenge_seq;
-
-drop sequence if exists ColumnDefinition_seq;
-
-drop sequence if exists Comment_seq;
-
-drop sequence if exists homeWork_challenge_seq;
-
-drop sequence if exists Inventory_seq;
-
-drop sequence if exists lofi_coin_flow_log_seq;
-
-drop sequence if exists map_seq;
-
-drop sequence if exists potion_seq;
-
-drop sequence if exists profile_seq;
-
-drop sequence if exists rating_seq;
-
-drop sequence if exists scroll_seq;
-
-drop sequence if exists Scroll_Collection_seq;
-
-drop sequence if exists ShopItem_seq;
-
-drop sequence if exists solvedSubTask_seq;
-
-drop sequence if exists story_challenge_seq;
-
-drop sequence if exists submitted_homework_seq;
-
-drop sequence if exists TableDefinition_seq;
-
-drop sequence if exists Task_seq;
-
-drop sequence if exists TaskSet_seq;
-
-drop sequence if exists texts_seq;
-
-drop sequence if exists user_seq;
-
-drop sequence if exists UserSession_seq;
+SET FOREIGN_KEY_CHECKS=1;
 

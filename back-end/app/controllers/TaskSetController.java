@@ -24,7 +24,7 @@ import javax.persistence.PersistenceException;
  * @author fabiomazzone
  */
 
-@Authenticated(CreatorSecured.class)
+//@Authenticated(CreatorSecured.class)
 public class TaskSetController extends Controller {
     /**
      * This method creates TaskFile objects from Json
@@ -36,10 +36,11 @@ public class TaskSetController extends Controller {
      */
 
     public static Result create() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        //Profile profile = ProfileDAO.getByUsername(request().username());
+        Profile profile = ProfileDAO.getByUsername("admin");
         JsonNode jsonNode = request().body().asJson();
 
-        TaskSet taskSet = TaskSetView.fromJson(profile, jsonNode);
+        TaskSet taskSet = TaskSetView.fromJsonForm(profile, jsonNode);
 
         if (taskSet == null) {
             Logger.warn("TaskSetController.create - The request body doesn't contain a valid TaskSet Json Object");

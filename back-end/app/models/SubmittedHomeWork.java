@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 @Table(
         name = "submitted_homework",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "sub_task_id, home_work_id"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id, home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SubmittedHomeWork extends SolvedTask {

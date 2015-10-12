@@ -1,5 +1,6 @@
 package view;
 
+import helper.ForeignKeyRelation;
 import models.*;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -7,6 +8,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import play.Logger;
 import play.libs.Json;
 
 import java.util.ArrayList;
@@ -18,9 +20,41 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class TaskSetView {
-    public static TaskSet fromJson(Profile profile, JsonNode jsonNode) {
+    public static TaskSet fromJsonForm(Profile profile, JsonNode jsonNode) {
+        JsonNode tableDefinitionArray               = jsonNode.path("tableDefinitions");
+        JsonNode foreignKeyArray                    = jsonNode.path("foreignKey");
+        JsonNode taskArray                          = jsonNode.path("tasks");
+        List<TableDefinition> tableDefinitions      = new ArrayList<>();
+        List<ForeignKeyRelation> foreignKeyRelations= new ArrayList<>();
+        List<Task> tasks                            = new ArrayList<>();
+        boolean  isHomework                         = jsonNode.path("isHomework").asBoolean();
 
-        return null;
+
+        for(JsonNode tableDefinitionNode : tableDefinitionArray) {
+            tableDefinitions.add(TableDefinitionView.fromJsonForm(tableDefinitionNode));
+        }
+
+        // Setting foreignKey Attributes
+        for(JsonNode foreignKeyNode : foreignKeyArray) {
+            String sourceTable         = foreignKeyNode.get("sourceTable").asText();
+            String sourceColumn        = foreignKeyNode.get("sourceColumn").asText();
+            String destinationTable    = foreignKeyNode.get("destinationTable").asText();
+            String destinationColumn   = foreignKeyNode.get("destinationColumn").asText();
+
+            ForeignKeyRelation foreignKeyRelation = new ForeignKeyRelation(
+                    sourceTable,
+                    sourceColumn,
+                    destinationTable,
+                    destinationColumn);
+
+            foreignKeyRelations.add(foreignKeyRelation);
+        }
+
+        for(JsonNode taskNode : taskArray) {
+            tasks.add(TaskView.fromJsonForm(taskNode, profile));
+        }
+
+        return  new TaskSet(tableDefinitions, foreignKeyRelations, tasks, profile, isHomework);
     }
 
     public static ObjectNode toJson(TaskSet taskSet) {

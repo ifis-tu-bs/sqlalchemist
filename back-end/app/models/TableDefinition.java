@@ -14,6 +14,9 @@ public class TableDefinition extends Model {
     @Id
     private long id;
 
+    @ManyToOne
+    private TaskSet                 taskSet;
+
     private String                  tableName;
     @OneToMany(cascade = CascadeType.ALL)
     private List<ColumnDefinition>  columnDefinitions;
@@ -26,9 +29,8 @@ public class TableDefinition extends Model {
 //  constructor
 //////////////////////////////////////////////////
 
-    public TableDefinition(String tableName, List<ColumnDefinition> columnDefinitions, String extension) {
+    public TableDefinition(String tableName, String extension) {
         this.tableName = tableName;
-        this.columnDefinitions = columnDefinitions;
         this.extension = extension;
     }
 
@@ -48,6 +50,10 @@ public class TableDefinition extends Model {
 
     public List<ColumnDefinition> getColumnDefinitions() {
         return columnDefinitions;
+    }
+
+    public void setColumnDefinitions(List<ColumnDefinition> columnDefinitions) {
+        this.columnDefinitions = columnDefinitions;
     }
 
     public String getExtension() {

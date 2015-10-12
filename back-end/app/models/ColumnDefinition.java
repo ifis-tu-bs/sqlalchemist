@@ -2,9 +2,7 @@ package models;
 
 import play.db.ebean.Model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author fabiomazzone
@@ -15,10 +13,16 @@ public class ColumnDefinition extends Model {
     @Id
     private long id;
 
+    @ManyToOne
+    private TableDefinition tableDefinition;
+
     private String  columnName;
     private String  dataType;
     private boolean isPrimaryKey;
     private boolean isNotNullable;
+
+    @ManyToOne
+    private ColumnDefinition foreignKey;
 
     private int     datagenSet;
 
@@ -29,12 +33,19 @@ public class ColumnDefinition extends Model {
 //  constructor
 //////////////////////////////////////////////////
 
-    public ColumnDefinition(String columnName, String dataType, boolean isPrimaryKey, boolean isNotNullable, int datagenSet) {
-        this.columnName = columnName;
-        this.dataType = dataType;
-        this.isPrimaryKey = isPrimaryKey;
-        this.isNotNullable = isNotNullable;
-        this.datagenSet = datagenSet;
+    public ColumnDefinition(
+            TableDefinition tableDefinition,
+            String columnName,
+            String dataType,
+            boolean isPrimaryKey,
+            boolean isNotNullable,
+            int datagenSet) {
+        this.tableDefinition= tableDefinition;
+        this.columnName     = columnName;
+        this.dataType       = dataType;
+        this.isPrimaryKey   = isPrimaryKey;
+        this.isNotNullable  = isNotNullable;
+        this.datagenSet     = datagenSet;
     }
 
 //////////////////////////////////////////////////
@@ -44,6 +55,10 @@ public class ColumnDefinition extends Model {
 
     public long getId() {
         return id;
+    }
+
+    public TableDefinition getTableDefinition() {
+        return tableDefinition;
     }
 
     public String getColumnName() {
@@ -62,7 +77,20 @@ public class ColumnDefinition extends Model {
         return isNotNullable;
     }
 
+    public boolean isForeignKey() {
+        return (this.foreignKey != null);
+    }
+
+    public ColumnDefinition getForeignKey() {
+        return foreignKey;
+    }
+
+    public void setForeignKey(ColumnDefinition foreignKey) {
+        this.foreignKey = foreignKey;
+    }
+
     public int getDatagenSet() {
         return datagenSet;
     }
+
 }

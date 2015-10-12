@@ -1,5 +1,8 @@
 package models;
 
+import helper.ForeignKeyRelation;
+import view.TableDefinitionView;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -12,7 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * this class objects matches to the task files on disk drive
+ * this entity holds the schema and a set of tasks thats operate on it
  *
  * @author fabiomazzone
  */
@@ -20,30 +23,30 @@ import java.util.List;
 @Table(name = "TaskSet")
 public class TaskSet extends Model {
     @Id
-    private
-    long id;
+    @Column
+    private long id;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private
-    List<TableDefinition>  tableDefinitions;
-    private String           relationsFormatted;
-    @OneToMany(cascade = CascadeType.ALL)
-    private
-    List<Task>       tasks;
-    private boolean          isHomework;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<TableDefinition>   tableDefinitions;
+    private String                  relationsFormatted;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<Task>              tasks;
+    private boolean                 isHomework;
 
     // Social Information's
-    //@ManyToMany
+    @ManyToOne
     private Profile creator;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private
     List<Rating> ratings;
-    @OneToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private
     List<Comment> comments;
 
     private Date created_at;
     private Date updated_at;
+
+    List<ForeignKeyRelation> foreignKeyRelations;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(Long.class, TaskSet.class);
 
@@ -54,39 +57,92 @@ public class TaskSet extends Model {
     /**
      * this is the constructor for an TaskSet object
      *
-     * @param tableDefinitions
-     * @param tasks             a list of all tasks that should be in this set
-     * @param creator           the creator of this object as Profile object
-     * @param isHomeWork        a flag
+     * @param tableDefinitions      a list of table definitions
+     * @param foreignKeyRelations   a list of all foreign key relations
+     * @param tasks                 a list of all tasks that should be in this set
+     * @param creator               the creator of this object as Profile object
+     * @param isHomeWork            a flag
      */
-    private TaskSet(
-            List<TableDefinition> tableDefinitions,
-            List<Task> tasks,
-            Profile creator,
-            boolean isHomeWork) {
-        super();
+    public TaskSet(
+            List<TableDefinition>       tableDefinitions,
+            List<ForeignKeyRelation>    foreignKeyRelations,
+            List<Task>                  tasks,
+            Profile                     creator,
+            boolean                     isHomeWork) {
 
-        this.tableDefinitions   = tableDefinitions;
-        this.tasks              = tasks;
+        this.tableDefinitions       = tableDefinitions;
+        this.foreignKeyRelations    = foreignKeyRelations;
+        this.tasks                  = tasks;
 
-        this.creator            = creator;
-        this.isHomework         = isHomeWork;
+        this.creator                = creator;
+        this.isHomework             = isHomeWork;
 
         // Initialize Social Components
-        this.ratings            = new ArrayList<>();
-        this.comments = new ArrayList<>();
+        this.ratings                = new ArrayList<>();
+        this.comments               = new ArrayList<>();
 
-        this.updated_at         = new Date();
-        this.created_at         = new Date();
+        this.updated_at             = new Date();
+        this.created_at             = new Date();
     }
 
+    @Override
+    public void save() {
+        this.prepareSaving();
+        super.save();
+    }
     /**
      * this method updated the database entry with this entity
      */
     @Override
     public void update() {
-        this.updated_at = new Date();
         super.update();
+    }
+
+    /**
+     * This method prepare the objects data to be stored in the database
+     */
+    private void prepareSaving() {
+        if(this.foreignKeyRelations != null) {
+            for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
+                TableDefinition sourceTable = null, destinationTable = null;
+                for(TableDefinition tableDefinition : this.tableDefinitions) {
+                    if(tableDefinition.getTableName().equals(foreignKeyRelation.sourceTable)) {
+                        sourceTable = tableDefinition;
+                        continue;
+                    }
+                    if(tableDefinition.getTableName().equals(foreignKeyRelation.destinationTable)) {
+                        destinationTable = tableDefinition;
+                    }
+                }
+                if(sourceTable != null && destinationTable != null) {
+                    ColumnDefinition sourceColumn = null, destinationColumn = null;
+                    for(ColumnDefinition columnDefinition : sourceTable.getColumnDefinitions()) {
+                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.sourceColumn)) {
+                            sourceColumn = columnDefinition;
+                            break;
+                        }
+                    }
+                    for(ColumnDefinition columnDefinition : destinationTable.getColumnDefinitions()) {
+                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.destinationColumn)) {
+                            destinationColumn = columnDefinition;
+                            break;
+                        }
+                    }
+                    if(sourceColumn != null && destinationColumn != null) {
+                        sourceColumn.setForeignKey(destinationColumn);
+                    }
+                }
+            }
+        }
+
+        String relationsFormatted = "";
+        for(int i = 0; i < this.tableDefinitions.size(); i++)  {
+            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(1));
+            if(i < this.tableDefinitions.size() - 1)
+                relationsFormatted = relationsFormatted + ",";
+        }
+        this.relationsFormatted = relationsFormatted;
+        this.updated_at = new Date();
     }
 
     /**
@@ -147,10 +203,10 @@ public class TaskSet extends Model {
         return updated_at;
     }
 
-
     public boolean contains(Task task) {
         return this.tasks.contains(task);
     }
+
 //////////////////////////////////////////////////
 //  json method
 //////////////////////////////////////////////////
@@ -175,17 +231,6 @@ public class TaskSet extends Model {
 //////////////////////////////////////////////////
 
     /**
-     * add subtasks of a List to own subtask list
-     * @param tasks   a list filled with subtasks
-     */
-    public void addTasks(List<Task> tasks)
-    {
-        for(Task task : tasks) {
-            this.tasks.add(task);
-        }
-    }
-
-    /**
      * This is the methode to add a rating to this entity
      */
     public void addRating(Rating rating) {
@@ -208,10 +253,10 @@ public class TaskSet extends Model {
      *
      * @param comment   the comment to be added
      */
-    public void addComment(Comment comment)
-    {
+    public void addComment(Comment comment)  {
         this.comments.add(comment);
     }
+
 //////////////////////////////////////////////////
 //  create methods
 //////////////////////////////////////////////////
