@@ -23,15 +23,15 @@
 
 
     <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined" style="float:right">Save current TaskSet</button>
-    <tabset tpye="pills">
+    <uib-tabset tpye="pills">
 
 
 
 
-      <tab deselect="keepTaskSets();">
-        <tab-heading>
+      <uib-tab deselect="keepTaskSets();">
+        <uib-tab-heading>
           TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
-        </tab-heading>
+        </uib-tab-heading>
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
@@ -83,17 +83,17 @@
           </div>
 
         </div>
-      </tab>
+      </uib-tab>
 
-      <tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
+      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
         <tab-heading>
           Intension <i>(tableDefinition)</i>
         </tab-heading>
-        <accordion close-others=true>
-          <accordion-group is-open="tableSelectionStatus.tableNotSelected">
-            <accordion-heading>
+        <uib-accordion close-others=true>
+          <uib-accordion-group is-open="tableSelectionStatus.tableNotSelected">
+            <uib-accordion-heading>
               <h5>Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b></h5>
-            </accordion-heading>
+            </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -120,11 +120,11 @@
                 </tr>
               </tbody>
             </table>
-          </accordion-group>
-          <accordion-group is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
-            <accordion-heading>
+          </uib-accordion-group>
+          <uib-accordion-group is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
+            <uib-accordion-heading>
               <h5>Columns:</b></h5>
-            </accordion-heading>
+            </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
                 <tr>
@@ -138,7 +138,7 @@
               <tbody>
                 <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
-                  <td><input type="text" ng-model="column.dataType" typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
+                  <td><input type="text" ng-model="column.dataType" uib-typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
                   <td>{{column.datagenSet}}</td>
                   <td><input type="checkbox" ng-model="column.notnull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
@@ -154,26 +154,26 @@
                 </tr>
               </tbody>
             </table>
-          </accordion-group>
-        </accordion>
+          </uib-accordion-group>
+        </uib-accordion>
 
-      </tab>
+      </uib-tab>
 
-      <tab disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
       <tab-heading>
           Intension <i>(foreignKeys)</i>
         </tab-heading>
 
-      </tab>
+      </uib-tab>
 
 
 
 
 
-      <tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
 
-      </tab>
-      <tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      </uib-tab>
+      <uib-tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
@@ -211,8 +211,8 @@
         </div>
 
 
-      </tab>
-    </tabset>
+      </uib-tab>
+    </uib-tabset>
   </div>
 
 
