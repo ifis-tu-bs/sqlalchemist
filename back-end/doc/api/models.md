@@ -218,9 +218,9 @@ TableDefinition:
 | ```relationsFormatted``` | ```String```                |            |
 | ```taskText```           | ```String```                |            |
 | ```refStatement```       | ```String```                |            |
-| ```evalstrategy```       | ```Number```                |[SET, LIST] |
+| ```evaluationstrategy``` | ```Number```                |[SET, LIST] |
 | ```points```             | ```Number```                |            |
-| ```requiredterm```       | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```requiredTerm```       | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
 | ```creator```            | [```Profile```](#profile)   |            |
 | ```rating```             | [```Rating```](#rating)     |            |
 | ```comments```           | [```Comment[]```](#comment) |            |
@@ -270,7 +270,7 @@ Task:
   "taskSet":            1,
   "taskText":           "Find all user",
   "refStatement":       "SELECT * FROM User",
-  "evalstrategy":       Number,
+  "evaluationstrategy": Number,
   "points":             1,
   "requiredTerm":       Number,
 }
