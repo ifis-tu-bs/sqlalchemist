@@ -22,7 +22,7 @@ public class CommentView {
 
         node.put("profile",     comment.getProfile().toJson());
         node.put("text",        comment.getComment());
-        node.put("created_at",  String.valueOf(comment.getCreated_at()));
+        node.put("createdAt",  String.valueOf(comment.getCreated_at()));
 
         return node;
     }

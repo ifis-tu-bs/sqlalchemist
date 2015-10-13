@@ -21,7 +21,7 @@
 |--------------------------|------------------------|------------|
 | ```id```                 | ```Number ```          |            |
 | ```columnName```         | ```String```           |            |
-| ```data_type```          | ```String```           |            |
+| ```dataType```           | ```String```           |            |
 | ```primaryKey```         | ```Boolean```          |            |
 | ```foreignKey```         | [```Column```](#column)|            |
 | ```notNull```            | ```Boolean```          |            |
@@ -33,7 +33,7 @@ Columns:
 {
   "id":         12,
   "columnName": "FirstName",
-  "data_type":  "Varchar(255)",
+  "dataType":   "Varchar(255)",
   "primaryKey": false,
   "notNull":    true,
   "foreignKey": null,
@@ -44,7 +44,7 @@ Columns:
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
 | ```columnName```         | ```String```      |            |
-| ```data_type```          | ```String```      |            |
+| ```dataType```           | ```String```      |            |
 | ```primaryKey```         | ```Boolean```     |            |
 | ```notNull```            | ```Boolean```     |            |
 | ```datagenSet```         | ```Number```      |            |
@@ -54,7 +54,7 @@ Example:
 Columns:
 {
   "columnName": "FirstName",
-  "data_type":  "Varchar(255)",
+  "dataType":   "Varchar(255)",
   "primaryKey": false,
   "notNull":    true,
   "datagenSet": 1
@@ -65,7 +65,7 @@ Columns:
 |--------------------------|-------------------------------------|------------|
 | ```profile```            | ```[```Profile```](#profile)```     |            |
 | ```text```               | ```String```                        |            |
-| ```created_at```         | ```String```                        |            |
+| ```createdAt```         | ```String```                        |            |
 
 Example:
 ```json
@@ -73,7 +73,7 @@ Comment:
 {
   "profile":    Profile,
   "text":       "Ein kommentar",
-  "created_at": "Mon Oct 12 06:18:37 CEST 2015"
+  "createdAt":  "Mon Oct 12 06:18:37 CEST 2015"
 }
 ```
 #### Comment.Form
@@ -224,8 +224,8 @@ TableDefinition:
 | ```creator```            | [```Profile```](#profile)   |            |
 | ```rating```             | [```Rating```](#rating)     |            |
 | ```comments```           | [```Comment[]```](#comment) |            |
-| ```created_at```         | ```String```                |            |
-| ```updated_at```         | ```String```                |            |
+| ```createdAt```          | ```String```                |            |
+| ```updatedAt```          | ```String```                |            |
 
 Example:  
 ```json
@@ -246,9 +246,9 @@ Task:
                             "negative":   false,
                             "needReview": false
                         },
-  "comments":           Comment[],
-  "created_at":         "Mon Oct 12 06:18:37 CEST 2015",
-  "updated_at":         "Mon Oct 12 06:18:37 CEST 2015"
+  "comments":           [],
+  "createdAt":          "Mon Oct 12 06:18:37 CEST 2015",
+  "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015"
 }
 
 ```
@@ -289,8 +289,8 @@ Task:
 | ```isHomework```         | ```String```                                |            |
 | ```rating```             | [```Rating```](#rating)                     |            |
 | ```comments```           | [```Comment[]```](#comment)                 |            |
-| ```created_at```         | ```String```                                |            |
-| ```updated_at```         | ```String```                                |            |
+| ```createdAt```          | ```String```                                |            |
+| ```updatedAt```          | ```String```                                |            |
 Example:  
 ```json
 TaskSet: {
@@ -324,9 +324,9 @@ TaskSet: {
                             "negative":   false,
                             "needReview": false
                         },
-  "comments":           Comment[],
-  "created_at":         "Mon Oct 12 06:18:37 CEST 2015",
-  "updated_at":         "Mon Oct 12 06:18:37 CEST 2015"
+  "comments":           [],
+  "createdAt":          "Mon Oct 12 06:18:37 CEST 2015",
+  "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015"
 }
 ```
 

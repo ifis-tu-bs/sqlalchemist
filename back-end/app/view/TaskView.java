@@ -50,8 +50,8 @@ public class TaskView {
         json.put("rating",              RatingView.toJson(rating_sum));
         json.put("comments",            commentNode);
 
-        json.put("created_at",          String.valueOf(task.getCreated_at()));
-        json.put("updated_at",          String.valueOf(task.getUpdated_at()));
+        json.put("createdAt",           String.valueOf(task.getCreated_at()));
+        json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
         return json;
     }
 

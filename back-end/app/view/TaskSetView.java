@@ -85,8 +85,8 @@ public class TaskSetView {
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
         taskSetJson.put("rating",               RatingView.toJson(rating_sum));
         taskSetJson.put("comments",             commentNode);
-        taskSetJson.put("created_at",           String.valueOf(taskSet.getCreated_at()));
-        taskSetJson.put("updated_at",           String.valueOf(taskSet.getUpdated_at()));
+        taskSetJson.put("createdAt",            String.valueOf(taskSet.getCreated_at()));
+        taskSetJson.put("updatedAt",            String.valueOf(taskSet.getUpdated_at()));
 
         return taskSetJson;
     }
