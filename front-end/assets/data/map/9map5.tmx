@@ -61,7 +61,7 @@
   <object id="504" name="ScrollEntity" x="6783" y="727" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="30"/>
+    <property name="scrollIndex" value="29"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -400,11 +400,11 @@
  <objectgroup name="collision">
   <object id="1" name="Ground" x="0.6667" y="480.333" width="717.333" height="31"/>
   <object id="445" name="Ground" x="833" y="798.908" width="1387" height="97"/>
-  <object id="516" name="Ground" x="6182.41" y="225" width="855.182" height="60"/>
-  <object id="605" name="Ground" x="5735.98" y="384.121" width="431.122" height="61"/>
-  <object id="606" name="Ground" x="5255.14" y="576.121" width="431.122" height="62"/>
-  <object id="635" name="Ground" x="2183.29" y="543.545" width="592.561" height="64"/>
-  <object id="640" name="Ground" x="4870.35" y="799.182" width="432.122" height="63"/>
+  <object id="516" name="Ground" x="6182.41" y="225" width="855.182" height="40"/>
+  <object id="605" name="Ground" x="5735.98" y="384.121" width="431.122" height="40"/>
+  <object id="606" name="Ground" x="5255.14" y="576.121" width="431.122" height="40"/>
+  <object id="635" name="Ground" x="2183.29" y="543.545" width="592.561" height="40"/>
+  <object id="640" name="Ground" x="4870.35" y="799.182" width="432.122" height="40"/>
   <object id="641" name="Ground" x="4327" y="991" width="528" height="65"/>
   <object id="642" name="Ground" x="2753" y="800" width="1454" height="95"/>
   <object id="643" name="Ground" x="5506" y="799" width="1533" height="96"/>

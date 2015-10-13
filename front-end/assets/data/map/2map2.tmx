@@ -441,7 +441,7 @@
   </object>
   <object id="196" name="EnemyEntity" x="544" y="659" width="79" height="320">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="1"/>
     <property name="image" value="saber"/>
     <property name="jump" value="9"/>
     <property name="speed" value="1"/>
@@ -450,7 +450,7 @@
    </properties>
   </object>
  </objectgroup>
- <objectgroup name="collision" visible="0">
+ <objectgroup name="collision">
   <object id="1" name="Ground" x="1.6667" y="770.333" width="509" height="14"/>
   <object id="33" name="Ground" x="673.67" y="961.333" width="736" height="11"/>
   <object id="64" name="Ground" x="1569.5" y="800.5" width="318" height="10"/>

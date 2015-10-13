@@ -360,7 +360,7 @@
   </object>
   <object id="144" name="EnemyEntity" x="637.385" y="735.908" width="389.23" height="32.185">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="1"/>
     <property name="image" value="dragon"/>
     <property name="jump" value="0"/>
     <property name="speed" value="6"/>

@@ -446,7 +446,7 @@
   </object>
   <object id="455" name="EnemyEntity" x="2064" y="308" width="222" height="72">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="1"/>
     <property name="image" value="enemy18_316x72"/>
     <property name="jump" value="0"/>
     <property name="speed" value="4"/>

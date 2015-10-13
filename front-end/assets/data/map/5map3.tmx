@@ -959,7 +959,7 @@
   </object>
   <object id="409" name="EnemyEntity" x="5397" y="995.408" width="1000" height="31.185">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="1"/>
     <property name="image" value="saber"/>
     <property name="jump" value="0"/>
     <property name="speed" value="25"/>

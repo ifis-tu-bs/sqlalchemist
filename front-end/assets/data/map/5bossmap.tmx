@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="188">
  <tileset firstgid="1" name="tileset2" tilewidth="32" tileheight="32">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/map/tileset2.png" trans="ffffff" width="192" height="544"/>
+  <image source="../img/map/tileset2.png" trans="ffffff" width="192" height="544"/>
  </tileset>
  <tileset firstgid="103" name="objekte" tilewidth="32" tileheight="32">
   <image source="../img/map/objekte.png" width="416" height="224"/>
  </tileset>
  <imagelayer name="Parallax_layer1">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/background/background_fog3.png"/>
+  <image source="../img/background/background_fog3.png"/>
  </imagelayer>
  <layer name="Kachelebene 1" width="120" height="34">
   <data encoding="base64">

@@ -218,7 +218,7 @@
   </object>
   <object id="154" name="EnemyEntity" x="8369.89" y="614.908" width="284.23" height="32.185">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="2"/>
     <property name="image" value="firefox"/>
     <property name="jump" value="0"/>
     <property name="speed" value="5"/>

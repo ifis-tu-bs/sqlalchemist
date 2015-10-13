@@ -180,6 +180,7 @@ var game = {
         me.pool.register("EnemyEntity", game.EnemyEntity);
         me.pool.register("SpikeEntity", game.SpikeEntity);
         me.pool.register("FireEntity", game.FireEntity);
+        me.pool.register("BuffEntity", game.BuffEntity);
 
 
 

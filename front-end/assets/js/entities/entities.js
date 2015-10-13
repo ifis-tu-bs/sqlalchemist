@@ -81,6 +81,7 @@ game.LevelEntity = me.LevelEntity.extend({
             game.persistent.currentLevel[0] = next;
 
             //Return our map name
+            console.log("NEXT: ",next);
             return (difficulty.toString() + "map" + next.toString());
         }
     }
@@ -484,6 +485,43 @@ game.FireEntity = me.CollectableEntity.extend({
         this.body.setCollisionMask(me.collision.types.NO_OBJECT);
 
         // remove it
+        me.game.world.removeChild(this);
+    }
+});
+
+/*----------------
+ a buffinging entity
+ ----------------- */
+game.BuffEntity = me.CollectableEntity.extend({
+    // extending the init function is not mandatory
+    // unless you need to add some extra initialization
+    init: function(x, y, settings) {
+        this.speed = settings.speed;
+        this.jump = settings.jump;
+        this.defense = settings.defense;
+        this.health = settings.health;
+        this.time = settings.time;
+
+        // call the parent constructor
+        this._super(me.CollectableEntity, 'init', [x, y , settings]);
+
+    },
+
+    // this function is called by the engine, when
+    // an object is touched by something (here collected)
+    onCollision : function () {
+        // do something when collected
+
+        game.stats.hp = game.stats.hp + this.health;
+        game.stats.addspeed = this.speed;
+        game.stats.addjump = this.jump;
+        game.stats.adddefense = this.defense;
+
+        setTimeout(function () {
+            game.stats.addspeed = 0;
+            game.stats.addjump = 0;
+            game.stats.adddefense = 0;
+        }, this.time);
         me.game.world.removeChild(this);
     }
 });

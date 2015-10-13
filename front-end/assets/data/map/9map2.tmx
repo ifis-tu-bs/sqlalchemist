@@ -324,16 +324,16 @@
  <objectgroup name="collision">
   <object id="1" name="Ground" x="-7.3333" y="481.333" width="724.333" height="31"/>
   <object id="445" name="Ground" x="861.727" y="799.908" width="6204.27" height="99"/>
-  <object id="505" name="Ground" x="902.818" y="320" width="400.182" height="60"/>
-  <object id="506" name="Ground" x="1478" y="192" width="401" height="60"/>
-  <object id="507" name="Ground" x="2535" y="383" width="401.182" height="60"/>
-  <object id="509" name="Ground" x="2055.41" y="575" width="400.182" height="60"/>
-  <object id="510" name="Ground" x="3109.41" y="224" width="401.182" height="60"/>
-  <object id="511" name="Ground" x="3687.41" y="384" width="400.182" height="62"/>
-  <object id="512" name="Ground" x="4230.41" y="579" width="402.182" height="58"/>
-  <object id="513" name="Ground" x="4774.41" y="384" width="528.591" height="60"/>
-  <object id="514" name="Ground" x="5382.41" y="224" width="401.182" height="60"/>
-  <object id="515" name="Ground" x="6054.41" y="224" width="982.591" height="63"/>
+  <object id="505" name="Ground" x="902.818" y="320" width="400.182" height="40"/>
+  <object id="506" name="Ground" x="1478" y="192" width="401" height="40"/>
+  <object id="507" name="Ground" x="2535" y="383" width="401.182" height="40"/>
+  <object id="509" name="Ground" x="2055.41" y="575" width="400.182" height="40"/>
+  <object id="510" name="Ground" x="3109.41" y="224" width="401.182" height="40"/>
+  <object id="511" name="Ground" x="3687.41" y="384" width="400.182" height="40"/>
+  <object id="512" name="Ground" x="4230.41" y="579" width="402.182" height="40"/>
+  <object id="513" name="Ground" x="4774.41" y="384" width="528.591" height="40"/>
+  <object id="514" name="Ground" x="5382.41" y="224" width="401.182" height="40"/>
+  <object id="515" name="Ground" x="6054.41" y="224" width="982.591" height="40"/>
   <object id="517" name="Ground" x="1798.67" y="422.333" width="115" height="29"/>
   <object id="518" name="Ground" x="1861.83" y="488" width="114" height="23.6667"/>
   <object id="519" name="Ground" x="4104.83" y="553" width="109" height="28.3333"/>

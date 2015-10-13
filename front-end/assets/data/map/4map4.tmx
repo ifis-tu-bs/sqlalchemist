@@ -309,7 +309,7 @@
   </object>
   <object id="397" name="EnemyEntity" x="2144" y="992" width="479" height="72">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="1"/>
     <property name="image" value="enemy18_316x72"/>
     <property name="jump" value="0"/>
     <property name="speed" value="4"/>

@@ -15,12 +15,12 @@ game.PlayScreen = me.ScreenObject.extend({
         game.data.score = 0;
 
         //is used for balancing purposes
-        var cheat = 6;
+        var cheat = 5;
         game.persistent.depth += cheat*5;
-        game.stats.defense += cheat;
-        game.stats.health += cheat;
-        game.stats.speed += cheat;
-        game.stats.jump += cheat;
+        game.stats.defense += cheat + 2 * 2;
+        game.stats.health += cheat + 1 * 0;
+        game.stats.speed += cheat + 2 * 0;
+        game.stats.jump += cheat + 3 * 2;
 
         for( var i = 0; i < 10; i++) {
             console.log("I:"+i);
@@ -35,11 +35,8 @@ game.PlayScreen = me.ScreenObject.extend({
         // load the start level
         if(game.data.playerStat.isTutorial){
             me.levelDirector.loadLevel("tutorial");
-        }else if(game.data.cheat){
-            game.data.cheat = false;
-            me.levelDirector.loadLevel("tutorial");
         }else{
-            me.levelDirector.loadLevel("start");
+            me.levelDirector.loadLevel("5bossmap");
         }
 
         // reset the hp

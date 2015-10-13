@@ -48,7 +48,7 @@
   <object id="13" name="ScrollEntity" x="3134" y="351" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="29"/>
+    <property name="scrollIndex" value="28"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -269,7 +269,7 @@
   </object>
   <object id="398" name="EnemyEntity" x="1603" y="550.5" width="700" height="56">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="3"/>
     <property name="image" value="enemy14"/>
     <property name="jump" value="0"/>
     <property name="speed" value="8"/>
@@ -287,9 +287,5 @@
   <object id="285" name="Ground" x="3041.5" y="415.5" width="223" height="32.5"/>
   <object id="288" name="Ground" x="3488.5" y="480.5" width="353" height="126"/>
   <object id="333" name="Ground" x="897.5" y="770" width="698" height="60"/>
-  <object id="372" name="Ground" x="1893.66" y="408.834" width="23.67" height="51.333"/>
-  <object id="373" name="Ground" x="1894.66" y="756.833" width="20.67" height="299.333"/>
-  <object id="374" name="Ground" x="2723.66" y="416.833" width="25.67" height="43.333"/>
-  <object id="375" name="Ground" x="2726.66" y="755.333" width="19.67" height="299.333"/>
  </objectgroup>
 </map>

@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="164">
  <tileset firstgid="1" name="jungle_guide" tilewidth="32" tileheight="32">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/map/jungle_guide.png" width="768" height="928"/>
+  <image source="../img/map/jungle_guide.png" width="768" height="928"/>
  </tileset>
  <tileset firstgid="697" name="jungle_terrain" tilewidth="32" tileheight="32">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/map/jungle_terrain.png" width="896" height="480"/>
+  <image source="../img/map/jungle_terrain.png" width="896" height="480"/>
  </tileset>
  <tileset firstgid="1117" name="objekte" tilewidth="32" tileheight="32">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/map/objekte.png" width="416" height="224"/>
+  <image source="../img/map/objekte.png" width="416" height="224"/>
  </tileset>
  <imagelayer name="Parallax_layer1">
-  <image source="../../../../Testdemos/Maptest/assets/data/img/background/rock.png"/>
+  <image source="../img/background/rock.png"/>
  </imagelayer>
  <layer name="Kachelebene 1" width="120" height="34">
   <data encoding="base64">
@@ -153,7 +153,7 @@
     <property name="spritewidth" value="70"/>
    </properties>
   </object>
-  <object id="112" name="EnemyEntity" x="1728.5" y="798.125" width="417" height="63.75">
+  <object id="112" name="EnemyEntity" x="1595.5" y="766.125" width="417" height="63.75">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="crow70x80"/>

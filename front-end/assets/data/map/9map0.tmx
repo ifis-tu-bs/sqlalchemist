@@ -42,7 +42,7 @@
   <object id="13" name="ScrollEntity" x="1839.12" y="469.091" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="50"/>
+    <property name="scrollIndex" value="49"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
