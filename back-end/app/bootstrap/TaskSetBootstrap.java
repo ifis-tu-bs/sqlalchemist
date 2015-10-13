@@ -121,7 +121,16 @@ public class TaskSetBootstrap {
                 "            \"destinationColumn\":\"id\"\n" +
                 "        }\n" +
                 "    ],\n" +
-                "    \"tasks\": [],\n" +
+                "    \"tasks\": [" +
+                "       {\n" +
+                "               \"taskSet\":            1,\n" +
+                "               \"taskText\":           \"Find all user\",\n" +
+                "               \"refStatement\":       \"SELECT * FROM User\",\n" +
+                "               \"evaluationstrategy\":       1,\n" +
+                "               \"points\":             1,\n" +
+                "               \"requiredTerm\":       2\n" +
+                "       }" +
+                "   ],\n" +
                 "    \"isHomework\":   true\n" +
                 "}\n");
 

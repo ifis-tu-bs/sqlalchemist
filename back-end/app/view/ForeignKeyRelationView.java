@@ -10,10 +10,10 @@ import play.libs.Json;
  */
 public class ForeignKeyRelationView {
     public static ForeignKeyRelation fromJsonForm(JsonNode foreignKeyNode) {
-        String sourceTable         = foreignKeyNode.get("sourceTable").asText();
-        String sourceColumn        = foreignKeyNode.get("sourceColumn").asText();
-        String destinationTable    = foreignKeyNode.get("destinationTable").asText();
-        String destinationColumn   = foreignKeyNode.get("destinationColumn").asText();
+        String sourceTable         = foreignKeyNode.path("sourceTable").asText();
+        String sourceColumn        = foreignKeyNode.path("sourceColumn").asText();
+        String destinationTable    = foreignKeyNode.path("destinationTable").asText();
+        String destinationColumn   = foreignKeyNode.path("destinationColumn").asText();
 
         return new ForeignKeyRelation(
                 sourceTable,

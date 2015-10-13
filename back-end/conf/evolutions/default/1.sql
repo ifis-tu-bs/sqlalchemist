@@ -52,6 +52,16 @@ create table Comment (
   constraint pk_Comment primary key (id))
 ;
 
+create table ForeignKeyRelation (
+  id                        bigint auto_increment not null,
+  task_set_id               bigint,
+  source_table              varchar(255),
+  source_column             varchar(255),
+  destination_table         varchar(255),
+  destination_column        varchar(255),
+  constraint pk_ForeignKeyRelation primary key (id))
+;
+
 create table homeWork_challenge (
   id                        bigint auto_increment not null,
   challenge_name            varchar(255),
@@ -345,56 +355,58 @@ alter table Comment add constraint fk_Comment_Task_3 foreign key (task_id) refer
 create index ix_Comment_Task_3 on Comment (task_id);
 alter table Comment add constraint fk_Comment_profile_4 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
 create index ix_Comment_profile_4 on Comment (profile_id);
-alter table homeWork_challenge add constraint fk_homeWork_challenge_creator_5 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_homeWork_challenge_creator_5 on homeWork_challenge (creator_id);
-alter table Inventory add constraint fk_Inventory_profile_6 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Inventory_profile_6 on Inventory (profile_id);
-alter table Inventory add constraint fk_Inventory_potion_7 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
-create index ix_Inventory_potion_7 on Inventory (potion_id);
-alter table lofi_coin_flow_log add constraint fk_lofi_coin_flow_log_profile_8 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_lofi_coin_flow_log_profile_8 on lofi_coin_flow_log (profile_id);
-alter table profile add constraint fk_profile_user_9 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_profile_user_9 on profile (user_id);
-alter table profile add constraint fk_profile_avatar_10 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
-create index ix_profile_avatar_10 on profile (avatar_id);
-alter table profile add constraint fk_profile_currentStory_11 foreign key (current_story_id) references story_challenge (id) on delete restrict on update restrict;
-create index ix_profile_currentStory_11 on profile (current_story_id);
-alter table profile add constraint fk_profile_currentScroll_12 foreign key (current_scroll_id) references scroll (id) on delete restrict on update restrict;
-create index ix_profile_currentScroll_12 on profile (current_scroll_id);
-alter table rating add constraint fk_rating_Task_13 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_rating_Task_13 on rating (task_id);
-alter table rating add constraint fk_rating_profile_14 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_rating_profile_14 on rating (profile_id);
-alter table scroll add constraint fk_scroll_potion_15 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
-create index ix_scroll_potion_15 on scroll (potion_id);
-alter table Scroll_Collection add constraint fk_Scroll_Collection_profile_16 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Scroll_Collection_profile_16 on Scroll_Collection (profile_id);
-alter table Scroll_Collection add constraint fk_Scroll_Collection_scroll_17 foreign key (scroll_id) references scroll (id) on delete restrict on update restrict;
-create index ix_Scroll_Collection_scroll_17 on Scroll_Collection (scroll_id);
-alter table ShopItem add constraint fk_ShopItem_avatar_18 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
-create index ix_ShopItem_avatar_18 on ShopItem (avatar_id);
-alter table solvedSubTask add constraint fk_solvedSubTask_profile_19 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_solvedSubTask_profile_19 on solvedSubTask (profile_id);
-alter table solvedSubTask add constraint fk_solvedSubTask_task_20 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_solvedSubTask_task_20 on solvedSubTask (task_id);
-alter table story_challenge add constraint fk_story_challenge_next_21 foreign key (next_id) references story_challenge (id) on delete restrict on update restrict;
-create index ix_story_challenge_next_21 on story_challenge (next_id);
-alter table submitted_homework add constraint fk_submitted_homework_profile_22 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_submitted_homework_profile_22 on submitted_homework (profile_id);
-alter table submitted_homework add constraint fk_submitted_homework_task_23 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_submitted_homework_task_23 on submitted_homework (task_id);
-alter table submitted_homework add constraint fk_submitted_homework_homeWork_24 foreign key (home_work_id) references homeWork_challenge (id) on delete restrict on update restrict;
-create index ix_submitted_homework_homeWork_24 on submitted_homework (home_work_id);
-alter table TableDefinition add constraint fk_TableDefinition_taskSet_25 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_TableDefinition_taskSet_25 on TableDefinition (task_set_id);
-alter table Task add constraint fk_Task_taskSet_26 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_Task_taskSet_26 on Task (task_set_id);
-alter table Task add constraint fk_Task_creator_27 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_Task_creator_27 on Task (creator_id);
-alter table TaskSet add constraint fk_TaskSet_creator_28 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_TaskSet_creator_28 on TaskSet (creator_id);
-alter table UserSession add constraint fk_UserSession_user_29 foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_UserSession_user_29 on UserSession (user_id);
+alter table ForeignKeyRelation add constraint fk_ForeignKeyRelation_taskSet_5 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_ForeignKeyRelation_taskSet_5 on ForeignKeyRelation (task_set_id);
+alter table homeWork_challenge add constraint fk_homeWork_challenge_creator_6 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_homeWork_challenge_creator_6 on homeWork_challenge (creator_id);
+alter table Inventory add constraint fk_Inventory_profile_7 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Inventory_profile_7 on Inventory (profile_id);
+alter table Inventory add constraint fk_Inventory_potion_8 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
+create index ix_Inventory_potion_8 on Inventory (potion_id);
+alter table lofi_coin_flow_log add constraint fk_lofi_coin_flow_log_profile_9 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_lofi_coin_flow_log_profile_9 on lofi_coin_flow_log (profile_id);
+alter table profile add constraint fk_profile_user_10 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_profile_user_10 on profile (user_id);
+alter table profile add constraint fk_profile_avatar_11 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
+create index ix_profile_avatar_11 on profile (avatar_id);
+alter table profile add constraint fk_profile_currentStory_12 foreign key (current_story_id) references story_challenge (id) on delete restrict on update restrict;
+create index ix_profile_currentStory_12 on profile (current_story_id);
+alter table profile add constraint fk_profile_currentScroll_13 foreign key (current_scroll_id) references scroll (id) on delete restrict on update restrict;
+create index ix_profile_currentScroll_13 on profile (current_scroll_id);
+alter table rating add constraint fk_rating_Task_14 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_rating_Task_14 on rating (task_id);
+alter table rating add constraint fk_rating_profile_15 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_rating_profile_15 on rating (profile_id);
+alter table scroll add constraint fk_scroll_potion_16 foreign key (potion_id) references potion (id) on delete restrict on update restrict;
+create index ix_scroll_potion_16 on scroll (potion_id);
+alter table Scroll_Collection add constraint fk_Scroll_Collection_profile_17 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Scroll_Collection_profile_17 on Scroll_Collection (profile_id);
+alter table Scroll_Collection add constraint fk_Scroll_Collection_scroll_18 foreign key (scroll_id) references scroll (id) on delete restrict on update restrict;
+create index ix_Scroll_Collection_scroll_18 on Scroll_Collection (scroll_id);
+alter table ShopItem add constraint fk_ShopItem_avatar_19 foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
+create index ix_ShopItem_avatar_19 on ShopItem (avatar_id);
+alter table solvedSubTask add constraint fk_solvedSubTask_profile_20 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_solvedSubTask_profile_20 on solvedSubTask (profile_id);
+alter table solvedSubTask add constraint fk_solvedSubTask_task_21 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_solvedSubTask_task_21 on solvedSubTask (task_id);
+alter table story_challenge add constraint fk_story_challenge_next_22 foreign key (next_id) references story_challenge (id) on delete restrict on update restrict;
+create index ix_story_challenge_next_22 on story_challenge (next_id);
+alter table submitted_homework add constraint fk_submitted_homework_profile_23 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_submitted_homework_profile_23 on submitted_homework (profile_id);
+alter table submitted_homework add constraint fk_submitted_homework_task_24 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_submitted_homework_task_24 on submitted_homework (task_id);
+alter table submitted_homework add constraint fk_submitted_homework_homeWork_25 foreign key (home_work_id) references homeWork_challenge (id) on delete restrict on update restrict;
+create index ix_submitted_homework_homeWork_25 on submitted_homework (home_work_id);
+alter table TableDefinition add constraint fk_TableDefinition_taskSet_26 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_TableDefinition_taskSet_26 on TableDefinition (task_set_id);
+alter table Task add constraint fk_Task_taskSet_27 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_Task_taskSet_27 on Task (task_set_id);
+alter table Task add constraint fk_Task_creator_28 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_Task_creator_28 on Task (creator_id);
+alter table TaskSet add constraint fk_TaskSet_creator_29 foreign key (creator_id) references profile (id) on delete restrict on update restrict;
+create index ix_TaskSet_creator_29 on TaskSet (creator_id);
+alter table UserSession add constraint fk_UserSession_user_30 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_UserSession_user_30 on UserSession (user_id);
 
 
 
@@ -433,6 +445,8 @@ drop table challenge;
 drop table ColumnDefinition;
 
 drop table Comment;
+
+drop table ForeignKeyRelation;
 
 drop table homeWork_challenge;
 

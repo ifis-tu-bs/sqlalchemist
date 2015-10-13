@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * @author fabiomazzone
  */
-@Authenticated(UserSecured.class)
+//@Authenticated(UserSecured.class)
 public class TaskController extends Controller {
 
     /**

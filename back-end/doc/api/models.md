@@ -237,9 +237,9 @@ Task:
   "relationsFormatted": "User(FirstName : String)",
   "taskText":           "Find all user",
   "refStatement":       "SELECT * FROM User",
-  "evalstrategy":       Number,
+  "evaluationstrategy": Number,
   "points":             1,
-  "requiredterm":       Number,
+  "requiredTerm":       Number,
   "creator":            Profile,
   "rating":             {
                             "positive":   true,
@@ -259,9 +259,9 @@ Task:
 | ```taskSet```            | ```Number```  |            |
 | ```taskText```           | ```String```  |            |
 | ```refStatement```       | ```String```  |            |
-| ```evalstrategy```       | ```Number```  |[SET, LIST] |
+| ```evaluationstrategy``` | ```Number```  |[SET, LIST] |
 | ```points```             | ```Number```  |            |
-| ```requiredterm```       | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```requiredTerm```       | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
 
 Example:  
 ```json
@@ -272,7 +272,7 @@ Task:
   "refStatement":       "SELECT * FROM User",
   "evalstrategy":       Number,
   "points":             1,
-  "requiredterm":       Number,
+  "requiredTerm":       Number,
 }
 
 ```
