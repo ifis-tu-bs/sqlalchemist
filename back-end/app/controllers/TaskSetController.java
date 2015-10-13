@@ -3,17 +3,11 @@ package controllers;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
-import models.Comment;
-import models.Profile;
-import models.Rating;
-import models.TaskSet;
+import models.*;
 
 import play.mvc.Security;
-import secured.CreatorSecured;
 import secured.UserSecured;
-import view.CommentView;
-import view.RatingView;
-import view.TaskSetView;
+import view.*;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -24,6 +18,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -112,33 +107,46 @@ public class TaskSetController extends Controller {
      * @return
      */
     public static Result update(Long id) {
-        Profile     profile     = ProfileDAO.getByUsername("admin");
+        //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
+        Logger.info(jsonNode.toString());
 
-  /*      TaskSet     taskSetEdit = TaskSetView.fromJson(profile, jsonNode);
+        JsonNode    tableDefinitionsNode            = jsonNode.path("tableDefinitions");
+        JsonNode    foreignKeyRelationsNode         = jsonNode.path("foreignKeyRelations");
 
-        if(taskSet == null && taskSetEdit == null) {
-            Logger.warn("TaskSetController - no TaskSet found for id: " + id + " and invalid taskSetForm !");
-            return badRequest("no TaskSet found and no valid taskSetForm");
-        } else if(taskSet == null ) {
+        String                  taskSetName         = jsonNode.path("taskSetName").asText();
+        List<TableDefinition>   tableDefinitions    = new ArrayList<>();
+        List<ForeignKeyRelation>foreignKeyRelations = new ArrayList<>();
+
+        if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
             return badRequest("no TaskSet found");
-        } else if(taskSetEdit == null) {
-            Logger.warn("TaskSetController - invalid taskSetForm !");
-            return badRequest("invalid taskSetForm");
+        }
+        // Delete old Data
+        for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
+            tableDefinition.delete();
         }
 
-        taskSet.setTaskSetName(taskSetEdit.getTaskSetName());
+        for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
+            foreignKeyRelation.delete();
+        }
 
-        tableDefinitions;
+        // Create new Data
+        for(JsonNode tableDefinitionNode : tableDefinitionsNode) {
+            tableDefinitions.add(TableDefinitionView.fromJsonForm(tableDefinitionNode));
+        }
 
-        foreignKeyRelations;
+        for(JsonNode foreignKeyRelationNode : foreignKeyRelationsNode) {
+            foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyRelationNode));
+        }
 
-        tasks;
+        taskSet.setTaskSetName(taskSetName);
+        taskSet.setTableDefinitions(tableDefinitions);
+        taskSet.setForeignKeyRelations(foreignKeyRelations);
+        //taskSet.setTasks(taskSetEdit.getTasks());
 
-
-        taskSet.update();*/
+        taskSet.save();
         return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 

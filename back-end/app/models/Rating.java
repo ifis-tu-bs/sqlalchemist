@@ -50,6 +50,10 @@ public class Rating extends Model {
         }
   }
 
+    public Long getId() {
+        return id;
+    }
+
     /**
      * getter for profile
      * @return returns the profile
@@ -79,16 +83,17 @@ public class Rating extends Model {
     }
 
     public static Rating sum(List<Rating> ratings) {
-    if(ratings == null || ratings.size() == 0) {
-      return new Rating(false, false, false, null);
-    }
-    Rating rating_sum = new Rating(false, false, false, null);
+        if(ratings == null || ratings.size() == 0) {
+            return new Rating(false, false, false, null);
+        }
+        Rating rating_sum = new Rating(false, false, false, null);
 
-    for(Rating rating : ratings) {
-      rating_sum.positiveRatings    += rating.positiveRatings;
-      rating_sum.negativeRatings    += rating.negativeRatings;
-      rating_sum.editRatings        += rating.editRatings;
+        for(Rating rating : ratings) {
+            rating_sum.positiveRatings += rating.positiveRatings;
+            rating_sum.negativeRatings += rating.negativeRatings;
+            rating_sum.editRatings += rating.editRatings;
+        }
+
+        return rating_sum;
     }
-    return rating_sum;
-  }
 }

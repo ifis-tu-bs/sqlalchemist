@@ -24,9 +24,9 @@ public class CreatorSecured extends Authenticator {
     @Override
     public String getUsername(Context cxt) {
 
-        Logger.info("Check for Creator: ");
-      String sessionID = cxt.session().get("sessionID");
-      UserSession session = UserSessionDAO.getBySessionID(sessionID);
+
+        String sessionID = cxt.session().get("sessionID");
+        UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) && session.getUser().getRole() >= User.ROLE_CREATOR ) {
             return session.getUser().getProfile().getUsername();
         }

@@ -23,9 +23,8 @@ public class StudentSecured extends Authenticator {
     @Override
     public String getUsername(Context cxt) {
 
-        Logger.info("Check for Student: ");
-      String sessionID = cxt.session().get("sessionID");
-      UserSession session = UserSessionDAO.getBySessionID(sessionID);
+        String sessionID = cxt.session().get("sessionID");
+        UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) && session.getUser().isStudent() ) {
             return session.getUser().getProfile().getUsername();
         }

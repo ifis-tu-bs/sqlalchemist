@@ -22,11 +22,9 @@ public class UserSecured extends Authenticator {
      */
     @Override
     public String getUsername(Context cxt) {
-      Logger.info("Check for User: ");
-      String sessionID = cxt.session().get("sessionID");
-      UserSession session = UserSessionDAO.getBySessionID(sessionID);
+        String sessionID = cxt.session().get("sessionID");
+        UserSession session = UserSessionDAO.getBySessionID(sessionID);
         if( session != null && session.isValid(cxt.request().remoteAddress()) ) {
-            Logger.info(session.getUser().getProfile().getUsername());
             return session.getUser().getProfile().getUsername();
         }
         return null;

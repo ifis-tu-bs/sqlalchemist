@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "TableDefinition")
+@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TableDefinition extends Model {
     @Id
     private long id;

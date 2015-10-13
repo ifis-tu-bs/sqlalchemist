@@ -34,9 +34,9 @@ public class Task extends Model {
 
     @ManyToOne
     private Profile     creator;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private List<Comment> comments;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private List<Rating> ratings;
 
     private Date created_at;
@@ -189,18 +189,23 @@ public class Task extends Model {
    * This is the methode to add a rating to this entity
    */
   public void addRating(Rating rating) {
-    if(this.ratings != null && this.ratings.size() > 0) {
-      for(Rating ratingI : this.ratings) {
-        if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
-          ratingI.delete();
-          break;
-        }
+      if(this.ratings != null && this.ratings.size() > 0) {
+          for(Rating ratingI : this.ratings) {
+              if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+                  this.ratings.remove(ratingI);
+                  this.update();
+                  ratingI.delete();
+                  break;
+              }
+          }
+      } else {
+          this.ratings = new ArrayList<>();
       }
-    } else {
-      this.ratings = new ArrayList<>();
-    }
 
-    this.ratings.add(rating);
+      this.ratings.add(rating);
+      rating.setTask(this);
+      rating.save();
+      this.update();
   }
 
     public static final int TASK_SOLVE_STATEMENT_CORRECT = 0;

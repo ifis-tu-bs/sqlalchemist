@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
 
+import play.Logger;
 import play.libs.Json;
 
 import java.util.ArrayList;
@@ -48,11 +49,13 @@ public class TaskSetView {
     }
 
     public static ObjectNode toJson(TaskSet taskSet) {
-        ObjectNode taskSetJson  = Json.newObject();
-        ArrayNode tableDefNode  = JsonNodeFactory.instance.arrayNode();
-        ArrayNode foreignKeyRelationNode = JsonNodeFactory.instance.arrayNode();
-        ArrayNode taskNode      = JsonNodeFactory.instance.arrayNode();
-        ArrayNode commentNode   = JsonNodeFactory.instance.arrayNode();
+        ObjectNode  taskSetJson             = Json.newObject();
+        ArrayNode   tableDefNode            = JsonNodeFactory.instance.arrayNode();
+        ArrayNode   foreignKeyRelationNode  = JsonNodeFactory.instance.arrayNode();
+        ArrayNode   taskNode                = JsonNodeFactory.instance.arrayNode();
+        List<Rating>ratings                 = taskSet.getRatings();
+        ArrayNode   commentNode             = JsonNodeFactory.instance.arrayNode();
+
 
         for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
             tableDefNode.add(TableDefinitionView.toJson(tableDefinition));
@@ -61,8 +64,6 @@ public class TaskSetView {
         for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
             foreignKeyRelationNode.add(ForeignKeyRelationView.toJson(foreignKeyRelation));
         }
-
-        List<Rating> ratings   = new ArrayList<>(taskSet.getRatings());
 
         for(Task task : taskSet.getTasks()) {
             taskNode.add(TaskView.toJson(task));

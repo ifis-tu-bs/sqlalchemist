@@ -25,7 +25,6 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TaskSet extends Model {
     @Id
-    @Column
     private long id;
 
     private String                  taskSetName;
@@ -95,12 +94,6 @@ public class TaskSet extends Model {
         super.save();
     }
 
-    @Override
-    public void update() {
-        this.updatedAt = new Date();
-        super.update();
-    }
-
     public void prepareStoring() {
         if(this.foreignKeyRelations != null) {
             for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
@@ -137,7 +130,7 @@ public class TaskSet extends Model {
 
         String relationsFormatted = "";
         for(int i = 0; i < this.tableDefinitions.size(); i++)  {
-            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(1));
+            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(i));
             if(i < this.tableDefinitions.size() - 1)
                 relationsFormatted = relationsFormatted + ",";
         }
@@ -161,12 +154,24 @@ public class TaskSet extends Model {
         return taskSetName;
     }
 
+    public void setTaskSetName(String taskSetName) {
+        this.taskSetName = taskSetName;
+    }
+
     public List<TableDefinition> getTableDefinitions() {
         return tableDefinitions;
     }
 
+    public void setTableDefinitions(List<TableDefinition> tableDefinitions) {
+        this.tableDefinitions = tableDefinitions;
+    }
+
     public List<ForeignKeyRelation> getForeignKeyRelations() {
         return foreignKeyRelations;
+    }
+
+    public void setForeignKeyRelations(List<ForeignKeyRelation> foreignKeyRelations) {
+        this.foreignKeyRelations = foreignKeyRelations;
     }
 
     public String getRelationsFormatted() {
