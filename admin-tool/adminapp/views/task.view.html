@@ -22,9 +22,12 @@
   <div style="width:100%;float:left">
 
 
-    <button class="btn btn-info" ng-click="save();" style="float:right">Save...</button>
-
+    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined" style="float:right">Save current TaskSet</button>
     <tabset tpye="pills">
+
+
+
+
       <tab deselect="keepTaskSets();">
         <tab-heading>
           TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
@@ -64,6 +67,13 @@
                         <span class="glyphicon glyphicon-trash"></span></button>
                     </td>-->
                   </tr>
+                  <tr>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTaskSet(); $event.stopPropagation();">New...</button>
+                    </td>
+                    <td/>
+                    <td/>
+                  </tr>
                   </tbody>
                 </table>
               </div>
@@ -72,8 +82,17 @@
 
         </div>
       </tab>
-      <tab heading="Intension" disable="selectedTaskSet.id === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
 
+
+
+
+
+
+
+      <tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
+        <tab-heading>
+          Intension <i>(tableDefinition)</i>
+        </tab-heading>
         <accordion close-others=true>
           <accordion-group is-open="tableSelectionStatus.tableNotSelected">
             <accordion-heading>
@@ -130,10 +149,22 @@
         </accordion>
 
       </tab>
-      <tab heading="Extension" disable="selectedTaskSet.id === undefined" deselect="keepTaskSets();">
+
+      <tab disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <tab-heading>
+          Intension <i>(foreignKeys)</i>
+        </tab-heading>
 
       </tab>
-      <tab heading="Tasks" disable="selectedTaskSet.id === undefined" deselect="keepTaskSets();">
+
+
+
+
+
+      <tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+
+      </tab>
+      <tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
 
       </tab>
     </tabset>

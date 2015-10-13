@@ -30,7 +30,6 @@ angular
 
         $scope.items=["bigint", "Varchar(255)", "boolean"];
 
-
         //$scope.codemirrorOptions = { mode: 'text/x-mysql', readOnly: true};
         $scope.animationsEnabled = true;
 
@@ -52,7 +51,8 @@ angular
         function getAllTaskSets() {
             if ($rootScope.Tasks.taskSets) {
                 vm.taskSets = $rootScope.Tasks.taskSets;
-                getCurrentPath();
+                $scope.getCurrentPath();
+                console.log(vm.taskSets);
 
             } else {
                 TaskService.getAllTaskSets().then(
@@ -61,7 +61,7 @@ angular
                                     FlashService.Error(result.message);
                                 } else {
                                     vm.taskSets = result;
-                                    getCurrentPath();
+                                    $scope.getCurrentPath();
                                     console.log(result);
                                 }
                         }
@@ -72,62 +72,14 @@ angular
 
         //////////////////////////////777
         //  Saving current vm.taskSets when leaving
+        //  Restoring saved Data and Displaying the correct screen
         //////////////////////////////777
 
         $scope.keepTaskSets = function () {
             $rootScope.Tasks.taskSets = vm.taskSets;
-            console.log(vm.taskSets);
         }
-
-        //////////////////////////////777
-        //  TaskSet Operations
-        //////////////////////////////777
-
-        $scope.taskSetSelectionStatus = {
-            taskSetSelected : false
-        }
-
-        $scope.selectTaskSet = function(taskSet, destination) {
-            var index = findInArray(vm.taskSets, taskSet);
-            selectTaskSet(index);
-            $scope.taskSetSelectionStatus.taskSetSelected = true;
-        }
-
-        function selectTaskSet (taskSetIndex) {
-            $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
-            vm.tasks = $scope.selectedTaskSet.tasks;
-            vm.tables = $scope.selectedTaskSet.tableDefinitions;
-            $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
-        }
-
-
-        //////////////////////////////777
-        //  Intension: TableHandling
-        //////////////////////////////777
-
-        $scope.tableSelectionStatus = {
-            tableSelected : false,
-            tableNotSelected : true
-        }
-
-        $scope.selectTable = function (table) {
-            var index = findInArray(vm.tables, table);
-            selectTable(index);
-            $scope.tableSelectionStatus.tableNotSelected = false;
-            $scope.tableSelectionStatus.tableSelected = true;
-        }
-
-        function selectTable(tableIndex) {
-            $scope.selectedTable = vm.tables[tableIndex];
-            $rootScope.Tasks.selectedTable = $scope.selectedTable;
-            vm.columns = $scope.selectedTable.columns;
-        }
-
-        //////////////////////////////777
-        //  Path Finding and Display organization
-        //////////////////////////////777
-
-        function getCurrentPath () {
+        
+        $scope.getCurrentPath = function () {
             var path = $rootScope.Tasks;
 
             //Find out if a TaskSet is currently selected
@@ -149,30 +101,94 @@ angular
 
         }
 
-        $scope.shouldIBeDisplayed = function(stateButton) {
-            var answer = false;
-            for (var i = states.length; i >= 0; i--) {
-                answer |= states[i] === $scope.state;
-                if (states[i] === stateButton) {
-                    break;
-                }
+        //////////////////////////////777
+        //  TaskSet - Control
+        //////////////////////////////777
+
+
+        /* DataTypes */
+        $scope.taskSetSelectionStatus = {
+            taskSetSelected : false
+        }
+
+        var DefaultTaskSet = function() {
+            this.taskSetName = "";
+            this.tableDefinitions = [];
+            this.foreignKeys = [];
+            this.tasks=[];
+            this.isHomework = false;
+        };
+
+
+        /* Methods */
+        $scope.pushNewTaskSet = function () {
+            vm.taskSets.push(new DefaultTaskSet());
+        }
+
+        $scope.selectTaskSet = function(taskSet, destination) {
+            console.log(taskSet);
+            console.log(vm.taskSets);
+            var index = findInArray(vm.taskSets, taskSet);
+            selectTaskSet(index);
+            $scope.taskSetSelectionStatus.taskSetSelected = true;
+        }
+
+        function selectTaskSet (taskSetIndex) {
+            $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
+            vm.tasks = $scope.selectedTaskSet.tasks;
+            vm.tables = $scope.selectedTaskSet.tableDefinitions;
+            $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
+        }
+
+        $scope.saveSelectedTaskSet = function () {
+            console.log($scope.selectedTaskSet);
+            if ($scope.selectedTaskSet.id != undefined) {
+
+                TaskService.editTaskSet($scope.selectedTaskSet, $scope.selectedTaskSet.id).then(
+                        function (result) {
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                            }
+                        }
+                );
+
+            } else {
+
+                TaskService.createTaskSet($scope.selectedTaskSet).then(
+                        function (result) {
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                            }
+                        }
+                );
+
             }
-
-            return answer;
         }
 
-        /*
-        $scope.prevSubmit = function() {
-            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
-            currentSpot = (currentSpot + vm.submits.length - 1) % vm.submits.length;
-            selectSubmit(currentSpot);
+
+        //////////////////////////////777
+        //  Intension: TableDefinition - Control
+        //////////////////////////////777
+
+        $scope.tableSelectionStatus = {
+            tableSelected : false,
+            tableNotSelected : true
         }
 
-        $scope.nextSubmit = function() {
-            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
-            currentSpot = (currentSpot + 1) % vm.submits.length;
-            selectSubmit(currentSpot);
-        }*/
+        $scope.selectTable = function (table) {
+            var index = findInArray(vm.tables, table);
+            selectTable(index);
+            $scope.tableSelectionStatus.tableNotSelected = false;
+            $scope.tableSelectionStatus.tableSelected = true;
+        }
+
+        function selectTable(tableIndex) {
+            $scope.selectedTable = vm.tables[tableIndex];
+            $rootScope.Tasks.selectedTable = $scope.selectedTable;
+            vm.columns = $scope.selectedTable.columns;
+        }
 
         //////////////////////////////777
         //  HomeWork Deletion
@@ -266,7 +282,7 @@ angular
 
         function findInArray(array, item) {
             for (var i = 0; i < array.length; i++) {
-                if (array[i].id === item.id) {
+                if (array[i].$$hashKey === item.$$hashKey) {
                     return i;
                 }
             }

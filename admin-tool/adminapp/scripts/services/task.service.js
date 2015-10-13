@@ -41,7 +41,7 @@
         }
 
         function editTaskSet(json, taskSetId) {
-            return $http.post('/TaskSet/' + taskSetId, json).then(handleSuccess, handleError);
+            return $http.patch('/TaskSet/' + taskSetId + "/", json).then(handleSuccess, handleError);
         }
 
         function viewTaskSet(json, taskSetId) {
