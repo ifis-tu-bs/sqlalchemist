@@ -1,6 +1,6 @@
 package view;
 
-import helper.ForeignKeyRelation;
+import models.ForeignKeyRelation;
 import models.*;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.Logger;
 import play.libs.Json;
 
 import java.util.ArrayList;
@@ -37,18 +36,7 @@ public class TaskSetView {
 
         // Setting foreignKey Attributes
         for(JsonNode foreignKeyNode : foreignKeyArray) {
-            String sourceTable         = foreignKeyNode.get("sourceTable").asText();
-            String sourceColumn        = foreignKeyNode.get("sourceColumn").asText();
-            String destinationTable    = foreignKeyNode.get("destinationTable").asText();
-            String destinationColumn   = foreignKeyNode.get("destinationColumn").asText();
-
-            ForeignKeyRelation foreignKeyRelation = new ForeignKeyRelation(
-                    sourceTable,
-                    sourceColumn,
-                    destinationTable,
-                    destinationColumn);
-
-            foreignKeyRelations.add(foreignKeyRelation);
+            foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyNode));
         }
 
         for(int i = 0; i < taskArray.size(); i++) {
@@ -62,11 +50,16 @@ public class TaskSetView {
     public static ObjectNode toJson(TaskSet taskSet) {
         ObjectNode taskSetJson  = Json.newObject();
         ArrayNode tableDefNode  = JsonNodeFactory.instance.arrayNode();
+        ArrayNode foreignKeyRelationNode = JsonNodeFactory.instance.arrayNode();
         ArrayNode taskNode      = JsonNodeFactory.instance.arrayNode();
         ArrayNode commentNode   = JsonNodeFactory.instance.arrayNode();
 
         for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
             tableDefNode.add(TableDefinitionView.toJson(tableDefinition));
+        }
+
+        for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
+            foreignKeyRelationNode.add(ForeignKeyRelationView.toJson(foreignKeyRelation));
         }
 
         List<Rating> ratings   = new ArrayList<>(taskSet.getRatings());
@@ -85,6 +78,7 @@ public class TaskSetView {
         taskSetJson.put("id",                   taskSet.getId());
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
         taskSetJson.put("tableDefinitions",     tableDefNode);
+        taskSetJson.put("foreignKeyRelations",  foreignKeyRelationNode);
         taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
         taskSetJson.put("tasks",                taskNode);
         taskSetJson.put("creator",              taskSet.getCreator().toJson()); // ToDo

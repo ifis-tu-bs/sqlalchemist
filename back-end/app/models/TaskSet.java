@@ -2,7 +2,6 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import helper.ForeignKeyRelation;
 import view.TableDefinitionView;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -33,6 +32,8 @@ public class TaskSet extends Model {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<TableDefinition>   tableDefinitions;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<ForeignKeyRelation>foreignKeyRelations;
     private String                  relationsFormatted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Task>              tasks;
@@ -50,8 +51,6 @@ public class TaskSet extends Model {
 
     private Date created_at;
     private Date updated_at;
-
-    List<ForeignKeyRelation> foreignKeyRelations;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(Long.class, TaskSet.class);
 
@@ -103,24 +102,24 @@ public class TaskSet extends Model {
             for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
                 TableDefinition sourceTable = null, destinationTable = null;
                 for(TableDefinition tableDefinition : this.tableDefinitions) {
-                    if(tableDefinition.getTableName().equals(foreignKeyRelation.sourceTable)) {
+                    if(tableDefinition.getTableName().equals(foreignKeyRelation.getSourceTable())) {
                         sourceTable = tableDefinition;
                         continue;
                     }
-                    if(tableDefinition.getTableName().equals(foreignKeyRelation.destinationTable)) {
+                    if(tableDefinition.getTableName().equals(foreignKeyRelation.getDestinationTable())) {
                         destinationTable = tableDefinition;
                     }
                 }
                 if(sourceTable != null && destinationTable != null) {
                     ColumnDefinition sourceColumn = null, destinationColumn = null;
                     for(ColumnDefinition columnDefinition : sourceTable.getColumnDefinitions()) {
-                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.sourceColumn)) {
+                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.getSourceColumn())) {
                             sourceColumn = columnDefinition;
                             break;
                         }
                     }
                     for(ColumnDefinition columnDefinition : destinationTable.getColumnDefinitions()) {
-                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.destinationColumn)) {
+                        if(columnDefinition.getColumnName().equals(foreignKeyRelation.getDestinationColumn())) {
                             destinationColumn = columnDefinition;
                             break;
                         }
@@ -174,6 +173,10 @@ public class TaskSet extends Model {
 
     public List<TableDefinition> getTableDefinitions() {
         return tableDefinitions;
+    }
+
+    public List<ForeignKeyRelation> getForeignKeyRelations() {
+        return foreignKeyRelations;
     }
 
     public String getRelationsFormatted() {

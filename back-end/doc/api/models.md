@@ -3,8 +3,12 @@
 ### Table of Content
 - [Column](#column)
   - [Column.Form](#columnform)
+- [Comment](#comment)
+  - [Comment.Form](#commentform)
 - [ForeignKey](#foreignkey)
   - [ForeignKey.Form](#foreignkeyform)
+- [Rating](#rating)
+  - [Rating.Form](#ratingform)
 - [TableDefinition](#tabledefinition)
   - [TableDefinition.Form](#tabledefinitionform)
 - [Task](#task)
@@ -56,7 +60,54 @@ Columns:
   "datagenSet": 1
 }
 ```
+### Comment
+| Name                     | Type                                | Description|
+|--------------------------|-------------------------------------|------------|
+| ```profile```            | ```[```Profile```](#profile)```     |            |
+| ```text```               | ```String```                        |            |
+| ```created_at```         | ```String```                        |            |
+
+Example:
+```json
+Comment:
+{
+  "profile":    Profile,
+  "text":       "Ein kommentar",
+  "created_at": "Mon Oct 12 06:18:37 CEST 2015"
+}
+```
+#### Comment.Form
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```text```               | ```String```     |            |
+
+Example:
+```json
+Comment:
+{
+    "text":   "Ein kommentar"
+}
+```
+
+
 ### ForeignKey
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```sourceTable```        | ```String```      |            |
+| ```sourceColumn```       | ```String```      |            |
+| ```destinationTable```   | ```String```      |            |
+| ```destinationColumn```  | ```String```      |            |
+
+Example:
+```json
+ForeignKey:
+{
+  "sourceTable":"Profile",
+  "sourceColumn":"user_id",
+  "destinationTable":"User",
+  "destinationColumn":"id"
+}
+```
 #### ForeignKey.Form
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
@@ -67,7 +118,7 @@ Columns:
 
 Example:
 ```json
-Columns:
+ForeignKey:
 {
   "sourceTable":"Profile",
   "sourceColumn":"user_id",
@@ -75,6 +126,39 @@ Columns:
   "destinationColumn":"id"
 }
 ```
+### Rating
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```positive```           | ```Boolean```     |            |
+| ```negative```           | ```Boolean```     |            |
+| ```needReview```         | ```Boolean```     |            |
+
+Example:
+```json
+Rating:
+{
+  "positive":   true,
+  "negative":   false,
+  "needReview": false
+}
+```
+#### Rating.Form
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```positive```           | ```Boolean```     |            |
+| ```negative```           | ```Boolean```     |            |
+| ```needReview```         | ```Boolean```     |            |
+
+Example:
+```json
+Rating:
+{
+    "positive":   true,
+    "negative":   false,
+    "needReview": false
+}
+```
+
 ### TableDefinition
 | Name                     | Type                       |Description|
 |--------------------------|----------------------------|-----------|
@@ -157,7 +241,11 @@ Task:
   "points":             1,
   "requiredterm":       Number,
   "creator":            Profile,
-  "rating":             Rating,
+  "rating":             {
+                            "positive":   true,
+                            "negative":   false,
+                            "needReview": false
+                        },
   "comments":           Comment[],
   "created_at":         "Mon Oct 12 06:18:37 CEST 2015",
   "updated_at":         "Mon Oct 12 06:18:37 CEST 2015"
@@ -194,6 +282,7 @@ Task:
 | ```id```                 | ```Number```                                |            |
 | ```taskSetName```        | ```String```                                |            |
 | ```tableDefinitions```   | [```TableDefinition[]```](#tabledefinition) |            |
+| ```foreignKeys```        | [```ForeignKey.Form[]```](#foreignkey)      |            |
 | ```relationsFormatted``` | ```String```                                |            |
 | ```tasks```              | [```Task```](#task)                         |            |
 | ```creator```            | [```Profile```](#profile)                   |            |
@@ -225,11 +314,16 @@ TaskSet: {
       "extension":  "INSERT INTO User(FirstName) Values ('Kéqz');"
     }
   ],
+  "foreignKeys":       [],
   "relationsFormatted": "User(FirstName : String)",
   "tasks":              Task[],
   "creator":            Profile,
   "isHomework":         false,
-  "rating":             Rating,
+  "rating":             {
+                            "positive":   true,
+                            "negative":   false,
+                            "needReview": false
+                        },
   "comments":           Comment[],
   "created_at":         "Mon Oct 12 06:18:37 CEST 2015",
   "updated_at":         "Mon Oct 12 06:18:37 CEST 2015"
