@@ -3,7 +3,7 @@
 ### Table of Content
 - [Column](#column)
   - [Column.Form](#columnform)
-- [ForeignKey](#foreignKey)
+- [ForeignKey](#foreignkey)
   - [ForeignKey.Form](#foreignkeyform)
 - [TableDefinition](#tabledefinition)
   - [TableDefinition.Form](#tabledefinitionform)
