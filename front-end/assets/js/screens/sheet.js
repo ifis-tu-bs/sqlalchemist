@@ -112,35 +112,20 @@ game.SheetScreen = me.ScreenObject.extend({
                         game.task.name = name;
                         game.task.potionId = id;
                         game.task.kind = 1;
-<<<<<<< HEAD
                         /*console.log("Upgrade: " + game.task.potionId,
                                     "Name: " + game.task.name,
                                     "Result" + game.scroll.enchantments[game.task.potionId].name);*/
-=======
-                        console.log("Upgrade: " + game.task.potionId, "Name: " + game.task.name , "Result" + game.scroll.enchantments[game.task.potionId].name);
->>>>>>> master
                         me.state.change(STATE_TASK);
                     }
                 }
 
                 var name = game.scroll.enchantments[i].name;
                 var id   = game.scroll.enchantments[i].id;
-
-<<<<<<< HEAD
                 var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 4.848485, 8.333333,
                                                         57.575757, 44.921875 + 13.020833 * j, 1);
                 upgrade.setImage("assets/data/img/collectables/upgrade_scroll.png", "scroll");
                 me.game.world.addChild(upgrade);
                 $("#upgrade" + i).fadeIn(100);
-
-=======
-                var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 4.848485, 8.333333, 57.575757, 44.921875 + 13.020833 * j, 1);
-                upgrade.setImage("assets/data/img/collectables/spinning_scroll.png", "scroll");
-                me.game.world.addChild(upgrade);
-
-
-                //me.game.world.addChild(new upgrade(760, 345 + 100*j,game.scroll.enchantments[i].name,game.scroll.enchantments[i].id));
->>>>>>> master
                 kind[j] = 1;
                 //console.log("painted");
             }
@@ -224,17 +209,9 @@ game.SheetScreen = me.ScreenObject.extend({
             ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
         };
 
-<<<<<<< HEAD
         var skinRight = new game.ClickableElement('skinRight', '', this.onRight, 4.848485, 8.333333,  60.606061, 16.927083, 1);
         skinRight.setImage("assets/data/img/buttons/character_arrow_right.png", "right");
         me.game.world.addChild(skinRight);
         $("#skinRight").fadeIn(100);
-=======
-
-
-        // Buttons to flip through the Avatars
-        me.game.world.addChild(new skinLeft(440, 130));
-        me.game.world.addChild(new skinRight(800, 130));
->>>>>>> master
     }
 });

@@ -401,52 +401,6 @@ game.HUD.PotionAmount = me.Renderable.extend( {
     }
 });
 
-//Used in Resultscreen
-game.HUD.Result = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        this.time = Math.floor((game.task.finishTime - game.task.startTime)/1000);
-        this.difficulty = game.task.difficulty;
-        this.score = game.data.gainScore;
-
-        //((this.difficulty+ 1) * 60 + this.time)/this.time
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Time: "           + convertTime(this.time),   this.pos.x -  30, this.pos.y - 100);
-        renderer.drawFont(this.font, "Score: "          + game.task.gainScore,               this.pos.x + 280, this.pos.y - 100);
-        renderer.drawFont(this.font, "Difficulty: "     + this.difficulty + 1,          this.pos.x  -  150, this.pos.y);
-        renderer.drawFont(this.font, "Lofi-Coins: "     + game.task.gainCoins,          this.pos.x + 300, this.pos.y);
-        switch(game.task.kind) {
-            case 0 :
-            {
-                renderer.drawFont(this.font, "You Crafted: ", this.pos.x - 100, this.pos.y + 100);
-                renderer.drawFont(this.font, "1 x "+game.potion.potions[game.task.potionId].name, this.pos.x + 10, this.pos.y + 200);
-                break;
-            }
-            case 1 :
-            {
-                renderer.drawFont(this.font, "You Got: ", this.pos.x - 100, this.pos.y + 100);
-                renderer.drawFont(this.font, game.task.name , this.pos.x + 10, this.pos.y + 200);
-            }
-        }
-    }
-});
-
 game.HUD.Buy = me.Renderable.extend( {
     /**
      * constructor

@@ -394,52 +394,6 @@ var buyBelt = me.GUI_Object.extend(
         }
     });
 
-//used in resultScreen
-var NEXT = me.GUI_Object.extend(
-    {
-        init:function (x, y){
-            var settings = {};
-            settings.image = "story_button";
-            settings.spritewidth = 240;
-            settings.spriteheight = 330;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 4;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event) {
-            console.log("clicked! Next with:" + game.task.kind);
-            switch(game.task.kind) {
-                case 0 :
-                {
-                    me.state.change(me.state.READY);
-                    return true;
-                    break;
-                }
-                case 1 :
-                {
-                    me.state.change(me.state.READY);
-                    return true;
-                    break;
-                }
-                case 2 :
-                {
-                    me.state.change(STATE_TRIVIA);
-                    return true;
-                    break;
-                }
-                case 3 :
-                {
-                    me.state.change(STATE_HOMEWORK);
-                    return true;
-                }
-            }
-        }
-    });
-
 var backToTheLab = me.GUI_Object.extend(
     {
         init:function (x, y)
