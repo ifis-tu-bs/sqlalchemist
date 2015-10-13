@@ -59,7 +59,7 @@ public class TaskSetController extends Controller {
             return badRequest("taskSet can't be saved");
         }
 
-        return ok(TaskSetView.toJson(taskSet));
+        return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 
     /**
@@ -134,6 +134,23 @@ public class TaskSetController extends Controller {
 
         return ok(TaskSetView.toJson(taskSet));
     }
+
+    /**
+     * This method deletes an TaskSet object
+     */
+    public static Result delete(Long id) {
+        TaskSet taskSet = TaskSetDAO.getById(id);
+
+        if(taskSet == null) {
+            Logger.warn("TaskSetController.delete - no TaskSet found for id: " + id);
+            return badRequest("no TaskSet found");
+        }
+
+        taskSet.delete();
+
+        return ok();
+    }
+
     /**
      * this method controls the rating of the TaskSet
      *
@@ -195,22 +212,6 @@ public class TaskSetController extends Controller {
 
         taskSet.addComment(comment);
         taskSet.update();
-        return ok();
-    }
-
-    /**
-     * This method deletes an TaskSet object
-     */
-    public static Result delete(Long id) {
-        TaskSet taskSet = TaskSetDAO.getById(id);
-
-        if(taskSet == null) {
-            Logger.warn("TaskSetController.delete - no TaskSet found for id: " + id);
-            return badRequest("no TaskSet found");
-        }
-
-        taskSet.delete();
-
         return ok();
     }
 }

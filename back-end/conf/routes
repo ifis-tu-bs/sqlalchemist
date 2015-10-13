@@ -42,23 +42,37 @@ GET         /challenge/reset                    controllers.ChallengeController.
 #TaskSetController
 POST        /TaskSet/                           controllers.TaskSetController.create()
 GET         /TaskSet/                           controllers.TaskSetController.read()
-GET         /TaskSet/:id                        controllers.TaskSetController.view(id: Long)
-POST        /TaskSet/:id                        controllers.TaskSetController.update(id: Long)
+GET         /TaskSet/:id/                       controllers.TaskSetController.view(id: Long)
+PATCH       /TaskSet/:id/                       controllers.TaskSetController.update(id: Long)
+DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
 
 #TaskController
-GET         /task/story/:id                     controllers.TaskController.story(id: Long)
-POST        /task/story/:id                     controllers.TaskController.storySolve(id: Long)
-GET         /task/trivia/:id                    controllers.TaskController.trivia(id: Long)
-POST        /task/trivia/:id                    controllers.TaskController.triviaSolve(id: Long)
-GET         /task/homework                      controllers.TaskController.homework()
-POST        /task/homework/:id                  controllers.TaskController.homeworkSolve(id: Long)
-GET         /task                               controllers.TaskController.index()
-GET         /task/:id                           controllers.TaskController.view(id: Long)
-DELETE      /task/:id                           controllers.TaskController.destroy(id: Long)
-POST        /task/:id/rate                      controllers.TaskController.rate(id: Long)
-POST        /task/:id/comment                   controllers.TaskController.comment(id: Long)
+POST        /TaskSet/:id/Task                   controllers.TaskController.create(id :Long)
+GET         /Task/                              controllers.TaskController.read()
+GET         /Task/:id/                          controllers.TaskController.view(id: Long)
+PATCH       /Task/:id/                          controllers.TaskController.update(id: Long)
+DELETE      /Task/:id/                          controllers.TaskController.delete(id: Long)
+POST        /Task/:id/rate                      controllers.TaskController.rate(id: Long)
+POST        /Task/:id/comment                   controllers.TaskController.comment(id: Long)
+
+
+
+#GET         /Task/                              controllers.TaskController.read()
+
+#TaskController
+#GET         /task/story/:id                     controllers.TaskController.story(id: Long)
+#POST        /task/story/:id                     controllers.TaskController.storySolve(id: Long)
+#GET         /task/trivia/:id                    controllers.TaskController.trivia(id: Long)
+#POST        /task/trivia/:id                    controllers.TaskController.triviaSolve(id: Long)
+#GET         /task/homework                      controllers.TaskController.homework()
+#POST        /task/homework/:id                  controllers.TaskController.homeworkSolve(id: Long)
+#GET         /task                               controllers.TaskController.index()
+#GET         /task/:id                           controllers.TaskController.view(id: Long)
+#DELETE      /task/:id                           controllers.TaskController.destroy(id: Long)
+#POST        /task/:id/rate                      controllers.TaskController.rate(id: Long)
+#POST        /task/:id/comment                   controllers.TaskController.comment(id: Long)
 
 #ProfileController
 GET         /profile                            controllers.ProfileController.index()
