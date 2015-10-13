@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="321">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="325">
  <tileset firstgid="1" name="castle1" tilewidth="32" tileheight="32">
   <image source="../img/map/castle1.png" width="512" height="1344"/>
  </tileset>
@@ -54,7 +54,7 @@
   <object id="13" name="ScrollEntity" x="2847" y="433" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="39"/>
+    <property name="scrollIndex" value="38"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -462,7 +462,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="230" name="EnemyEntity" x="2104.5" y="268.5" width="136" height="764">
+  <object id="230" name="EnemyEntity" x="1998.5" y="276.5" width="136" height="764">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy14"/>
@@ -488,6 +488,46 @@
     <property name="image" value="enemy14"/>
     <property name="jump" value="4"/>
     <property name="speed" value="6"/>
+    <property name="spriteheight" value="64"/>
+    <property name="spritewidth" value="64"/>
+   </properties>
+  </object>
+  <object id="321" name="EnemyEntity" x="1430.5" y="607" width="70" height="70">
+   <properties>
+    <property name="attack" value="00"/>
+    <property name="image" value="enemy05"/>
+    <property name="jump" value="0"/>
+    <property name="speed" value="0"/>
+    <property name="spriteheight" value="64"/>
+    <property name="spritewidth" value="64"/>
+   </properties>
+  </object>
+  <object id="322" name="EnemyEntity" x="900.5" y="606" width="600" height="50">
+   <properties>
+    <property name="attack" value="00"/>
+    <property name="image" value="saber"/>
+    <property name="jump" value="0"/>
+    <property name="speed" value="7"/>
+    <property name="spriteheight" value="44"/>
+    <property name="spritewidth" value="45"/>
+   </properties>
+  </object>
+  <object id="323" name="EnemyEntity" x="2066.5" y="276.5" width="136" height="764">
+   <properties>
+    <property name="attack" value="00"/>
+    <property name="image" value="enemy14"/>
+    <property name="jump" value="6"/>
+    <property name="speed" value="0"/>
+    <property name="spriteheight" value="64"/>
+    <property name="spritewidth" value="64"/>
+   </properties>
+  </object>
+  <object id="324" name="EnemyEntity" x="2129.5" y="276.5" width="136" height="764">
+   <properties>
+    <property name="attack" value="1"/>
+    <property name="image" value="enemy14"/>
+    <property name="jump" value="6"/>
+    <property name="speed" value="0"/>
     <property name="spriteheight" value="64"/>
     <property name="spritewidth" value="64"/>
    </properties>
