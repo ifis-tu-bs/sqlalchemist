@@ -49,15 +49,35 @@ game.SheetScreen = me.ScreenObject.extend({
 
         var kind = [0,0,0,0];
 
-        for (var i = 0; i < game.scroll.enchantments.length; i++){
+       for (var i = 0; i < game.scroll.enchantments.length; i++){
             var j = Math.floor(i/10);
             console.log(game.scroll.enchantments[i].name, game.scroll.enchantments[i].id,"  used: " + game.scroll.enchantments[i].used," availible: " + game.scroll.enchantments[i].available, "position: " + kind[j]);
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
-                me.game.world.addChild(new upgrade(760, 345 + 100*j,game.scroll.enchantments[i].name,game.scroll.enchantments[i].id));
+
+                function onUpgrade(name, id){
+                    return function () {
+                        game.task.name = name;
+                        game.task.potionId = id;
+                        game.task.kind = 1;
+                        console.log("Upgrade: " + game.task.potionId, "Name: " + game.task.name , "Result" + game.scroll.enchantments[game.task.potionId].name);
+                        me.state.change(STATE_TASK);
+                    }
+                }
+
+                var name = game.scroll.enchantments[i].name;
+                var id   = game.scroll.enchantments[i].id;
+
+                var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 4.848485, 8.333333, 57.575757, 44.921875 + 13.020833 * j, 1);
+                upgrade.setImage("assets/data/img/collectables/spinning_scroll.png", "scroll");
+                me.game.world.addChild(upgrade);
+
+
+                //me.game.world.addChild(new upgrade(760, 345 + 100*j,game.scroll.enchantments[i].name,game.scroll.enchantments[i].id));
                 kind[j] = 1;
                 console.log("painted");
             }
         }
+
 
 
 

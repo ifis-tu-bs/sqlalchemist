@@ -103,7 +103,7 @@
   <object id="504" name="ScrollEntity" x="6813" y="159" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="60"/>
+    <property name="scrollIndex" value="59"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -406,14 +406,14 @@
  <objectgroup name="collision">
   <object id="1" name="Ground" x="0.6667" y="480.333" width="718.333" height="31"/>
   <object id="445" name="Ground" x="833.727" y="799.908" width="6204.27" height="98"/>
-  <object id="505" name="Ground" x="1222.82" y="608" width="623.513" height="61"/>
-  <object id="506" name="Ground" x="1959.67" y="480" width="624" height="63"/>
-  <object id="507" name="Ground" x="2823" y="351" width="432" height="64"/>
-  <object id="510" name="Ground" x="3335" y="224" width="433.592" height="61"/>
-  <object id="511" name="Ground" x="3911.41" y="96" width="432.59" height="60"/>
-  <object id="512" name="Ground" x="4423" y="448" width="432.592" height="60"/>
-  <object id="513" name="Ground" x="4934.38" y="287" width="433.59" height="64"/>
-  <object id="514" name="Ground" x="5510.41" y="126.97" width="433.59" height="64"/>
-  <object id="516" name="Ground" x="6150.41" y="223" width="889.182" height="62"/>
+  <object id="505" name="Ground" x="1222.82" y="608" width="623.513" height="40"/>
+  <object id="506" name="Ground" x="1959.67" y="480" width="624" height="40"/>
+  <object id="507" name="Ground" x="2823" y="351" width="432" height="40"/>
+  <object id="510" name="Ground" x="3335" y="224" width="433.592" height="40"/>
+  <object id="511" name="Ground" x="3911.41" y="96" width="432.59" height="40"/>
+  <object id="512" name="Ground" x="4423" y="448" width="432.592" height="40"/>
+  <object id="513" name="Ground" x="4934.38" y="287" width="433.59" height="40"/>
+  <object id="514" name="Ground" x="5510.41" y="126.97" width="433.59" height="40"/>
+  <object id="516" name="Ground" x="6150.41" y="223" width="889.182" height="40"/>
  </objectgroup>
 </map>

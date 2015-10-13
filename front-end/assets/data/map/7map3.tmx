@@ -235,7 +235,7 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="235" name="EnemyEntity" x="2277.5" y="673" width="62" height="373">
+  <object id="235" name="EnemyEntity" x="2279" y="673" width="62" height="373">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -245,7 +245,7 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="236" name="EnemyEntity" x="2598" y="569" width="59" height="475.5">
+  <object id="236" name="EnemyEntity" x="2599" y="569" width="59" height="475.5">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -255,7 +255,7 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="238" name="EnemyEntity" x="2983.5" y="479.5" width="59" height="513.5">
+  <object id="238" name="EnemyEntity" x="2985" y="479.5" width="59" height="513.5">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -287,7 +287,7 @@
   </object>
   <object id="251" name="EnemyEntity" x="151.5" y="158.5" width="377" height="29">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="2"/>
     <property name="image" value="buckbeak"/>
     <property name="jump" value="0"/>
     <property name="speed" value="4"/>

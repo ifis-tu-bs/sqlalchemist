@@ -48,7 +48,7 @@
   <object id="13" name="ScrollEntity" x="1088" y="318" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="49"/>
+    <property name="scrollIndex" value="48"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -368,7 +368,7 @@
   </object>
   <object id="409" name="EnemyEntity" x="2845.75" y="765" width="736.5" height="83">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="2"/>
     <property name="image" value="enemy14"/>
     <property name="jump" value="0"/>
     <property name="speed" value="8"/>

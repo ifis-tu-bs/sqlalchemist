@@ -283,7 +283,7 @@
    <polygon points="0,0 48,127 47,-1"/>
   </object>
   <object id="457" name="Ground" x="2947" y="942" width="900" height="54"/>
-  <object id="458" name="Ground" x="2401" y="1075" width="90" height="54"/>
+  <object id="458" name="Ground" x="2401" y="1075" width="95" height="54"/>
   <object id="481" x="2541" y="987">
    <polygon points="0,0 48,127 47,-1"/>
   </object>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="356">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="357">
  <tileset firstgid="1" name="castle1" tilewidth="32" tileheight="32">
   <image source="../img/map/castle1.png" width="512" height="1344"/>
  </tileset>
@@ -48,7 +48,7 @@
   <object id="13" name="ScrollEntity" x="3456" y="400" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="24"/>
+    <property name="scrollIndex" value="23"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -296,7 +296,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="353" name="EnemyEntity" x="608.5" y="603" width="282" height="38">
+  <object id="353" name="EnemyEntity" x="595" y="603" width="282" height="38">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy14"/>
@@ -340,5 +340,6 @@
   <object id="339" name="Ground" x="2592" y="832" width="448" height="31"/>
   <object id="340" name="Ground" x="3393.5" y="448.5" width="158" height="31"/>
   <object id="341" name="Ground" x="3584.5" y="703.5" width="256" height="383"/>
+  <object id="356" name="Ground" x="577.5" y="1059" width="3000" height="32"/>
  </objectgroup>
 </map>

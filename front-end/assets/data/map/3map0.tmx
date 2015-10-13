@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="172">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="120" height="34" tilewidth="32" tileheight="32" nextobjectid="173">
  <tileset firstgid="1" name="castle1" tilewidth="32" tileheight="32">
   <image source="../img/map/castle1.png" width="512" height="1344"/>
  </tileset>
@@ -236,11 +236,11 @@
    </properties>
   </object>
   <object id="169" name="SpikeEntity" x="2820" y="160.5" width="193" height="14" rotation="90"/>
-  <object id="170" name="SpikeEntity" x="3424.5" y="707" width="335" height="10" rotation="90"/>
-  <object id="171" name="SpikeEntity" x="3425.5" y="417" width="126" height="10" rotation="90"/>
+  <object id="170" name="SpikeEntity" x="3429.5" y="710" width="335" height="10" rotation="90"/>
+  <object id="171" name="SpikeEntity" x="3428.5" y="409" width="126" height="10" rotation="90"/>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="58" name="EnemyEntity" x="1696" y="738" width="305" height="28">
+  <object id="58" name="EnemyEntity" x="1698" y="744" width="305" height="28">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy08"/>
@@ -250,7 +250,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="131" name="EnemyEntity" x="2496.5" y="319" width="221" height="30">
+  <object id="131" name="EnemyEntity" x="2500.5" y="325" width="221" height="30">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy08"/>
@@ -260,7 +260,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="132" name="EnemyEntity" x="2527.5" y="834" width="221" height="30">
+  <object id="132" name="EnemyEntity" x="2513.5" y="838" width="221" height="30">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy08"/>
@@ -270,7 +270,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="133" name="EnemyEntity" x="2752.5" y="513" width="221" height="30">
+  <object id="133" name="EnemyEntity" x="2747.5" y="523" width="221" height="30">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy08"/>
@@ -280,7 +280,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="134" name="EnemyEntity" x="897.5" y="801" width="221" height="30">
+  <object id="134" name="EnemyEntity" x="901.5" y="805" width="221" height="30">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy08"/>
@@ -301,10 +301,11 @@
   <object id="79" name="Ground" x="800" y="576" width="414" height="63"/>
   <object id="85" name="Ground" x="2369" y="865" width="543" height="62"/>
   <object id="122" name="Ground" x="1409.5" y="352" width="832" height="65"/>
-  <object id="123" name="Ground" x="2369" y="350.5" width="1474" height="65"/>
+  <object id="123" name="Ground" x="2369" y="350.5" width="1474" height="50"/>
   <object id="124" name="Ground" x="0" y="150.5" width="1087" height="266"/>
   <object id="125" name="Ground" x="1086.5" y="5" width="1760" height="153"/>
   <object id="126" name="Ground" x="3426.5" y="417.5" width="30" height="126"/>
   <object id="127" name="Ground" x="3425" y="705" width="31" height="385"/>
+  <object id="172" name="Ground" x="575.667" y="1061.33" width="3000" height="29"/>
  </objectgroup>
 </map>

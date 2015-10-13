@@ -51,7 +51,7 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
-  <object id="228" name="SpikeEntity" x="547" y="834.5" width="191" height="13" rotation="90"/>
+  <object id="228" name="SpikeEntity" x="546" y="840.5" width="191" height="13" rotation="90"/>
   <object id="240" name="CoinEntity" x="1181" y="881" width="32" height="32">
    <properties>
     <property name="image" value="spinning_coin_gold"/>
@@ -88,12 +88,12 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
-  <object id="328" name="SpikeEntity" x="544.5" y="258.5" width="315" height="11" rotation="90"/>
-  <object id="329" name="SpikeEntity" x="1348.5" y="674.5" width="253" height="15" rotation="90"/>
-  <object id="330" name="SpikeEntity" x="1890.5" y="833.5" width="191" height="13" rotation="90"/>
-  <object id="331" name="SpikeEntity" x="2563.5" y="832.5" width="191" height="13" rotation="90"/>
-  <object id="332" name="SpikeEntity" x="3522.5" y="831.5" width="191" height="13" rotation="90"/>
-  <object id="334" name="SpikeEntity" x="3521.5" y="385.5" width="126" height="12" rotation="90"/>
+  <object id="328" name="SpikeEntity" x="545.5" y="255.5" width="315" height="11" rotation="90"/>
+  <object id="329" name="SpikeEntity" x="1350.5" y="681.5" width="240" height="15" rotation="90"/>
+  <object id="330" name="SpikeEntity" x="1890.5" y="842.5" width="191" height="13" rotation="90"/>
+  <object id="331" name="SpikeEntity" x="2565.5" y="839.5" width="191" height="13" rotation="90"/>
+  <object id="332" name="SpikeEntity" x="3526.5" y="840.5" width="191" height="13" rotation="90"/>
+  <object id="334" name="SpikeEntity" x="3523.5" y="392.5" width="126" height="12" rotation="90"/>
   <object id="335" name="SpikeEntity" x="3520.5" y="546.5" width="122" height="11" rotation="90"/>
   <object id="336" name="ScrollEntity" x="2241" y="605" width="32" height="32">
    <properties>
@@ -877,7 +877,7 @@
   </object>
   <object id="342" name="EnemyEntity" x="2295" y="474" width="447" height="35">
    <properties>
-    <property name="attack" value="00"/>
+    <property name="attack" value="2"/>
     <property name="image" value="enemy11"/>
     <property name="jump" value="0"/>
     <property name="speed" value="6"/>
