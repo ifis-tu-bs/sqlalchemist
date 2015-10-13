@@ -11,8 +11,7 @@ game.SignUpScreen = me.ScreenObject.extend({
         var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/sign_up_screen.png", "back");
         me.game.world.addChild(background);
-
-        $("#background").fadeIn("slow");
+        $("#background").fadeIn(100);
 
 
         /**
@@ -30,6 +29,10 @@ game.SignUpScreen = me.ScreenObject.extend({
         var usernameSignUp         = new game.TextInputElement('input', 'text', 'wUsernameSignUp', 'fUsernameSignUp', 55, 7, 22, 34, 2);
         var passwordSignUp         = new game.TextInputElement('input', 'text', 'wPasswordSignUp', 'fPasswordSignUp', 55, 7, 22, 44, 2);
         var passwordAckSignUp      = new game.TextInputElement('input', 'text', 'wPasswordAckSignUp', 'fPasswordAckSignUp', 55, 7, 22, 54, 2);
+        me.game.world.addChild(useridSignUp);
+        me.game.world.addChild(usernameSignUp);
+        me.game.world.addChild(passwordSignUp);
+        me.game.world.addChild(passwordAckSignUp);
 
 
         /**
@@ -72,6 +75,8 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         toStart = function () {
             $("#background").fadeOut(100);
+            $("#submitButton").fadeOut(100);
+            $("#backToLoginButton").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.MENU);
             }, 100);
@@ -96,7 +101,6 @@ game.SignUpScreen = me.ScreenObject.extend({
 
 
             function onSubmit(xmlHttpRequest) {
-
                 //console.log("Response of POST" + xmlHttpRequest.responseText);
                 /**
                  * Check if username or id already taken.
@@ -136,6 +140,8 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         this.toLogin = function() {
             $("#background").fadeOut(100);
+            $("#submitButton").fadeOut(100);
+            $("#backToLoginButton").fadeOut(100);
             setTimeout( function() {
                 me.state.change(STATE_LOGIN);
             }, 100);
@@ -155,17 +161,10 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         var submitButton      = new game.ClickableElement('submitButton', 'Enter', this.submitReply, 20, 6.5, 58.5, 64.5, 1);
         var backToLoginButton = new game.ClickableElement('backToLoginButton', 'Back', this.toLogin, 20, 6.5, 19.5, 64.5, 1);
-
-        /**
-         * add children to container
-         */
-        me.game.world.addChild(useridSignUp);
-        me.game.world.addChild(usernameSignUp);
-        me.game.world.addChild(passwordSignUp);
-        me.game.world.addChild(passwordAckSignUp);
-
         me.game.world.addChild(submitButton);
         me.game.world.addChild(backToLoginButton);
+        $("#submitButton").fadeIn(100);
+        $("#backToLoginButton").fadeIn(100);
     }
 
 

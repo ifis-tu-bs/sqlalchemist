@@ -5,16 +5,16 @@
 
 game.SettingsScreen = me.ScreenObject.extend({
 
+    
     /**
      *  action to perform on state change.
      */
+
     onResetEvent : function() {
 
         /**
          *  set settings_screen
          */
-
-
 
         me.game.world.addChild(
             new me.Sprite (
@@ -24,18 +24,53 @@ game.SettingsScreen = me.ScreenObject.extend({
             1
         );
 
+
+        /**
+        var backgroundsettings = new game.BackgroundElement('backgroundsettings', 100, 100, 0, 0, 'none');
+        backgroundsettings.setImage("assets/data/img/gui/settings_screen.png", "back");
+        me.game.world.addChild(backgroundsettings);
+         */
+
+        //$("#backgroundsettings").fadeIn(100);
+
         /**
          *  add all necessary buttons to screen
          */
         me.game.world.addChild(new music(450,195),3);
         me.game.world.addChild(new sound(450,295),4);
-        me.game.world.addChild(new game.HUD.SettingsElements(125, 195),5);
-        me.game.world.addChild(new backToMenu(950,-40),2);
+        me.game.world.addChild(new game.HUD.SettingsElements(125, 195), 5);
 
         /**var background = new game.BackgroundElement('background', 100, 100, 0, 0);
         background.setImage("assets/data/img/gui/settings_screen.png", "back");
         me.game.world.addChild(background);*/
 
+        this.backToMenu = function () {
+            $("#studentRequest").fadeOut(100);
+            $("#storyReset").fadeOut(100);
+            $("#changePassword").fadeOut(100);
+            $("#backFromSettings").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(me.state.MENU);
+            }, 100);
+        };
+
+        var backFromSettings = new game.ClickableElement('backFromSettings','', this.backToMenu, 18.1818, 17.7083, 72, -5, 1);
+        backFromSettings.setImage("assets/data/img/buttons/new_back_button.png", "back");
+        me.game.world.addChild(backFromSettings);
+        $("#backFromSettings").fadeIn(100);
+
+
+        var musicElement        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        me.game.world.addChild(musicElement);
+        if (!game.data.music && !game.data.sound){
+            musicElement.writeHTML('MUSIC: OFF' + "<br>" +'SOUNDS: OFF');
+        } else if (game.data.music && !game.data.sound){
+            musicElement.writeHTML('MUSIC:  ON' + "<br>" +'SOUNDS: OFF');
+        } else if (!game.data.music && game.data.sound){
+            musicElement.writeHTML('MUSIC: OFF' + "<br>" +'SOUNDS:  ON');
+        } else if (game.data.music && game.data.sound){
+            musicElement.writeHTML('MUSIC:  ON' + "<br>" +'SOUNDS:  ON');
+        }
 
         var oldPassword         = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
         var newPassword         = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);
@@ -45,8 +80,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         var keyBindingsHeader   = new game.TextOutputElement('keyBindingsHeader', 50, 5, 40, 26, 1);
         var keyBindings         = new game.TextOutputElement('keyBindings', 30, 25, 45, 36, 5);
         var keyBindingsDisc     = new game.TextOutputElement('keyBindingsDisc', 25, 25, 62, 36, 5);
-
-
         me.game.world.addChild(oldPassword);
         me.game.world.addChild(newPassword);
         me.game.world.addChild(newPasswordAck);
@@ -91,13 +124,18 @@ game.SettingsScreen = me.ScreenObject.extend({
         };
         var studentRequest = new game.ClickableElement('studentRequest', "verify as student", sendStudentRequest, 33, 5, 48, 72, 1);
         me.game.world.addChild(studentRequest);
+        $("#studentRequest").fadeIn(100);
 
         SubmitResetClicked = function(){
 
             resetReply = function(xmlHttpRequest){
-
-                window.location.reload();
-
+                $("#studentRequest").fadeOut(100);
+                $("#storyReset").fadeOut(100);
+                $("#changePassword").fadeOut(100);
+                $("#backFromSettings").fadeOut(100);
+                setTimeout( function() {
+                    window.location.reload();
+                }, 100);
             };
             ajaxSendChallengeResetRequest(resetReply);
         };
@@ -133,9 +171,12 @@ game.SettingsScreen = me.ScreenObject.extend({
              on load function: confirmation for password change
              */
             function userReply() {
-                me.state.change(me.state.SETTINGS);
-
-
+                $("#studentRequest").fadeOut(100);
+                $("#storyReset").fadeOut(100);
+                $("#changePassword").fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(me.state.SETTINGS);
+                }, 100);
             }
 
             ajaxSendUsersRequest(passwordJSON, userReply);
@@ -191,9 +232,10 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var changePassword = new game.ClickableElement('changePassword', 'change password?', ChangePasswordClicked, 23, 10, 13, 53, 2);
         me.game.world.addChild(changePassword);
+        $("#changePassword").fadeIn(100);
 
 
-        resetStoryClicked = function(){
+        this.resetStoryClicked = function(){
             keyBindingsHeader.hide();
             keyBindings.hide();
             keyBindingsDisc.hide();
@@ -208,8 +250,9 @@ game.SettingsScreen = me.ScreenObject.extend({
             studentRequest.hide();
         };
 
-        var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', resetStoryClicked, 23, 10, 13, 70, 2);
+        var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', this.resetStoryClicked, 23, 10, 13, 70, 2);
         me.game.world.addChild(storyReset);
+        $("#storyReset").fadeIn(100);
 
     },
 
@@ -227,8 +270,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         }
 
         setSettings();
-
-
 
     }
 
