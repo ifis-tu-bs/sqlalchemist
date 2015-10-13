@@ -93,6 +93,7 @@ Comment:
 ### ForeignKey
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
+| ```id```                 | ```Number ```     |            |
 | ```sourceTable```        | ```String```      |            |
 | ```sourceColumn```       | ```String```      |            |
 | ```destinationTable```   | ```String```      |            |
@@ -102,10 +103,11 @@ Example:
 ```json
 ForeignKey:
 {
-  "sourceTable":"Profile",
-  "sourceColumn":"user_id",
-  "destinationTable":"User",
-  "destinationColumn":"id"
+  "id":                 12,
+  "sourceTable":        "Profile",
+  "sourceColumn":       "user_id",
+  "destinationTable":   "User",
+  "destinationColumn":  "id"
 }
 ```
 #### ForeignKey.Form
@@ -120,10 +122,10 @@ Example:
 ```json
 ForeignKey:
 {
-  "sourceTable":"Profile",
-  "sourceColumn":"user_id",
-  "destinationTable":"User",
-  "destinationColumn":"id"
+  "sourceTable":        "Profile",
+  "sourceColumn":       "user_id",
+  "destinationTable":   "User",
+  "destinationColumn":  "id"
 }
 ```
 ### Rating

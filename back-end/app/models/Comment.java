@@ -22,6 +22,12 @@ public class Comment extends Model{
     @ManyToOne
     private Profile profile;
 
+    @ManyToOne
+    private TaskSet taskSet;
+
+    @ManyToOne
+    private Task task;
+
     /** Content of the comment. */
     @Column(name = "comment")
     private String comment;

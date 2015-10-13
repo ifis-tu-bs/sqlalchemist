@@ -32,11 +32,11 @@ public class Task extends Model {
     private int     points;
     private int     requiredTerm;
 
-    @OneToOne
+    @ManyToOne
     private Profile     creator;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Comment> comments;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Rating> ratings;
 
     private Date created_at;

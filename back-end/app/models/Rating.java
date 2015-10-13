@@ -1,10 +1,7 @@
 package models;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import play.Play;
 import play.db.ebean.Model;
-import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,29 +19,35 @@ public class Rating extends Model {
     @ManyToOne
     Profile profile;
 
+    @ManyToOne
+    private TaskSet taskSet;
+
+    @ManyToOne
+    private Task task;
+
     long positiveRatings;
     long negativeRatings;
     long editRatings;
 
-  public Rating(
-      boolean positive,
-      boolean negative,
-      boolean needReview,
-      Profile profile) {
+    public Rating(
+        boolean positive,
+        boolean negative,
+        boolean needReview,
+        Profile profile) {
 
-    if(profile != null) {
-      this.profile = profile;
+        if(profile != null) {
+            this.profile = profile;
 
-      int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
+            int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
 
-      this.positiveRatings = positive   ? votes : 0;
-      this.negativeRatings = negative   ? votes : 0;
-      this.editRatings     = needReview ? votes : 0;
-    } else {
-      this.positiveRatings = 0;
-      this.negativeRatings = 0;
-      this.editRatings = 0;
-    }
+            this.positiveRatings = positive   ? votes : 0;
+            this.negativeRatings = negative   ? votes : 0;
+            this.editRatings     = needReview ? votes : 0;
+        } else {
+            this.positiveRatings = 0;
+            this.negativeRatings = 0;
+            this.editRatings = 0;
+        }
   }
 
     /**
@@ -53,6 +56,14 @@ public class Rating extends Model {
      */
     public Profile getProfile() {
         return this.profile;
+    }
+
+    public void setTaskSet(TaskSet taskSet) {
+        this.taskSet = taskSet;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public long getPositiveRatings() {

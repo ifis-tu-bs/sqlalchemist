@@ -28,6 +28,10 @@ public class ForeignKeyRelation extends Model {
         this.destinationColumn = destinationColumn;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getSourceTable() {
         return sourceTable;
     }

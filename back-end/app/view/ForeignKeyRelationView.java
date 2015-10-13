@@ -26,10 +26,11 @@ public class ForeignKeyRelationView {
     public static ObjectNode toJson(ForeignKeyRelation foreignKeyRelation) {
         ObjectNode foreignKeyRelationNode = Json.newObject();
 
-        foreignKeyRelationNode.put("sourceTable", foreignKeyRelation.getSourceTable());
-        foreignKeyRelationNode.put("sourceColumn", foreignKeyRelation.getSourceColumn());
-        foreignKeyRelationNode.put("destinationTable", foreignKeyRelation.getDestinationTable());
-        foreignKeyRelationNode.put("destinationColumn", foreignKeyRelation.getDestinationColumn());
+        foreignKeyRelationNode.put("id",                    foreignKeyRelation.getId());
+        foreignKeyRelationNode.put("sourceTable",           foreignKeyRelation.getSourceTable());
+        foreignKeyRelationNode.put("sourceColumn",          foreignKeyRelation.getSourceColumn());
+        foreignKeyRelationNode.put("destinationTable",      foreignKeyRelation.getDestinationTable());
+        foreignKeyRelationNode.put("destinationColumn",     foreignKeyRelation.getDestinationColumn());
 
         return foreignKeyRelationNode;
     }

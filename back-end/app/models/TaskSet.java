@@ -42,15 +42,13 @@ public class TaskSet extends Model {
     // Social Information's
     @ManyToOne
     private Profile creator;
-    @ManyToMany
-    private
-    List<Rating> ratings;
-    @ManyToMany
-    private
-    List<Comment> comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<Rating> ratings;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<Comment> comments;
 
-    private Date created_at;
-    private Date updated_at;
+    private Date createdAt;
+    private Date updatedAt;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(Long.class, TaskSet.class);
 
@@ -87,14 +85,20 @@ public class TaskSet extends Model {
         this.ratings                = new ArrayList<>();
         this.comments               = new ArrayList<>();
 
-        this.updated_at             = new Date();
-        this.created_at             = new Date();
+        this.updatedAt = new Date();
+        this.createdAt = new Date();
     }
 
     @Override
     public void save() {
         this.prepareStoring();
         super.save();
+    }
+
+    @Override
+    public void update() {
+        this.updatedAt = new Date();
+        super.update();
     }
 
     public void prepareStoring() {
@@ -138,21 +142,7 @@ public class TaskSet extends Model {
                 relationsFormatted = relationsFormatted + ",";
         }
         this.relationsFormatted = relationsFormatted;
-        this.updated_at = new Date();
-    }
-
-    /**
-     * this method deletes the database entry of this entity
-     */
-    @Override
-    public void delete() {
-        List<Task> tasks = this.tasks;
-        if(tasks  != null && tasks.size() > 0) {
-            for(Task task: tasks) {
-                task.delete();
-            }
-        }
-        super.delete();
+        this.updatedAt = new Date();
     }
 
 //////////////////////////////////////////////////
@@ -203,12 +193,12 @@ public class TaskSet extends Model {
         return comments;
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public Date getCreatedAt() {
+        return createdAt;
     }
 
-    public Date getUpdated_at() {
-        return updated_at;
+    public Date getUpdatedAt() {
+        return updatedAt;
     }
 
     public boolean contains(Task task) {
@@ -242,18 +232,23 @@ public class TaskSet extends Model {
      * This is the methode to add a rating to this entity
      */
     public void addRating(Rating rating) {
-      if(this.ratings != null && this.ratings.size() > 0) {
-        for(Rating ratingI : this.ratings) {
-          if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
-            ratingI.delete();
-            break;
-          }
+        if(this.ratings != null && this.ratings.size() > 0) {
+            for(Rating ratingI : this.ratings) {
+                if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+                    this.ratings.remove(ratingI);
+                    this.update();
+                    ratingI.delete();
+                    break;
+                }
+            }
+        } else {
+            this.ratings = new ArrayList<>();
         }
-      } else {
-        this.ratings = new ArrayList<>();
-      }
 
-      this.ratings.add(rating);
+        this.ratings.add(rating);
+        rating.setTaskSet(this);
+        rating.save();
+        this.update();
     }
 
     /**

@@ -84,6 +84,13 @@ public class Profile extends Model {
     @Transient
     long ownRank;
 
+    @OneToMany(mappedBy = "creator")
+    private List<TaskSet>   tasks;
+    @OneToMany(mappedBy = "profile")
+    private List<Rating> ratings;
+    @OneToMany(mappedBy = "profile")
+    private  List<Comment> comments;
+
     public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
 
 

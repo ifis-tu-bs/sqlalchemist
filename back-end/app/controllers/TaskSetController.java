@@ -8,6 +8,9 @@ import models.Profile;
 import models.Rating;
 import models.TaskSet;
 
+import play.mvc.Security;
+import secured.CreatorSecured;
+import secured.UserSecured;
 import view.CommentView;
 import view.RatingView;
 import view.TaskSetView;
@@ -29,7 +32,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 
-//@Authenticated(CreatorSecured.class)
+@Security.Authenticated(UserSecured.class)
 public class TaskSetController extends Controller {
     /**
      * This method creates TaskFile objects from Json
@@ -41,8 +44,7 @@ public class TaskSetController extends Controller {
      */
 
     public static Result create() {
-        //Profile profile = ProfileDAO.getByUsername(request().username());
-        Profile profile = ProfileDAO.getByUsername("admin");
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode jsonNode = request().body().asJson();
 
         TaskSet taskSet = TaskSetView.fromJsonForm(profile, jsonNode);
@@ -114,7 +116,7 @@ public class TaskSetController extends Controller {
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
 
-        TaskSet     taskSetEdit = TaskSetView.fromJsonForm(profile, jsonNode);
+  /*      TaskSet     taskSetEdit = TaskSetView.fromJson(profile, jsonNode);
 
         if(taskSet == null && taskSetEdit == null) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id + " and invalid taskSetForm !");
@@ -127,11 +129,16 @@ public class TaskSetController extends Controller {
             return badRequest("invalid taskSetForm");
         }
 
-        taskSet.delete();
+        taskSet.setTaskSetName(taskSetEdit.getTaskSetName());
 
-        taskSetEdit.setId(id);
-        taskSetEdit.save();
+        tableDefinitions;
 
+        foreignKeyRelations;
+
+        tasks;
+
+
+        taskSet.update();*/
         return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 
@@ -163,26 +170,26 @@ public class TaskSetController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
-     public static Result rate(Long id) {
-         JsonNode   ratingBody  = request().body().asJson();
-         TaskSet    taskSet     = TaskSetDAO.getById(id);
-         Profile    profile     = ProfileDAO.getByUsername(request().username());
-         Rating     rating      = RatingView.fromJsonForm(ratingBody, profile);
+    public static Result rate(Long id) {
+        JsonNode   ratingBody  = request().body().asJson();
+        TaskSet    taskSet     = TaskSetDAO.getById(id);
+        Profile    profile     = ProfileDAO.getByUsername(request().username());
+        Rating     rating      = RatingView.fromJsonForm(ratingBody, profile);
 
-         if (taskSet == null) {
-             Logger.warn("TaskSetController.rate("+id+") - no task found");
-             return badRequest("no SubTask found");
-         }
-         if(rating == null) {
-             Logger.warn("TaskSetController.rate() - invalid json body");
-             return badRequest("invalid json body");
-         }
+        if(taskSet == null) {
+            Logger.warn("TaskSetController.rate("+id+") - no task found");
+            return badRequest("no SubTask found");
+        }
+        if(rating == null) {
+            Logger.warn("TaskSetController.rate() - invalid json body");
+            return badRequest("invalid json body");
+        }
 
-         taskSet.addRating(rating);
-         taskSet.update();
+        taskSet.addRating(rating);
+        taskSet.update();
 
-         return redirect(routes.TaskSetController.view(taskSet.getId()));
-     }
+        return redirect(routes.TaskSetController.view(taskSet.getId()));
+    }
 
     /**
      * this method handels the comments for TaskFiles

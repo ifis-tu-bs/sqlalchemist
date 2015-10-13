@@ -15,7 +15,8 @@ import play.libs.Json;
  */
 public class TaskSetBootstrap {
     public static void init(){
-        JsonNode node = Json.parse("{\n" +
+        JsonNode node = Json.parse("{\n " +
+                "   \"taskSetName\":          \"DefaulttaskSet\"," +
                 "    \"tableDefinitions\": [\n" +
                 "        {\n" +
                 "            \"tableName\": \"User\",\n" +

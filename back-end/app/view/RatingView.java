@@ -11,9 +11,9 @@ import play.libs.Json;
  */
 public class RatingView {
     public static Rating fromJsonForm(JsonNode ratingBody, Profile profile) {
-        boolean positive    = ratingBody.asBoolean();
-        boolean negative    = ratingBody.asBoolean();
-        boolean needReview  = ratingBody.asBoolean();
+        boolean positive    = ratingBody.path("positive").asBoolean();
+        boolean negative    = ratingBody.path("negative").asBoolean();
+        boolean needReview  = ratingBody.path("needReview").asBoolean();
 
         return new Rating(positive, negative, needReview, profile);
     }
