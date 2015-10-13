@@ -1,0 +1,26 @@
+#backFromTrivia {
+    font-family: Trajan_Pro_Regular, sans-serif;
+    cursor: pointer;
+    color: #a3743c;
+    text-align: center;
+    -webkit-border-radius: 14;
+    -moz-border-radius: 14;
+    border-radius: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+#backFromTrivia:hover, #backFromTrivia:focus, #backFromTrivia:active {
+    background-color: #a3743c;
+    color: white;
+}

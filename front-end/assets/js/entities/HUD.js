@@ -91,7 +91,6 @@ game.HUDII.Container = me.Container.extend({
 
 });
 
-
 //needs to be KICKED
 game.HUDIII = game.HUDIII || {};
 
@@ -306,6 +305,7 @@ game.HUD.SettingsElements = me.Renderable.extend( {
 
         this.sound = game.data.sound;
         this.music = game.data.music;
+
     },
 
     /**
@@ -364,75 +364,6 @@ game.HUD.LofiCoins = me.Renderable.extend( {
     }
 });
 
-//Used in the Scrollcollection
-game.HUD.Collector = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, progress, level) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        this.progress = progress;
-        this.level = level;
-
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, this.level + " of 10 Levels cleared", this.pos.x, this.pos.y);
-        renderer.drawFont(this.font, this.progress + " of 60 Scorlls collected", this.pos.x, this.pos.y + 50);
-        renderer.drawFont(this.font, "You can collect 100 Scrolls a day", this.pos.x, this.pos.y + 400);
-    }
-});
-
-//Used in Gameoverscreen
-game.HUD.GameOver = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, cash) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "left");
-        this.cash = cash;
-    },
-
-    /**renderer.drawFont(this.font, "USERNAME: " + this.user_object.username.toUpperCase(), this.pos.x + 760, this.pos.y);
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Depth: " + game.persistent.depth , this.pos.x + 600 , this.pos.y + 55);
-        renderer.drawFont(this.font, "Score: " + game.data.score , this.pos.x + 280, this.pos.y + 55);
-        renderer.drawFont(this.font,"Lofi-Coins: " + this.cash , this.pos.x -100, this.pos.y + 55);
-        console.log(game.data.scrolls);
-        if(game.data.scollLimit !== 0) {
-            if (game.data.scrolls.length !== 0) {
-                renderer.drawFont(this.font, "Scrolls obtained: ", this.pos.x - 100, this.pos.y + 135);
-                for (i = 0; i < game.data.scrolls.length; i++) {
-                    renderer.drawFont(this.font, game.data.scrolls[i], this.pos.x + 80, this.pos.y + 200 + 50 * i);
-                }
-            } else {
-                renderer.drawFont(this.font, "No Scrolls For You!!", this.pos.x + 120, this.pos.y + 170);
-                renderer.drawFont(this.font, "Sorry :(", this.pos.x + 280, this.pos.y + 285);
-            }
-            renderer.drawFont(this.font, "You still can collect " + (game.data.scollLimit - game.data.scrolls.length) + " Scrolls today", this.pos.x - 40, this.pos.y + 400);
-        }else{
-            renderer.drawFont(this.font, "You collected all Scrolls for today,", this.pos.x - 71, this.pos.y + 185);
-            renderer.drawFont(this.font, "come back tomorrow to earn new Scrolls!", this.pos.x - 111, this.pos.y + 290);
-        }
-    }
-});
-
 //Used in Beltscreen, shows the amount of potions already created
 game.HUD.PotionAmount = me.Renderable.extend( {
     /**
@@ -470,53 +401,6 @@ game.HUD.PotionAmount = me.Renderable.extend( {
     }
 });
 
-//Used in Resultscreen
-game.HUD.Result = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        this.time = Math.floor((game.task.finishTime - game.task.startTime)/1000);
-        this.difficulty = game.task.difficulty;
-        this.score = game.data.gainScore;
-
-        //((this.difficulty+ 1) * 60 + this.time)/this.time
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Time: "           + convertTime(this.time),   this.pos.x -  30, this.pos.y - 100);
-        renderer.drawFont(this.font, "Score: "          + game.task.gainScore,               this.pos.x + 280, this.pos.y - 100);
-        renderer.drawFont(this.font, "Difficulty: "     + this.difficulty + 1,          this.pos.x  -  150, this.pos.y);
-        renderer.drawFont(this.font, "Lofi-Coins: "     + game.task.gainCoins,          this.pos.x + 300, this.pos.y);
-        switch(game.task.kind) {
-            case 0 :
-            {
-                renderer.drawFont(this.font, "You Crafted: ", this.pos.x - 100, this.pos.y + 100);
-                renderer.drawFont(this.font, "1 x "+game.potion.potions[game.task.potionId].name, this.pos.x + 10, this.pos.y + 200);
-                break;
-            }
-            case 1 :
-            {
-                renderer.drawFont(this.font, "You Got: ", this.pos.x - 100, this.pos.y + 100);
-                renderer.drawFont(this.font, game.task.name , this.pos.x + 10, this.pos.y + 200);
-            }
-        }
-    }
-});
-
-
 game.HUD.Buy = me.Renderable.extend( {
     /**
      * constructor
@@ -545,6 +429,7 @@ game.HUD.Buy = me.Renderable.extend( {
 
     }
 });
+
 game.HUD.BuyBelt = me.Renderable.extend( {
     /**
      * constructor
@@ -599,36 +484,6 @@ game.HUD.Text = me.Renderable.extend( {
     }
 });
 
-//TRASH??!!
-game.HUD.Profile = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 50, "white", "right");
-
-    }
-
-
-    /**
-     * draw profile information
-     * renderer.drawFont(this.font, "melon", 100, 100);
-
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Username: " + this.user_object.username, this.pos.x + 160, this.pos.y);
-        renderer.drawFont(this.font, "Lofi-Coins: " + this.user_object.coins, this.pos.x + 160, this.pos.y + 50);
-        //renderer.drawFont(this.font, "Points: " + this.user_object.points, this.pos.x + 160, this.pos.y + 100);
-        //renderer.drawFont(this.font, "Avatar: " + this.user_object.avatar, this.pos.x + 160, this.pos.y + 150);
-    }*/
-});
-
-
 game.HUD.Homework = me.Renderable.extend( {
     /**
      * constructor
@@ -642,13 +497,6 @@ game.HUD.Homework = me.Renderable.extend( {
         // create a font
         this.font = new me.Font("Trajan_Pro_Regular", 50, "white", "right");
 
-    }
-});
-
-game.Icon = me.Sprite.extend({
-    init: function () {
-        this._super(me.Sprite, "init", [0, 0, me.loader.getImage("arbitraryLoadingScreen"), 1320, 768]);
-        this.z = 1000;
     }
 });
 
@@ -782,5 +630,3 @@ game.HUD.OverlayAlert = me.Renderable.extend( {
         renderer.drawFont(this.font, this.alertText, this.pos.x, this.pos.y);
     }
 });
-
-

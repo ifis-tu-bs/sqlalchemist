@@ -1,4 +1,4 @@
-#wIdSignUp {
+#wIdSignUp, #wUsernameSignUp, #wPasswordSignUp, #wPasswordAckSignUp {
     background-color: transparent;
     border-color: #00031f;
     -webkit-border-radius: 8px;
@@ -12,9 +12,10 @@
     border-style: solid;
     border-width: 1px;
     overflow: hidden;
+    z-index: 3;
 }
 
-#fIdSignUp {
+#fIdSignUp, #fUsernameSignUp, #fPasswordSignUp, #fPasswordAckSignUp {
     background-color: transparent;
     border-color: #00031f;
     -webkit-border-radius: 8px;
@@ -38,140 +39,7 @@
     z-index: 3;
 }
 
-#wUsernameSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-}
-
-#fUsernameSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: none;
-    border-width: 1px;
-    color: #00031f;
-    font-family: LinBiolinum, sans-serif;
-    text-align: center;
-    font-size: 100%;
-    font-weight: normal;
-    overflow: auto;
-    position: absolute;
-    resize: none;
-    z-index: 3;
-}
-
-#wPasswordSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-}
-
-#fPasswordSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: none;
-    border-width: 1px;
-    ccolor: #00031f;
-    font-family: LinBiolinum, sans-serif;
-    text-align: center;
-    font-size: 100%;
-    font-weight: normal;
-    overflow: auto;
-    position: absolute;
-    resize: none;
-    z-index: 3;
-}
-
-#wPasswordAckSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: solid;
-    border-width: 1px;
-    overflow: hidden;
-}
-
-#fPasswordAckSignUp {
-    background-color: transparent;
-    border-color: #00031f;
-    -webkit-border-radius: 8px;
-    -moz-border-radius: 8px;
-    -o-border-radius: 8px;
-    -ms-border-radius: 8px;
-    mso-border-radius: 8px;
-    -atsc-border-radius: 8px;
-    -wap-border-radius: 8px;
-    border-radius: 8px;
-    border-style: none;
-    border-width: 1px;
-    color: #00031f;
-    font-family: LinBiolinum, sans-serif;
-    text-align: center;
-    font-size: 100%;
-    font-weight: normal;
-    overflow: auto;
-    position: absolute;
-    resize: none;
-    z-index: 3;
-}
-
-#submitButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#backToLoginButton {
+#submitButton, #backToLoginButton {
     background-color : transparent;
     border-style : none;
     font-family : Trajan_Pro_Regular, sans-serif;

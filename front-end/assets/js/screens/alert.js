@@ -17,29 +17,26 @@ game.AlertScreen = me.ScreenObject.extend({
             me.state.change(STATE_START);
         }
 
-        /**me.game.world.addChild(
-            new me.Sprite(
-                0, 0,
-                me.loader.getImage('game_over_screen')
-            ),
-            1
-        );*/
-
         var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/game_over_screen.png", "back");
         me.game.world.addChild(background);
 
-        $("#background").fadeIn("slow");
+        $("#background").fadeIn(100);
 
         me.game.world.addChild(new game.HUD.OverlayAlert(300, 150, game.alert.alertText));
 
         this.onAlertOkClick = function() {
-            me.state.change(game.alert.toState);
+            $("#alertOk").fadeOut(100);
+            $("#background").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(game.alert.toState);
+            }, 100);
+
         };
 
         var alertOk = new game.ClickableElement("alertOk", "Ok", this.onAlertOkClick, 40, 12, 33, 25, 1);
-
         me.game.world.addChild(alertOk);
+        $("#alertOk").fadeIn(100);
 
     }
 });
