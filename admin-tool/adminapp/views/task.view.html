@@ -3,14 +3,8 @@
   <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
   <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
 
-  <div class="btn-group" style="float:left;width:70%">
-    <button type="button" class="btn btn-default" ng-click="goSelectTaskSet()" ng-show="shouldIBeDisplayed('TaskSetSelection')"> > </button>
-    <button type="button" class="btn btn-default" ng-click="goSelectTask()" ng-show="shouldIBeDisplayed('TaskSelection')" ng-disabled="state === 'TaskFileSelection'">TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed('InspectTask')" ng-disabled="state === 'InspectSubmit'">Task: <b>{{selectedTask.taskName</b></button>
-  </div>
-
   <div class="container-fluid" style="float:right;width:30%">
-    <form ng-show="!shouldIBeDisplayed('InspectTask')">
+    <form ng-show="true">
       <div class="form-group">
         <div class="input-group">
           <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
@@ -20,30 +14,144 @@
     </form>
   </div>
 
-  <div style="width:100%;height:8px;float:right"></div>
+  <hr/>
+  <hr/>
 
-  <div class="ng-hide" ng-show="state === 'TaskSetSelection'" style="width:100%;float:right">
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
 
-        <th>View Schema...</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="taskSet in vm.taskSets | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet)">
-        <td>{{taskSet.name}}</td>
-        <td>Schema...</td>
-        <!--<td>{{taskSet.start_at}}</td>
-        <td>{{taskSet.expires_at}}</td>
-        <td>
-          <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
-            <span class="glyphicon glyphicon-trash"></span></button>
-        </td>-->
-      </tr>
-      </tbody>
-    </table>
+
+  <div style="width:100%;float:left">
+
+
+    <button class="btn btn-info" ng-click="save();" style="float:right">Save...</button>
+
+    <tabset tpye="pills">
+      <tab deselect="keepTaskSets();">
+        <tab-heading>
+          TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
+        </tab-heading>
+        <div style="width:100%;float:left">
+          <div class="panel {{panelClass || 'panel-default'}}">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                Select TaskSet for further editing
+              </h4>
+            </div>
+            <div class="panel-default">
+              <div class="panel-body">
+                <table class="table table-hover">
+                  <thead>
+                  <tr>
+                    <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                    <th ng-click="orderTaskPredicate = 'created_at'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
+                    <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr ng-repeat="taskSet in vm.taskSets | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet, 'TaskSelection')">
+                    <td><input type="text" ng-click="$event.stopPropagation();" ng-model="taskSet.taskSetName"></td>
+                    <td>{{taskSet.created_at}}</td>
+                    <td>
+                      <div class="btn-group" role="group" aria-label="...">
+                        <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
+                        <a href="" ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.needReview }} <span style="width: 6px"></span>
+                        <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
+                      </div>
+                    </td>
+                    <!--<td>{{taskSet.start_at}}</td>
+                    <td>{{taskSet.expires_at}}</td>
+                    <td>
+                      <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
+                        <span class="glyphicon glyphicon-trash"></span></button>
+                    </td>-->
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </tab>
+      <tab heading="Intension" disable="selectedTaskSet.id === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
+
+        <accordion close-others=true>
+          <accordion-group is-open="tableSelectionStatus.tableNotSelected">
+            <accordion-heading>
+              <h5>Table: <b>{{selectedTable.id === undefined ? "select..." : selectedTable.tableName}}</b></h5>
+            </accordion-heading>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                  <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
+                  <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
+                  <td>{{table.columns.length}}</td>
+                  <!--<td>{{taskSet.start_at}}</td>
+                  <td>{{taskSet.expires_at}}</td>
+                  <td>
+                    <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
+                      <span class="glyphicon glyphicon-trash"></span></button>
+                  </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </accordion-group>
+          <accordion-group is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
+            <accordion-heading>
+              <h5>Columns:</b></h5>
+            </accordion-heading>
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th ng-click="orderTableEditPredicate = 'columnName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                  <th ng-click="orderTableEditPredicate = 'dataType'; orderReverse = !orderReverse" style="cursor: pointer">Type</th>
+                  <th ng-click="orderTableEditPredicate = 'datagenSet'; orderReverse = !orderReverse" style="cursor: pointer">GenSet</th>
+                  <th ng-click="orderTableEditPredicate = 'notNull'; orderReverse = !orderReverse" style="cursor: pointer">Not Null?</th>
+                  <th ng-click="orderTableEditPredicate = 'primaryKey'; orderReverse = !orderReverse" style="cursor: pointer">Primary?</th>
+                  <th>Foreign Key</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
+                  <td><input type="text" ng-model="column.columnName"></td>
+                  <td><input type="text" ng-model="column.dataType" typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
+                  <td>{{column.datagenSet}}</td>
+                  <td><input type="checkbox" ng-model="column.notnull"></td>
+                  <td><input type="checkbox" ng-model="column.primary"></td>
+                  <td><input type="text" ng-model="column.foreignKey" typeahead="item as item.tableName for item in vm.tables | filter:$viewValue | limitTo:5"></td>
+                </tr>
+              </tbody>
+            </table>
+          </accordion-group>
+        </accordion>
+
+      </tab>
+      <tab heading="Extension" disable="selectedTaskSet.id === undefined" deselect="keepTaskSets();">
+
+      </tab>
+      <tab heading="Tasks" disable="selectedTaskSet.id === undefined" deselect="keepTaskSets();">
+
+      </tab>
+    </tabset>
+
+
+
+  </div>
+
+  <div class="ng-hide" ng-show="state === 'TableEdit'" style="width:100%;float:right">
+    <div class="btn-group" style="float:right; width:100%">
+      <button type="button" class="btn btn-default" ng-click="schemaState='Intension'" style="float:right"> Intension </button>
+      <button type="button" class="btn btn-default" ng-click="schemaState='Extension'" style="float:right"> Extension </button>
+      <button type="button" class="btn btn-default" ng-click="schemaState='Constraints'" style="float:right"> Constraints </button>
+    </div>
+
+
+
+
   </div>
 
   <div class="ng-hide" ng-show="state === 'TaskSelection'" style="width:100%;float:right">
@@ -77,7 +185,7 @@
 
   </div>
 
-  <div class="ng-hide" ng-show="state === 'InspectTask'"  style="width:100%;float:right">
+  <div class="ng-hide" ng-show="state === 'TaskEdit'"  style="width:100%;float:right">
     <div style="width:100%;height: 8px"> </div>
     <div style="width:45%; float:left">
       <button class="btn btn-default" ng-click="prevSubmit()" style="float:left">Previous Student</button>
