@@ -36,7 +36,7 @@
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
               <h4 class="panel-title">
-                Select TaskSet for further editing
+                <h4>Select TaskSet for further editing</h4>
               </h4>
             </div>
             <div class="panel-default">
@@ -45,14 +45,16 @@
                   <thead>
                   <tr>
                     <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                    <th ng-click="orderTaskPredicate = 'created_at'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
-                    <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                    <th ng-click="orderTaskSetPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
+                    <th ng-click="orderTaskSetPredicate = 'updatedAt'; orderReverse = !orderReverse" style="cursor: pointer">Last Update</th>
+                    <th ng-click="orderTaskSetPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                   </tr>
                   </thead>
                   <tbody>
                   <tr ng-repeat="taskSet in vm.taskSets | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet, 'TaskSelection')">
                     <td><input type="text" ng-click="$event.stopPropagation();" ng-model="taskSet.taskSetName"></td>
-                    <td>{{taskSet.created_at}}</td>
+                    <td>{{taskSet.createdAt}}</td>
+                    <td>{{taskSet.updatedAt}}</td>
                     <td>
                       <div class="btn-group" role="group" aria-label="...">
                         <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
@@ -83,12 +85,6 @@
         </div>
       </tab>
 
-
-
-
-
-
-
       <tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
         <tab-heading>
           Intension <i>(tableDefinition)</i>
@@ -96,7 +92,7 @@
         <accordion close-others=true>
           <accordion-group is-open="tableSelectionStatus.tableNotSelected">
             <accordion-heading>
-              <h5>Table: <b>{{selectedTable.id === undefined ? "select..." : selectedTable.tableName}}</b></h5>
+              <h5>Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b></h5>
             </accordion-heading>
             <table class="table table-hover">
               <thead>
@@ -116,6 +112,12 @@
                       <span class="glyphicon glyphicon-trash"></span></button>
                   </td>-->
                 </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTable(); $event.stopPropagation();">New...</button>
+                  </td>
+                  <td/>
+                </tr>
               </tbody>
             </table>
           </accordion-group>
@@ -131,7 +133,6 @@
                   <th ng-click="orderTableEditPredicate = 'datagenSet'; orderReverse = !orderReverse" style="cursor: pointer">GenSet</th>
                   <th ng-click="orderTableEditPredicate = 'notNull'; orderReverse = !orderReverse" style="cursor: pointer">Not Null?</th>
                   <th ng-click="orderTableEditPredicate = 'primaryKey'; orderReverse = !orderReverse" style="cursor: pointer">Primary?</th>
-                  <th>Foreign Key</th>
                 </tr>
               </thead>
               <tbody>
@@ -140,8 +141,16 @@
                   <td><input type="text" ng-model="column.dataType" typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
                   <td>{{column.datagenSet}}</td>
                   <td><input type="checkbox" ng-model="column.notnull"></td>
-                  <td><input type="checkbox" ng-model="column.primary"></td>
-                  <td><input type="text" ng-model="column.foreignKey" typeahead="item as item.tableName for item in vm.tables | filter:$viewValue | limitTo:5"></td>
+                  <td><input type="checkbox" ng-model="column.primaryKey"></td>
+                </tr>
+                <tr>
+                  <td>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewColumn(); $event.stopPropagation();">New...</button>
+                  </td>
+                  <td/>
+                  <td/>
+                  <td/>
+                  <td/>
                 </tr>
               </tbody>
             </table>
@@ -165,25 +174,48 @@
 
       </tab>
       <tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+        <div style="width:100%;float:left">
+          <div class="panel {{panelClass || 'panel-default'}}">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <h4>Select TaskSet for further editing</h4>
+              </h4>
+            </div>
+            <div class="panel-body">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                    <th ng-click="orderTaskPredicate = 'creator.username'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+                    <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
+                    <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                  </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task);">
+                  <td><input type="text" ng-model="task.taskName"></td>
+                  <td>{{task.creator.username}}</td>
+                  <td>{{task.createdAt}}</td>
+                  <td>
+                    <div class="btn-group" role="group" aria-label="...">
+                      <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
 
       </tab>
     </tabset>
-
-
-
   </div>
 
-  <div class="ng-hide" ng-show="state === 'TableEdit'" style="width:100%;float:right">
-    <div class="btn-group" style="float:right; width:100%">
-      <button type="button" class="btn btn-default" ng-click="schemaState='Intension'" style="float:right"> Intension </button>
-      <button type="button" class="btn btn-default" ng-click="schemaState='Extension'" style="float:right"> Extension </button>
-      <button type="button" class="btn btn-default" ng-click="schemaState='Constraints'" style="float:right"> Constraints </button>
-    </div>
 
-
-
-
-  </div>
 
   <div class="ng-hide" ng-show="state === 'TaskSelection'" style="width:100%;float:right">
 
@@ -193,7 +225,7 @@
         <th ng-click="orderTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">ID</th>
         <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
         <th ng-click="orderTaskPredicate = 'creator'; orderReverse = !orderReverse" style="cursor: pointer">Created by</th>
-        <th ng-click="orderTaskPredicate = 'created_at'; orderReverse = !orderReverse" style="cursor: pointer">Created at</th>
+        <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Created at</th>
         <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
       </tr>
       </thead>
@@ -202,7 +234,7 @@
         <td>{{ task.id }}</td>
         <td>{{ task.taskName}}</td>
         <td>{{ task.creator }}</td>
-        <td>{{ task.created_at }}</td>
+        <td>{{ task.createdAt }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="...">
             <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>

@@ -106,7 +106,7 @@ angular
         //////////////////////////////777
 
 
-        /* DataTypes */
+        /* Data */
         $scope.taskSetSelectionStatus = {
             taskSetSelected : false
         }
@@ -140,6 +140,7 @@ angular
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
         }
 
+        /* Server Side Methods */
         $scope.saveSelectedTaskSet = function () {
             console.log($scope.selectedTaskSet);
             if ($scope.selectedTaskSet.id != undefined) {
@@ -167,14 +168,50 @@ angular
             }
         }
 
+        $scope.rateTaskSet = function (taskSet, decision) {
+            var ratingJson = {};
+            switch (decision) {
+                case 'positive': {
+                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
+                    break;
+                }
+                case 'needReview': {
+                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
+                    break;
+                }
+                case 'negative': {
+                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
+                    break;
+                }
+            }
 
+            TaskService.rateTaskSet(taskSet.id, ratingJson).then(
+                function (result) {
+                    if (result.error) {
+                        FlashService.Error(result.message);
+                    } else {
+                    }
+            });
+        }
         //////////////////////////////777
         //  Intension: TableDefinition - Control
         //////////////////////////////777
 
+        /* Data */
         $scope.tableSelectionStatus = {
             tableSelected : false,
             tableNotSelected : true
+        }
+
+        var DefaultTable = function () {
+            this.tableName = "";
+            this.columns = [];
+            this.extension = "";
+        }
+
+        /* Methods */
+        $scope.pushNewTable = function () {
+            vm.tables.push(new DefaultTable());
         }
 
         $scope.selectTable = function (table) {
@@ -188,6 +225,23 @@ angular
             $scope.selectedTable = vm.tables[tableIndex];
             $rootScope.Tasks.selectedTable = $scope.selectedTable;
             vm.columns = $scope.selectedTable.columns;
+        }
+
+        //////////////////////////////777
+        //  Intension: TableDefinition: Column - Control
+        //////////////////////////////777
+
+        /* Data */
+        var DefaultColumn = function () {
+            this.columnName = "";
+            this.dataType = "bigint"
+            this.notNull = true;
+            this.primary = false;
+        }
+
+        /* Methods */
+        $scope.pushNewColumn = function () {
+            vm.columns.push(new DefaultColumn());
         }
 
         //////////////////////////////777
@@ -222,32 +276,7 @@ angular
         //////////////////////////////777
 
 
-        $scope.rateTaskFile = function (taskSet, decision) {
-            var ratingJson = {};
-            switch (decision) {
-                case 'positive': {
-                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
-                    break;
-                }
-                case 'needReview': {
-                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
-                    break;
-                }
-                case 'negative': {
-                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
-                    break;
-                }
-            }
 
-            TaskService.rateTaskSet(taskSet.id, ratingJson).then(
-                function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        initController();
-                    }
-            });
-        }
 
         $scope.rateTask = function (task, decision) {
 
