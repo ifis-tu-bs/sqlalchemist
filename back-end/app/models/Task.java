@@ -128,20 +128,40 @@ public class Task extends Model {
         return taskText;
     }
 
+    public void setTaskText(String taskText) {
+        this.taskText = taskText;
+    }
+
     public String getRefStatement() {
         return refStatement;
+    }
+
+    public void setRefStatement(String refStatement) {
+        this.refStatement = refStatement;
     }
 
     public int getEvaluationstrategy() {
         return evaluationstrategy;
     }
 
+    public void setEvaluationstrategy(int evaluationstrategy) {
+        this.evaluationstrategy = evaluationstrategy;
+    }
+
     public int getPoints() {
         return points;
     }
 
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
     public int getRequiredTerm() {
         return requiredTerm;
+    }
+
+    public void setRequiredTerm(int requiredTerm) {
+        this.requiredTerm = requiredTerm;
     }
 
     public Profile getCreator() {

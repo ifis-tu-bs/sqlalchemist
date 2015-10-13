@@ -1,21 +1,17 @@
 package controllers;
 
-import dao.ProfileDAO;
-import dao.ScrollDAO;
-import dao.ScrollCollectionDAO;
-import dao.SolvedTaskDAO;
-import dao.SubmittedHomeWorkDAO;
-import dao.TaskDAO;
+import dao.*;
 
 import Exception.SQLAlchemistException;
 
-import models.Comment;
-import models.Profile;
-import models.Rating;
-import models.Scroll;
-import models.Task;
+import models.*;
 
 import secured.UserSecured;
+
+import view.CommentView;
+import view.RatingView;
+import view.TaskSetView;
+import view.TaskView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.*;
@@ -25,9 +21,6 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-import view.CommentView;
-import view.RatingView;
-import view.TaskView;
 
 import java.util.List;
 
@@ -38,26 +31,49 @@ import java.util.List;
 public class TaskController extends Controller {
 
     /**
+     * This method creates an Object
+     *
+     * @param taskSetId
+     * @return
+     */
+    public static Result create(Long taskSetId) {
+        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        JsonNode    taskNode    = request().body().asJson();
+        TaskSet     taskSet     = TaskSetDAO.getById(taskSetId);
+        if(taskSet == null) {
+            Logger.warn("TaskController.create - cannot find TaskSet");
+            return badRequest("cannot find TaskSet");
+        }
+        String      taskName    = taskSet.getTaskSetName() + "" + taskSet.getTasks().size();
+        Task        task        = TaskView.fromJsonForm(taskNode, taskName, profile);
+        if(task == null) {
+            Logger.warn("TaskController.create - invalid json");
+            return badRequest("invalid json");
+        }
+        return redirect(routes.TaskController.view(task.getId()));
+    }
+
+    /**
      * This method returns all created Task
      *
      * GET      /task
      *
      * @return returns a JSON Array filled with all Task
      */
-    public static Result index() {
-        ArrayNode       arrayNode= JsonNodeFactory.instance.arrayNode();
-        List<Task>   tasks = TaskDAO.getAll();
+    public static Result read() {
+        ArrayNode   taskNode = JsonNodeFactory.instance.arrayNode();
+        List<Task>  taskList = TaskDAO.getAll();
 
-        if (tasks == null) {
-            Logger.warn("TaskController.index - no Tasks found");
-            return badRequest("no Tasks found");
+        if (taskList == null) {
+            Logger.warn("TaskSet.index - no TaskSet found");
+            return badRequest("no TaskSet found");
         }
 
-        for(Task task : tasks) {
-            arrayNode.add(TaskView.toJson(task));
+        for(Task task : taskList) {
+            taskNode.add(TaskView.toJson(task));
         }
 
-        return ok(arrayNode);
+        return ok(taskNode);
     }
 
     /**
@@ -65,24 +81,52 @@ public class TaskController extends Controller {
      *
      *  GET      /task/:id
      *
-     * @param id    the id of a Task as long
+     * @param taskId    the id of a Task as long
      * @return      returns a Task
      */
-    public static Result view(long id) {
-        Task task = TaskDAO.getById(id);
+    public static Result view(Long taskId) {
+        Task task = TaskDAO.getById(taskId);
 
         if (task == null) {
-            Logger.warn("TaskController.view("+id+") - no task found");
-            return null;
+            Logger.warn("TaskController.view("+task+") - no task found");
+            return badRequest("no task found");
         }
-        ObjectNode taskJsoned = TaskView.toJson(task);
 
-        return ok(taskJsoned);
+        return ok(TaskView.toJson(task));
     }
 
+    public static Result update(Long taskId) {
+        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        Task        task        = TaskDAO.getById(taskId);
+        if(task == null) {
+            Logger.warn("TaskController.update - cannot find Task");
+            return badRequest("cannot find Task");
+        }
+        JsonNode    taskNode    = request().body().asJson();
+        TaskSet     taskSet     = task.getTaskSet();
+        Task        taskNew     = TaskView.fromJsonForm(taskNode, "", profile);
+        if(task == null) {
+            Logger.warn("TaskController.create - invalid json");
+            return badRequest("invalid json");
+        }
 
-    public static Result destroy(Long id) {
-        return ok();
+        task.setTaskText(taskNew.getTaskText());
+        task.setRefStatement(taskNew.getRefStatement());
+        task.setEvaluationstrategy(taskNew.getEvaluationstrategy());
+        task.setPoints(taskNew.getPoints());
+        task.setRequiredTerm(taskNew.getRequiredTerm());
+
+        task.update();
+
+        return redirect(routes.TaskController.view(task.getId()));
+    }
+
+    public static Result delete(Long taskId) {
+        Task task = TaskDAO.getById(taskId);
+
+        task.delete();
+
+        return redirect(routes.TaskController.read());
     }
 
     /**
@@ -114,7 +158,7 @@ public class TaskController extends Controller {
 
         task.addRating(rating);
         task.update();
-        return ok();
+        return redirect(routes.TaskController.view(task.getId()));
     }
 
     /**
@@ -145,7 +189,7 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return ok();
+        return redirect(routes.TaskController.view(task.getId()));
     }
 
 
@@ -187,7 +231,6 @@ public class TaskController extends Controller {
      * @param id task-id
      * @return
      */
-    @SuppressWarnings("UnusedAssignment")
     public static Result storySolve(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
@@ -271,7 +314,6 @@ public class TaskController extends Controller {
      * @param id
      * @return
      */
-    @SuppressWarnings("UnusedAssignment")
     public static Result triviaSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
