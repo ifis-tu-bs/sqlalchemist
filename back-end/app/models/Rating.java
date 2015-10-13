@@ -1,7 +1,7 @@
 package models;
 
-import com.avaje.ebeaninternal.server.deploy.generatedproperty.GeneratedInsertTimestamp;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import play.Logger;
 import play.Play;
 import play.db.ebean.Model;
@@ -27,6 +27,39 @@ public class Rating extends Model {
     long negativeRatings;
     long editRatings;
 
+  private Rating() {
+    this(null, false, false, false);
+  }
+
+  public Rating(
+      Profile profile,
+      boolean positive,
+      boolean negative,
+      boolean needReview) {
+
+    if(profile != null) {
+      this.profile = profile;
+
+      int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
+
+      this.positiveRatings = positive   ? votes : 0;
+      this.negativeRatings = negative   ? votes : 0;
+      this.editRatings     = needReview ? votes : 0;
+    } else {
+      this.positiveRatings = 0;
+      this.negativeRatings = 0;
+      this.editRatings = 0;
+    }
+  }
+
+    /**
+     * getter for profile
+     * @return returns the profile
+     */
+    public Profile getProfile() {
+        return this.profile;
+    }
+
     public ObjectNode toJson() {
         ObjectNode node = Json.newObject();
 
@@ -37,64 +70,17 @@ public class Rating extends Model {
         return node;
     }
 
-    public void clear() {
-        this.positiveRatings = 0;
-        this.negativeRatings = 0;
-        this.editRatings = 0;
+  public static Rating sum(List<Rating> ratings) {
+    if(ratings == null || ratings.size() == 0) {
+      return new Rating();
     }
+    Rating rating_sum = new Rating();
 
-
-    public void add(List<Rating> ratings) {
-        if(ratings == null || ratings.size() == 0) {
-            return;
-        }
-        for(Rating rating : ratings) {
-            this.positiveRatings    += rating.positiveRatings;
-            this.negativeRatings    += rating.negativeRatings;
-            this.editRatings        += rating.editRatings;
-        }
+    for(Rating rating : ratings) {
+      rating_sum.positiveRatings    += rating.positiveRatings;
+      rating_sum.negativeRatings    += rating.negativeRatings;
+      rating_sum.editRatings        += rating.editRatings;
     }
-
-    /**
-     * getter for profile
-     * @return returns the profile
-     */
-    public Profile getProfile() {
-        return this.profile;
-    }
-
-    public boolean rate(boolean positive, boolean needReview, boolean negative) {
-        int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
-
-        clear();
-
-        if(positive) {
-            this.positiveRatings += votes;
-            return true;
-        } else if (needReview) {
-            this.editRatings += votes;
-            return true;
-        } else if (negative){
-            this.negativeRatings += votes;
-            return true;
-        }
-
-        return false;
-    }
-
-    public static Rating create(Profile profile, boolean positive, boolean needReview, boolean negative) {
-        Rating rating = new Rating();
-
-        rating.profile = profile;
-        rating.rate(positive, needReview, negative);
-
-        try {
-            rating.save();
-
-            return rating;
-        } catch (PersistenceException e) {
-            Logger.warn("Rating.create - catches an PersistenceException: " + e.getMessage());
-            return null;
-        }
-    }
+    return rating_sum;
+  }
 }

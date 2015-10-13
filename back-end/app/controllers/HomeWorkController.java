@@ -1,33 +1,41 @@
 package controllers;
 
+
+import dao.HomeWorkChallengeDAO;
+import dao.ProfileDAO;
+import dao.SubmittedHomeWorkDAO;
+import dao.TaskFileDAO;
+import dao.UserDAO;
+
+import models.HomeWorkChallenge;
+import models.SubmittedHomeWork;
+import models.SubTask;
+import models.TaskFile;
+import models.User;
+
+import secured.AdminSecured;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.*;
+
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
-import secured.AdminSecured;
-import secured.UserSecured;
+import play.mvc.Security.Authenticated;
+import secured.StudentSecured;
 
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-
-import static play.mvc.Results.ok;
 
 /**
  * Created by Invisible on 30.06.2015.
  */
-@Security.Authenticated(AdminSecured.class)
 public class HomeWorkController extends Controller {
 
+    @Authenticated(AdminSecured.class)
     public static Result getSubmitsForHomeworkTaskFile() {
         /*
             TODO: Make JSON with all Students and their done HW, that are expired!
@@ -41,8 +49,8 @@ public class HomeWorkController extends Controller {
             return badRequest("Invalid json data");
         }
 
-        HomeWorkChallenge homeWorkChallenge = HomeWorkChallenge.getById(json.findPath("homework").longValue());
-        TaskFile taskFile = TaskFile.getByFileName(json.findPath("taskFile").textValue());
+        HomeWorkChallenge homeWorkChallenge = HomeWorkChallengeDAO.getById(json.findPath("homework").longValue());
+        TaskFile taskFile = TaskFileDAO.getByFileName(json.findPath("taskFile").textValue());
 
         if (homeWorkChallenge == null || taskFile == null) {
             return badRequest("Homework or taskfile have not been specified correctly");
@@ -51,7 +59,7 @@ public class HomeWorkController extends Controller {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         for (SubTask subTask : taskFile.getSubTasks()) {
-            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWork.getSubmitsForSubtask(subTask));
+            ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWorkDAO.getSubmitsForSubtask(subTask));
             ObjectNode objectNode = subTask.toJson();
             objectNode.put("submits", submits);
 
@@ -61,19 +69,21 @@ public class HomeWorkController extends Controller {
         return ok(arrayNode);
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getAllStudents () {
         return ok("dummy");
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getAll() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");
         }
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<HomeWorkChallenge> homeWorkList = HomeWorkChallenge.getAll();
+        List<HomeWorkChallenge> homeWorkList = HomeWorkChallengeDAO.getAll();
 
         if (homeWorkList == null) {
             return badRequest("No HomeWorks found");
@@ -90,8 +100,9 @@ public class HomeWorkController extends Controller {
      *  Create
      * @return
      */
+    @Authenticated(AdminSecured.class)
     public static Result create() {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");
@@ -113,7 +124,7 @@ public class HomeWorkController extends Controller {
 
         ArrayList<TaskFile> taskFiles = new ArrayList<>();
         for (JsonNode taskFileJson : json.findPath("tasks")) {
-            taskFiles.add(TaskFile.getByFileName(taskFileJson.textValue()));
+            taskFiles.add(TaskFileDAO.getByFileName(taskFileJson.textValue()));
         }
 
         if (utcTimeFrom > utcTimeTo || utcTimeTo < new Date().getTime()) {
@@ -133,7 +144,7 @@ public class HomeWorkController extends Controller {
         //                                                  |
         //                                                  v
         //
-        if (HomeWorkChallenge.create(name, User.getProfile(session()), 0, 0, taskFiles, 0, start, end) == null) {
+        if (HomeWorkChallengeDAO.create(name, ProfileDAO.getByUsername(request().username()), 0, 0, taskFiles, 0, start, end) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return badRequest("Data did not match constraints");
         }
@@ -141,27 +152,44 @@ public class HomeWorkController extends Controller {
         return ok();
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result delete(Long id) {
-        User user = User.getProfile(session()).getUser();
+        User user = UserDAO.getByUsername(request().username());
 
         if (user.getRole() <= User.ROLE_CREATOR) {
             return badRequest("Need to be higher Level User");
         }
 
-        HomeWorkChallenge.getById(id).delete();
+        HomeWorkChallengeDAO.getById(id).delete();
 
         return ok("Deleted");
     }
 
+    @Authenticated(AdminSecured.class)
     public static Result getForSubTask(Long subTaskId, Long homeWorkChallengeId) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        List<SubmittedHomeWork> submits = SubmittedHomeWork.getSubmitsForSubtaskAndHomeWorkChallenge(subTaskId, homeWorkChallengeId);
+        List<SubmittedHomeWork> submits = SubmittedHomeWorkDAO.getSubmitsForSubtaskAndHomeWorkChallenge(subTaskId, homeWorkChallengeId);
 
         for (SubmittedHomeWork submittedHomeWork : submits) {
             arrayNode.add(submittedHomeWork.toJson());
         }
 
         return ok(arrayNode);
+    }
+
+    @Authenticated(StudentSecured.class)
+    public static Result getCurrentHomeWorkForCurrentSession() {
+        User user = UserDAO.getByUsername(request().username());
+
+
+        HomeWorkChallenge homeWorkChallenge;
+        if((homeWorkChallenge = HomeWorkChallengeDAO.getCurrent()) == null) {
+            return badRequest("No Current HomeWork");
+        }
+
+        JsonNode jsonNode = homeWorkChallenge.toHomeWorkJsonForProfile(user.getProfile());
+
+        return ok(jsonNode);
     }
 }

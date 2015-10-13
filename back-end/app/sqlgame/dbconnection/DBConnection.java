@@ -126,9 +126,9 @@ public class DBConnection {
      * SQLSelectStatement
      */
     public ArrayList<ArrayList<String>> executeSQLSelectStatement(String user, String pass, String sqlStatement) throws MySQLAlchemistException {
-        Connection conn = null;
-        Statement stmt = null;
-        ArrayList<ArrayList<String>> result = null;
+        Connection conn;
+        Statement stmt;
+        ArrayList<ArrayList<String>> result;
 
         try {
             //Open connection
@@ -163,8 +163,8 @@ public class DBConnection {
      * SQLUpdateStatement
      */
     public void executeSQLUpdateStatement(String user, String pass, String sqlStatement) throws MySQLAlchemistException {
-        Connection conn = null;
-        Statement stmt = null;
+        Connection conn;
+        Statement stmt;
 
         try {
             //Open connection
@@ -195,8 +195,8 @@ public class DBConnection {
      * SQLUpdateStatement
      */
     public void executeSQLUpdateStatement(String user, String pass, String[] sqlStatement) throws MySQLAlchemistException {
-        Connection conn = null;
-        Statement stmt = null;
+        Connection conn;
+        Statement stmt;
 
         try {
             //Open connection
@@ -229,8 +229,8 @@ public class DBConnection {
      * SQLUpdateStatement
      */
     public void executeSQLUpdateStatement(String user, String pass, ArrayList<String> sqlStatement) throws MySQLAlchemistException {
-        Connection conn = null;
-        Statement stmt = null;
+        Connection conn;
+        Statement stmt;
 
         try {
             //Open connection
@@ -268,7 +268,7 @@ public class DBConnection {
     public ArrayList<ArrayList<String>> executeSQLSelectPreparedStatement(String user, String pass, String preparedSqlStatement, String[] variables) throws MySQLAlchemistException {
         Connection conn;
         PreparedStatement pStmt;
-        ArrayList<ArrayList<String>> result = null;
+        ArrayList<ArrayList<String>> result;
 
         try {
             //Open connection

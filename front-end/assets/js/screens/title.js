@@ -72,13 +72,19 @@ game.TitleScreen = me.ScreenObject.extend({
             var profileObject = JSON.parse(xmlHttpRequest.responseText);
             if (profileObject.student == false){
 
-                me.game.world.addChild(
+                /**me.game.world.addChild(
                     new me.Sprite (
                         0,0,
                         me.loader.getImage('home_screen_1')
                     ),
                     1
-                );
+                );*/
+
+                var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
+                background.setImage("assets/data/img/gui/home_screen_1.png", "back");
+                me.game.world.addChild(background);
+
+                $("#background").fadeIn("slow");
 
                 var settingsButton  = new game.ClickableElement('settingsButton', 'Sett ings', onSettings, 15, 22, 70, 61, 2);
                 var highscoreButton = new game.ClickableElement('highscoreButton', 'Rank ings', onHighscore, 25, 31, 38, 54, 2);
@@ -89,13 +95,19 @@ game.TitleScreen = me.ScreenObject.extend({
                 me.game.world.addChild(shopButton);
 
             } else {
-                me.game.world.addChild(
+                /**me.game.world.addChild(
                     new me.Sprite (
                         0,0,
                         me.loader.getImage('home_screen_2')
                     ),
                     1
-                );
+                );*/
+
+                var background2 = new game.BackgroundElement('background2', 100, 100, 0, 0, 'none');
+                background2.setImage("assets/data/img/gui/home_screen_2.png", "back2");
+                me.game.world.addChild(background2);
+
+                $("#background2").fadeIn("slow");
 
                 var settingsButtonStudent  = new game.ClickableElement('settingsButtonStudent', 'Sett ings', onSettings, 16, 20.5, 59.5, 78, 2);
                 var highscoreButtonStudent = new game.ClickableElement('highscoreButtonStudent', 'Rank ings', onHighscore, 25, 25, 56, 50, 2);

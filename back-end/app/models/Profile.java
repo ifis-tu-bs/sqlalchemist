@@ -1,13 +1,18 @@
 package models;
 
+import dao.AvatarDAO;
+import dao.InventoryDAO;
+import dao.LofiCoinFlowLogDAO;
+import dao.ScrollCollectionDAO;
+import dao.ShopItemDAO;
+
+import helper.Random;
+
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 
-import Exception.UsernameTakenException;
-import helper.Random;
-import helper.*;
 import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;
@@ -80,7 +85,7 @@ public class Profile extends Model {
     @Transient
     long ownRank;
 
-    private static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+    public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
 
 
 //////////////////////////////////////////////////
@@ -90,7 +95,7 @@ public class Profile extends Model {
     /**
      * @param username the username
      */
-    private Profile(String username) {
+    public Profile(String username) {
         super();
         this.setUsername(username);
         this.setPlayerStats(PlayerStats.defaultValues);
@@ -101,7 +106,7 @@ public class Profile extends Model {
 
         this.setShopItems(new ArrayList<>());
 
-        List<ShopItem> defaultAvatar = ShopItem.getByPrice(0);
+        List<ShopItem> defaultAvatar = ShopItemDAO.getByPrice(0);
 
         for (ShopItem shopItem : defaultAvatar) {
             this.buy(shopItem);
@@ -150,7 +155,7 @@ public class Profile extends Model {
 //////////////////////////////////////////////////
 
     public boolean setAvatar(long id) {
-        Avatar avatar_temp = Avatar.getById(id);
+        Avatar avatar_temp = AvatarDAO.getById(id);
 
         if(avatar_temp == null)
             return false;
@@ -163,7 +168,7 @@ public class Profile extends Model {
     private int addCoinsFromScore(int score) {
         int coins = score;
 
-        int collected = LofiCoinFlowLog.getCollectedCoinsSinceYesterday(this);
+        int collected = LofiCoinFlowLogDAO.getCollectedCoinsSinceYesterday(this);
         collected = coins + collected;
 
         int coinLimit = Play.application().configuration().getInt("Game.CoinLimit");
@@ -176,7 +181,7 @@ public class Profile extends Model {
         if(this.coins >= 1000000) {
             this.coins = 999999;
         }
-        LofiCoinFlowLog.add(this, coins);
+        LofiCoinFlowLogDAO.add(this, coins);
 
         return coins;
     }
@@ -207,7 +212,7 @@ public class Profile extends Model {
         playerStats_sum.add(this.playerStats);
         playerStats_sum.add(this.avatar.getPlayerStats());
 
-        List<Scroll> scrollList = ScrollCollection.getActiveScrolls(this);
+        List<Scroll> scrollList = ScrollCollectionDAO.getActiveScrolls(this);
 
         for(Scroll scroll : scrollList) {
             playerStats_sum.add(scroll.getPlayerStats());
@@ -286,9 +291,9 @@ public class Profile extends Model {
     public void addCurrentScroll() {
         Scroll scroll = this.currentScroll;
         if(scroll.isRecipe()) {
-            Inventory.create(this, scroll.getPotion());
+            InventoryDAO.create(this, scroll.getPotion());
         }  else {
-            ScrollCollection.setActive(this, scroll);
+            ScrollCollectionDAO.setActive(this, scroll);
         }
 
     }
@@ -300,10 +305,10 @@ public class Profile extends Model {
     }
 
     public void addScroll(Scroll scroll) {
-        this.scrollLimit = ScrollCollection.getLimit(this);
+        this.scrollLimit = ScrollCollectionDAO.getLimit(this);
         if(this.scrollLimit > 0) {
-            ScrollCollection.add(this, scroll);
-            this.scrollLimit = ScrollCollection.getLimit(this);
+            ScrollCollectionDAO.add(this, scroll);
+            this.scrollLimit = ScrollCollectionDAO.getLimit(this);
         }
     }
 
@@ -315,8 +320,8 @@ public class Profile extends Model {
         this.setCurrentStory(null);
         this.setCurrentScroll(null);
         this.setTutorialDone(false);
-        ScrollCollection.reset(this);
-        Inventory.reset(this);
+        ScrollCollectionDAO.reset(this);
+        InventoryDAO.reset(this);
 
         this.setDepthReset(0);
     }
@@ -382,8 +387,8 @@ public class Profile extends Model {
         node.put("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
-        node.put("inventory",       Inventory.getJson_Inventory(this));
-        node.put("belt",            Inventory.getJson_Belt(this));
+        node.put("inventory",       InventoryDAO.getJson_Inventory(this));
+        node.put("belt",            InventoryDAO.getJson_Belt(this));
         node.put("scrollCollection",ScrollCollection.toJsonAll(this));
 
         return node;
@@ -429,36 +434,6 @@ public class Profile extends Model {
         node.put("ownRank",     profile.ownRank + 1);
 	node.put("own",		profile.toJsonHighScore());
         return node;
-    }
-
-//////////////////////////////////////////////////
-//  Class Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param username asd
-     * @return asd
-     */
-    public static Profile create(String username) throws UsernameTakenException {
-
-        Profile profile = new Profile(username);
-
-        try {
-            profile.save();
-
-            return profile;
-        } catch (PersistenceException e) {
-            Logger.warn("Profile.create UsernameTaken: " + e.getMessage());
-            throw e;
-        }
-    }
-    public static Profile getById(long id) {
-        return Profile.find.byId(id);
-    }
-
-    public static Profile getByUsername(String username) {
-        return find.where().eq("username", username).findUnique();
     }
 
 //////////////////////////////////////////////////

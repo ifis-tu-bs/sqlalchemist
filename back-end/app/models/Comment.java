@@ -1,11 +1,12 @@
 package models;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;
+
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -79,31 +80,4 @@ public class Comment extends Model{
 
         return arrayNode;
     }
-
-//////////////////////////////////////////////////
-//  Create Method
-//////////////////////////////////////////////////
-
-    public static Comment create(Profile profile, String text) {
-        if(profile == null || text == null) {
-            return null;
-        }
-
-        Comment comment = new Comment(profile, text);
-        try{
-            comment.save();
-        } catch (PersistenceException pe) {
-            Logger.warn("Comment.create - caught PersistenceException: " + pe.getMessage());
-            Comment comment_comp = find.where().eq("text", text).findUnique();
-            if(comment_comp != null) {
-                Logger.warn("Comment.create - found alternative \"Comment\"");
-                return comment_comp;
-            }
-            Logger.error("Comment.create - no alternative \"Comment\" found");
-            return null;
-        }
-        return comment;
-    }
-
-
 }

@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.xml.sax.InputSource;
 
 /**
  * Class InputFile.
@@ -115,7 +114,7 @@ public class InputFile {
                         try {
                             FileReader fr = new FileReader(fullFilePath);
                             BufferedReader br = new BufferedReader(fr);
-                            String zeile = "";
+                            String zeile;
                             do {
                                 zeile = br.readLine();
                                 if (zeile != null) {
@@ -127,7 +126,7 @@ public class InputFile {
                         } catch (IOException e) {
                             throw new MySQLAlchemistException("Fehler beim lesen der alten Datei.", null);
                         }
-                        int length = 0;
+                        int length;
                         content = content.trim();
                         file = file.trim();
                         if (content.length() != file.length()) {

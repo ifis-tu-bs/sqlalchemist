@@ -1,7 +1,5 @@
 package ClassTests;
 
-import models.Exception.EmailTakenException;
-import models.Exception.UsernameTakenException;
 import models.Inventory;
 import models.Potion;
 import models.Profile;
@@ -29,9 +27,10 @@ public class InventoryTest {
     }
 
 
+    @SuppressWarnings("UnusedAssignment")
     @Test
     public void testInventoryCreate(){
-        Profile profile = null;
+        Profile profile;
         try {
             profile = User.create("fabiomazzone", "fabio.mazzone@me.com", "test").profile;
         } catch (UsernameTakenException | EmailTakenException e) {

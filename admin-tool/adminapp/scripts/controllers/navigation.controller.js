@@ -1,3 +1,10 @@
+/**********************************************************************************************************************
+*   Directive for templates/navigation.template.html
+*
+*   Automatically builds the navbar with all registered views in the app.
+*       See app.js
+**********************************************************************************************************************/
+
 (function() {
 
     angular

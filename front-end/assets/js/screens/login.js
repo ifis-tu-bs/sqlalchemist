@@ -4,37 +4,28 @@ game.LoginScreen = me.ScreenObject.extend({
      */
     onResetEvent: function() {
 
-        // workaround f�r android bug CB-4404
-        if (me.device.android || me.device.android2) {
-            if (me.device.isFullscreen) {
-                me.device.exitFullscreen();
-                document.body.style.minHeight = document.body.clientHeight + 'px';
-            }
-        }
-
         /**
          * Load screen-image for Login
          */
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('login_screen')
-            ),
-            1
-        );
+        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
+        background.setImage("assets/data/img/gui/login_screen.png", "back");
+        me.game.world.addChild(background);
 
+        $("#background").fadeIn("slow");
 
         /**
          * Function will be called when server responded.
          * @param xmlHttpRequest
          */
         function onLogin(xmlHttpRequest) {
-
-            console.log("STATUS :" + xmlHttpRequest.status);
+            //console.log("STATUS :" + xmlHttpRequest.status);
             if (xmlHttpRequest.status == 401){
                 alert("wrong id or password!");
             } else{
-                toMainMenu();
+                $("#background").fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(me.state.MENU);
+                }, 100);
             }
         }
 
@@ -43,12 +34,12 @@ game.LoginScreen = me.ScreenObject.extend({
          * returned value: xmlHttpRequest
          * on success: user session is created
          */
-        function loginReply() {
+        this.loginReply = function () {
             var userid     = document.getElementById("fId").value;
             var pw         = document.getElementById("fPassword").value;
             this.user_json = JSON.stringify({id: userid, password: pw});
             ajaxSendLoginRequest(this.user_json, onLogin);
-        }
+        };
 
 
         /**
@@ -73,26 +64,33 @@ game.LoginScreen = me.ScreenObject.extend({
         userid.insertText('e-mail');
         password.insertText('password');
 
-        clearUserIDField = function () {
+        this.clearUserIDField = function () {
             userid.clear();
-            userid.removeEvent('click', clearUserIDField);
+            userid.removeEvent('click', this.clearUserIDField);
         };
-        userid.addEvent('click', clearUserIDField);
+        userid.addEvent('click', this.clearUserIDField);
 
-        clearPasswordField = function () {
+        this.clearPasswordField = function () {
             password.clear();
             password.changeType('password');
-            password.removeEvent('click', clearPasswordField);
+            password.removeEvent('click', this.clearPasswordField);
         };
-        password.addEvent('focus', clearPasswordField);
+        password.addEvent('focus', this.clearPasswordField);
 
 
-        function toSignUp() {
-            me.state.change(STATE_SIGNUP);
-        }
-        function toPasswordReset() {
-            me.state.change(STATE_FORGOTPASSWORD);
-        }
+        this.toSignUp = function () {
+            $("#background").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(STATE_SIGNUP);
+            }, 100);
+        };
+
+        this.toPasswordReset = function () {
+            $("#background").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(STATE_FORGOTPASSWORD);
+            }, 100);
+        };
 
 
         /**
@@ -106,9 +104,9 @@ game.LoginScreen = me.ScreenObject.extend({
          *          top      : the top margin of the element in percent of the height of the canvas
          *          rows     : the number of rows
          */
-        var loginButton     = new game.ClickableElement('loginButton', 'Enter', loginReply, 20, 6.5, 42.5, 64.5, 1);
-        var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', toSignUp, 25, 2, 25, 58.5, 1);
-        var forgotPassword  = new game.ClickableElement('forgotPassword', 'Forgot Password? Click here!', toPasswordReset, 22, 2, 52, 58.5, 1);
+        var loginButton     = new game.ClickableElement('loginButton', 'Enter', this.loginReply, 20, 6.5, 42.5, 64.5, 1);
+        var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', this.toSignUp, 25, 2, 25, 58.5, 1);
+        var forgotPassword  = new game.ClickableElement('forgotPassword', 'Forgot Password? Click here!', this.toPasswordReset, 22, 2, 52, 58.5, 1);
 
 
         /**
@@ -124,8 +122,11 @@ game.LoginScreen = me.ScreenObject.extend({
 
     },
 
-    //Gets the Settings on Login and starts the Menu-Music
+    /**
+     * Gets the Settings on Login and starts the Menu-Music
+     */
     onDestroyEvent: function() {
+
         //get the users settings
         function getSettings(xmlHttpRequest){
 

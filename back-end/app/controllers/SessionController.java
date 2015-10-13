@@ -1,9 +1,18 @@
 package controllers;
 
+import dao.UserSessionDAO;
+
+import models.User;
+import models.UserSession;
+
 import com.fasterxml.jackson.databind.JsonNode;
-import models.*;
-import play.*;
-import play.mvc.*;
+
+import play.Logger;
+import play.Play;
+import play.mvc.Controller;
+import play.mvc.Result;
+import play.mvc.Security.Authenticated;
+
 
 import secured.*;
 
@@ -30,7 +39,7 @@ public class SessionController extends Controller {
         String id = json.findPath("id").textValue();
         String password = json.findPath("password").textValue();
         boolean adminTool = json.findPath("adminTool").asBoolean();
-        
+
         if (id == null || password == null) {
             Logger.info("SessionController.create - Expecting Json data");
             Logger.info("SessionController.create - Json: " + json.toString());
@@ -49,7 +58,7 @@ public class SessionController extends Controller {
 
             if (userSession != null ) {
                 session().put("sessionID", userSession.getSessionID());
-                return controllers.ProfileController.index();
+                return redirect(routes.ProfileController.index());
             }
             Logger.warn("SessionController.create - Can't create userSession");
             return badRequest("Can't create userSession");
@@ -62,9 +71,10 @@ public class SessionController extends Controller {
      *
      * @return
      */
-    @Security.Authenticated(UserSecured.class)
+    @Authenticated(UserSecured.class)
     public static Result delete() {
-        UserSession userSession = UserSession.getSession(session());
+        String sessionID = session().get("sessionID");
+        UserSession userSession = UserSessionDAO.getBySessionID(sessionID);
 
         if (userSession == null) {
             Logger.info("SessionController.delete - No session has been deleted.");

@@ -1,4 +1,11 @@
-﻿(function () {
+﻿/**********************************************************************************************************************
+*   Controller for views/login.view.html
+*
+*   Handles the Login view. Not too special.
+*   The Authentication service is used for the actual Login.
+**********************************************************************************************************************/
+
+(function () {
     'use strict';
 
     angular

@@ -80,16 +80,16 @@ create table map (
 
 create table potion (
   id                        bigint not null,
-  Potion_name               varchar(255),
+  potionName                varchar(255),
   type                      integer,
   powerLevel                integer,
-  buff_value                integer,
+  buffValue                 integer,
   health                    integer,
   defense                   integer,
   speed                     integer,
   jump                      integer,
   slot                      integer,
-  constraint uq_potion_Potion_name unique (Potion_name),
+  constraint uq_potion_potionName unique (potionName),
   constraint uq_potion_1 unique (type,powerLevel),
   constraint pk_potion primary key (id))
 ;
@@ -165,7 +165,7 @@ create table Scroll_Collection (
 create table ShopItem (
   id                        bigint not null,
   type                      integer,
-  ShopItemname              varchar(255),
+  ShopItemName              varchar(255),
   ShopItem_desc             varchar(255),
   thumbnail_url             varchar(255),
   price                     integer,

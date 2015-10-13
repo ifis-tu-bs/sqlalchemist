@@ -1,12 +1,18 @@
 package models;
 
+import dao.*;
+
+import Exception.SQLAlchemistException;
+import helper.Random;
+
+import sqlgame.exception.MySQLAlchemistException;
+import sqlgame.sandbox.*;
+
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
-import sqlgame.exception.MySQLAlchemistException;
-import sqlgame.sandbox.*;
-import Exception.SOLAlchemistException;
-import helper.Random;
+
+
 import play.*;
 import play.db.ebean.Model;
 import play.libs.Json;
@@ -55,7 +61,7 @@ public class SubTask extends Model {
     private Date created_at;
     private Date edited_at;
 
-    private static final Finder<Long, SubTask> find = new Finder<>(Long.class, SubTask.class);
+    public static final Finder<Long, SubTask> find = new Finder<>(Long.class, SubTask.class);
 
 //////////////////////////////////////////////////
 //  constructor
@@ -119,8 +125,7 @@ public class SubTask extends Model {
     public ObjectNode toJson() {
         ObjectNode json = Json.newObject();
 
-        Rating      rating_sum  = new Rating();
-        rating_sum.add(this.ratings);
+        Rating rating_sum = Rating.sum(this.ratings);
 
         json.put("id",          this.id);
         if(creator != null) {
@@ -150,18 +155,25 @@ public class SubTask extends Model {
         schema                 :String
         exercise               :String
         points                 :int
-        timeLimit              :int
-        difficulty             :int
         rating                 :JSON.rating*/
 
-        Rating      rating_sum  = new Rating();
-        rating_sum.add(this.ratings);
+        Rating  rating  = Rating.sum(this.ratings);
 
-        json.put("id", this.id);
-        json.put("schema", this.taskFile.getSchema());
-        json.put("exercise", this.exercise);
-        json.put("points", this.points);
-        json.put("rating",      rating_sum.toJson());
+        json.put("id",        this.id);
+        json.put("schema",    this.taskFile.getSchema());
+        json.put("exercise",  this.exercise);
+        json.put("points",    this.points);
+        json.put("rating",    rating.toJson());
+
+        return json;
+    }
+
+    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
+        ObjectNode json = Json.newObject();
+
+        json.put("id",          this.id);
+        json.put("exercise",    this.exercise);
+        json.put("done",        SubmittedHomeWorkDAO.getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, this) != null);
 
         return json;
     }
@@ -193,51 +205,30 @@ public class SubTask extends Model {
 
     public boolean comment(Profile profile, String text) {
         Comment comment;
-        if((comment = Comment.create(profile, text)) != null) {
+        if((comment = CommentDAO.create(profile, text)) != null) {
             this.commentList.add(comment);
             return true;
         }
         return false;
     }
 
-
-    /**
-     * This is the method to rate this TaskFile
-     *
-     * @param profile       the profile thats rate
-     * @param positive      if the rating for positive
-     * @param needReview    if the rating for needReview
-     * @param negative      if the rating for negative
-     * @return              return true if the rating process is successful
-     */
-    public boolean rate(Profile profile, boolean positive, boolean needReview, boolean negative) {
-        Rating rating = null;
-
-        if(this.ratings != null && this.ratings.size() > 0) {
-            for (Rating ratingI : this.ratings) {
-                if (ratingI.getProfile().getId() == profile.getId()) {
-                    rating = ratingI;
-                    break;
-                }
-
-            }
-        } else {
-            this.ratings = new ArrayList<>();
+  /**
+   * This is the methode to add a rating to this entity
+   */
+  public void addRating(Rating rating) {
+    if(this.ratings != null && this.ratings.size() > 0) {
+      for(Rating ratingI : this.ratings) {
+        if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+          ratingI.delete();
+          break;
         }
-
-        if(rating != null) {
-            rating.rate(positive, needReview, negative);
-            rating.update();
-            return true;
-        } else {
-            rating = Rating.create(profile, positive, needReview, negative);
-            if(rating == null) {
-                return false;
-            }
-            this.ratings.add(rating);
-        }
-        return true;
+      }
+    } else {
+      this.ratings = new ArrayList<>();
     }
+
+    this.ratings.add(rating);
+  }
 
     public static final int TASK_SOLVE_STATEMENT_CORRECT = 0;
     public static final int TASK_SOLVE_STATEMENT_ERROR = 1;
@@ -247,12 +238,12 @@ public class SubTask extends Model {
      * @param statement
      * @return
      */
-    public boolean solve(String statement) throws SOLAlchemistException {
+    public boolean solve(String statement) throws SQLAlchemistException {
         Task task = this.taskFile.getTask();
         try {
             task.startTask("local");
         } catch (MySQLAlchemistException e) {
-            throw new SOLAlchemistException("Database Exception, try later");
+            throw new SQLAlchemistException("Database Exception, try later");
         }
         try {
             boolean status = task.isUserStatementCorrect(statement, this.index);
@@ -264,126 +255,9 @@ public class SubTask extends Model {
             Logger.warn("SubTask.solve - catches MySQLAlchemistException: " + e.getMyMessage());
             try {
                 task.closeTask();
-            } catch (MySQLAlchemistException e1) {       }
-            throw new SOLAlchemistException(e.getMyMessage());
+            } catch (MySQLAlchemistException e1) {}
+            throw new SQLAlchemistException(e.getMyMessage());
         }
-    }
-
-
-//////////////////////////////////////////////////
-//  Object Getter Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param id
-     * @return
-     */
-    public static SubTask getById(long id) {
-        return SubTask.find.byId(id);
-    }
-
-    /**
-     *
-     * @param potionID
-     * @return
-     */
-    public static SubTask getByPotionID(long potionID, Profile profile) {
-        List<SubTask> list = SubTask.find.where().eq("potion_id", potionID).findList();
-
-        SubTask subTask = list.get(0);
-
-        return subTask;
-    }
-
-    /**
-     *
-     * @param profile
-     * @param scroll
-     * @return
-     */
-    public static SubTask getByScroll(Profile profile, Scroll scroll) {
-        float points = 0;
-
-        if(scroll.isRecipe()) {
-            points = scroll.getPotion().getLevel();
-        } else {
-            List<ScrollCollection> scrollList = ScrollCollection.getScrollCollection(profile);
-            for(ScrollCollection scrollCollection : scrollList) {
-                Scroll singleScroll = scrollCollection.scroll;
-                if( !singleScroll.isRecipe() && singleScroll.getType() == scroll.getType()) {
-                    points++;
-                }
-            }
-        }
-        Logger.info("Diffi: " + Math.round(points / 2));
-        return getByDifficulty(profile, Math.round(points / 2));
-    }
-
-    public static SubTask getByDifficulty(Profile profile, int points) {
-        List<SubTask> subTaskList           = find.where().eq("available", true).eq("points", points).findList(); //.eq("is_home_work", false).findList();
-        List<SolvedSubTask> solvedSubTasks  = SolvedSubTask.getAllDoneSubTask(profile);
-
-        if(subTaskList == null || subTaskList.size() == 0) {
-            Logger.warn("SubTask.getByDifficulty - No isAvailable SubTasks found");
-            return null;
-        }
-
-        if(solvedSubTasks == null || solvedSubTasks.size() == 0) {
-            return subTaskList.get(Random.randomInt(0, subTaskList.size() - 1));
-        }
-        for(SolvedSubTask solvedSubTask : solvedSubTasks) {
-            if(subTaskList.contains(solvedSubTask.getSubTask())) {
-                subTaskList.remove(solvedSubTask.getSubTask());
-            }
-        }
-        if(subTaskList.size() == 0) {
-            subTaskList           = find.where().eq("available", true).eq("points", points).findList();
-        }
-
-        int i = Random.randomInt(0, subTaskList.size() - 1);
-
-        return subTaskList.get(i);
-    }
-
-
-    /**
-     *
-     * @param challengeID
-     * @return
-     */
-    public static SubTask getByChallengeID(long challengeID, Profile profile) {
-
-        return null;
-    }
-
-    /**
-     * ToDO
-     * @param taskFile
-     * @param index
-     * @return
-     */
-    public static SubTask getByIndexOfTaskFile(TaskFile taskFile, int index) {
-        SubTask subTask = find.where().eq("taskFile", taskFile).eq("index", index).findUnique();
-        if (subTask == null) {
-            Logger.warn("SubTask.getByIndexOfTaskFile - cannot find SubTask with Index: " + index + " and taskFile: " + taskFile);
-            return null;
-        }
-        return subTask;
-    }
-
-    /**
-     *
-     *
-     * @return
-     */
-    public static List<SubTask> getAll() {
-        List<SubTask> subTaskList = find.all();
-        if (subTaskList == null) {
-            Logger.warn("SubTask.getAll - no entitys saved");
-            return null;
-        }
-        return subTaskList;
     }
 
     /**

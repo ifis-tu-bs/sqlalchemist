@@ -1,3 +1,16 @@
+/**********************************************************************************************************************
+*   Controller for views/homework.view.html
+*
+*   Manages the displacement of all Homeworks.
+*
+*   Page is orderd via:
+*   Homeworks -> TaskFiles(in the selected HW) -> SubTasks(in the selected TF) -> Submits(of the selected ST)
+*
+*   Selected Items are stored in $scope, the recieved data from the server in vm
+*
+*   The Controller is handled in states to fit the current Selection
+**********************************************************************************************************************/
+
 (function () {
 
 

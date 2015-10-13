@@ -1,9 +1,6 @@
 package helper;
 
-import play.Logger;
-
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * SQL to RA Converter - Class

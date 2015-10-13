@@ -4,7 +4,6 @@ import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  *
@@ -76,6 +75,10 @@ public class Challenge extends Model {
         this.modified_at = new Date();
 
         super.update();
+    }
+
+    public void setPlayer(Profile player) {
+      this.player = player;
     }
 
 }

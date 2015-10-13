@@ -1,9 +1,7 @@
 package ClassTests;
 
-import models.Avatar;
 import models.TaskFile;
 import org.junit.BeforeClass;
-import org.junit.Test;
 import play.Logger;
 import play.test.FakeApplication;
 

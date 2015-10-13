@@ -1,16 +1,22 @@
 package controllers;
 
-import models.*;
+import dao.ProfileDAO;
+import dao.StoryChallengeDAO;
+
+import models.Profile;
+import models.StoryChallenge;
+
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
+
 import secured.UserSecured;
 
 /**
  * @author fabiomazzone
  */
 
-@Security.Authenticated(UserSecured.class)
+@Authenticated(UserSecured.class)
 public class ChallengeController extends Controller {
 
     /**
@@ -18,27 +24,27 @@ public class ChallengeController extends Controller {
      * @return
      */
     public static Result story() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
-        StoryChallenge challenge = StoryChallenge.getForProfile(profile);
+        StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
 
         return ok(challenge.toJson());
     }
 
     public static Result skipChallenge() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
         profile.setTutorialDone(true);
 
-        profile.setCurrentStory(StoryChallenge.getFirstLevel());
+        profile.setCurrentStory(StoryChallengeDAO.getFirstLevel());
 
         profile.update();
         return ok();
     }
 
     public static Result reset() {
-        Profile profile = User.getProfile(session());
+        Profile profile = ProfileDAO.getByUsername(request().username());
 
-        profile.setCurrentStory(StoryChallenge.getFirstLevel());
+        profile.setCurrentStory(StoryChallengeDAO.getFirstLevel());
         profile.setTutorialDone(false);
 
         profile.update();
