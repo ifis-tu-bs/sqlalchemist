@@ -57,6 +57,23 @@ Columns:
 }
 ```
 ### ForeignKey
+| Name                     | Type              | Description|
+|--------------------------|-------------------|------------|
+| ```sourceTable```        | ```String```      |            |
+| ```sourceColumn```       | ```String```      |            |
+| ```destinationTable```   | ```String```      |            |
+| ```destinationColumn```  | ```String```      |            |
+
+Example:
+```json
+Columns:
+{
+  "sourceTable":"Profile",
+  "sourceColumn":"user_id",
+  "destinationTable":"User",
+  "destinationColumn":"id"
+}
+```
 #### ForeignKey.Form
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
@@ -194,6 +211,7 @@ Task:
 | ```id```                 | ```Number```                                |            |
 | ```taskSetName```        | ```String```                                |            |
 | ```tableDefinitions```   | [```TableDefinition[]```](#tabledefinition) |            |
+| ```foreignKeys```        | [```ForeignKey.Form[]```](#foreignkey)      |            |
 | ```relationsFormatted``` | ```String```                                |            |
 | ```tasks```              | [```Task```](#task)                         |            |
 | ```creator```            | [```Profile```](#profile)                   |            |
@@ -225,6 +243,7 @@ TaskSet: {
       "extension":  "INSERT INTO User(FirstName) Values ('Kéqz');"
     }
   ],
+  "foreignKeys":       [],
   "relationsFormatted": "User(FirstName : String)",
   "tasks":              Task[],
   "creator":            Profile,
