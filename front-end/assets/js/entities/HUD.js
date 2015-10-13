@@ -364,48 +364,6 @@ game.HUD.LofiCoins = me.Renderable.extend( {
     }
 });
 
-//Used in Gameoverscreen
-game.HUD.GameOver = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, cash) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "left");
-        this.cash = cash;
-    },
-
-    /**renderer.drawFont(this.font, "USERNAME: " + this.user_object.username.toUpperCase(), this.pos.x + 760, this.pos.y);
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Depth: " + game.persistent.depth , this.pos.x + 600 , this.pos.y + 55);
-        renderer.drawFont(this.font, "Score: " + game.data.score , this.pos.x + 280, this.pos.y + 55);
-        renderer.drawFont(this.font,"Lofi-Coins: " + this.cash , this.pos.x -100, this.pos.y + 55);
-        console.log(game.data.scrolls);
-        if(game.data.scollLimit !== 0) {
-            if (game.data.scrolls.length !== 0) {
-                renderer.drawFont(this.font, "Scrolls obtained: ", this.pos.x - 100, this.pos.y + 135);
-                for (i = 0; i < game.data.scrolls.length; i++) {
-                    renderer.drawFont(this.font, game.data.scrolls[i], this.pos.x + 80, this.pos.y + 200 + 50 * i);
-                }
-            } else {
-                renderer.drawFont(this.font, "No Scrolls For You!!", this.pos.x + 120, this.pos.y + 170);
-                renderer.drawFont(this.font, "Sorry :(", this.pos.x + 280, this.pos.y + 285);
-            }
-            renderer.drawFont(this.font, "You still can collect " + (game.data.scollLimit - game.data.scrolls.length) + " Scrolls today", this.pos.x - 40, this.pos.y + 400);
-        }else{
-            renderer.drawFont(this.font, "You collected all Scrolls for today,", this.pos.x - 71, this.pos.y + 185);
-            renderer.drawFont(this.font, "come back tomorrow to earn new Scrolls!", this.pos.x - 111, this.pos.y + 290);
-        }
-    }
-});
-
 //Used in Beltscreen, shows the amount of potions already created
 game.HUD.PotionAmount = me.Renderable.extend( {
     /**

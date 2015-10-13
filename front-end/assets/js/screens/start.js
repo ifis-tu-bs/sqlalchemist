@@ -1,8 +1,5 @@
 
 game.StartScreen = me.ScreenObject.extend({
-    /**
-     *  action to perform on state change
-     */
 
     onResetEvent: function() {
 
@@ -13,7 +10,6 @@ game.StartScreen = me.ScreenObject.extend({
             ),
             1
         );
-
         
         var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/title_screen.png", "back");
@@ -57,13 +53,11 @@ game.StartScreen = me.ScreenObject.extend({
          * these functions are called when buttons are clicked.
          * Here: simple state change.
          */
-
-
         this.onStart = function() {
             $("#background").fadeOut(100);
             $("#startButton").fadeOut(100);
             setTimeout( function() {
-                if(game.data.gotSession){
+                if (game.data.gotSession) {
                     me.state.change(me.state.MENU);
                 } else {
                     me.state.change(STATE_LOGIN);
