@@ -158,7 +158,7 @@ public class TaskController extends Controller {
 
         task.addRating(rating);
         task.update();
-        return ok();
+        return redirect(routes.TaskController.view(task.getId()));
     }
 
     /**
@@ -189,7 +189,7 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return ok();
+        return redirect(routes.TaskController.view(task.getId()));
     }
 
 

@@ -132,7 +132,7 @@ public class TaskSetController extends Controller {
         taskSetEdit.setId(id);
         taskSetEdit.save();
 
-        return ok(TaskSetView.toJson(taskSet));
+        return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 
     /**
@@ -148,7 +148,7 @@ public class TaskSetController extends Controller {
 
         taskSet.delete();
 
-        return ok();
+        return redirect(routes.TaskSetController.read());
     }
 
     /**
@@ -181,7 +181,7 @@ public class TaskSetController extends Controller {
          taskSet.addRating(rating);
          taskSet.update();
 
-         return ok();
+         return redirect(routes.TaskSetController.view(taskSet.getId()));
      }
 
     /**
@@ -212,6 +212,6 @@ public class TaskSetController extends Controller {
 
         taskSet.addComment(comment);
         taskSet.update();
-        return ok();
+        return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 }

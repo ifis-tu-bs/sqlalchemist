@@ -30,12 +30,21 @@
 |GET   |/challenge/skip             |Challenge  |.skip                 |              |200-                   |                     |
 |GET   |/challenge/reset            |Challenge  |.reset                |              |200-                   |                     |
 |TaskSetController|
-|POST  |/TaskSet/                   |TaskSet    |.create               |TaskSet.Form  |200-                   |400-                 |
+|POST  |/TaskSet/                   |TaskSet    |.create               |TaskSet.Form  |Redirect(TaskSet.view) |400-                 |
 |GET   |/TaskSet/                   |TaskSet    |.read                 |              |200-TaskSet[]          |400-                 |
 |GET   |/TaskSet/:id                |TaskSet    |.view                 |              |200-TaskSet            |400-                 |
-|POST  |/TaskSet/:id                |TaskSet    |.update               |TaskSet.Form  |200-                   |400-                 |
-|POST  |/TaskSet/:id/rate           |TaskSet    |.rate                 |Rating.Form   |200-                   |400-                 |
-|POST  |/TaskSet/:id/comment        |TaskSet    |.comment              |Comment.Form  |200-                   |400-                 |
+|POST  |/TaskSet/:id                |TaskSet    |.update               |TaskSet.Form  |Redirect(TaskSet.view) |400-                 |
+|DELETE|/TaskSet/:id/               |TaskSet    |.delete               |              |Redirect(TaskSet.read) |400-                 |
+|POST  |/TaskSet/:id/rate           |TaskSet    |.rate                 |Rating.Form   |Redirect(TaskSet.view) |400-                 |
+|POST  |/TaskSet/:id/comment        |TaskSet    |.comment              |Comment.Form  |Redirect(TaskSet.view) |400-                 |
+|TaskController
+|POST  |/TaskSet/:id/Task           |Task       |.create               |Task.Form     |Redirect(Task.view)    |400-                 |
+|GET   |/Task/                      |Task       |.read                 |              |200-Task[]             |400-                 |
+|GET   |/Task/:id/                  |Task       |.view                 |              |200-Task               |400-                 |
+|PATCH |/Task/:id/                  |Task       |.update               |Task.Form     |Redirect(Task.view)    |400-                 |
+|DELETE|/Task/:id/                  |Task       |.delete               |              |Redirect(Task.read)    |400-                 |
+|POST  |/Task/:id/rate              |Task       |.rate                 |Rating.Form   |Redirect(Task.view)    |400-                 |
+|POST  |/Task/:id/comment           |Task       |.comment              |Comment.Form  |Redirect(Task.view)    |400-                 |
 
 #SubTaskController
 |GET     /task               | .index            |                | ok   - JSON.tasks           |                       | X
