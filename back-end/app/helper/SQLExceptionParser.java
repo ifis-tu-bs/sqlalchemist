@@ -8,7 +8,7 @@ public class SQLExceptionParser extends ExceptionParser{
         String message = null;
         switch (err) {
             case 50004:
-                message = "Unknown DataType";
+                message = "Unknown DataType ( Or one of columns have a name with an space )";
                 break;
 
             default:
