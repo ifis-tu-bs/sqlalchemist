@@ -1,4 +1,4 @@
-## json model documentaion
+## json model documentation
 
 ### Table of Content
 - [Column](#column)

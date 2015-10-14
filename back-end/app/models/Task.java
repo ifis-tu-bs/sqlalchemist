@@ -1,7 +1,5 @@
 package models;
 
-import Exception.SQLAlchemistException;
-
 import com.fasterxml.jackson.databind.node.*;
 
 
@@ -33,7 +31,7 @@ public class Task extends Model {
     private int     requiredTerm;
 
     @ManyToOne
-    private Profile     creator;
+    private final Profile     creator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private List<Comment> comments;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
@@ -50,12 +48,13 @@ public class Task extends Model {
 
     /**
      *
-     * @param taskText
-     * @param refStatement
-     * @param evaluationstrategy
-     * @param points
-     * @param requiredTerm
-     * @param creator
+     * @param taskName              the name of this task
+     * @param taskText              the description of the task
+     * @param refStatement          the reference statement
+     * @param evaluationstrategy    the evaluationstrategy
+     * @param points                the value of points
+     * @param requiredTerm          the required Terms
+     * @param creator               the creator
      */
     public Task(
             String taskName,
@@ -186,7 +185,7 @@ public class Task extends Model {
 //////////////////////////////////////////////////
 
   /**
-   * This is the methode to add a rating to this entity
+   * This is the method to add a rating to this entity
    */
   public void addRating(Rating rating) {
       if(this.ratings != null && this.ratings.size() > 0) {
@@ -213,10 +212,10 @@ public class Task extends Model {
 
     /**
      *
-     * @param statement
-     * @return
+     * @param statement     the statment to check
+     * @return              returns an boolean
      */
-    public boolean solve(String statement) throws SQLAlchemistException {
+    public boolean solve(String statement) {
         return false;
         /*
         Task task = this.taskFile.getTask();
@@ -246,7 +245,12 @@ public class Task extends Model {
      * @param comment   the comment to be added
      */
     public void addComment(Comment comment) {
+        if(this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
         this.comments.add(comment);
+        comment.setTask(this);
+        comment.save();
     }
 
     public List<Comment> getComments() {

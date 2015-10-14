@@ -5,20 +5,18 @@ import dao.TaskSetDAO;
 
 import models.*;
 
-import play.mvc.Security;
 import secured.UserSecured;
+
 import view.*;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.JsonNode;
 
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -67,7 +65,6 @@ public class TaskSetController extends Controller {
      * @return returns a JSON Array filled with all taskSets
      */
     public static Result read() {
-        ArrayNode     taskSetNode = JsonNodeFactory.instance.arrayNode();
         List<TaskSet> taskSetList = TaskSetDAO.getAll();
 
         if (taskSetList == null) {
@@ -75,11 +72,7 @@ public class TaskSetController extends Controller {
             return badRequest("no TaskSet found");
         }
 
-        for(TaskSet taskSet : taskSetList) {
-            taskSetNode.add(TaskSetView.toJson(taskSet));
-        }
-
-        return ok(taskSetNode);
+        return ok(TaskSetView.toJson(taskSetList));
     }
 
     /**
@@ -103,8 +96,8 @@ public class TaskSetController extends Controller {
     /**
      * This method updates the TaskSet
      *
-     * @param id
-     * @return
+     * @param id        the if of the taskSet
+     * @return          returns an redirection to the updated taskSet
      */
     public static Result update(Long id) {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
@@ -112,39 +105,12 @@ public class TaskSetController extends Controller {
         TaskSet     taskSet     = TaskSetDAO.getById(id);
         Logger.info(jsonNode.toString());
 
-        JsonNode    tableDefinitionsNode            = jsonNode.path("tableDefinitions");
-        JsonNode    foreignKeyRelationsNode         = jsonNode.path("foreignKeyRelations");
-
-        String                  taskSetName         = jsonNode.path("taskSetName").asText();
-        List<TableDefinition>   tableDefinitions    = new ArrayList<>();
-        List<ForeignKeyRelation>foreignKeyRelations = new ArrayList<>();
-
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
             return badRequest("no TaskSet found");
         }
-        // Delete old Data
-        for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
-            tableDefinition.delete();
-        }
 
-        for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
-            foreignKeyRelation.delete();
-        }
 
-        // Create new Data
-        for(JsonNode tableDefinitionNode : tableDefinitionsNode) {
-            tableDefinitions.add(TableDefinitionView.fromJsonForm(tableDefinitionNode));
-        }
-
-        for(JsonNode foreignKeyRelationNode : foreignKeyRelationsNode) {
-            foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyRelationNode));
-        }
-
-        taskSet.setTaskSetName(taskSetName);
-        taskSet.setTableDefinitions(tableDefinitions);
-        taskSet.setForeignKeyRelations(foreignKeyRelations);
-        //taskSet.setTasks(taskSetEdit.getTasks());
 
         taskSet.save();
         return redirect(routes.TaskSetController.view(taskSet.getId()));

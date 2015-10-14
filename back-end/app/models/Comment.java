@@ -18,9 +18,6 @@ public class Comment extends Model{
     @Id
     private long id;
 
-    /** Relation to the profile of the user, who created the comment. */
-    @ManyToOne
-    private Profile profile;
 
     @ManyToOne
     private TaskSet taskSet;
@@ -28,9 +25,13 @@ public class Comment extends Model{
     @ManyToOne
     private Task task;
 
+    /** Relation to the profile of the user, who created the comment. */
+    @ManyToOne
+    private final Profile profile;
+
     /** Content of the comment. */
     @Column(name = "comment")
-    private String comment;
+    private final String comment;
 
     private final Date created_at;
 
@@ -58,6 +59,22 @@ public class Comment extends Model{
 
     public long getId() {
         return id;
+    }
+
+    public TaskSet getTaskSet() {
+        return taskSet;
+    }
+
+    public void setTaskSet(TaskSet taskSet) {
+        this.taskSet = taskSet;
+    }
+
+    public Task getTask() {
+        return task;
+    }
+
+    public void setTask(Task task) {
+        this.task = task;
     }
 
     public Profile getProfile() {

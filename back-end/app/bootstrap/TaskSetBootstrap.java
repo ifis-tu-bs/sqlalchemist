@@ -11,12 +11,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
 
 /**
- * Created by fabiomazzone on 12/10/15.
+ *
+ * @author fabiomazzone
  */
 public class TaskSetBootstrap {
     public static void init(){
         JsonNode node = Json.parse("{\n " +
-                "   \"taskSetName\":          \"DefaulttaskSet\"," +
+                "   \"taskSetName\":          \"DefaultTaskSet\"," +
                 "    \"tableDefinitions\": [\n" +
                 "        {\n" +
                 "            \"tableName\": \"User\",\n" +
@@ -98,7 +99,7 @@ public class TaskSetBootstrap {
                 "                    \"datagenSet\": 0\n" +
                 "                },\n" +
                 "                {\n" +
-                "                    \"columnName\": \"mirname\",\n" +
+                "                    \"columnName\": \"mirName\",\n" +
                 "                    \"dataType\": \"Varchar(255)\",\n" +
                 "                    \"primaryKey\": true,\n" +
                 "                    \"notNull\": false,\n" +

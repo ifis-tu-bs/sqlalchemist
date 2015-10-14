@@ -13,7 +13,7 @@
 |DELETE|/users                      |User       |.delete               |              |200-                      |                     |
 |GET   |/users/verify/:code         |User       |.verifyEmail          |              |200-                      |                     |
 |POST  |/users/password             |User       |.sendResetPasswordMail|              |200-                      |                     |
-|POST  |/users/dopasswordreset/:code|User       |.doResetPassword      |              |200-                      |                     |
+|POST  |/users/doPasswordReset/:code|User       |.doResetPassword      |              |200-                      |                     |
 |GET   |/users/student              |User       |.checkStudent         |              |200-                      |                     |
 |POST  |/users/:id                  |User       |.promote              |              |200-                      |                     |
 |Item|
@@ -47,7 +47,7 @@
 |POST  |/Task/:id/rate              |Task       |.rate                 |Rating.Form   |Redirect(Task.view)       |400-                 |
 |POST  |/Task/:id/comment           |Task       |.comment              |Comment.Form  |Redirect(Task.view)       |400-                 |
 |ProfileController
-|GET  |/profile                     |Profile    |.read                 |              |200-Profile.Playerstate   |400-                 |
+|GET  |/profile                     |Profile    |.read                 |              |200-Profile.PlayerState   |400-                 |
 |GET  |/profile/character           |Profile    |.character            |              |200-Profile.CharacterState|400-                 |
 |GET  |/profile/avatar/:id          |Profile    |.avatar               |              |200-Profile.Attributes    |400-                 |
 |GET  |/profile/reset               |Profile    |.reset                |              |                          |400-                 |

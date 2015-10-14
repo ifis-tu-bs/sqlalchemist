@@ -80,7 +80,7 @@
                     "datagenSet": 0
                 },
                 {
-                    "columnName": "mirname",
+                    "columnName": "mirName",
                     "dataType": "Varchar(255)",
                     "primaryKey": true,
                     "notNull": false,

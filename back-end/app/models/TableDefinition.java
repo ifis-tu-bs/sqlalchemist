@@ -20,11 +20,11 @@ public class TableDefinition extends Model {
     @ManyToOne(cascade = CascadeType.ALL)
     private TaskSet                 taskSet;
 
-    private String                  tableName;
+    private final String                  tableName;
     @OneToMany(mappedBy = "tableDefinition", cascade = CascadeType.ALL)
     private List<ColumnDefinition>  columnDefinitions;
     @Column(columnDefinition = "Text")
-    private String                  extension;
+    private final String                  extension;
 
 //////////////////////////////////////////////////
 //  constructor

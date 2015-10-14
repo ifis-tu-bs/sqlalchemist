@@ -19,48 +19,20 @@ public class TaskDAO {
 
       /**
        *
-       * @param id
-       * @return
+       * @param id          the id of the task object
+       * @return            the task object
        */
       public static Task getById(long id) {
           return Task.find.byId(id);
       }
 
-      /**
-       *
-       * @param potionID
-       * @return
-       */
-      public static Task getByPotionID(long potionID, Profile profile) {
-          List<Task> list = Task.find.where().eq("potion_id", potionID).findList();
 
-          return list.get(0);
-      }
-
-      /**
-       *
-       * @param profile
-       * @param scroll
-       * @return
-       */
-      public static Task getByScroll(Profile profile, Scroll scroll) {
-          float points = 0;
-
-          if(scroll.isRecipe()) {
-              points = scroll.getPotion().getPowerLevel();
-          } else {
-              List<ScrollCollection> scrollList = ScrollCollectionDAO.getScrollCollection(profile);
-              for(ScrollCollection scrollCollection : scrollList) {
-                  Scroll singleScroll = scrollCollection.getScroll();
-                  if( !singleScroll.isRecipe() && singleScroll.getType() == scroll.getType()) {
-                      points++;
-                  }
-              }
-          }
-          Logger.info("Diffi: " + Math.round(points / 2));
-          return getByDifficulty(profile, Math.round(points / 2));
-      }
-
+    /**
+     *
+     * @param profile       the profile
+     * @param points        the difficulty
+     * @return              an task object that matches to the given parameter
+     */
       public static Task getByDifficulty(Profile profile, int points) {
           List<Task> TaskList           = Task.find.where().eq("available", true).eq("points", points).findList(); //.eq("is_home_work", false).findList();
           List<SolvedTask> solvedTasks  = SolvedTaskDAO.getAllDoneTask(profile);
@@ -87,21 +59,10 @@ public class TaskDAO {
           return TaskList.get(i);
       }
 
-
-      /**
-       *
-       * @param challengeID
-       * @return
-       */
-      public static Task getByChallengeID(long challengeID, Profile profile) {
-
-          return null;
-      }
-
       /**
        *
        *
-       * @return
+       * @return    returns a list of all task objects
        */
       public static List<Task> getAll() {
           List<Task> TaskList = Task.find.all();

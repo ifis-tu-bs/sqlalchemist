@@ -11,6 +11,8 @@ import models.Task;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
 
+import java.util.List;
+
 /**
  * @author fabiomazzone
  */
@@ -41,7 +43,7 @@ public class TaskView {
         json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("refStatement",        task.getRefStatement());
-        json.put("evalstrategy",        task.getEvaluationstrategy());
+        json.put("evaluationstrategy",  task.getEvaluationstrategy());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
@@ -55,4 +57,13 @@ public class TaskView {
         return json;
     }
 
+    public static ArrayNode toJson(List<Task> taskList) {
+        ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
+
+        for(Task task : taskList) {
+            taskNode.add(TaskView.toJson(task));
+        }
+
+        return taskNode;
+    }
 }

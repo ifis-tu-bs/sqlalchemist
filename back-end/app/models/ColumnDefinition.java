@@ -18,17 +18,17 @@ public class ColumnDefinition extends Model {
     private List<ColumnDefinition> referencedColumns;
 
     @ManyToOne
-    private TableDefinition tableDefinition;
+    private final TableDefinition tableDefinition;
 
-    private String  columnName;
-    private String  dataType;
-    private boolean isPrimaryKey;
-    private boolean isNotNullable;
+    private final String  columnName;
+    private final String  dataType;
+    private final boolean isPrimaryKey;
+    private final boolean isNotNullable;
 
     @ManyToOne
     private ColumnDefinition foreignKey;
 
-    private int     datagenSet;
+    private final int     datagenSet;
 
     public static Finder<Long, ColumnDefinition> find = new Finder<>(Long.class, ColumnDefinition.class);
 

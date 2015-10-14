@@ -1,6 +1,5 @@
 package view;
 
-import models.ForeignKeyRelation;
 import models.*;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -8,7 +7,6 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.Logger;
 import play.libs.Json;
 
 import java.util.ArrayList;
@@ -90,5 +88,48 @@ public class TaskSetView {
         taskSetJson.put("updatedAt",            String.valueOf(taskSet.getUpdatedAt()));
 
         return taskSetJson;
+    }
+
+    public static void updateFromJson(TaskSet taskSet, JsonNode jsonNode) {
+        TaskSetView.updateFromJson(taskSet, jsonNode);
+        JsonNode    tableDefinitionsNode            = jsonNode.path("tableDefinitions");
+        JsonNode    foreignKeyRelationsNode         = jsonNode.path("foreignKeyRelations");
+
+        String                  taskSetName         = jsonNode.path("taskSetName").asText();
+        List<TableDefinition>   tableDefinitions    = new ArrayList<>();
+        List<ForeignKeyRelation>foreignKeyRelations = new ArrayList<>();
+
+        // Delete old Data
+        for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
+            tableDefinition.delete();
+        }
+
+        for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
+            foreignKeyRelation.delete();
+        }
+
+        // Create new Data
+        for(JsonNode tableDefinitionNode : tableDefinitionsNode) {
+            tableDefinitions.add(TableDefinitionView.fromJsonForm(tableDefinitionNode));
+        }
+
+        for(JsonNode foreignKeyRelationNode : foreignKeyRelationsNode) {
+            foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyRelationNode));
+        }
+
+        taskSet.setTaskSetName(taskSetName);
+        taskSet.setTableDefinitions(tableDefinitions);
+        taskSet.setForeignKeyRelations(foreignKeyRelations);
+        //taskSet.setTasks(taskSetEdit.getTasks());
+    }
+
+    public static ArrayNode toJson(List<TaskSet> taskSetList) {
+        ArrayNode taskSetNode = JsonNodeFactory.instance.arrayNode();
+
+        for(TaskSet taskSet : taskSetList) {
+            taskSetNode.add(TaskSetView.toJson(taskSet));
+        }
+
+        return taskSetNode;
     }
 }

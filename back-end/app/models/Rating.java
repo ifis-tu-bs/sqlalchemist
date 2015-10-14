@@ -62,8 +62,16 @@ public class Rating extends Model {
         return this.profile;
     }
 
+    public TaskSet getTaskSet() {
+        return taskSet;
+    }
+
     public void setTaskSet(TaskSet taskSet) {
         this.taskSet = taskSet;
+    }
+
+    public Task getTask() {
+        return task;
     }
 
     public void setTask(Task task) {

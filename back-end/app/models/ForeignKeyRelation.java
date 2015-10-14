@@ -16,10 +16,10 @@ public class ForeignKeyRelation extends Model {
     @ManyToOne(cascade = CascadeType.ALL)
     private TaskSet taskSet;
 
-    private String sourceTable;
-    private String sourceColumn;
-    private String destinationTable;
-    private String destinationColumn;
+    private final String sourceTable;
+    private final String sourceColumn;
+    private final String destinationTable;
+    private final String destinationColumn;
 
     public ForeignKeyRelation(String sourceTable, String sourceColumn, String destinationTable, String destinationColumn) {
         this.sourceTable = sourceTable;

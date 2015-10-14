@@ -5,7 +5,6 @@ import models.UserSession;
 
 import dao.UserSessionDAO;
 
-import play.Logger;
 import play.mvc.Http.Context;
 import play.mvc.Security.Authenticator;
 import play.mvc.Result;

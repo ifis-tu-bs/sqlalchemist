@@ -36,17 +36,17 @@ public class TaskSet extends Model {
     private String                  relationsFormatted;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Task>              tasks;
-    private boolean                 isHomework;
+    private final boolean                 isHomework;
 
     // Social Information's
     @ManyToOne
-    private Profile creator;
+    private final Profile creator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Rating> ratings;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Comment> comments;
 
-    private Date createdAt;
+    private final Date createdAt;
     private Date updatedAt;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(Long.class, TaskSet.class);
@@ -234,7 +234,7 @@ public class TaskSet extends Model {
 //////////////////////////////////////////////////
 
     /**
-     * This is the methode to add a rating to this entity
+     * This is the method to add a rating to this entity
      */
     public void addRating(Rating rating) {
         if(this.ratings != null && this.ratings.size() > 0) {
@@ -253,7 +253,6 @@ public class TaskSet extends Model {
         this.ratings.add(rating);
         rating.setTaskSet(this);
         rating.save();
-        this.update();
     }
 
     /**
@@ -262,7 +261,12 @@ public class TaskSet extends Model {
      * @param comment   the comment to be added
      */
     public void addComment(Comment comment)  {
+        if(this.comments == null) {
+            this.comments = new ArrayList<>();
+        }
         this.comments.add(comment);
+        comment.setTaskSet(this);
+        comment.save();
     }
 
 //////////////////////////////////////////////////

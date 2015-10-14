@@ -4,7 +4,6 @@ import models.User;
 import play.Logger;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
@@ -13,7 +12,6 @@ import java.util.Properties;
 /**
  * @author Invisible
  */
-@SuppressWarnings("ALL")
 public class MailSender {
     private Properties props;
 

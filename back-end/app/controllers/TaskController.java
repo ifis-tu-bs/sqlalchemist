@@ -2,39 +2,34 @@ package controllers;
 
 import dao.*;
 
-import Exception.SQLAlchemistException;
-
 import models.*;
 
 import secured.UserSecured;
 
 import view.CommentView;
 import view.RatingView;
-import view.TaskSetView;
 import view.TaskView;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.*;
 
 import play.Logger;
-import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security.Authenticated;
+import play.mvc.Security;
 
 import java.util.List;
 
 /**
  * @author fabiomazzone
  */
-//@Authenticated(UserSecured.class)
+@Security.Authenticated(UserSecured.class)
 public class TaskController extends Controller {
 
     /**
      * This method creates an Object
      *
-     * @param taskSetId
-     * @return
+     * @param taskSetId     the id of the taskSet
+     * @return              returns an redirection to the new task
      */
     public static Result create(Long taskSetId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
@@ -61,7 +56,6 @@ public class TaskController extends Controller {
      * @return returns a JSON Array filled with all Task
      */
     public static Result read() {
-        ArrayNode   taskNode = JsonNodeFactory.instance.arrayNode();
         List<Task>  taskList = TaskDAO.getAll();
 
         if (taskList == null) {
@@ -69,11 +63,7 @@ public class TaskController extends Controller {
             return badRequest("no TaskSet found");
         }
 
-        for(Task task : taskList) {
-            taskNode.add(TaskView.toJson(task));
-        }
-
-        return ok(taskNode);
+        return ok(TaskView.toJson(taskList));
     }
 
     /**
@@ -196,9 +186,9 @@ public class TaskController extends Controller {
 
     /**
      *
-     * @param id potion id
+     * @param id        potion id
      * @return
-     */
+     *//*
     public static Result story(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         Scroll scroll   = ScrollDAO.getById(id);
@@ -230,7 +220,7 @@ public class TaskController extends Controller {
      *
      * @param id task-id
      * @return
-     */
+     *//*
     public static Result storySolve(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
@@ -291,7 +281,7 @@ public class TaskController extends Controller {
     /**
      *
      * @return
-     */
+     *//*
     public static Result trivia(Long difficulty) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         int points = difficulty.intValue();
@@ -313,7 +303,7 @@ public class TaskController extends Controller {
      *
      * @param id
      * @return
-     */
+     *//*
     public static Result triviaSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
@@ -374,7 +364,7 @@ public class TaskController extends Controller {
     /**
      *
      * @return
-     */
+     *//*
     public static Result homework() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         Task task = TaskDAO.getByChallengeID(1L, profile);
@@ -386,7 +376,7 @@ public class TaskController extends Controller {
      *
      * @param id
      * @return
-     */
+     *//*
     public static Result homeworkSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
@@ -417,6 +407,6 @@ public class TaskController extends Controller {
 
         return ok("HomeWork Has Been Submitted");
     }
-
+*/
 
 }

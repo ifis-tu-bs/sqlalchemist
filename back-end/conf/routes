@@ -18,7 +18,7 @@ DELETE      /users                              controllers.UserController.destr
 GET         /users                              controllers.UserController.getAllUsers()
 GET         /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
 POST        /users/password                     controllers.UserController.sendResetPasswordMail()
-POST        /users/dopasswordreset/:code        controllers.UserController.doResetPassword(code: String)
+POST        /users/doPasswordReset/:code        controllers.UserController.doResetPassword(code: String)
 GET         /users/student                      controllers.UserController.checkStudent()
 POST        /users/:id                          controllers.UserController.promote(id :Long)
 
@@ -58,9 +58,6 @@ POST        /Task/:id/rate                      controllers.TaskController.rate(
 POST        /Task/:id/comment                   controllers.TaskController.comment(id: Long)
 
 
-
-#GET         /Task/                              controllers.TaskController.read()
-
 #TaskController
 #GET         /task/story/:id                     controllers.TaskController.story(id: Long)
 #POST        /task/story/:id                     controllers.TaskController.storySolve(id: Long)
@@ -68,11 +65,7 @@ POST        /Task/:id/comment                   controllers.TaskController.comme
 #POST        /task/trivia/:id                    controllers.TaskController.triviaSolve(id: Long)
 #GET         /task/homework                      controllers.TaskController.homework()
 #POST        /task/homework/:id                  controllers.TaskController.homeworkSolve(id: Long)
-#GET         /task                               controllers.TaskController.index()
-#GET         /task/:id                           controllers.TaskController.view(id: Long)
-#DELETE      /task/:id                           controllers.TaskController.destroy(id: Long)
-#POST        /task/:id/rate                      controllers.TaskController.rate(id: Long)
-#POST        /task/:id/comment                   controllers.TaskController.comment(id: Long)
+
 
 #ProfileController
 GET         /profile                            controllers.ProfileController.read()

@@ -4,12 +4,9 @@ import bootstrap.BootstrapDB;
 
 import dao.UserDAO;
 
-import models.*;
-
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.Play;
 
 
 /**

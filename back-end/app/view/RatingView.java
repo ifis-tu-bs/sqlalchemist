@@ -7,7 +7,7 @@ import models.Rating;
 import play.libs.Json;
 
 /**
- * Created by fabiomazzone on 12/10/15.
+ * @author fabiomazzone
  */
 public class RatingView {
     public static Rating fromJsonForm(JsonNode ratingBody, Profile profile) {
