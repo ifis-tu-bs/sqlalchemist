@@ -1,19 +1,7 @@
-#explanationHeaders {
+#explanationHeaders, #explanation {
     background-color: transparent;
     border-style: none;
-    font-family: Trajan_Pro_Regular, sans-serif;
-    color: black;
-    overflow : hidden;
-    position: absolute;
-    text-align: left;
-    vertical-align: middle;
-    z-Index: 4;
-}
-
-#explanation {
-    background-color: transparent;
-    border-style: none;
-    font-family: Prociono-Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     overflow : hidden;
     position: absolute;
@@ -23,7 +11,7 @@
 }
 
 #fatLady, #scrollCol, #door, #mirror, #belt, #tutorial, #triviamode, #homeworks, #rating{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     cursor: pointer;
     text-align: center;
     -webkit-border-radius: 14;

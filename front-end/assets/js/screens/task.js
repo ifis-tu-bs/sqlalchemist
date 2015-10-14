@@ -83,6 +83,7 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(schemaButton);
         me.game.world.addChild(taskButton);
         me.game.world.addChild(backButton);
+        $("#backButton").fadeIn(100);
         me.game.world.addChild(tryButton);
         me.game.world.addChild(sameTaskButton);
         me.game.world.addChild(nextTaskButton);

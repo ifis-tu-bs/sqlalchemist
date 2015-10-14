@@ -45,10 +45,10 @@
     <property name="to" value="7"/>
    </properties>
   </object>
-  <object id="13" name="ScrollEntity" x="2241" y="928" width="32" height="32">
+  <object id="13" name="ScrollEntity" x="771" y="895" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="58"/>
+    <property name="scrollIndex" value="57"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -67,7 +67,7 @@
     <property name="spritewidth" value="32"/>
    </properties>
   </object>
-  <object id="69" name="CoinEntity" x="1458" y="835" width="32" height="32">
+  <object id="69" name="CoinEntity" x="1417" y="825" width="32" height="32">
    <properties>
     <property name="image" value="spinning_coin_gold"/>
     <property name="spritewidth" value="32"/>
@@ -291,7 +291,7 @@
   </object>
   <object id="202" name="EnemyEntity" x="858" y="310" width="79" height="320">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="3"/>
     <property name="image" value="saber"/>
     <property name="jump" value="7"/>
     <property name="speed" value="0"/>

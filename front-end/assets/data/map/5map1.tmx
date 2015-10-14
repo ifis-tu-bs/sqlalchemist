@@ -6,7 +6,7 @@
  <tileset firstgid="141" name="tileset2" tilewidth="32" tileheight="32">
   <image source="../img/map/tileset2.png" trans="ffffff" width="192" height="544"/>
  </tileset>
- <imagelayer name="Parallax_layer1">
+ <imagelayer name="Parallax_layer1" x="-374" y="-572">
   <image source="../img/background/background_fog1.png"/>
  </imagelayer>
  <layer name="Kachelebene 2" width="120" height="34">
@@ -30,10 +30,10 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="13" name="ScrollEntity" x="3632" y="974" width="32" height="32">
+  <object id="13" name="ScrollEntity" x="2976" y="289" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
-    <property name="scrollIndex" value="46"/>
+    <property name="scrollIndex" value="45"/>
     <property name="spritewidth" value="32"/>
     <property name="type" value="enchantment"/>
    </properties>
@@ -379,7 +379,7 @@
   </object>
   <object id="152" name="EnemyEntity" x="3492" y="166.407" width="344" height="37.185">
    <properties>
-    <property name="attack" value="0"/>
+    <property name="attack" value="1"/>
     <property name="image" value="saber"/>
     <property name="jump" value="0"/>
     <property name="speed" value="6"/>

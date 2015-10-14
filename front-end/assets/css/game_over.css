@@ -1,0 +1,33 @@
+#depthId, #scoreId, #lofiCoinsGoId, #obtainedId, #coinLimitGoId  {
+    background-color : transparent;
+    border-style : none;
+    color : black;
+    display : block;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    line-height : 1;
+    margin : 0 auto;
+    max-width : 100%;
+    overflow : hidden;
+    position : absolute;
+    text-align: left;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index : 3;
+}
+
+#noScrollsPara, #coinLimitPara, #allScrollsPara {
+    text-align: center;
+}
+
+#next {
+    background-color : transparent;
+    border-style : none;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    color : transparent;
+    cursor : pointer;
+    overflow : visible;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}

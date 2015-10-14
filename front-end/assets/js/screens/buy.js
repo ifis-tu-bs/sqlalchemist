@@ -5,7 +5,10 @@ game.BuyScreen = me.ScreenObject.extend({
      */
     onResetEvent : function() {
 
-        me.game.world.addChild(
+        console.log(game.data.shopId);
+        console.log(game.data.shop[game.data.shopId]);
+
+        /**me.game.world.addChild(
             new me.Sprite (
                 0,0,
                 me.loader.getImage('shop_screen')
@@ -13,8 +16,33 @@ game.BuyScreen = me.ScreenObject.extend({
             0
         );
 
-        me.game.world.addChild(new game.HUD.LofiCoins(230, 660),3);
+        /**
+         * Create background-div and add image to it.
+         */
+        var backgroundShop = new game.BackgroundElement('backgroundShopId', 100, 100, 0, 0, 'none');
+        backgroundShop.setImage("assets/data/img/gui/shop_screen.png", "backgroundshop");
+        me.game.world.addChild(backgroundShop);
+        $("#backgroundShopId").fadeIn(100);
+        var backgroundFaded = new game.BackgroundElement('backgroundFadedId', 100, 100, 0, 0, 'none');
+        backgroundFaded.setImage("assets/data/img/gui/faded_lab_screen.png", "backgroundfaded");
+        me.game.world.addChild(backgroundFaded);
+        $("#backgroundFadedId").fadeIn(100);
+        var backgroundTag = new game.BackgroundElement('backgroundTagId', 88.863636, 68.489583, 0, 15.885417, 'none');
+        backgroundTag.setImage("assets/data/img/gui/price_tag.png", "backgroundtag");
+        me.game.world.addChild(backgroundTag);
+        $("#backgroundTagId").fadeIn(100);
 
+
+        var lofiCoinsFrame = new game.BackgroundElement('lofiCoinsId', 18.257576, 12.369792, 0, 82.291667, 'none');
+        lofiCoinsFrame.setImage("assets/data/img/gui/LofiCoinBox.png", "lofiCoinsImg");
+        me.game.world.addChild(lofiCoinsFrame);
+        $("#lofiCoinsId").fadeIn(100);
+
+        var lofiCoins = new game.TextOutputElement('lofiCoins', 15, 6, 2.7, 86, 1);
+        me.game.world.addChild(lofiCoins);
+        lofiCoins.writeHTML(game.data.lofiCoins, 'lofiCoinsPara');
+
+/**
         me.game.world.addChild(
             new me.Sprite (
                 0,0,
@@ -29,35 +57,60 @@ game.BuyScreen = me.ScreenObject.extend({
                 me.loader.getImage('price_tag')
             ),
             2
-        );
-
-        // Creates a Button that brings you back to the last Screen
+        );*/
 
 
         if(game.data.spriteId > 41){
             me.game.world.addChild( new game.HUD.BuyBelt(543, 300),3);
-        }else{
-            if (game.data.shop[game.data.shopId].avatar.isTeam == true) {
-                me.game.world.addChild(new game.SkinFront(350,200,game.data.shop[game.data.shopId].thumbnailUrl, game.data.shop[game.data.shopId].avatar.isTeam));
+        } else {
+            var filename = game.data.shop[game.data.shopId].thumbnailUrl;
+            if (game.data.shop[game.data.shopId].avatar.isTeam) {
+                var avatar = new game.BackgroundElement('avatar', 9.545455, 12.5, 26.015152, 26.041667, 'none');
+                avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                $("#avatar").fadeIn(100);
+                me.game.world.addChild(avatar);
             } else {
-                me.game.world.addChild(new game.SkinFront(360,200,game.data.shop[game.data.shopId].thumbnailUrl, game.data.shop[game.data.shopId].avatar.isTeam));
-
+                var avatar = new game.BackgroundElement('avatar', 7.272727, 12.5, 27.272727, 26.041667, 'none');
+                avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                $("#avatar").fadeIn(100);
+                me.game.world.addChild(avatar);
             }
 
-            // The result text
-            me.game.world.addChild( new game.HUD.Buy(543, 300),3);
+            var discription = game.data.shop[game.data.shopId].desc.split("\\n");
+
+            var nameAndPrice    = new game.TextOutputElement('nameAndPrice', 50, 11, 36.136364, 28.0625, 3);
+            var discriptiontext = new game.TextOutputElement('discriptiontext', 60, 25.666666, 26, 43.1, 7);
+            me.game.world.addChild(nameAndPrice);
+            me.game.world.addChild(discriptiontext);
+
+            nameAndPrice.writeHTML("Name: " + game.data.shop[game.data.shopId].name  + "<br><br>" +
+                                   "Price: " + game.data.shop[game.data.shopId].price, 'namePara');
+
+            for(var i = 0; i < discription.length; i++) {
+                discriptiontext.writeHTML(discription[i] + "<br>", 'discPara');
+            }
+
         }
 
-
-        toShop = function() {
-            me.state.change(STATE_SHOP);
+        this.toShop = function() {
+            $("#backToShop").fadeOut(100);
+            $("#buyButton").fadeOut(100);
+            $("#lofiCoinsId").fadeOut(100);
+            $("#lofiCoins").fadeOut(100);
+            $("#avatar").fadeOut(100);
+            $("#backgroundShopId").fadeOut(100);
+            $("#backgroundFadedId").fadeOut(100);
+            $("#backgroundTagId").fadeOut(100);
+            setTimeout( function() {
+                me.state.change(STATE_SHOP);
+            }, 100);
         };
 
         stopDouble = function() {
             game.data.playing = false;
         };
 
-        onBuy = function() {
+        this.onBuy = function() {
             function bought(xmlHttpRequest) {
 
                 console.log(xmlHttpRequest);
@@ -70,10 +123,10 @@ game.BuyScreen = me.ScreenObject.extend({
                 var session = JSON.parse(xmlHttpRequest.responseText);
 
                 console.log(game.data.lofiCoins);
-                if (game.data.sound && game.data.lofiCoins > session.coins) {
+                if (game.data.lofiCoins > session.coins) {
                     me.audio.play("cash", false, null, game.data.soundVolume);
                     me.state.change(STATE_SHOP);
-                }else if (game.data.sound && !game.data.playing){
+                } else if (game.data.sound && !game.data.playing){
                     console.log("else");
                     game.data.playing = true;
                     me.audio.play("fail", false, stopDouble, game.data.soundVolume);
@@ -84,11 +137,12 @@ game.BuyScreen = me.ScreenObject.extend({
             ajaxSendShopIdRequest(game.data.spriteId, bought);
         };
 
-        var backToShop = new game.ClickableElement('backToShop','Back', toShop, 20, 7, 30, 73, 1);
-        var buyButton  = new game.ClickableElement('buyButton','Buy', onBuy, 20, 7, 60, 73, 1);
-
+        var backToShop = new game.ClickableElement('backToShop','Back',this. toShop, 20, 7, 30, 73, 1);
+        var buyButton  = new game.ClickableElement('buyButton','Buy', this.onBuy, 20, 7, 60, 73, 1);
         me.game.world.addChild(backToShop);
         me.game.world.addChild(buyButton);
+        $("#backToShop").fadeIn(100);
+        $("#buyButton").fadeIn(100);
     }
 
 });

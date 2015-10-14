@@ -19,47 +19,47 @@ public class ShopItemBootstrap {
           Logger.info("Initialize 'ShopItem' data");
 
 
-          ShopItemDAO.create(AvatarDAO.getByName("Alastor Moody"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Albus Dumbledore"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Arthur Weasley"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Cho Chang"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Colin Creevey"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Crabbe and Goyle"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Dolores Umbridge"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Draco Malfoy"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Filius Flitwick"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Fleur Delacour"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Fred and George"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Fred and George Uniform"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Gilderoy Lockhart"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Ginny Weasley"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Harry Potter"), 0); //Bereits im Besitz des Benutzers
-          ShopItemDAO.create(AvatarDAO.getByName("Harry Potter 2"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Hermione Granger"), 0); //Bereits im Besitz des Benutzers
-          ShopItemDAO.create(AvatarDAO.getByName("Hermione Granger 2"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Horace Slughorn"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Kingsley Shacklebolt"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Lavender Brown"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Lucius Malfoy"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Luna Lovegood"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Minerva McGonagall"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Moaning Myrtle"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Molly Weasley"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Mr. Binns"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Narcissa Malfoy"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Neville Longbottom"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Nymphadora Tonks"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Padma and Parvati"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Pomona Sprout"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Remus Lupin"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Ron Weasley"), 0); //Bereits im Besitz des Benutzers
-          ShopItemDAO.create(AvatarDAO.getByName("Ron Weasley 2"), 8000);
-          ShopItemDAO.create(AvatarDAO.getByName("Rubeus Hagrid"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Seamus Finnigan"), 500);
-          ShopItemDAO.create(AvatarDAO.getByName("Severus Snape"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Sirius Black"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Sybill Trelawney"), 2000);
-          ShopItemDAO.create(AvatarDAO.getByName("Voldemort"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Mad Skipping Al"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Fresh D!"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Art Weaslby"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Ching Chang Cho"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Colin Creepy"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Crabbe and Sac"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Dolly"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Drag'o Femalfoy"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Wilius Philwick"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Tour de la Flur"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("George and Michael"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("George and Michael Uniform"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Lockroy Gildehart"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Tonic Weaslby"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Hairy P."), 0); //Bereits im Besitz des Benutzers
+          ShopItemDAO.create(AvatarDAO.getByName("Hairy P. 2"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Hermene Mine Moe"), 0); //Bereits im Besitz des Benutzers
+          ShopItemDAO.create(AvatarDAO.getByName("Hermene Mine Moe 2"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Borace Jelzhorn"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Usain Shacklebolt"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Student 72"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Lucy Femalfoy"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Lurra Loveburg"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Mimerma Mcmomamall"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("The Toilet Ghost"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Ms. Weaslby"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Mr. Beans"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Narziss Femalfoy"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Neville Schlongbottom"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Nymphadora Tongues"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Padvatima"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Mongo Oma"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Wolfgang Wolf"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Jon Weaslby"), 0); //Bereits im Besitz des Benutzers
+          ShopItemDAO.create(AvatarDAO.getByName("Bon Weaslby"), 8000);
+          ShopItemDAO.create(AvatarDAO.getByName("Hoga"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Seamus Gallagher"), 500);
+          ShopItemDAO.create(AvatarDAO.getByName("Serverus Snapy"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Sloop Dog"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Sybrille Trelawney"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Voldemotherfucker"), 20000);
 
           ShopItemDAO.create("Belt Slot 1", "url",  1000);
           ShopItemDAO.create("Belt Slot 2", "url",  2000);

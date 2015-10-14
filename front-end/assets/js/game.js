@@ -51,7 +51,8 @@ var game = {
         text : 0,
         nextText: true,
         cheat: false,
-        count: 0
+        count: 0,
+        profile: 0
     },
     //informations for the Task
     task : {
@@ -162,7 +163,6 @@ var game = {
         me.state.set(STATE_LEGEND, new game.LegendScreen());
 
 
-
         // set the "Play/Ingame" Screen Object
         me.state.set(me.state.PLAY, new game.PlayScreen());
         me.state.set(me.state.SETTINGS, new game.SettingsScreen());
@@ -171,7 +171,7 @@ var game = {
         me.state.set(me.state.READY, new game.ReadyScreen());
 
         // set a global fading transition for the screen
-        //me.state.transition("fade", "#000000", 100);
+        me.state.transition("fade", "#000000", 100);
 
         // add our player entity in the entity pool
         me.pool.register("mainPlayer", game.PlayerEntity);
@@ -180,6 +180,7 @@ var game = {
         me.pool.register("EnemyEntity", game.EnemyEntity);
         me.pool.register("SpikeEntity", game.SpikeEntity);
         me.pool.register("FireEntity", game.FireEntity);
+        me.pool.register("BuffEntity", game.BuffEntity);
 
 
 

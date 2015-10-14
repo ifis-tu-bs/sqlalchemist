@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="oppcastle" tilewidth="32" tileheight="32">
   <image source="../img/map/oppcastle.png" width="480" height="352"/>
  </tileset>
- <imagelayer name="Parallax_layer1">
+ <imagelayer name="Parallax_layer1" x="-2" y="-5">
   <image source="../img/background/tree.png"/>
  </imagelayer>
  <layer name="Background" width="120" height="28">
@@ -26,7 +26,7 @@
    <property name="duration" value="300"/>
    <property name="fade" value="#300000"/>
   </properties>
-  <object id="3" name="mainPlayer" x="4" y="602" width="32" height="64">
+  <object id="3" name="mainPlayer" x="4" y="579" width="32" height="64">
    <properties>
     <property name="image" value="gripe_run_right"/>
     <property name="spritewidth" value="64"/>
@@ -45,7 +45,7 @@
     <property name="to" value="2"/>
    </properties>
   </object>
-  <object id="13" name="ScrollEntity" x="1248" y="585" width="32" height="32">
+  <object id="13" name="ScrollEntity" x="3647" y="386" width="32" height="32">
    <properties>
     <property name="image" value="spinning_scrolls"/>
     <property name="scrollIndex" value="32"/>
@@ -363,7 +363,7 @@
   </object>
  </objectgroup>
  <objectgroup name="EnemyEntities">
-  <object id="58" name="EnemyEntity" x="288" y="638" width="300" height="29">
+  <object id="58" name="EnemyEntity" x="278" y="643" width="300" height="29">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy13"/>
@@ -373,7 +373,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="118" name="EnemyEntity" x="1078" y="638.5" width="401" height="32">
+  <object id="118" name="EnemyEntity" x="1067" y="642.5" width="401" height="32">
    <properties>
     <property name="attack" value="00"/>
     <property name="image" value="enemy13"/>

@@ -1,4 +1,4 @@
-#mostCoins {
+#mostCoins,#mostScore, #timeSpent, #numberOfRuns, #sqlStatements, #sqlRate  {
     font-family: Trajan_Pro_Regular, sans-serif;
     cursor: pointer;
     text-align: center;
@@ -23,136 +23,21 @@
     background-color: white;
     color: black;
 }
-
-
-#mostScore {
-    font-family: Trajan_Pro_Regular, sans-serif;
-    cursor: pointer;
-    text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    -webkit-transition-duration: 0.2s;
-    transition-duration: 0.2s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
-}
 #mostScore:hover, #mostScore:focus, #mostScore:active {
     background-color: white;
     color: black;
-}
-
-
-#timeSpent {
-    font-family: Trajan_Pro_Regular, sans-serif;
-    cursor: pointer;
-    text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    -webkit-transition-duration: 0.2s;
-    transition-duration: 0.2s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
 }
 #timeSpent:hover, #timeSpent:focus, #timeSpent:active {
     background-color: white;
     color: black;
 }
-
-
-#numberOfRuns {
-    font-family: Trajan_Pro_Regular, sans-serif;
-    cursor: pointer;
-    text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    -webkit-transition-duration: 0.2s;
-    transition-duration: 0.2s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
-}
 #numberOfRuns:hover, #numberOfRuns:focus, #numberOfRuns:active {
     background-color: white;
     color: black;
 }
-
-
-#sqlStatements {
-    font-family: Trajan_Pro_Regular, sans-serif;
-    cursor: pointer;
-    text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    -webkit-transition-duration: 0.2s;
-    transition-duration: 0.2s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
-}
 #sqlStatements:hover, #sqlStatements:focus, #sqlStatements:active {
     background-color: white;
     color: black;
-}
-
-
-#sqlRate {
-    font-family: Trajan_Pro_Regular, sans-serif;
-    cursor: pointer;
-    text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
-    border-radius: 14px;
-    display: inline-block;
-    vertical-align: middle;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    overflow: hidden;
-    -webkit-transition-duration: 0.2s;
-    transition-duration: 0.2s;
-    -webkit-transition-property: color, background-color;
-    transition-property: color, background-color;
 }
 #sqlRate:hover, #sqlRate:focus, #sqlRate:active {
     background-color: white;

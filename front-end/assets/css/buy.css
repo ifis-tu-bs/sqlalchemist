@@ -1,4 +1,4 @@
-#backToShop {
+#backToShop, #buyButton {
     background-color : transparent;
     border-style: none;
     font-family : Trajan_Pro_Regular, sans-serif;
@@ -11,15 +11,44 @@
     z-Index : 4;
 }
 
-#buyButton {
+#nameAndPrice {
     background-color : transparent;
     border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
     color : black;
-    cursor : pointer;
-    overflow : visible;
+    display : block;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    line-height : 1;
+    margin : 0 auto;
+    max-width : 100%;
+    overflow : hidden;
     position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index : 3;
+}
+
+#namePara {
+    padding-top: 1px;
+}
+
+#discPara {
+    padding-top: 7px;
+    padding-bottom: 7px;
+}
+
+
+#discriptiontext {
+    background-color : transparent;
+    border-style : none;
+    color : black;
+    display : block;
+    font-family : Trajan_Pro_Regular, sans-serif;
+    line-height : 1;
+    margin : 0 auto;
+    max-width : 100%;
+    overflow : hidden;
+    position : absolute;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index : 3;
 }
