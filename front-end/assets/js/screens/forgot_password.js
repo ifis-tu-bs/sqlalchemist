@@ -1,8 +1,5 @@
 game.ForgotPasswordScreen = me.ScreenObject.extend({
 
-    /**
-    *  Action to perform on state change: STATE_LOGIN
-    */
     onResetEvent: function() {
 
         /**
