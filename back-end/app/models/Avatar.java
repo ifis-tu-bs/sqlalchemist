@@ -31,9 +31,6 @@ public class Avatar extends Model {
 
     private final boolean isTeam;
 
-    @Column(name = "soundURL")
-    private final String soundURL;
-
     @Embedded
     private final PlayerStats playerStats;
 
@@ -48,14 +45,12 @@ public class Avatar extends Model {
      * @param name                  name of the avatar
      * @param desc                  avatar description
      * @param avatarFilename        avatarFilename
-     * @param soundURL              sound url
      * @param playerStats           avatar PlayerStats
      */
     public Avatar(
             String name,
             String desc,
             String avatarFilename,
-            String soundURL,
             boolean isTeam,
             PlayerStats playerStats) {
         super();
@@ -63,7 +58,6 @@ public class Avatar extends Model {
         this.name           = name;
         this.desc           = desc;
         this.avatarFilename= avatarFilename;
-        this.soundURL       = soundURL;
         this.isTeam         = isTeam;
         this.playerStats    = playerStats;
 
@@ -84,18 +78,12 @@ public class Avatar extends Model {
         node.put("name",            this.getName());
         node.put("desc",            this.desc);
         node.put("avatarFilename",  this.avatarFilename);
-        node.put("soundURL",        this.soundURL);
         node.put("isTeam",          this.isTeam);
         node.put("attributes",      this.playerStats.toJson());
 
         return node;
     }
 
-
-    /**
-     *
-     * @return
-     */
     public PlayerStats getPlayerStats() {
         return this.playerStats;
     }

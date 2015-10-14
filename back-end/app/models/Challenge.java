@@ -44,12 +44,6 @@ public class Challenge extends Model {
 //////////////////////////////////////////////////
 //  Constructor
 //////////////////////////////////////////////////
-    /**
-     *
-     * @param name
-     * @param solve_type
-     * @param solve_type_extension
-     */
     Challenge(
             String name,
             int solve_type,

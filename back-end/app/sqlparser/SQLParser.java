@@ -1,29 +1,28 @@
 package sqlparser;
 
+import models.SQLResult;
 import models.Task;
 import models.TaskSet;
-import play.Logger;
-
+import models.UserStatement;
 
 /**
  * @author fabiomazzone
  */
 public class SQLParser {
 
-    private TaskSet taskSet;
-    private Task    task;
+    public static SQLResult checkStatement(Task task, UserStatement userStatement) {
+        DBConnection    dbConnection    = new DBConnection(task.getTaskSet());
+        int             status;
+        if((status = dbConnection.createDB()) != 0) {
+            return new SQLResult(task, SQLResult.ERROR, status);
+        }
 
-    public SQLParser(Task task) {
-        this.taskSet    = task.getTaskSet();
-    }
-
-    public static int checkStatement(Task task, String statement) {
-        return 0;
+        return new SQLResult(task, SQLResult.SEMANTICS);
     }
 
     public static int initialize(TaskSet taskSet) {
         DBConnection dbConnection = new DBConnection(taskSet);
-        return dbConnection.recreateDB();
+        return dbConnection.createDB();
     }
 
     public static void delete(TaskSet taskSet) {

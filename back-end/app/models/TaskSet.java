@@ -93,7 +93,7 @@ public class TaskSet extends Model {
         super.save();
     }
 
-    public void prepareStoring() {
+    private void prepareStoring() {
         if(this.foreignKeyRelations != null) {
             for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
                 TableDefinition sourceTable = null, destinationTable = null;

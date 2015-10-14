@@ -9,7 +9,6 @@ create table avatar (
   Avatardesc                varchar(255),
   avatar_filename           varchar(255),
   is_team                   tinyint(1) default 0,
-  soundURL                  varchar(255),
   health                    integer,
   defense                   integer,
   speed                     integer,

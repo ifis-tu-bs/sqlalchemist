@@ -36,11 +36,11 @@ public class SessionController extends Controller {
             Logger.info("SessionController.create - Could not retrieve Json from POST body");
             return badRequest("Could not retrieve Json from POST body");
         }
-        String id = json.findPath("id").textValue();
-        String password = json.findPath("password").textValue();
-        boolean adminTool = json.findPath("adminTool").asBoolean();
+        String  id          = json.path("id").textValue();
+        String  password    = json.path("password").textValue();
+        boolean adminTool   = json.path("adminTool").asBoolean();
 
-        if (id == null || password == null) {
+        if (id.length() == 0 || password.length() == 0) {
             Logger.info("SessionController.create - Expecting Json data");
             Logger.info("SessionController.create - Json: " + json.toString());
             return badRequest("Expecting Json data");
@@ -52,7 +52,7 @@ public class SessionController extends Controller {
         if ((user = User.validate(id, password, adminTool)) != null) {
             UserSession userSession = UserSession.create(
                     user,
-                    Play.application().configuration().getInt("Session.duration"),
+                    Play.application().configuration().getInt("UserManagement.SessionDuration"),
                     request().remoteAddress()
             );
 

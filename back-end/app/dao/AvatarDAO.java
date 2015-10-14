@@ -14,27 +14,23 @@ public class AvatarDAO {
   //////////////////////////////////////////////////
   /**
    * This is a create method for an avatar-object
-   *
    * @param name                  name of the avatar
    * @param desc                  description of the avatar
    * @param avatarFilename        file name of the avatar files
-   * @param soundURL              sound url
    * @param isTeam                is the avatar a tag team
    * @param playerStats           avatar playerStats
    */
     public static Avatar create(
-        String  name,
-        String  desc,
-        String  avatarFilename,
-        String  soundURL,
-        boolean isTeam,
-        PlayerStats playerStats) {
+            String name,
+            String desc,
+            String avatarFilename,
+            boolean isTeam,
+            PlayerStats playerStats) {
 
         Avatar avatar = new Avatar(
                 name,
                 desc,
                 avatarFilename,
-                soundURL,
                 isTeam,
                 playerStats );
 

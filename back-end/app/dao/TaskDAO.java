@@ -3,8 +3,6 @@ package dao;
 import helper.Random;
 
 import models.Profile;
-import models.Scroll;
-import models.ScrollCollection;
 import models.SolvedTask;
 import models.Task;
 

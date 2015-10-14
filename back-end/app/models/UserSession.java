@@ -56,7 +56,7 @@ public class UserSession extends Model {
      * @param duration duration in days
      * @return returns the created and saved Session Object
      */
-    public static UserSession create(User user, Integer duration, String remoteAddress) {
+    public static UserSession create(User user, int duration, String remoteAddress) {
         if(duration < 1) {
             return null;
         }

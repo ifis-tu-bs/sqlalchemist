@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by fabiomazzone on 11/06/15.
+ * @author fabiomazzone
  */
 @Entity
 @Table(name = "homeWork_challenge")
