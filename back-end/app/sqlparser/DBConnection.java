@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author fabiomazzone
@@ -22,6 +24,8 @@ public class DBConnection{
 
     Connection connection;
 
+    private static final int CONNECTION_ERROR = -1;
+    private static final int CREATE_TABLE_ERROR = -2;
 
     public DBConnection(TaskSet taskSet) {
         this.taskSet = taskSet;
@@ -38,46 +42,65 @@ public class DBConnection{
         }
     }
 
-    public boolean recreateDB() {
-        boolean status;
-        status = this.initDBConn();
-
-        status = this.create();
-
-        if(!status) {
-            this.delete();
+    public int recreateDB() {
+        if(!this.initDBConn()) {
+            Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
+            return DBConnection.CONNECTION_ERROR;
         }
 
+        if(!this.create()){
+            Logger.info("Cannot Create Tables for TaskSet: " + this.taskSet.getId());
+            this.delete();
+            this.closeDBConn();
+            return DBConnection.CREATE_TABLE_ERROR;
+        }
 
         this.closeDBConn();
-
-        return status;
+        return 0;
     }
 
 
-    public void deleteDB() {
-        this.initDBConn();
-
+    public int deleteDB() {
+        if(!this.initDBConn()) {
+            Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
+            return DBConnection.CONNECTION_ERROR;
+        }
         this.delete();
-
-
         this.closeDBConn();
-
+        return 0;
     }
 
     private boolean create() {
         boolean status = true;
         Statement stmt;
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
+            List<String> primKeys = new ArrayList<>();
             String statement = "CREATE TABLE " + tableDefinition.getTableName() + "( ";
             for(int i = 0; i < tableDefinition.getColumnDefinitions().size(); i++) {
                 ColumnDefinition columnDefinition = tableDefinition.getColumnDefinitions().get(i);
                 statement = statement + columnDefinition.getColumnName() + " ";
                 statement = statement + " " + columnDefinition.getDataType();
-
+                if(columnDefinition.isNotNullable()) {
+                    statement = statement + " NOT NULL";
+                }
+                if(columnDefinition.isPrimaryKey()) {
+                    primKeys.add(columnDefinition.getColumnName());
+                }
                 if(i < tableDefinition.getColumnDefinitions().size() -1 )
-                    statement = statement + ", ";
+                    statement = statement + ",";
             }
+            if(primKeys.size() > 0) {
+                String primaryKey = ", PRIMARY KEY (";
+                for (int i = 0; i < primKeys.size(); i++) {
+                    String primKey = primKeys.get(i);
+                    primaryKey = primaryKey + primKey;
+                    if(i < primKeys.size() - 1)
+                        primaryKey = primaryKey + ",";
+                }
+                primaryKey = primaryKey + ")";
+                statement = statement + primaryKey;
+            }
+
             statement = statement + " );";
 
             Logger.info(statement);
@@ -92,7 +115,7 @@ public class DBConnection{
         return status;
     }
 
-    public boolean delete() {
+    private boolean delete() {
         boolean status = true;
         Statement stmt;
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {

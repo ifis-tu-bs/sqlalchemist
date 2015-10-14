@@ -21,7 +21,7 @@ public class SQLParser {
         return 0;
     }
 
-    public static boolean initialize(TaskSet taskSet) {
+    public static int initialize(TaskSet taskSet) {
         DBConnection dbConnection = new DBConnection(taskSet);
         return dbConnection.recreateDB();
     }
