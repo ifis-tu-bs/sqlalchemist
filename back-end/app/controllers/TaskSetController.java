@@ -55,7 +55,7 @@ public class TaskSetController extends Controller {
             return badRequest("taskSet can't be saved");
         }
 
-        if(!SQLParser.initialize(taskSet)) {
+        if(SQLParser.initialize(taskSet) != 0) {
             Logger.warn("TaskSetController.create - the TaskSet is invalid");
             return badRequest("invalid TaskSet");
         }
@@ -120,7 +120,7 @@ public class TaskSetController extends Controller {
 
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
-        if(!SQLParser.initialize(taskSet)) {
+        if(SQLParser.initialize(taskSet) != 0) {
             Logger.warn("TaskSetController.create - the TaskSet is invalid");
             return badRequest("invalid TaskSet");
         }
