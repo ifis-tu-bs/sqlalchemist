@@ -20,7 +20,6 @@ public class ShopItemDAO {
        * @return  returns the ShopItem
        */
       public static ShopItem create(Avatar avatar, int price) {
-
           return create(avatar.getName(), avatar.getDesc(), avatar.getAvatar(), ShopItem.TYPE_AVATAR, avatar, price);
       }
 

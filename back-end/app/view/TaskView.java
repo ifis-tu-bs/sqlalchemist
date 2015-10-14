@@ -17,7 +17,12 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class TaskView {
-    public static Task fromJsonForm(JsonNode taskNode, String taskName, Profile creator) {
+    public static Task fromJsonForm(JsonNode taskNode, String taskNameDefault, Profile creator) {
+        String  taskName            = taskNameDefault;
+        if(taskNode.has("taskName")) {
+            taskName = taskNode.get("taskName").asText();
+        }
+
         String  taskText            = taskNode.get("taskText").asText();
         String  refStatement        = taskNode.get("refStatement").asText();
         int     evaluationstrategy  = taskNode.get("evaluationstrategy").asInt();
