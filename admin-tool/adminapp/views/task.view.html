@@ -140,7 +140,7 @@
                   <td><input type="text" ng-model="column.columnName"></td>
                   <td><input type="text" ng-model="column.dataType" uib-typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
                   <td>{{column.datagenSet}}</td>
-                  <td><input type="checkbox" ng-model="column.notnull"></td>
+                  <td><input type="checkbox" ng-model="column.notNull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
                 </tr>
                 <tr>
@@ -206,12 +206,13 @@
                   </td>
                   <tr>
                     <td colspan="4" ng-style="task.isCollapsed ? {padding: 0} : {}">
-                      <div style="width:100%">
-                        <span style="float:left;width:50%"><h4>Task Text</h4></span>
-                        <span style="float:right;width:50%;text-align: right"><h4>Reference Statement</h4></span>
-                      </div>
 
                       <div uib-collapse="task.isCollapsed">
+                        <div style="width:100%">
+                          <span style="float:left;width:50%"><h4>Task Text</h4></span>
+                          <span style="float:right;width:50%;text-align: right"><h4>Reference Statement</h4></span>
+                        </div>
+
                         <div ui-ace="{
                           theme: 'twilight'
                         }" ng-model="task.taskText" style="float:left"></div>
