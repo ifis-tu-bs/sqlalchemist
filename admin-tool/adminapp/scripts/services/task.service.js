@@ -16,6 +16,10 @@
         service.postTaskSetComment = postTaskSetComment;
 
         /* TaskControlls */
+        service.createTask = createTask;
+        service.editTask = editTask;
+
+
         service.getSubTask = getSubTask
         //service.rateSubTask = rateSubTask;
         service.postSubTaskComment = postSubTaskComment;
@@ -60,9 +64,20 @@
          * Task Controlls
          */
 
+        function createTask(taskSetId, taskJson) {
+            return $http.post('/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
+        }
+
+        function editTask(taskId, taskJson) {
+            return $http.patch('/Task/' + taskId + '/', taskJson).then(handleSuccess, handleError);
+        }
+
         function rateTask(id, ratingJson) {
             return $http.post("/task/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
         }
+
+
+
 
         function createHomeWork(dateFromUTCString, dateToUTCString, taskFiles, name) {
             return $http.post("/homework",{from: dateFromUTCString, to: dateToUTCString, tasks: taskFiles, name: name}).then(handleSuccess, handleError);
@@ -103,8 +118,8 @@
             return data.data;
         }
 
-        function handleError(error) {
-            return {error: true, message: error.data};
+        function handleError(data) {
+            return {error: true, message: data.data};
         }
 
     }

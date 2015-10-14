@@ -1,7 +1,6 @@
 
 <div class="container-fluid">
-  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
-  <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
+  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message" style="float:left;width:68%"></div>
 
   <div class="container-fluid" style="float:right;width:30%">
     <form ng-show="true">
@@ -22,8 +21,8 @@
 
 
 
-    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined" style="float:right">Save current TaskSet</button>
-    <uib-tabset tpye="pills">
+    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || taskTabActive" style="float:right">Save current TaskSet</button>
+    <uib-tabset tpye="tabs">
 
 
 
@@ -174,7 +173,7 @@
 
       </uib-tab>
 
-      <uib-tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab heading="Tasks" select="enterTaskTab();" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets(); leaveTaskTab();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
@@ -193,7 +192,7 @@
                   </tr>
                 </thead>
                 <tbody ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search">
-                <tr  style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
+                <tr style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
                   <td><input type="text" ng-model="task.taskName" ng-click="$event.stopPropagation();"></td>
                   <td>{{task.creator.username}}</td>
                   <td>{{task.createdAt}}</td>
@@ -204,8 +203,11 @@
                       <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
                     </div>
                   </td>
+                <td>
+                  <button type="button" class="btn btn-info btn-xs" ng-click="saveTask(task); $event.stopPropagation();">Save...</button>
+                </td>
                   <tr>
-                    <td colspan="4" ng-style="task.isCollapsed ? {padding: 0} : {}">
+                    <td colspan="5" ng-style="task.isCollapsed ? {padding: 0} : {}">
 
                       <div uib-collapse="task.isCollapsed">
                         <div style="width:100%">

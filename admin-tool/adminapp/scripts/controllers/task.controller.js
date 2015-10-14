@@ -30,9 +30,7 @@ angular
 
         $scope.items=["bigint", "Varchar(255)", "boolean"];
 
-        $scope.codemirrorOptionsRefStatement = { mode: 'text/x-mysql'};
-        $scope.codemirrorOptionsTaskText = {mode: 'text/plain'};
-
+        $scope.taskTabActive = false;
         $scope.animationsEnabled = true;
 
         vm.taskSets = [];
@@ -145,7 +143,11 @@ angular
 
         /* Server Side Methods */
         $scope.saveSelectedTaskSet = function () {
+
             console.log($scope.selectedTaskSet);
+
+            FlashService.Clear();
+
             if ($scope.selectedTaskSet.id != undefined) {
 
                 TaskService.editTaskSet($scope.selectedTaskSet, $scope.selectedTaskSet.id).then(
@@ -153,6 +155,7 @@ angular
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
+                                FlashService.Success("Updated TaskSet");
                             }
                         }
                 );
@@ -164,6 +167,7 @@ angular
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
+                                FlashService.Success("Created new TaskSet");
                             }
                         }
                 );
@@ -252,6 +256,7 @@ angular
         //  Tasks: Control
         //////////////////////////////777
 
+        /* Data */
         var DefaultTask = function () {
             this.taskSet = $scope.selectedTaskSet.id;
             this.taskName = "";
@@ -262,12 +267,47 @@ angular
             this.isCollapsed = true;
         }
 
-        $scope.selectTask = function (task) {
-            //$scope.
-        }
+        /* Methods */
 
         $scope.pushNewTask = function () {
             vm.tasks.push(new DefaultTask());
+        }
+
+
+        $scope.enterTaskTab = function () {
+            $scope.taskTabActive = true;
+        }
+
+        $scope.leaveTaskTab = function () {
+            $scope.taskTabActive = false;
+        }
+
+        /* Server Side Methods */
+
+        $scope.saveTask = function (task) {
+            console.log(task);
+
+            if (task.id != undefined) {
+                TaskService.editTask(task.id, task).then(
+                        function (result) {
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                                FlashService.Success("Updated Task");
+                            }
+                        }
+                );
+            } else {
+                TaskService.createTask(task.taskSet, task).then(
+                        function (result) {
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                                FlashService.Success("Created new Task");
+                            }
+                        }
+                );
+            }
         }
 
         //////////////////////////////777
