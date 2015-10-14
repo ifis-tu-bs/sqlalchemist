@@ -45,6 +45,9 @@ public class TaskController extends Controller {
             Logger.warn("TaskController.create - invalid json");
             return badRequest("invalid json");
         }
+
+        task.save();
+
         return redirect(routes.TaskController.view(task.getId()));
     }
 

@@ -201,41 +201,6 @@ public class TaskSet extends Model {
         return ratings;
     }
 
-    public List<Comment> getComments() {
-        return comments;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public Date getUpdatedAt() {
-        return updatedAt;
-    }
-
-    //////////////////////////////////////////////////
-//  json method
-//////////////////////////////////////////////////
-
-    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
-        ObjectNode  objectNode = Json.newObject();
-
-        ArrayNode subTasks   = JsonNodeFactory.instance.arrayNode();
-
-        for(Task task : this.tasks) {
-            subTasks.add(task.toHomeWorkJsonForProfile(profile));
-        }
-
-        objectNode.put("schema",        this.relationsFormatted);
-        objectNode.put("subTasks",      subTasks);
-
-        return objectNode;
-    }
-
-//////////////////////////////////////////////////
-//  action
-//////////////////////////////////////////////////
-
     /**
      * This is the method to add a rating to this entity
      */
@@ -258,6 +223,10 @@ public class TaskSet extends Model {
         rating.save();
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
     /**
      * this method adds comments to the TaskFile
      *
@@ -271,6 +240,36 @@ public class TaskSet extends Model {
         comment.setTaskSet(this);
         comment.save();
     }
+
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getUpdatedAt() {
+        return updatedAt;
+    }
+
+//////////////////////////////////////////////////
+//  json method
+//////////////////////////////////////////////////
+
+    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
+        ObjectNode  objectNode = Json.newObject();
+
+        ArrayNode subTasks   = JsonNodeFactory.instance.arrayNode();
+
+        for(Task task : this.tasks) {
+            subTasks.add(task.toHomeWorkJsonForProfile(profile));
+        }
+
+        objectNode.put("schema",        this.relationsFormatted);
+        objectNode.put("subTasks",      subTasks);
+
+        return objectNode;
+    }
+
+
 
 //////////////////////////////////////////////////
 //  create methods

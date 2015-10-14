@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.*;
 
 import play.db.ebean.Model;
 import play.libs.Json;
-import sqlparser.SQLParser;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -180,22 +179,6 @@ public class Task extends Model {
         return ratings;
     }
 
-    public Date getCreated_at() {
-        return created_at;
-    }
-
-    public Date getUpdated_at() {
-        return updated_at;
-    }
-
-
-//////////////////////////////////////////////////
-//  Action
-//////////////////////////////////////////////////
-
-  /**
-   * This is the method to add a rating to this entity
-   */
     public void addRating(Rating rating) {
         if(this.ratings != null && this.ratings.size() > 0) {
             for(Rating ratingI : this.ratings) {
@@ -216,11 +199,9 @@ public class Task extends Model {
         this.update();
     }
 
-    /**
-     * this method adds comments to the SubTask
-     *
-     * @param comment   the comment to be added
-     */
+    public List<Comment> getComments() {
+        return this.comments;
+    }
     public void addComment(Comment comment) {
         if(this.comments == null) {
             this.comments = new ArrayList<>();
@@ -230,9 +211,15 @@ public class Task extends Model {
         comment.save();
     }
 
-    public List<Comment> getComments() {
-        return this.comments;
+    public Date getCreated_at() {
+        return created_at;
     }
+
+    public Date getUpdated_at() {
+        return updated_at;
+    }
+
+    //////////
 
     public int getScore() {
         return (this.points * 100) * 50;
