@@ -18,6 +18,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -109,21 +110,42 @@ public class TaskSetController extends Controller {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
+
         Logger.info(jsonNode.toString());
 
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
             return badRequest("no TaskSet found");
         }
+        List<TableDefinition>   tableDefinitionsOld    = new ArrayList<>(taskSet.getTableDefinitions());
+        List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
+
 
         SQLParser.delete(taskSet);
-
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
+
         if(SQLParser.initialize(taskSet) != 0) {
-            Logger.warn("TaskSetController.create - the TaskSet is invalid");
+            Logger.warn("TaskSetController.update - the TaskSet is invalid");
+            taskSet = TaskSetDAO.getById(id);
+            if(SQLParser.initialize(taskSet) != 0) {
+                Logger.warn("TaskSetController.update - can't create original TaskSet");
+                return badRequest("can't create original TaskSet");
+            }
             return badRequest("invalid TaskSet");
         }
+
+
+        // Delete old Data
+        for(TableDefinition tableDefinition : tableDefinitionsOld) {
+            tableDefinition.delete();
+        }
+
+
+        for(ForeignKeyRelation foreignKeyRelation : foreignKeyRelationsOld) {
+            foreignKeyRelation.delete();
+        }
+
 
         taskSet.save();
         return redirect(routes.TaskSetController.view(taskSet.getId()));
