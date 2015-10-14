@@ -16,6 +16,7 @@
   - [Task.Exercise](#taskexercise)
 - [TaskSet](#taskset)
   - [TaskSet.Form](#tasksetform)
+- [UserStatement](#userstatement)
 
 ### Column
 | Name                     | Type                   | Description|
@@ -161,7 +162,45 @@ Rating:
     "needReview": false
 }
 ```
+### SQLResult
+#### SQLResult.Successfull
+| Name                     | Type                   | Description|
+|--------------------------|------------------------|------------|
+| ```type```               | ```Number ```          | Always 0   |
+| ```terry```              | ```String```           |            |
+| ```time```               | ```Number```           |            |
+| ```score```              | ```Number```           |            |
+| ```coins```              | ```Number```           |            |
 
+Example:
+```json
+Columns:
+{
+    "type":     0,
+    "terry":    "Your answer was correct",
+    "time":     1200,
+    "score":    123,
+    "coins":     50
+}
+```
+#### SQLResult.Failure
+| Name                     | Type                   | Description|
+|--------------------------|------------------------|------------|
+| ```type```               | ```Number ```          | 1 = semantic error | 2 = syntactic error |
+| ```terry```              | ```String```           |            |
+| ```time```               | ```Number```           |            |
+| ```SQLError```           | ```String```           |            |
+
+Example:
+```json
+Columns:
+{
+    "type":     2,
+    "terry":    "you are an stupid guy",
+    "time":     1200,
+    "SQLError": "a random error message"
+}
+```
 ### TableDefinition
 | Name                     | Type                       |Description|
 |--------------------------|----------------------------|-----------|
@@ -401,5 +440,19 @@ TaskSet: {
   "foreignKeys":       [],
   "tasks":             [],
   "isHomework":         false,
+}
+```
+### UserStatement
+| Name                     | Type                   | Description|
+|--------------------------|------------------------|------------|
+| ```notNull```            | ```String```           |            |
+| ```datagenSet```         | ```Number```           |            |
+
+Example:
+```json
+Columns:
+{
+  "foreignKey": "SELECT * FROM User;",
+  "datagenSet": 1000
 }
 ```

@@ -47,30 +47,30 @@
 |POST  |/Task/:id/rate              |Task       |.rate                 |Rating.Form   |Redirect(Task.view)       |400-                 |
 |POST  |/Task/:id/comment           |Task       |.comment              |Comment.Form  |Redirect(Task.view)       |400-                 |
 |SQLController
-|GET   |/SQL/Story/:id              |SQL        |.story                |              |Task.Exercise             |400-                 |
+|GET   |/SQL/Story/:id              |SQL        |.story                |              |200-Task.Exercise         |400-                 |
 |POST  |/SQL/Story/:id              |SQL        |.storySolve(id: Long)
-|GET   |/SQL/Trivia/:id             |SQL        |.trivia               |              |Task.Exercise             |400-                 |
-|POST  |/SQL/Trivia/:id             |SQL        |.triviaSolve(id: Long)
+|GET   |/SQL/Trivia/:id             |SQL        |.trivia               |              |200-Task.Exercise         |400-                 |
+|POST  |/SQL/Trivia/:id             |SQL        |.triviaSolve          |UserStatement |SQLResult.Successfull     |400-SQLResult.Failure|
 |GET   |/SQL/Homework               |SQL        |.homework()             
 |POST  |/SQL/Homework/:id           |SQL        |.homeworkSolve(id: Long)
 |ProfileController
-|GET   |/profile                     |Profile    |.read                 |              |200-Profile.PlayerState   |400-                 |
-|GET   |/profile/character           |Profile    |.character            |              |200-Profile.CharacterState|400-                 |
-|GET   |/profile/avatar/:id          |Profile    |.avatar               |              |200-Profile.Attributes    |400-                 |
-|GET   |/profile/reset               |Profile    |.reset                |              |                          |400-                 |
-|GET   |/profile/homework            |Profile    |.getUserHomeworks     |              |                          |400-                 |
-|GET   |/profile/:id                 |Profile    |.view                 |              |200-Profile               |400-                 |
+|GET   |/profile                     |Profile    |.read                |              |200-Profile.PlayerState   |400-                 |
+|GET   |/profile/character           |Profile    |.character           |              |200-Profile.CharacterState|400-                 |
+|GET   |/profile/avatar/:id          |Profile    |.avatar              |              |200-Profile.Attributes    |400-                 |
+|GET   |/profile/reset               |Profile    |.reset               |              |                          |400-                 |
+|GET   |/profile/homework            |Profile    |.getUserHomeworks    |              |                          |400-                 |
+|GET   |/profile/:id                 |Profile    |.view                |              |200-Profile               |400-                 |
 |ShopController
-|GET   |/shop/avatar                 |Shop       |.avatarList           |              |200-ShopItem[]            |400-                 |
-|GET   |/shop/belt                   |Shop       |.beltList             |              |200-ShopItem[]            |400-                 |
-|GET   |/shop/:id                    |Shop       |.buy                  |              |200-                      |400-                 |
+|GET   |/shop/avatar                 |Shop       |.avatarList          |              |200-ShopItem[]            |400-                 |
+|GET   |/shop/belt                   |Shop       |.beltList            |              |200-ShopItem[]            |400-                 |
+|GET   |/shop/:id                    |Shop       |.buy                 |              |200-                      |400-                 |
 |HighScoreController
-|GET   |/highscore/points            |HighScore  |.byPoints             |              |200-HighscoreList         |400-                 |
-|GET   |/highscore/time              |HighScore  |.byTime               |              |200-HighscoreList         |400-                 |
-|GET   |/highscore/runs              |HighScore  |.byRuns               |              |200-HighscoreList         |400-                 |
-|GET   |/highscore/sql               |HighScore  |.bySQL                |              |200-HighscoreList         |400-                 |
-|GET   |/highscore/rate              |HighScore  |.byRate               |              |200-HighscoreList         |400-                 |
-|GET   |/highscore/coins             |HighScore  |.byCoins              |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/points            |HighScore  |.byPoints            |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/time              |HighScore  |.byTime              |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/runs              |HighScore  |.byRuns              |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/sql               |HighScore  |.bySQL               |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/rate              |HighScore  |.byRate              |              |200-HighscoreList         |400-                 |
+|GET   |/highscore/coins             |HighScore  |.byCoins             |              |200-HighscoreList         |400-                 |
 
 
 

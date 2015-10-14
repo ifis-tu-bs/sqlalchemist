@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -27,9 +28,7 @@ public class DBConnection{
     public DBConnection(TaskSet taskSet) {
         this.taskSet = taskSet;
 
-        this.dbUrl = "jdbc:h2:" + Play.application().configuration().getString("input.dbsPath") + taskSet.getId();
-
-        Logger.info("sqlparser.DBConnection.dbUrl: " + this.dbUrl);
+        this.dbUrl = "jdbc:h2:mem:" + taskSet.getId();
 
         try {
             Class.forName(Play.application().configuration().getString("input.driver"));
@@ -39,7 +38,7 @@ public class DBConnection{
         }
     }
 
-    public int recreateDB() {
+    public int createDB() {
         int status = 0;
         if((status = this.initDBConn()) != 0) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
@@ -70,24 +69,36 @@ public class DBConnection{
     }
 
     private int create() {
-        int status = 0;
-        Statement stmt;
+        int         status = 0;
+        Statement   stmt;
+
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
-            List<String> primKeys = new ArrayList<>();
-            String statement = "CREATE TABLE " + tableDefinition.getTableName() + "( ";
+            List<String>    primKeys                    = new ArrayList<>();
+            String          dataGenSetInsertStatement    = "INSERT INTO " + tableDefinition.getTableName() + "(";
+            String          statement                   = "CREATE TABLE " + tableDefinition.getTableName() + "( ";
+
             for(int i = 0; i < tableDefinition.getColumnDefinitions().size(); i++) {
                 ColumnDefinition columnDefinition = tableDefinition.getColumnDefinitions().get(i);
-                statement = statement + columnDefinition.getColumnName() + " ";
-                statement = statement + " " + columnDefinition.getDataType();
+                dataGenSetInsertStatement   = dataGenSetInsertStatement + columnDefinition.getColumnName();
+                statement                   = statement + columnDefinition.getColumnName() + " ";
+                statement                   = statement + " " + columnDefinition.getDataType();
+
                 if(columnDefinition.isNotNullable()) {
                     statement = statement + " NOT NULL";
                 }
                 if(columnDefinition.isPrimaryKey()) {
                     primKeys.add(columnDefinition.getColumnName());
                 }
-                if(i < tableDefinition.getColumnDefinitions().size() -1 )
+
+                if(i < tableDefinition.getColumnDefinitions().size() -1) {
                     statement = statement + ",";
+                    dataGenSetInsertStatement = dataGenSetInsertStatement + ", ";
+                }
+
             }
+
+            dataGenSetInsertStatement = dataGenSetInsertStatement + ") VALUES (";
+            // Set Primary Keys if necessary;
             if(primKeys.size() > 0) {
                 String primaryKey = ", PRIMARY KEY (";
                 for (int i = 0; i < primKeys.size(); i++) {
@@ -99,16 +110,28 @@ public class DBConnection{
                 primaryKey = primaryKey + ")";
                 statement = statement + primaryKey;
             }
-
+            // Close the statements
             statement = statement + " );";
 
+
+
             Logger.info(statement);
+            Logger.debug("dataGenInsertStatement: " + dataGenSetInsertStatement);
+
+            // Execute the Statements
             try {
                 stmt = connection.createStatement();
                 stmt.execute(statement);
+
+                List<String> tableExtensions = new ArrayList<>(Arrays.asList(tableDefinition.getExtension().split("\n")));
+
+                for(String tableExtension : tableExtensions) {
+                    stmt.execute(tableExtension);
+                }
             } catch (SQLException e) {
                 Logger.error("DBConnection.create: " + e.getMessage());
                 status = e.getErrorCode();
+                break;
             }
         }
         return status;

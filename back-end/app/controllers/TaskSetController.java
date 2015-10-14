@@ -60,8 +60,8 @@ public class TaskSetController extends Controller {
         }
         int err = 0;
         if((err = SQLParser.initialize(taskSet)) != 0) {
-            Logger.warn("TaskSetController.create - the TaskSet is invalid");
-            taskSet.delete();
+            Logger.warn("TaskSetController.create - " + SQLExceptionParser.parse(err));
+                    taskSet.delete();
             return badRequest(SQLExceptionParser.parse(err));
         }
 
@@ -132,11 +132,11 @@ public class TaskSetController extends Controller {
 
         int err;
         if((err = SQLParser.initialize(taskSet)) != 0) {
-            Logger.warn("TaskSetController.update - the TaskSet is invalid");
+            Logger.warn("TaskSetController.update - " + SQLExceptionParser.parse(err));
             taskSet = TaskSetDAO.getById(id);
             int err2;
             if((err2 = SQLParser.initialize(taskSet)) != 0) {
-                Logger.warn("TaskSetController.update - can't create original TaskSet");
+                Logger.warn("TaskSetController.update - " + SQLExceptionParser.parse(err2));
                 return badRequest(SQLExceptionParser.parse(err2));
             }
             return badRequest(SQLExceptionParser.parse(err));

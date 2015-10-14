@@ -1,21 +1,22 @@
 package controllers;
 
-import dao.ProfileDAO;
-import dao.ScrollCollectionDAO;
-import dao.ScrollDAO;
-import dao.TaskDAO;
-import models.Profile;
-import models.Scroll;
-import models.ScrollCollection;
-import models.Task;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import dao.*;
+import models.*;
 import play.Logger;
 import play.Play;
+import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import secured.UserSecured;
+import sqlparser.SQLParser;
+import view.SQLResultView;
 import view.TaskView;
+import view.UserStatementView;
 
+import java.awt.*;
 import java.util.List;
 
 /**
@@ -138,59 +139,43 @@ public class SQLController extends Controller {
 
         return ok(TaskView.toJsonExercise(task));
     }
-/*
+
     public static Result triviaSolve(Long id) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        JsonNode body   = request().body().asJson();
-        Task task = TaskDAO.getById(id);
+        Profile         profile         = ProfileDAO.getByUsername(request().username());
+        JsonNode        body            = request().body().asJson();
+        Task            task            = TaskDAO.getById(id);
+        UserStatement userStatement     = UserStatementView.fromJsonForm(body);
 
-        if (profile == null || body == null) {
-            Logger.warn("TaskController.triviaSolve - no profile or no jsonBody or wrong TaskId");
-            return badRequest("no profile or no jsonBody or wrong TaskId");
+        if (userStatement == null) {
+            Logger.warn("TaskController.triviaSolve - invalid json body");
+            return badRequest("invalid json body");
         }
-        Logger.info(body.toString());
-        String  statement   = body.findPath("statement").asText();
-        int     time         = (body.findPath("time").asInt()/1000);
-
-        if(statement == null || time == 0) {
-            Logger.warn("TaskController.triviaSolve - Expecting Json Data");
-            return badRequest("Expecting Json data");
+        if(task == null) {
+            Logger.warn("TaskController.triviaSolve - no task found");
+            return badRequest("no task found");
         }
 
-        Result result;
+        SQLResult   sqlResult   = SQLParser.checkStatement(task, userStatement);
+        ObjectNode  resultNode;
+        Result      result;
+        boolean     status;
+
+        if(sqlResult.getType() != SQLResult.SUCCESSFULL) {
+            status = false;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement);
+            result = badRequest(resultNode);
+        } else {
+            profile.addSuccessfully();
+            int coins = profile.addScore(task.getScore() / userStatement.getTime());
+            status = true;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement, coins);
+            result = ok(resultNode);
+        }
+
         profile.addStatement();
-        profile.addTime(time);
-        ObjectNode node = Json.newObject();
-        Logger.info(statement);
-        try {
-            if(task.solve(statement)) {
-                SolvedTaskDAO.update(profile, task, true);
-                int coins = profile.addScore(task.getScore() / time);
-                profile.addSuccessfully();
+        profile.addTime(userStatement.getTime());
 
-                node.put("terry", "your answer was correct");
-                node.put("time",    time);
-                node.put("score", task.getScore() / time);
-                node.put("coins",  coins);
-
-                result = ok(node);
-            } else {
-                SolvedTaskDAO.update(profile, task, false);
-
-                node.put("terry",   "symantic error");
-                node.put("time",    time);
-
-                result = badRequest(node);
-            }
-        } catch (SQLAlchemistException e) {
-            SolvedTaskDAO.update(profile, task, false);
-
-            node.put("terry",       "syntax error");
-            node.put("time",        time);
-            node.put("DBMessage",   e.getMessage());
-
-            result = badRequest(node);
-        }
+        SolvedTaskDAO.update(profile, task, status);
 
         profile.update();
         return result;

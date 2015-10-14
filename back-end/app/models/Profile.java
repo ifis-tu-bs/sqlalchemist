@@ -507,7 +507,7 @@ public class Profile extends Model {
         this.coinScale = coinScale;
     }
 
-    public void setScrollLimit(Integer scrollLimit) {
+    public void setScrollLimit(int scrollLimit) {
         this.scrollLimit = scrollLimit;
     }
 
