@@ -88,18 +88,15 @@ public class TaskController extends Controller {
     public static Result update(Long taskId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         Task        task        = TaskDAO.getById(taskId);
+
         if(task == null) {
             Logger.warn("TaskController.update - cannot find Task");
             return badRequest("cannot find Task");
         }
         JsonNode    taskNode    = request().body().asJson();
-        TaskSet     taskSet     = task.getTaskSet();
         Task        taskNew     = TaskView.fromJsonForm(taskNode, "", profile);
-        if(task == null) {
-            Logger.warn("TaskController.create - invalid json");
-            return badRequest("invalid json");
-        }
 
+        task.setTaskName(taskNew.getTaskName());
         task.setTaskText(taskNew.getTaskText());
         task.setRefStatement(taskNew.getRefStatement());
         task.setEvaluationstrategy(taskNew.getEvaluationstrategy());

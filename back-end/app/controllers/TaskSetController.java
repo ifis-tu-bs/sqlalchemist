@@ -3,6 +3,7 @@ package controllers;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
+import helper.SQLExceptionParser;
 import models.*;
 
 import secured.UserSecured;
@@ -18,6 +19,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -54,10 +56,11 @@ public class TaskSetController extends Controller {
             Logger.warn(pe.getMessage());
             return badRequest("taskSet can't be saved");
         }
-
-        if(SQLParser.initialize(taskSet) != 0) {
+        int err = 0;
+        if((err = SQLParser.initialize(taskSet)) != 0) {
             Logger.warn("TaskSetController.create - the TaskSet is invalid");
-            return badRequest("invalid TaskSet");
+            taskSet.delete();
+            return badRequest(SQLExceptionParser.parse(err));
         }
 
         return redirect(routes.TaskSetController.view(taskSet.getId()));
@@ -109,21 +112,44 @@ public class TaskSetController extends Controller {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
+
         Logger.info(jsonNode.toString());
 
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
             return badRequest("no TaskSet found");
         }
+        List<TableDefinition>   tableDefinitionsOld    = new ArrayList<>(taskSet.getTableDefinitions());
+        List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
+
 
         SQLParser.delete(taskSet);
-
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
-        if(SQLParser.initialize(taskSet) != 0) {
-            Logger.warn("TaskSetController.create - the TaskSet is invalid");
-            return badRequest("invalid TaskSet");
+
+        int err;
+        if((err = SQLParser.initialize(taskSet)) != 0) {
+            Logger.warn("TaskSetController.update - the TaskSet is invalid");
+            taskSet = TaskSetDAO.getById(id);
+            int err2;
+            if((err2 = SQLParser.initialize(taskSet)) != 0) {
+                Logger.warn("TaskSetController.update - can't create original TaskSet");
+                return badRequest(SQLExceptionParser.parse(err2));
+            }
+            return badRequest(SQLExceptionParser.parse(err));
         }
+
+
+        // Delete old Data
+        for(TableDefinition tableDefinition : tableDefinitionsOld) {
+            tableDefinition.delete();
+        }
+
+
+        for(ForeignKeyRelation foreignKeyRelation : foreignKeyRelationsOld) {
+            foreignKeyRelation.delete();
+        }
+
 
         taskSet.save();
         return redirect(routes.TaskSetController.view(taskSet.getId()));

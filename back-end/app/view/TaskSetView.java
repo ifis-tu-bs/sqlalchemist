@@ -99,19 +99,9 @@ public class TaskSetView {
     public static void updateFromJson(TaskSet taskSet, JsonNode jsonNode) {
         JsonNode    tableDefinitionsNode            = jsonNode.path("tableDefinitions");
         JsonNode    foreignKeyRelationsNode         = jsonNode.path("foreignKeyRelations");
-
         String                  taskSetName         = jsonNode.path("taskSetName").asText();
         List<TableDefinition>   tableDefinitions    = new ArrayList<>();
         List<ForeignKeyRelation>foreignKeyRelations = new ArrayList<>();
-
-        // Delete old Data
-        for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
-            tableDefinition.delete();
-        }
-
-        for(ForeignKeyRelation foreignKeyRelation : taskSet.getForeignKeyRelations()) {
-            foreignKeyRelation.delete();
-        }
 
         // Create new Data
         for(JsonNode tableDefinitionNode : tableDefinitionsNode) {
@@ -125,7 +115,6 @@ public class TaskSetView {
         taskSet.setTaskSetName(taskSetName);
         taskSet.setTableDefinitions(tableDefinitions);
         taskSet.setForeignKeyRelations(foreignKeyRelations);
-        //taskSet.setTasks(taskSetEdit.getTasks());
     }
 
     public static ArrayNode toJson(List<TaskSet> taskSetList) {
