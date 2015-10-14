@@ -15,11 +15,6 @@ import play.mvc.Result;
  * Created by fabiomazzone on 27/04/15.
  */
 public class CreatorSecured extends Authenticator {
-    /**
-     *
-     * @param cxt
-     * @return
-     */
     @Override
     public String getUsername(Context cxt) {
 
@@ -32,12 +27,7 @@ public class CreatorSecured extends Authenticator {
         return null;
     }
 
-    /**
-     *
-     * @param context
-     * @return
-     */
-    @Override
+     @Override
     public Result onUnauthorized(Context context) {
         return forbidden("restricted page, you need higher permissions, than \"Creator\"");
     }

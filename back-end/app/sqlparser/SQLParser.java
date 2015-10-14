@@ -2,8 +2,6 @@ package sqlparser;
 
 import models.Task;
 import models.TaskSet;
-import play.Logger;
-
 
 /**
  * @author fabiomazzone

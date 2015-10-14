@@ -6,6 +6,7 @@ import dao.TaskSetDAO;
 import helper.SQLExceptionParser;
 import models.*;
 
+import secured.CreatorSecured;
 import secured.UserSecured;
 
 import sqlparser.SQLParser;
@@ -39,6 +40,7 @@ public class TaskSetController extends Controller {
      * @return returns the created TaskSet
      */
 
+    @Security.Authenticated(CreatorSecured.class)
     public static Result create() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode jsonNode = request().body().asJson();
@@ -108,6 +110,7 @@ public class TaskSetController extends Controller {
      * @param id        the if of the taskSet
      * @return          returns an redirection to the updated taskSet
      */
+    @Security.Authenticated(CreatorSecured.class)
     public static Result update(Long id) {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
@@ -158,6 +161,7 @@ public class TaskSetController extends Controller {
     /**
      * This method deletes an TaskSet object
      */
+    @Security.Authenticated(CreatorSecured.class)
     public static Result delete(Long id) {
         TaskSet taskSet = TaskSetDAO.getById(id);
 

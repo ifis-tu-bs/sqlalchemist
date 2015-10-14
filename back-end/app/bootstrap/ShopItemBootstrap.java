@@ -61,11 +61,11 @@ public class ShopItemBootstrap {
           ShopItemDAO.create(AvatarDAO.getByName("Sybrille Trelawney"), 2000);
           ShopItemDAO.create(AvatarDAO.getByName("Voldemotherfucker"), 20000);
 
-          ShopItemDAO.create("Belt Slot 1", "url",  1000);
-          ShopItemDAO.create("Belt Slot 2", "url",  2000);
-          ShopItemDAO.create("Belt Slot 3", "url",  4000);
-          ShopItemDAO.create("Belt Slot 4", "url",  8000);
-          ShopItemDAO.create("Belt Slot 5", "url", 16000);
+          ShopItemDAO.create("Belt Slot 1", 1000);
+          ShopItemDAO.create("Belt Slot 2", 2000);
+          ShopItemDAO.create("Belt Slot 3", 4000);
+          ShopItemDAO.create("Belt Slot 4", 8000);
+          ShopItemDAO.create("Belt Slot 5", 16000);
 
           Logger.info("Done initializing");
       }

@@ -112,7 +112,7 @@ public class Profile extends Model {
 
         this.setShopItems(new ArrayList<>());
 
-        List<ShopItem> defaultAvatar = ShopItemDAO.getByPrice(0);
+        List<ShopItem> defaultAvatar = ShopItemDAO.getFreeShopItems();
 
         for (ShopItem shopItem : defaultAvatar) {
             this.buy(shopItem);

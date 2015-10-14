@@ -4,6 +4,7 @@ import dao.*;
 
 import models.*;
 
+import secured.CreatorSecured;
 import secured.UserSecured;
 
 import view.CommentView;
@@ -31,6 +32,7 @@ public class TaskController extends Controller {
      * @param taskSetId     the id of the taskSet
      * @return              returns an redirection to the new task
      */
+    @Security.Authenticated(CreatorSecured.class)
     public static Result create(Long taskSetId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         JsonNode    taskNode    = request().body().asJson();
@@ -41,6 +43,7 @@ public class TaskController extends Controller {
         }
         String      taskName    = taskSet.getTaskSetName() + "" + taskSet.getTasks().size();
         Task        task        = TaskView.fromJsonForm(taskNode, taskName, profile);
+
         if(task == null) {
             Logger.warn("TaskController.create - invalid json");
             return badRequest("invalid json");
@@ -82,13 +85,14 @@ public class TaskController extends Controller {
         Task task = TaskDAO.getById(taskId);
 
         if (task == null) {
-            Logger.warn("TaskController.view("+task+") - no task found");
+            Logger.warn("TaskController.view("+taskId+") - no task found");
             return badRequest("no task found");
         }
 
         return ok(TaskView.toJsonList(task));
     }
 
+    @Security.Authenticated(CreatorSecured.class)
     public static Result update(Long taskId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         Task        task        = TaskDAO.getById(taskId);
@@ -112,6 +116,7 @@ public class TaskController extends Controller {
         return redirect(routes.TaskController.view(task.getId()));
     }
 
+    @Security.Authenticated(CreatorSecured.class)
     public static Result delete(Long taskId) {
         Task task = TaskDAO.getById(taskId);
 

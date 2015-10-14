@@ -44,7 +44,7 @@ public class ItemController extends Controller {
 
         if( profile == null) {
             Logger.warn("ItemController.collected - not a valid User");
-            badRequest("not a valid User");
+            return badRequest("not a valid User");
         }
 
         if (body == null) {

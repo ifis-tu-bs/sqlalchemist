@@ -114,7 +114,7 @@ public class ScrollCollectionDAO {
           List<ScrollCollection> scrollCollectionList = ScrollCollection.find.where().eq("profile", profile).eq("isActive", true).findList();
           if (scrollCollectionList == null) {
               Logger.warn("ScrollCollection.getActiveScrolls - no Scrolls found");
-              return null;
+              return new ArrayList<>();
           }
 
           List<Scroll> scrollList = new ArrayList<>();
