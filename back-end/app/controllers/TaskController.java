@@ -46,6 +46,7 @@ public class TaskController extends Controller {
             return badRequest("invalid json");
         }
 
+        task.setTaskSet(taskSet);
         task.save();
 
         return redirect(routes.TaskController.view(task.getId()));

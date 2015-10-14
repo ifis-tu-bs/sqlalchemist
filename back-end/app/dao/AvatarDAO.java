@@ -22,35 +22,35 @@ public class AvatarDAO {
    * @param isTeam                is the avatar a tag team
    * @param playerStats           avatar playerStats
    */
-  public static Avatar create(
-      String  name,
-      String  desc,
-      String  avatarFilename,
-      String  soundURL,
-      boolean isTeam,
-      PlayerStats playerStats) {
+    public static Avatar create(
+        String  name,
+        String  desc,
+        String  avatarFilename,
+        String  soundURL,
+        boolean isTeam,
+        PlayerStats playerStats) {
 
-    Avatar avatar = new Avatar(
-        name,
-        desc,
-        avatarFilename,
-        soundURL,
-        isTeam,
-        playerStats );
+        Avatar avatar = new Avatar(
+                name,
+                desc,
+                avatarFilename,
+                soundURL,
+                isTeam,
+                playerStats );
 
-    try {
-      avatar.save();
-    } catch (PersistenceException pe) {
-      Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
-      if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
-        Logger.warn("Can't create Avatar(duplicate) " + avatar.toJson().toString());
-        return avatar_res;
-      }
-      Logger.error("Can't create Avatar: " + avatar.toJson());
-      return null;
+        try {
+            avatar.save();
+        } catch (PersistenceException pe) {
+            Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
+            if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
+                Logger.warn("Can't create Avatar(duplicate) " + avatar.toJson().toString());
+                return avatar_res;
+            }
+            Logger.error("Can't create Avatar: " + avatar.toJson());
+            return null;
+        }
+        return avatar;
     }
-    return avatar;
-  }
 
   //////////////////////////////////////////////////
   //  Object Getter Methods
