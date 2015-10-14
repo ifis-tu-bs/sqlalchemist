@@ -18,8 +18,8 @@
   <hr/>
 
 
-
   <div style="width:100%;float:left">
+
 
 
     <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined" style="float:right">Save current TaskSet</button>
@@ -173,6 +173,7 @@
       <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
 
       </uib-tab>
+
       <uib-tab heading="Tasks" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
@@ -191,9 +192,9 @@
                     <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                   </tr>
                 </thead>
-                <tbody>
-                <tr ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task);">
-                  <td><input type="text" ng-model="task.taskName"></td>
+                <tbody ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search">
+                <tr  style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
+                  <td><input type="text" ng-model="task.taskName" ng-click="$event.stopPropagation();"></td>
                   <td>{{task.creator.username}}</td>
                   <td>{{task.createdAt}}</td>
                   <td>
@@ -203,7 +204,33 @@
                       <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
                     </div>
                   </td>
+                  <tr>
+                    <td colspan="4" ng-style="task.isCollapsed ? {padding: 0} : {}">
+                      <div style="width:100%">
+                        <span style="float:left;width:50%"><h4>Task Text</h4></span>
+                        <span style="float:right;width:50%;text-align: right"><h4>Reference Statement</h4></span>
+                      </div>
+
+                      <div uib-collapse="task.isCollapsed">
+                        <div ui-ace ng-model="task.taskText" style="float:left"></div>
+                        <div ui-ace="{
+                             mode : 'sql',
+                             theme : 'twilight'
+                        }" ng-model="task.refStatement" style="float:right"></div>
+                      </div>
+                    </td>
+                  </tr>
                 </tr>
+                </tbody>
+                <tbody>
+                  <tr>
+                    <td>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTask(); $event.stopPropagation();">New...</button>
+                    </td>
+                    <td/>
+                    <td/>
+                    <td/>
+                  </tr>
                 </tbody>
               </table>
             </div>

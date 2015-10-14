@@ -30,7 +30,9 @@ angular
 
         $scope.items=["bigint", "Varchar(255)", "boolean"];
 
-        //$scope.codemirrorOptions = { mode: 'text/x-mysql', readOnly: true};
+        $scope.codemirrorOptionsRefStatement = { mode: 'text/x-mysql'};
+        $scope.codemirrorOptionsTaskText = {mode: 'text/plain'};
+
         $scope.animationsEnabled = true;
 
         vm.taskSets = [];
@@ -39,6 +41,7 @@ angular
         $scope.selectedTaskSet = {};
         $scope.selectedTask = {};
         $scope.selectedTable = {};
+
 
         function initController() {
             getAllTaskSets();
@@ -238,12 +241,33 @@ angular
             this.columnName = "";
             this.dataType = "bigint"
             this.notNull = true;
-            this.primary = false;
+            this.primaryKey = false;
         }
 
         /* Methods */
         $scope.pushNewColumn = function () {
             vm.columns.push(new DefaultColumn());
+        }
+        //////////////////////////////777
+        //  Tasks: Control
+        //////////////////////////////777
+
+        var DefaultTask = function () {
+            this.taskSet = $scope.selectedTaskSet.id;
+            this.taskName = "";
+            this.refStatement = "";
+            this.evaluationstrategy = 0;
+            this.points = 1;
+            this.requiredTerm = 0;
+            this.isCollapsed = true;
+        }
+
+        $scope.selectTask = function (task) {
+            //$scope.
+        }
+
+        $scope.pushNewTask = function () {
+            vm.tasks.push(new DefaultTask());
         }
 
         //////////////////////////////777

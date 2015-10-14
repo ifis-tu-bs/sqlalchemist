@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.codemirror'])
+        .module('app', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'ui.codemirror', 'ui.ace'])
         .config(config)
         .run(run)
         .value('ui.codemirror.config', {
