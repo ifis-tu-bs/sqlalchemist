@@ -75,7 +75,7 @@ POST        /Task/:id/comment                   controllers.TaskController.comme
 #POST        /task/:id/comment                   controllers.TaskController.comment(id: Long)
 
 #ProfileController
-GET         /profile                            controllers.ProfileController.index()
+GET         /profile                            controllers.ProfileController.read()
 GET         /profile/character                  controllers.ProfileController.character()
 GET         /profile/avatar/:id                 controllers.ProfileController.avatar(id: Long)
 GET         /profile/reset                      controllers.ProfileController.reset()
@@ -83,7 +83,6 @@ GET         /profile/homework                   controllers.ProfileController.ge
 GET         /profile/:id                        controllers.ProfileController.view(id: Long)
 
 #ShopController
-GET         /shop                               controllers.ShopController.avatarList()
 GET         /shop/avatar                        controllers.ShopController.avatarList()
 GET         /shop/belt                          controllers.ShopController.beltList()
 GET         /shop/:id                           controllers.ShopController.buy(id: Long)
