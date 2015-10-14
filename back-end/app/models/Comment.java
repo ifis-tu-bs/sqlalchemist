@@ -1,20 +1,10 @@
 package models;
 
-import play.Logger;
 import play.db.ebean.Model;
-import play.libs.Json;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
-/**
- * Created by stefa_000 on 16.06.2015.
- */
 
 /**
  * This model describes the comment.
@@ -28,13 +18,20 @@ public class Comment extends Model{
     @Id
     private long id;
 
+
+    @ManyToOne
+    private TaskSet taskSet;
+
+    @ManyToOne
+    private Task task;
+
     /** Relation to the profile of the user, who created the comment. */
     @ManyToOne
-    private Profile profile;
+    private final Profile profile;
 
     /** Content of the comment. */
-    @Column(name = "text")
-    private String text;
+    @Column(name = "comment")
+    private final String comment;
 
     private final Date created_at;
 
@@ -48,36 +45,47 @@ public class Comment extends Model{
 //  Constructor
 //////////////////////////////////////////////////
 
-    public Comment(Profile profile, String text) {
+    public Comment(String comment, Profile profile) {
         this.profile    = profile;
-        this.text       = text;
+        this.comment    = comment;
 
         this.created_at = new Date();
     }
 
 
 //////////////////////////////////////////////////
-//  Json Method
+//  Getter & Setter
 //////////////////////////////////////////////////
 
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("profile", this.profile.toJsonProfile());
-        node.put("text",    this.text);
-        node.put("written", String.valueOf(this.created_at));
-
-        return node;
+    public long getId() {
+        return id;
     }
 
+    public TaskSet getTaskSet() {
+        return taskSet;
+    }
 
-    public static ArrayNode toJsonAll(List<Comment> commentList) {
-        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+    public void setTaskSet(TaskSet taskSet) {
+        this.taskSet = taskSet;
+    }
 
-        for(Comment comment : commentList) {
-            arrayNode.add(comment.toJson());
-        }
+    public Task getTask() {
+        return task;
+    }
 
-        return arrayNode;
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
     }
 }

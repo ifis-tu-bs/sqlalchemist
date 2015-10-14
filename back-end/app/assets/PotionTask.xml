@@ -10,12 +10,12 @@
 
      <schema>
       <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Recipe(
               name VARCHAR(100) NOT NULL PRIMARY KEY,
               complexity INTEGER
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO Recipe (name, complexity) VALUES ('Dizzyness', 1);</tuple> 
 		  <tuple>INSERT INTO Recipe (name, complexity) VALUES ('A', 1);</tuple>
@@ -34,7 +34,7 @@
         </extension>
       </relation>
              <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Potion(
               id INT NOT NULL PRIMARY KEY, 
               name VARCHAR(100), 
@@ -44,7 +44,7 @@
               recipe VARCHAR(100) NOT NULL,
               FOREIGN KEY (recipe) REFERENCES Recipe(name)
           );
-        </intension>
+        </tableDefinition>
         <extension>
           <tuple>INSERT INTO potion VALUES (2, 'B', 1, 1, 'red', 'B')</tuple>
 		  <tuple>INSERT INTO potion VALUES (3, 'C', 1, 1, 'red', 'C')</tuple>
@@ -61,14 +61,14 @@
         </extension>
      </relation>
              <relation>
-      	<intension>
+      	<tableDefinition>
           CREATE TABLE Book(
               id INT NOT NULL PRIMARY KEY,
               title VARCHAR(100), 
               author VARCHAR(100),
               year INT
           );
-        </intension>
+        </tableDefinition>
       	<extension>
       		<tuple>INSERT INTO book VALUES (1, 'A', 'A', 2000)</tuple>
 			<tuple>INSERT INTO book VALUES (2, 'B', 'B', 1980)</tuple>
@@ -80,7 +80,7 @@
       	</extension>
       </relation>
              <relation>
-      	<intension>
+      	<tableDefinition>
           CREATE TABLE Recipe_is_in_Book(
             recipe VARCHAR(100) NOT NULL,
             book INT NOT NULL,
@@ -89,7 +89,7 @@
             FOREIGN KEY (recipe) REFERENCES Recipe(name), 
             FOREIGN KEY (book)   REFERENCES Book(id)
             );
-          </intension>
+          </tableDefinition>
       	<extension>
             <tuple>INSERT INTO recipe_is_in_book VALUES ('A', 1, 1)</tuple>
 			<tuple>INSERT INTO recipe_is_in_book VALUES ('B', 1, 10)</tuple>
@@ -101,7 +101,7 @@
         </extension>
       </relation>
 	  <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Ingredient(
             name VARCHAR(100) NOT NULL PRIMARY KEY,
             size VARCHAR(100),
@@ -109,7 +109,7 @@
             color VARCHAR(100),
             type VARCHAR(100)
             );
-          </intension>
+          </tableDefinition>
         <extension>
             <tuple>INSERT INTO Ingredient VALUES ('Bezoar', 'small', 'false', 'brown', 'stone'); </tuple>
             <tuple>INSERT INTO Ingredient VALUES ('Horned Slugs', 'small', 'false', 'green', 'animal');</tuple>
@@ -121,7 +121,7 @@
         </extension>
       </relation>
 	  <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Potion_has_Ingredient(
             potion INT NOT NULL,
             ingredient VARCHAR(100) NOT NULL,
@@ -129,7 +129,7 @@
             FOREIGN KEY (potion) REFERENCES Potion(id),
             FOREIGN KEY (ingredient) REFERENCES Ingredient(name)
             );
-          </intension>
+          </tableDefinition>
         <extension>
             <tuple>INSERT INTO potion_has_ingredient VALUES (1, 'Bezoar')</tuple>
 			<tuple>INSERT INTO potion_has_ingredient VALUES (2, 'Horned Slugs')</tuple>
@@ -141,7 +141,7 @@
         </extension>
       </relation>
 	  <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE Potion_is_antidote_to(
             potion INT NOT NULL,
             antidote INT NOT NULL,
@@ -149,7 +149,7 @@
             FOREIGN KEY (potion) REFERENCES Potion(id),
             FOREIGN KEY (antidote) REFERENCES Potion(id)
             );
-          </intension>
+          </tableDefinition>
         <extension>
             <tuple>INSERT INTO potion_is_antidote_to VALUES (1, 2)</tuple>
 			<tuple>INSERT INTO potion_is_antidote_to VALUES (1, 3)</tuple>
@@ -159,7 +159,7 @@
         </extension>
       </relation>
 	  <relation>
-        <intension>
+        <tableDefinition>
           CREATE TABLE potion_has_recipe(
 			potion INT NOT NULL,
             recipe VARCHAR(100) NOT NULL,
@@ -167,7 +167,7 @@
             FOREIGN KEY (potion) REFERENCES Potion(id),
             FOREIGN KEY (recipe) REFERENCES Recipe(name)
 			);
-          </intension>
+          </tableDefinition>
        </relation>
      </schema>
 

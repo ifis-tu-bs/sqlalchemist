@@ -98,7 +98,7 @@ public class ScrollCollectionDAO {
 
           if(scrollCollections == null) {
               Logger.warn("ScrollCollection.getScrolls - can't find any scroll");
-              return null;
+              return new ArrayList<>();
           }
 
           return scrollCollections;

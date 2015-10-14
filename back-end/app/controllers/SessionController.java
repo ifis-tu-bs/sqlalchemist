@@ -58,7 +58,7 @@ public class SessionController extends Controller {
 
             if (userSession != null ) {
                 session().put("sessionID", userSession.getSessionID());
-                return redirect(routes.ProfileController.index());
+                return redirect(routes.ProfileController.read());
             }
             Logger.warn("SessionController.create - Can't create userSession");
             return badRequest("Can't create userSession");

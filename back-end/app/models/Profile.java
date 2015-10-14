@@ -13,7 +13,6 @@ import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
 
-import play.Logger;
 import play.Play;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
@@ -84,6 +83,13 @@ public class Profile extends Model {
 
     @Transient
     long ownRank;
+
+    @OneToMany(mappedBy = "creator")
+    private List<TaskSet>   tasks;
+    @OneToMany(mappedBy = "profile")
+    private List<Rating> ratings;
+    @OneToMany(mappedBy = "profile")
+    private  List<Comment> comments;
 
     public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
 
@@ -335,18 +341,6 @@ public class Profile extends Model {
 //////////////////////////////////////////////////
 
     public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("id",          this.id);
-
-
-        node.put("created_at", String.valueOf(this.created_at));
-        node.put("last_action", String.valueOf(this.edited_at));
-
-        return node;
-    }
-
-    public ObjectNode toJsonProfile() {
         ObjectNode node = Json.newObject();
 
         node.put("id",          this.id);

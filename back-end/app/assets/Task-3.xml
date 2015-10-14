@@ -7,7 +7,7 @@
         </titles>
         <schema>
             <relation>
-                <intension>CREATE TABLE Potions(id int not null primary key, type int, name varchar(100))</intension>
+                <tableDefinition>CREATE TABLE Potions(id int not null primary key, type int, name varchar(100))</tableDefinition>
                 <extension>
                     <tuple>INSERT INTO Potions(id, type, name) VALUES (1, 1, 'Weak Speed Potion')</tuple>
                 </extension>

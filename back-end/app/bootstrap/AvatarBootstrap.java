@@ -2,7 +2,6 @@ package bootstrap;
 
 import dao.AvatarDAO;
 
-import models.Avatar;
 import models.PlayerStats;
 
 import play.Logger;

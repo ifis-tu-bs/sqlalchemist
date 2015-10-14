@@ -2,11 +2,10 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import play.Logger;
+
 import play.db.ebean.Model;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.*;
 
@@ -19,7 +18,7 @@ import javax.persistence.*;
         name = "solvedSubTask"
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
-public class SolvedSubTask extends Model {
+public class SolvedTask extends Model {
     @Id
     long id;
 
@@ -29,30 +28,30 @@ public class SolvedSubTask extends Model {
 
     @ManyToOne
     @Column(name = "sub_task_id")
-    SubTask subTask;
+    Task task;
 
     int solved;
     int trys;
 
     Date lastSolved;
 
-    public static final Finder<Long, SolvedSubTask> find = new Finder<>(Long.class, SolvedSubTask.class);
+    public static final Finder<Long, SolvedTask> find = new Finder<>(Long.class, SolvedTask.class);
 
-    public SolvedSubTask(
+    public SolvedTask(
             Profile profile,
-            SubTask subTask
+            Task task
     ) {
         super();
 
         this.profile = profile;
-        this.subTask = subTask;
+        this.task = task;
 
         this.solved = 0;
         this.trys = 0;
     }
 
-    public SubTask getSubTask() {
-      return this.subTask;
+    public Task getTask() {
+      return this.task;
     }
 
     public void pushSolved() {
