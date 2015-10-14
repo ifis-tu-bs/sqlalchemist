@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
         <link href="adminapp/css/app.css" rel="stylesheet" />
         <link href="adminapp/css/modalStyleClass.css" rel="stylesheet" />
-        <link rel="stylesheet" href="adminapp/css/codemirror.css">
+        <script src="adminapp/scripts/libraries/ace.js"></script>
     </head>
     <body ng-app="app">
 
@@ -22,6 +22,10 @@
             </div>
         </div>
 
+        <!-- RequireJS (used by Ace) -->
+<!--
+        <script src="adminapp/scripts/libraries/require.js"></script>
+
         <!-- AngularJS Scripts -->
 
         <script src="adminapp/scripts/libraries/angular.js"></script>
@@ -34,18 +38,10 @@
         <script src="adminapp/scripts/libraries/ui-bootstrap-tpls-0.14.1.min.js"></script>
         <script src="adminapp/scripts/libraries/ui-codemirror.js"></script>
 
-        <!-- CodeMirror Scripts -->
-
-        <script src="adminapp/scripts/libraries/codemirror.js"></script>
-        <script src="adminapp/scripts/libraries/matchbrackets.js"></script>
-        <script src="adminapp/scripts/libraries/sql.js"></script>
-        <script src="adminapp/scripts/libraries/xml.js"></script>
-
         <!-- Ace Scripts -->
-        <script src="adminapp/scripts/libraries/ace.js"></script>
         <script src="adminapp/scripts/libraries/ui-ace.min.js"></script>
         <script src="adminapp/scripts/libraries/mode-sql.js"></script>
-        <!--<script src="adminapp/scripts/libraries/theme-twilight.js"></script>
+        <script src="adminapp/scripts/libraries/theme-twilight.js"></script>
 
 
 
