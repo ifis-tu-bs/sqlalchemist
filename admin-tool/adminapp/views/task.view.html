@@ -212,7 +212,9 @@
                       </div>
 
                       <div uib-collapse="task.isCollapsed">
-                        <div ui-ace ng-model="task.taskText" style="float:left"></div>
+                        <div ui-ace="{
+                          theme: 'twilight'
+                        }" ng-model="task.taskText" style="float:left"></div>
                         <div ui-ace="{
                              mode : 'sql',
                              theme : 'twilight'
