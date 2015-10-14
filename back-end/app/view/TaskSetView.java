@@ -115,7 +115,6 @@ public class TaskSetView {
         taskSet.setTaskSetName(taskSetName);
         taskSet.setTableDefinitions(tableDefinitions);
         taskSet.setForeignKeyRelations(foreignKeyRelations);
-        //taskSet.setTasks(taskSetEdit.getTasks());
     }
 
     public static ArrayNode toJson(List<TaskSet> taskSetList) {

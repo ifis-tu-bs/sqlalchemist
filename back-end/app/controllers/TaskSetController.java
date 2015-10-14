@@ -3,6 +3,7 @@ package controllers;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
+import helper.SQLExceptionParser;
 import models.*;
 
 import secured.UserSecured;
@@ -55,10 +56,11 @@ public class TaskSetController extends Controller {
             Logger.warn(pe.getMessage());
             return badRequest("taskSet can't be saved");
         }
-
-        if(SQLParser.initialize(taskSet) != 0) {
+        int err = 0;
+        if((err = SQLParser.initialize(taskSet)) != 0) {
             Logger.warn("TaskSetController.create - the TaskSet is invalid");
-            return badRequest("invalid TaskSet");
+            taskSet.delete();
+            return badRequest(SQLExceptionParser.parse(err));
         }
 
         return redirect(routes.TaskSetController.view(taskSet.getId()));
@@ -125,14 +127,16 @@ public class TaskSetController extends Controller {
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
 
-        if(SQLParser.initialize(taskSet) != 0) {
+        int err;
+        if((err = SQLParser.initialize(taskSet)) != 0) {
             Logger.warn("TaskSetController.update - the TaskSet is invalid");
             taskSet = TaskSetDAO.getById(id);
-            if(SQLParser.initialize(taskSet) != 0) {
+            int err2;
+            if((err2 = SQLParser.initialize(taskSet)) != 0) {
                 Logger.warn("TaskSetController.update - can't create original TaskSet");
-                return badRequest("can't create original TaskSet");
+                return badRequest(SQLExceptionParser.parse(err2));
             }
-            return badRequest("invalid TaskSet");
+            return badRequest(SQLExceptionParser.parse(err));
         }
 
 

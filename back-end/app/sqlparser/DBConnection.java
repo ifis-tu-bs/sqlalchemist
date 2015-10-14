@@ -24,9 +24,6 @@ public class DBConnection{
 
     Connection connection;
 
-    private static final int CONNECTION_ERROR = -1;
-    private static final int CREATE_TABLE_ERROR = -2;
-
     public DBConnection(TaskSet taskSet) {
         this.taskSet = taskSet;
 
@@ -43,16 +40,17 @@ public class DBConnection{
     }
 
     public int recreateDB() {
-        if(!this.initDBConn()) {
+        int status = 0;
+        if((status = this.initDBConn()) != 0) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
-            return DBConnection.CONNECTION_ERROR;
+            return status;
         }
 
-        if(!this.create()){
+        if((status = this.create()) != 0){
             Logger.info("Cannot Create Tables for TaskSet: " + this.taskSet.getId());
             this.delete();
             this.closeDBConn();
-            return DBConnection.CREATE_TABLE_ERROR;
+            return status;
         }
 
         this.closeDBConn();
@@ -61,17 +59,18 @@ public class DBConnection{
 
 
     public int deleteDB() {
-        if(!this.initDBConn()) {
+        int status = 0;
+        if((status = this.initDBConn()) != 0) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
-            return DBConnection.CONNECTION_ERROR;
+            return status;
         }
         this.delete();
         this.closeDBConn();
         return 0;
     }
 
-    private boolean create() {
-        boolean status = true;
+    private int create() {
+        int status = 0;
         Statement stmt;
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
             List<String> primKeys = new ArrayList<>();
@@ -108,8 +107,8 @@ public class DBConnection{
                 stmt = connection.createStatement();
                 stmt.execute(statement);
             } catch (SQLException e) {
-                Logger.error("DBConnection.deleteDB: " + e.getMessage());
-                status = false;
+                Logger.error("DBConnection.create: " + e.getMessage());
+                status = e.getErrorCode();
             }
         }
         return status;
@@ -127,28 +126,30 @@ public class DBConnection{
 
                 Logger.info(statement);
             } catch (SQLException e) {
-                Logger.error("DBConnection.deleteDB: " + e.getMessage());
+                Logger.error("DBConnection.delete: " + e.getMessage());
                 status = false;
             }
         }
         return status;
     }
 
-    private boolean initDBConn() {
+    private int initDBConn() {
         try {
             this.connection = DriverManager.getConnection(this.dbUrl);
-            return true;
+            return 0;
         } catch (SQLException e) {
-            Logger.warn(e.getSQLState());
-            return false;
+            Logger.warn(e.getMessage());
+            return e.getErrorCode();
         }
     }
 
-    private void closeDBConn() {
+    private int closeDBConn() {
         try {
             this.connection.close();
+            return 0;
         } catch (SQLException e) {
-            Logger.warn(e.getSQLState());
+            Logger.warn(e.getMessage());
+            return e.getErrorCode();
         }
     }
 }
