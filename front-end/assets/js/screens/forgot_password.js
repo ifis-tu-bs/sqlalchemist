@@ -40,7 +40,7 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         this.resetPasswordReply = function() {
             var userid     = document.getElementById("fEmail").value;
             this.user_json = JSON.stringify({id: userid});
-
+            console.log(this.user_json);
             ajaxSendUsersResetPasswordRequest(this.user_json, onReset);
         };
 
