@@ -27,7 +27,7 @@ public class TaskSetView {
         List<ForeignKeyRelation>foreignKeyRelations     = new ArrayList<>();
         List<Task>              tasks                   = new ArrayList<>();
         boolean                 isHomework              = jsonNode.path("isHomework").asBoolean();
-
+        TaskSet                 taskSet;
 
         for(JsonNode tableDefinitionNode : tableDefinitionArray) {
             tableDefinitions.add(TableDefinitionView.fromJsonForm(tableDefinitionNode));
@@ -38,12 +38,18 @@ public class TaskSetView {
             foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyNode));
         }
 
+        taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, profile, isHomework);
+
         for(int i = 0; i < taskArray.size(); i++) {
             JsonNode taskNode = taskArray.get(i);
-            tasks.add(TaskView.fromJsonForm(taskNode, taskSetName + " " + i, profile));
+            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, profile);
+            task.setTaskSet(taskSet);
+            tasks.add(task);
         }
 
-        return  new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, tasks, profile, isHomework);
+        taskSet.setTasks(tasks);
+
+        return taskSet;
     }
 
     public static ObjectNode toJson(TaskSet taskSet) {
@@ -91,7 +97,6 @@ public class TaskSetView {
     }
 
     public static void updateFromJson(TaskSet taskSet, JsonNode jsonNode) {
-        TaskSetView.updateFromJson(taskSet, jsonNode);
         JsonNode    tableDefinitionsNode            = jsonNode.path("tableDefinitions");
         JsonNode    foreignKeyRelationsNode         = jsonNode.path("foreignKeyRelations");
 

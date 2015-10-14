@@ -17,7 +17,7 @@ public class TableDefinition extends Model {
     @Id
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private TaskSet                 taskSet;
 
     private final String                  tableName;

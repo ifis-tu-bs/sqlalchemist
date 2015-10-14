@@ -7,6 +7,7 @@ import models.*;
 
 import secured.UserSecured;
 
+import sqlparser.SQLParser;
 import view.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -52,6 +53,11 @@ public class TaskSetController extends Controller {
         } catch (PersistenceException pe) {
             Logger.warn(pe.getMessage());
             return badRequest("taskSet can't be saved");
+        }
+
+        if(!SQLParser.initialize(taskSet)) {
+            Logger.warn("TaskSetController.create - the TaskSet is invalid");
+            return badRequest("invalid TaskSet");
         }
 
         return redirect(routes.TaskSetController.view(taskSet.getId()));
@@ -110,7 +116,14 @@ public class TaskSetController extends Controller {
             return badRequest("no TaskSet found");
         }
 
+        SQLParser.delete(taskSet);
 
+        TaskSetView.updateFromJson(taskSet, jsonNode);
+
+        if(!SQLParser.initialize(taskSet)) {
+            Logger.warn("TaskSetController.create - the TaskSet is invalid");
+            return badRequest("invalid TaskSet");
+        }
 
         taskSet.save();
         return redirect(routes.TaskSetController.view(taskSet.getId()));

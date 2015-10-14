@@ -45,9 +45,9 @@ create table ColumnDefinition (
 
 create table Comment (
   id                        bigint auto_increment not null,
-  profile_id                bigint,
   task_set_id               bigint,
   task_id                   bigint,
+  profile_id                bigint,
   comment                   varchar(255),
   created_at                datetime,
   constraint pk_Comment primary key (id))
@@ -341,12 +341,12 @@ alter table ColumnDefinition add constraint fk_ColumnDefinition_tableDefinition_
 create index ix_ColumnDefinition_tableDefinition_1 on ColumnDefinition (table_definition_id);
 alter table ColumnDefinition add constraint fk_ColumnDefinition_foreignKey_2 foreign key (foreign_key_id) references ColumnDefinition (id) on delete restrict on update restrict;
 create index ix_ColumnDefinition_foreignKey_2 on ColumnDefinition (foreign_key_id);
-alter table Comment add constraint fk_Comment_profile_3 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_Comment_profile_3 on Comment (profile_id);
-alter table Comment add constraint fk_Comment_taskSet_4 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
-create index ix_Comment_taskSet_4 on Comment (task_set_id);
-alter table Comment add constraint fk_Comment_task_5 foreign key (task_id) references Task (id) on delete restrict on update restrict;
-create index ix_Comment_task_5 on Comment (task_id);
+alter table Comment add constraint fk_Comment_taskSet_3 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
+create index ix_Comment_taskSet_3 on Comment (task_set_id);
+alter table Comment add constraint fk_Comment_task_4 foreign key (task_id) references Task (id) on delete restrict on update restrict;
+create index ix_Comment_task_4 on Comment (task_id);
+alter table Comment add constraint fk_Comment_profile_5 foreign key (profile_id) references profile (id) on delete restrict on update restrict;
+create index ix_Comment_profile_5 on Comment (profile_id);
 alter table ForeignKeyRelation add constraint fk_ForeignKeyRelation_taskSet_6 foreign key (task_set_id) references TaskSet (id) on delete restrict on update restrict;
 create index ix_ForeignKeyRelation_taskSet_6 on ForeignKeyRelation (task_set_id);
 alter table homeWork_challenge add constraint fk_homeWork_challenge_creator_7 foreign key (creator_id) references profile (id) on delete restrict on update restrict;

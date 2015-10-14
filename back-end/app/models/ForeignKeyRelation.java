@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
@@ -9,11 +11,12 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "ForeignKeyRelation")
+@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ForeignKeyRelation extends Model {
     @Id
     private long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private TaskSet taskSet;
 
     private final String sourceTable;

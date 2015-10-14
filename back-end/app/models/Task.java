@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.*;
 
 import play.db.ebean.Model;
 import play.libs.Json;
+import sqlparser.SQLParser;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -119,6 +120,10 @@ public class Task extends Model {
         return taskSet;
     }
 
+    public void setTaskSet(TaskSet taskSet) {
+        this.taskSet = taskSet;
+    }
+
     public String getTaskName() {
         return taskName;
     }
@@ -187,56 +192,24 @@ public class Task extends Model {
   /**
    * This is the method to add a rating to this entity
    */
-  public void addRating(Rating rating) {
-      if(this.ratings != null && this.ratings.size() > 0) {
-          for(Rating ratingI : this.ratings) {
-              if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
-                  this.ratings.remove(ratingI);
-                  this.update();
-                  ratingI.delete();
-                  break;
-              }
-          }
-      } else {
-          this.ratings = new ArrayList<>();
-      }
-
-      this.ratings.add(rating);
-      rating.setTask(this);
-      rating.save();
-      this.update();
-  }
-
-    public static final int TASK_SOLVE_STATEMENT_CORRECT = 0;
-    public static final int TASK_SOLVE_STATEMENT_ERROR = 1;
-
-    /**
-     *
-     * @param statement     the statment to check
-     * @return              returns an boolean
-     */
-    public boolean solve(String statement) {
-        return false;
-        /*
-        Task task = this.taskFile.getTask();
-        try {
-            task.startTask("local");
-        } catch (MySQLAlchemistException e) {
-            throw new SQLAlchemistException("Database Exception, try later");
+    public void addRating(Rating rating) {
+        if(this.ratings != null && this.ratings.size() > 0) {
+            for(Rating ratingI : this.ratings) {
+                if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+                    this.ratings.remove(ratingI);
+                    this.update();
+                    ratingI.delete();
+                    break;
+                }
+            }
+        } else {
+            this.ratings = new ArrayList<>();
         }
-        try {
-            boolean status = task.isUserStatementCorrect(statement, this.index);
 
-            task.closeTask();
-            Logger.info("status: " + status);
-            return status;
-        } catch (MySQLAlchemistException e) {
-            Logger.warn("SubTask.solve - catches MySQLAlchemistException: " + e.getMyMessage());
-            try {
-                task.closeTask();
-            } catch (MySQLAlchemistException e1) {}
-            throw new SQLAlchemistException(e.getMyMessage());
-        }*/
+        this.ratings.add(rating);
+        rating.setTask(this);
+        rating.save();
+        this.update();
     }
 
     /**

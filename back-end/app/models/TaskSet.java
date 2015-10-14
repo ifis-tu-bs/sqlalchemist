@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
+
 import view.TableDefinitionView;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -58,9 +59,9 @@ public class TaskSet extends Model {
     /**
      * this is the constructor for an TaskSet object
      *
+     * @param taskSetName           the name of the taskSet
      * @param tableDefinitions      a list of table definitions
      * @param foreignKeyRelations   a list of all foreign key relations
-     * @param tasks                 a list of all tasks that should be in this set
      * @param creator               the creator of this object as Profile object
      * @param isHomeWork            a flag
      */
@@ -68,14 +69,12 @@ public class TaskSet extends Model {
             String                      taskSetName,
             List<TableDefinition>       tableDefinitions,
             List<ForeignKeyRelation>    foreignKeyRelations,
-            List<Task>                  tasks,
             Profile                     creator,
             boolean                     isHomeWork) {
 
         this.taskSetName            = taskSetName;
         this.tableDefinitions       = tableDefinitions;
         this.foreignKeyRelations    = foreignKeyRelations;
-        this.tasks                  = tasks;
 
         this.creator                = creator;
         this.isHomework             = isHomeWork;
@@ -182,6 +181,14 @@ public class TaskSet extends Model {
         return tasks;
     }
 
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
+    public boolean contains(Task task) {
+        return this.tasks.contains(task);
+    }
+
     public boolean isHomework() {
         return isHomework;
     }
@@ -206,11 +213,7 @@ public class TaskSet extends Model {
         return updatedAt;
     }
 
-    public boolean contains(Task task) {
-        return this.tasks.contains(task);
-    }
-
-//////////////////////////////////////////////////
+    //////////////////////////////////////////////////
 //  json method
 //////////////////////////////////////////////////
 

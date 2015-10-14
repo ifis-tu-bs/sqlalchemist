@@ -1,11 +1,11 @@
 package view;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import models.ColumnDefinition;
+import models.TableDefinition;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import models.TableDefinition;
 import play.libs.Json;
 
 
@@ -14,11 +14,11 @@ import play.libs.Json;
  */
 public class ColumnDefinitionView {
     public static ColumnDefinition fromJsonForm(JsonNode columnNode, TableDefinition tableDefinition) {
-        String columnName       = columnNode.get("columnName").asText();
-        String dataType         = columnNode.get("dataType").asText();
-        boolean isPrimaryKey    = columnNode.get("primaryKey").asBoolean();
-        boolean isNotNullable   = columnNode.get("notNull").asBoolean();
-        int datagenSet          = columnNode.get("datagenSet").asInt();
+        String  columnName      = columnNode.path("columnName").asText();
+        String  dataType        = columnNode.path("dataType").asText();
+        boolean isPrimaryKey    = columnNode.path("primaryKey").asBoolean();
+        boolean isNotNullable   = columnNode.path("notNull").asBoolean();
+        int     datagenSet      = columnNode.path("datagenSet").asInt();
 
         return new ColumnDefinition(tableDefinition, columnName, dataType, isPrimaryKey, isNotNullable, datagenSet);
     }

@@ -19,9 +19,9 @@ import java.util.List;
 public class TableDefinitionView {
     public static TableDefinition fromJsonForm(JsonNode tableDefinitionNode) {
         JsonNode                ColumnArray         = tableDefinitionNode.path("columns");
-        String                  tableName           = tableDefinitionNode.get("tableName").asText();
+        String                  tableName           = tableDefinitionNode.path("tableName").asText();
         List<ColumnDefinition>  columnDefinitions   = new ArrayList<>();
-        String                  extension           = tableDefinitionNode.get("extension").asText();
+        String                  extension           = tableDefinitionNode.path("extension").asText();
         TableDefinition tableDefinition             = new TableDefinition(tableName, extension);
         for(JsonNode columnNode : ColumnArray) {
             columnDefinitions.add(ColumnDefinitionView.fromJsonForm(columnNode, tableDefinition));
