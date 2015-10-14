@@ -101,7 +101,7 @@ public class Avatar extends Model {
     }
 
     public String getName() {
-        return this.name.contains("2") ? this.name.replace('2', ' ').trim() : this.name;
+        return this.name.contains("2") ? this.name.replace(" 2", "").trim() : this.name;
     }
 
     public String getAvatar() {

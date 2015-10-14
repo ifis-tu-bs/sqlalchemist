@@ -32,7 +32,7 @@ public class TaskView {
         return new Task(taskName, taskText, refStatement, evaluationstrategy, points, requiredTerm, creator);
     }
 
-    public static ObjectNode toJson(Task task) {
+    public static ObjectNode toJsonList(Task task) {
         ObjectNode json = Json.newObject();
         ArrayNode commentNode = JsonNodeFactory.instance.arrayNode();
 
@@ -62,11 +62,30 @@ public class TaskView {
         return json;
     }
 
-    public static ArrayNode toJson(List<Task> taskList) {
+    public static ObjectNode toJsonExercise(Task task) {
+        ObjectNode  json        = Json.newObject();
+        Rating      rating_sum  = Rating.sum(task.getRatings());
+
+        json.put("id",                  task.getId());
+        json.put("taskName",            task.getTaskName());
+        json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
+        json.put("taskText",            task.getTaskText());
+        json.put("points",              task.getPoints());
+        json.put("requiredTerm",        task.getRequiredTerm());
+
+        json.put("rating",              RatingView.toJson(rating_sum));
+
+        json.put("createdAt",           String.valueOf(task.getCreated_at()));
+        json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
+
+        return json;
+    }
+
+    public static ArrayNode toJsonList(List<Task> taskList) {
         ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
 
         for(Task task : taskList) {
-            taskNode.add(TaskView.toJson(task));
+            taskNode.add(TaskView.toJsonList(task));
         }
 
         return taskNode;

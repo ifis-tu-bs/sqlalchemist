@@ -57,14 +57,13 @@ DELETE      /Task/:id/                          controllers.TaskController.delet
 POST        /Task/:id/rate                      controllers.TaskController.rate(id: Long)
 POST        /Task/:id/comment                   controllers.TaskController.comment(id: Long)
 
-
-#TaskController
-#GET         /task/story/:id                     controllers.TaskController.story(id: Long)
-#POST        /task/story/:id                     controllers.TaskController.storySolve(id: Long)
-#GET         /task/trivia/:id                    controllers.TaskController.trivia(id: Long)
-#POST        /task/trivia/:id                    controllers.TaskController.triviaSolve(id: Long)
-#GET         /task/homework                      controllers.TaskController.homework()
-#POST        /task/homework/:id                  controllers.TaskController.homeworkSolve(id: Long)
+#SQLController
+GET         /SQL/Story/:id                      controllers.SQLController.story(id: Long)
+#POST        /SQL/Story/:id                      controllers.SQLController.storySolve(id: Long)
+GET         /SQL/Trivia/:id                     controllers.SQLController.trivia(id: Int)
+#POST        /SQL/Trivia/:id                     controllers.SQLController.triviaSolve(id: Long)
+GET         /SQL/Homework                       controllers.SQLController.homework()
+#POST        /SQL/Homework/:id                   controllers.SQLController.homeworkSolve(id: Long)
 
 
 #ProfileController

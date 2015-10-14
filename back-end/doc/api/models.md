@@ -13,6 +13,7 @@
   - [TableDefinition.Form](#tabledefinitionform)
 - [Task](#task)
   - [Task.Form](#taskform)
+  - [Task.Exercise](#taskexercise)
 - [TaskSet](#taskset)
   - [TaskSet.Form](#tasksetform)
 
@@ -65,7 +66,7 @@ Columns:
 |--------------------------|-------------------------------------|------------|
 | ```profile```            | ```[```Profile```](#profile)```     |            |
 | ```text```               | ```String```                        |            |
-| ```createdAt```         | ```String```                        |            |
+| ```createdAt```          | ```String```                        |            |
 
 Example:
 ```json
@@ -278,6 +279,41 @@ Task:
 }
 
 ```
+
+#### Task.Exercise
+| Name                     | Type                     | Description|
+|--------------------------|--------------------------|------------|
+| ```id```                 | ```Number ```            |            |
+| ```taskName```           | ```String```             |            |
+| ```relationsFormatted``` | ```String```             |            |
+| ```taskText```           | ```String```             |            |
+| ```points```             | ```Number```             |            |
+| ```requiredTerm```       | ```Number```             |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```rating```             | [```Rating```](#rating)  |            |
+| ```createdAt```          | ```String```             |            |
+| ```updatedAt```          | ```String```             |            |
+
+Example:  
+```json
+Task:
+{
+  "id":                 1,
+  "taskName":           "taskName",
+  "taskText":           "Find all user",
+  "relationsFormatted": "User((int) !id!)",
+  "points":             1,
+  "requiredTerm":       Number,
+  "rating":             {
+                            "positive":   true,
+                            "negative":   false,
+                            "needReview": false
+                        },
+  "createdAt":          "Mon Oct 12 06:18:37 CEST 2015",
+  "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015"
+}
+
+```
+
 ### TaskSet
 | Name                     | Type                                        | Description|
 |--------------------------|---------------------------------------------|------------|

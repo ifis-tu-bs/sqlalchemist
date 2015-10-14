@@ -70,7 +70,7 @@ public class TaskSetView {
         }
 
         for(Task task : taskSet.getTasks()) {
-            taskNode.add(TaskView.toJson(task));
+            taskNode.add(TaskView.toJsonList(task));
             ratings.addAll(task.getRatings());
         }
 
