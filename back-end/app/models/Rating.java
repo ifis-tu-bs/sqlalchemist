@@ -1,11 +1,7 @@
 package models;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import play.Logger;
 import play.Play;
 import play.db.ebean.Model;
-import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,37 +16,43 @@ public class Rating extends Model {
     @Id
     Long id;
 
-    @OneToOne
+    @ManyToOne
     Profile profile;
+
+    @ManyToOne
+    private TaskSet taskSet;
+
+    @ManyToOne
+    private Task task;
 
     long positiveRatings;
     long negativeRatings;
     long editRatings;
 
-  private Rating() {
-    this(null, false, false, false);
+    public Rating(
+        boolean positive,
+        boolean negative,
+        boolean needReview,
+        Profile profile) {
+
+        if(profile != null) {
+            this.profile = profile;
+
+            int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
+
+            this.positiveRatings = positive   ? votes : 0;
+            this.negativeRatings = negative   ? votes : 0;
+            this.editRatings     = needReview ? votes : 0;
+        } else {
+            this.positiveRatings = 0;
+            this.negativeRatings = 0;
+            this.editRatings = 0;
+        }
   }
 
-  public Rating(
-      Profile profile,
-      boolean positive,
-      boolean negative,
-      boolean needReview) {
-
-    if(profile != null) {
-      this.profile = profile;
-
-      int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
-
-      this.positiveRatings = positive   ? votes : 0;
-      this.negativeRatings = negative   ? votes : 0;
-      this.editRatings     = needReview ? votes : 0;
-    } else {
-      this.positiveRatings = 0;
-      this.negativeRatings = 0;
-      this.editRatings = 0;
+    public Long getId() {
+        return id;
     }
-  }
 
     /**
      * getter for profile
@@ -60,27 +62,46 @@ public class Rating extends Model {
         return this.profile;
     }
 
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("positive",    this.positiveRatings);
-        node.put("negative",    this.negativeRatings);
-        node.put("needReview",  this.editRatings);
-
-        return node;
+    public TaskSet getTaskSet() {
+        return taskSet;
     }
 
-  public static Rating sum(List<Rating> ratings) {
-    if(ratings == null || ratings.size() == 0) {
-      return new Rating();
+    public void setTaskSet(TaskSet taskSet) {
+        this.taskSet = taskSet;
     }
-    Rating rating_sum = new Rating();
 
-    for(Rating rating : ratings) {
-      rating_sum.positiveRatings    += rating.positiveRatings;
-      rating_sum.negativeRatings    += rating.negativeRatings;
-      rating_sum.editRatings        += rating.editRatings;
+    public Task getTask() {
+        return task;
     }
-    return rating_sum;
-  }
+
+    public void setTask(Task task) {
+        this.task = task;
+    }
+
+    public long getPositiveRatings() {
+        return positiveRatings;
+    }
+
+    public long getNegativeRatings() {
+        return negativeRatings;
+    }
+
+    public long getEditRatings() {
+        return editRatings;
+    }
+
+    public static Rating sum(List<Rating> ratings) {
+        if(ratings == null || ratings.size() == 0) {
+            return new Rating(false, false, false, null);
+        }
+        Rating rating_sum = new Rating(false, false, false, null);
+
+        for(Rating rating : ratings) {
+            rating_sum.positiveRatings += rating.positiveRatings;
+            rating_sum.negativeRatings += rating.negativeRatings;
+            rating_sum.editRatings += rating.editRatings;
+        }
+
+        return rating_sum;
+    }
 }

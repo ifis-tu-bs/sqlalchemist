@@ -4,6 +4,7 @@ import models.Avatar;
 import models.PlayerStats;
 
 import play.Logger;
+import view.AvatarView;
 
 import javax.persistence.PersistenceException;
 
@@ -14,43 +15,39 @@ public class AvatarDAO {
   //////////////////////////////////////////////////
   /**
    * This is a create method for an avatar-object
-   *
    * @param name                  name of the avatar
    * @param desc                  description of the avatar
    * @param avatarFilename        file name of the avatar files
-   * @param soundURL              sound url
    * @param isTeam                is the avatar a tag team
    * @param playerStats           avatar playerStats
    */
-  public static Avatar create(
-      String  name,
-      String  desc,
-      String  avatarFilename,
-      String  soundURL,
-      boolean isTeam,
-      PlayerStats playerStats) {
+    public static Avatar create(
+            String name,
+            String desc,
+            String avatarFilename,
+            boolean isTeam,
+            PlayerStats playerStats) {
 
-    Avatar avatar = new Avatar(
-        name,
-        desc,
-        avatarFilename,
-        soundURL,
-        isTeam,
-        playerStats );
+        Avatar avatar = new Avatar(
+                name,
+                desc,
+                avatarFilename,
+                isTeam,
+                playerStats );
 
-    try {
-      avatar.save();
-    } catch (PersistenceException pe) {
-      Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
-      if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
-        Logger.warn("Can't create Avatar(duplicate) " + avatar.toJson().toString());
-        return avatar_res;
-      }
-      Logger.error("Can't create Avatar: " + avatar.toJson());
-      return null;
+        try {
+            avatar.save();
+        } catch (PersistenceException pe) {
+            Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
+            if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
+                Logger.warn("Can't create Avatar(duplicate) " + AvatarView.toJson(avatar).toString());
+                return avatar_res;
+            }
+            Logger.error("Can't create Avatar: " + AvatarView.toJson(avatar));
+            return null;
+        }
+        return avatar;
     }
-    return avatar;
-  }
 
   //////////////////////////////////////////////////
   //  Object Getter Methods

@@ -1,7 +1,9 @@
 package controllers;
 
+import dao.ProfileDAO;
 import dao.UserDAO;
 
+import models.Profile;
 import models.User;
 
 import secured.UserSecured;
@@ -40,32 +42,38 @@ public class UserController extends Controller {
      * @return this method returns a user
      */
     public static Result create() {
+        Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
-
-        String    username  = json.findPath("username").textValue().trim();
-        String    email     = json.findPath("id").textValue().trim();
-        String    password  = json.findPath("password").textValue().trim();
-        int       role      = json.findPath("role").asInt();
+        String    username  = json.path("username").textValue().trim();
+        String    email     = json.path("id").textValue().trim();
+        String    password  = json.path("password").textValue().trim();
+        int       role      = json.path("role").asInt();
         ObjectNode node     = Json.newObject();
 
-        if(username == null || email == null || password == null) {
+        if(profile == null || profile.getUser().getRole() != User.ROLE_ADMIN) {
+            role = 0;
+        }
+
+        if(username.length() > 0 || email.length() >0 || password.length() > 0) {
             return badRequest("Expecting Json data");
         } else {
             boolean isValid = true;
             // Check the availability of the username
             if(UserDAO.getByUsername(username) != null) {
-              node.put("username", 1);
+                isValid = false;
+                node.put("username", 1);
             } else {
-              node.put("username", 0);
+                node.put("username", 0);
             }
             // Check the availability of the email
             if(UserDAO.getByUsername(email) != null) {
-              node.put("id", 1);
+                isValid = false;
+                node.put("id", 1);
             } else {
-              node.put("id", 0);
+                node.put("id", 0);
             }
             if(!isValid) {
                 return badRequest(node);
@@ -159,11 +167,6 @@ public class UserController extends Controller {
         return ok("Email has been sent");
     }
 
-    /**
-     *
-     * @param resetCode
-     * @return
-     */
     public static Result doResetPassword(String resetCode) {
         try {
             if (Long.parseLong(resetCode, 16) % 97 != 1) {
@@ -228,7 +231,7 @@ public class UserController extends Controller {
 
         if(user == null) {
             Logger.info("UserController.promote  - User not found");
-            badRequest("User not found");
+            return badRequest("User not found");
         }
 
         int role = body.path("role").asInt();

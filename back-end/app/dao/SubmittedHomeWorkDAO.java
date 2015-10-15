@@ -4,7 +4,7 @@ package dao;
 import models.HomeWorkChallenge;
 import models.Profile;
 import models.SubmittedHomeWork;
-import models.SubTask;
+import models.Task;
 
 import play.Logger;
 
@@ -17,16 +17,16 @@ public class SubmittedHomeWorkDAO  {
   //  Getter Object
   //////////////////////////////////////////////////
 
-      public static List<SubmittedHomeWork> getSubmitsForSubtask(SubTask subTask) {
-          return SubmittedHomeWork.find.where().eq("sub_task_id", subTask.getId()).findList();
+      public static List<SubmittedHomeWork> getSubmitsForSubtask(Task task) {
+          return SubmittedHomeWork.find.where().eq("sub_task_id", task.getId()).findList();
       }
 
       public static List<Object> getSubmitsForProfile(Profile profile) {
           return SubmittedHomeWork.find.where().eq("profile_id", profile.getId()).findIds();
       }
 
-      public static List<SubmittedHomeWork> getSubmitsForSubtaskAndHomeWorkChallenge(long subTaskId, long homeWorkChallengeId) {
-          return SubmittedHomeWork.find.where().eq("sub_task_id", subTaskId).eq("home_work_id", homeWorkChallengeId).findList();
+      public static List<SubmittedHomeWork> getSubmitsForSubtaskAndHomeWorkChallenge(long taskId, long homeWorkChallengeId) {
+          return SubmittedHomeWork.find.where().eq("sub_task_id", taskId).eq("home_work_id", homeWorkChallengeId).findList();
       }
 
   //////////////////////////////////////////////////
@@ -36,7 +36,7 @@ public class SubmittedHomeWorkDAO  {
 
       public static SubmittedHomeWork submit(
               Profile profile,
-              SubTask subTask,
+              Task task,
               boolean solve,
               String statement) {
 
@@ -45,12 +45,12 @@ public class SubmittedHomeWorkDAO  {
               return null;
           }
 
-          if (!HomeWorkChallengeDAO.getCurrent().contains(subTask)) {
+          if (!HomeWorkChallengeDAO.getCurrent().contains(task)) {
               Logger.info("SubmittedHomeWork.submit - SomeOne got Late");
               return null;
           }
 
-          SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, subTask);
+          SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndTask(profile, task);
 
 
           if (existed != null) {
@@ -68,7 +68,7 @@ public class SubmittedHomeWorkDAO  {
 
           SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
                   profile,
-                  subTask,
+                  task,
                   HomeWorkChallengeDAO.getCurrent(),
                   solve,
                   statement);
@@ -88,12 +88,12 @@ public class SubmittedHomeWorkDAO  {
      * Returns current the Submit for given Subtask and Profile HomeWork
      * (Only on the Current HomeWork: See HomeWorkChallengeDAO.getCurrent())
      * @param profile Profile of the Submitter
-     * @param subTask subTask being submitted
+     * @param task task being submitted
      * @return The given Object, or null if none exists
      */
-    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndSubTask(
+    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTask(
             Profile profile,
-            SubTask subTask) {
+            Task task) {
 
         HomeWorkChallenge currentHomeWorkChallenge;
         if ((currentHomeWorkChallenge = HomeWorkChallengeDAO.getCurrent()) == null ) {
@@ -102,7 +102,7 @@ public class SubmittedHomeWorkDAO  {
 
         return SubmittedHomeWork.find.where()
                 .eq("profile_id", profile.getId())
-                .eq("sub_task_id", subTask.getId())
+                .eq("sub_task_id", task.getId())
                 .eq("home_work_id", currentHomeWorkChallenge.getId())
                 .findUnique();
     }

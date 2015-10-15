@@ -10,6 +10,7 @@ import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import view.ShopItemView;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class ShopController extends Controller {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItemDAO.getAvatarList();
 
-        return ok(ShopItem.toJsonAll(profile, shopItems));
+        return ok(ShopItemView.toJson(profile, shopItems));
     }
 
     /**
@@ -41,7 +42,7 @@ public class ShopController extends Controller {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItemDAO.getBeltList();
 
-        return ok(ShopItem.toJsonAll(profile, shopItems));
+        return ok(ShopItemView.toJson(profile, shopItems));
     }
 
     /**

@@ -4,7 +4,6 @@ import models.User;
 import play.Logger;
 
 import javax.mail.*;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.io.*;
@@ -86,8 +85,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -130,8 +127,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -176,8 +171,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -213,8 +206,6 @@ public class MailSender {
 
             Transport.send(message);
 
-        } catch (AddressException e) {
-            e.printStackTrace();
         } catch (MessagingException e) {
             e.printStackTrace();
         }

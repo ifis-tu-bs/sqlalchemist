@@ -1,8 +1,5 @@
 package models;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.libs.Json;
-
 import javax.persistence.Embeddable;
 
 /**
@@ -49,31 +46,11 @@ public class PlayerStats {
             int slot) {
         super();
 
-        this.health     = health;
-        this.defense    = defense;
-        this.speed      = speed;
-        this.jump       = jump;
-        this.slot       = slot;
-    }
-
-//////////////////////////////////////////////////
-//  Json Method
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @return returns the Avatar-Object as a Json model
-     */
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("health",  this.health);
-        node.put("defense", this.defense);
-        node.put("speed",   this.speed);
-        node.put("jump",    this.jump);
-        node.put("slots",   this.slot);
-
-        return node;
+        this.health = health;
+        this.defense = defense;
+        this.speed = speed;
+        this.jump = jump;
+        this.slot = slot;
     }
 
     /**
@@ -92,6 +69,23 @@ public class PlayerStats {
 //////////////////////////////////////////////////
 //  Getter & Setter - methods
 //////////////////////////////////////////////////
+
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getDefense() {
+        return defense;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public int getJump() {
+        return jump;
+    }
 
     /**
      *

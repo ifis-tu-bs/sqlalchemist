@@ -2,8 +2,6 @@ package bootstrap;
 
 import dao.MapDAO;
 
-import models.Map;
-
 import play.Logger;
 
 public class MapBootstrap {

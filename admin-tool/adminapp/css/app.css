@@ -23,3 +23,9 @@ div.app-modal-window .modal-dialog{
 .trNormal {
     cursor: pointer;
 }
+
+.ace_editor  {
+  height : 200px;
+  width : 48%;
+  font-size : 13px
+}

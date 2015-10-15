@@ -4,6 +4,7 @@ import models.Potion;
 
 import play.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.PersistenceException;
 
@@ -16,7 +17,7 @@ public class PotionDAO {
    * @param name          Potion Name
    * @param type          Potion Type
    * @param powerLevel    Potion Power Level
-   * @param buff_value    Potion Power
+   * @param buffValue     Potion Power
    * @return              returns the Potion-Object or Null on Failure
    */
   public static Potion create(
@@ -59,7 +60,7 @@ public class PotionDAO {
     List<Potion> potionList = Potion.find.all();
     if(potionList == null) {
       Logger.warn("Potion.getAll - no potions in database !?");
-      return null;
+      return new ArrayList<>();
     }
     return potionList;
   }
