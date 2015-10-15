@@ -8,6 +8,10 @@ import dao.ShopItemDAO;
 
 import helper.Random;
 
+import view.AvatarView;
+import view.PlayerStatsView;
+import view.SettingsView;
+
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
@@ -17,7 +21,6 @@ import play.Play;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
-import view.AvatarView;
 
 import javax.persistence.*;
 import java.util.*;
@@ -106,7 +109,7 @@ public class Profile extends Model {
         super();
         this.setUsername(username);
         this.setPlayerStats(PlayerStats.defaultValues);
-        this.setSettings(new Settings());
+        this.setSettings(new Settings(true, true));
 
         this.setTutorialDone(false);
         this.setStoryDone(false);
@@ -363,7 +366,7 @@ public class Profile extends Model {
 
         node.put("id",          this.id);
         node.put("username",    this.username);
-        node.put("settings",    this.settings.getSettings());
+        node.put("settings",    SettingsView.toJson(this.settings));
         node.put("student",     this.user.isStudent());
         node.put("storyDone",   this.storyDone);
         node.put("coins",       this.coins);
@@ -377,8 +380,8 @@ public class Profile extends Model {
         ObjectNode node = Json.newObject();
         PlayerStats playerStats_sum = this.getPlayerStats();
 
-        node.put("attributes",      playerStats_sum.toJson());
-        node.put("currentAvatar", AvatarView.toJson(this.avatar));
+        node.put("attributes",      PlayerStatsView.toJson(playerStats_sum));
+        node.put("currentAvatar",   AvatarView.toJson(this.avatar));
         node.put("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);

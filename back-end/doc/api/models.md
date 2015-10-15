@@ -8,6 +8,8 @@
     - [Comment.Form](#commentform)
 - [ForeignKey](#foreignkey)
     - [ForeignKey.Form](#foreignkeyform)
+- [Map](#map)
+- [PlayerState](#playerstate)
 - [Rating](#rating)
     - [Rating.Form](#ratingform)
 - [ShopItem](#shopitem)
@@ -158,6 +160,46 @@ ForeignKey:
   "destinationColumn":  "id"
 }
 ```
+### Map
+| Name                      | Type                              | Description|
+|---------------------------|-----------------------------------|------------|
+| ```id```                  | ```Number```                      |            |
+| ```level```               | ```Number```                      |            |
+| ```path```                | ```String```                      |            |
+| ```isBossMap```           | ```Boolean```                     |            |
+
+Example:
+```json
+Map:
+{
+  "id":             12,
+  "level":          1,
+  "path":           "Yeah",
+  "isBossMap":      true
+}
+```
+### PlayerState
+| Name                      | Type                              | Description|
+|---------------------------|-----------------------------------|------------|
+| ```health```              | ```Number```                      |            |
+| ```defense```             | ```Number```                      |            |
+| ```speed```               | ```Number```                      |            |
+| ```jump```                | ```Number```                      |            |
+| ```slots```               | ```Number```                      |            |
+
+Example:
+```json
+PlayerState:
+{
+  "health":         12,
+  "defense":        1,
+  "speed":          "Yeah",
+  "jump":           123,
+  "slots":          true
+}
+```
+
+
 ### Rating
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
@@ -190,6 +232,22 @@ Rating:
     "needReview": false
 }
 ```
+
+### Settings
+| Name                      | Type              | Description|
+|---------------------------|-------------------|------------|
+| ```music```               | ```Boolean```     |            |
+| ```sound```               | ```Boolean```     |            |
+
+Example:
+```json
+Settings:
+{
+    "music":   true,
+    "sound":   false,
+}
+```
+
 ### ShopItem
 | Name                      | Type                              | Description|
 |---------------------------|-----------------------------------|------------|
@@ -368,7 +426,7 @@ Task:
   "refStatement":       "SELECT * FROM User",
   "evaluationstrategy": Number,
   "points":             1,
-  "requiredTerm":       Number,
+  "requiredTerm":       Number
 }
 
 ```
@@ -493,7 +551,7 @@ TaskSet: {
   ],
   "foreignKeys":       [],
   "tasks":             [],
-  "isHomework":         false,
+  "isHomework":         false
 }
 ```
 ### UserStatement

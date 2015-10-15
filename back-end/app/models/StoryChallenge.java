@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.libs.Json;
+import view.MapView;
 
 import javax.persistence.*;
 import java.util.List;
@@ -85,7 +86,7 @@ public class StoryChallenge extends Challenge {
             textsNode.add(text.toJson());
         }
         for(Map map : this.maps) {
-            mapNode.add(map.toJson());
+            mapNode.add(MapView.toJson(map));
         }
 
         node.put("level",           this.level);
