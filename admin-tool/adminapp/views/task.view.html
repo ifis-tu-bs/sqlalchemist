@@ -21,7 +21,7 @@
 
 
 
-    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || taskTabActive" style="float:right">Save current TaskSet</button>
+    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || tabActive.tasks" style="float:right">Save current TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
     <uib-tabset tpye="tabs">
 
 
@@ -61,6 +61,7 @@
                         <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
                       </div>
                     </td>
+                    <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteTaskSet(taskSet); $event.stopPropagation();" style="font-size: 11pt;float:right"> Delete</button> </td>
                     <!--<td>{{taskSet.start_at}}</td>
                     <td>{{taskSet.expires_at}}</td>
                     <td>
@@ -84,7 +85,7 @@
         </div>
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
+      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionTables" deselect="keepTaskSets(); keepTabActive();">
         <tab-heading>
           Intension <i>(tableDefinition)</i>
         </tab-heading>
@@ -104,6 +105,10 @@
                 <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
                   <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
                   <td>{{table.columns.length}}</td>
+
+                  <td>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                  </td>
                   <!--<td>{{taskSet.start_at}}</td>
                   <td>{{taskSet.expires_at}}</td>
                   <td>
@@ -141,6 +146,9 @@
                   <td>{{column.datagenSet}}</td>
                   <td><input type="checkbox" ng-model="column.notNull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteColumn(column); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -158,18 +166,18 @@
 
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionForeignKeys" deselect="keepTaskSets(); keepTabActive();">
       <tab-heading>
           Intension <i>(foreignKeys)</i>
         </tab-heading>
 
       </uib-tab>
 
-      <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.extension" deselect="keepTaskSets(); keepTabActive();">
 
       </uib-tab>
 
-      <uib-tab heading="Tasks" select="enterTaskTab();" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets(); leaveTaskTab();">
+      <uib-tab heading="Tasks" active="tabActive.tasks" disable="selectedTaskSet.$$hashKey === undefined" select="enterTaskTab();" deselect="keepTaskSets(); keepTabActive();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
@@ -184,6 +192,7 @@
                     <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
                     <th ng-click="orderTaskPredicate = 'evaluationStrategy'; orderReverse = !orderReverse" style="cursor: pointer">Evaluating Correctness via</th>
                     <th ng-click="orderTaskPredicate = 'creator.username'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+                    <th ng-click="orderTaskPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Points</th>
                     <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                     <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                   </tr>
@@ -192,20 +201,35 @@
                 <tr style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
                   <td><input type="text" ng-model="task.taskName" ng-click="$event.stopPropagation();"></td>
                   <td>
-                    <div class="btn-group" uib-dropdown uib-keyboard-nav>
-                      <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
-                        {{task.evaluationStrategy === 1 ? "Set" : "List"}}
+                    <div class="btn-group" uib-dropdown>
+                      <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
+                        {{task.evaluationStrategy === 1 ? "Set" : "List"}} <span class="caret"></span>
                       </button>
-                      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                        <li role="menuitem" ng-click="task.evaluationStrategy = 1; $event.stopPropagation();">Set</li>
-                        <li role="menuitem" ng-click="task.evaluationStrategy = 2; $event.stopPropagation();">List</li>
+                      <ul class="uib-dropdown-menu" role="menu">
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.evaluationStrategy = 1; $event.stopPropagation();">Set</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.evaluationStrategy = 2; $event.stopPropagation();">List</li>
                       </ul>
                     </div>
                   </td>
                   <td>{{task.creator.username}}</td>
+                  <td>
+                    <div class="btn-group" uib-dropdown>
+                      <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
+                        {{task.points}} <span class="caret"></span>
+                      </button>
+                      <ul class="uib-dropdown-menu" role="menu">
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 1; $event.stopPropagation();">1</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 2; $event.stopPropagation();">2</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 3; $event.stopPropagation();">3</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 4; $event.stopPropagation();">4</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 5; $event.stopPropagation();">5</li>
+                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 6; $event.stopPropagation();">6</li>
+                      </ul>
+                    </div>
+                  </td>
                   <td>{{task.createdAt}}</td>
                   <td>
-                    <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
                       <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
                       <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
                       <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
@@ -215,9 +239,9 @@
                   <button type="button" class="btn btn-info btn-xs" ng-click="saveTask(task); $event.stopPropagation();" style="font-size:11pt">Save...</button>
                 </td>
                   <tr>
-                    <td colspan="5" ng-style="task.isCollapsed ? {padding: 0} : {}">
+                    <td colspan="7" ng-style="!task.isCollapsed ? {padding: 0} : {}">
 
-                      <div uib-collapse="task.isCollapsed">
+                      <div uib-collapse="!task.isCollapsed">
                         <div style="width:100%">
                           <span style="float:left;width:50%"><h4>Task Text</h4></span>
                           <span style="float:right;width:50%;text-align: right"><h4>Reference Statement</h4></span>

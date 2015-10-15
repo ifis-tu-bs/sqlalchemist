@@ -14,14 +14,14 @@
         service.viewTaskSet = viewTaskSet;
         service.rateTaskSet = rateTaskSet;
         service.postTaskSetComment = postTaskSetComment;
+        service.deleteTaskSet = deleteTaskSet;
 
         /* TaskControlls */
         service.createTask = createTask;
         service.editTask = editTask;
-
+        service.rateTask = rateTask;
 
         service.getSubTask = getSubTask
-        //service.rateSubTask = rateSubTask;
         service.postSubTaskComment = postSubTaskComment;
         service.createHomeWork = createHomeWork;
         //service.getAllHomeworks = getAllHomeworks;
@@ -60,6 +60,10 @@
             return $http.post('/TaskSet/' + id + '/comment', {text: comment}).then(handleSuccess, handleError);
         }
 
+        function deleteTaskSet(id) {
+            return $http.delete('/TaskSet/' + id + '/').then(handleSuccess, handleError);
+        }
+
         /*
          * Task Controlls
          */
@@ -73,7 +77,7 @@
         }
 
         function rateTask(id, ratingJson) {
-            return $http.post("/task/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
+            return $http.post("/Task/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
         }
 
 
