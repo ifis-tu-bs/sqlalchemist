@@ -288,8 +288,7 @@ create table user (
   user_mnr                  varchar(255),
   user_ynr                  varchar(255),
   is_student                boolean,
-  password_hash             varchar(255),
-  password_reset_code       varchar(255),
+  password                  varchar(255),
   user_role                 integer,
   created_at                timestamp,
   edited_at                 timestamp,
@@ -297,7 +296,6 @@ create table user (
   constraint uq_user_email_verify_code unique (email_verify_code),
   constraint uq_user_user_mnr unique (user_mnr),
   constraint uq_user_user_ynr unique (user_ynr),
-  constraint uq_user_password_reset_code unique (password_reset_code),
   constraint pk_user primary key (id))
 ;
 
