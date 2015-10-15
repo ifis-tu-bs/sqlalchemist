@@ -1,6 +1,7 @@
 package sqlparser;
 
 import models.ColumnDefinition;
+import models.ForeignKeyRelation;
 import models.TableDefinition;
 import models.TaskSet;
 import play.Logger;
@@ -133,6 +134,9 @@ public class DBConnection{
                 break;
             }
         }
+        //for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
+
+        //}
         return status;
     }
 
