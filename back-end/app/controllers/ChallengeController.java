@@ -19,10 +19,6 @@ import secured.UserSecured;
 @Authenticated(UserSecured.class)
 public class ChallengeController extends Controller {
 
-    /**
-     * GET    /challenge/story
-     * @return
-     */
     public static Result story() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 

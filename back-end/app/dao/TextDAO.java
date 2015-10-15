@@ -54,7 +54,7 @@ public class TextDAO {
 
           int size = texts.size();
           if(size != 0) {
-              int i = Random.randomInt(0, size - 1);
+              int i = Random.randomInt(size - 1);
               return texts.get(i);
           }
           Logger.warn("Text.getTextByType - found no texts");

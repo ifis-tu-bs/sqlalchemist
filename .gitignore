@@ -6,6 +6,7 @@
 .DS_Store
 */.DS_Store
 **/.DS_Store
+*.log
 
 ########
 # Back-End
@@ -27,6 +28,8 @@ back-end/.settings
 back-end/public/game
 back-end/.sbtserver
 back-end/public/admintool
+*.h2.db
+*.trace.db
 
 ########
 # Front-End

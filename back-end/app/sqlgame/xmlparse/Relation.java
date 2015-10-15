@@ -10,12 +10,12 @@ import java.util.ArrayList;
 public class Relation {
 
     /**
-     * Intension of the relation.
+     * TableDefinition of the relation.
      */
     private String intension;
 
     /**
-     * Intension of the relation.
+     * TableDefinition of the relation.
      */
     private String tableName;
 

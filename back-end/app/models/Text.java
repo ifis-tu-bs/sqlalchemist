@@ -1,12 +1,8 @@
 package models;
 
-import java.util.List;
-
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import helper.*;
-import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;
 
@@ -30,9 +26,9 @@ public class Text extends Model {
     @Column(name = "type")
     private final int type;
 
-    private int prerequisite;
+    private final int prerequisite;
 
-    private int chronology;
+    private final int chronology;
 
     @Column(name = "text", columnDefinition = "Text")
     private final String text;

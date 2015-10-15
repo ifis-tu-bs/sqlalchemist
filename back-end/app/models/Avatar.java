@@ -1,10 +1,6 @@
 package models;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
-
-import play.Logger;
 import play.db.ebean.Model;
-import play.libs.Json;
 
 import javax.persistence.*;
 
@@ -32,9 +28,6 @@ public class Avatar extends Model {
 
     private final boolean isTeam;
 
-    @Column(name = "soundURL")
-    private final String soundURL;
-
     @Embedded
     private final PlayerStats playerStats;
 
@@ -49,14 +42,12 @@ public class Avatar extends Model {
      * @param name                  name of the avatar
      * @param desc                  avatar description
      * @param avatarFilename        avatarFilename
-     * @param soundURL              sound url
      * @param playerStats           avatar PlayerStats
      */
     public Avatar(
             String name,
             String desc,
             String avatarFilename,
-            String soundURL,
             boolean isTeam,
             PlayerStats playerStats) {
         super();
@@ -64,56 +55,33 @@ public class Avatar extends Model {
         this.name           = name;
         this.desc           = desc;
         this.avatarFilename= avatarFilename;
-        this.soundURL       = soundURL;
         this.isTeam         = isTeam;
         this.playerStats    = playerStats;
 
     }
 
-//////////////////////////////////////////////////
-//  Json Method
-//////////////////////////////////////////////////
-
-    /**
-     * Json method
-     * @return returns the Avatar-object as a Json model
-     */
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("id",              this.id);
-        node.put("name",            this.getName());
-        node.put("desc",            this.desc);
-        node.put("avatarFilename",  this.avatarFilename);
-        node.put("soundURL",        this.soundURL);
-        node.put("isTeam",          this.isTeam);
-        node.put("attributes",      this.playerStats.toJson());
-
-        return node;
-    }
-
-
-    /**
-     *
-     * @return
-     */
-    public PlayerStats getPlayerStats() {
-        return this.playerStats;
+    public long getId() {
+        return this.id;
     }
 
     public String getName() {
-        return this.name.contains("2") ? this.name.replace('2', ' ').trim() : this.name;
-    }
-
-    public String getAvatar() {
-        return this.avatarFilename;
+        return this.name.contains("2") ? this.name.replace(" 2", "").trim() : this.name;
     }
 
     public String getDesc() {
         return this.desc;
     }
 
-    public long getId() {
-        return this.id;
+    public String getAvatarFilename() {
+        return this.avatarFilename;
     }
+
+    public boolean isTeam() {
+        return isTeam;
+    }
+
+    public PlayerStats getPlayerStats() {
+        return this.playerStats;
+    }
+
 }

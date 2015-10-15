@@ -1,18 +1,18 @@
 package models;
 
-import play.Logger;
 import play.libs.Json;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import view.TaskSetView;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 /**
- * Created by fabiomazzone on 11/06/15.
+ * @author fabiomazzone
  */
 @Entity
 @Table(name = "homeWork_challenge")
@@ -28,7 +28,7 @@ public class HomeWorkChallenge extends Challenge {
 
 
     @ManyToMany(cascade = CascadeType.ALL)
-    protected final List<TaskFile> taskFiles;
+    protected final List<TaskSet> taskSets;
 
     private Date start_at;
 
@@ -45,7 +45,7 @@ public class HomeWorkChallenge extends Challenge {
             Profile creator,
             int solve_type,
             int solve_type_extension,
-            List<TaskFile> taskFiles,
+            List<TaskSet> taskFiles,
             int type,
             Date start_at,
             Date expires_at) {
@@ -56,7 +56,7 @@ public class HomeWorkChallenge extends Challenge {
                 CHALLENGE_TYPE_HOMEWORK); // -----#
                                           //      |
         this.creator = creator;           //      #-- Same?
-        this.taskFiles = taskFiles;       //      |
+        this.taskSets = taskFiles;       //      |
         this.type = type;                 // -----#
         this.start_at = start_at;
         this.expires_at = expires_at;
@@ -69,8 +69,8 @@ public class HomeWorkChallenge extends Challenge {
 //////////////////////////////////////////////////
 
 
-    public List<TaskFile> getTaskFiles() {
-        return this.taskFiles;
+    public List<TaskSet> getTaskSets() {
+        return this.taskSets;
     }
 
     public long getId() {
@@ -90,9 +90,9 @@ public class HomeWorkChallenge extends Challenge {
         return this.expires_at;
     }
 
-    public boolean contains(SubTask subTask) {
-        for (TaskFile taskFile : taskFiles) {
-            if (taskFile.contains(subTask))
+    public boolean contains(Task task) {
+        for (TaskSet taskSet : this.taskSets) {
+            if (taskSet.contains(task))
                 return true;
         }
         return false;
@@ -100,8 +100,8 @@ public class HomeWorkChallenge extends Challenge {
 
     public boolean submittedAll(List<Object> submits) {
         boolean answer = true;
-        for (TaskFile taskFile : this.taskFiles) {
-            answer &= taskFile.submittedAll(submits);
+        for (TaskSet taskSet : this.taskSets) {
+            answer &= taskSet.submittedAll(submits);
         }
         return answer;
     }
@@ -109,23 +109,18 @@ public class HomeWorkChallenge extends Challenge {
 //  Json Methods
 //////////////////////////////////////////////////
 
-    /**
-     *  Makes Json Object for this Object
-     * @return
-     */
     public ObjectNode toJson() {
         ObjectNode objectNode = Json.newObject();
-
-
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        for (TaskFile taskFile : taskFiles) {
-            arrayNode.add(taskFile.toJson());
+
+        for (TaskSet taskSet : taskSets) {
+            arrayNode.add(TaskSetView.toJson(taskSet));
         }
 
         objectNode.put("id", this.id);
         objectNode.put("name", this.name);
-        objectNode.put("taskFiles", arrayNode);
-        objectNode.put("creator", this.creator.toJsonProfile());
+        objectNode.put("taskSets", arrayNode);
+        objectNode.put("creator", this.creator.toJson());
         objectNode.put("start_at", String.valueOf(this.start_at));
         objectNode.put("expires_at", String.valueOf(this.expires_at));
 
@@ -133,23 +128,18 @@ public class HomeWorkChallenge extends Challenge {
     }
 
 
-    /**
-     * Makes Json Object not containing any solutions or other Admin relative Information
-     * @param profile
-     * @return
-     */
     public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
 
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
 
-        for (TaskFile taskFile : taskFiles) {
-            arrayNode.add(taskFile.toHomeWorkJsonForProfile(profile));
+        for (TaskSet taskSet : taskSets) {
+            arrayNode.add(taskSet.toHomeWorkJsonForProfile(profile));
         }
 
         objectNode.put("name",      this.getName());
-        objectNode.put("taskFiles", arrayNode);
+        objectNode.put("taskSets", arrayNode);
 
         return objectNode;
     }

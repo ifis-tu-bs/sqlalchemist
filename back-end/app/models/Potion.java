@@ -1,9 +1,9 @@
 package models;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.Logger;
 import play.db.ebean.Model;
 import play.libs.Json;
+import view.PlayerStatsView;
 
 import javax.persistence.*;
 
@@ -60,7 +60,7 @@ public class Potion extends Model {
      * @param name          Potion Name
      * @param type          Potion Type
      * @param powerLevel    Potion Power Level
-     * @param buff_value    Potion Buff Value
+     * @param buffValue    Potion Buff Value
      */
     public Potion(
             String name,
@@ -126,7 +126,7 @@ public class Potion extends Model {
         node.put("name", this.name);
         node.put("type", this.type);
         node.put("powerLevel", this.powerLevel);
-        node.put("buff_value", this.playerStats.toJson());
+        node.put("buff_value", PlayerStatsView.toJson(this.playerStats));
 
         return node;
     }

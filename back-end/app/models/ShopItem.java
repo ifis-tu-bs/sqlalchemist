@@ -1,22 +1,14 @@
 package models;
 
-import dao.AvatarDAO;
-
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import play.db.ebean.Model;
-import play.libs.Json;
-import play.Logger;
 
 import javax.persistence.*;
-import java.util.List;
 
 /**
- * @author Stefan Hanisch
+ * @author fabiomazzone
  */
 @Entity
 @Table(name = "ShopItem")
@@ -73,48 +65,41 @@ public class ShopItem extends Model{
     }
 
 //////////////////////////////////////////////////
-//  Json Method
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @return returns the ShopItem-Object as a Json model
-     */
-    public ObjectNode toJson(Profile profile) {
-        ObjectNode node = Json.newObject();
-
-        node.put("id",              this.id);
-        node.put("name",            this.name);
-        node.put("desc",            this.desc);
-        node.put("type",            this.type);
-        node.put("thumbnailUrl",    this.thumbnailUrl);
-        node.put("price",           this.price);
-        if(this.type == TYPE_AVATAR) {
-            node.put("avatar",          this.avatar.toJson());
-        }
-        node.put("bought",          profile.shopItemInList(this));
-
-        return node;
-    }
-
-    public static ArrayNode toJsonAll(Profile profile, List<ShopItem> shopItems) {
-        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-
-        for(ShopItem shopItem : shopItems) {
-
-            arrayNode.add(shopItem.toJson(profile));
-        }
-
-        return arrayNode;
-    }
-
-//////////////////////////////////////////////////
 //  Getter & Setter - methods
 //////////////////////////////////////////////////
 
-  public long getId() {
+    public long getId() {
     return this.id;
   }
+
+    public int getType() {
+        return type;
+    }
+
+    /**
+     *
+     * @return returns true if the shopItem is a Avatar
+     */
+    public boolean isTypeAvatar() {
+        return this.type == TYPE_AVATAR;
+    }
+
+    public boolean isTypeBeltSlot() {
+        return this.type == TYPE_BELT;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public String getThumbnailUrl() {
+        return thumbnailUrl;
+    }
+
     /**
      *
      * @return returns the price of the shopItem
@@ -123,13 +108,6 @@ public class ShopItem extends Model{
         return price;
     }
 
-    /**
-     *
-     * @return returns true if the shopItem is a Avatar
-     */
-    public boolean isAvatar() {
-        return this.type == TYPE_AVATAR;
-    }
 
     /**
      *
@@ -139,7 +117,4 @@ public class ShopItem extends Model{
         return this.avatar;
     }
 
-    public boolean isBeltSlot() {
-        return this.type == TYPE_BELT;
-    }
 }

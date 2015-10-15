@@ -4,12 +4,14 @@ import dao.ProfileDAO;
 
 import models.Profile;
 
+import view.SettingsView;
+
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+
 
 
 /**
@@ -26,7 +28,7 @@ public class SettingsController extends Controller {
      */
     public static Result index() {
         Profile profile = ProfileDAO.getByUsername(request().username());
-        return ok(profile.settings.getSettings());
+        return ok(SettingsView.toJson(profile.settings));
     }
 
     /**
@@ -35,17 +37,11 @@ public class SettingsController extends Controller {
      * @return  returns a http responds code if the action was successfully or not
      */
     public static Result edit() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        JsonNode json = request().body().asJson();
-        if(json == null || json.get("music") == null && json.get("sound") == null) {
-            Logger.warn("SettingsController.edit - not Valid");
-            return badRequest("Invalid Json");
-        }
-        boolean music = json.get("music").asBoolean();
-        boolean sound = json.get("sound").asBoolean();
+        Profile profile     = ProfileDAO.getByUsername(request().username());
+        JsonNode json       = request().body().asJson();
+        profile.settings    = SettingsView.fromJson(json);
 
-        profile.settings.setSettings(music, sound);
         profile.update();
-        return ok(profile.settings.getSettings());
+        return redirect(routes.SettingsController.index());
     }
 }
