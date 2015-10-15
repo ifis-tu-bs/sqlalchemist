@@ -28,7 +28,7 @@ public class UserSession extends Model {
     @Constraints.Required
     private String sessionID;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     public User user;
 
     @Column(name = "remoteAddress")

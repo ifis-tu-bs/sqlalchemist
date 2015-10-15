@@ -63,10 +63,10 @@ public class User extends Model {
     public static final int ROLE_CREATOR = 2;
     public static final int ROLE_ADMIN = 3;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     public List<UserSession> sessions;
 
-    @OneToOne(mappedBy="user")
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     public Profile profile;
 
     private Date created_at;
@@ -98,7 +98,7 @@ public class User extends Model {
 
         long verifyNumber = (long) this.hashCode();
         long checksum = (98 - ((verifyNumber * 100) % 97)) % 97;
-        
+
         this.emailVerifyCode = Long.toHexString(verifyNumber * 100 + checksum);
 
         this.setPassword(password);

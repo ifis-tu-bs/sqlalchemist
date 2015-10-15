@@ -128,7 +128,11 @@ public class UserController extends Controller {
      */
     @Authenticated(UserSecured.class)
     public static Result destroy() {
-    	return ok("Test");
+        User user = UserDAO.getByUsername(request().username());
+
+        user.delete();
+
+        return ok("test");
     }
 
     /**

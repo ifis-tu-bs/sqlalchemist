@@ -249,7 +249,7 @@ create table Task (
   task_name                 varchar(255),
   task_text                 varchar(255),
   ref_statement             varchar(255),
-  evaluationstrategy        integer,
+  evaluationStrategy        integer,
   points                    integer,
   required_term             integer,
   creator_id                bigint,
