@@ -17,6 +17,7 @@ import play.Play;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 import play.libs.Json;
+import view.AvatarView;
 
 import javax.persistence.*;
 import java.util.*;
@@ -225,7 +226,7 @@ public class Profile extends Model {
         }
 
         for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isBeltSlot()) {
+            if(shopItem.isTypeBeltSlot()) {
                 playerStats_sum.addBeltSlot();
             }
         }
@@ -348,7 +349,7 @@ public class Profile extends Model {
         node.put("coins",       this.coins);
         node.put("score",       this.totalScore);
         node.put("highScore",   this.toJsonHighScore());
-        node.put("avatar",      this.avatar.toJson());
+        node.put("avatar",      AvatarView.toJson(this.avatar));
 
         return node;
     }
@@ -377,7 +378,7 @@ public class Profile extends Model {
         PlayerStats playerStats_sum = this.getPlayerStats();
 
         node.put("attributes",      playerStats_sum.toJson());
-        node.put("currentAvatar",   this.avatar.toJson());
+        node.put("currentAvatar", AvatarView.toJson(this.avatar));
         node.put("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
@@ -407,8 +408,8 @@ public class Profile extends Model {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isAvatar()) {
-                arrayNode.add(shopItem.getAvatar().toJson());
+            if(shopItem.isTypeAvatar()) {
+                arrayNode.add(AvatarView.toJson(shopItem.getAvatar()));
             }
         }
 

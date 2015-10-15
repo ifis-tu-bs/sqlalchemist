@@ -1,23 +1,51 @@
 ## json model documentation
 
 ### Table of Content
+- [Avatar](#avatar)
 - [Column](#column)
-  - [Column.Form](#columnform)
+    - [Column.Form](#columnform)
 - [Comment](#comment)
-  - [Comment.Form](#commentform)
+    - [Comment.Form](#commentform)
 - [ForeignKey](#foreignkey)
-  - [ForeignKey.Form](#foreignkeyform)
+    - [ForeignKey.Form](#foreignkeyform)
 - [Rating](#rating)
-  - [Rating.Form](#ratingform)
+    - [Rating.Form](#ratingform)
+- [ShopItem](#shopitem)
+- [SQLResult](#sqlresult)
+    - [SQLResult.Successfull](#sqlresultsuccessfull)
+    - [SQLResult.Failure](#sqlresultfailure)
 - [TableDefinition](#tabledefinition)
-  - [TableDefinition.Form](#tabledefinitionform)
+    - [TableDefinition.Form](#tabledefinitionform)
 - [Task](#task)
-  - [Task.Form](#taskform)
-  - [Task.Exercise](#taskexercise)
+    - [Task.Form](#taskform)
+    - [Task.Exercise](#taskexercise)
 - [TaskSet](#taskset)
-  - [TaskSet.Form](#tasksetform)
+    - [TaskSet.Form](#tasksetform)
 - [UserStatement](#userstatement)
 
+
+### Avatar
+| Name                      | Type                              | Description|
+|---------------------------|-----------------------------------|------------|
+| ```id```                  | ```Number ```                     |            |
+| ```name```                | ```String```                      |            |
+| ```desc```                | ```String```                      |            |
+| ```avatarFilename```      | ```String```                      |            |
+| ```isTeam```              | ```Boolean```                     |            |
+| ```attributes```          | [```PlayerState```](#playerstate) |            |
+
+Example:
+```json
+Avatar:
+{
+  "id":             12,
+  "name":           "FirstName",
+  "desc":           "Yeah",
+  "avatarFilename": "parryhitter",
+  "isTeam":         true,
+  "attributes":     PlayerState
+}
+```
 ### Column
 | Name                     | Type                   | Description|
 |--------------------------|------------------------|------------|
@@ -162,6 +190,32 @@ Rating:
     "needReview": false
 }
 ```
+### ShopItem
+| Name                      | Type                              | Description|
+|---------------------------|-----------------------------------|------------|
+| ```id```                  | ```Number ```                     |            |
+| ```name```                | ```String```                      |            |
+| ```desc```                | ```String```                      |            |
+| ```type```                | ```Number```                      | 0 = Avatar - 1 = Belt |
+| ```thumbnailUrl```        | ```String```                      |            |
+| ```price```               | ```Number```                      |            |
+| ```avatar```              | [```Avatar```](#avatar) |         |            |
+| ```bought```              | ```Boolean```                     |            |
+
+Example:
+```json
+ShopItem:
+{
+  "id":             12,
+  "name":           "FirstName",
+  "desc":           "Yeah",
+  "type":           1,
+  "thumbnailUrl":   "parryhitter",
+  "price":          true,
+  "avatar":         Avatar,
+  "bought":         false
+}
+```
 ### SQLResult
 #### SQLResult.Successfull
 | Name                     | Type                   | Description|
@@ -186,7 +240,7 @@ Columns:
 #### SQLResult.Failure
 | Name                     | Type                   | Description|
 |--------------------------|------------------------|------------|
-| ```type```               | ```Number ```          | 1 = semantic error | 2 = syntactic error |
+| ```type```               | ```Number ```          | 1 = semantic error - 2 = syntactic error |
 | ```terry```              | ```String```           |            |
 | ```time```               | ```Number```           |            |
 | ```SQLError```           | ```String```           |            |

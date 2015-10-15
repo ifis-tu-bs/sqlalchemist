@@ -4,6 +4,7 @@ import models.Avatar;
 import models.PlayerStats;
 
 import play.Logger;
+import view.AvatarView;
 
 import javax.persistence.PersistenceException;
 
@@ -39,10 +40,10 @@ public class AvatarDAO {
         } catch (PersistenceException pe) {
             Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
             if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
-                Logger.warn("Can't create Avatar(duplicate) " + avatar.toJson().toString());
+                Logger.warn("Can't create Avatar(duplicate) " + AvatarView.toJson(avatar).toString());
                 return avatar_res;
             }
-            Logger.error("Can't create Avatar: " + avatar.toJson());
+            Logger.error("Can't create Avatar: " + AvatarView.toJson(avatar));
             return null;
         }
         return avatar;

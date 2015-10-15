@@ -63,44 +63,28 @@ public class Avatar extends Model {
 
     }
 
-//////////////////////////////////////////////////
-//  Json Method
-//////////////////////////////////////////////////
-
-    /**
-     * Json method
-     * @return returns the Avatar-object as a Json model
-     */
-    public ObjectNode toJson() {
-        ObjectNode node = Json.newObject();
-
-        node.put("id",              this.id);
-        node.put("name",            this.getName());
-        node.put("desc",            this.desc);
-        node.put("avatarFilename",  this.avatarFilename);
-        node.put("isTeam",          this.isTeam);
-        node.put("attributes",      this.playerStats.toJson());
-
-        return node;
-    }
-
-    public PlayerStats getPlayerStats() {
-        return this.playerStats;
+    public long getId() {
+        return this.id;
     }
 
     public String getName() {
         return this.name.contains("2") ? this.name.replace(" 2", "").trim() : this.name;
     }
 
-    public String getAvatar() {
-        return this.avatarFilename;
-    }
-
     public String getDesc() {
         return this.desc;
     }
 
-    public long getId() {
-        return this.id;
+    public String getAvatarFilename() {
+        return this.avatarFilename;
     }
+
+    public boolean isTeam() {
+        return isTeam;
+    }
+
+    public PlayerStats getPlayerStats() {
+        return this.playerStats;
+    }
+
 }
