@@ -47,6 +47,8 @@ DELETE      /TaskSet/:id/                       controllers.TaskSetController.de
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
 
+GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
+
 #TaskController
 POST        /TaskSet/:id/Task                   controllers.TaskController.create(id :Long)
 GET         /Task/                              controllers.TaskController.read()
