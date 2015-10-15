@@ -143,7 +143,7 @@
                 <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
                   <td><input type="text" ng-model="column.dataType" uib-typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
-                  <td>{{column.datagenSet}}</td>
+                  <td><input type="number" ng-model="column.datagenSet"></td>
                   <td><input type="checkbox" ng-model="column.notNull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
                   <td>
@@ -232,29 +232,29 @@
                 <tr style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
                   <td><input type="text" ng-model="task.taskName" ng-click="$event.stopPropagation();"></td>
                   <td>
-                    <div class="btn-group" uib-dropdown>
+                    <div class="btn-group" uib-dropdown is-open="taskEvaluationStrategyDropDownStatus">
                       <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
                         {{task.evaluationStrategy === 1 ? "Set" : "List"}} <span class="caret"></span>
                       </button>
-                      <ul class="uib-dropdown-menu" role="menu">
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.evaluationStrategy = 1; $event.stopPropagation();">Set</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.evaluationStrategy = 2; $event.stopPropagation();">List</li>
+                      <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskEvaluationStrategyDropDownStatus = !taskEvaluationStrategyDropDownStatus">
+                        <li role="menuitem" ng-click="task.evaluationStrategy = 1;">Set</li>
+                        <li role="menuitem" ng-click="task.evaluationStrategy = 2;">List</li>
                       </ul>
                     </div>
                   </td>
                   <td>{{task.creator.username}}</td>
                   <td>
-                    <div class="btn-group" uib-dropdown>
+                    <div class="btn-group" uib-dropdown is-open="taskPointsDropDownStatus">
                       <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
                         {{task.points}} <span class="caret"></span>
                       </button>
-                      <ul class="uib-dropdown-menu" role="menu">
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 1; $event.stopPropagation();">1</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 2; $event.stopPropagation();">2</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 3; $event.stopPropagation();">3</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 4; $event.stopPropagation();">4</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 5; $event.stopPropagation();">5</li>
-                        <li uib-dropdown-toggle role="menuitem" ng-click="task.points = 6; $event.stopPropagation();">6</li>
+                      <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskPointsDropDownStatus = !taskPointsDropDownStatus">
+                        <li role="menuitem" ng-click="task.points = 1;">1</li>
+                        <li role="menuitem" ng-click="task.points = 2;">2</li>
+                        <li role="menuitem" ng-click="task.points = 3;">3</li>
+                        <li role="menuitem" ng-click="task.points = 4;">4</li>
+                        <li role="menuitem" ng-click="task.points = 5;">5</li>
+                        <li role="menuitem" ng-click="task.points = 6;">6</li>
                       </ul>
                     </div>
                   </td>

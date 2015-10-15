@@ -3,13 +3,13 @@
     <h4 class="modal-title">Are you sure?</h4>
 </div>
 <div class="modal-body">
-    <span ng-bind="message"></span>
+    <div ng-bind-html="message"></div>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-lg" ng-click="ok()" >
+    <button type="button" class="btn btn-primary" ng-click="ok()" >
         Yes
     </button>
-    <button type="button" class="btn btn-primary btn-lg" ng-click="close()">
+    <button type="button" class="btn btn-primary" ng-click="close()">
         No
     </button>
 </div>

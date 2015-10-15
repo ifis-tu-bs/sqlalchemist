@@ -181,7 +181,7 @@ angular
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {
-                                return "Are you sure you want to delete TaskSet: " + taskSet.taskSetName + "? It will be deleted forever!";
+                                return "<span style='font-size:15pt'> Are you sure you want to delete TaskSet: <b>" + taskSet.taskSetName + "</b>? <br> It will be deleted forever!</span>";
                             }
                     }
             });
