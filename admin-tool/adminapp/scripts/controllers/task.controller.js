@@ -28,7 +28,7 @@ angular
         $scope.orderTablePredicate = 'tableName';
         $scope.search = '';
 
-        $scope.items=["bigint", "Varchar(255)", "boolean"];
+        $scope.dataTypes = [];
         $scope.tabActive = {
             intensionTables : false,
             intensionForeignKeys : false,
@@ -65,6 +65,7 @@ angular
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
+                            console.log(result);
                                 vm.taskSets = result;
                                 $scope.getCurrentPath();
                             }
@@ -72,6 +73,13 @@ angular
                 );
 
             }
+
+            TaskService.getColumnDefinitionDataTypes().then(
+                    function (result) {
+                        vm.dataTypes = result;
+                    },
+                    null
+            );
         }
 
         //////////////////////////////777

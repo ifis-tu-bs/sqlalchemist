@@ -21,6 +21,9 @@
         service.editTask = editTask;
         service.rateTask = rateTask;
 
+        /* Data */
+        service.getColumnDefinitionDataTypes = getColumnDefinitionDataTypes;
+
         service.getSubTask = getSubTask
         service.postSubTaskComment = postSubTaskComment;
         service.createHomeWork = createHomeWork;
@@ -32,9 +35,7 @@
         return service;
 
 
-        /*
-         * TaskSet Controlls
-         */
+        /* TaskSet Controlls */
 
         function createTaskSet(json) {
             return $http.post('/TaskSet/', json).then(handleSuccess, handleError);
@@ -64,9 +65,8 @@
             return $http.delete('/TaskSet/' + id + '/').then(handleSuccess, handleError);
         }
 
-        /*
-         * Task Controlls
-         */
+
+        /* Task Controlls */
 
         function createTask(taskSetId, taskJson) {
             return $http.post('/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
@@ -81,7 +81,14 @@
         }
 
 
+        /* DataTypes */
 
+        function getColumnDefinitionDataTypes() {
+            return $http.get("/ColumnDefinition/DataTypes/").then(handleSuccess, handleError);
+        }
+
+
+        /* Left Overs*/
 
         function createHomeWork(dateFromUTCString, dateToUTCString, taskFiles, name) {
             return $http.post("/homework",{from: dateFromUTCString, to: dateToUTCString, tasks: taskFiles, name: name}).then(handleSuccess, handleError);

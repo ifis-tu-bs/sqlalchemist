@@ -27,7 +27,7 @@
 
 
 
-      <uib-tab deselect="keepTaskSets();">
+      <uib-tab id="TaskSets" deselect="keepTaskSets();">
         <uib-tab-heading>
           TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
         </uib-tab-heading>
@@ -85,14 +85,14 @@
         </div>
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionTables" deselect="keepTaskSets(); keepTabActive();">
+      <uib-tab id="IntensionTables" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionTables" deselect="keepTaskSets(); keepTabActive();">
         <tab-heading>
           Intension <i>(tableDefinition)</i>
         </tab-heading>
         <uib-accordion close-others=true>
-          <uib-accordion-group is-open="tableSelectionStatus.tableNotSelected">
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
             <uib-accordion-heading>
-              <h5>Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b></h5>
+              Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
             </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
@@ -109,12 +109,6 @@
                   <td>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
                   </td>
-                  <!--<td>{{taskSet.start_at}}</td>
-                  <td>{{taskSet.expires_at}}</td>
-                  <td>
-                    <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
-                      <span class="glyphicon glyphicon-trash"></span></button>
-                  </td>-->
                 </tr>
                 <tr>
                   <td>
@@ -125,9 +119,9 @@
               </tbody>
             </table>
           </uib-accordion-group>
-          <uib-accordion-group is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
             <uib-accordion-heading>
-              <h5>Columns:</b></h5>
+              <b>Columns</b>
             </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
@@ -142,7 +136,7 @@
               <tbody>
                 <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
-                  <td><input type="text" ng-model="column.dataType" uib-typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
+                  <td><input type="text" ng-model="column.dataType" uib-typeahead="dataTypeObj.dataType as dataTypeObj.dataType for dataTypeObj in vm.dataTypes | filter:$viewValue | limitTo:5"> </td>
                   <td><input type="number" ng-model="column.datagenSet"></td>
                   <td><input type="checkbox" ng-model="column.notNull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
@@ -166,7 +160,7 @@
 
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionForeignKeys" deselect="keepTaskSets(); keepTabActive();">
+      <uib-tab id="IntensionForeinKeys" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionForeignKeys" deselect="keepTaskSets(); keepTabActive();">
         <tab-heading>
           Intension <i>(foreignKeys)</i>
         </tab-heading>
@@ -204,11 +198,44 @@
         </table>
       </uib-tab>
 
-      <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.extension" deselect="keepTaskSets(); keepTabActive();">
+      <uib-tab id="Extension" heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.extension" deselect="keepTaskSets(); keepTabActive();">
+        <uib-accordion close-others=true>
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
+            <uib-accordion-heading>
+              Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
+            </uib-accordion-heading>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
+                <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
+                <td>{{table.columns.length}}</td>
 
+                <td>
+                  <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </uib-accordion-group>
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableSelected">
+            <uib-accordion-heading>
+              Edit Extension
+            </uib-accordion-heading>
+            <div id="extensionEditor" ng-model="selectedTable.extensions" ui-ace="{
+              mode : 'sql',
+              theme : 'twilight'
+            }"></div>
+          </uib-accordion-group>
+        </uib-accordion>
       </uib-tab>
 
-      <uib-tab heading="Tasks" active="tabActive.tasks" disable="selectedTaskSet.$$hashKey === undefined" select="enterTaskTab();" deselect="keepTaskSets(); keepTabActive();">
+      <uib-tab id="Tasks" heading="Tasks" active="tabActive.tasks" disable="selectedTaskSet.$$hashKey === undefined" select="enterTaskTab();" deselect="keepTaskSets(); keepTabActive();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">

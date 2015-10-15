@@ -30,8 +30,7 @@ div.app-modal-window .modal-dialog{
   font-size : 13px
 }
 
-
-/*
- * Animations
- */
-
+#extensionEditor {
+    width:100%;
+    height:300px
+}
