@@ -1,7 +1,5 @@
 package models;
 
-import play.api.libs.ws.ssl.Algorithms;
-
 import javax.persistence.*;
 
 /**

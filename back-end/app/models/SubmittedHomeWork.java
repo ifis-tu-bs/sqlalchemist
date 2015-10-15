@@ -13,6 +13,8 @@ import java.util.List;
 
 /**
  * Created by invisiblevm on 7/13/15.
+ *
+ * @author invisiblevm
  */
 @Entity
 @Table(

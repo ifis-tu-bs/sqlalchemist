@@ -184,7 +184,7 @@ public class User extends Model {
 
     /**
      * Setting password (used by doResetPassword)
-     * @param newPassword
+     * @param newPassword    asd
      */
     private void setPassword(String newPassword) {
         this.passwordHash = BCrypt.hashpw(newPassword, BCrypt.gensalt());
@@ -195,7 +195,7 @@ public class User extends Model {
 
     /**
      *
-     * @return
+     * @return asd
      */
     public Profile getProfile() {
         return this.profile;
@@ -203,7 +203,7 @@ public class User extends Model {
 
     /**
      *
-     * @return
+     * @return asd
      */
     public String getEmail() {
         return this.email;
@@ -258,8 +258,8 @@ public class User extends Model {
      *
      * @param id        User Identifier
      * @param password  User password
-     * @param adminTool
-     * @return
+     * @param adminTool asd
+     * @return  asd
      */
     public static User validate(String id, String password, boolean adminTool) {
 
@@ -296,7 +296,7 @@ public class User extends Model {
     /**
      * Send reset mail
      *
-     * @return
+     * @return asd
      */
     public void sendResetPasswordMail() {
 
@@ -313,9 +313,9 @@ public class User extends Model {
 
     /**
      *  Change Password for set resetCode
-     * @param resetCode
-     * @param newPassword
-     * @return
+     * @param resetCode asd
+     * @param newPassword asd
+     * @return asd
      */
     public static boolean doResetPassword(String resetCode, String newPassword) {
         User user = find.where().eq("password_reset_code", resetCode).findUnique();
@@ -333,8 +333,8 @@ public class User extends Model {
 
     /**
      *  updates the isStudent flag
-     * @param user
-     * @return
+     * @param user asd
+     * @return asd
      */
     public static boolean updateStudentState(User user) {
         HMSAccessor hms = new HMSAccessor();

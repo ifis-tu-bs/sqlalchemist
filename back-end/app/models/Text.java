@@ -26,9 +26,9 @@ public class Text extends Model {
     @Column(name = "type")
     private final int type;
 
-    private int prerequisite;
+    private final int prerequisite;
 
-    private int chronology;
+    private final int chronology;
 
     @Column(name = "text", columnDefinition = "Text")
     private final String text;

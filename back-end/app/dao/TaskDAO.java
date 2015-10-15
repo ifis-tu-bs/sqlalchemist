@@ -41,7 +41,7 @@ public class TaskDAO {
           }
 
           if(solvedTasks == null || solvedTasks.size() == 0) {
-              return TaskList.get(Random.randomInt(0, TaskList.size() - 1));
+              return TaskList.get(Random.randomInt(TaskList.size() - 1));
           }
           for(SolvedTask solvedTask : solvedTasks) {
               if(TaskList.contains(solvedTask.getTask())) {
@@ -52,7 +52,7 @@ public class TaskDAO {
               TaskList           = Task.find.where().eq("available", true).eq("points", points).findList();
           }
 
-          int i = Random.randomInt(0, TaskList.size() - 1);
+          int i = Random.randomInt(TaskList.size() - 1);
 
           return TaskList.get(i);
       }

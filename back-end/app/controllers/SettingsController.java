@@ -42,6 +42,6 @@ public class SettingsController extends Controller {
         profile.settings    = SettingsView.fromJson(json);
 
         profile.update();
-        return ok(SettingsView.toJson(profile.settings));
+        return redirect(routes.SettingsController.index());
     }
 }

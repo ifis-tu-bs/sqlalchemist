@@ -22,7 +22,7 @@ public class SQLResult {
 
     public SQLResult(Task task, int type, int sqlerror) {
         this.task = task;
-        this.type       = type;
+        this.type       = SQLResult.ERROR;
         this.sqlError   = sqlerror;
     }
 

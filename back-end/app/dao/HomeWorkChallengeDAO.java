@@ -13,18 +13,7 @@ import java.util.List;
 
 
 public class HomeWorkChallengeDAO {
-  /**
-   *  New HomeworkChallenge
-   * @param name
-   * @param creator
-   * @param solve_type
-   * @param solve_type_extension
-   * @param taskSets
-   * @param type
-   * @param start_at
-   * @param expires_at
-   * @return
-   */
+
   public static HomeWorkChallenge create(
           String name,
           Profile creator,
@@ -65,10 +54,6 @@ public class HomeWorkChallengeDAO {
     return homeWorkChallenge;
   }
 
-  /**
-   *  Get all HomeWorks
-   * @return
-   */
   public static List<HomeWorkChallenge> getAll() {
     List<HomeWorkChallenge> homeWorkList = HomeWorkChallenge.find.all();
 
@@ -84,11 +69,6 @@ public class HomeWorkChallengeDAO {
     return HomeWorkChallenge.find.where().in("id", submits).findList();
   }
 
-  /**
-   *  Get Instance by Id
-   * @param id
-   * @return
-   */
   public static HomeWorkChallenge getById (long id) {
     return HomeWorkChallenge.find.byId(id);
   }

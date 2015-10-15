@@ -112,7 +112,7 @@ public class Profile extends Model {
         this.setSettings(new Settings(true, true));
 
         this.setTutorialDone(false);
-        this.setStoryDone(false);
+        this.setStoryDone();
 
         this.setShopItems(new ArrayList<>());
 
@@ -122,7 +122,7 @@ public class Profile extends Model {
             this.buy(shopItem);
         }
 
-        ShopItem shopItem = this.shopItems.get(Random.randomInt(0, 2));
+        ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
         this.setAvatar(shopItem.getAvatar().getId());
 
         this.setCurrentStory(null);
@@ -495,8 +495,8 @@ public class Profile extends Model {
         this.settings = settings;
     }
 
-    public void setStoryDone(boolean storyDone) {
-        this.storyDone = storyDone;
+    public void setStoryDone() {
+        this.storyDone = false;
     }
 
     public void setShopItems(ArrayList<ShopItem> shopItems) {

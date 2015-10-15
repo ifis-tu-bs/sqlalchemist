@@ -97,10 +97,6 @@ public class HomeWorkController extends Controller {
         return ok(arrayNode);
     }
 
-    /**
-     *  Create
-     * @return
-     */
     @Authenticated(AdminSecured.class)
     public static Result create() {
         User user = UserDAO.getByUsername(request().username());

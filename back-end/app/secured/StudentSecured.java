@@ -12,13 +12,9 @@ import play.mvc.Result;
  * The Security Class to verify
  *
  * Created by fabiomazzone on 27/04/15.
+ * @author fabiomazzone
  */
 public class StudentSecured extends Authenticator {
-    /**
-     *
-     * @param cxt
-     * @return
-     */
     @Override
     public String getUsername(Context cxt) {
 
@@ -30,11 +26,6 @@ public class StudentSecured extends Authenticator {
         return null;
     }
 
-    /**
-     *
-     * @param context
-     * @return
-     */
     @Override
     public Result onUnauthorized(Context context) {
         return forbidden("restricted page, you need higher permissions, than \"User\"");

@@ -52,18 +52,10 @@ public class UserDAO {
       }
   }
 
-  /**
-   *
-   */
   public static User getById(long id) {
       return User.find.byId(id);
   }
 
-  /**
-   *
-   * @param email
-   * @return
-   */
   public static User getByEmail(String email) {
     if(email == null) {
       return null;
@@ -82,11 +74,6 @@ public class UserDAO {
     return userProfile.getUser();
   }
 
-  /**
-   *
-   * @param y_ID
-   * @return
-   */
   private static User getByY_ID(String y_ID) {
     if(y_ID == null) {
       return null;
@@ -94,9 +81,6 @@ public class UserDAO {
     return User.find.where().eq("y_ID",y_ID).findUnique();
   }
 
-  /**
-   * @return
-   */
   public static List<User> getAllStudendts() {
     List<User> studentList = User.find.where().eq("isStudent", true).findList();
     if (studentList.size() == 0) {

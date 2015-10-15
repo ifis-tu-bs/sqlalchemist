@@ -17,7 +17,7 @@ public class PotionDAO {
    * @param name          Potion Name
    * @param type          Potion Type
    * @param powerLevel    Potion Power Level
-   * @param buff_value    Potion Power
+   * @param buffValue     Potion Power
    * @return              returns the Potion-Object or Null on Failure
    */
   public static Potion create(

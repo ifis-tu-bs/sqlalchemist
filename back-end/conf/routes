@@ -13,14 +13,14 @@ GET         /logout                             controllers.SessionController.de
 
 #UserController
 POST        /signup                             controllers.UserController.create()
-POST        /users                              controllers.UserController.edit()
-DELETE      /users                              controllers.UserController.destroy()
 GET         /users                              controllers.UserController.getAllUsers()
+GET         /users/student                      controllers.UserController.checkStudent()
+POST        /users                              controllers.UserController.edit()
 GET         /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
 POST        /users/password                     controllers.UserController.sendResetPasswordMail()
 POST        /users/doPasswordReset/:code        controllers.UserController.doResetPassword(code: String)
-GET         /users/student                      controllers.UserController.checkStudent()
 POST        /users/:id                          controllers.UserController.promote(id :Long)
+DELETE      /users                              controllers.UserController.destroy()
 
 #ItemController
 GET         /profile/inventory                  controllers.ItemController.inventory()

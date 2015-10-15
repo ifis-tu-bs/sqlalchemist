@@ -167,11 +167,6 @@ public class UserController extends Controller {
         return ok("Email has been sent");
     }
 
-    /**
-     *
-     * @param resetCode
-     * @return
-     */
     public static Result doResetPassword(String resetCode) {
         try {
             if (Long.parseLong(resetCode, 16) % 97 != 1) {

@@ -58,7 +58,7 @@ public class TaskSetController extends Controller {
             Logger.warn(pe.getMessage());
             return badRequest("taskSet can't be saved");
         }
-        int err = 0;
+        int err;
         if((err = SQLParser.initialize(taskSet)) != 0) {
             Logger.warn("TaskSetController.create - " + SQLExceptionParser.parse(err));
                     taskSet.delete();
@@ -144,14 +144,10 @@ public class TaskSetController extends Controller {
 
 
         // Delete old Data
-        for(TableDefinition tableDefinition : tableDefinitionsOld) {
-            tableDefinition.delete();
-        }
+        tableDefinitionsOld.forEach(models.TableDefinition::delete);
 
 
-        for(ForeignKeyRelation foreignKeyRelation : foreignKeyRelationsOld) {
-            foreignKeyRelation.delete();
-        }
+        foreignKeyRelationsOld.forEach(models.ForeignKeyRelation::delete);
 
 
         taskSet.save();

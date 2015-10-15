@@ -184,22 +184,15 @@ public class SQLController extends Controller {
         return result;
     }
 
-    /**
-     *
-     * @return
-     */
+
     public static Result homework() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        //Profile profile = ProfileDAO.getByUsername(request().username());
         //Task task = TaskDAO.getByChallengeID(1L, profile);
 
         return badRequest("not implemented yet");
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     *//*
+    /*
     public static Result homeworkSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();

@@ -37,7 +37,7 @@ public class Task extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
     private List<Rating> ratings;
 
-    private Date created_at;
+    private final Date created_at;
     private Date updated_at;
 
     public static final Finder<Long, Task> find = new Finder<>(Long.class, Task.class);

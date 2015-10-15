@@ -109,10 +109,6 @@ public class HomeWorkChallenge extends Challenge {
 //  Json Methods
 //////////////////////////////////////////////////
 
-    /**
-     *  Makes Json Object for this Object
-     * @return
-     */
     public ObjectNode toJson() {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
@@ -132,11 +128,6 @@ public class HomeWorkChallenge extends Challenge {
     }
 
 
-    /**
-     * Makes Json Object not containing any solutions or other Admin relative Information
-     * @param profile
-     * @return
-     */
     public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
 
         ObjectNode objectNode = Json.newObject();

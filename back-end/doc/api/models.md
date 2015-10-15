@@ -12,6 +12,7 @@
 - [PlayerState](#playerstate)
 - [Rating](#rating)
     - [Rating.Form](#ratingform)
+- [Settings](#settings)
 - [ShopItem](#shopitem)
 - [SQLResult](#sqlresult)
     - [SQLResult.Successfull](#sqlresultsuccessfull)

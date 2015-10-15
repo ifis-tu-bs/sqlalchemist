@@ -20,6 +20,7 @@ import secured.*;
  * The SessionController
  *
  * Created by fabiomazzone on 25/04/15.
+ * @author fabiomazzone
  */
 public class SessionController extends Controller {
     /**
@@ -67,10 +68,6 @@ public class SessionController extends Controller {
         return forbidden("Wrong ID/Password");
     }
 
-    /**
-     *
-     * @return
-     */
     @Authenticated(UserSecured.class)
     public static Result delete() {
         String sessionID = session().get("sessionID");

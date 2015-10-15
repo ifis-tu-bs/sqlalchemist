@@ -18,10 +18,9 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class DBConnection{
-    private long id;
-    private String dbUrl;
+    private final String dbUrl;
 
-    private TaskSet taskSet;
+    private final TaskSet taskSet;
 
     Connection connection;
 
@@ -39,7 +38,7 @@ public class DBConnection{
     }
 
     public int createDB() {
-        int status = 0;
+        int status;
         if((status = this.initDBConn()) != 0) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
             return status;
@@ -58,7 +57,7 @@ public class DBConnection{
 
 
     public int deleteDB() {
-        int status = 0;
+        int status;
         if((status = this.initDBConn()) != 0) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
             return status;

@@ -7,7 +7,7 @@ import models.User;
 import play.Play;
 
 /**
- * Created by fabiomazzone on 12/10/15.
+ * @author fabiomazzone
  */
 public class UserBootstrap {
     public static void init() {
@@ -19,13 +19,17 @@ public class UserBootstrap {
             UserDAO.create(username, email, password, User.ROLE_ADMIN);
         } else {
             User user = UserDAO.create("admin", "admin@local.de", "password1234", User.ROLE_ADMIN);
-            user.setStudent();
-            user.update();
+            if(user != null) {
+                user.setStudent();
+                user.update();
+            }
 
             UserDAO.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
             User test2 = UserDAO.create("test2", "test2@test.de", "test", User.ROLE_USER);
-            test2.isStudent = true;
-            test2.save();
+            if(test2 != null) {
+                test2.setStudent();
+                test2.save();
+            }
             UserDAO.create("test3", "test3@test.de", "test", User.ROLE_USER);
         }
     }

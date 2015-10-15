@@ -11,10 +11,10 @@ import java.util.List;
 
 public class MapDAO {
       /**
-       * @param level
-       * @param path      Path to File Source
-       * @param isBossMap isBossMap
-       * @return returns the Map-Object or Null on Failure
+       * @param level       the level of the map
+       * @param path        Path to File Source
+       * @param isBossMap   isBossMap
+       * @return            returns the Map-Object or Null on Failure
        */
       public static Map create(
               int level,
