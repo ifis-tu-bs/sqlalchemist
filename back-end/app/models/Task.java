@@ -1,7 +1,8 @@
 package models;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
-
 
 import play.db.ebean.Model;
 import play.libs.Json;
@@ -16,6 +17,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Task")
+@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Task extends Model {
     @Id
     private long id;
