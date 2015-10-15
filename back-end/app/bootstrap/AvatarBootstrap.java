@@ -32,7 +32,7 @@ public class AvatarBootstrap {
         1);
     */
     AvatarDAO.create(
-                  "Mad Skipping Al",
+                  "Skipping Al",
                   "Al is a high ranked auror. \\nHe not only has an imposing personality, \\nbut is also a great fighter known for \\nhis variable offensive fighting style.",
                   "alastor_moody",
                   "assets/",
@@ -48,7 +48,7 @@ public class AvatarBootstrap {
                   new PlayerStats(2,1,2,2,0));
 
           AvatarDAO.create(
-                  "Art Weaslby",
+                  "Art Weasleby",
                   "Art has worked in the Ministry \\nOf Magic for several years, but as you \\nwill see, he has not lost his touch.",
                   "arthur_weasley",
                   "assets/",
@@ -72,7 +72,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,2,0,0));
 
           AvatarDAO.create(
-                  "Crabbe and Sac",
+                  "Crabbe and Crabber",
                   "Drag'os henchmen. Known for \\ntheir strength. They always stay \\nat each others side.",
                   "crabbe_and_goyle",
                   "assets/",
@@ -80,7 +80,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,1,0,1,0));
 
           AvatarDAO.create(
-                  "Dolly",
+                  "Dolly P.",
                   "Little women in pink.\\nJust do not underestimate her,\\nshe is really robust.",
                   "dolores_umbridge",
                   "assets/",
@@ -88,7 +88,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,1,1,0,0));
 
           AvatarDAO.create(
-                  "Drag'o Femalfoy",
+                  "Draco Femalfoy",
                   "Not the nicest guy around.\\nQuite a big mouth and if push\\ncomes to shove, he is off in no time.",
                   "draco_malfoy",
                   "assets/",
@@ -112,7 +112,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,1,2,0));
 
           AvatarDAO.create(
-                  "George and Michael",
+                  "James and Oliver",
                   "Inseparable,\\nthe two Weasleys are really though.\\nTogether they are unstoppable.",
                   "fred_and_george",
                   "assets/",
@@ -120,7 +120,7 @@ public class AvatarBootstrap {
                   new PlayerStats(4,0,0,0,0));
 
           AvatarDAO.create(
-                  "George and Michael Uniform",
+                  "James and Oliver Uniform",
                   "Uniform seam to make one weak.\\nYeah maybe,but those two\\nare still some formidable runners.",
                   "fred_and_george_2",
                   "assets/",
@@ -128,7 +128,7 @@ public class AvatarBootstrap {
                   new PlayerStats(1,1,0,0,0));
 
           AvatarDAO.create(
-                  "Lockroy Gildehart",
+                  "Capt. Cockhard",
                   "Simply the greatest Wizard of all time,\\nknown from all his adventures,\\nso this one is right up his alley.",
                   "gilderoy_lockhart",
                   "assets/",
@@ -136,7 +136,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,0,0,0));
 
           AvatarDAO.create(
-                  "Tonic Weaslby",
+                  "Tonic Weaslbey",
                   "Lovely little Tonic,\\nthe youngest of the family,\\nbut still a Weaslby,\\nso watch out.",
                   "ginny_weasley",
                   "assets/",
@@ -208,7 +208,7 @@ public class AvatarBootstrap {
                   new PlayerStats(2,0,1,0,0));
 
           AvatarDAO.create(
-                  "Lurra Loveburg",
+                  "Lurra Ladybug",
                   "The good soul of the house.\\n Yes..., she is weird, but give her a go.",
                   "luna_lovegood",
                   "assets/",
@@ -216,7 +216,7 @@ public class AvatarBootstrap {
                   new PlayerStats(1,0,0,1,0));
 
           AvatarDAO.create(
-                  "Mimerma Mcmomamall",
+                  "Ms. McKittycat",
                   "The Professor for Transfiguration,\\nis also an Animagus,\\nshe got the velocity of a cat and\\nmaybe some lives to spare as well.",
                   "minerva_mcGonagel",
                   "assets/",
@@ -224,7 +224,7 @@ public class AvatarBootstrap {
                   new PlayerStats(2,0,0,2,0));
 
           AvatarDAO.create(
-                  "The Toilet Ghost",
+                  "Grieving Grace",
                   "Myrtle is a ghost.\\nShe likes to get lost in great heights,\\nbut remember, for the purpose of\\nthis game, she is not immortal.",
                   "moaning_myrtle2",
                   "assets/",
@@ -232,7 +232,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,0,4,0));
 
           AvatarDAO.create(
-                  "Ms. Weaslby",
+                  "Mother Weasleby",
                   "Having 7 children, she knows how to \\ntake care of all kind of injuries.",
                   "molly_weasley",
                   "assets/",
@@ -256,7 +256,7 @@ public class AvatarBootstrap {
                   new PlayerStats(-1,0,2,2,0));
 
           AvatarDAO.create(
-                  "Neville Schlongbottom",
+                  "Neville Strongbottom",
                   "I've always hoped that he is\\nthe one from the prophecy.\\nChoose him, he is really good.",
                   "neville_longbottom",
                   "assets/",
@@ -272,7 +272,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,3,1,0));
 
           AvatarDAO.create(
-                  "Padvatima",
+                  "Party Partil",
                   "The Parti-Twins are the cheapest \\nteam with the best agility.",
                   "padma_and_parvati_patil",
                   "assets/",
@@ -280,7 +280,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,1,1,0));
 
           AvatarDAO.create(
-                  "Mongo Oma",
+                  "Brussela Kraut",
                   "Head of the Pufflehuff House.\\nShe really gets the job done,\\nplus she reminds me of my grandma.",
                   "pomona_sprout",
                   "assets/",
@@ -296,7 +296,7 @@ public class AvatarBootstrap {
                   new PlayerStats(-2,0,3,3,0));
 
           AvatarDAO.create(
-                  "Jon Weaslby",
+                  "Jon Weasleby",
                   "discription",
                   "ron_weasley",
                   "assets/",
@@ -304,7 +304,7 @@ public class AvatarBootstrap {
                   new PlayerStats(1,0,0,0,0));
 
           AvatarDAO.create(
-                  "Bon Weaslby",
+                  "Bon Weasleby 2",
                   "The muscle of the gang. Quidditch \\nkeeper and the greatest Chess-player \\nof Hogwarts, you might think.",
                   "ron__weasley",
                   "assets/",
@@ -328,7 +328,7 @@ public class AvatarBootstrap {
                   new PlayerStats(5,-1,0,0,0));
 
           AvatarDAO.create(
-                  "Serverus Snapy",
+                  "Serverus Snoopy",
                   "The half-blood prince \\nand master of potion-making\\nalways has a elixir at hand.",
                   "severus_snape",
                   "assets/",
@@ -337,7 +337,7 @@ public class AvatarBootstrap {
 
 
           AvatarDAO.create(
-                  "Sloop Dog",
+                  "Sloop Dogg",
                   "The only wizzard who escaped azkaban\\non his own with the speed of a hound.\\nHe should be able to escape the \\ndungeon, and all it throws at him.",
                   "sirius_black",
                   "assets/",
@@ -345,7 +345,7 @@ public class AvatarBootstrap {
                   new PlayerStats(3,2,3,-2,0));
 
           AvatarDAO.create(
-                  "Sybrille Trelawney",
+                  "Sybrille Truehorny",
                   "Sybrille is gifted with the power \\nof foresight which gives her a \\nclear advantage in dodging obstacles.",
                   "sybill_trelawney",
                   "assets/",
@@ -353,7 +353,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,2,1,0));
 
           AvatarDAO.create(
-                  "Voldemotherfucker",
+                  "Vollderlord",
                   "He-Who-Must-Not-Be-Named-Or-Renamed-For-Legal-Reasons,\\nthe mightiest black magician of all time.\\nHe spreads fear and terror.",
                   "voldemort",
                   "assets/",

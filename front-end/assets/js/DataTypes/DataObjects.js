@@ -26,7 +26,7 @@ game.skin.skins = new Array();
 game.skin.currentSkin = 0;
 
 //Load Skins into game.skin.skins (INPUT)
-for (var i = 0; i <= 42; i++) {
+for (var i = 0; i <= 60; i++) {
     game.skin.skins[i] = new Skin(0, "default");
 }
 
