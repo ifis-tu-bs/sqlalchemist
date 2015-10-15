@@ -3,6 +3,7 @@ package controllers;
 import dao.ProfileDAO;
 import dao.UserDAO;
 
+import helper.MailSender;
 import models.Profile;
 import models.User;
 
@@ -112,6 +113,7 @@ public class UserController extends Controller {
                 json.findPath("password_old").textValue(),
                 json.findPath("password_new").textValue())) {
 
+            user.update();
             return ok("Password successfully changed");
         }
 
@@ -155,38 +157,22 @@ public class UserController extends Controller {
      */
     public static Result sendResetPasswordMail() {
         JsonNode  json = request().body().asJson();
-
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
+        User user = UserDAO.getByEmail(json.path("id").textValue());
+        if(user == null) {
+            return badRequest();
+        }
 
-        User user = UserDAO.getByEmail(json.findPath("id").textValue());
+        String newPassword = Integer.toHexString(user.getProfile().getUsername().hashCode());
 
-        user.sendResetPasswordMail();
+        user.setPassword(newPassword);
+        user.update();
+
+        MailSender.resetPassword(user.getEmail(), newPassword);
 
         return ok("Email has been sent");
-    }
-
-    public static Result doResetPassword(String resetCode) {
-        try {
-            if (Long.parseLong(resetCode, 16) % 97 != 1) {
-                return badRequest("Sorry, this Reset-Code has not been sent");
-            }
-        } catch (NumberFormatException e) {
-            return badRequest("Sorry, this Reset-Code has not been sent");
-        }
-
-        JsonNode json = request().body().asJson();
-
-        if (json == null) {
-            return badRequest("Could not retrieve Json from POST body!");
-        }
-
-        if (!User.doResetPassword(resetCode, json.findPath("newpassword").textValue())) {
-            return badRequest("User not found - Wrong Link reset link?");
-        }
-
-        return ok("Password has been changed.");
     }
 
     public static Result checkStudent() {

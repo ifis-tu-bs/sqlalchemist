@@ -18,7 +18,6 @@ GET         /users/student                      controllers.UserController.check
 POST        /users                              controllers.UserController.edit()
 GET         /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
 POST        /users/password                     controllers.UserController.sendResetPasswordMail()
-POST        /users/doPasswordReset/:code        controllers.UserController.doResetPassword(code: String)
 POST        /users/:id                          controllers.UserController.promote(id :Long)
 DELETE      /users                              controllers.UserController.destroy()
 
