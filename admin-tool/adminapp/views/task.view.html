@@ -167,10 +167,41 @@
       </uib-tab>
 
       <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionForeignKeys" deselect="keepTaskSets(); keepTabActive();">
-      <tab-heading>
+        <tab-heading>
           Intension <i>(foreignKeys)</i>
         </tab-heading>
-
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th ng-click="orderTableEditPredicate = 'sourceTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
+            <th ng-click="orderTableEditPredicate = 'sourceColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+            <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
+            <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
+            <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="foreignKey in vm.foreignKeyRelations | orderBy:orderTableEditPredicate:orderReverse | filter:search">
+              <td><input type="text" ng-model="foreignKey.sourceTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
+              <td><input type="text" ng-model="foreignKey.sourceColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.sourceTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.sourceTable === ''"> </td>
+              <td><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></td>
+              <td><input type="text" ng-model="foreignKey.destinationTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
+              <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
+              <td>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewForeignKey(); $event.stopPropagation();">New...</button>
+              </td>
+              <td/>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+          </tbody>
+        </table>
       </uib-tab>
 
       <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.extension" deselect="keepTaskSets(); keepTabActive();">

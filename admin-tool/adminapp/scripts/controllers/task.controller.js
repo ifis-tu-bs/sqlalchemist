@@ -41,6 +41,7 @@ angular
         vm.taskSets = [];
         vm.tasks = [];
         vm.tables = [];
+        vm.foreignKeys = [];
         $scope.selectedTaskSet = {};
         $scope.selectedTask = {};
         $scope.selectedTable = {};
@@ -65,8 +66,8 @@ angular
                                     FlashService.Error(result.message);
                                 } else {
                                     vm.taskSets = result;
-                                    $scope.getCurrentPath();
                                     console.log(result);
+                                    $scope.getCurrentPath();
                                 }
                         }
                 );
@@ -114,7 +115,7 @@ angular
         var DefaultTaskSet = function() {
             this.taskSetName = "";
             this.tableDefinitions = [];
-            this.foreignKeys = [];
+            this.foreignKeyRelations = [];
             this.tasks=[];
             this.isHomework = false;
         };
@@ -132,15 +133,18 @@ angular
         }
 
         function selectTaskSet (taskSetIndex) {
+
             $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
+        console.log($scope.selectedTaskSet);
             vm.tasks = $scope.selectedTaskSet.tasks;
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
+            vm.foreignKeyRelations = $scope.selectedTaskSet.foreignKeyRelations;
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
         }
 
         /* Server Side Methods */
         $scope.saveSelectedTaskSet = function () {
-
+            console.log($scope.selectedTaskSet);
             FlashService.Clear();
 
             if ($scope.selectedTaskSet.id != undefined) {
@@ -177,7 +181,7 @@ angular
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {
-                                return "Are you sure you want to delete TaskSet: " + taskSet.taskSetName + "?\n It will be deleted forever!";
+                                return "Are you sure you want to delete TaskSet: " + taskSet.taskSetName + "? It will be deleted forever!";
                             }
                     }
             });
@@ -294,6 +298,28 @@ angular
         //////////////////////////////777
 
         /* Data */
+        var DefaultForeignKey = function () {
+            this.sourceTable = null;
+            this.sourceColumn = null;
+            this.destinationTable = null;
+            this.destinationColumn = null;
+        }
+
+        /* Methods */
+        $scope.pushNewForeignKey = function () {
+            vm.foreignKeyRelations.push(new DefaultForeignKey());
+        }
+
+        /* Changes are only changed on the Server via TaskSet Actions */
+        $scope.deleteForeignKey = function (foreignKey) {
+            vm.foreignKeyRelations.splice(findInArray(vm.foreignKeyRelations, foreignKey), 1);
+        }
+
+        //////////////////////////////777
+        //  Tasks: Control
+        //////////////////////////////777
+
+        /* Data */
         var DefaultTask = function () {
             this.taskSet = $scope.selectedTaskSet.id;
             this.taskName = "";
@@ -311,7 +337,6 @@ angular
         }
 
         /* Server Side Methods */
-
         $scope.saveTask = function (task) {
             if (task.id != undefined) {
                 TaskService.editTask(task.id, task).then(
@@ -439,6 +464,18 @@ angular
                 }
             }
             return -1;
+        }
+
+        $scope.findColumnsForTableName = function (tableName) {
+            var columns = [];
+            for (var i = 0; i < vm.tables.length; i++) {
+                if (vm.tables[i].tableName === tableName) {
+                    for (var j = 0; j < vm.tables[i].columns.length; j++) {
+                        columns.push(vm.tables[i].columns[j].columnName);
+                    }
+                }
+            }
+            return columns;
         }
 
 
