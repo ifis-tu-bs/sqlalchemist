@@ -62,13 +62,12 @@ angular
             } else {
                 TaskService.getAllTaskSets().then(
                         function (result) {
-                                if (result.error) {
-                                    FlashService.Error(result.message);
-                                } else {
-                                    vm.taskSets = result;
-                                    console.log(result);
-                                    $scope.getCurrentPath();
-                                }
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                                vm.taskSets = result;
+                                $scope.getCurrentPath();
+                            }
                         }
                 );
 
@@ -76,7 +75,7 @@ angular
         }
 
         //////////////////////////////777
-        //  Saving current vm.taskSets when leaving
+        //  Saving data when leaving View
         //  Restoring saved Data and Displaying the correct screen
         //////////////////////////////777
 
@@ -87,14 +86,20 @@ angular
         $scope.keepTaskSets = function () {
             $rootScope.Tasks.taskSets = vm.taskSets;
         }
+
+        $scope.$on('$locationChangeStart', function(event) {
+            $scope.keepTabActive();
+            $scope.keepTaskSets();
+        });
         
         $scope.getCurrentPath = function () {
             var path = $rootScope.Tasks;
 
+            console.log(path);
             //Find out if a TaskSet is currently selected
             if (path.selectedTaskSet) {
-                $scope.selectTaskSet(path.selectedTaskSet);
                 $scope.tabActive = path.tabActive;
+                $scope.selectTaskSet(path.selectedTaskSet);
             } else {
                 return;
             }
@@ -135,7 +140,6 @@ angular
         function selectTaskSet (taskSetIndex) {
 
             $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
-        console.log($scope.selectedTaskSet);
             vm.tasks = $scope.selectedTaskSet.tasks;
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
             vm.foreignKeyRelations = $scope.selectedTaskSet.foreignKeyRelations;
@@ -381,12 +385,12 @@ angular
                             break;
                         }
                     }
-
                     TaskService.rateTask(task.id, ratingJson).then(
                         function (result) {
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
+                                console.log($scope.tabActive);
                                 vm.tasks[findInArray(vm.tasks, task)] = result;
                             }
                     });
@@ -419,39 +423,6 @@ angular
             });
         }
 */
-        //////////////////////////////777
-        //  Rating stuff
-        //////////////////////////////777
-
-
-
-
-        $scope.rateTask = function (task, decision) {
-
-            var ratingJson = {};
-            switch (decision) {
-                case 'positive': {
-                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
-                    break;
-                }
-                case 'needReview': {
-                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
-                    break;
-                }
-                case 'negative': {
-                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
-                    break;
-                }
-            }
-            TaskService.rateTask(task.id, ratingJson).then(
-                function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message)
-                    } else {
-                        initController();
-                    }
-            });
-        }
 
         //////////////////////////////777
         //  Array functions
