@@ -134,9 +134,20 @@ public class DBConnection{
                 break;
             }
         }
-        //for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
+        for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
+            String addForeignKey = "ALTER TABLE " + foreignKeyRelation.getSourceTable() + " ADD FOREIGN KEY (" + foreignKeyRelation.getSourceColumn() + ") REFERENCES " + foreignKeyRelation.getDestinationTable() + "(" + foreignKeyRelation.getDestinationColumn() + ");";
+            Logger.info(addForeignKey);
 
-        //}
+            // Execute the Statements
+            try {
+                stmt = connection.createStatement();
+                stmt.execute(addForeignKey);
+            } catch (SQLException e) {
+                Logger.error("DBConnection.create: " + e.getMessage());
+                status = e.getErrorCode();
+                break;
+            }
+        }
         return status;
     }
 

@@ -109,7 +109,7 @@ public class TaskSetBootstrap {
                 "            \"extension\": null\n" +
                 "        }\n" +
                 "    ],\n" +
-                "    \"foreignKeys\": [\n" +
+                "    \"foreignKeyRelations\": [\n" +
                 "        {\n" +
                 "            \"sourceTable\":\"Profile\",\n" +
                 "            \"sourceColumn\":\"user_id\",\n" +
