@@ -299,10 +299,10 @@ angular
 
         /* Data */
         var DefaultForeignKey = function () {
-            this.sourceTable = null;
-            this.sourceColumn = null;
-            this.destinationTable = null;
-            this.destinationColumn = null;
+            this.sourceTable = "";
+            this.sourceColumn = "";
+            this.destinationTable = "";
+            this.destinationColumn = "";
         }
 
         /* Methods */
