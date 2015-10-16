@@ -57,7 +57,8 @@ public class SQLController extends Controller {
             }
         }
         Logger.info("Difficulty: " + Math.round(difficulty / 2));
-        Task task = TaskDAO.getByDifficulty(profile, Math.round(difficulty / 2));
+        //Task task = TaskDAO.getByDifficulty(profile, Math.round(difficulty / 2));
+        Task task = TaskDAO.getById(1L);
 
         if(task == null) {
             Logger.warn("TaskController.story - no task found for ScrollID: " + id);
@@ -119,7 +120,8 @@ public class SQLController extends Controller {
             return badRequest("difficulty is out of range");
         }
 
-        Task task = TaskDAO.getByDifficulty(profile, difficulty);
+        //Task task = TaskDAO.getByDifficulty(profile, difficulty);
+        Task task = TaskDAO.getById(1L);
 
         if(task == null) {
             Logger.warn("SQLController.trivia - no task available");
