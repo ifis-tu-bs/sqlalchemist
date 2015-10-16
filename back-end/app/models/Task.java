@@ -1,7 +1,8 @@
 package models;
 
+import com.avaje.ebean.annotation.ConcurrencyMode;
+import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.*;
-
 
 import play.db.ebean.Model;
 import play.libs.Json;
@@ -16,7 +17,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Task")
+@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Task extends Model {
+
+    public static final int EVALUATIONSTRATEGY_SET = 1;
+    public static final int EVALUATIONSTRATEGY_LIST = 2;
+
     @Id
     private long id;
 
@@ -26,16 +32,20 @@ public class Task extends Model {
     private String  taskName;
     private String  taskText;
     private String  refStatement;
-    private int     evaluationstrategy;
+    private int     evaluationStrategy;
     private int     points;
     private int     requiredTerm;
 
     @ManyToOne
-    private final Profile     creator;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private List<Comment> comments;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
-    private List<Rating> ratings;
+    private final Profile   creator;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "task")
+    private List<Comment>   comments;
+    @OneToMany(
+            cascade = CascadeType.ALL,
+            mappedBy = "task")
+    private List<Rating>    ratings;
 
     private final Date created_at;
     private Date updated_at;
@@ -51,7 +61,7 @@ public class Task extends Model {
      * @param taskName              the name of this task
      * @param taskText              the description of the task
      * @param refStatement          the reference statement
-     * @param evaluationstrategy    the evaluationstrategy
+     * @param evaluationStrategy    the evaluationStrategy
      * @param points                the value of points
      * @param requiredTerm          the required Terms
      * @param creator               the creator
@@ -60,7 +70,7 @@ public class Task extends Model {
             String taskName,
             String taskText,
             String refStatement,
-            int evaluationstrategy,
+            int evaluationStrategy,
             int points,
             int requiredTerm,
             Profile creator) {
@@ -68,7 +78,7 @@ public class Task extends Model {
         this.taskName           = taskName;
         this.taskText           = taskText;
         this.refStatement       = refStatement;
-        this.evaluationstrategy = evaluationstrategy;
+        this.evaluationStrategy = evaluationStrategy;
         this.points             = points;
         this.requiredTerm       = requiredTerm;
 
@@ -147,12 +157,12 @@ public class Task extends Model {
         this.refStatement = refStatement;
     }
 
-    public int getEvaluationstrategy() {
-        return evaluationstrategy;
+    public int getEvaluationStrategy() {
+        return evaluationStrategy;
     }
 
-    public void setEvaluationstrategy(int evaluationstrategy) {
-        this.evaluationstrategy = evaluationstrategy;
+    public void setEvaluationStrategy(int evaluationStrategy) {
+        this.evaluationStrategy = evaluationStrategy;
     }
 
     public int getPoints() {

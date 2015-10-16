@@ -67,7 +67,7 @@ game.LegendScreen = me.ScreenObject.extend({
                         " first. Remember you can submit wrong answers too!");
                 };
 
-                var homeworks = new game.ClickableElement('homeworks','homework', this.homeworkClick, 17, 4, 80, 91, 1);
+                var homeworks = new game.ClickableElement('homeworks','Homework', this.homeworkClick, 17, 4, 80, 91, 1);
                 me.game.world.addChild(homeworks);
                 $("#homeworks").fadeIn(100);
             }
@@ -118,7 +118,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " all levels of the Dungeon. If you collected all scrolls, used the enchantments in the" +
                 " Mirror and beaten the Boss, you will skip that level.");
         };
-        var scrollCol = new game.ClickableElement('scrollCol', "scroll collection", this.scrollClick, 16, 8, 80.7, 31, 2);
+        var scrollCol = new game.ClickableElement('scrollCol', "Scroll Collection", this.scrollClick, 16, 8, 80.7, 31, 2);
         me.game.world.addChild(scrollCol);
         $("#scrollCol").fadeIn(100);
 
@@ -137,7 +137,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " maps you need your best potions." + "<br>" + "So don't forget: You have to brew a lot of potions to" +
                 " get through the story!");
         };
-        var door = new game.ClickableElement('door', 'door to dungeon', this.doorClick, 16, 8, 80.8, 40.8, 2);
+        var door = new game.ClickableElement('door', 'Door to Dungeon', this.doorClick, 16, 8, 80.8, 40.8, 2);
         me.game.world.addChild(door);
         $("#door").fadeIn(100);
 
@@ -155,7 +155,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " speed, jump and defense for ALL your avatars." + "<br>" + "New avatars can be bought in the shop in the main menu."+
                 " Every avatar has special stats, but if you want to know which, you have to buy them.");
         };
-        var mirror = new game.ClickableElement('mirror', 'mirror', this.mirrorClick, 12, 4, 82.5, 52, 1);
+        var mirror = new game.ClickableElement('mirror', 'Mirror', this.mirrorClick, 12, 4, 82.5, 52, 1);
         me.game.world.addChild(mirror);
         $("#mirror").fadeIn(100);
 
@@ -174,7 +174,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " potion bottle, the potion will be inserted into the first free belt slot. By clicking on the scroll" +
                 " above it, you can keep more supplies coming." + "<br>" + "New belt slots can also be bought in the shop in the main menu.");
         };
-        var belt = new game.ClickableElement('belt', 'belt', this.beltClick, 8, 4, 84.5, 60, 1);
+        var belt = new game.ClickableElement('belt', 'Belt', this.beltClick, 8, 4, 84.5, 60, 1);
         me.game.world.addChild(belt);
         $("#belt").fadeIn(100);
 
@@ -192,7 +192,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 + "<br>" +
                 "Be aware, that you entire progress will be deleted!");
         };
-        var tutorial = new game.ClickableElement('tutorial', 'tutorial', this.tutorialClick, 15, 4, 81, 68, 1);
+        var tutorial = new game.ClickableElement('tutorial', 'Tutorial', this.tutorialClick, 15, 4, 81, 68, 1);
         me.game.world.addChild(tutorial);
         $("#tutorial").fadeIn(100);
 
@@ -213,7 +213,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " For each solved statement you get a certain amount of coins and score. You can exchange your coins " +
                 " in the shop for several characters or additional belt slots.");
         };
-        var task = new game.ClickableElement('triviamode','quiz mode', this.taskClick, 18, 4, 79.5, 76, 1);
+        var task = new game.ClickableElement('triviamode','Quiz Mode', this.taskClick, 18, 4, 79.5, 76, 1);
         me.game.world.addChild(task);
         $("#triviamode").fadeIn(100);
 
@@ -231,7 +231,7 @@ game.LegendScreen = me.ScreenObject.extend({
                 " thumbs-down (the red one). If you think that a tasks is complete nonsense, click on the magnifying glass" +
                 " and some HiWi from IfIs will review and correct them.");
         };
-        var rating    = new game.ClickableElement('rating','rating', this.ratingClick, 12, 4, 82.5, 84, 1);
+        var rating    = new game.ClickableElement('rating','Rating', this.ratingClick, 12, 4, 82.5, 84, 1);
         me.game.world.addChild(rating);
         $("#rating").fadeIn(100);
     }

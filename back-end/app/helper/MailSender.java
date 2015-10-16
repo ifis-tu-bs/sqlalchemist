@@ -48,6 +48,12 @@ public class MailSender {
         return mailSender;
     }
 
+
+
+    public static void resetPassword(String email, String newPassword) {
+        MailSender.getInstance().sendResetEmail(email, newPassword);
+    }
+
     /**
      * Send verify Email. Should be Used by User.class
      * @param email email.TO
@@ -93,9 +99,9 @@ public class MailSender {
     /**
      * Send verify Email. Should be Used by User.class
      * @param email email.TO
-     * @param verifyString the Hex-verify-String.
+     * @param newPassword the Hex-verify-String.
      */
-    public void sendResetEmail(String email, String verifyString) {
+    public void sendResetEmail(String email, String newPassword) {
 
         Session session = Session.getInstance(this.props,
                 new javax.mail.Authenticator() {
@@ -116,14 +122,13 @@ public class MailSender {
             message.setText("" +
                     "Dear User\n" +
                     "\n" +
-                    "Here is your password reset link for theSQLalchemist.\n" +
+                    "Here is your password reset link for the SQL Alchemist.\n" +
                     "If you did not order a reset simply ignore this Mail!\n" +
-                    "http://sqlalchemist.ifis.cs.tu-bs.de/users/passwordreset/" + verifyString + "\n" +
+                    "Your new password is: " + newPassword + ", please change it\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
                     "\n" +
-                    "Greetings, your SQLalchemist Admin\n" +
-                    "");
+                    "Greetings, your SQL Alchemist Admin\n");
 
             Transport.send(message);
 
@@ -210,4 +215,5 @@ public class MailSender {
             e.printStackTrace();
         }
     }
+
 }

@@ -25,11 +25,11 @@ public class TaskView {
 
         String  taskText            = taskNode.get("taskText").asText();
         String  refStatement        = taskNode.get("refStatement").asText();
-        int     evaluationstrategy  = taskNode.get("evaluationstrategy").asInt();
+        int     evaluationStrategy  = taskNode.get("evaluationStrategy").asInt();
         int     points              = taskNode.get("points").asInt();
         int     requiredTerm        = taskNode.get("requiredTerm").asInt();
 
-        return new Task(taskName, taskText, refStatement, evaluationstrategy, points, requiredTerm, creator);
+        return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, creator);
     }
 
     public static ObjectNode toJsonList(Task task) {
@@ -48,7 +48,7 @@ public class TaskView {
         json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("refStatement",        task.getRefStatement());
-        json.put("evaluationstrategy",  task.getEvaluationstrategy());
+        json.put("evaluationStrategy",  task.getEvaluationStrategy());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 

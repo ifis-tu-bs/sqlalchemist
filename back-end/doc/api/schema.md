@@ -14,7 +14,6 @@
 |POST  |/users                      |User       |.edit                 |User.Form     |200-                         |                     |
 |GET   |/users/verify/:code         |User       |.verifyEmail          |              |200-                         |                     |
 |POST  |/users/password             |User       |.sendResetPasswordMail|              |200-                         |                     |
-|POST  |/users/doPasswordReset/:code|User       |.doResetPassword      |              |200-                         |                     |
 |POST  |/users/:id                  |User       |.promote              |              |200-                         |                     |
 |DELETE|/users                      |User       |.delete               |              |200-                         |                     |
 |Item|

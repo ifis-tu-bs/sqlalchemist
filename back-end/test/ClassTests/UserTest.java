@@ -1,6 +1,5 @@
 package ClassTests;
 
-import bootstrap.AvatarBootstrap;
 import bootstrap.ShopItemBootstrap;
 import dao.UserDAO;
 import models.*;

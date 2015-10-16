@@ -14,14 +14,17 @@
         service.viewTaskSet = viewTaskSet;
         service.rateTaskSet = rateTaskSet;
         service.postTaskSetComment = postTaskSetComment;
+        service.deleteTaskSet = deleteTaskSet;
 
         /* TaskControlls */
         service.createTask = createTask;
         service.editTask = editTask;
+        service.rateTask = rateTask;
 
+        /* Data */
+        service.getColumnDefinitionDataTypes = getColumnDefinitionDataTypes;
 
         service.getSubTask = getSubTask
-        //service.rateSubTask = rateSubTask;
         service.postSubTaskComment = postSubTaskComment;
         service.createHomeWork = createHomeWork;
         //service.getAllHomeworks = getAllHomeworks;
@@ -32,9 +35,7 @@
         return service;
 
 
-        /*
-         * TaskSet Controlls
-         */
+        /* TaskSet Controlls */
 
         function createTaskSet(json) {
             return $http.post('/TaskSet/', json).then(handleSuccess, handleError);
@@ -60,9 +61,12 @@
             return $http.post('/TaskSet/' + id + '/comment', {text: comment}).then(handleSuccess, handleError);
         }
 
-        /*
-         * Task Controlls
-         */
+        function deleteTaskSet(id) {
+            return $http.delete('/TaskSet/' + id + '/').then(handleSuccess, handleError);
+        }
+
+
+        /* Task Controlls */
 
         function createTask(taskSetId, taskJson) {
             return $http.post('/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
@@ -73,11 +77,18 @@
         }
 
         function rateTask(id, ratingJson) {
-            return $http.post("/task/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
+            return $http.post("/Task/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
         }
 
 
+        /* DataTypes */
 
+        function getColumnDefinitionDataTypes() {
+            return $http.get("/ColumnDefinition/DataTypes/").then(handleSuccess, handleError);
+        }
+
+
+        /* Left Overs*/
 
         function createHomeWork(dateFromUTCString, dateToUTCString, taskFiles, name) {
             return $http.post("/homework",{from: dateFromUTCString, to: dateToUTCString, tasks: taskFiles, name: name}).then(handleSuccess, handleError);

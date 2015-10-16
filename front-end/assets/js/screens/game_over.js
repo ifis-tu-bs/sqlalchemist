@@ -73,13 +73,34 @@ game.GameOverScreen = me.ScreenObject.extend({
                 this.scrollsObtained = new game.TextOutputElement('obtainedId', 73, 26.5, 14, 37.109375, 5);
                 me.game.world.addChild(scrollsObtained);
 
-                if (game.data.scollLimit !== 0) {
+                if(game.persistent.depth === 52){
+                    function profileReply(xmlHttpRequest){
+                        var playerstate_JSON = JSON.parse(xmlHttpRequest.responseText);
+                        var id       = playerstate_JSON.id;
+                        var username = playerstate_JSON.username;
+                        function profileID_Reply(xmlHttpRequest) {
+
+                            var profile_JSON = JSON.parse(xmlHttpRequest.responseText);
+                            //console.log("Kahn",profile_JSON);
+                            var playedRuns = profile_JSON.highScore.playedRuns;
+
+                            this.scrollsObtained.writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                            "                               Well done " + username + "!!!"+"<br>" + "<br>" + "&nbsp;You have beaten the game in " + (playedRuns+1) + "&nbsp;Runs!" + "<br>" +
+                                                           "&nbsp;reset the story in the settings" + "<br>" +  "&nbsp;if you want to finish it quicker.");
+                        }
+                        ajaxSendProfileIdRequest(id, profileID_Reply);
+                    }
+                    ajaxSendProfileRequest(profileReply);
+
+
+
+                }else if (game.data.scollLimit !== 0) {
 
                     if (game.data.scrolls.length !== 0) {
                         this.scrollsObtained.writeHTML("Scrolls obtained: " + "<br>", 'obtainedPara');
 
                         for (i = 0; i < game.data.scrolls.length; i++) {
-                            this.scrollsObtained.writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + game.data.scrolls[i] + "<br>",
+                            this.scrollsObtained.writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + game.data.scrolls[i] + "<br>",
                                                            'obtainedPara');
                         }
 
@@ -112,7 +133,12 @@ game.GameOverScreen = me.ScreenObject.extend({
              */
             if (game.data.music) {
                 me.audio.stopTrack();
-                me.audio.playTrack("gameover", game.data.musicVolume);
+                if(game.persistent.depth === 52){
+                    me.audio.playTrack("result", game.data.musicVolume);
+                }else{
+                    me.audio.playTrack("gameover", game.data.musicVolume);
+                }
+
             }
 
             /**

@@ -1,7 +1,6 @@
 package view;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import helper.SQLExceptionParser;
 import models.SQLResult;
 import models.UserStatement;
 import play.libs.Json;
@@ -17,7 +16,7 @@ public class SQLResultView {
         sqlResultNode.put("type",       sqlResult.getType());
         sqlResultNode.put("terry",      "semantic error");
         sqlResultNode.put("time",       userStatement.getTime());
-        sqlResultNode.put("SQLError",   SQLExceptionParser.parse(sqlResult.getSQLError()));
+        sqlResultNode.put("SQLError",   sqlResult.getSqlStatus().getSqlException().getMessage());
 
         return sqlResultNode;
     }

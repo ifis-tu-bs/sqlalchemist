@@ -18,7 +18,6 @@ GET         /users/student                      controllers.UserController.check
 POST        /users                              controllers.UserController.edit()
 GET         /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
 POST        /users/password                     controllers.UserController.sendResetPasswordMail()
-POST        /users/doPasswordReset/:code        controllers.UserController.doResetPassword(code: String)
 POST        /users/:id                          controllers.UserController.promote(id :Long)
 DELETE      /users                              controllers.UserController.destroy()
 
@@ -48,6 +47,8 @@ DELETE      /TaskSet/:id/                       controllers.TaskSetController.de
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
 
+GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
+
 #TaskController
 POST        /TaskSet/:id/Task                   controllers.TaskController.create(id :Long)
 GET         /Task/                              controllers.TaskController.read()
@@ -59,7 +60,7 @@ POST        /Task/:id/comment                   controllers.TaskController.comme
 
 #SQLController
 GET         /SQL/Story/:id                      controllers.SQLController.story(id: Long)
-#POST        /SQL/Story/:id                      controllers.SQLController.storySolve(id: Long)
+POST        /SQL/Story/:id                      controllers.SQLController.storySolve(id: Long)
 GET         /SQL/Trivia/:id                     controllers.SQLController.trivia(id: Int)
 POST        /SQL/Trivia/:id                     controllers.SQLController.triviaSolve(id: Long)
 GET         /SQL/Homework                       controllers.SQLController.homework()
