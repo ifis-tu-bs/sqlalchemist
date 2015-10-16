@@ -17,7 +17,8 @@ public class SQLParser {
             return new SQLResult(task, SQLResult.ERROR, status);
         }
 
-        return new SQLResult(task, SQLResult.SEMANTICS);
+        //return new SQLResult(task, SQLResult.SEMANTICS);
+        return new SQLResult(task, SQLResult.SUCCESSFULL);
     }
 
     public static SQLStatus initialize(TaskSet taskSet) {
