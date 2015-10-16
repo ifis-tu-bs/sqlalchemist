@@ -18,7 +18,6 @@ GET         /users/student                      controllers.UserController.check
 POST        /users                              controllers.UserController.edit()
 GET         /users/verify/:code                 controllers.UserController.verifyEmail(code: String)
 POST        /users/password                     controllers.UserController.sendResetPasswordMail()
-POST        /users/doPasswordReset/:code        controllers.UserController.doResetPassword(code: String)
 POST        /users/:id                          controllers.UserController.promote(id :Long)
 DELETE      /users                              controllers.UserController.destroy()
 
@@ -47,6 +46,8 @@ PATCH       /TaskSet/:id/                       controllers.TaskSetController.up
 DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
+
+GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
 
 #TaskController
 POST        /TaskSet/:id/Task                   controllers.TaskController.create(id :Long)

@@ -67,63 +67,49 @@ public class SQLController extends Controller {
         profile.update();
         return ok(TaskView.toJsonExercise(task));
     }
-/*
+
     public static Result storySolve(long id) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        JsonNode body = request().body().asJson();
+        Profile         profile         = ProfileDAO.getByUsername(request().username());
+        JsonNode        body            = request().body().asJson();
+        Task            task            = TaskDAO.getById(id);
+        UserStatement   userStatement   = UserStatementView.fromJsonForm(body);
 
-        if (body == null) {
-            return badRequest("Could not retrieve Json from POST body!");
+        if (userStatement == null) {
+            Logger.warn("TaskController.triviaSolve - invalid json body");
+            return badRequest("invalid json body");
         }
-        String  statement    = body.findPath("statement").textValue();
-        int     time         = (body.findPath("time").intValue()/1000);
-
-        if(statement == null) {
-            return badRequest("Expecting Json data");
+        if(task == null) {
+            Logger.warn("TaskController.triviaSolve - no task found");
+            return badRequest("no task found");
         }
 
-        Task task = TaskDAO.getById(id);
+        SQLResult   sqlResult   = SQLParser.checkStatement(task, userStatement);
+        ObjectNode  resultNode;
+        Result      result;
+        boolean     status;
 
-        Logger.info(body.toString());
+        if(sqlResult.getType() != SQLResult.SUCCESSFULL) {
+            status = false;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement);
+            result = badRequest(resultNode);
+        } else {
+            profile.addSuccessfully();
+            int coins = profile.addScore(task.getScore() / userStatement.getTime());
+            profile.addCurrentScroll();
+            status = true;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement, coins);
+            result = ok(resultNode);
+        }
 
-        ObjectNode node = Json.newObject();
         profile.addStatement();
-        profile.addTime(time);
-        Result result;
-        try {
-            if(task.solve(statement)) {
-                SolvedTaskDAO.update(profile, task, true);
-                profile.addSuccessfully();
-                int coins = profile.addScore(task.getScore() / time);
-                profile.addCurrentScroll();
+        profile.addTime(userStatement.getTime());
 
-                node.put("terry", "your answer was correct");
-                node.put("time", time);
-                node.put("score", task.getScore() / time);
-                node.put("coins",  coins);
+        SolvedTaskDAO.update(profile, task, status);
 
-                result = ok(node);
-            } else {
-                SolvedTaskDAO.update(profile, task, false);
-
-                node.put("terry", "SEMANTIC");
-                node.put("time",        time);
-
-                result = badRequest(node);
-            }
-        } catch (SQLAlchemistException e) {
-            Logger.info("SQL");
-            SolvedTaskDAO.update(profile, task, false);
-
-            node.put("terry",       "SYNTAX");
-            node.put("time",        time);
-            node.put("DBMessage", e.getMessage());
-
-            result = badRequest(node);
-        }
         profile.update();
         return result;
-    }*/
+
+    }
 
     public static Result trivia(int difficulty) {
         Profile profile = ProfileDAO.getByUsername(request().username());

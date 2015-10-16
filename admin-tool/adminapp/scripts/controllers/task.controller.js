@@ -261,7 +261,7 @@ angular
             this.taskSet = $scope.selectedTaskSet.id;
             this.taskName = "";
             this.refStatement = "";
-            this.evaluationstrategy = 0;
+            this.evaluationStrategy = 1;
             this.points = 1;
             this.requiredTerm = 0;
             this.isCollapsed = true;

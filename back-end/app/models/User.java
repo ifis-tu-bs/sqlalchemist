@@ -49,10 +49,7 @@ public class User extends Model {
 
     public boolean isStudent;
 
-    private String passwordHash;
-
-    @Column(name = "password_reset_code", unique = true)
-    private String passwordResetCode;
+    private String password;
 
     /**
      * 1 | User
@@ -66,10 +63,10 @@ public class User extends Model {
     public static final int ROLE_CREATOR = 2;
     public static final int ROLE_ADMIN = 3;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
     public List<UserSession> sessions;
 
-    @OneToOne(mappedBy="user")
+    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
     public Profile profile;
 
     private Date created_at;
@@ -101,9 +98,10 @@ public class User extends Model {
 
         long verifyNumber = (long) this.hashCode();
         long checksum = (98 - ((verifyNumber * 100) % 97)) % 97;
+
         this.emailVerifyCode = Long.toHexString(verifyNumber * 100 + checksum);
 
-        this.passwordHash = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.setPassword(password);
 
         this.role = role;
 
@@ -118,6 +116,7 @@ public class User extends Model {
         ObjectNode node = Json.newObject();
 
         node.put("id",          this.id);
+        node.put("username",    this.getProfile().getUsername());
         if(this.matNR != null) {
             node.put("matno",       this.matNR);
         } else {
@@ -136,6 +135,7 @@ public class User extends Model {
         }
 
         node.put("email",       this.email);
+        node.put("createdAt",   String.valueOf(this.created_at));
 
         return node;
     }
@@ -174,9 +174,8 @@ public class User extends Model {
      * @return  returns true if successful
      */
     public boolean changePassword(String oldPassword, String newPassword) {
-        if(BCrypt.checkpw(oldPassword, this.passwordHash)) {
-            this.passwordHash = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-            this.update();
+        if(BCrypt.checkpw(oldPassword, this.password)) {
+            this.setPassword(newPassword);
             return true;
         }
         return false;
@@ -186,11 +185,8 @@ public class User extends Model {
      * Setting password (used by doResetPassword)
      * @param newPassword    asd
      */
-    private void setPassword(String newPassword) {
-        this.passwordHash = BCrypt.hashpw(newPassword, BCrypt.gensalt());
-        this.passwordResetCode = null;
-
-        this.update();
+    public void setPassword(String newPassword) {
+        this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
     /**
@@ -218,9 +214,6 @@ public class User extends Model {
      * @param profile User Profile
      */
     public void setProfile(Profile profile) {
-        if(profile == null) {
-            throw new IllegalArgumentException();
-        }
         this.profile = profile;
     }
 
@@ -277,7 +270,7 @@ public class User extends Model {
             if (user != null && user.isStudent) {
                 // ToDO WE NEED THIS?
                 // LDAP Magic
-            } else if (user != null &&  BCrypt.checkpw(password, user.passwordHash)) {
+            } else if (user != null &&  BCrypt.checkpw(password, user.password)) {
                 if(adminTool && user.getRole() > ROLE_USER || !adminTool) {
                     return user;
                 }
@@ -285,50 +278,12 @@ public class User extends Model {
         }
            */
         User user = dao.UserDAO.getByEmail(id);
-        if (user != null &&  BCrypt.checkpw(password, user.passwordHash)) {
+        if (user != null &&  BCrypt.checkpw(password, user.password)) {
             if (adminTool && user.getRole() > ROLE_USER || !adminTool) {
                 return user;
             }
         }
         return null;
-    }
-
-    /**
-     * Send reset mail
-     *
-     * @return asd
-     */
-    public void sendResetPasswordMail() {
-
-
-        long verifyNumber = (long) this.email.hashCode();
-        long checksum = (98 - ((verifyNumber * 100) % 97)) % 97;
-
-        this.passwordResetCode = Long.toHexString(verifyNumber * 100 + checksum);
-
-        this.update();
-
-        MailSender.getInstance().sendResetEmail(this.email, this.passwordResetCode);
-    }
-
-    /**
-     *  Change Password for set resetCode
-     * @param resetCode asd
-     * @param newPassword asd
-     * @return asd
-     */
-    public static boolean doResetPassword(String resetCode, String newPassword) {
-        User user = find.where().eq("password_reset_code", resetCode).findUnique();
-
-        if (user == null) {
-            return false;
-        }
-
-        user.setPassword(newPassword);
-
-        MailSender.getInstance().sendPasswordChanged(user.email);
-
-        return true;
     }
 
     /**

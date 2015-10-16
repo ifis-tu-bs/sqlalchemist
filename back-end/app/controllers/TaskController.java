@@ -107,7 +107,7 @@ public class TaskController extends Controller {
         task.setTaskName(taskNew.getTaskName());
         task.setTaskText(taskNew.getTaskText());
         task.setRefStatement(taskNew.getRefStatement());
-        task.setEvaluationstrategy(taskNew.getEvaluationstrategy());
+        task.setEvaluationStrategy(taskNew.getEvaluationStrategy());
         task.setPoints(taskNew.getPoints());
         task.setRequiredTerm(taskNew.getRequiredTerm());
 

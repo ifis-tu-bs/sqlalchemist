@@ -373,7 +373,7 @@ TableDefinition:
 | ```relationsFormatted``` | ```String```                |            |
 | ```taskText```           | ```String```                |            |
 | ```refStatement```       | ```String```                |            |
-| ```evaluationstrategy``` | ```Number```                |[SET, LIST] |
+| ```evaluationStrategy``` | ```Number```                |[SET = 1, LIST = 2] |
 | ```points```             | ```Number```                |            |
 | ```requiredTerm```       | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
 | ```creator```            | [```Profile```](#profile)   |            |
@@ -392,7 +392,7 @@ Task:
   "relationsFormatted": "User(FirstName : String)",
   "taskText":           "Find all user",
   "refStatement":       "SELECT * FROM User",
-  "evaluationstrategy": Number,
+  "evaluationStrategy": Number,
   "points":             1,
   "requiredTerm":       Number,
   "creator":            Profile,
@@ -414,7 +414,7 @@ Task:
 | ```taskSet```            | ```Number```  |            |
 | ```taskText```           | ```String```  |            |
 | ```refStatement```       | ```String```  |            |
-| ```evaluationstrategy``` | ```Number```  |[SET, LIST] |
+| ```evaluationStrategy``` | ```Number```  |[SET = 1, LIST = 2] |
 | ```points```             | ```Number```  |            |
 | ```requiredTerm```       | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
 
@@ -425,7 +425,7 @@ Task:
   "taskSet":            1,
   "taskText":           "Find all user",
   "refStatement":       "SELECT * FROM User",
-  "evaluationstrategy": Number,
+  "evaluationStrategy": Number,
   "points":             1,
   "requiredTerm":       Number
 }

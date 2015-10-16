@@ -30,6 +30,8 @@ back-end/.sbtserver
 back-end/public/admintool
 *.h2.db
 *.trace.db
+back-end/conf/evolutions
+
 
 ########
 # Front-End
