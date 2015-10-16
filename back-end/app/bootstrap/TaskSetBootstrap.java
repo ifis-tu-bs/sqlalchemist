@@ -19,6 +19,7 @@ import play.libs.Json;
  */
 public class TaskSetBootstrap {
     public static void init(){
+        Logger.info("Initialize 'TaskSet' data");
         JsonNode node = Json.parse("{\n " +
                 "   \"taskSetName\":          \"DefaultTaskSet\"," +
                 "    \"tableDefinitions\": [\n" +
@@ -100,5 +101,7 @@ public class TaskSetBootstrap {
             Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
             taskSet.delete();
         }
+
+        Logger.info("Done initializing");
     }
 }
