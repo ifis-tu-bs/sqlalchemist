@@ -5,6 +5,9 @@ import models.Task;
 import models.TaskSet;
 import models.UserStatement;
 
+import java.util.List;
+
+
 /**
  * @author fabiomazzone
  */
@@ -16,6 +19,8 @@ public class SQLParser {
         if((status = dbConnection.createDB()) != null) {
             return new SQLResult(task, SQLResult.ERROR, status);
         }
+
+        List<List<String>> refStatement;
 
         //return new SQLResult(task, SQLResult.SEMANTICS);
         return new SQLResult(task, SQLResult.SUCCESSFULL);

@@ -47,14 +47,14 @@ public class TaskSetBootstrap {
                 "                    \"datagenSet\": 3\n" +
                 "                }\n" +
                 "            ],\n" +
-                "            \"extension\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
+                "            \"extensions\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
                 "        },\n" +
                 "        {\n" +
                 "            \"tableName\": \"Profile\",\n" +
                 "            \"columns\": [\n" +
                 "                {\n" +
                 "                    \"columnName\": \"user\",\n" +
-                "                    \"dataType\": \"VARCHAR\",\n" +
+                "                    \"dataType\": \"VARCHAR(255)\",\n" +
                 "                    \"primaryKey\": true,\n" +
                 "                    \"notNull\": true,\n" +
                 "                    \"datagenSet\": 2\n" +
@@ -67,13 +67,13 @@ public class TaskSetBootstrap {
                 "                    \"datagenSet\": 3\n" +
                 "                }\n" +
                 "            ],\n" +
-                "            \"extension\": \"INSERT INTO Profile(username, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone');\\n \"\n" +
+                "            \"extensions\": \"INSERT INTO Profile(user, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone'); \\n \"\n" +
                 "        } \n" +
                 "    ],\n" +
                 "    \"foreignKeyRelations\": [\n" +
                 "        {\n" +
                 "            \"sourceTable\":\"Profile\",\n" +
-                "            \"sourceColumn\":\"username\",\n" +
+                "            \"sourceColumn\":\"user\",\n" +
                 "            \"destinationTable\":\"User\",\n" +
                 "            \"destinationColumn\":\"EMail\"\n" +
                 "        }\n" +
@@ -95,7 +95,6 @@ public class TaskSetBootstrap {
 
         TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
         taskSet.save();
-
         SQLStatus err;
         if((err = SQLParser.initialize(taskSet)) != null) {
             Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
