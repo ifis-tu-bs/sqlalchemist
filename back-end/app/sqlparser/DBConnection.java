@@ -133,6 +133,7 @@ public class DBConnection{
         try {
             this.resultSet = this.statement.executeQuery(statement);
             this.result = this.transformResultSet(this.resultSet);
+            this.printResult();
         } catch (SQLException e) {
             Logger.warn("DBConnection.runnable - Statement not runnable: " + statement);
             return new SQLStatus(e);
@@ -186,26 +187,23 @@ public class DBConnection{
      * @throws java.sql.SQLException, SQLException se
      */
     private List<List<String>> transformResultSet(ResultSet rs) throws SQLException {
-        List<List<String>> result = new ArrayList<>();
-        List<String> resultColumnName = new ArrayList<>();
-        List<String> resultRow;
+        List<List<String>> table    = new ArrayList<>();
+
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
 
-        for (int i = 0; i < columnsNumber; i++) {
-            resultColumnName.add(rsmd.getColumnName(i + 1));
+        for(int i = 1; i <= columnsNumber; i++) {
+            List<String> column = new ArrayList<>();
+            column.add(rsmd.getColumnName(i));
+            table.add(column);
         }
-        result.add(resultColumnName);
-
         while (rs.next()) {
-            resultRow = new ArrayList<>();
-            for (int i = 0; i < columnsNumber; i++) {
-                resultRow.add(rs.getString(i + 1));
+            for(int i = 0; i < table.size(); i++) {
+                List<String> column = table.get(i);
+                column.add(rs.getString(i+1));
             }
-            result.add(resultRow);
         }
-
-        return result;
+        return table;
     }
 
     /**
@@ -213,20 +211,13 @@ public class DBConnection{
      *
      * Prints out the ResultSet of a SELECT-statement.
      *
-     * @param rs ResultSet, ResultSet of a SELECT-statement
      * @throws java.sql.SQLException, SQLException se
      */
-    private void printResultSet(ResultSet rs) throws SQLException {
-        ResultSetMetaData rsmd = rs.getMetaData();
-        int columnsNumber = rsmd.getColumnCount();
-        while (rs.next()) {
-            for (int i = 1; i <= columnsNumber; i++) {
-                if (i > 1) {
-                    Logger.debug(",  ");
-                }
-                Logger.debug(rsmd.getColumnName(i) + ": " + rs.getString(i));
+    private void printResult() throws SQLException {
+        for(List<String> column : this.result) {
+            for(String field : column) {
+                Logger.info(field);
             }
-            Logger.debug("") ;
         }
     }
 }
