@@ -519,6 +519,7 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             if (game.task.kind == 2) {
         	    // Trivia
+                console.log("Kahn");
                 ajaxSendTaskTriviaRequest(game.task.difficulty, handleGetTask);
 
             }
