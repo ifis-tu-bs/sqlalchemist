@@ -12,8 +12,9 @@ public class SQLResult {
 
     private Task task;
 
-    private int type;
-    private SQLStatus sqlStatus;
+    private int         type;
+    private SQLStatus   sqlStatus;
+    private String      message;
 
 
     public SQLResult(Task task, int type) {
@@ -22,10 +23,16 @@ public class SQLResult {
         this.sqlStatus = null;
     }
 
-    public SQLResult(Task task, int type, SQLStatus sqlStatus) {
+    public SQLResult(Task task, SQLStatus sqlStatus) {
         this.task = task;
         this.type       = SQLResult.ERROR;
         this.sqlStatus   = sqlStatus;
+    }
+
+    public SQLResult(Task task, int type, String message) {
+        this.task = task;
+        this.type = type;
+        this.message = message;
     }
 
     public Task getTask() {
@@ -38,5 +45,9 @@ public class SQLResult {
 
     public SQLStatus getSqlStatus() {
         return sqlStatus;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }

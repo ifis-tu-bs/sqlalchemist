@@ -59,7 +59,7 @@ public class TaskSetController extends Controller {
             return badRequest("taskSet can't be saved");
         }
         SQLStatus err;
-        if((err = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+        if((err = SQLParser.createDB(taskSet)) != null) {
             Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
                     taskSet.delete();
             return badRequest(err.getSqlException().getMessage());
@@ -126,16 +126,16 @@ public class TaskSetController extends Controller {
         List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
 
 
-//SQLParser.delete(taskSet);
+        SQLParser.deleteDB(taskSet);
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
 
         SQLStatus err;
-        if((err = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+        if((err = SQLParser.createDB(taskSet)) != null) {
             Logger.warn("TaskSetController.update - " + err.getSqlException().getMessage() );
             taskSet = TaskSetDAO.getById(id);
             SQLStatus err2;
-            if((err2 = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+            if((err2 = SQLParser.createDB(taskSet)) != null) {
                 Logger.warn("TaskSetController.update - " + err2.getSqlException().getMessage());
                 return badRequest(err2.getSqlException().getMessage());
             }

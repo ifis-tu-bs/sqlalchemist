@@ -133,7 +133,6 @@ public class DBConnection{
         try {
             this.resultSet = this.statement.executeQuery(statement);
             this.result = this.transformResultSet(this.resultSet);
-            this.printResult();
         } catch (SQLException e) {
             Logger.warn("DBConnection.runnable - Statement not runnable: " + statement);
             return new SQLStatus(e);

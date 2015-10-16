@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class SQLParser {
 
-    public static SQLStatus checkTaskSetConfiguration(TaskSet taskSet) {
+    public static SQLStatus createDB(TaskSet taskSet) {
         DBConnection    dbConnection = new DBConnection(taskSet);
         SQLStatus       status;
 
@@ -39,53 +39,73 @@ public class SQLParser {
                 return status;
             }
         }
-
         dbConnection.deleteDB();
         dbConnection.closeDBConn();
         return null;
     }
 
     public static SQLResult checkUserStatement(Task task, UserStatement userStatement) {
-/*        DBConnection    dbConnection    = new DBConnection(task.getTaskSet());
+        DBConnection    dbConnection    = new DBConnection(task.getTaskSet());
         SQLStatus       status;
 
         if((status = dbConnection.initDBConn()) != null) {
-            return new SQLResult(task, SQLResult.ERROR, status);
+            return new SQLResult(task, status);
         }
 
         if((status = dbConnection.createDB()) != null) {
-            return new SQLResult(task, SQLResult.ERROR, status);
+            return new SQLResult(task, status);
         }
 
         if((status = dbConnection.runnable(task.getRefStatement())) != null) {
             Logger.warn("Statement not runnable: " + task.getRefStatement());
-            dbConnection.deleteDB();
+            //dbConnection.deleteDB();
             dbConnection.closeDBConn();
-            return new SQLResult(task, SQLResult.ERROR, status);
+            return new SQLResult(task, status);
         }
 
         List<List<String>> refStatementResult = dbConnection.getResult();
 
-        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
+        if((status = dbConnection.runnable(userStatement.getStatement())) != null) {
             Logger.warn("Statement not runnable: " + task.getRefStatement());
-            dbConnection.deleteDB();
+            //dbConnection.deleteDB();
             dbConnection.closeDBConn();
-            return new SQLResult(task, SQLResult.ERROR, status);
+            return new SQLResult(task, status);
         }
 
         List<List<String>> userStatementResult = dbConnection.getResult();
 
+        SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
+
         if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
-                dbConnection.deleteDB();
-                dbConnection.closeDBConn();
-                return new SQLResult(task, SQLResult.SUCCESSFULL);
+                result = new SQLResult(task, SQLResult.SUCCESSFULL);
             }
         } else {
             Logger.info("not yet implemented ! ");
+            if(refStatementResult.size() != userStatementResult.size()) {
+                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less columns");
+            }
+            if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
+                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less rows");
+            }
         }
 
-        //return new SQLResult(task, SQLResult.SEMANTICS);*/
-        return new SQLResult(task, SQLResult.SUCCESSFULL);
+        dbConnection.deleteDB();
+        dbConnection.closeDBConn();
+        //return new SQLResult(task, SQLResult.SEMANTICS);
+        return result;
+    }
+
+    public static SQLStatus deleteDB(TaskSet taskSet) {
+        DBConnection    dbConnection = new DBConnection(taskSet);
+        SQLStatus       status;
+
+        if((status = dbConnection.initDBConn()) != null) {
+            return status;
+        }
+
+        dbConnection.deleteDB();
+        dbConnection.closeDBConn();
+        return null;
     }
 }
