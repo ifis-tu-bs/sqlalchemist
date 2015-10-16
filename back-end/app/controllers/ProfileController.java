@@ -1,10 +1,10 @@
 package controllers;
 
-import dao.HomeWorkChallengeDAO;
+import dao.HomeWorkDAO;
 import dao.ProfileDAO;
 import dao.SubmittedHomeWorkDAO;
 
-import models.HomeWorkChallenge;
+import models.HomeWork;
 import models.Profile;
 
 import play.Logger;
@@ -105,15 +105,15 @@ public class ProfileController extends Controller {
 
     public static Result getUserHomeworks() {
         List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
-        List<HomeWorkChallenge> homeWorks = HomeWorkChallengeDAO.getHomeWorksForSubmits(submits);
+        List<HomeWork> homeWorks = HomeWorkDAO.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        for (HomeWorkChallenge homeWork : homeWorks) {
+        for (HomeWork homeWork : homeWorks) {
             ObjectNode json = Json.newObject();
-            json.put("name", homeWork.getName());
-            json.put("expires_at", df.format(homeWork.getExpires_at()));
+            json.put("name", homeWork.getHomeWorkName());
+            json.put("expires_at", df.format(homeWork.getExpire_at()));
             json.put("submitted", homeWork.submittedAll(submits));
 
             arrayNode.add(json);

@@ -1,7 +1,7 @@
 package dao;
 
 
-import models.HomeWorkChallenge;
+import models.HomeWork;
 import models.Profile;
 import models.SubmittedHomeWork;
 import models.Task;
@@ -18,16 +18,43 @@ public class SubmittedHomeWorkDAO  {
   //////////////////////////////////////////////////
 
       public static List<SubmittedHomeWork> getSubmitsForSubtask(Task task) {
-          return SubmittedHomeWork.find.where().eq("sub_task_id", task.getId()).findList();
+          return SubmittedHomeWork.find.where().eq("task_id", task.getId()).findList();
       }
 
       public static List<Object> getSubmitsForProfile(Profile profile) {
           return SubmittedHomeWork.find.where().eq("profile_id", profile.getId()).findIds();
       }
 
-      public static List<SubmittedHomeWork> getSubmitsForSubtaskAndHomeWorkChallenge(long taskId, long homeWorkChallengeId) {
-          return SubmittedHomeWork.find.where().eq("sub_task_id", taskId).eq("home_work_id", homeWorkChallengeId).findList();
+      public static List<SubmittedHomeWork> getSubmitsForTaskInHomeWork(long taskId, long homeWorkId) {
+          return SubmittedHomeWork.find.where().eq("task_id", taskId).eq("home_work_id", homeWorkId).findList();
       }
+
+  //////////////////////////////////////////////////
+  //  Special Getter Object
+  //////////////////////////////////////////////////
+
+    /**
+     * Returns current the Submit for given Subtask and Profile HomeWork
+     * (Only on the Current HomeWork: See HomeWorkChallengeDAO.getCurrent())
+     * @param profile Profile of the Submitter
+     * @param task task being submitted
+     * @return The given Object, or null if none exists
+     */
+    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTask(
+            Profile profile,
+            Task task) {
+
+        HomeWork currentHomeWork;
+        if ((currentHomeWork = HomeWorkDAO.getCurrent()) == null ) {
+            return null;
+        }
+
+        return SubmittedHomeWork.find.where()
+                .eq("profile_id", profile.getId())
+                .eq("sub_task_id", task.getId())
+                .eq("home_work_id", currentHomeWork.getId())
+                .findUnique();
+    }
 
   //////////////////////////////////////////////////
   //  Submit Method
@@ -40,12 +67,12 @@ public class SubmittedHomeWorkDAO  {
               boolean solve,
               String statement) {
 
-          if (HomeWorkChallengeDAO.getCurrent() == null) {
+          if (HomeWorkDAO.getCurrent() == null) {
               Logger.warn("Trying to submit without having an active HomeWork!!!");
               return null;
           }
 
-          if (!HomeWorkChallengeDAO.getCurrent().contains(task)) {
+          if (!HomeWorkDAO.getCurrent().contains(task)) {
               Logger.info("SubmittedHomeWork.submit - SomeOne got Late");
               return null;
           }
@@ -69,7 +96,7 @@ public class SubmittedHomeWorkDAO  {
           SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
                   profile,
                   task,
-                  HomeWorkChallengeDAO.getCurrent(),
+                  HomeWorkDAO.getCurrent(),
                   solve,
                   statement);
 
@@ -84,26 +111,4 @@ public class SubmittedHomeWorkDAO  {
       }
 
 
-    /**
-     * Returns current the Submit for given Subtask and Profile HomeWork
-     * (Only on the Current HomeWork: See HomeWorkChallengeDAO.getCurrent())
-     * @param profile Profile of the Submitter
-     * @param task task being submitted
-     * @return The given Object, or null if none exists
-     */
-    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTask(
-            Profile profile,
-            Task task) {
-
-        HomeWorkChallenge currentHomeWorkChallenge;
-        if ((currentHomeWorkChallenge = HomeWorkChallengeDAO.getCurrent()) == null ) {
-            return null;
-        }
-
-        return SubmittedHomeWork.find.where()
-                .eq("profile_id", profile.getId())
-                .eq("sub_task_id", task.getId())
-                .eq("home_work_id", currentHomeWorkChallenge.getId())
-                .findUnique();
-    }
 }

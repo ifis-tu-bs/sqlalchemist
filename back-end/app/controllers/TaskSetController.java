@@ -232,6 +232,6 @@ public class TaskSetController extends Controller {
 
         taskSet.addComment(comment);
         taskSet.update();
-        return redirect(routes.TaskSetController.view(taskSet.getId()));
+        return ok(CommentView.toJson(comment));
     }
 }

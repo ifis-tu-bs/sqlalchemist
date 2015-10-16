@@ -79,6 +79,9 @@ public class Profile extends Model {
     private int solvedSQL;
     private int quote;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SubmittedHomeWork> submittedHomeWorks;
+
     private Date created_at;
     private Date edited_at;
 

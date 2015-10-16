@@ -185,6 +185,6 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return redirect(routes.TaskController.view(task.getId()));
+        return ok(CommentView.toJson(comment));
     }
 }

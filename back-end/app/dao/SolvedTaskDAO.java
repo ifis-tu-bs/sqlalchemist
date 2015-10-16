@@ -37,7 +37,7 @@ public class SolvedTaskDAO {
       solvedTask.update();
   }
 
-  private static SolvedTask getByProfileAndTask(Profile profile, Task task) {
+  public static SolvedTask getByProfileAndTask(Profile profile, Task task) {
       if(profile == null || task == null) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
           return null;

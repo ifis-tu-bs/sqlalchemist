@@ -98,22 +98,6 @@ public class Task extends Model {
     }
 
 //////////////////////////////////////////////////
-//  json method
-//////////////////////////////////////////////////
-
-
-    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
-        ObjectNode json = Json.newObject();
-
-        json.put("id",          this.id);
-        //json.put("exercise",    this.exercise);
-        //json.put("done",        SubmittedHomeWorkDAO.getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, this) != null);
-
-        return json;
-    }
-
-
-//////////////////////////////////////////////////
 //  Getter & Setter
 //////////////////////////////////////////////////
 

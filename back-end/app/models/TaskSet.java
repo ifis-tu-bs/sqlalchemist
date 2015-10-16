@@ -38,6 +38,8 @@ public class TaskSet extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Task>              tasks;
     private final boolean                 isHomework;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<HomeWork> homeWorks;
 
     // Social Information's
     @ManyToOne
@@ -249,27 +251,6 @@ public class TaskSet extends Model {
     public Date getUpdatedAt() {
         return updatedAt;
     }
-
-//////////////////////////////////////////////////
-//  json method
-//////////////////////////////////////////////////
-
-    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
-        ObjectNode  objectNode = Json.newObject();
-
-        ArrayNode subTasks   = JsonNodeFactory.instance.arrayNode();
-
-        for(Task task : this.tasks) {
-            subTasks.add(task.toHomeWorkJsonForProfile(profile));
-        }
-
-        objectNode.put("schema",        this.relationsFormatted);
-        objectNode.put("subTasks",      subTasks);
-
-        return objectNode;
-    }
-
-
 
 //////////////////////////////////////////////////
 //  create methods

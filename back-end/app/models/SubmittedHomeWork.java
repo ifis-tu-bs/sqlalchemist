@@ -28,7 +28,7 @@ public class SubmittedHomeWork extends SolvedTask {
 
     @ManyToOne
     @Column(name = "home_work_id")
-    HomeWorkChallenge homeWork;
+    HomeWork homeWork;
 
     String statement;
     boolean solve;
@@ -43,7 +43,7 @@ public class SubmittedHomeWork extends SolvedTask {
     public SubmittedHomeWork (
             Profile profile,
             Task task,
-            HomeWorkChallenge homeWork,
+            HomeWork homeWork,
             boolean solve,
             String statement) {
 
@@ -75,12 +75,12 @@ public class SubmittedHomeWork extends SolvedTask {
         objectNode.put("statement", this.statement);
         objectNode.put("solve", this.solve);
         objectNode.put("student", this.profile.getUser().toJson());
-        objectNode.put("sub_task", this.task.getId());
+        objectNode.put("task", this.task.getId());
 
         return objectNode;
     }
 
-    public HomeWorkChallenge getHomeWork() {
+    public HomeWork getHomeWork() {
       return this.homeWork;
     }
 

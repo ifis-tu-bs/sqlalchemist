@@ -3,6 +3,7 @@ package view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import dao.SolvedTaskDAO;
 import models.Comment;
 import models.Profile;
 import models.Rating;
@@ -86,6 +87,32 @@ public class TaskView {
 
         for(Task task : taskList) {
             taskNode.add(TaskView.toJsonList(task));
+        }
+
+        return taskNode;
+    }
+
+    /**
+     * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
+     * @param task
+     * @param profile
+     * @return
+     */
+    public static ObjectNode toJsonHomeWorkForProfile(Task task, Profile profile) {
+        ObjectNode json = Json.newObject();
+
+        json.put("id",          task.getId());
+        json.put("exercise",    task.getTaskText());
+        json.put("done",        SolvedTaskDAO.getByProfileAndTask(profile, task) != null);
+
+        return json;
+    }
+
+    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, Profile profile) {
+        ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
+
+        for(Task task : taskList) {
+            taskNode.add(TaskView.toJsonHomeWorkForProfile(task, profile));
         }
 
         return taskNode;

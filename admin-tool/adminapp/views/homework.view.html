@@ -5,9 +5,9 @@
 
   <div class="btn-group" style="float:left;width:70%">
     <button type="button" class="btn btn-default" ng-click="goSelectHomework()" ng-show="shouldIBeDisplayed('HomeWorkSelection')"> > </button>
-    <button type="button" class="btn btn-default" ng-click="goSelectTaskFile()" ng-show="shouldIBeDisplayed('TaskFileSelection')" ng-disabled="state === 'TaskFileSelection'">HomeWork: <b>{{selectedHomework.name}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="goSelectSubtask()" ng-show="shouldIBeDisplayed('SubTaskSelection')" ng-disabled="state === 'SubTaskSelection'">TaskFile: <b>{{selectedTaskFile.fileName}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed('SubmitSelection')" ng-disabled="state === 'SubmitSelection'">SubTask: <b>{{selectedSubTask.id}}</b></button>
+    <button type="button" class="btn btn-default" ng-click="goSelectTaskSet()" ng-show="shouldIBeDisplayed('taskSetSelection')" ng-disabled="state === 'taskSetSelection'">HomeWork: <b>{{selectedHomework.homeWorkName}}</b></button>
+    <button type="button" class="btn btn-default" ng-click="goSelectTask()" ng-show="shouldIBeDisplayed('taskSelection')" ng-disabled="state === 'taskSelection'">taskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
+    <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed('SubmitSelection')" ng-disabled="state === 'SubmitSelection'">task: <b>{{selectedTask.taskName}}</b></button>
     <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed('InspectSubmit')" ng-disabled="state === 'InspectSubmit'">Submit: {{selectedSubmit.student.matno}}<b></b></button>
   </div>
 
@@ -28,19 +28,19 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th ng-click="orderHomeWorkPredicate = 'name'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+          <th ng-click="orderHomeWorkPredicate = 'homeWorkName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
           <th ng-click="orderHomeWorkPredicate = 'creator.name'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
           <th ng-click="orderHomeWorkPredicate = 'start_at'; orderReverse = !orderReverse" style="cursor: pointer">Start at</th>
-          <th ng-click="orderHomeWorkPredicate = 'expires_at'; orderReverse = !orderReverse" style="cursor: pointer">Expire at</th>
+          <th ng-click="orderHomeWorkPredicate = 'expire_at'; orderReverse = !orderReverse" style="cursor: pointer">Expire at</th>
           <th>View</th>
           </tr>
       </thead>
       <tbody>
         <tr ng-repeat="homework in vm.homeworks | orderBy:orderHomeWorkPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectHomework(homework)">
-          <td>{{homework.name}}</td>
+          <td>{{homework.homeWorkName}}</td>
           <td>{{homework.creator.username}}</td>
           <td>{{homework.start_at}}</td>
-          <td>{{homework.expires_at}}</td>
+          <td>{{homework.expire_at}}</td>
           <td>
               <button type="button" class="btn btn-default" ng-click="deleteHomework(homework);  $event.stopPropagation();">
                 <span class="glyphicon glyphicon-trash"></span></button>
@@ -50,25 +50,25 @@
     </table>
   </div>
 
-  <div class="ng-hide" ng-show="state === 'TaskFileSelection'" style="width:100%;float:right">
+  <div class="ng-hide" ng-show="state === 'taskSetSelection'" style="width:100%;float:right">
 
     <table class="table table-hover">
       <thead>
       <tr>
-        <th ng-click="orderTaskFilePredicate = 'filename'; orderReverse = !orderReverse" style="cursor: pointer">TaskFileName</th>
-        <th ng-click="orderTaskFilePredicate = 'created_at'; orderReverse = !orderReverse" style="cursor: pointer">Created at</th>
-        <th ng-click="orderTaskFilePredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+        <th ng-click="orderTaskSetPredicate = 'filename'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+        <th ng-click="orderTaskSetPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Created at</th>
+        <th ng-click="orderTaskSetPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="taskFile in vm.taskFiles | orderBy:orderHomeWorkPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskFile(taskFile)">
-        <td>{{ taskFile.fileName }}</td>
-        <td>{{ taskFile.created_at }}</td>
+      <tr ng-repeat="taskSet in vm.taskSets | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet)">
+        <td>{{ taskSet.taskSetName }}</td>
+        <td>{{ taskSet.createdAt }}</td>
         <td>
           <div class="btn-group" role="group" aria-label="...">
-            <a href="" ng-click="rateTaskFile(taskFile, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskFile.rating.positive }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateTaskFile(taskFile, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskFile.rating.needReview }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateTaskFile(taskFile, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskFile.rating.negative }}
+            <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
+            <a href="" ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.needReview }} <span style="width: 6px"></span>
+            <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
           </div>
         </td>
       </tr>
@@ -77,26 +77,26 @@
 
   </div>
 
-  <div class="ng-hide" ng-show="state === 'SubTaskSelection'" style="width:100%;float:right">
+  <div class="ng-hide" ng-show="state === 'taskSelection'" style="width:100%;float:right">
     <table class="table table-hover">
       <thead>
       <tr>
-        <th ng-click="orderSubTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">Subtask</th>
-        <th ng-click="orderSubTaskPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Difficulty</th>
-        <th ng-click="orderSubTaskPredicate = 'refStatement'; orderReverse = !orderReverse" style="cursor: pointer">Reference Statement</th>
-        <th ng-click="orderSubTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+        <th ng-click="orderTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">task</th>
+        <th ng-click="orderTskPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Difficulty</th>
+        <th ng-click="orderTaskPredicate = 'refStatement'; orderReverse = !orderReverse" style="cursor: pointer">Reference Statement</th>
+        <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="subTask in vm.subTasks  | orderBy:orderSubTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectSubTask(subTask)">
-        <td>{{subTask.id}}</td>
-        <td>{{subTask.points}}</td>
-        <td>{{subTask.refStatement}}</td>
+      <tr ng-repeat="task in vm.tasks  | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task)">
+        <td>{{task.id}}</td>
+        <td>{{task.points}}</td>
+        <td>{{task.refStatement}}</td>
         <td>
           <div class="btn-group" role="group" aria-label="...">
-            <a href="" ng-click="rateSubTask(subTask, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ subTask.rating.positive }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateSubTask(subTask, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ subTask.rating.needReview }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateSubTask(subTask, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ subTask.rating.negative }}
+            <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
+            <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
+            <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
           </div>
         </td>
       </tr>
@@ -137,7 +137,7 @@
       <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLUser" ng-model="selectedSubmit.statement" style="resize:none; width:100%"></textarea>
     </div>
     <div style="width:45%; float:right">
-      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLRef" ng-model="selectedSubTask.refStatement" style="resize:none; width:100%"></textarea>
+      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLRef" ng-model="selectedtask.refStatement" style="resize:none; width:100%"></textarea>
 
     </div>
   </div>

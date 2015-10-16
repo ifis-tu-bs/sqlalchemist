@@ -154,14 +154,30 @@ angular
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
         }
 
+        $scope.viewTaskSetComments = function(taskSet) {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/comment.template.html',
+                    controller: 'CommentController',
+                    resolve: {
+                        commentTaskObject: function() {
+                            return {content: taskSet, type: 'taskSet'};
+                        }
+                    }
+            });
+
+            modalInstance.result.then(
+            FlashService.Clear,
+            null
+            );
+        }
+
+
         /* Server Side Methods */
-        $scope.saveSelectedTaskSet = function () {
-            console.log($scope.selectedTaskSet);
-            FlashService.Clear();
+        $scope.saveTaskSet = function(taskSet) {
+            if (taskSet.id != undefined) {
 
-            if ($scope.selectedTaskSet.id != undefined) {
-
-                TaskService.editTaskSet($scope.selectedTaskSet, $scope.selectedTaskSet.id).then(
+                return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
                             if (result.error) {
                                 FlashService.Error(result.message);
@@ -172,13 +188,13 @@ angular
                 );
 
             } else {
-
-                TaskService.createTaskSet($scope.selectedTaskSet).then(
+                return TaskService.createTaskSet(taskSet).then(
                         function (result) {
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
                                 FlashService.Success("Created new TaskSet");
+                                vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
                             }
                         }
                 );
@@ -186,7 +202,16 @@ angular
             }
         }
 
+        $scope.saveSelectedTaskSet = function () {
+             $scope.saveTaskSet($scope.selectedTaskSet);
+        }
+
         $scope.deleteTaskSet = function (taskSet) {
+            if (taskSet.id === undefined) {
+                vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1);
+                return;
+            }
+
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'adminapp/templates/sure.template.html',
@@ -206,7 +231,7 @@ angular
                 null
             ).then(
                  function () {
-                     vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1)
+                     vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1);
                  },
                  function (error) {
                          if (error.message) {
@@ -348,6 +373,24 @@ angular
             vm.tasks.push(new DefaultTask());
         }
 
+        $scope.viewTaskComments = function(task) {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/comment.template.html',
+                    controller: 'CommentController',
+                    resolve: {
+                        commentTaskObject: function() {
+                            return {content: task, type: 'task'};
+                        }
+                    }
+            });
+
+            modalInstance.result.then(
+            FlashService.Clear,
+            null
+            );
+        }
+
         /* Server Side Methods */
         $scope.saveTask = function (task) {
             if (task.id != undefined) {
@@ -375,6 +418,44 @@ angular
                         }
                 );
             }
+        }
+
+
+        $scope.deleteTask = function (task) {
+            /* If not in Database, we don't need to do much */
+            if (task.id === undefined) {
+                vm.tasks.splice(findInArray(vm.tasks, task), 1);
+                return;
+            }
+
+
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/sure.template.html',
+                    controller: 'sureTemplateController',
+                    resolve: {
+                        sureTemplateMessage: function () {
+                                return "<span style='font-size:15pt'> Are you sure you want to delete Task: <b>" + task.taskName + "</b>? <br> It will be deleted forever!</span>";
+                            }
+                    }
+            });
+
+            modalInstance.result
+            .then(
+                function () {
+                    return TaskService.deleteTask(task.id);
+                },
+                null
+            ).then(
+                 function () {
+                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
+                 },
+                 function (error) {
+                         if (error.message) {
+                             FlashService.Error(error.message);
+                         }
+                     }
+            );
         }
 
         $scope.rateTask = function (task, decision) {
