@@ -380,9 +380,9 @@ function ajaxSendTaskOverTaskSetRequest(id, onload) {
     return xmlHttpRequest;
 }
 
-// ~ GET /Task/
+// ~ GET /Task
 function ajaxSendTaskRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/Task/", onload);
+    var xmlHttpRequest = createRequest("GET", "/Task", onload);
 
     xmlHttpRequest.send();
 
@@ -398,18 +398,18 @@ function ajaxSendTaskIdRequest(id, onload) {
     return xmlHttpRequest;
 }
 
-// ~ PATCH /task/:id ~ id: TaskID, jsonData: JSON.task
+// ~ PATCH /Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdEditRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/task/" + id, onload);
+    var xmlHttpRequest = createRequest("PATCH", "/Task/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ DELETE /task/:id ~ id: TaskID, jsonData: JSON.task
+// ~ DELETE /Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdEditRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/task/" + id, onload);
+    var xmlHttpRequest = createRequest("DELETE", "/Task/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -425,15 +425,6 @@ function ajaxSendTaskIdRatingRequest(id, jsonData, onload) {
     return xmlHttpRequest;
 }
 
-// ~ GET /Task/:id/comment ~ id: TaskID
-function ajaxSendTaskIdCommentRequest(id, onload) {
-  var xmlHttpRequest = createRequest("GET", "/Task/" + id + "/comment", onload);
-
-  xmlHttpRequest.send();
-
-  return xmlHttpRequest;
-}
-
 // ~ POST /task/:id/comment ~ id: TaskID, jsonData: JSON.comment
 function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("POST", "/task/" + id + "/comment", onload);
@@ -442,6 +433,72 @@ function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
 
     return xmlHttpRequest;
 }
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TaskSetController ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+// ~ POST /TaskSet
+function ajaxSendTaskSetRequest(id, onload) {
+    var xmlHttpRequest = createRequest("Post", "/TaskSet", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
+// ~ GET /TaskSet
+function ajaxSendTaskSetRequest(onload) {
+    var xmlHttpRequest = createRequest("GET", "/TaskSet", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
+// ~ GET /TaskSet/:id ~ id: TaskSetID
+function ajaxSendTaskSetIdRequest(id, onload) {
+    var xmlHttpRequest = createRequest("GET", "/TaskSet/" + id, onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
+// ~ PATCH /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
+function ajaxSendTaskSetIdEditRequest(id, jsonData, onload) {
+    var xmlHttpRequest = createRequest("PATCH", "/TaskSet/" + id, onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
+// ~ DELETE /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
+function ajaxSendTaskSetIdEditRequest(id, jsonData, onload) {
+    var xmlHttpRequest = createRequest("DELETE", "/TaskSet/" + id, onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
+// ~ POST /TaskSet/:id/rate ~ id: TaskSetID, jsonData: JSON.rating
+function ajaxSendTaskSetIdRatingRequest(id, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/TaskSet/" + id + "/rate", onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
+// ~ POST /task/:id/comment ~ id: TaskSetID, jsonData: JSON.comment
+function ajaxSendTaskSetIdCommentSetRequest(id, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/task/" + id + "/comment", onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
