@@ -18,8 +18,8 @@ angular
     .module('app')
     .controller('TasksController', TasksController);
 
-    TasksController.$inject = ['$scope', '$modal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout'];
-    function TasksController($scope, $modal, TaskService, FlashService, $rootScope, $location, $filter, $timeout) {
+    TasksController.$inject = ['$scope', '$uibModal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout'];
+    function TasksController($scope, $uibModal, TaskService, FlashService, $rootScope, $location, $filter, $timeout) {
         var vm = this;
 
         $scope.orderReverse = false;
@@ -28,14 +28,20 @@ angular
         $scope.orderTablePredicate = 'tableName';
         $scope.search = '';
 
-        $scope.items=["bigint", "Varchar(255)", "boolean"];
+        $scope.dataTypes = [];
+        $scope.tabActive = {
+            intensionTables : false,
+            intensionForeignKeys : false,
+            extension : false,
+            tasks : false
+        };
 
-        $scope.taskTabActive = false;
         $scope.animationsEnabled = true;
 
         vm.taskSets = [];
         vm.tasks = [];
         vm.tables = [];
+        vm.foreignKeys = [];
         $scope.selectedTaskSet = {};
         $scope.selectedTask = {};
         $scope.selectedTable = {};
@@ -53,52 +59,59 @@ angular
             if ($rootScope.Tasks.taskSets) {
                 vm.taskSets = $rootScope.Tasks.taskSets;
                 $scope.getCurrentPath();
-                console.log(vm.taskSets);
-
             } else {
                 TaskService.getAllTaskSets().then(
                         function (result) {
-                                if (result.error) {
-                                    FlashService.Error(result.message);
-                                } else {
-                                    vm.taskSets = result;
-                                    $scope.getCurrentPath();
-                                    console.log(result);
-                                }
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                            console.log(result);
+                                vm.taskSets = result;
+                                $scope.getCurrentPath();
+                            }
                         }
                 );
 
             }
+
+            TaskService.getColumnDefinitionDataTypes().then(
+                    function (result) {
+                        vm.dataTypes = result;
+                    },
+                    null
+            );
         }
 
         //////////////////////////////777
-        //  Saving current vm.taskSets when leaving
+        //  Saving data when leaving View
         //  Restoring saved Data and Displaying the correct screen
         //////////////////////////////777
+
+        $scope.keepTabActive = function () {
+            $rootScope.Tasks.tabActive = $scope.tabActive;
+        }
 
         $scope.keepTaskSets = function () {
             $rootScope.Tasks.taskSets = vm.taskSets;
         }
+
+        $scope.$on('$locationChangeStart', function(event) {
+            $scope.keepTabActive();
+            $scope.keepTaskSets();
+        });
         
         $scope.getCurrentPath = function () {
             var path = $rootScope.Tasks;
 
+            console.log(path);
             //Find out if a TaskSet is currently selected
             if (path.selectedTaskSet) {
+                $scope.tabActive = path.tabActive;
                 $scope.selectTaskSet(path.selectedTaskSet);
             } else {
                 return;
             }
 
-            //Find out if a Task/Table is currently selected
-            if (path.selectedTask) {
-                $scope.selectTask(path.selectedTask);
-            } else if (path.selectedTable){
-                $scope.selectTable(path.selectedTable);
-            } else {
-                $scope.state = path.state;
-                return;
-            }
 
         }
 
@@ -115,7 +128,7 @@ angular
         var DefaultTaskSet = function() {
             this.taskSetName = "";
             this.tableDefinitions = [];
-            this.foreignKeys = [];
+            this.foreignKeyRelations = [];
             this.tasks=[];
             this.isHomework = false;
         };
@@ -127,25 +140,23 @@ angular
         }
 
         $scope.selectTaskSet = function(taskSet, destination) {
-            console.log(taskSet);
-            console.log(vm.taskSets);
             var index = findInArray(vm.taskSets, taskSet);
             selectTaskSet(index);
-            $scope.taskSetSelectionStatus.taskSetSelected = true;
+            $scope.tabActive.intensionTables = true;
         }
 
         function selectTaskSet (taskSetIndex) {
+
             $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
             vm.tasks = $scope.selectedTaskSet.tasks;
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
+            vm.foreignKeyRelations = $scope.selectedTaskSet.foreignKeyRelations;
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
         }
 
         /* Server Side Methods */
         $scope.saveSelectedTaskSet = function () {
-
             console.log($scope.selectedTaskSet);
-
             FlashService.Clear();
 
             if ($scope.selectedTaskSet.id != undefined) {
@@ -175,6 +186,36 @@ angular
             }
         }
 
+        $scope.deleteTaskSet = function (taskSet) {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/sure.template.html',
+                    controller: 'sureTemplateController',
+                    resolve: {
+                        sureTemplateMessage: function () {
+                                return "<span style='font-size:15pt'> Are you sure you want to delete TaskSet: <b>" + taskSet.taskSetName + "</b>? <br> It will be deleted forever!</span>";
+                            }
+                    }
+            });
+
+            modalInstance.result
+            .then(
+                function () {
+                    return TaskService.deleteTaskSet(taskSet.id);
+                },
+                null
+            ).then(
+                 function () {
+                     vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1)
+                 },
+                 function (error) {
+                         if (error.message) {
+                             FlashService.Error(error.message);
+                         }
+                     }
+            );
+        }
+
         $scope.rateTaskSet = function (taskSet, decision) {
             var ratingJson = {};
             switch (decision) {
@@ -197,6 +238,7 @@ angular
                     if (result.error) {
                         FlashService.Error(result.message);
                     } else {
+                        vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
                     }
             });
         }
@@ -236,6 +278,11 @@ angular
             vm.columns = $scope.selectedTable.columns;
         }
 
+        /* Changes are only changed on the Server via TaskSet Actions */
+        $scope.deleteTable = function (table) {
+            vm.tables.splice(findInArray(vm.tables, table), 1);
+        }
+
         //////////////////////////////777
         //  Intension: TableDefinition: Column - Control
         //////////////////////////////777
@@ -252,6 +299,34 @@ angular
         $scope.pushNewColumn = function () {
             vm.columns.push(new DefaultColumn());
         }
+
+        /* Changes are only changed on the Server via TaskSet Actions */
+        $scope.deleteColumn = function (column) {
+            vm.columns.splice(findInArray(vm.columns, column), 1);
+        }
+
+        //////////////////////////////777
+        //  Tasks: Control
+        //////////////////////////////777
+
+        /* Data */
+        var DefaultForeignKey = function () {
+            this.sourceTable = "";
+            this.sourceColumn = "";
+            this.destinationTable = "";
+            this.destinationColumn = "";
+        }
+
+        /* Methods */
+        $scope.pushNewForeignKey = function () {
+            vm.foreignKeyRelations.push(new DefaultForeignKey());
+        }
+
+        /* Changes are only changed on the Server via TaskSet Actions */
+        $scope.deleteForeignKey = function (foreignKey) {
+            vm.foreignKeyRelations.splice(findInArray(vm.foreignKeyRelations, foreignKey), 1);
+        }
+
         //////////////////////////////777
         //  Tasks: Control
         //////////////////////////////777
@@ -273,20 +348,8 @@ angular
             vm.tasks.push(new DefaultTask());
         }
 
-
-        $scope.enterTaskTab = function () {
-            $scope.taskTabActive = true;
-        }
-
-        $scope.leaveTaskTab = function () {
-            $scope.taskTabActive = false;
-        }
-
         /* Server Side Methods */
-
         $scope.saveTask = function (task) {
-            console.log(task);
-
             if (task.id != undefined) {
                 TaskService.editTask(task.id, task).then(
                         function (result) {
@@ -303,12 +366,43 @@ angular
                             if (result.error) {
                                 FlashService.Error(result.message);
                             } else {
+
+                                /* Let's put in the new values we just created in BackEnd */
+                                vm.tasks[findInArray(vm.tasks, task)] = result;
+
                                 FlashService.Success("Created new Task");
                             }
                         }
                 );
             }
         }
+
+        $scope.rateTask = function (task, decision) {
+                    var ratingJson = {};
+                    switch (decision) {
+                        case 'positive': {
+                            ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
+                            break;
+                        }
+                        case 'needReview': {
+                            ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
+                            break;
+                        }
+                        case 'negative': {
+                            ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
+                            break;
+                        }
+                    }
+                    TaskService.rateTask(task.id, ratingJson).then(
+                        function (result) {
+                            if (result.error) {
+                                FlashService.Error(result.message);
+                            } else {
+                                console.log($scope.tabActive);
+                                vm.tasks[findInArray(vm.tasks, task)] = result;
+                            }
+                    });
+                }
 
         //////////////////////////////777
         //  HomeWork Deletion
@@ -317,7 +411,7 @@ angular
 /*
         $scope.deleteHomework = function (taskSet) {
             var taskSetIndex = findInArray(vm.taskSets, taskSet);
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'adminapp/templates/sure.template.html',
                     controller: 'sureTemplateController',
@@ -337,39 +431,6 @@ angular
             });
         }
 */
-        //////////////////////////////777
-        //  Rating stuff
-        //////////////////////////////777
-
-
-
-
-        $scope.rateTask = function (task, decision) {
-
-            var ratingJson = {};
-            switch (decision) {
-                case 'positive': {
-                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
-                    break;
-                }
-                case 'needReview': {
-                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
-                    break;
-                }
-                case 'negative': {
-                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
-                    break;
-                }
-            }
-            TaskService.rateTask(task.id, ratingJson).then(
-                function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message)
-                    } else {
-                        initController();
-                    }
-            });
-        }
 
         //////////////////////////////777
         //  Array functions
@@ -382,6 +443,18 @@ angular
                 }
             }
             return -1;
+        }
+
+        $scope.findColumnsForTableName = function (tableName) {
+            var columns = [];
+            for (var i = 0; i < vm.tables.length; i++) {
+                if (vm.tables[i].tableName === tableName) {
+                    for (var j = 0; j < vm.tables[i].columns.length; j++) {
+                        columns.push(vm.tables[i].columns[j].columnName);
+                    }
+                }
+            }
+            return columns;
         }
 
 

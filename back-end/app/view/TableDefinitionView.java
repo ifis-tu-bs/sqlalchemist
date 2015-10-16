@@ -21,7 +21,7 @@ public class TableDefinitionView {
         JsonNode                ColumnArray         = tableDefinitionNode.path("columns");
         String                  tableName           = tableDefinitionNode.path("tableName").asText();
         List<ColumnDefinition>  columnDefinitions   = new ArrayList<>();
-        String                  extension           = tableDefinitionNode.path("extension").asText();
+        String                  extension           = tableDefinitionNode.path("extensions").asText();
         TableDefinition tableDefinition             = new TableDefinition(tableName, extension);
         for(JsonNode columnNode : ColumnArray) {
             columnDefinitions.add(ColumnDefinitionView.fromJsonForm(columnNode, tableDefinition));

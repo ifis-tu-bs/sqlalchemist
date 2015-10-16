@@ -21,13 +21,13 @@
 
 
 
-    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || taskTabActive" style="float:right">Save current TaskSet</button>
+    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || tabActive.tasks" style="float:right">Save current TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
     <uib-tabset tpye="tabs">
 
 
 
 
-      <uib-tab deselect="keepTaskSets();">
+      <uib-tab id="TaskSets" deselect="keepTaskSets();">
         <uib-tab-heading>
           TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
         </uib-tab-heading>
@@ -61,6 +61,7 @@
                         <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
                       </div>
                     </td>
+                    <td><button type="button" class="btn btn-danger btn-xs" ng-click="deleteTaskSet(taskSet); $event.stopPropagation();" style="font-size: 11pt;float:right"> Delete</button> </td>
                     <!--<td>{{taskSet.start_at}}</td>
                     <td>{{taskSet.expires_at}}</td>
                     <td>
@@ -84,14 +85,14 @@
         </div>
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" active="taskSetSelectionStatus.taskSetSelected" deselect="keepTaskSets();">
+      <uib-tab id="IntensionTables" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionTables" deselect="keepTaskSets(); keepTabActive();">
         <tab-heading>
           Intension <i>(tableDefinition)</i>
         </tab-heading>
         <uib-accordion close-others=true>
-          <uib-accordion-group is-open="tableSelectionStatus.tableNotSelected">
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
             <uib-accordion-heading>
-              <h5>Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b></h5>
+              Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
             </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
@@ -104,12 +105,10 @@
                 <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
                   <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
                   <td>{{table.columns.length}}</td>
-                  <!--<td>{{taskSet.start_at}}</td>
-                  <td>{{taskSet.expires_at}}</td>
+
                   <td>
-                    <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
-                      <span class="glyphicon glyphicon-trash"></span></button>
-                  </td>-->
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -120,9 +119,9 @@
               </tbody>
             </table>
           </uib-accordion-group>
-          <uib-accordion-group is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableSelected" is-disabled="selectedTable.tableName === undefined">
             <uib-accordion-heading>
-              <h5>Columns:</b></h5>
+              <b>Columns</b>
             </uib-accordion-heading>
             <table class="table table-hover">
               <thead>
@@ -137,10 +136,13 @@
               <tbody>
                 <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
-                  <td><input type="text" ng-model="column.dataType" uib-typeahead="item for item in items | filter:$viewValue | limitTo:5"> </td>
-                  <td>{{column.datagenSet}}</td>
+                  <td><input type="text" ng-model="column.dataType" uib-typeahead="dataTypeObj.dataType as dataTypeObj.dataType for dataTypeObj in vm.dataTypes | filter:$viewValue | limitTo:5"> </td>
+                  <td><input type="number" ng-model="column.datagenSet"></td>
                   <td><input type="checkbox" ng-model="column.notNull"></td>
                   <td><input type="checkbox" ng-model="column.primaryKey"></td>
+                  <td>
+                    <button type="button" class="btn btn-danger btn-xs" ng-click="deleteColumn(column); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                  </td>
                 </tr>
                 <tr>
                   <td>
@@ -158,18 +160,82 @@
 
       </uib-tab>
 
-      <uib-tab disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
-      <tab-heading>
+      <uib-tab id="IntensionForeinKeys" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.intensionForeignKeys" deselect="keepTaskSets(); keepTabActive();">
+        <tab-heading>
           Intension <i>(foreignKeys)</i>
         </tab-heading>
-
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th ng-click="orderTableEditPredicate = 'sourceTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
+            <th ng-click="orderTableEditPredicate = 'sourceColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+            <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
+            <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
+            <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="foreignKey in vm.foreignKeyRelations | orderBy:orderTableEditPredicate:orderReverse | filter:search">
+              <td><input type="text" ng-model="foreignKey.sourceTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
+              <td><input type="text" ng-model="foreignKey.sourceColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.sourceTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.sourceTable === ''"> </td>
+              <td><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></td>
+              <td><input type="text" ng-model="foreignKey.destinationTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
+              <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
+              <td>
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewForeignKey(); $event.stopPropagation();">New...</button>
+              </td>
+              <td/>
+              <td/>
+              <td/>
+              <td/>
+            </tr>
+          </tbody>
+        </table>
       </uib-tab>
 
-      <uib-tab heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets();">
+      <uib-tab id="Extension" heading="Extension" disable="selectedTaskSet.$$hashKey === undefined" active="tabActive.extension" deselect="keepTaskSets(); keepTabActive();">
+        <uib-accordion close-others=true>
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
+            <uib-accordion-heading>
+              Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
+            </uib-accordion-heading>
+            <table class="table table-hover">
+              <thead>
+              <tr>
+                <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+                <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
+                <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
+                <td>{{table.columns.length}}</td>
 
+                <td>
+                  <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </uib-accordion-group>
+          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableSelected">
+            <uib-accordion-heading>
+              Edit Extension
+            </uib-accordion-heading>
+            <div id="extensionEditor" ng-model="selectedTable.extensions" ui-ace="{
+              mode : 'sql',
+              theme : 'twilight'
+            }"></div>
+          </uib-accordion-group>
+        </uib-accordion>
       </uib-tab>
 
-      <uib-tab heading="Tasks" select="enterTaskTab();" disable="selectedTaskSet.$$hashKey === undefined" deselect="keepTaskSets(); leaveTaskTab();">
+      <uib-tab id="Tasks" heading="Tasks" active="tabActive.tasks" disable="selectedTaskSet.$$hashKey === undefined" select="enterTaskTab();" deselect="keepTaskSets(); keepTabActive();">
         <div style="width:100%;float:left">
           <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
@@ -184,6 +250,7 @@
                     <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
                     <th ng-click="orderTaskPredicate = 'evaluationStrategy'; orderReverse = !orderReverse" style="cursor: pointer">Evaluating Correctness via</th>
                     <th ng-click="orderTaskPredicate = 'creator.username'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+                    <th ng-click="orderTaskPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Points</th>
                     <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                     <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                   </tr>
@@ -192,20 +259,35 @@
                 <tr style="cursor: pointer" ng-click="task.isCollapsed = !task.isCollapsed;;">
                   <td><input type="text" ng-model="task.taskName" ng-click="$event.stopPropagation();"></td>
                   <td>
-                    <div class="btn-group" uib-dropdown uib-keyboard-nav>
-                      <button id="simple-btn-keyboard-nav" type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
-                        {{task.evaluationStrategy === 1 ? "Set" : "List"}}
+                    <div class="btn-group" uib-dropdown is-open="taskEvaluationStrategyDropDownStatus">
+                      <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
+                        {{task.evaluationStrategy === 1 ? "Set" : "List"}} <span class="caret"></span>
                       </button>
-                      <ul class="uib-dropdown-menu" role="menu" aria-labelledby="simple-btn-keyboard-nav">
-                        <li role="menuitem" ng-click="task.evaluationStrategy = 1; $event.stopPropagation();">Set</li>
-                        <li role="menuitem" ng-click="task.evaluationStrategy = 2; $event.stopPropagation();">List</li>
+                      <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskEvaluationStrategyDropDownStatus = !taskEvaluationStrategyDropDownStatus">
+                        <li role="menuitem" ng-click="task.evaluationStrategy = 1;">Set</li>
+                        <li role="menuitem" ng-click="task.evaluationStrategy = 2;">List</li>
                       </ul>
                     </div>
                   </td>
                   <td>{{task.creator.username}}</td>
+                  <td>
+                    <div class="btn-group" uib-dropdown is-open="taskPointsDropDownStatus">
+                      <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
+                        {{task.points}} <span class="caret"></span>
+                      </button>
+                      <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskPointsDropDownStatus = !taskPointsDropDownStatus">
+                        <li role="menuitem" ng-click="task.points = 1;">1</li>
+                        <li role="menuitem" ng-click="task.points = 2;">2</li>
+                        <li role="menuitem" ng-click="task.points = 3;">3</li>
+                        <li role="menuitem" ng-click="task.points = 4;">4</li>
+                        <li role="menuitem" ng-click="task.points = 5;">5</li>
+                        <li role="menuitem" ng-click="task.points = 6;">6</li>
+                      </ul>
+                    </div>
+                  </td>
                   <td>{{task.createdAt}}</td>
                   <td>
-                    <div class="btn-group" role="group" aria-label="...">
+                    <div class="btn-group" role="group">
                       <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
                       <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
                       <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
@@ -215,9 +297,9 @@
                   <button type="button" class="btn btn-info btn-xs" ng-click="saveTask(task); $event.stopPropagation();" style="font-size:11pt">Save...</button>
                 </td>
                   <tr>
-                    <td colspan="5" ng-style="task.isCollapsed ? {padding: 0} : {}">
+                    <td colspan="7" ng-style="!task.isCollapsed ? {padding: 0} : {}">
 
-                      <div uib-collapse="task.isCollapsed">
+                      <div uib-collapse="!task.isCollapsed">
                         <div style="width:100%">
                           <span style="float:left;width:50%"><h4>Task Text</h4></span>
                           <span style="float:right;width:50%;text-align: right"><h4>Reference Statement</h4></span>
@@ -253,57 +335,5 @@
 
       </uib-tab>
     </uib-tabset>
-  </div>
-
-
-
-  <div class="ng-hide" ng-show="state === 'TaskSelection'" style="width:100%;float:right">
-
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th ng-click="orderTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">ID</th>
-        <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-        <th ng-click="orderTaskPredicate = 'creator'; orderReverse = !orderReverse" style="cursor: pointer">Created by</th>
-        <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Created at</th>
-        <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task)">
-        <td>{{ task.id }}</td>
-        <td>{{ task.taskName}}</td>
-        <td>{{ task.creator }}</td>
-        <td>{{ task.createdAt }}</td>
-        <td>
-          <div class="btn-group" role="group" aria-label="...">
-            <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
-            <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
-          </div>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div class="ng-hide" ng-show="state === 'TaskEdit'"  style="width:100%;float:right">
-    <div style="width:100%;height: 8px"> </div>
-    <div style="width:45%; float:left">
-      <button class="btn btn-default" ng-click="prevSubmit()" style="float:left">Previous Student</button>
-      <label style="float:right">Student's Statement:</label>
-    </div>
-    <div style="width:45%; float:right">
-      <label style="float:left">Reference Statement:</label>
-      <button class="btn btn-default" ng-click="nextSubmit()" style="float:right">Next Student</button>
-    </div>
-    <div style="width:45%; float:left">
-      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLUser" ng-model="selectedSubmit.statement" style="resize:none; width:100%"></textarea>
-    </div>
-    <div style="width:45%; float:right">
-      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLRef" ng-model="selectedSubTask.refStatement" style="resize:none; width:100%"></textarea>
-
-    </div>
   </div>
 </div>
