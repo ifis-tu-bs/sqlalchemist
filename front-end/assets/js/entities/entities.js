@@ -29,7 +29,7 @@ game.LevelEntity = me.LevelEntity.extend({
                 title = "level".concat(Math.ceil(Math.random() * 7));
                 me.audio.stopTrack();
                 me.audio.playTrack(title, game.data.musicVolume);
-            } else if (game.persistent.depth % 5 === 1 && game.data.score !== 0) {
+            } else if (game.persistent.depth % 5 === 1 && game.data.score !== 0 ) {
                 title = "boss".concat(Math.ceil(Math.random() * 5));
                 me.audio.stopTrack();
                 me.audio.playTrack(title, game.data.musicVolume);
@@ -59,6 +59,7 @@ game.LevelEntity = me.LevelEntity.extend({
         //Increase the depth for every level
         game.persistent.depth++;
 
+        console.log(game.persistent.depth)
         //Every fifth map shall be a boooooosss map
         if (game.persistent.depth % 5 === 0) {
             //Return the bosslevel for current difficulty

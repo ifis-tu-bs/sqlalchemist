@@ -16,7 +16,7 @@ game.PlayScreen = me.ScreenObject.extend({
 
         //is used for balancing purposes
         var cheat = 0;
-        game.persistent.depth += cheat*5;
+        game.persistent.depth += cheat*5 + 0;
         game.stats.defense += cheat + 2 * 0;
         game.stats.health += cheat + 1 * 0;
         game.stats.speed += cheat + 2 * 0;

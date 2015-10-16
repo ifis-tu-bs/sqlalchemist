@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-up" width="128" height="24" tilewidth="32" tileheight="32" nextobjectid="456">
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="128" height="24" tilewidth="32" tileheight="32" nextobjectid="457">
  <tileset firstgid="1" name="glitch" tilewidth="32" tileheight="32">
   <image source="../img/map/glitch.png" width="1024" height="672"/>
  </tileset>
@@ -25,8 +25,8 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="454" name="SpikeEntity" x="4036.5" y="-646" width="20" height="10000"/>
-  <object id="455" name="BuffEntity" x="382" y="577" width="32" height="32">
+  <object id="454" name="SpikeEntity" x="4045.5" y="-621" width="20" height="10000"/>
+  <object id="455" name="BuffEntity" x="30" y="357" width="32" height="32">
    <properties>
     <property name="defense" value="0"/>
     <property name="health" value="3"/>
@@ -37,9 +37,16 @@
     <property name="time" value="20000"/>
    </properties>
   </object>
+  <object id="456" name="game.LevelEntity" x="4064.5" y="697" width="33" height="30">
+   <properties>
+    <property name="duration" value="300"/>
+    <property name="fade" value="#009900"/>
+    <property name="to" value="0"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="EnemyEntities"/>
  <objectgroup name="collision">
-  <object id="446" name="Ground" x="-7" y="649" width="4200" height="400"/>
+  <object id="446" name="Ground" x="-44" y="647" width="4200" height="400"/>
  </objectgroup>
 </map>
