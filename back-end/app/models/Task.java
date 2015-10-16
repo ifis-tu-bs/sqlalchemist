@@ -19,6 +19,10 @@ import java.util.List;
 @Table(name = "Task")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Task extends Model {
+
+    public static final int EVALUATIONSTRATEGY_SET = 1;
+    public static final int EVALUATIONSTRATEGY_LIST = 2;
+
     @Id
     private long id;
 

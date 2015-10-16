@@ -84,7 +84,7 @@ public class SQLController extends Controller {
             return badRequest("no task found");
         }
 
-        SQLResult   sqlResult   = SQLParser.checkStatement(task, userStatement);
+        SQLResult   sqlResult   = SQLParser.checkUserStatement(task, userStatement);
         ObjectNode  resultNode;
         Result      result;
         boolean     status;
@@ -146,7 +146,7 @@ public class SQLController extends Controller {
             return badRequest("no task found");
         }
 
-        SQLResult   sqlResult   = SQLParser.checkStatement(task, userStatement);
+        SQLResult   sqlResult   = SQLParser.checkUserStatement(task, userStatement);
         ObjectNode  resultNode;
         Result      result;
         boolean     status;

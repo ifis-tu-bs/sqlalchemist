@@ -20,7 +20,11 @@ public class DBConnection{
 
     private final TaskSet taskSet;
 
-    Connection connection;
+    private ResultSet           resultSet;
+    private List<List<String>>  result;
+
+    Connection  connection;
+    Statement   statement;
 
     public DBConnection(TaskSet taskSet) {
         this.taskSet = taskSet;
@@ -35,59 +39,19 @@ public class DBConnection{
         }
     }
 
-    private SQLStatus initDBConn() {
+    public SQLStatus initDBConn() {
         try {
             this.connection = DriverManager.getConnection(this.dbUrl);
+            this.statement  = this.connection.createStatement();
             return null;
         } catch (SQLException e) {
             Logger.warn(e.getMessage());
+            this.connection = null;
             return new SQLStatus(e);
         }
     }
 
-    private int closeDBConn() {
-        try {
-            this.connection.close();
-            return 0;
-        } catch (SQLException e) {
-            Logger.warn(e.getMessage());
-            return e.getErrorCode();
-        }
-    }
-
     public SQLStatus createDB() {
-        SQLStatus status;
-        if((status = this.initDBConn()) != null) {
-            Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
-            return status;
-        }
-
-        if((status = this.create()) != null){
-            Logger.info("Cannot Create Tables for TaskSet: " + this.taskSet.getId());
-            this.delete();
-            this.closeDBConn();
-            return status;
-        }
-
-        this.closeDBConn();
-        return null;
-    }
-
-
-    public SQLStatus deleteDB() {
-        SQLStatus status;
-        if((status = this.initDBConn()) != null) {
-            Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
-            return status;
-        }
-        this.delete();
-        this.closeDBConn();
-        return null;
-    }
-
-    private SQLStatus create() {
-        Statement   stmt;
-
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
             List<String>    primKeys                    = new ArrayList<>();
             String          dataGenSetInsertStatement    = "INSERT INTO " + tableDefinition.getTableName() + "(";
@@ -131,20 +95,18 @@ public class DBConnection{
 
 
 
-            Logger.info(statement);
-            Logger.debug("dataGenInsertStatement: " + dataGenSetInsertStatement);
+            Logger.debug(statement) ;
+            Logger.debug("DBConnection.create - dataGenInsertStatement: " + dataGenSetInsertStatement);
 
             // Execute the Statements
             try {
-                stmt = connection.createStatement();
-                stmt.execute(statement);
+                this.statement.execute(statement);
 
-                Logger.debug(tableDefinition.getExtension());
                 List<String> tableExtensions = new ArrayList<>(Arrays.asList(tableDefinition.getExtension().split("\n")));
 
                 for(String tableExtension : tableExtensions) {
-                    Logger.debug(tableExtension);
-                    stmt.execute(tableExtension);
+                    Logger.debug(tableExtension); ;
+                    this.statement.execute(tableExtension);
                 }
 
             } catch (SQLException e) {
@@ -154,37 +116,39 @@ public class DBConnection{
         }
         for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
             String addForeignKey = "ALTER TABLE " + foreignKeyRelation.getSourceTable() + " ADD FOREIGN KEY (" + foreignKeyRelation.getSourceColumn() + ") REFERENCES " + foreignKeyRelation.getDestinationTable() + "(" + foreignKeyRelation.getDestinationColumn() + ");";
-            Logger.info(addForeignKey);
+            Logger.debug(addForeignKey) ;
 
             // Execute the Statements
             try {
-                stmt = connection.createStatement();
-                stmt.execute(addForeignKey);
+                this.statement.execute(addForeignKey);
             } catch (SQLException e) {
                 Logger.error("DBConnection.create: " + e.getMessage());
                 return new SQLStatus(e);
             }
         }
+        return null;
+    }
+
+    public SQLStatus runnable(String statement) {
         try {
-            ResultSet rs = connection.createStatement().executeQuery("Select * FROM User");
-            printResultSet(rs);
+            this.resultSet = this.statement.executeQuery(statement);
+            this.result = this.transformResultSet(this.resultSet);
         } catch (SQLException e) {
-            e.printStackTrace();
+            Logger.warn("DBConnection.runnable - Statement not runnable: " + statement);
+            return new SQLStatus(e);
         }
         return null;
     }
 
-    private boolean delete() {
+    public boolean deleteDB() {
         boolean status = true;
-        Statement stmt;
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
             try {
-                stmt = connection.createStatement();
                 String statement = "DROP TABLE IF EXISTS " + tableDefinition.getTableName() + ";";
 
-                stmt.execute(statement);
+                this.statement.execute(statement);
 
-                Logger.info(statement);
+                Logger.debug(statement);
             } catch (SQLException e) {
                 Logger.error("DBConnection.delete: " + e.getMessage());
                 status = false;
@@ -193,6 +157,23 @@ public class DBConnection{
         return status;
     }
 
+    public int closeDBConn() {
+        try {
+            if(this.resultSet != null) {
+                this.resultSet.close();
+            }
+            this.statement.close();
+            this.connection.close();
+            return 0;
+        } catch (SQLException e) {
+            Logger.warn(e.getMessage());
+            return e.getErrorCode();
+        }
+    }
+
+    public List<List<String>> getResult() {
+        return this.result;
+    }
 
     /**
      * Method tranformResultSet.
@@ -204,10 +185,10 @@ public class DBConnection{
      *               the DB-table-column and the associated value
      * @throws java.sql.SQLException, SQLException se
      */
-    private ArrayList<ArrayList<String>> transformResultSet(ResultSet rs) throws SQLException {
-        ArrayList<ArrayList<String>> result = new ArrayList<>();
-        ArrayList<String> resultColumnName = new ArrayList<>();
-        ArrayList<String> resultRow;
+    private List<List<String>> transformResultSet(ResultSet rs) throws SQLException {
+        List<List<String>> result = new ArrayList<>();
+        List<String> resultColumnName = new ArrayList<>();
+        List<String> resultRow;
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
 
@@ -241,11 +222,11 @@ public class DBConnection{
         while (rs.next()) {
             for (int i = 1; i <= columnsNumber; i++) {
                 if (i > 1) {
-                    Logger.info(",  ");
+                    Logger.debug(",  ");
                 }
-                Logger.info(rsmd.getColumnName(i) + ": " + rs.getString(i));
+                Logger.debug(rsmd.getColumnName(i) + ": " + rs.getString(i));
             }
-            Logger.info("");
+            Logger.debug("") ;
         }
     }
 }
