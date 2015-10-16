@@ -3,13 +3,13 @@ package controllers;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
-import helper.SQLExceptionParser;
 import models.*;
 
 import secured.CreatorSecured;
 import secured.UserSecured;
 
 import sqlparser.SQLParser;
+import sqlparser.SQLStatus;
 import view.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -58,11 +58,11 @@ public class TaskSetController extends Controller {
             Logger.warn(pe.getMessage());
             return badRequest("taskSet can't be saved");
         }
-        int err;
-        if((err = SQLParser.initialize(taskSet)) != 0) {
-            Logger.warn("TaskSetController.create - " + SQLExceptionParser.parse(err));
+        SQLStatus err;
+        if((err = SQLParser.initialize(taskSet)) != null) {
+            Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
                     taskSet.delete();
-            return badRequest(SQLExceptionParser.parse(err));
+            return badRequest(err.getSqlException().getMessage());
         }
 
         return redirect(routes.TaskSetController.view(taskSet.getId()));
@@ -130,16 +130,16 @@ public class TaskSetController extends Controller {
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
 
-        int err;
-        if((err = SQLParser.initialize(taskSet)) != 0) {
-            Logger.warn("TaskSetController.update - " + SQLExceptionParser.parse(err));
+        SQLStatus err;
+        if((err = SQLParser.initialize(taskSet)) != null) {
+            Logger.warn("TaskSetController.update - " + err.getSqlException().getMessage() );
             taskSet = TaskSetDAO.getById(id);
-            int err2;
-            if((err2 = SQLParser.initialize(taskSet)) != 0) {
-                Logger.warn("TaskSetController.update - " + SQLExceptionParser.parse(err2));
-                return badRequest(SQLExceptionParser.parse(err2));
+            SQLStatus err2;
+            if((err2 = SQLParser.initialize(taskSet)) != null) {
+                Logger.warn("TaskSetController.update - " + err2.getSqlException().getMessage());
+                return badRequest(err2.getSqlException().getMessage());
             }
-            return badRequest(SQLExceptionParser.parse(err));
+            return badRequest(err.getSqlException().getMessage());
         }
 
 

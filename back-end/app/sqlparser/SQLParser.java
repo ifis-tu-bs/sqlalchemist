@@ -12,15 +12,15 @@ public class SQLParser {
 
     public static SQLResult checkStatement(Task task, UserStatement userStatement) {
         DBConnection    dbConnection    = new DBConnection(task.getTaskSet());
-        int             status;
-        if((status = dbConnection.createDB()) != 0) {
+        SQLStatus       status;
+        if((status = dbConnection.createDB()) != null) {
             return new SQLResult(task, SQLResult.ERROR, status);
         }
 
         return new SQLResult(task, SQLResult.SEMANTICS);
     }
 
-    public static int initialize(TaskSet taskSet) {
+    public static SQLStatus initialize(TaskSet taskSet) {
         DBConnection dbConnection = new DBConnection(taskSet);
         return dbConnection.createDB();
     }

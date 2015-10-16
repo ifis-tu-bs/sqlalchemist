@@ -38,14 +38,14 @@ public class DBConnection{
         }
     }
 
-    public int createDB() {
-        int status;
-        if((status = this.initDBConn()) != 0) {
+    public SQLStatus createDB() {
+        SQLStatus status;
+        if((status = this.initDBConn()) != null) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
             return status;
         }
 
-        if((status = this.create()) != 0){
+        if((status = this.create()) != null){
             Logger.info("Cannot Create Tables for TaskSet: " + this.taskSet.getId());
             this.delete();
             this.closeDBConn();
@@ -53,23 +53,22 @@ public class DBConnection{
         }
 
         this.closeDBConn();
-        return 0;
+        return null;
     }
 
 
-    public int deleteDB() {
-        int status;
-        if((status = this.initDBConn()) != 0) {
+    public SQLStatus deleteDB() {
+        SQLStatus status;
+        if((status = this.initDBConn()) != null) {
             Logger.info("Cannot initialize DBConnection for TaskSet: " + this.taskSet.getId());
             return status;
         }
         this.delete();
         this.closeDBConn();
-        return 0;
+        return null;
     }
 
-    private int create() {
-        int         status = 0;
+    private SQLStatus create() {
         Statement   stmt;
 
         for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
@@ -130,8 +129,7 @@ public class DBConnection{
                 }
             } catch (SQLException e) {
                 Logger.error("DBConnection.create: " + e.getMessage());
-                status = e.getErrorCode();
-                break;
+                return new SQLStatus(e);
             }
         }
         for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
@@ -144,11 +142,10 @@ public class DBConnection{
                 stmt.execute(addForeignKey);
             } catch (SQLException e) {
                 Logger.error("DBConnection.create: " + e.getMessage());
-                status = e.getErrorCode();
-                break;
+                return new SQLStatus(e);
             }
         }
-        return status;
+        return null;
     }
 
     private boolean delete() {
@@ -170,13 +167,13 @@ public class DBConnection{
         return status;
     }
 
-    private int initDBConn() {
+    private SQLStatus initDBConn() {
         try {
             this.connection = DriverManager.getConnection(this.dbUrl);
-            return 0;
+            return null;
         } catch (SQLException e) {
             Logger.warn(e.getMessage());
-            return e.getErrorCode();
+            return new SQLStatus(e);
         }
     }
 
