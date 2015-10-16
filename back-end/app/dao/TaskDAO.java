@@ -32,7 +32,7 @@ public class TaskDAO {
      * @return              an task object that matches to the given parameter
      */
       public static Task getByDifficulty(Profile profile, int points) {
-          List<Task> TaskList           = Task.find.where().eq("available", true).eq("points", points).findList(); //.eq("is_home_work", false).findList();
+          List<Task> TaskList           = Task.find.where().eq("points", points).findList(); //.eq("is_home_work", false).findList();
           List<SolvedTask> solvedTasks  = SolvedTaskDAO.getAllDoneTask(profile);
 
           if(TaskList == null || TaskList.size() == 0) {

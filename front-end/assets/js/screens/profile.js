@@ -69,7 +69,7 @@ game.ProfileScreen = me.ScreenObject.extend({
             function profileID_Reply(xmlHttpRequest) {
 
                 var profile_JSON = JSON.parse(xmlHttpRequest.responseText);
-                //console.log(profile_JSON);
+                console.log("Kahn",profile_JSON);
                 var filename = profile_JSON.avatar.avatarFilename;
                 var isTeam = profile_JSON.avatar.isTeam;
                 if (!isTeam) {

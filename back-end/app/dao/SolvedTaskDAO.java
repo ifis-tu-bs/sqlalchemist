@@ -23,6 +23,7 @@ public class SolvedTaskDAO {
           Profile profile,
           Task task,
           boolean solved ) {
+
       SolvedTask solvedTask = getByProfileAndTask(profile, task);
       if (solvedTask == null) {
           solvedTask = create(profile, task);
@@ -42,16 +43,12 @@ public class SolvedTaskDAO {
           Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
           return null;
       }
-
       try {
-          SolvedTask solvedTask = SolvedTask.find.where().eq("profile", profile).eq("subTask", task).findUnique();
-
-
+          SolvedTask solvedTask = SolvedTask.find.where().eq("profile", profile).eq("task", task).findUnique();
           if(solvedTask == null) {
               Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
               return null;
           }
-
           return solvedTask;
       } catch (NullPointerException e) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");

@@ -1,5 +1,7 @@
 package models;
 
+import sqlparser.SQLStatus;
+
 /**
  * @author fabiomazzone
  */
@@ -10,20 +12,27 @@ public class SQLResult {
 
     private Task task;
 
-    private int type;
-    private int sqlError;
+    private int         type;
+    private SQLStatus   sqlStatus;
+    private String      message;
 
 
     public SQLResult(Task task, int type) {
         this.task = task;
         this.type = type;
-        this.sqlError = 0;
+        this.sqlStatus = null;
     }
 
-    public SQLResult(Task task, int type, int sqlerror) {
+    public SQLResult(Task task, SQLStatus sqlStatus) {
         this.task = task;
         this.type       = SQLResult.ERROR;
-        this.sqlError   = sqlerror;
+        this.sqlStatus   = sqlStatus;
+    }
+
+    public SQLResult(Task task, int type, String message) {
+        this.task = task;
+        this.type = type;
+        this.message = message;
     }
 
     public Task getTask() {
@@ -34,7 +43,11 @@ public class SQLResult {
         return type;
     }
 
-    public int getSQLError() {
-        return sqlError;
+    public SQLStatus getSqlStatus() {
+        return sqlStatus;
+    }
+
+    public String getMessage() {
+        return message;
     }
 }
