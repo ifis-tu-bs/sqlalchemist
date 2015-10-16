@@ -32,7 +32,7 @@ public class ShopItemBootstrap {
           ShopItemDAO.create(AvatarDAO.getByName("James and Oliver"), 8000);
           ShopItemDAO.create(AvatarDAO.getByName("James and Oliver Uniform"), 2000);
           ShopItemDAO.create(AvatarDAO.getByName("Capt. Cockhard"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Tonic Weasleby"), 2000);
+          ShopItemDAO.create(AvatarDAO.getByName("Tonic Weaslbey"), 2000);
           ShopItemDAO.create(AvatarDAO.getByName("Hairy P."), 0); //Bereits im Besitz des Benutzers
           ShopItemDAO.create(AvatarDAO.getByName("Hairy P. 2"), 8000);
           ShopItemDAO.create(AvatarDAO.getByName("Hermene Mine Moe"), 0); //Bereits im Besitz des Benutzers
@@ -57,7 +57,7 @@ public class ShopItemBootstrap {
           ShopItemDAO.create(AvatarDAO.getByName("Hoga"), 20000);
           ShopItemDAO.create(AvatarDAO.getByName("Seamus Gallagher"), 500);
           ShopItemDAO.create(AvatarDAO.getByName("Serverus Snoopy"), 20000);
-          ShopItemDAO.create(AvatarDAO.getByName("Sloop Dog"), 20000);
+          ShopItemDAO.create(AvatarDAO.getByName("Sloop Dogg"), 20000);
           ShopItemDAO.create(AvatarDAO.getByName("Sybrille Truehorny"), 2000);
           ShopItemDAO.create(AvatarDAO.getByName("Vollderlord"), 20000);
 

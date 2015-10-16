@@ -60,17 +60,17 @@ game.SettingsScreen = me.ScreenObject.extend({
         $("#backFromSettings").fadeIn(100);
 
 
+        /**
+        var soundElement        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        var soundPlus        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        var soundMinus        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        var soundShow        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
         var musicElement        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
-        me.game.world.addChild(musicElement);
-        if (!game.data.music && !game.data.sound){
-            musicElement.writeHTML('MUSIC: OFF' + "<br>" +'SOUNDS: OFF');
-        } else if (game.data.music && !game.data.sound){
-            musicElement.writeHTML('MUSIC:  ON' + "<br>" +'SOUNDS: OFF');
-        } else if (!game.data.music && game.data.sound){
-            musicElement.writeHTML('MUSIC: OFF' + "<br>" +'SOUNDS:  ON');
-        } else if (game.data.music && game.data.sound){
-            musicElement.writeHTML('MUSIC:  ON' + "<br>" +'SOUNDS:  ON');
-        }
+        var musicPlus        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        var musicMinus        = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+        var musicShow       = new game.TextOutputElement('musicElement', 50, 10, 9.4696, 25.3906, 2);
+         me.game.world.addChild(musicElement);
+        **/
 
         var oldPassword         = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
         var newPassword         = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);

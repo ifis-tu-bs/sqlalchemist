@@ -32,7 +32,7 @@ function createRequest(method, url, callback) {
             callback(xhr);
         } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
                    xhr.status == 503 || xhr.status == 504) {
-            alert("Something went wrong, please check you internet connection!");
+            alert("Something went wrong, please check your internet connection!");
             return;
         } else {
             if (xhr.status == 403){
@@ -426,7 +426,7 @@ function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
 
 // ~ GET /shop
 function ajaxSendShopRequest(onload) {
-  var xmlHttpRequest = createRequest("GET", "/shop", onload);
+  var xmlHttpRequest = createRequest("GET", "/shop/avatar", onload);
 
   xmlHttpRequest.send();
 

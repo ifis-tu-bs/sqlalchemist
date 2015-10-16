@@ -39,7 +39,7 @@ public class AvatarBootstrap {
 
           AvatarDAO.create(
                   "Fresh D!",
-                  "You might think he is not so nimble,\\nbecause of his advanced age.\\nBut he ist Airbus P. W. B. Fumbledoor!\\nHe is the best!",
+                  "You might think he is not so nimble,\\nbecause of his advanced age.\\nBut he is Airbus P. W. B. Fumbledoor!\\nHe is the best!",
                   "albus_dumbledore",
                   false,
                   new PlayerStats(2,1,2,2,0));
@@ -241,7 +241,7 @@ public class AvatarBootstrap {
                   new PlayerStats(0,0,3,1,0));
 
           AvatarDAO.create(
-                  "Party Partil",
+                  "Party Patil",
                   "The Parti-Twins are the cheapest \\nteam with the best agility.",
                   "padma_and_parvati_patil",
                   true,
