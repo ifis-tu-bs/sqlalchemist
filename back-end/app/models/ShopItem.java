@@ -21,18 +21,18 @@ public class ShopItem extends Model{
     public static final int TYPE_AVATAR = 0;
     public static final int TYPE_BELT = 1;
     @Column(name = "type")
-    private int type;
+    private final int type;
 
     @Column(name = "ShopItemName")
-    private String name;
+    private final String name;
 
     @Column(name ="ShopItem_desc")
-    private String desc;
+    private final String desc;
 
-    private String thumbnailUrl;
+    private final String thumbnailUrl;
 
     @Column(name = "price")
-    private int price;
+    private final int price;
 
     @OneToOne
     private Avatar avatar;

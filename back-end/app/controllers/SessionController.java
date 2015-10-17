@@ -30,13 +30,13 @@ public class SessionController extends Controller {
      *
      * @return Returns the Global ProfileState
      */
-    public static Result create() {
-
+    public Result create() {
         JsonNode json = request().body().asJson();
         if (json == null) {
             Logger.info("SessionController.create - Could not retrieve Json from POST body");
             return badRequest("Could not retrieve Json from POST body");
         }
+
         String  id          = json.path("id").textValue();
         String  password    = json.path("password").textValue();
         boolean adminTool   = json.path("adminTool").asBoolean();
@@ -69,7 +69,7 @@ public class SessionController extends Controller {
     }
 
     @Authenticated(UserSecured.class)
-    public static Result delete() {
+    public Result delete() {
         String sessionID = session().get("sessionID");
         UserSession userSession = UserSessionDAO.getBySessionID(sessionID);
 

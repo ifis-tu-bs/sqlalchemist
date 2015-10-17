@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
+import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -18,22 +19,28 @@ import java.util.List;
  */
 @Entity
 @Table(
-        name = "submitted_homework",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id, home_work_id"})
+        name = "SubmittedHomework",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id", "home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
-public class SubmittedHomeWork extends SolvedTask {
+public class SubmittedHomeWork extends Model {
     @Id
-    long id;
+    private Long id;
+
+    @ManyToOne
+    final Profile profile;
+
+    @ManyToOne
+    final Task task;
 
     @ManyToOne
     @Column(name = "home_work_id")
-    HomeWork homeWork;
+    final HomeWork homeWork;
 
     String statement;
     boolean solve;
 
-    public static Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
+    public static final Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
 
 
 //////////////////////////////////////////////////
@@ -47,7 +54,8 @@ public class SubmittedHomeWork extends SolvedTask {
             boolean solve,
             String statement) {
 
-        super(profile, task);
+        this.profile = profile;
+        this.task = task;
         this.homeWork = homeWork;
 
         this.solve = solve;

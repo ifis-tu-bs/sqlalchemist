@@ -13,7 +13,7 @@ import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
 
 /**
- * Created by fabiomazzone on 15/07/15.
+ * @author fabiomazzone
  */
 public class AvatarTest {
 

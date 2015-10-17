@@ -9,18 +9,18 @@ import java.util.Calendar;
  * @author fabiomazzone
  */
 @Entity
-@Table
+@Table(name = "LofiCoinFlowLog")
 public class LofiCoinFlowLog extends Model {
 
     @Id
     public long id;
 
     @ManyToOne
-    public Profile profile;
+    private final Profile profile;
 
-    public int lofiCoinsCollected = 0;
+    private final int lofiCoinsCollected;
 
-    public Calendar collected;
+    private final Calendar collected;
 
     public static final Finder<Long, LofiCoinFlowLog> find = new Finder<>(Long.class, LofiCoinFlowLog.class);
 
@@ -29,5 +29,13 @@ public class LofiCoinFlowLog extends Model {
         this.lofiCoinsCollected = coins;
 
         this.collected = Calendar.getInstance();
+    }
+
+    public Calendar getCollected() {
+        return this.collected;
+    }
+
+    public int getLofiCoinsCollected() {
+        return this.lofiCoinsCollected;
     }
 }

@@ -23,7 +23,7 @@ public class Application extends Controller {
      *
      * @return ok
      */
-    public static Result init() {
+    public Result init() {
         if(UserDAO.getAllUsers().size() == 0) {
             Logger.info("Application.init - Start initializing");
             // Init final Classes

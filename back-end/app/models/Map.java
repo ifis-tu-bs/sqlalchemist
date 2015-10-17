@@ -11,19 +11,19 @@ import javax.persistence.*;
  *  @author fabiomazzone
  */
 @Entity
-@Table(name = "map")
+@Table(name = "Map")
 public class Map extends Model {
     @Id
     private long id;
 
     @Column(name = "level")
-    private int level;
+    private final int level;
 
     @Column(name = "path", unique = true)
-    private String path;
+    private final String path;
 
     @Column(name = "boss_map")
-    private boolean isBossMap = false;
+    private final boolean isBossMap;
 
     public static final Finder<Long, Map> find = new Finder<>(Long.class, Map.class);
 

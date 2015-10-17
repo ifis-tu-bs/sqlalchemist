@@ -26,7 +26,7 @@ public class SettingsController extends Controller {
      *
      * @return  returns the Player Settings as JSON Object
      */
-    public static Result index() {
+    public Result index() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         return ok(SettingsView.toJson(profile.settings));
     }
@@ -36,7 +36,7 @@ public class SettingsController extends Controller {
      *
      * @return  returns a http responds code if the action was successfully or not
      */
-    public static Result edit() {
+    public Result edit() {
         Profile profile     = ProfileDAO.getByUsername(request().username());
         JsonNode json       = request().body().asJson();
         profile.settings    = SettingsView.fromJson(json);

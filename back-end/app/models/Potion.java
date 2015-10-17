@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(
-        name = "potion",
+        name = "Potion",
         uniqueConstraints = @UniqueConstraint(columnNames = {"type", "powerLevel"})
 )
 public class Potion extends Model {
@@ -47,7 +47,7 @@ public class Potion extends Model {
     private final int buffValue;
 
     @Embedded
-    private PlayerStats playerStats;
+    private final PlayerStats playerStats;
 
     public static final Finder<Long, Potion> find = new Finder<>(Long.class, Potion.class);
 

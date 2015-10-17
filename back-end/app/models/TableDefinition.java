@@ -15,7 +15,7 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TableDefinition extends Model {
     @Id
-    private long id;
+    private Long id;
 
     @ManyToOne
     private TaskSet                 taskSet;

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import dao.HomeWorkDAO;
-import dao.ProfileDAO;
 import dao.TaskSetDAO;
 import models.HomeWork;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -18,7 +17,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Invisible on 16.10.2015.
+ * @author Invisible
  */
 public class HomeWorkView {
 
@@ -57,7 +56,7 @@ public class HomeWorkView {
         return null;
     }
 
-    public static ObjectNode toJson(HomeWork homeWork) {
+    private static ObjectNode toJson(HomeWork homeWork) {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
@@ -85,7 +84,7 @@ public class HomeWorkView {
         return homeWorkNode;
     }
 
-    public static ObjectNode toJsonExcerciseForProfile(HomeWork homeWork, Profile profile) {
+    public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
 
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();

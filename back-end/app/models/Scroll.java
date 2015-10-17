@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @version 0.5
  */
 @Entity
-@Table (name = "scroll")
+@Table (name = "Scroll")
 public class Scroll extends  Model {
     @Id
     private long id;

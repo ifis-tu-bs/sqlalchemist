@@ -180,8 +180,6 @@ public class InventoryDAO {
       public static void reset(Profile profile) {
           List<Inventory> inventoryList = Inventory.find.where().eq("profile", profile).findList();
 
-          for(Inventory inventory : inventoryList) {
-              inventory.delete();
-          }
+          inventoryList.forEach(models.Inventory::delete);
       }
 }

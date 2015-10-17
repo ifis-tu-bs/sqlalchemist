@@ -35,8 +35,7 @@ public class ProfileController extends Controller {
      *
      * @return returns the PlayerState as JSON Object
      */
-    public static Result read() {
-        Logger.info(request().username());
+    public Result read() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null){
@@ -53,7 +52,7 @@ public class ProfileController extends Controller {
      * @param   id profile id
      * @return  returns the Profile as JSON Object
      */
-    public static Result view(Long id) {
+    public Result view(Long id) {
         Profile profile = ProfileDAO.getById(id);
 
         return ok(profile.toJson());
@@ -64,7 +63,7 @@ public class ProfileController extends Controller {
      *
      * @return  returns the CharacterState as JSON Object
      */
-    public static Result character() {
+    public Result character() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null) {
@@ -81,7 +80,7 @@ public class ProfileController extends Controller {
      * @param   id avatar id
      * @return  returns the new playerStats
      */
-    public static Result avatar(long id) {
+    public Result avatar(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(profile == null || !profile.setAvatar(id)) {
@@ -93,7 +92,7 @@ public class ProfileController extends Controller {
     }
 
 
-    public static Result reset() {
+    public Result reset() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.resetStory();
@@ -103,7 +102,7 @@ public class ProfileController extends Controller {
         return ok();
     }
 
-    public static Result getUserHomeworks() {
+    public Result getUserHomeworks() {
         List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
         List<HomeWork> homeWorks = HomeWorkDAO.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

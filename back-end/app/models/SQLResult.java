@@ -10,9 +10,9 @@ public class SQLResult {
     public static final int SEMANTICS = 1;
     public static final int SUCCESSFULL = 0;
 
-    private Task task;
+    private final Task task;
 
-    private int         type;
+    private final int         type;
     private SQLStatus   sqlStatus;
     private String      message;
 

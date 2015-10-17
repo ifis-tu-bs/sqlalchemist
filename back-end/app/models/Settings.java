@@ -10,8 +10,8 @@ import javax.persistence.*;
  */
 @Embeddable
 public class Settings {
-    private boolean sound;
-    private boolean music;
+    private final boolean sound;
+    private final boolean music;
 
 //////////////////////////////////////////////////
 //  Constructor

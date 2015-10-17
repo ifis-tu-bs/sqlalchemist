@@ -22,12 +22,12 @@ import java.util.regex.Pattern;
  * @author Fabio Mazzone
  */
 @Entity
-@Table(name = "user")
+@Table(name = "User")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class User extends Model {
     // unique ID
     @Id
-    public long id;
+    public Long id;
 
     //
     @Constraints.Email

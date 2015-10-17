@@ -7,7 +7,7 @@ package helper;
  */
 public class SimpleText {
 
-    public String text;
+    public final String text;
 
     public static final int SIMPLE_TEXT_PREREQUISITE_TUTORIAL_LAB_1              =  1;
     public static final int SIMPLE_TEXT_PREREQUISITE_TUTORIAL_LAB_2              =  2;
@@ -35,11 +35,11 @@ public class SimpleText {
     public static final int SIMPLE_TEXT_PREREQUISITE_BOSSMAP_9  =  99;
     public static final int SIMPLE_TEXT_PREREQUISITE_BOSSMAP_10 = 100;
 
-    public int prerequisite;
+    public final int prerequisite;
 
-    public String sound_url;
+    public final String sound_url;
 
-    public int lines;
+    public final int lines;
 
     public SimpleText(String text, int prerequisite, int lines) {
         this(text, prerequisite, null, lines);

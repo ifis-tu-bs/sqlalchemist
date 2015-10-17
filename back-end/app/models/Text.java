@@ -13,12 +13,11 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "texts")
+@Table(name = "Text")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Text extends Model {
     @Id
-    private
-    long id;
+    private Long id;
 
     public static final int TEXT_TYPE_TERRY_SUCCESSFUL = 200;
     public static final int TEXT_TYPE_TERRY_FAILURE = 201;

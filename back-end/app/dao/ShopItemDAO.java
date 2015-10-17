@@ -86,9 +86,8 @@ public class ShopItemDAO {
       }
 
       public static List<ShopItem> getFreeShopItems() {
-          List<ShopItem> shopItems = ShopItem.find.where().eq("price", 0).findList();
 
-          return shopItems;
+          return ShopItem.find.where().eq("price", 0).findList();
       }
 
       public static List<ShopItem> getAvatarList() {

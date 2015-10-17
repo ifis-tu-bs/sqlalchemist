@@ -1,11 +1,6 @@
 package models;
 
 import play.db.ebean.Model;
-import play.libs.Json;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,26 +10,26 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "homeWork")
+@Table(name = "HomeWork")
 public class HomeWork extends Model {
 
     @Id
     private long id;
 
     @ManyToOne
-    private Profile creator;
+    private final Profile creator;
 
     @ManyToMany()
-    protected final List<TaskSet> taskSets;
+    private final List<TaskSet> taskSets;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<SubmittedHomeWork> submittedHomeWorks;
 
-    private Date start_at;
+    private final Date start_at;
 
-    private Date expire_at;
+    private final Date expire_at;
 
-    private String homeWorkName;
+    private final String homeWorkName;
 
     public static final Model.Finder<Long, HomeWork> find = new Model.Finder<>(Long.class, HomeWork.class);
 

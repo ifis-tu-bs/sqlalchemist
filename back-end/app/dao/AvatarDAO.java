@@ -34,7 +34,6 @@ public class AvatarDAO {
                 avatarFilename,
                 isTeam,
                 playerStats );
-
         try {
             avatar.save();
         } catch (PersistenceException pe) {

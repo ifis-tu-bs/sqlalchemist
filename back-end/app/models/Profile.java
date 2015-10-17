@@ -26,13 +26,12 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "profile")
+@Table(name = "Profile")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Profile extends Model {
     // unique ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @OneToOne
     private User user;
@@ -89,7 +88,7 @@ public class Profile extends Model {
     public Date version;
 
     @Transient
-    long ownRank;
+    private long ownRank;
 
     @OneToMany(mappedBy = "creator")
     private List<TaskSet>   tasks;
@@ -111,19 +110,15 @@ public class Profile extends Model {
     public Profile(String username) {
         super();
         this.setUsername(username);
-        this.setPlayerStats(PlayerStats.defaultValues);
+        this.setPlayerStats(PlayerStats.getDefault());
         this.setSettings(new Settings(true, true));
 
         this.setTutorialDone(false);
         this.setStoryDone();
 
-        this.setShopItems(new ArrayList<>());
-
         List<ShopItem> defaultAvatar = ShopItemDAO.getFreeShopItems();
 
-        for (ShopItem shopItem : defaultAvatar) {
-            this.buy(shopItem);
-        }
+        defaultAvatar.forEach(this::buy);
 
         ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
         this.setAvatar(shopItem.getAvatar().getId());
@@ -231,11 +226,7 @@ public class Profile extends Model {
             playerStats_sum.add(scroll.getPlayerStats());
         }
 
-        for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isTypeBeltSlot()) {
-                playerStats_sum.addBeltSlot();
-            }
-        }
+        this.shopItems.stream().filter(ShopItem::isTypeBeltSlot).forEach(shopItem -> playerStats_sum.addBeltSlot());
 
         if(this.isStoryDone()) {
             playerStats_sum.add(new PlayerStats(0,0,0,0,1));
@@ -413,11 +404,7 @@ public class Profile extends Model {
     public ArrayNode toJsonBoughtAvatars(){
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isTypeAvatar()) {
-                arrayNode.add(AvatarView.toJson(shopItem.getAvatar()));
-            }
-        }
+        this.shopItems.stream().filter(shopItem -> shopItem.isTypeAvatar()).forEach(shopItem -> arrayNode.add(AvatarView.toJson(shopItem.getAvatar())));
 
         return arrayNode;
     }
@@ -524,5 +511,13 @@ public class Profile extends Model {
 
     public void setQuote(int quote) {
         this.quote = quote;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public Date getEdited_at() {
+        return edited_at;
     }
 }

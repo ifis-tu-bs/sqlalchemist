@@ -19,7 +19,7 @@ import secured.UserSecured;
 @Authenticated(UserSecured.class)
 public class ChallengeController extends Controller {
 
-    public static Result story() {
+    public Result story() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
@@ -27,7 +27,7 @@ public class ChallengeController extends Controller {
         return ok(challenge.toJson());
     }
 
-    public static Result skipChallenge() {
+    public Result skipChallenge() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         profile.setTutorialDone(true);
 
@@ -37,7 +37,7 @@ public class ChallengeController extends Controller {
         return ok();
     }
 
-    public static Result reset() {
+    public Result reset() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.setCurrentStory(StoryChallengeDAO.getFirstLevel());

@@ -15,7 +15,7 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ColumnDefinition extends Model {
     @Id
-    private long id;
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foreignKey")
     private List<ColumnDefinition> referencedColumns;

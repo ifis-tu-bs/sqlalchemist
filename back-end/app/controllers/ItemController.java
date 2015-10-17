@@ -37,7 +37,7 @@ public class ItemController extends Controller {
      *
      * @return ok
      */
-    public static Result collected() {
+    public Result collected() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body = request().body().asJson();
         StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
@@ -103,7 +103,7 @@ public class ItemController extends Controller {
      * @return ok
      */
 
-    public static Result scrollCollection() {
+    public Result scrollCollection() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         if(profile == null) {
             Logger.warn("ProfileController.scrollCollection - No profile found");
@@ -117,7 +117,7 @@ public class ItemController extends Controller {
      *
      * @return ok
      */
-    public static Result belt() {
+    public Result belt() {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         return ok(InventoryDAO.getJson_Belt(profile));
@@ -129,7 +129,7 @@ public class ItemController extends Controller {
      *
      * @return ok
      */
-    public static Result edit() {
+    public Result edit() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode belt = request().body().asJson().path("slots");
 
@@ -156,7 +156,7 @@ public class ItemController extends Controller {
      *
      * @return ok
      */
-    public static Result used(int id) {
+    public Result used(int id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         Inventory inventory = InventoryDAO.getBeltSlot(profile, id);
@@ -174,7 +174,7 @@ public class ItemController extends Controller {
      *
      * @return ok
      */
-    public static Result inventory() {
+    public Result inventory() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         return ok(InventoryDAO.getJson_Inventory(profile));
     }

@@ -68,9 +68,8 @@ public class HomeWorkDAO {
   }
 
   public static HomeWork getCurrent() {
-    HomeWork currentChallenge = HomeWork.find.where().lt("start_at", new Date()).gt("expire_at", new Date()).findUnique();
 
-    return currentChallenge;
+      return HomeWork.find.where().lt("start_at", new Date()).gt("expire_at", new Date()).findUnique();
   }
 
 

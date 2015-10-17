@@ -94,9 +94,6 @@ public class TaskView {
 
     /**
      * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
-     * @param task
-     * @param profile
-     * @return
      */
     public static ObjectNode toJsonHomeWorkForProfile(Task task, Profile profile) {
         ObjectNode json = Json.newObject();

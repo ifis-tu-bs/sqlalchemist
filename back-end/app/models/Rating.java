@@ -10,14 +10,14 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table
+@Table(name = "Rating")
 public class Rating extends Model {
 
     @Id
-    Long id;
+    private Long id;
 
     @ManyToOne
-    Profile profile;
+    private Profile profile;
 
     @ManyToOne
     private TaskSet taskSet;
@@ -25,9 +25,9 @@ public class Rating extends Model {
     @ManyToOne
     private Task task;
 
-    long positiveRatings;
-    long negativeRatings;
-    long editRatings;
+    private long positiveRatings;
+    private long negativeRatings;
+    private long editRatings;
 
     public Rating(
         boolean positive,

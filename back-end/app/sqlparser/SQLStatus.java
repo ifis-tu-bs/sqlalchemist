@@ -6,7 +6,7 @@ import java.sql.SQLException;
  * @author fabiomazzone
  */
 public class SQLStatus {
-    private SQLException sqlException;
+    private final SQLException sqlException;
     public SQLStatus(SQLException e) {
         this.sqlException = e;
     }

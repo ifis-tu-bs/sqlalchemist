@@ -26,22 +26,22 @@ public class UserSession extends Model {
 
     @Column(name = "sessionID", unique = true, length=30)
     @Constraints.Required
-    private String sessionID;
+    private final String sessionID;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    public User user;
+    @ManyToOne
+    public final User user;
 
     @Column(name = "remoteAddress")
     @Constraints.Required
-    private String remoteAddress;
+    private final String remoteAddress;
 
     @Column(name = "created_at")
     @Constraints.Required
-    private Date created_at;
+    private final Date created_at;
 
     @Column(name = "expires_at")
     @Constraints.Required
-    private Date expires_at;
+    private final Date expires_at;
 
     /**
      * Need for Database Communication
@@ -49,6 +49,14 @@ public class UserSession extends Model {
     public static final Finder<Long,UserSession> find = new Finder<>(
             Long.class, UserSession.class
     );
+
+    public UserSession(User user, int duration, String remoteAddress) {
+        this.user = user;
+        this.created_at = new Date();
+        this.expires_at = new Date(this.created_at.getTime() + duration*((1000 * 60 * 60 * 24)));
+        this.sessionID = Integer.toHexString(this.hashCode());
+        this.remoteAddress = remoteAddress;
+    }
 
     /**
      *
@@ -60,12 +68,7 @@ public class UserSession extends Model {
         if(duration < 1) {
             return null;
         }
-        UserSession session = new UserSession();
-        session.user = user;
-        session.created_at = new Date();
-        session.expires_at = new Date(session.created_at.getTime() + duration*((1000 * 60 * 60 * 24)));
-        session.sessionID = Integer.toHexString(session.hashCode());
-        session.remoteAddress = remoteAddress;
+        UserSession session = new UserSession(user, duration, remoteAddress);
         session.save();
         return session;
     }
