@@ -51,7 +51,7 @@ public class SubmittedHomeWorkDAO  {
 
         return SubmittedHomeWork.find.where()
                 .eq("profile_id", profile.getId())
-                .eq("sub_task_id", task.getId())
+                .eq("task_id", task.getId())
                 .eq("home_work_id", currentHomeWork.getId())
                 .findUnique();
     }

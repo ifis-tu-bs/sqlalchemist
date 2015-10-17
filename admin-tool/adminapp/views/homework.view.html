@@ -116,7 +116,7 @@
       <tbody>
       <tr ng-repeat="submit in vm.submits | orderBy:orderSubmitPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectSubmit(submit)">
         <td>{{submit.student.matno}}</td>
-        <td>{{submit.solve}}</td>
+        <td><input type="checkbox" ng-model="submit.solve" disabled></td>
         <td>{{submit.statement}}</td>
       </tr>
       </tbody>
@@ -133,11 +133,12 @@
       <label style="float:left">Reference Statement:</label>
       <button class="btn btn-default" ng-click="nextSubmit()" style="float:right">Next Student</button>
     </div>
+    <div style="width:100%;"> <br /><br /></div>
     <div style="width:45%; float:left">
-      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLUser" ng-model="selectedSubmit.statement" style="resize:none; width:100%"></textarea>
+      <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLUser" class="homeWorkEditor" ng-model="selectedSubmit.statement" style="resize:none; width:100%" disabled></div>
     </div>
     <div style="width:45%; float:right">
-      <textarea  ui-codemirror="codemirrorOptions" id="CodeMirrorSQLRef" ng-model="selectedtask.refStatement" style="resize:none; width:100%"></textarea>
+      <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLRef" class="homeWorkEditor" ng-model="selectedtask.refStatement" style="resize:none; width:100%" disabled></div>
 
     </div>
   </div>

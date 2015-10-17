@@ -126,18 +126,9 @@ angular
 
         function selectSubmit(SubmitIndex) {
             $scope.state = 'InspectSubmit';
-
-            //CodeMirror and its abstrusities...
-            $timeout(
-                function() {
-                    $scope.$apply(
-                        function() {
-                            $scope.selectedSubmit = vm.submits[SubmitIndex];
-                            $rootScope.Homework.selectedSubmit = $scope.selectedSubmit;
-                            $scope.selectedTask.refStatement += " ";
-                        }
-                    )
-                }, 100);
+            $scope.selectedSubmit = vm.submits[SubmitIndex];
+            $rootScope.Homework.selectedSubmit = $scope.selectedSubmit;
+            $scope.selectedTask.refStatement += " ";
         }
 
         //////////////////////////////777
@@ -350,6 +341,10 @@ angular
                 }
             }
             return -1;
+        }
+
+        $scope.setAceReadOnly = function (_editor) {
+            _editor.setReadOnly(true);
         }
     }
 
