@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -91,7 +91,7 @@ public class ScrollCollection extends Model {
     public ObjectNode toJson() {
         ObjectNode node = Json.newObject();
 
-        node.put("scroll",  this.scroll.toJson());
+        node.set("scroll",  this.scroll.toJson());
         node.put("isActive",this.isActive);
 
         return node;
@@ -110,7 +110,7 @@ public class ScrollCollection extends Model {
 
         scrollCollectionList.stream().filter(scrollCollection -> !scrollCollection.scroll.isRecipe()).forEach(scrollCollection -> arrayNode.add(scrollCollection.toJson()));
 
-        objectNode.put("scrolls", arrayNode);
+        objectNode.set("scrolls", arrayNode);
 
         return objectNode;
     }

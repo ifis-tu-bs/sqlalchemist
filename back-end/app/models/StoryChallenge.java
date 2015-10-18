@@ -4,13 +4,13 @@ import dao.TextDAO;
 
 import helper.SimpleText;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import play.db.ebean.Model;
 import play.libs.Json;
 import view.MapView;
 
@@ -104,13 +104,13 @@ public class StoryChallenge extends Model {
             mapNode.add(MapView.toJson(map));
         }
 
-        node.put("level", this.level);
-        node.put("texts", textsNode);
-        node.put("maps", mapNode);
+        node.put("level",   this.level);
+        node.set("texts",   textsNode);
+        node.set("maps",    mapNode);
 
         node.put("isTutorial", this.isTutorial);
 
-        node.put("characterState", this.profile.toJsonCharacterState());
+        node.set("characterState", this.profile.toJsonCharacterState());
 
         node.put("createdAt", String.valueOf(this.getCreatedAt()));
 

@@ -82,14 +82,14 @@ public class TaskSetView {
 
         taskSetJson.put("id",                   taskSet.getId());
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
-        taskSetJson.put("tableDefinitions",     tableDefNode);
-        taskSetJson.put("foreignKeyRelations",  foreignKeyRelationNode);
+        taskSetJson.set("tableDefinitions",     tableDefNode);
+        taskSetJson.set("foreignKeyRelations",  foreignKeyRelationNode);
         taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
-        taskSetJson.put("tasks",                taskNode);
-        taskSetJson.put("creator",              taskSet.getCreator().toJson()); // ToDo
+        taskSetJson.set("tasks",                taskNode);
+        taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
-        taskSetJson.put("rating",               RatingView.toJson(rating_sum));
-        taskSetJson.put("comments",             commentNode);
+        taskSetJson.set("rating",               RatingView.toJson(rating_sum));
+        taskSetJson.set("comments",             commentNode);
         taskSetJson.put("createdAt",            String.valueOf(taskSet.getCreatedAt()));
         taskSetJson.put("updatedAt",            String.valueOf(taskSet.getUpdatedAt()));
 

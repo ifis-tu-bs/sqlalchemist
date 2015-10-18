@@ -53,10 +53,10 @@ public class TaskView {
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
-        json.put("creator",             task.getCreator().toJson());
+        json.set("creator",             task.getCreator().toJson());
 
-        json.put("rating",              RatingView.toJson(rating_sum));
-        json.put("comments",            commentNode);
+        json.set("rating",              RatingView.toJson(rating_sum));
+        json.set("comments",            commentNode);
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
@@ -74,7 +74,7 @@ public class TaskView {
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
-        json.put("rating",              RatingView.toJson(rating_sum));
+        json.set("rating",              RatingView.toJson(rating_sum));
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));

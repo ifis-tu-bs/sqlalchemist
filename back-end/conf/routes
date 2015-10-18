@@ -33,10 +33,10 @@ POST        /profile/collected                  controllers.ItemController.colle
 GET         /profile/settings                   controllers.SettingsController.index()
 POST        /profile/settings                   controllers.SettingsController.edit()
 
-#ChallengeController
-GET         /challenge/story                    controllers.ChallengeController.story()
-GET         /challenge/skip                     controllers.ChallengeController.skipChallenge()
-GET         /challenge/reset                    controllers.ChallengeController.reset()
+#LevelController
+GET         /challenge/story                    controllers.LevelController.story()
+GET         /challenge/skip                     controllers.LevelController.skipChallenge()
+GET         /challenge/reset                    controllers.LevelController.reset()
 
 #TaskSetController
 POST        /TaskSet/                           controllers.TaskSetController.create()

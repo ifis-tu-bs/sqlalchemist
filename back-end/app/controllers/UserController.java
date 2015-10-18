@@ -220,7 +220,7 @@ public class UserController extends Controller {
 
         for(User user : userList) {
             ObjectNode node = user.toJsonShort();
-            node.put("profile", user.getProfile().toJsonHighScore());
+            node.set("profile", user.getProfile().toJsonHighScore());
             arrayNode.add(node);
         }
 

@@ -91,7 +91,7 @@ public class ItemController extends Controller {
 
         ObjectNode node = Json.newObject();
 
-        node.put("scrolls",     arrayNode);
+        node.set("scrolls",     arrayNode);
         node.put("coins",       coinsDifference);
 
         return ok(node);

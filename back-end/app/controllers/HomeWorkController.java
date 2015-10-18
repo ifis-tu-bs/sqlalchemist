@@ -118,7 +118,7 @@ public class HomeWorkController extends Controller {
         for (Task task : taskSet.getTasks()) {
             ArrayNode submits = SubmittedHomeWork.toJsonAll(SubmittedHomeWorkDAO.getSubmitsForSubtask(task));
             ObjectNode objectNode = TaskView.toJsonList(task);
-            objectNode.put("submits", submits);
+            objectNode.set("submits", submits);
 
             arrayNode.add(objectNode);
         }

@@ -1,7 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 import play.libs.Json;
 import view.PlayerStatsView;
 
@@ -126,7 +126,7 @@ public class Potion extends Model {
         node.put("name", this.name);
         node.put("type", this.type);
         node.put("powerLevel", this.powerLevel);
-        node.put("buff_value", PlayerStatsView.toJson(this.playerStats));
+        node.set("buff_value", PlayerStatsView.toJson(this.playerStats));
 
         return node;
     }

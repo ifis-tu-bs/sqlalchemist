@@ -1,12 +1,12 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -82,7 +82,7 @@ public class SubmittedHomeWork extends Model {
         objectNode.put("id", this.id);
         objectNode.put("statement", this.statement);
         objectNode.put("solve", this.solve);
-        objectNode.put("student", this.profile.getUser().toJson());
+        objectNode.set("student", this.profile.getUser().toJson());
         objectNode.put("task", this.task.getId());
 
         return objectNode;

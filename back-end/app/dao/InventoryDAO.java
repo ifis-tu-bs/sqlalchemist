@@ -65,12 +65,12 @@ public class InventoryDAO {
                   count = inventoryList.size();
               }
 
-              objectNode.put("potion",    potion.toJson());
+              objectNode.set("potion",    potion.toJson());
               objectNode.put("count",     count);
 
               Scroll scroll = ScrollDAO.getByPotion(potion);
               if(ScrollCollectionDAO.isActive(profile, scroll)) {
-                  objectNode.put("scroll", scroll.toJson());
+                  objectNode.set("scroll", scroll.toJson());
               } else {
                   objectNode.put("scroll", "empty");
               }
@@ -78,7 +78,7 @@ public class InventoryDAO {
               arrayNode.add(objectNode);
           }
 
-          json.put("potions", arrayNode);
+          json.set("potions", arrayNode);
           return json;
       }
 
@@ -100,11 +100,11 @@ public class InventoryDAO {
               if (inv == null) {
                   json.put("potion", "empty");
               } else {
-                  json.put("potion", inv.potion.toJson());
+                  json.set("potion", inv.potion.toJson());
               }
               arrayNode.add(json);
           }
-          node.put("slots", arrayNode);
+          node.set("slots", arrayNode);
           return node;
       }
 

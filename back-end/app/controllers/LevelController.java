@@ -17,7 +17,7 @@ import secured.UserSecured;
  */
 
 @Authenticated(UserSecured.class)
-public class ChallengeController extends Controller {
+public class LevelController extends Controller {
 
     public Result story() {
         Profile profile = ProfileDAO.getByUsername(request().username());

@@ -66,8 +66,8 @@ public class HomeWorkView {
 
         objectNode.put("id",    homeWork.getId());
         objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
-        objectNode.put("taskSets",  arrayNode);
-        objectNode.put("creator",   homeWork.getCreator().toJson());
+        objectNode.set("taskSets",  arrayNode);
+        objectNode.set("creator",   homeWork.getCreator().toJson());
         objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
         objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
@@ -99,7 +99,7 @@ public class HomeWorkView {
 
 
         objectNode.put("name",     homeWork.getHomeWorkName());
-        objectNode.put("taskSets", arrayNode);
+        objectNode.set("taskSets", arrayNode);
 
         return objectNode;
     }

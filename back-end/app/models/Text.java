@@ -1,9 +1,9 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;

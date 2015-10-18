@@ -12,6 +12,7 @@ import view.AvatarView;
 import view.PlayerStatsView;
 import view.SettingsView;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
@@ -19,7 +20,6 @@ import com.fasterxml.jackson.databind.node.*;
 
 import play.Play;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -345,8 +345,8 @@ public class Profile extends Model {
         node.put("username",    this.username);
         node.put("coins",       this.coins);
         node.put("score",       this.totalScore);
-        node.put("highScore",   this.toJsonHighScore());
-        node.put("avatar",      AvatarView.toJson(this.avatar));
+        node.set("highScore",   this.toJsonHighScore());
+        node.set("avatar",      AvatarView.toJson(this.avatar));
 
         return node;
     }
@@ -360,7 +360,7 @@ public class Profile extends Model {
 
         node.put("id",          this.id);
         node.put("username",    this.username);
-        node.put("settings",    SettingsView.toJson(this.settings));
+        node.set("settings",    SettingsView.toJson(this.settings));
         node.put("student",     this.user.isStudent());
         node.put("storyDone",   this.storyDone);
         node.put("coins",       this.coins);
@@ -374,14 +374,14 @@ public class Profile extends Model {
         ObjectNode node = Json.newObject();
         PlayerStats playerStats_sum = this.getPlayerStats();
 
-        node.put("attributes",      PlayerStatsView.toJson(playerStats_sum));
-        node.put("currentAvatar",   AvatarView.toJson(this.avatar));
-        node.put("avatars_bought",  this.toJsonBoughtAvatars());
+        node.set("attributes",      PlayerStatsView.toJson(playerStats_sum));
+        node.set("currentAvatar",   AvatarView.toJson(this.avatar));
+        node.set("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
-        node.put("inventory",       InventoryDAO.getJson_Inventory(this));
-        node.put("belt",            InventoryDAO.getJson_Belt(this));
-        node.put("scrollCollection",ScrollCollection.toJsonAll(this));
+        node.set("inventory",       InventoryDAO.getJson_Inventory(this));
+        node.set("belt",            InventoryDAO.getJson_Belt(this));
+        node.set("scrollCollection",ScrollCollection.toJsonAll(this));
 
         return node;
     }
@@ -418,9 +418,9 @@ public class Profile extends Model {
 
         ObjectNode node = Json.newObject();
 
-        node.put("highScore",   newArray);
+        node.set("highScore",   newArray);
         node.put("ownRank",     profile.ownRank + 1);
-	node.put("own",		profile.toJsonHighScore());
+        node.set("own",         profile.toJsonHighScore());
         return node;
     }
 
