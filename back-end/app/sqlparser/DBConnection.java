@@ -191,16 +191,17 @@ class DBConnection{
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
 
+        List<String> row = new ArrayList<>();
         for(int i = 1; i <= columnsNumber; i++) {
-            List<String> column = new ArrayList<>();
-            column.add(rsmd.getColumnName(i));
-            table.add(column);
+            row.add(rsmd.getColumnLabel(i));
         }
+        table.add(row);
         while (rs.next()) {
-            for(int i = 0; i < table.size(); i++) {
-                List<String> column = table.get(i);
-                column.add(rs.getString(i+1));
+            row = new ArrayList<>();
+            for(int i = 1; i <= columnsNumber; i++) {
+                row.add(rs.getString(i));
             }
+            table.add(row);
         }
         return table;
     }
@@ -212,8 +213,8 @@ class DBConnection{
      *
      * @throws java.sql.SQLException, SQLException se
      */
-    private void printResult() throws SQLException {
-        for(List<String> column : this.result) {
+    public static void printResult(List<List<String>> result) {
+        for(List<String> column : result) {
             column.forEach(Logger::info);
         }
     }

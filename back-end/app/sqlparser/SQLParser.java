@@ -33,7 +33,7 @@ public class SQLParser {
         for(Task task : tasks) {
             Logger.debug("run: " + task.getRefStatement());
             if((status = dbConnection.runnable(task.getRefStatement())) != null) {
-                Logger.warn("Statement not runnable: " + task.getRefStatement());
+                Logger.warn("SQLParser.createDB - Statement not runnable: " + task.getRefStatement());
                 dbConnection.deleteDB();
                 dbConnection.closeDBConn();
                 return status;
@@ -56,37 +56,84 @@ public class SQLParser {
             return new SQLResult(task, status);
         }
 
-        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
-            Logger.warn("Statement not runnable: " + task.getRefStatement());
-            //dbConnection.deleteDB();
-            dbConnection.closeDBConn();
-            return new SQLResult(task, status);
-        }
-
-        List<List<String>> refStatementResult = dbConnection.getResult();
-
         if((status = dbConnection.runnable(userStatement.getStatement())) != null) {
             Logger.warn("Statement not runnable: " + task.getRefStatement());
             //dbConnection.deleteDB();
             dbConnection.closeDBConn();
             return new SQLResult(task, status);
         }
-
         List<List<String>> userStatementResult = dbConnection.getResult();
+
+        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
+            Logger.warn("Statement not runnable: " + task.getRefStatement());
+            //dbConnection.deleteDB();
+            dbConnection.closeDBConn();
+            return new SQLResult(task, status);
+        }
+        List<List<String>> refStatementResult = dbConnection.getResult();
+
+
+
 
         SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
 
+        DBConnection.printResult(userStatementResult);
+        DBConnection.printResult(refStatementResult);
         if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);
             }
+            result = new SQLResult(task, SQLResult.SEMANTICS, "Errrrrorr");
         } else {
-            Logger.info("not yet implemented ! ");
             if(refStatementResult.size() != userStatementResult.size()) {
                 result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less columns");
-            }
-            if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
+            } else if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
                 result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less rows");
+            } else {
+                for(int i = 0; i < refStatementResult.size(); i++) {
+                    List<String> refRow = refStatementResult.get(i);
+                    for(int j = 0; j < userStatementResult.size(); j++) {
+                        List<String> userRow = userStatementResult.get(j);
+                    }
+                }
+                for(List<String> refColumn : refStatementResult) {
+                    List<String> userColumn = null;
+                    for(int i = 0; i < userStatementResult.size(); i++) {
+                        List<String> userColumnIter = userStatementResult.get(i);
+                        if(refColumn.get(0).equals(userColumnIter.get(0))) {
+                            Logger.info("Column Match");
+                            userColumn = userColumnIter;
+                            break;
+                        }
+                    }
+                    if(userColumn == null) {
+                        Logger.info("Column not found ! :(");
+                        result = new SQLResult(task, SQLResult.SEMANTICS, "Column's do not match");
+                        break;
+                    }
+                    for(String refRow : refColumn) {
+                        String userRow = null;
+                        for(String userRowIter : userColumn) {
+                            if(refRow.equals(userRowIter)) {
+                                userRow = userRowIter;
+                                Logger.info("Row Match");
+                                break;
+                            }
+                        }
+                        if(userRow == null) {
+                            Logger.info("Row not found ! :(");
+                            result = new SQLResult(task, SQLResult.SEMANTICS, "Row's do not match 1");
+                            break;
+                        }
+                        userColumn.remove(userRow);
+                    }
+                    if(userColumn.isEmpty()) {
+                      userStatementResult.remove(userColumn);
+                    } else {
+                      result = new SQLResult(task, SQLResult.SEMANTICS, "Row's do not match");
+                      break;
+                    }
+                }
             }
         }
 
