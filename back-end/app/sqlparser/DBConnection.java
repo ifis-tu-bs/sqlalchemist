@@ -8,9 +8,7 @@ import play.Logger;
 import play.Play;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author fabiomazzone
@@ -21,7 +19,7 @@ class DBConnection{
     private final TaskSet taskSet;
 
     private ResultSet           resultSet;
-    private List<List<String>>  result;
+    private List<Set<String>>  result;
 
     private Connection  connection;
     private Statement   statement;
@@ -171,7 +169,7 @@ class DBConnection{
         }
     }
 
-    public List<List<String>> getResult() {
+    public List<Set<String>> getResult() {
         return this.result;
     }
 
@@ -185,19 +183,19 @@ class DBConnection{
      *               the DB-table-column and the associated value
      * @throws java.sql.SQLException, SQLException se
      */
-    private List<List<String>> transformResultSet(ResultSet rs) throws SQLException {
-        List<List<String>> table    = new ArrayList<>();
+    private List<Set<String>> transformResultSet(ResultSet rs) throws SQLException {
+        List<Set<String>> table    = new ArrayList<>();
 
         ResultSetMetaData rsmd = rs.getMetaData();
         int columnsNumber = rsmd.getColumnCount();
 
-        List<String> row = new ArrayList<>();
+        Set<String> row = new HashSet<>();
         for(int i = 1; i <= columnsNumber; i++) {
             row.add(rsmd.getColumnLabel(i));
         }
         table.add(row);
         while (rs.next()) {
-            row = new ArrayList<>();
+            row = new HashSet<>();
             for(int i = 1; i <= columnsNumber; i++) {
                 row.add(rs.getString(i));
             }
@@ -213,8 +211,8 @@ class DBConnection{
      *
      * @throws java.sql.SQLException, SQLException se
      */
-    public static void printResult(List<List<String>> result) {
-        for(List<String> column : result) {
+    public static void printResult(List<Set<String>> result) {
+        for(Set<String> column : result) {
             column.forEach(Logger::info);
         }
     }
