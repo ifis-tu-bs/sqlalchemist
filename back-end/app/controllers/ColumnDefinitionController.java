@@ -12,7 +12,7 @@ import play.mvc.Result;
  */
 public class ColumnDefinitionController extends Controller{
 
-    public static Result dataTypes() {
+    public Result dataTypes() {
         ArrayNode dataTypesNode = JsonNodeFactory.instance.arrayNode();
         String[] dataTypes = {"VARCHAR(255)", "BOOLEAN", "INTEGER", "INTEGER", "BIGINT", "DECIMAL", "NUMERIC", "FLOAT", "DATE", "TIME", "TIMESTAMP"};
         for(String dataType : dataTypes) {

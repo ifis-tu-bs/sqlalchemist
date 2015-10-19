@@ -13,7 +13,7 @@ import java.util.Properties;
  * @author Invisible
  */
 public class MailSender {
-    private Properties props;
+    private final Properties props;
 
     /**
      * MailSender for the whole Application.

@@ -4,6 +4,7 @@ import dao.TextDAO;
 
 import helper.SimpleText;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -14,6 +15,7 @@ import play.libs.Json;
 import view.MapView;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,24 +25,34 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "story_challenge")
+@Table(name = "StoryChallenge")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
-public class StoryChallenge extends Challenge {
+public class StoryChallenge extends Model {
+    @Id
+    private Long id;
+
+    private final String name;
+
+    private final boolean isTutorial;
+
     public static final int SOLVE_TYPE_RUNNER = 0;
 
-    public static final int TYPE_TUTORIAL = 0;
-    public static final int TYPE_STORY = 1;
+    @ManyToMany
+    private List<Text> texts;
 
     @ManyToMany
-    List<Text> texts;
+    final List<Map> maps;
 
-    @ManyToMany
-    List<Map> maps;
-
-    private int level;
+    private final int level;
 
     @OneToOne
-    private StoryChallenge next;
+    private final StoryChallenge next;
+
+    private final Date createdAt;
+
+    @Transient
+    Profile profile;
+
 
     public static final Finder<Long, StoryChallenge> find = new Finder<>(Long.class, StoryChallenge.class);
 
@@ -50,21 +62,22 @@ public class StoryChallenge extends Challenge {
 
     public StoryChallenge(
             String          name,
-            boolean         tutorial,
+            boolean         isTutorial,
             List<Map>       maps,
             StoryChallenge  next,
             int             level) {
 
-        super(name,
-                SOLVE_TYPE_RUNNER,
-                0,
-                tutorial ? TYPE_TUTORIAL: TYPE_STORY);
+        this.name = name;
 
+
+        this.isTutorial = isTutorial;
 
         this.maps = maps;
+
         this.next = next;
         this.level = level;
 
+        this.createdAt = new Date();
     }
 
 
@@ -78,24 +91,28 @@ public class StoryChallenge extends Challenge {
 //////////////////////////////////////////////////
 
     public ObjectNode toJson() {
-        ObjectNode node     = Json.newObject();
+        ObjectNode node = Json.newObject();
         ArrayNode textsNode = JsonNodeFactory.instance.arrayNode();
-        ArrayNode mapNode   = JsonNodeFactory.instance.arrayNode();
+        ArrayNode mapNode = JsonNodeFactory.instance.arrayNode();
 
-        for(Text text : this.texts) {
+        node.put("name", this.getName());
+
+        for (Text text : this.texts) {
             textsNode.add(text.toJson());
         }
-        for(Map map : this.maps) {
+        for (Map map : this.maps) {
             mapNode.add(MapView.toJson(map));
         }
 
-        node.put("level",           this.level);
-        node.put("texts",           textsNode);
-        node.put("maps",            mapNode);
+        node.put("level",   this.level);
+        node.set("texts",   textsNode);
+        node.set("maps",    mapNode);
 
-        node.put("isTutorial",      this.type == TYPE_TUTORIAL);
+        node.put("isTutorial", this.isTutorial);
 
-        node.put("characterState",  this.player.toJsonCharacterState());
+        node.set("characterState", this.profile.toJsonCharacterState());
+
+        node.put("createdAt", String.valueOf(this.getCreatedAt()));
 
         return node;
     }
@@ -111,7 +128,7 @@ public class StoryChallenge extends Challenge {
     public boolean setTexts(List<SimpleText> texts) {
         for(int i = 0; i < texts.size(); i++) {
             SimpleText simpleText = texts.get(i);
-            Text text = TextDAO.create(this.type, i, simpleText.prerequisite, simpleText.text, simpleText.sound_url, simpleText.lines);
+            Text text = TextDAO.create(0, i, simpleText.prerequisite, simpleText.text, simpleText.sound_url, simpleText.lines);
 
             if(text != null) {
                 this.texts.add(text);
@@ -126,7 +143,15 @@ public class StoryChallenge extends Challenge {
         return this.next;
     }
 
-    public void setNext(StoryChallenge next) {
-      this.next = next;
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
     }
 }

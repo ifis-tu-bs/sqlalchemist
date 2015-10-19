@@ -16,8 +16,8 @@ public class LofiCoinFlowLogDAO {
       int collected = 0;
 
       for(LofiCoinFlowLog lofiCoinFlowLog : LogList) {
-          if(yesterday.before(lofiCoinFlowLog.collected)) {
-              collected = collected + lofiCoinFlowLog.lofiCoinsCollected;
+          if(yesterday.before(lofiCoinFlowLog.getCollected())) {
+              collected = collected + lofiCoinFlowLog.getLofiCoinsCollected();
           }
       }
 

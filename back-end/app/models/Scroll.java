@@ -2,7 +2,7 @@ package models;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @version 0.5
  */
 @Entity
-@Table (name = "scroll")
+@Table (name = "Scroll")
 public class Scroll extends  Model {
     @Id
     private long id;
@@ -133,7 +133,7 @@ public class Scroll extends  Model {
         node.put("name", this.name);
         node.put("type", this.type);
         if(this.potion != null) {
-            node.put("potion", this.potion.toJson());
+            node.set("potion", this.potion.toJson());
         }
 
         return node;

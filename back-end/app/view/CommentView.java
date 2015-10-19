@@ -20,7 +20,7 @@ public class CommentView {
     public static ObjectNode toJson(Comment comment) {
         ObjectNode node = Json.newObject();
 
-        node.put("profile",     comment.getProfile().toJson());
+        node.set("profile",     comment.getProfile().toJson());
         node.put("text",        comment.getComment());
         node.put("createdAt",  String.valueOf(comment.getCreated_at()));
 

@@ -1,8 +1,8 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import play.db.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TableDefinition extends Model {
     @Id
-    private long id;
+    private Long id;
 
     @ManyToOne
     private TaskSet                 taskSet;

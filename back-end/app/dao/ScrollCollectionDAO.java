@@ -10,6 +10,7 @@ import play.Play;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Calendar;
+import java.util.stream.Collectors;
 
 public class ScrollCollectionDAO {
   /**
@@ -79,7 +80,7 @@ public class ScrollCollectionDAO {
        * @param scroll    the scroll
        * @return          returns the scrollCollection object
        */
-      public static ScrollCollection getByProfileAndScroll(Profile profile, Scroll scroll) {
+      private static ScrollCollection getByProfileAndScroll(Profile profile, Scroll scroll) {
           ScrollCollection scrollCollection = ScrollCollection.find.where().eq("profile", profile).eq("scroll", scroll).findUnique();
           if (scrollCollection == null) {
               return null;
@@ -117,13 +118,7 @@ public class ScrollCollectionDAO {
               return new ArrayList<>();
           }
 
-          List<Scroll> scrollList = new ArrayList<>();
-
-          for(ScrollCollection scrollCollection : scrollCollectionList) {
-              scrollList.add(scrollCollection.getScroll());
-          }
-
-          return scrollList;
+          return scrollCollectionList.stream().map(ScrollCollection::getScroll).collect(Collectors.toList());
       }
 
       public static int getLimit(Profile profile) {
@@ -145,9 +140,7 @@ public class ScrollCollectionDAO {
       public static void reset(Profile profile) {
           List<ScrollCollection> scrollCollectionList = ScrollCollection.find.where().eq("profile", profile).findList();
 
-          for(ScrollCollection scrollCollection : scrollCollectionList) {
-              scrollCollection.delete();
-          }
+          scrollCollectionList.forEach(models.ScrollCollection::delete);
 
       }
 }

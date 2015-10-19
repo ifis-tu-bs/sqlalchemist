@@ -5,7 +5,6 @@ import helper.SimpleText;
 import models.Map;
 import models.Profile;
 import models.StoryChallenge;
-import models.Text;
 
 import play.Logger;
 
@@ -46,9 +45,7 @@ public class StoryChallengeDAO {
                   Logger.warn("StoryChallenge.create - Can't save all Texts");
 
                   if(storyChallenge.getTexts() != null) {
-                      for(Text text : storyChallenge.getTexts()) {
-                          text.delete();
-                      }
+                      storyChallenge.getTexts().forEach(models.Text::delete);
                   }
 
                   storyChallenge.delete();
@@ -66,7 +63,7 @@ public class StoryChallengeDAO {
       public static StoryChallenge getForProfile(Profile profile) {
           StoryChallenge challenge;
           if (!profile.isTutorialDone()) {
-              challenge = StoryChallenge.find.where().eq("type", StoryChallenge.TYPE_TUTORIAL).findList().get(0);
+              challenge = StoryChallenge.find.where().eq("isTutorial", true).findList().get(0);
               profile.setCurrentStory(challenge);
           } else {
               challenge = profile.getCurrentStory();
@@ -75,13 +72,13 @@ public class StoryChallengeDAO {
 
           profile.update();
           if(challenge != null)
-              challenge.setPlayer(profile);
+              challenge.setProfile(profile);
 
           return challenge;
       }
 
       public static StoryChallenge getFirstLevel() {
-          StoryChallenge challenge = StoryChallenge.find.where().eq("type", StoryChallenge.TYPE_TUTORIAL).findList().get(0);
+          StoryChallenge challenge = StoryChallenge.find.where().eq("isTutorial", true).findList().get(0);
           if(challenge == null) {
               Logger.warn("StoryChallenge.getFirstLevel - No Element found");
               return null;

@@ -2,7 +2,8 @@ package models;
 
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import play.db.ebean.Model;
+
+import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ColumnDefinition extends Model {
     @Id
-    private long id;
+    private Long id;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "foreignKey")
     private List<ColumnDefinition> referencedColumns;

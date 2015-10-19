@@ -27,7 +27,7 @@ import java.util.List;
  */
 @Security.Authenticated(UserSecured.class)
 public class SQLController extends Controller {
-    public static Result story(long id) {
+    public Result story(long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         Scroll scroll   = ScrollDAO.getById(id);
 
@@ -69,7 +69,7 @@ public class SQLController extends Controller {
         return ok(TaskView.toJsonExercise(task));
     }
 
-    public static Result storySolve(long id) {
+    public Result storySolve(long id) {
         Profile         profile         = ProfileDAO.getByUsername(request().username());
         JsonNode        body            = request().body().asJson();
         Task            task            = TaskDAO.getById(id);
@@ -112,7 +112,7 @@ public class SQLController extends Controller {
 
     }
 
-    public static Result trivia(int difficulty) {
+    public Result trivia(int difficulty) {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(difficulty < 0 && difficulty > Play.application().configuration().getInt("HighestTaskDifficulty")) {
@@ -131,7 +131,7 @@ public class SQLController extends Controller {
         return ok(TaskView.toJsonExercise(task));
     }
 
-    public static Result triviaSolve(Long id) {
+    public Result triviaSolve(Long id) {
         Profile         profile         = ProfileDAO.getByUsername(request().username());
         JsonNode        body            = request().body().asJson();
         Task            task            = TaskDAO.getById(id);
@@ -173,7 +173,7 @@ public class SQLController extends Controller {
     }
 
 
-    public static Result homework() {
+    public Result homework() {
         //Profile profile = ProfileDAO.getByUsername(request().username());
         //Task task = TaskDAO.getByChallengeID(1L, profile);
 
@@ -181,7 +181,7 @@ public class SQLController extends Controller {
     }
 
     /*
-    public static Result homeworkSolve(Long id) {
+    public Result homeworkSolve(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode body   = request().body().asJson();
         Task task = TaskDAO.getById(id);

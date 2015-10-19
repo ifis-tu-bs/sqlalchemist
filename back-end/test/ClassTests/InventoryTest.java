@@ -15,7 +15,7 @@ import static play.test.Helpers.start;
 
 
 /**
- * Created by gabriel on 6/25/15.
+ * @author gabriel on 6/25/15.
  */
 public class InventoryTest {
     @BeforeClass

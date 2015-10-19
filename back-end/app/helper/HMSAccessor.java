@@ -8,14 +8,14 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * Created by Invisible on 30.06.2015.
+ * @author Invisible
  */
 public class HMSAccessor {
     private DatabaseMetaData metaData = null;
     private Connection connection = null;
     private PreparedStatement statement = null;
     private ResultSet resultSet = null;
-    private Map<String, String> results = new HashMap<>();
+    private final Map<String, String> results = new HashMap<>();
 
     public boolean identifyUser(String email) {
 

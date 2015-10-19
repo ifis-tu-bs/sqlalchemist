@@ -27,7 +27,7 @@ public class ShopItemView {
         node.put("thumbnailUrl",    shopItem.getThumbnailUrl());
         node.put("price",           shopItem.getPrice());
         if(shopItem.isTypeAvatar()) {
-            node.put("avatar",      AvatarView.toJson(shopItem.getAvatar()));
+            node.set("avatar",      AvatarView.toJson(shopItem.getAvatar()));
         }
         node.put("bought",          profile.shopItemInList(shopItem));
 

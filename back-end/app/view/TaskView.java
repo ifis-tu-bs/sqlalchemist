@@ -3,6 +3,7 @@ package view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import dao.SolvedTaskDAO;
 import models.Comment;
 import models.Profile;
 import models.Rating;
@@ -52,10 +53,10 @@ public class TaskView {
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
-        json.put("creator",             task.getCreator().toJson());
+        json.set("creator",             task.getCreator().toJson());
 
-        json.put("rating",              RatingView.toJson(rating_sum));
-        json.put("comments",            commentNode);
+        json.set("rating",              RatingView.toJson(rating_sum));
+        json.set("comments",            commentNode);
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
@@ -73,7 +74,7 @@ public class TaskView {
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
 
-        json.put("rating",              RatingView.toJson(rating_sum));
+        json.set("rating",              RatingView.toJson(rating_sum));
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
@@ -86,6 +87,29 @@ public class TaskView {
 
         for(Task task : taskList) {
             taskNode.add(TaskView.toJsonList(task));
+        }
+
+        return taskNode;
+    }
+
+    /**
+     * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
+     */
+    public static ObjectNode toJsonHomeWorkForProfile(Task task, Profile profile) {
+        ObjectNode json = Json.newObject();
+
+        json.put("id",          task.getId());
+        json.put("exercise",    task.getTaskText());
+        json.put("done",        SolvedTaskDAO.getByProfileAndTask(profile, task) != null);
+
+        return json;
+    }
+
+    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, Profile profile) {
+        ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
+
+        for(Task task : taskList) {
+            taskNode.add(TaskView.toJsonHomeWorkForProfile(task, profile));
         }
 
         return taskNode;

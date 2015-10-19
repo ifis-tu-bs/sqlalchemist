@@ -97,7 +97,7 @@ public class TaskSetBootstrap {
         TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
         taskSet.save();
         SQLStatus err;
-        if((err = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+        if((err = SQLParser.createDB(taskSet)) != null) {
             Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
             taskSet.delete();
         }

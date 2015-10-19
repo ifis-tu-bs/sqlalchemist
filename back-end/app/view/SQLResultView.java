@@ -13,10 +13,15 @@ public class SQLResultView {
         ObjectNode sqlResultNode = Json.newObject();
 
 
-        sqlResultNode.put("type",       sqlResult.getType());
-        sqlResultNode.put("terry",      "semantic error");
-        sqlResultNode.put("time",       userStatement.getTime());
-        sqlResultNode.put("SQLError",   sqlResult.getSqlStatus().getSqlException().getMessage());
+        sqlResultNode.put("type", sqlResult.getType());
+        sqlResultNode.put("time", userStatement.getTime());
+        if(sqlResult.getType() == SQLResult.ERROR) {
+            sqlResultNode.put("terry", "syntax error");
+            sqlResultNode.put("SQLError", sqlResult.getSqlStatus().getSqlException().getMessage());
+        } else {
+            sqlResultNode.put("terry", "semantic error");
+            sqlResultNode.put("SQLError", sqlResult.getMessage());
+        }
 
         return sqlResultNode;
     }

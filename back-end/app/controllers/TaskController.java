@@ -33,7 +33,7 @@ public class TaskController extends Controller {
      * @return              returns an redirection to the new task
      */
     @Security.Authenticated(CreatorSecured.class)
-    public static Result create(Long taskSetId) {
+    public Result create(Long taskSetId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         JsonNode    taskNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(taskSetId);
@@ -62,7 +62,7 @@ public class TaskController extends Controller {
      *
      * @return returns a JSON Array filled with all Task
      */
-    public static Result read() {
+    public Result read() {
         List<Task>  taskList = TaskDAO.getAll();
 
         if (taskList == null) {
@@ -81,7 +81,7 @@ public class TaskController extends Controller {
      * @param taskId    the id of a Task as long
      * @return      returns a Task
      */
-    public static Result view(Long taskId) {
+    public Result view(Long taskId) {
         Task task = TaskDAO.getById(taskId);
 
         if (task == null) {
@@ -93,7 +93,7 @@ public class TaskController extends Controller {
     }
 
     @Security.Authenticated(CreatorSecured.class)
-    public static Result update(Long taskId) {
+    public Result update(Long taskId) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         Task        task        = TaskDAO.getById(taskId);
 
@@ -117,7 +117,7 @@ public class TaskController extends Controller {
     }
 
     @Security.Authenticated(CreatorSecured.class)
-    public static Result delete(Long taskId) {
+    public Result delete(Long taskId) {
         Task task = TaskDAO.getById(taskId);
 
         task.delete();
@@ -137,7 +137,7 @@ public class TaskController extends Controller {
      * @param id    the id of the Task
      * @return      returns a http code with a result of the operation
      */
-    public static Result rate(Long id) {
+    public Result rate(Long id) {
         JsonNode body       = request().body().asJson();
         Task task           = TaskDAO.getById(id);
         Profile profile     = ProfileDAO.getByUsername(request().username());
@@ -167,7 +167,7 @@ public class TaskController extends Controller {
      * @param id    the id of the Task
      * @return      returns a http code with a result message
      */
-    public static Result comment(Long id) {
+    public Result comment(Long id) {
         Profile     profile = ProfileDAO.getByUsername(request().username());
         JsonNode    body    = request().body().asJson();
         Task        task    = TaskDAO.getById(id);
@@ -185,6 +185,6 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return redirect(routes.TaskController.view(task.getId()));
+        return ok(CommentView.toJson(comment));
     }
 }

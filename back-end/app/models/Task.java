@@ -1,11 +1,8 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import com.fasterxml.jackson.databind.node.*;
-
-import play.db.ebean.Model;
-import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -24,7 +21,7 @@ public class Task extends Model {
     public static final int EVALUATIONSTRATEGY_LIST = 2;
 
     @Id
-    private long id;
+    private Long id;
 
     @ManyToOne
     private TaskSet taskSet;
@@ -100,22 +97,6 @@ public class Task extends Model {
         this.updated_at = new Date();
         super.update();
     }
-
-//////////////////////////////////////////////////
-//  json method
-//////////////////////////////////////////////////
-
-
-    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
-        ObjectNode json = Json.newObject();
-
-        json.put("id",          this.id);
-        //json.put("exercise",    this.exercise);
-        //json.put("done",        SubmittedHomeWorkDAO.getCurrentSubmittedHomeWorkForProfileAndSubTask(profile, this) != null);
-
-        return json;
-    }
-
 
 //////////////////////////////////////////////////
 //  Getter & Setter

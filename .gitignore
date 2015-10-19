@@ -2,11 +2,11 @@
 # git ignore file
 #
 
+.idea
 .svn
 .DS_Store
-*/.DS_Store
-**/.DS_Store
 *.log
+node_modules
 
 ########
 # Back-End

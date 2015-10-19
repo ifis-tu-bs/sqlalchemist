@@ -7,6 +7,8 @@ import helper.MailSender;
 import models.Profile;
 import models.User;
 
+import models.UserSession;
+import play.Play;
 import secured.UserSecured;
 import secured.AdminSecured;
 
@@ -42,12 +44,13 @@ public class UserController extends Controller {
      *
      * @return this method returns a user
      */
-    public static Result create() {
+    public Result create() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
         }
+        Logger.info(json.toString());
         String    username  = json.path("username").textValue().trim();
         String    email     = json.path("id").textValue().trim();
         String    password  = json.path("password").textValue().trim();
@@ -58,36 +61,48 @@ public class UserController extends Controller {
             role = 0;
         }
 
-        if(username.length() > 0 || email.length() >0 || password.length() > 0) {
+        if(username.length() == 0 || email.length() == 0 || password.length() == 0) {
             return badRequest("Expecting Json data");
-        } else {
-            boolean isValid = true;
-            // Check the availability of the username
-            if(UserDAO.getByUsername(username) != null) {
-                isValid = false;
-                node.put("username", 1);
-            } else {
-                node.put("username", 0);
-            }
-            // Check the availability of the email
-            if(UserDAO.getByUsername(email) != null) {
-                isValid = false;
-                node.put("id", 1);
-            } else {
-                node.put("id", 0);
-            }
-            if(!isValid) {
-                return badRequest(node);
-            }
-
-            try {
-                UserDAO.create(username, email, password, role);
-            } catch (IllegalArgumentException ex) {
-                return badRequest(ex.getMessage());
-            }
-
-            return controllers.SessionController.create();
         }
+
+        boolean isValid = true;
+        // Check the availability of the username
+        if(UserDAO.getByUsername(username) != null) {
+            isValid = false;
+            node.put("username", 1);
+        } else {
+            node.put("username", 0);
+        }
+        // Check the availability of the email
+        if(UserDAO.getByEmail(email) != null) {
+            isValid = false;
+            node.put("id", 1);
+        } else {
+            node.put("id", 0);
+        }
+        if(!isValid) {
+            return badRequest(node);
+        }
+
+        User user;
+
+        try {
+            user = UserDAO.create(username, email, password, role);
+        } catch (IllegalArgumentException ex) {
+            return badRequest(ex.getMessage());
+        }
+        UserSession userSession = UserSession.create(
+                user,
+                Play.application().configuration().getInt("UserManagement.SessionDuration"),
+                request().remoteAddress()
+        );
+
+        if (userSession != null ) {
+            session().put("sessionID", userSession.getSessionID());
+            return redirect(routes.ProfileController.read());
+        }
+        Logger.warn("SessionController.create - Can't create userSession");
+        return badRequest("Can't create userSession");
     }
 
     /**
@@ -101,7 +116,7 @@ public class UserController extends Controller {
      * @return returns a ok if the old password is valid or a badRequest Status
      */
     @Authenticated(UserSecured.class)
-    public static Result edit() {
+    public Result edit() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
@@ -127,7 +142,7 @@ public class UserController extends Controller {
      * @return ok
      */
     @Authenticated(UserSecured.class)
-    public static Result destroy() {
+    public Result destroy() {
         User user = UserDAO.getByUsername(request().username());
 
         user.delete();
@@ -140,7 +155,7 @@ public class UserController extends Controller {
      * @param verifyCode The given Code by URL
      * @return Success state
      */
-    public static Result verifyEmail(String verifyCode) {
+    public Result verifyEmail(String verifyCode) {
         if (Long.parseLong(verifyCode, 16) % 97 != 1) {
             return badRequest("Sorry, this Verify-Code has not been sent");
         }
@@ -159,7 +174,7 @@ public class UserController extends Controller {
      *
      * @return Success state
      */
-    public static Result sendResetPasswordMail() {
+    public Result sendResetPasswordMail() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
             return badRequest("Could not retrieve Json from POST body!");
@@ -179,7 +194,7 @@ public class UserController extends Controller {
         return ok("Email has been sent");
     }
 
-    public static Result checkStudent() {
+    public Result checkStudent() {
         User user = UserDAO.getByUsername(request().username());
 
         if (user == null) {
@@ -198,14 +213,14 @@ public class UserController extends Controller {
     }
 
     @Authenticated(AdminSecured.class)
-    public static Result getAllUsers() {
+    public Result getAllUsers() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         List<User> userList = UserDAO.getAllUsers();
 
 
         for(User user : userList) {
             ObjectNode node = user.toJsonShort();
-            node.put("profile", user.getProfile().toJsonHighScore());
+            node.set("profile", user.getProfile().toJsonHighScore());
             arrayNode.add(node);
         }
 
@@ -214,7 +229,7 @@ public class UserController extends Controller {
     }
 
     @Authenticated(AdminSecured.class)
-    public static Result promote(long id) {
+    public Result promote(long id) {
         User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();

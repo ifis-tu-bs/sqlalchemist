@@ -26,7 +26,7 @@ public class ShopController extends Controller {
      *
      * @return ok
      */
-    public static Result avatarList() {
+    public Result avatarList() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItemDAO.getAvatarList();
 
@@ -38,7 +38,7 @@ public class ShopController extends Controller {
      *
      * @return ok
      */
-    public static Result beltList() {
+    public Result beltList() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<ShopItem> shopItems = ShopItemDAO.getBeltList();
 
@@ -50,7 +50,7 @@ public class ShopController extends Controller {
      *
      * @return ok
      */
-    public static Result buy(Long id) {
+    public Result buy(Long id) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         ShopItem shopItem = ShopItemDAO.getById(id);
 
