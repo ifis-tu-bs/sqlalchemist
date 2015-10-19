@@ -40,7 +40,7 @@ public class TableDefinitionView {
 
         tableNode.put("id", tableDefinition.getId());
         tableNode.put("tableName", tableDefinition.getTableName());
-        tableNode.put("columns", columnNode);
+        tableNode.set("columns", columnNode);
         tableNode.put("extensions", tableDefinition.getExtension());
 
         return tableNode;

@@ -8,5 +8,6 @@ public class BootstrapDB {
         StoryChallengeBootstrap.init();
         UserBootstrap.init();
         TaskSetBootstrap.init();
+        HomeWorkBootstrap.init();
     }
 }

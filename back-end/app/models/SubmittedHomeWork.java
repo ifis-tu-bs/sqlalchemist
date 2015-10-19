@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -18,22 +19,28 @@ import java.util.List;
  */
 @Entity
 @Table(
-        name = "submitted_homework",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id, home_work_id"})
+        name = "SubmittedHomework",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id", "home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
-public class SubmittedHomeWork extends SolvedTask {
+public class SubmittedHomeWork extends Model {
     @Id
-    long id;
+    private Long id;
+
+    @ManyToOne
+    final Profile profile;
+
+    @ManyToOne
+    final Task task;
 
     @ManyToOne
     @Column(name = "home_work_id")
-    HomeWorkChallenge homeWork;
+    final HomeWork homeWork;
 
     String statement;
     boolean solve;
 
-    public static Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
+    public static final Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
 
 
 //////////////////////////////////////////////////
@@ -43,11 +50,12 @@ public class SubmittedHomeWork extends SolvedTask {
     public SubmittedHomeWork (
             Profile profile,
             Task task,
-            HomeWorkChallenge homeWork,
+            HomeWork homeWork,
             boolean solve,
             String statement) {
 
-        super(profile, task);
+        this.profile = profile;
+        this.task = task;
         this.homeWork = homeWork;
 
         this.solve = solve;
@@ -74,13 +82,13 @@ public class SubmittedHomeWork extends SolvedTask {
         objectNode.put("id", this.id);
         objectNode.put("statement", this.statement);
         objectNode.put("solve", this.solve);
-        objectNode.put("student", this.profile.getUser().toJson());
-        objectNode.put("sub_task", this.task.getId());
+        objectNode.set("student", this.profile.getUser().toJson());
+        objectNode.put("task", this.task.getId());
 
         return objectNode;
     }
 
-    public HomeWorkChallenge getHomeWork() {
+    public HomeWork getHomeWork() {
       return this.homeWork;
     }
 

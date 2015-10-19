@@ -12,6 +12,7 @@ import view.AvatarView;
 import view.PlayerStatsView;
 import view.SettingsView;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.Query;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
@@ -19,20 +20,18 @@ import com.fasterxml.jackson.databind.node.*;
 
 import play.Play;
 import play.data.validation.Constraints;
-import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "profile")
+@Table(name = "Profile")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Profile extends Model {
     // unique ID
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long id;
+    private Long id;
 
     @OneToOne
     private User user;
@@ -79,6 +78,9 @@ public class Profile extends Model {
     private int solvedSQL;
     private int quote;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SubmittedHomeWork> submittedHomeWorks;
+
     private Date created_at;
     private Date edited_at;
 
@@ -86,7 +88,7 @@ public class Profile extends Model {
     public Date version;
 
     @Transient
-    long ownRank;
+    private long ownRank;
 
     @OneToMany(mappedBy = "creator")
     private List<TaskSet>   tasks;
@@ -108,19 +110,15 @@ public class Profile extends Model {
     public Profile(String username) {
         super();
         this.setUsername(username);
-        this.setPlayerStats(PlayerStats.defaultValues);
+        this.setPlayerStats(PlayerStats.getDefault());
         this.setSettings(new Settings(true, true));
 
         this.setTutorialDone(false);
         this.setStoryDone();
 
-        this.setShopItems(new ArrayList<>());
-
         List<ShopItem> defaultAvatar = ShopItemDAO.getFreeShopItems();
 
-        for (ShopItem shopItem : defaultAvatar) {
-            this.buy(shopItem);
-        }
+        defaultAvatar.forEach(this::buy);
 
         ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
         this.setAvatar(shopItem.getAvatar().getId());
@@ -228,11 +226,7 @@ public class Profile extends Model {
             playerStats_sum.add(scroll.getPlayerStats());
         }
 
-        for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isTypeBeltSlot()) {
-                playerStats_sum.addBeltSlot();
-            }
-        }
+        this.shopItems.stream().filter(ShopItem::isTypeBeltSlot).forEach(shopItem -> playerStats_sum.addBeltSlot());
 
         if(this.isStoryDone()) {
             playerStats_sum.add(new PlayerStats(0,0,0,0,1));
@@ -351,8 +345,8 @@ public class Profile extends Model {
         node.put("username",    this.username);
         node.put("coins",       this.coins);
         node.put("score",       this.totalScore);
-        node.put("highScore",   this.toJsonHighScore());
-        node.put("avatar",      AvatarView.toJson(this.avatar));
+        node.set("highScore",   this.toJsonHighScore());
+        node.set("avatar",      AvatarView.toJson(this.avatar));
 
         return node;
     }
@@ -366,7 +360,7 @@ public class Profile extends Model {
 
         node.put("id",          this.id);
         node.put("username",    this.username);
-        node.put("settings",    SettingsView.toJson(this.settings));
+        node.set("settings",    SettingsView.toJson(this.settings));
         node.put("student",     this.user.isStudent());
         node.put("storyDone",   this.storyDone);
         node.put("coins",       this.coins);
@@ -380,14 +374,14 @@ public class Profile extends Model {
         ObjectNode node = Json.newObject();
         PlayerStats playerStats_sum = this.getPlayerStats();
 
-        node.put("attributes",      PlayerStatsView.toJson(playerStats_sum));
-        node.put("currentAvatar",   AvatarView.toJson(this.avatar));
-        node.put("avatars_bought",  this.toJsonBoughtAvatars());
+        node.set("attributes",      PlayerStatsView.toJson(playerStats_sum));
+        node.set("currentAvatar",   AvatarView.toJson(this.avatar));
+        node.set("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
-        node.put("inventory",       InventoryDAO.getJson_Inventory(this));
-        node.put("belt",            InventoryDAO.getJson_Belt(this));
-        node.put("scrollCollection",ScrollCollection.toJsonAll(this));
+        node.set("inventory",       InventoryDAO.getJson_Inventory(this));
+        node.set("belt",            InventoryDAO.getJson_Belt(this));
+        node.set("scrollCollection",ScrollCollection.toJsonAll(this));
 
         return node;
     }
@@ -410,11 +404,7 @@ public class Profile extends Model {
     public ArrayNode toJsonBoughtAvatars(){
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        for(ShopItem shopItem : this.shopItems) {
-            if(shopItem.isTypeAvatar()) {
-                arrayNode.add(AvatarView.toJson(shopItem.getAvatar()));
-            }
-        }
+        this.shopItems.stream().filter(shopItem -> shopItem.isTypeAvatar()).forEach(shopItem -> arrayNode.add(AvatarView.toJson(shopItem.getAvatar())));
 
         return arrayNode;
     }
@@ -428,9 +418,9 @@ public class Profile extends Model {
 
         ObjectNode node = Json.newObject();
 
-        node.put("highScore",   newArray);
+        node.set("highScore",   newArray);
         node.put("ownRank",     profile.ownRank + 1);
-	node.put("own",		profile.toJsonHighScore());
+        node.set("own",         profile.toJsonHighScore());
         return node;
     }
 
@@ -521,5 +511,13 @@ public class Profile extends Model {
 
     public void setQuote(int quote) {
         this.quote = quote;
+    }
+
+    public Date getCreated_at() {
+        return created_at;
+    }
+
+    public Date getEdited_at() {
+        return edited_at;
     }
 }

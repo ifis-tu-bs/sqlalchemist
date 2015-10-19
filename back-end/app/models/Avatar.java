@@ -1,6 +1,6 @@
 package models;
 
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 
@@ -11,11 +11,10 @@ import javax.persistence.*;
  *  @author fabiomazzone
  */
 @Entity
-@Table(name = "avatar")
+@Table(name = "Avatar")
 public class Avatar extends Model {
-
     @Id
-    private long id;
+    private Long id;
 
     @Column(name = "avatar_name", unique = true)
     private final String name;
@@ -31,7 +30,7 @@ public class Avatar extends Model {
     @Embedded
     private final PlayerStats playerStats;
 
-    public static final Finder<Long, Avatar> find = new Finder<>(Long.class, Avatar.class);
+    public static final Finder<Long, Avatar> find = new Model.Finder<>(Long.class, Avatar.class);
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -50,8 +49,6 @@ public class Avatar extends Model {
             String avatarFilename,
             boolean isTeam,
             PlayerStats playerStats) {
-        super();
-
         this.name           = name;
         this.desc           = desc;
         this.avatarFilename= avatarFilename;
@@ -65,7 +62,9 @@ public class Avatar extends Model {
     }
 
     public String getName() {
-        return this.name.contains("2") ? this.name.replace(" 2", "").trim() : this.name;
+        if(this.name.contains(" 2"))
+            return this.name.replace(" 2", "");
+        return this.name;
     }
 
     public String getDesc() {
@@ -77,7 +76,7 @@ public class Avatar extends Model {
     }
 
     public boolean isTeam() {
-        return isTeam;
+        return this.isTeam;
     }
 
     public PlayerStats getPlayerStats() {

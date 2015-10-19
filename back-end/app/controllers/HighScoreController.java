@@ -19,7 +19,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result byPoints() {
+    public Result byPoints() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortByScore(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));
@@ -29,7 +29,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result byTime() {
+    public Result byTime() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortByTime(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));
@@ -39,7 +39,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result byRuns() {
+    public Result byRuns() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortByRuns(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));
@@ -50,7 +50,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result bySQL() {
+    public Result bySQL() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortBySQL(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));
@@ -61,7 +61,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result byRate() {
+    public Result byRate() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortByRate(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));
@@ -72,7 +72,7 @@ public class HighScoreController extends Controller {
      *
      * @return  returns the Json.HighScoreList
      */
-    public static Result byCoins() {
+    public Result byCoins() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         List<Profile> profiles = Profile.sortByCoins(profile);
         return ok(Profile.toJsonHighScoreAll(profiles, profile));

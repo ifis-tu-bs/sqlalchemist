@@ -1,15 +1,10 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import view.TableDefinitionView;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.db.ebean.Model;
-import play.libs.Json;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -26,7 +21,7 @@ import java.util.List;
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TaskSet extends Model {
     @Id
-    private long id;
+    private Long id;
 
     private String                  taskSetName;
 
@@ -38,6 +33,8 @@ public class TaskSet extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Task>              tasks;
     private final boolean                 isHomework;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<HomeWork> homeWorks;
 
     // Social Information's
     @ManyToOne
@@ -249,27 +246,6 @@ public class TaskSet extends Model {
     public Date getUpdatedAt() {
         return updatedAt;
     }
-
-//////////////////////////////////////////////////
-//  json method
-//////////////////////////////////////////////////
-
-    public ObjectNode toHomeWorkJsonForProfile(Profile profile) {
-        ObjectNode  objectNode = Json.newObject();
-
-        ArrayNode subTasks   = JsonNodeFactory.instance.arrayNode();
-
-        for(Task task : this.tasks) {
-            subTasks.add(task.toHomeWorkJsonForProfile(profile));
-        }
-
-        objectNode.put("schema",        this.relationsFormatted);
-        objectNode.put("subTasks",      subTasks);
-
-        return objectNode;
-    }
-
-
 
 //////////////////////////////////////////////////
 //  create methods

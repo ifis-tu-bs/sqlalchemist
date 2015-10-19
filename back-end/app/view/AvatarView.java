@@ -20,7 +20,7 @@ public class AvatarView {
         node.put("desc",            avatar.getDesc());
         node.put("avatarFilename",  avatar.getAvatarFilename());
         node.put("isTeam",          avatar.isTeam());
-        node.put("attributes",      PlayerStatsView.toJson(avatar.getPlayerStats()));
+        node.set("attributes",      PlayerStatsView.toJson(avatar.getPlayerStats()));
 
         return node;
     }

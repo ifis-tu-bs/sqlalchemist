@@ -3,7 +3,7 @@ package models;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
-import play.db.ebean.Model;
+import com.avaje.ebean.Model;
 
 import java.util.Date;
 
@@ -14,33 +14,30 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(
-        name = "solvedSubTask"
-)
+@Table(name = "SolvedSubTask")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SolvedTask extends Model {
     @Id
-    long id;
+    private long id;
 
     @ManyToOne
     @Column(name = "profile_id")
-    Profile profile;
+    private final Profile profile;
 
     @ManyToOne
-    @Column(name = "sub_task_id")
-    Task task;
+    @Column(name = "task_id")
+    private final Task task;
 
-    int solved;
-    int trys;
+    private int solved;
+    private int trys;
 
-    Date lastSolved;
+    private Date lastSolved;
 
     public static final Finder<Long, SolvedTask> find = new Finder<>(Long.class, SolvedTask.class);
 
     public SolvedTask(
             Profile profile,
-            Task task
-    ) {
+            Task task) {
         super();
 
         this.profile = profile;

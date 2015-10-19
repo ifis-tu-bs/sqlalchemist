@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * @author fabiomazzone
  */
-public class DBConnection{
+class DBConnection{
     private final String dbUrl;
 
     private final TaskSet taskSet;
@@ -23,8 +23,8 @@ public class DBConnection{
     private ResultSet           resultSet;
     private List<List<String>>  result;
 
-    Connection  connection;
-    Statement   statement;
+    private Connection  connection;
+    private Statement   statement;
 
     public DBConnection(TaskSet taskSet) {
         this.taskSet = taskSet;
@@ -105,7 +105,7 @@ public class DBConnection{
                 List<String> tableExtensions = new ArrayList<>(Arrays.asList(tableDefinition.getExtension().split("\n")));
 
                 for(String tableExtension : tableExtensions) {
-                    Logger.debug(tableExtension); ;
+                    Logger.debug(tableExtension);
                     this.statement.execute(tableExtension);
                 }
 
@@ -133,7 +133,6 @@ public class DBConnection{
         try {
             this.resultSet = this.statement.executeQuery(statement);
             this.result = this.transformResultSet(this.resultSet);
-            this.printResult();
         } catch (SQLException e) {
             Logger.warn("DBConnection.runnable - Statement not runnable: " + statement);
             return new SQLStatus(e);
@@ -215,9 +214,7 @@ public class DBConnection{
      */
     private void printResult() throws SQLException {
         for(List<String> column : this.result) {
-            for(String field : column) {
-                Logger.info(field);
-            }
+            column.forEach(Logger::info);
         }
     }
 }

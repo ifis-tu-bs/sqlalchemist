@@ -399,7 +399,7 @@ function ajaxSendTaskIdRequest(id, onload) {
 }
 
 // ~ PATCH /Task/:id ~ id: TaskID, jsonData: JSON.task
-function ajaxSendTaskIdEditRequest(id, jsonData, onload) {
+function ajaxSendTaskIdPatchRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("PATCH", "/Task/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
@@ -408,7 +408,7 @@ function ajaxSendTaskIdEditRequest(id, jsonData, onload) {
 }
 
 // ~ DELETE /Task/:id ~ id: TaskID, jsonData: JSON.task
-function ajaxSendTaskIdEditRequest(id, jsonData, onload) {
+function ajaxSendTaskIdDeleteRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("DELETE", "/Task/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
@@ -437,7 +437,7 @@ function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TaskSetController ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // ~ POST /TaskSet
-function ajaxSendTaskSetRequest(id, onload) {
+function ajaxSendTaskSetResolveRequest(id, onload) {
     var xmlHttpRequest = createRequest("Post", "/TaskSet", onload);
 
     xmlHttpRequest.send();
@@ -464,7 +464,7 @@ function ajaxSendTaskSetIdRequest(id, onload) {
 }
 
 // ~ PATCH /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
-function ajaxSendTaskSetIdEditRequest(id, jsonData, onload) {
+function ajaxSendTaskSetIdPatchRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("PATCH", "/TaskSet/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
@@ -473,7 +473,7 @@ function ajaxSendTaskSetIdEditRequest(id, jsonData, onload) {
 }
 
 // ~ DELETE /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
-function ajaxSendTaskSetIdEditRequest(id, jsonData, onload) {
+function ajaxSendTaskSetIdDeleteRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("DELETE", "/TaskSet/" + id, onload);
 
     xmlHttpRequest.send(jsonData);

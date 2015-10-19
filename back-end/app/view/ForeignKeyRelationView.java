@@ -8,7 +8,7 @@ import play.libs.Json;
 /**
  * @author fabiomazzone
  */
-public class ForeignKeyRelationView {
+class ForeignKeyRelationView {
     public static ForeignKeyRelation fromJsonForm(JsonNode foreignKeyNode) {
         String sourceTable         = foreignKeyNode.path("sourceTable").asText();
         String sourceColumn        = foreignKeyNode.path("sourceColumn").asText();

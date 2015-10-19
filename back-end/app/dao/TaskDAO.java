@@ -63,11 +63,6 @@ public class TaskDAO {
        * @return    returns a list of all task objects
        */
       public static List<Task> getAll() {
-          List<Task> TaskList = Task.find.all();
-          if (TaskList == null) {
-              Logger.warn("Task.getAll - no entitys saved");
-              return null;
-          }
-          return TaskList;
+          return Task.find.all();
       }
 }

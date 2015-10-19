@@ -4,10 +4,9 @@
 </div>
 <div class="modal-body">
     <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
-    <label ng-show="vm.error" class="alert alert-danger">{{vm.error}}</label>
 
     <label for="Comments" class="col-sm-2 control-label">Comments of others:</label>
-    <textarea id="Comments" name="Comments" disabled ng-model="textAreaDataComments" style="resize:none;width:100%; height:50vh"></textarea>
+    <textarea id="Comments" name="Comments" disabled ng-model="textAreaDataComments" style="resize:none;width:100%; height:30vh"></textarea>
 
     <label for="InputComment" class="col-sm-2 control-label">Your Comment:</label>
     <textarea id="InputComment" ng-model="textAreaDataInputComment" style="resize:none;width:100%"></textarea>

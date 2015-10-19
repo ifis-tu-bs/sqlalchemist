@@ -1,9 +1,9 @@
 package models;
 
+import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import play.db.ebean.Model;
 import play.libs.Json;
 
 import javax.persistence.*;
@@ -13,12 +13,11 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "texts")
+@Table(name = "Text")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Text extends Model {
     @Id
-    private
-    long id;
+    private Long id;
 
     public static final int TEXT_TYPE_TERRY_SUCCESSFUL = 200;
     public static final int TEXT_TYPE_TERRY_FAILURE = 201;

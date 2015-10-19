@@ -12,7 +12,7 @@ import play.libs.Json;
 /**
  * @author fabiomazzone
  */
-public class ColumnDefinitionView {
+class ColumnDefinitionView {
     public static ColumnDefinition fromJsonForm(JsonNode columnNode, TableDefinition tableDefinition) {
         String  columnName      = columnNode.path("columnName").asText();
         String  dataType        = columnNode.path("dataType").asText();

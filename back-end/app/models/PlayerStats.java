@@ -10,13 +10,11 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class PlayerStats {
-    int health;
-    int defense;
-    int speed;
-    int jump;
-    int slot;
-
-    public static PlayerStats defaultValues = new PlayerStats(5,0,5,15,1);
+    private int health;
+    private int defense;
+    private int speed;
+    private int jump;
+    private int slot;
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -51,6 +49,10 @@ public class PlayerStats {
         this.speed = speed;
         this.jump = jump;
         this.slot = slot;
+    }
+
+    public static PlayerStats getDefault() {
+        return new PlayerStats(5, 0, 5, 15, 1);
     }
 
     /**

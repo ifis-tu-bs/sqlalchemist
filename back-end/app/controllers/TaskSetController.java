@@ -41,7 +41,7 @@ public class TaskSetController extends Controller {
      */
 
     @Security.Authenticated(CreatorSecured.class)
-    public static Result create() {
+    public Result create() {
         Profile profile = ProfileDAO.getByUsername(request().username());
         JsonNode jsonNode = request().body().asJson();
 
@@ -59,7 +59,7 @@ public class TaskSetController extends Controller {
             return badRequest("taskSet can't be saved");
         }
         SQLStatus err;
-        if((err = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+        if((err = SQLParser.createDB(taskSet)) != null) {
             Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
                     taskSet.delete();
             return badRequest(err.getSqlException().getMessage());
@@ -75,7 +75,7 @@ public class TaskSetController extends Controller {
      *
      * @return returns a JSON Array filled with all taskSets
      */
-    public static Result read() {
+    public Result read() {
         List<TaskSet> taskSetList = TaskSetDAO.getAll();
 
         if (taskSetList == null) {
@@ -94,7 +94,7 @@ public class TaskSetController extends Controller {
      * @param id    the id of a TaskSet as long
      * @return      returns a TaskSet
      */
-    public static Result view(Long id) {
+    public Result view(Long id) {
         TaskSet taskSet = TaskSetDAO.getById(id);
 
         if (taskSet == null) {
@@ -111,7 +111,7 @@ public class TaskSetController extends Controller {
      * @return          returns an redirection to the updated taskSet
      */
     @Security.Authenticated(CreatorSecured.class)
-    public static Result update(Long id) {
+    public Result update(Long id) {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
@@ -126,16 +126,16 @@ public class TaskSetController extends Controller {
         List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
 
 
-//SQLParser.delete(taskSet);
+        SQLParser.deleteDB(taskSet);
         TaskSetView.updateFromJson(taskSet, jsonNode);
 
 
         SQLStatus err;
-        if((err = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+        if((err = SQLParser.createDB(taskSet)) != null) {
             Logger.warn("TaskSetController.update - " + err.getSqlException().getMessage() );
             taskSet = TaskSetDAO.getById(id);
             SQLStatus err2;
-            if((err2 = SQLParser.checkTaskSetConfiguration(taskSet)) != null) {
+            if((err2 = SQLParser.createDB(taskSet)) != null) {
                 Logger.warn("TaskSetController.update - " + err2.getSqlException().getMessage());
                 return badRequest(err2.getSqlException().getMessage());
             }
@@ -158,7 +158,7 @@ public class TaskSetController extends Controller {
      * This method deletes an TaskSet object
      */
     @Security.Authenticated(CreatorSecured.class)
-    public static Result delete(Long id) {
+    public Result delete(Long id) {
         TaskSet taskSet = TaskSetDAO.getById(id);
 
         if(taskSet == null) {
@@ -183,7 +183,7 @@ public class TaskSetController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result of the operation
      */
-    public static Result rate(Long id) {
+    public Result rate(Long id) {
         JsonNode   ratingBody  = request().body().asJson();
         TaskSet    taskSet     = TaskSetDAO.getById(id);
         Profile    profile     = ProfileDAO.getByUsername(request().username());
@@ -214,7 +214,7 @@ public class TaskSetController extends Controller {
      * @param id    the id of the TaskFile
      * @return      returns a http code with a result message
      */
-    public static Result comment(Long id) {
+    public Result comment(Long id) {
         Profile     profile     = ProfileDAO.getByUsername(request().username());
         JsonNode    commentBody = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
@@ -232,6 +232,6 @@ public class TaskSetController extends Controller {
 
         taskSet.addComment(comment);
         taskSet.update();
-        return redirect(routes.TaskSetController.view(taskSet.getId()));
+        return ok(CommentView.toJson(comment));
     }
 }
