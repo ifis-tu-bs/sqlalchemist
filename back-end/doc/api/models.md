@@ -26,6 +26,8 @@
     - [TaskSet.Form](#tasksetform)
 - [UserStatement](#userstatement)
 - [HomeWork] (#homework)
+    - [HomeWork.Form] (#Homeworkform)
+    - [HomeWork.Student] (#homeworkstudent)
 
 ### Avatar
 | Name                      | Type                              | Description|
@@ -112,7 +114,7 @@ Comment:
 #### Comment.Form
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
-| ```text```               | ```String```     |            |
+| ```text```               | ```String```      |            |
 
 Example:
 ```json
