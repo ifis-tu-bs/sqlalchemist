@@ -6,7 +6,9 @@ import models.TaskSet;
 import models.UserStatement;
 import play.Logger;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -33,7 +35,7 @@ public class SQLParser {
         for(Task task : tasks) {
             Logger.debug("run: " + task.getRefStatement());
             if((status = dbConnection.runnable(task.getRefStatement())) != null) {
-                Logger.warn("Statement not runnable: " + task.getRefStatement());
+                Logger.warn("SQLParser.createDB - Statement not runnable: " + task.getRefStatement());
                 dbConnection.deleteDB();
                 dbConnection.closeDBConn();
                 return status;
@@ -56,43 +58,52 @@ public class SQLParser {
             return new SQLResult(task, status);
         }
 
-        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
-            Logger.warn("Statement not runnable: " + task.getRefStatement());
-            //dbConnection.deleteDB();
-            dbConnection.closeDBConn();
-            return new SQLResult(task, status);
-        }
-
-        List<List<String>> refStatementResult = dbConnection.getResult();
-
         if((status = dbConnection.runnable(userStatement.getStatement())) != null) {
             Logger.warn("Statement not runnable: " + task.getRefStatement());
             //dbConnection.deleteDB();
             dbConnection.closeDBConn();
             return new SQLResult(task, status);
         }
+        List<Set<String>> userStatementResult = dbConnection.getResult();
 
-        List<List<String>> userStatementResult = dbConnection.getResult();
+        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
+            Logger.warn("Statement not runnable: " + task.getRefStatement());
+            //dbConnection.deleteDB();
+            dbConnection.closeDBConn();
+            return new SQLResult(task, status);
+        }
+        List<Set<String>> refStatementResult = dbConnection.getResult();
+
+
+
 
         SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
 
+        DBConnection.printResult(userStatementResult);
+        DBConnection.printResult(refStatementResult);
         if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);
+            } else {
+                result = new SQLResult(task, SQLResult.SEMANTICS, "Errrrrorr");
             }
         } else {
-            Logger.info("not yet implemented ! ");
+            Set<Set<String>> refStatementSetSet = toSetSet(refStatementResult);
+            Set<Set<String>> userStatementSetSet = toSetSet(userStatementResult);
+
             if(refStatementResult.size() != userStatementResult.size()) {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less columns");
-            }
-            if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
                 result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less rows");
+            } else if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
+                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less columns");
+            } else if(refStatementSetSet.equals(userStatementSetSet)) {
+                result = new SQLResult(task, SQLResult.SUCCESSFULL);
+            } else {
+                result = new SQLResult(task, SQLResult.SEMANTICS, "Error");
             }
         }
 
         dbConnection.deleteDB();
         dbConnection.closeDBConn();
-        //return new SQLResult(task, SQLResult.SEMANTICS);
         return result;
     }
 
@@ -107,5 +118,13 @@ public class SQLParser {
         dbConnection.deleteDB();
         dbConnection.closeDBConn();
         return null;
+    }
+
+    private static Set<Set<String>> toSetSet(List<Set<String>> listSet) {
+        Set<Set<String>> setSet = new HashSet<>();
+        for(Set<String> set : listSet) {
+            setSet.add(set);
+        }
+        return setSet;
     }
 }

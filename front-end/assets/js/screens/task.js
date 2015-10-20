@@ -43,6 +43,7 @@ game.TaskScreen = me.ScreenObject.extend({
         );
      
         textOut          = new game.TextOutputElement('task', 73, 30, 12, 13, 10);
+        textOutHead      = new game.TextOutputElement('task', 73, 30, 12, 4, 8);
         
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 80, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 10, 80, 2);
@@ -79,6 +80,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
 
         me.game.world.addChild(textOut);
+        me.game.world.addChild(textOutHead);
         me.game.world.addChild(submitButton);
         me.game.world.addChild(schemaButton);
         me.game.world.addChild(taskButton);
@@ -282,21 +284,21 @@ game.TaskScreen = me.ScreenObject.extend({
 	     */
         function writeHeadline() {
         	
-            textOut.clear();
+            textOutHead.clear();
             
         	if ((game.task.kind == 0) || (game.task.kind == 1)) {
         	    // Story Collector
-        	    textOut.writePara(game.task.name, 'tasktitle');
+        	    textOutHead.writePara(game.task.name, 'tasktitle');
             }
             
             if (game.task.kind == 2) {
         	    // Trivia
-        	    textOut.writePara('Difficulty: ' + game.task.difficulty, 'tasktitle');
+        	    textOutHead.writePara('Difficulty: ' + game.task.difficulty, 'tasktitle');
             }
             
             if (game.task.kind == 3) {
         	    // Homework
-        	    textOut.writePara('Exercise', 'tasktitle');
+        	    textOutHead.writePara('Exercise', 'tasktitle');
             }
             
         };
@@ -325,7 +327,7 @@ game.TaskScreen = me.ScreenObject.extend({
                 // write data
                 writeHeadline();
                 textOut.clear();
-                textOut.writePara(dataTask.exercise, 'taskbody');
+                textOut.writePara(dataTask.taskText, 'taskbody');
 
                 // buttons to hide
                 tryButton.hide();
@@ -335,6 +337,7 @@ game.TaskScreen = me.ScreenObject.extend({
                 // buttons to display
                 submitButton.display();
                 schemaButton.display();
+                backButton.display();
 
                 likeButton.display();
                 dislikeButton.display();
@@ -357,6 +360,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
                 // buttons to display
                 tryButton.display();
+                backButton.display();
 
                 // write message
                 textOut.clear();

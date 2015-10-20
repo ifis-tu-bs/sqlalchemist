@@ -59,11 +59,11 @@ POST        /Task/:id/rate                      controllers.TaskController.rate(
 POST        /Task/:id/comment                   controllers.TaskController.comment(id: Long)
 
 #SQLController
-GET         /SQL/Story/:id                      controllers.SQLController.story(id: Long)
-POST        /SQL/Story/:id                      controllers.SQLController.storySolve(id: Long)
-GET         /SQL/Trivia/:id                     controllers.SQLController.trivia(id: Int)
-POST        /SQL/Trivia/:id                     controllers.SQLController.triviaSolve(id: Long)
-GET         /SQL/Homework                       controllers.SQLController.homework()
+GET         /SQL/Story/:id/                     controllers.SQLController.story(id: Long)
+POST        /SQL/Story/:id/                     controllers.SQLController.storySolve(id: Long)
+GET         /SQL/Trivia/:id/:stay               controllers.SQLController.trivia(id: Int, stay ?= false: Boolean)
+POST        /SQL/Trivia/:id/                    controllers.SQLController.triviaSolve(id: Long)
+GET         /SQL/Homework/                      controllers.SQLController.homework()
 #POST        /SQL/Homework/:id                   controllers.SQLController.homeworkSolve(id: Long)
 
 

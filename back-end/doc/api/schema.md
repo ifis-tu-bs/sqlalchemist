@@ -47,12 +47,12 @@
 |POST  |/Task/:id/rate              |Task       |.rate                 |Rating.Form   |Redirect(Task.view)          |400-                 |
 |POST  |/Task/:id/comment           |Task       |.comment              |Comment.Form  |Redirect(Task.view)          |400-                 |
 |SQLController
-|GET   |/SQL/Story/:id              |SQL        |.story                |              |200-Task.Exercise            |400-                 |
-|POST  |/SQL/Story/:id              |SQL        |.storySolve(id: Long)
-|GET   |/SQL/Trivia/:id             |SQL        |.trivia               |              |200-Task.Exercise            |400-                 |
-|POST  |/SQL/Trivia/:id             |SQL        |.triviaSolve          |UserStatement |SQLResult.Successfull        |400-SQLResult.Failure|
-|GET   |/SQL/Homework               |SQL        |.homework()             
-|POST  |/SQL/Homework/:id           |SQL        |.homeworkSolve(id: Long)
+|GET   |/SQL/Story/:id/             |SQL        |.story                |              |200-Task.Exercise            |400-                 |
+|POST  |/SQL/Story/:id/             |SQL        |.storySolve(id: Long)
+|GET   |/SQL/Trivia/:id/:stay       |SQL        |.trivia               |              |200-Task.Exercise            |400-                 |
+|POST  |/SQL/Trivia/:id/            |SQL        |.triviaSolve          |UserStatement |SQLResult.Successfull        |400-SQLResult.Failure|
+|GET   |/SQL/Homework/              |SQL        |.homework()
+|POST  |/SQL/Homework/:id/          |SQL        |.homeworkSolve(id: Long)
 |ProfileController
 |GET   |/profile                     |Profile    |.read                |              |200-Profile.PlayerState      |400-                 |
 |GET   |/profile/character           |Profile    |.character           |              |200-Profile.CharacterState   |400-                 |
