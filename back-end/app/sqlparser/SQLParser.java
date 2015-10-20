@@ -79,8 +79,6 @@ public class SQLParser {
 
         SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
 
-        DBConnection.printResult(userStatementResult);
-        DBConnection.printResult(refStatementResult);
         if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);

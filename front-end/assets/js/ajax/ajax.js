@@ -317,7 +317,7 @@ function ajaxSendChallengeHomeworkRequest(onload) {
 
 // ~ GET /SQL/Story/:id ~ id: StoryTaskID
 function ajaxSendTaskStoryIDRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Story/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/SQL/Story/" + id + "/", onload);
 
     xmlHttpRequest.send();
 
@@ -326,7 +326,7 @@ function ajaxSendTaskStoryIDRequest(id, onload) {
 
 // ~ POST /SQL/Story/:id ~ id: StoryTaskID, jsonData: JSON.task.solve
 function ajaxSendTaskStorySolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Story/" + id, onload);
+    var xmlHttpRequest = createRequest("POST", "/SQL/Story/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -335,7 +335,7 @@ function ajaxSendTaskStorySolveRequest(id, jsonData, onload) {
 
 // ~ GET /SQL/Trivia/:id: StoryTaskID | difficulty: DifficultyLevel
 function ajaxSendTaskTriviaRequest(difficulty, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Trivia/" + difficulty, onload);
+    var xmlHttpRequest = createRequest("GET", "/SQL/Trivia/" + difficulty + "/", onload);
 
     xmlHttpRequest.send();
 
@@ -344,7 +344,7 @@ function ajaxSendTaskTriviaRequest(difficulty, onload) {
 
 // ~ POST /SQL/Trivia/:id ~ id: TriviaTaskID, jsonData: JSON.task.solve
 function ajaxSendTaskTriviaSolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Trivia/" + id, onload);
+    var xmlHttpRequest = createRequest("POST", "/SQL/Trivia/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -353,7 +353,7 @@ function ajaxSendTaskTriviaSolveRequest(id, jsonData, onload) {
 
 // ~ GET /SQL/Homework
 function ajaxSendTaskHomeworkRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Homework", onload);
+    var xmlHttpRequest = createRequest("GET", "/SQL/Homework/", onload);
 
     xmlHttpRequest.send();
 
@@ -362,7 +362,7 @@ function ajaxSendTaskHomeworkRequest(onload) {
 
 // ~ POST /SQL/Homework/:id ~ id: HomeworkID, jsonData: JSON.task.solve
 function ajaxSendTaskHomeworkSolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + id, onload);
+    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -382,7 +382,7 @@ function ajaxSendTaskOverTaskSetRequest(id, onload) {
 
 // ~ GET /Task
 function ajaxSendTaskRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/Task", onload);
+    var xmlHttpRequest = createRequest("GET", "/Task/", onload);
 
     xmlHttpRequest.send();
 
@@ -391,7 +391,7 @@ function ajaxSendTaskRequest(onload) {
 
 // ~ GET /Task/:id/ ~ id: TaskID
 function ajaxSendTaskIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/Task/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/Task/" + id + "/", onload);
 
     xmlHttpRequest.send();
 
@@ -400,7 +400,7 @@ function ajaxSendTaskIdRequest(id, onload) {
 
 // ~ PATCH /Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdPatchRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/Task/" + id, onload);
+    var xmlHttpRequest = createRequest("PATCH", "/Task/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -409,7 +409,7 @@ function ajaxSendTaskIdPatchRequest(id, jsonData, onload) {
 
 // ~ DELETE /Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdDeleteRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/Task/" + id, onload);
+    var xmlHttpRequest = createRequest("DELETE", "/Task/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
