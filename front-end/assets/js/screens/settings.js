@@ -258,6 +258,7 @@ game.SettingsScreen = me.ScreenObject.extend({
 
     onDestroyEvent: function(){
 
+        console.log(game.data.music, game.data.sound)
         function changeSet(xmlHttpRequest) {
             console.log(xmlHttpRequest);
         }
@@ -266,6 +267,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             var music = game.data.music;
             var sound = game.data.sound;
             this.user_json_setting = JSON.stringify({music: music, sound: sound});
+            console.log("AJAX: ", this.user_json_setting)
             ajaxSendProfileSettingsSetRequest(this.user_json_setting, changeSet);
         }
 
