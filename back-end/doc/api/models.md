@@ -657,3 +657,23 @@ HomeWork.Form: {
   "expire_at":  Number
 }
 ```
+
+####HomeWork.Student
+| Name                     | Type                     | Description|
+|--------------------------|--------------------------|------------|
+| ```id```                 | ```Number ```            |            |
+| ```homeWorkName```       | ```String```             |            |
+| ```creator```            | [```Profile```](#profile)|            |
+| ```start_at```           | ```Number```             | Milliseconds|
+| ```expire_at```          | ```Number```             | Milliseconds|
+
+Example:
+```json
+HomeWork: {
+  "id": 1,
+  "homeWorkName": "Homework1SS1415",
+  "creator": Profile,
+  "start_at":   Number,
+  "expire_at":  Number
+}
+```
