@@ -227,7 +227,7 @@
     color: #a3743c;
 }
 
-#task {
+#task, #head, #schemaa {
 	background-color : transparent;
 	border-style : none;
 	color : white;
