@@ -26,7 +26,7 @@ public class TaskSetView {
         List<TableDefinition>   tableDefinitions        = new ArrayList<>();
         List<ForeignKeyRelation>foreignKeyRelations     = new ArrayList<>();
         List<Task>              tasks                   = new ArrayList<>();
-        boolean                 isHomework              = jsonNode.path("isHomework").asBoolean();
+        boolean                 isHomework              = jsonNode.path("isHomeWork").asBoolean();
         TaskSet                 taskSet;
 
         for(JsonNode tableDefinitionNode : tableDefinitionArray) {
