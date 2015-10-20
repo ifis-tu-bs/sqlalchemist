@@ -1,8 +1,9 @@
 package models;
 
-import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
+
+import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -43,6 +44,7 @@ public class Task extends Model {
             cascade = CascadeType.ALL,
             mappedBy = "task")
     private List<Rating>    ratings;
+
 
     private final Date created_at;
     private Date updated_at;

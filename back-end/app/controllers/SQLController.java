@@ -112,7 +112,7 @@ public class SQLController extends Controller {
 
     }
 
-    public Result trivia(int difficulty) {
+    public Result trivia(int difficulty, boolean stay) {
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         if(difficulty < 0 && difficulty > Play.application().configuration().getInt("HighestTaskDifficulty")) {

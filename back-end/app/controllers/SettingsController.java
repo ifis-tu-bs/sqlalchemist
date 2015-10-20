@@ -8,6 +8,7 @@ import view.SettingsView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
@@ -39,8 +40,7 @@ public class SettingsController extends Controller {
     public Result edit() {
         Profile profile     = ProfileDAO.getByUsername(request().username());
         JsonNode json       = request().body().asJson();
-        profile.settings    = SettingsView.fromJson(json);
-
+        profile.setSettings(SettingsView.fromJson(json));
         profile.update();
         return redirect(routes.SettingsController.index());
     }
