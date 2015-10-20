@@ -584,8 +584,8 @@ Columns:
 |--------------------------|--------------------------|------------|
 | ```id```                 | ```Number ```            |            |
 | ```homeWorkName```       | ```String```             |            |
-| ```taskSets```           | ```[```TaskSet[]```](#tabledefinitionform)``` |            |
-| ```creator```            | ```[```Profile```](#profile)```               |            |
+| ```taskSets```           | [```TaskSet[]```](#tabledefinitionform)|            |
+| ```creator```            | [```Profile```](#profile)              |            |
 | ```start_at```           | ```Number```             | Milliseconds|
 | ```expire_at```          | ```Number```             | Milliseconds|
 
