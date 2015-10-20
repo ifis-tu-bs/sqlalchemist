@@ -25,6 +25,11 @@ game.TaskScreen = me.ScreenObject.extend({
 			me.audio.playTrack("task",game.data.musicVolume);
 		}
 
+        var backgroundTask = new game.BackgroundElement('backgroundTaskId', 100, 100, 0, 0, 'none');
+        backgroundTask.setImage("assets/data/img/gui/task_screen_new.png", "backgroundscreen");
+        me.game.world.addChild(backgroundTask);
+        $("#backgroundTaskId").fadeIn(100);
+
         game.data.count = 0;
     	// workaround fuer android bug CB-4404
     	if (me.device.android || me.device.android2) {
@@ -34,39 +39,43 @@ game.TaskScreen = me.ScreenObject.extend({
 			}
 	    }
 
-        me.game.world.addChild(
+        /**me.game.world.addChild(
             new me.Sprite (
                 0,0,
                 me.loader.getImage('task_screen')
             ),
             1
-        );
-     
-        textOut          = new game.TextOutputElement('task', 73, 30, 12, 13, 10);
-        textOutHead      = new game.TextOutputElement('task', 73, 30, 12, 4, 8);
-        
-        submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 80, 2);
-        backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 10, 80, 2);
-        schemaButton     = new game.ClickableElement('schema', 'Schema',toggleSchemaButtonWithTaskButton, 10, 6, 52, 80, 2);
-        taskButton       = new game.ClickableElement('taskbutton', 'Task', toggleSchemaButtonWithTaskButton, 10, 6, 52, 80, 2);
-        tryButton        = new game.ClickableElement('trybutton', 'Try again', getTaskFromServer, 10, 6, 38, 80, 2);
-        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Try Again', showSameTask, 10, 6, 38, 80, 2);
+        );**/
 
-        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 80, 2);
-        
-        aceButton        = new game.ClickableElement('acebutton', 'Ace Editor', getAceEditor, 73, 6, 12, 50, 2);
+        //(id, width, height, left, top, rows)
+        textOut          = new game.TextOutputElement('task', 73, 30, 3, 8, 10);
+        textOutHead      = new game.TextOutputElement('head', 73, 8, 10, 2, 2);
+        textOutSchema    = new game.TextOutputElement('schemaa', 73, 30, 3, 8, 10);
+
+        submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
+        backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
+        schemaButton     = new game.ClickableElement('schema', 'Schema',toggleSchemaButtonWithTaskButton, 10, 6, 52, 90, 2);
+        taskButton       = new game.ClickableElement('taskbutton', 'Task', toggleSchemaButtonWithTaskButton, 10, 6, 52, 90, 2);
+        tryButton        = new game.ClickableElement('trybutton', 'Try again', getTaskFromServer, 10, 6, 38, 90, 2);
+        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Try Again', showSameTask, 10, 6, 38, 90, 2);
+
+        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
+
+        aceButton        = new game.ClickableElement('acebutton', 'Ace Editor', getAceEditor, 73, 6, 1, 54, 2);
         /*
         codemirrorButton = new game.ClickableElement('codemirrorbutton', 'CodeMirror Editor', getCodemirrorEditor, 73, 6, 12, 50, 2);
         */
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 80, 2);
-        
+
         likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 70, 80, 2);
         dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 76, 80, 2);
         reviewButton     = new game.ClickableElement('reviewbutton', '', needReview, 2, 3, 82, 80, 2); // needs image
-        
+
         textIn = new Object();
-        
+
+        console.log(1);
+
         submitButton.hide();
         schemaButton.hide();
         taskButton.hide();
@@ -81,6 +90,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
         me.game.world.addChild(textOut);
         me.game.world.addChild(textOutHead);
+        me.game.world.addChild(textOutSchema);
         me.game.world.addChild(submitButton);
         me.game.world.addChild(schemaButton);
         me.game.world.addChild(taskButton);
@@ -93,18 +103,20 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(likeButton);
         me.game.world.addChild(dislikeButton);
         me.game.world.addChild(reviewButton);
-        
+
         me.game.world.addChild(aceButton);
 
+        console.log(2);
+
         aceButton.display();
-        
+
         likeButton.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
         dislikeButton.setImage("assets/data/img/stuff/thumbs_down.png", "thumbdown");
         reviewButton.setImage("assets/data/img/buttons/magnifier.png", "review");
 
-        
+
         dataTask = {
-        	
+
             id         : 0,
             schema     : '\nrel1((Integer)!key1!,(String)attr1,(String)attr2)\nrel2((String)!key2! -> attr1, (Integer)!key3! -> attr3)',
             exercise   : 'Aufgabe',
@@ -116,35 +128,35 @@ game.TaskScreen = me.ScreenObject.extend({
                 positive     : 0,
                 needReview   : 0,
             }
-            
+
         };
-        
+
         dataTaskSolve = {
-        	
+
         	statement : 'SQL Statement',
         	time      : 0
-        	
+
         };
-        
+
         dataTaskResult = {
-        	
+
         	terry : '',
         	time  : 0
-        	
+
         };
-        
+
         dataTaskRating = {
-        	
+
         	negative     : 0,
         	positive     : 0,
-        	needReview   : 0,
-        	
+        	needReview   : 0
+
         };
-        
+
         //
         // Button related functions
         //
-        
+
         /**
          * backButton
          */
@@ -162,7 +174,7 @@ game.TaskScreen = me.ScreenObject.extend({
 	            me.state.change(STATE_HOMEWORK);
 	        }
         }
-        
+
         /**
          * codemirrorButton
          */
@@ -178,12 +190,13 @@ game.TaskScreen = me.ScreenObject.extend({
         	}
         }
         */
-        
+
 		/**
 		 * aceButton
+         * (id, width, height, left, top, rows)
 		 */
 		function getAceEditor() {
-			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 71, 25, 12, 44, 7);
+			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 35, 3, 45, 7);
 			me.game.world.addChild(aceEditor);
 			aceButton.hide();
 			textIn = aceEditor;
@@ -192,7 +205,7 @@ game.TaskScreen = me.ScreenObject.extend({
 				submitButton.display();
 			}
 		}
-        
+
         /**
          * likeButton
          */
@@ -204,7 +217,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	var jsonData = JSON.stringify(dataTaskRating);
         	ajaxSendTaskIdRatingRequest(dataTask.id, jsonData, handleRating);
         }
-        
+
         /**
          * dislikeButton
          */
@@ -216,7 +229,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	var jsonData = JSON.stringify(dataTaskRating);
         	ajaxSendTaskIdRatingRequest(dataTask.id, jsonData, handleRating);
         }
-        
+
         /**
          * reviewButton
          */
@@ -228,7 +241,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	var jsonData = JSON.stringify(dataTaskRating);
             ajaxSendTaskIdRatingRequest(dataTask.id, jsonData, handleRating);
         }
-        
+
         /**
 	     * sameTaskButton
 	     */
@@ -240,7 +253,7 @@ game.TaskScreen = me.ScreenObject.extend({
             submitButton.display();
             schemaButton.display();
         }
-        
+
         /**
          * schemaButton and taskButton
          */
@@ -248,10 +261,10 @@ game.TaskScreen = me.ScreenObject.extend({
         	if (schemaButton.visibility == true) {
         		schemaButton.hide();
         		taskButton.display();
-        		textOut.clear();
-        		textOut.writePara('Schema', 'schematitle');
-        		var schema = renderSchema(dataTask.schema);
-        		textOut.writeHTML(schema, 'schematext');
+        		//textOutSchema.clear();
+        		//textOutSchema.writePara('Schema', 'schematitle');
+        		//var schema = renderSchema(dataTask.schema);
+        		//textOutSchema.writeHTML(schema, 'schematext');
         	}
         	else {
         		taskButton.hide();
@@ -259,54 +272,55 @@ game.TaskScreen = me.ScreenObject.extend({
         		textOut.clear();
         		writeHeadline();
         		textOut.writePara(dataTask.exercise, 'taskbody');
-        	}	
+        	}
         };
-	    
+
 	    //
 	    // textoutput related functions
 	    //
-        
+
 	    /**
 	     *
 	     */
 	    function renderSchema(schema) {
-	    
+
 	    	res = schema.replace(/(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
 	    	res = res.replace(/\n/gmi, '<br>');
-	    	
+
 	        return res;
-	        
+
 	    };
-	    
+
 	    /**
 	     *
 	     */
         function writeHeadline() {
-        	
+
+            console.log(4);
             textOutHead.clear();
-            
+
         	if ((game.task.kind == 0) || (game.task.kind == 1)) {
         	    // Story Collector
         	    textOutHead.writePara(game.task.name, 'tasktitle');
             }
-            
+
             if (game.task.kind == 2) {
         	    // Trivia
         	    textOutHead.writePara('Difficulty: ' + game.task.difficulty, 'tasktitle');
             }
-            
+
             if (game.task.kind == 3) {
         	    // Homework
         	    textOutHead.writePara('Exercise', 'tasktitle');
             }
-            
+
         };
-        
+
         //
         // callback functions for ajax requests
         //
-        
+
         /**
          *
          */
@@ -315,13 +329,15 @@ game.TaskScreen = me.ScreenObject.extend({
             dislikeButton.hide();
             reviewButton.hide();
         };
-        
+
 		/**
          *
          */
         function handleGetTask(xhr) {
             if (xhr.status == 200 || xhr.status ==  400) {
+                console.log(3);
                 dataTask = JSON.parse(xhr.responseText);
+                console.log(dataTask);
                 //dataTask.schema = renderSchema(dataTask.schema);
 
                 // write data
@@ -329,14 +345,22 @@ game.TaskScreen = me.ScreenObject.extend({
                 textOut.clear();
                 textOut.writePara(dataTask.taskText, 'taskbody');
 
+                //write Schema
+                textOutSchema.clear();
+                textOutSchema.writePara('Schema', 'schematitle');
+                var schematext = renderSchema(dataTask.relationsFormatted);
+                console.log(schematext);
+                textOutSchema.writeHTML(schema, 'schematext');
+
                 // buttons to hide
                 tryButton.hide();
                 nextTaskButton.hide();
                 sameTaskButton.hide();
+                console.log(5);
 
                 // buttons to display
                 submitButton.display();
-                schemaButton.display();
+                //schemaButton.display();
                 backButton.display();
 
                 likeButton.display();
