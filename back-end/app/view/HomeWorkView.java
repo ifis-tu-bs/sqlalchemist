@@ -35,7 +35,7 @@ public class HomeWorkView {
         }
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
-        for (JsonNode taskFileJson : node.findPath("tasks")) {
+        for (JsonNode taskFileJson : node.findPath("taskSets")) {
             taskSets.add(TaskSetDAO.getById(taskFileJson.longValue()));
         }
 

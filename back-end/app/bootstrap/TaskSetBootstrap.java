@@ -81,12 +81,14 @@ public class TaskSetBootstrap {
                 "    ],\n" +
                 "    \"tasks\": [" +
                 "       {\n" +
-                "               \"taskSet\":            1,\n" +
-                "               \"taskText\":           \"Find all user\",\n" +
-                "               \"refStatement\":       \"SELECT * FROM User\",\n" +
-                "               \"evaluationStrategy\": 1,\n" +
-                "               \"points\":             1,\n" +
-                "               \"requiredTerm\":       2\n" +
+                "               \"taskSet\":                    1,\n" +
+                "               \"taskText\":                   \"Find all user\",\n" +
+                "               \"refStatement\":               \"SELECT * FROM User\",\n" +
+                "               \"evaluationStrategy\":         1,\n" +
+                "               \"points\":                     1,\n" +
+                "               \"requiredTerm\":               2,\n" +
+                "               \"availableSyntaxChecks\":      10,\n" +
+                "               \"availableSemanticChecks\":    2\n" +
                 "       }" +
                 "   ],\n" +
                 "    \"isHomework\":   true\n" +

@@ -12,10 +12,13 @@ angular
     .module('app')
     .controller('makeHWController', makeHWController);
 
-    makeHWController.$inject = ['TaskService', '$scope', '$modalInstance', 'TaskFilesForHomeWork', 'FlashService'];
-    function makeHWController(TaskService, $scope, $modalInstance, TaskFilesForHomeWork, FlashService) {
+    makeHWController.$inject = ['TaskService', '$scope', '$modalInstance', 'FlashService'];
+    function makeHWController(TaskService, $scope, $modalInstance, FlashService) {
         var vm = this;
-        console.log(TaskFilesForHomeWork);
+        vm.selectedTaskSets = [];
+
+
+
         $scope.datePickerFromData = new Date();
         $scope.datePickerToData = new Date();
 
@@ -28,22 +31,6 @@ angular
             $scope.datePickerToData.setSeconds(59);
             $scope.datePickerToData.setMinutes(59);
             $scope.datePickerToData.setHours(23);
-
-            TaskService.createHomeWork($scope.datePickerFromData.getTime(),
-                    $scope.datePickerToData.getTime(),
-                    TaskFilesForHomeWork,
-                    $scope.name)
-                .then(
-                    function (result) {
-                        console.log(result);
-                        if (result.error) {
-                            FlashService.Error(result.message);
-                        } else {
-                            FlashService.Clear();
-                            $modalInstance.close();
-                        }
-                    }
-                );
         };
 
         $scope.close = function() {

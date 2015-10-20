@@ -37,6 +37,9 @@ public class SubmittedHomeWork extends Model {
     @Column(name = "home_work_id")
     final HomeWork homeWork;
 
+    private int syntaxChecksDone;
+    private int semanticChecksDone;
+
     String statement;
     boolean solve;
 
@@ -46,6 +49,8 @@ public class SubmittedHomeWork extends Model {
 //////////////////////////////////////////////////
 //  Constructor
 //////////////////////////////////////////////////
+
+
 
     public SubmittedHomeWork (
             Profile profile,
@@ -57,6 +62,8 @@ public class SubmittedHomeWork extends Model {
         this.profile = profile;
         this.task = task;
         this.homeWork = homeWork;
+        this.syntaxChecksDone = 0;
+        this.semanticChecksDone = 0;
 
         this.solve = solve;
         this.statement = statement;
@@ -86,6 +93,22 @@ public class SubmittedHomeWork extends Model {
         objectNode.put("task", this.task.getId());
 
         return objectNode;
+    }
+
+    public void addSyntaxCheck() {
+        this.syntaxChecksDone++;
+    }
+
+    public void addSemanticCheck() {
+        this.semanticChecksDone++;
+    }
+
+    public int getSemanticChecksDone() {
+        return semanticChecksDone;
+    }
+
+    public int getSyntaxChecksDone() {
+        return syntaxChecksDone;
     }
 
     public HomeWork getHomeWork() {

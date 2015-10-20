@@ -25,14 +25,6 @@ public class HomeWorkDAO {
       throw new IllegalArgumentException();
     }
 
-    if (HomeWork.find.where().between("expire_at", start_at, expire_at).findList().size() > 0 ||
-        HomeWork.find.where().between("start_at", start_at, expire_at).findList().size() > 0 ||
-        HomeWork.find.where().lt("start_at", start_at).gt("expire_at", expire_at).findList().size() > 0 ||
-        HomeWork.find.where().gt("start_at", start_at).lt("expire_at", expire_at).findList().size() > 0) {
-      Logger.info("There is already a HomeWork during these Times!");
-      return null;
-    }
-
     HomeWork homeWork = new HomeWork(
         name,
         creator,
@@ -42,8 +34,9 @@ public class HomeWorkDAO {
 
     try {
       homeWork.save();
-    } catch (PersistenceException ignored) {
-
+    } catch (PersistenceException pe) {
+      Logger.info("HomeWorkDAO.java - create: could not save homeWork: " + homeWork.getHomeWorkName());
+      return null;
     }
     return homeWork;
   }
