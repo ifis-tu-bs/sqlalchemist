@@ -35,7 +35,7 @@ public class HomeWorkView {
         }
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
-        for (JsonNode taskFileJson : node.findPath("taskSets")) {
+        for (JsonNode taskFileJson : node.findPath("taskSetIds")) {
             taskSets.add(TaskSetDAO.getById(taskFileJson.longValue()));
         }
 
@@ -48,12 +48,12 @@ public class HomeWorkView {
         Date end = new Date(utcTimeTo);
         Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskSets.toString());
 
-
-        if (HomeWorkDAO.create(name, profile, taskSets, start, end) == null) {
+        HomeWork homeWork;
+        if ((homeWork = new HomeWork(name, profile, taskSets, start, end)) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return null;
         }
-        return null;
+        return homeWork;
     }
 
     private static ObjectNode toJson(HomeWork homeWork) {

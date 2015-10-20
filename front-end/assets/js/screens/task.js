@@ -39,46 +39,37 @@ game.TaskScreen = me.ScreenObject.extend({
 			}
 	    }
 
-        /**me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('task_screen')
-            ),
-            1
-        );**/
-
         //(id, width, height, left, top, rows)
-        textOut          = new game.TextOutputElement('task', 73, 30, 3, 8, 10);
+        textOut          = new game.TextOutputElement('task', 55, 42, 3, 8, 14);
         textOutHead      = new game.TextOutputElement('head', 73, 8, 10, 2, 2);
-        textOutSchema    = new game.TextOutputElement('schemaa', 73, 30, 3, 8, 10);
+        textOutSchema    = new game.TextOutputElement('schemaa', 35, 81, 61, 8, 27);
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
-        schemaButton     = new game.ClickableElement('schema', 'Schema',toggleSchemaButtonWithTaskButton, 10, 6, 52, 90, 2);
-        taskButton       = new game.ClickableElement('taskbutton', 'Task', toggleSchemaButtonWithTaskButton, 10, 6, 52, 90, 2);
         tryButton        = new game.ClickableElement('trybutton', 'Try again', getTaskFromServer, 10, 6, 38, 90, 2);
         sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Try Again', showSameTask, 10, 6, 38, 90, 2);
 
         nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
 
-        aceButton        = new game.ClickableElement('acebutton', 'Ace Editor', getAceEditor, 73, 6, 1, 54, 2);
         /*
         codemirrorButton = new game.ClickableElement('codemirrorbutton', 'CodeMirror Editor', getCodemirrorEditor, 73, 6, 12, 50, 2);
         */
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 80, 2);
 
-        likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 70, 80, 2);
-        dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 76, 80, 2);
-        reviewButton     = new game.ClickableElement('reviewbutton', '', needReview, 2, 3, 82, 80, 2); // needs image
+        likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 48, 40, 2);
+        dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 52, 40, 2);
+        reviewButton     = new game.ClickableElement('reviewbutton', '', needReview, 2, 3, 56, 40, 2);
+
+        likeButtonSet       = new game.ClickableElement('likebuttonSet', '', likeItSet, 2, 3, 86, 90, 2);
+        dislikeButtonSet    = new game.ClickableElement('dislikebuttonSet', '', dislikeItSet, 2, 3, 90, 90, 2);
+        reviewButtonSet     = new game.ClickableElement('reviewbuttonSet', '', needReviewSet, 2, 3, 94, 90, 2);
 
         textIn = new Object();
 
         console.log(1);
 
         submitButton.hide();
-        schemaButton.hide();
-        taskButton.hide();
         tryButton.hide();
         sameTaskButton.hide();
         nextTaskButton.hide();
@@ -92,8 +83,6 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(textOutHead);
         me.game.world.addChild(textOutSchema);
         me.game.world.addChild(submitButton);
-        me.game.world.addChild(schemaButton);
-        me.game.world.addChild(taskButton);
         me.game.world.addChild(backButton);
         $("#backButton").fadeIn(100);
         me.game.world.addChild(tryButton);
@@ -104,15 +93,14 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(dislikeButton);
         me.game.world.addChild(reviewButton);
 
-        me.game.world.addChild(aceButton);
-
-        console.log(2);
-
-        aceButton.display();
 
         likeButton.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
         dislikeButton.setImage("assets/data/img/stuff/thumbs_down.png", "thumbdown");
         reviewButton.setImage("assets/data/img/buttons/magnifier.png", "review");
+
+        likeButtonSet.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
+        dislikeButtonSet.setImage("assets/data/img/stuff/thumbs_down.png", "thumbdown");
+        reviewButtonSet.setImage("assets/data/img/buttons/magnifier.png", "review");
 
 
         dataTask = {
@@ -126,7 +114,7 @@ game.TaskScreen = me.ScreenObject.extend({
             rating     : {
                 negative     : 0,
                 positive     : 0,
-                needReview   : 0,
+                needReview   : 0
             }
 
         };
@@ -175,36 +163,53 @@ game.TaskScreen = me.ScreenObject.extend({
 	        }
         }
 
-        /**
-         * codemirrorButton
-         */
-        /*
-        function getCodemirrorEditor() {
-        	var codeMirrorEditor = new game.TextInputElement('textarea', 'codemirror', 'wrapperInputCM', 'fieldInputCM', 73, 25, 12, 50, 7);
-        	me.game.world.addChild(codeMirrorEditor);
-        	codemirrorButton.hide();
-        	textIn = codeMirrorEditor;
-        	textIn.display();
-        	if (!tryButton.visibility) {
-        		submitButton.display();
-        	}
-        }
-        */
-
 		/**
-		 * aceButton
-         * (id, width, height, left, top, rows)
+		 * Init Ace editor
 		 */
 		function getAceEditor() {
-			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 35, 3, 45, 7);
+			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 35, 3, 45, 10);
 			me.game.world.addChild(aceEditor);
-			aceButton.hide();
 			textIn = aceEditor;
 			textIn.display();
 			if (!tryButton.visibility) {
 				submitButton.display();
 			}
 		}
+        /**
+         * likeButtonSet
+         */
+        function likeItSet() {
+            //
+            dataTaskRating.negative = 0;
+            dataTaskRating.positive = 1;
+            dataTaskRating.needReview = 0;
+            var jsonData = JSON.stringify(dataTaskRating);
+            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+        }
+
+        /**
+         * dislikeButtonSet
+         */
+        function dislikeItSet() {
+            //
+            dataTaskRating.negative = 1;
+            dataTaskRating.positive = 0;
+            dataTaskRating.needReview = 0;
+            var jsonData = JSON.stringify(dataTaskRating);
+            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+        }
+
+        /**
+         * reviewButton
+         */
+        function needReviewSet() {
+            //
+            dataTaskRating.negative = 0;
+            dataTaskRating.positive = 0;
+            dataTaskRating.needReview = 1;
+            var jsonData = JSON.stringify(dataTaskRating);
+            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+        }
 
         /**
          * likeButton
@@ -251,29 +256,8 @@ game.TaskScreen = me.ScreenObject.extend({
 	    	sameTaskButton.hide();
 	    	nextTaskButton.hide();
             submitButton.display();
-            schemaButton.display();
         }
 
-        /**
-         * schemaButton and taskButton
-         */
-        function toggleSchemaButtonWithTaskButton() {
-        	if (schemaButton.visibility == true) {
-        		schemaButton.hide();
-        		taskButton.display();
-        		//textOutSchema.clear();
-        		//textOutSchema.writePara('Schema', 'schematitle');
-        		//var schema = renderSchema(dataTask.schema);
-        		//textOutSchema.writeHTML(schema, 'schematext');
-        	}
-        	else {
-        		taskButton.hide();
-        		schemaButton.display();
-        		textOut.clear();
-        		writeHeadline();
-        		textOut.writePara(dataTask.exercise, 'taskbody');
-        	}
-        };
 
 	    //
 	    // textoutput related functions
@@ -324,6 +308,15 @@ game.TaskScreen = me.ScreenObject.extend({
         /**
          *
          */
+        function handleRatingSet(xhr) {
+            likeButtonSet.hide();
+            dislikeButtonSet.hide();
+            reviewButtonSet.hide();
+        };
+
+        /**
+         *
+         */
         function handleRating(xhr) {
             likeButton.hide();
             dislikeButton.hide();
@@ -335,7 +328,6 @@ game.TaskScreen = me.ScreenObject.extend({
          */
         function handleGetTask(xhr) {
             if (xhr.status == 200 || xhr.status ==  400) {
-                console.log(3);
                 dataTask = JSON.parse(xhr.responseText);
                 console.log(dataTask);
                 //dataTask.schema = renderSchema(dataTask.schema);
@@ -349,8 +341,10 @@ game.TaskScreen = me.ScreenObject.extend({
                 textOutSchema.clear();
                 textOutSchema.writePara('Schema', 'schematitle');
                 var schematext = renderSchema(dataTask.relationsFormatted);
-                console.log(schematext);
-                textOutSchema.writeHTML(schema, 'schematext');
+                console.log("SchemaText: ",schematext);
+                textOutSchema.writeHTML(schemaa, 'schematext');
+                console.log(4,5);
+
 
                 // buttons to hide
                 tryButton.hide();
@@ -360,12 +354,15 @@ game.TaskScreen = me.ScreenObject.extend({
 
                 // buttons to display
                 submitButton.display();
-                //schemaButton.display();
                 backButton.display();
 
                 likeButton.display();
                 dislikeButton.display();
                 reviewButton.display();
+
+                likeButtonSet.display();
+                dislikeButtonSet.display();
+                reviewButtonSet.display();
 
                 if (game.task.kind == 3) {
                     // Homework
@@ -421,8 +418,6 @@ game.TaskScreen = me.ScreenObject.extend({
             }
 
             // buttons to hide
-            schemaButton.hide();
-            taskButton.hide();
             submitButton.hide();
 
             // buttons to display
@@ -547,7 +542,6 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             if (game.task.kind == 2) {
         	    // Trivia
-                console.log("Kahn");
                 ajaxSendTaskTriviaRequest(game.task.difficulty, handleGetTask);
 
             }
