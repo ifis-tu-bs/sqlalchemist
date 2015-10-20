@@ -62,7 +62,7 @@
                     </div>
                   </td>
                   <td>
-                    <input type="checkbox" ng-model="taskSet.isHomework" ng-disabled="taskSet.id !== undefined" ng-click="$event.stopPropagation();">
+                    <input type="checkbox" ng-model="taskSet.isHomeWork" ng-disabled="taskSet.id !== undefined" ng-click="$event.stopPropagation();">
                   </td>
                   <td>
                     <div class="btn-group">
@@ -264,11 +264,14 @@
                 <thead>
                   <tr>
                     <th ng-click="orderTaskPredicate = 'taskName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                    <th ng-click="orderTaskPredicate = 'evaluationStrategy'; orderReverse = !orderReverse" style="cursor: pointer">Evaluating Correctness via</th>
-                    <th ng-click="orderTaskPredicate = 'creator.username'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+                    <th ng-click="orderTaskPredicate = 'evaluationStrategy'; orderReverse = !orderReverse" style="cursor: pointer">Compare Mode</th>
+                    <th ng-hide="selectedTaskSet.isHomeWork === true" ng-click="orderTaskPredicate = 'creator.username'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
                     <th ng-click="orderTaskPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Points</th>
+                    <th ng-hide="selectedTaskSet.isHomeWork === false" ng-click="orderTaskPredicate = 'availableSyntaxChecks'; orderReverse = !orderReverse" style="cursor: pointer;text-align:right">Nr. Syntax</th>
+                    <th ng-hide="selectedTaskSet.isHomeWork === false" ng-click="orderTaskPredicate = 'availableSemanticChecks'; orderReverse = !orderReverse" style="cursor: pointer">Nr. Semantic</th>
                     <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                     <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                    <th></th>
                   </tr>
                 </thead>
                 <tbody ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search">
@@ -285,7 +288,7 @@
                       </ul>
                     </div>
                   </td>
-                  <td>{{task.creator.username}}</td>
+                  <td ng-hide="selectedTaskSet.isHomeWork === true">{{task.creator.username}}</td>
                   <td>
                     <div class="btn-group" uib-dropdown is-open="taskPointsDropDownStatus">
                       <button type="button" class="btn btn-default btn-xs" uib-dropdown-toggle ng-click="$event.stopPropagation();" style="font-size:11pt">
@@ -300,6 +303,12 @@
                         <li role="menuitem" ng-click="task.points = 6;">6</li>
                       </ul>
                     </div>
+                  </td>
+                  <td ng-hide="selectedTaskSet.isHomeWork === false">
+                    <input type="number" ng-model="task.availableSyntaxChecks" ng-click="$event.stopPropagation();" style="width:55px;float:right">
+                  </td>
+                  <td ng-hide="selectedTaskSet.isHomeWork === false">
+                    <input type="number" ng-model="task.availableSemanticChecks" ng-click="$event.stopPropagation();" style="width:55px">
                   </td>
                   <td>{{task.createdAt}}</td>
                   <td>
@@ -319,7 +328,7 @@
                   </div>
                 </td>
                   <tr>
-                    <td colspan="7" ng-style="!task.isCollapsed ? {padding: 0} : {}">
+                    <td colspan="{{selectedTaskSet.isHomeWork ? 8 : 7}}" style="padding:0">
 
                       <div uib-collapse="!task.isCollapsed">
                         <div style="width:100%">

@@ -252,6 +252,8 @@ create table submittedhomework (
   profile_id                    bigint,
   task_id                       bigint,
   home_work_id                  bigint,
+  syntax_checks_done            integer,
+  semantic_checks_done          integer,
   statement                     varchar(255),
   solve                         boolean,
   constraint uq_submittedhomework_profile_id_task_id_home_work_id unique (profile_id,task_id,home_work_id),
@@ -280,6 +282,8 @@ create table task (
   creator_id                    bigint,
   created_at                    timestamp,
   updated_at                    timestamp,
+  available_syntax_checks       integer,
+  available_semantic_checks     integer,
   constraint pk_task primary key (id)
 );
 create sequence Task_seq;

@@ -29,8 +29,10 @@ public class TaskView {
         int     evaluationStrategy  = taskNode.get("evaluationStrategy").asInt();
         int     points              = taskNode.get("points").asInt();
         int     requiredTerm        = taskNode.get("requiredTerm").asInt();
+        int     availableSyntaxChecks       = taskNode.get("availableSyntaxChecks").asInt();
+        int     availableSemanticChecks     = taskNode.get("availableSemanticChecks").asInt();
 
-        return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, creator);
+        return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, creator, availableSyntaxChecks, availableSemanticChecks);
     }
 
     public static ObjectNode toJsonList(Task task) {
@@ -52,6 +54,8 @@ public class TaskView {
         json.put("evaluationStrategy",  task.getEvaluationStrategy());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
+        json.put("availableSyntaxChecks",   task.getAvailableSyntaxChecks());
+        json.put("availableSemanticChecks", task.getAvailableSemanticChecks());
 
         json.set("creator",             task.getCreator().toJson());
 
@@ -73,6 +77,8 @@ public class TaskView {
         json.put("taskText",            task.getTaskText());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());
+        json.put("availableSyntaxChecks",   task.getAvailableSyntaxChecks());
+        json.put("availableSemanticChecks", task.getAvailableSemanticChecks());
 
         json.set("rating",              RatingView.toJson(rating_sum));
 

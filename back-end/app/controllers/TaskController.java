@@ -110,6 +110,8 @@ public class TaskController extends Controller {
         task.setEvaluationStrategy(taskNew.getEvaluationStrategy());
         task.setPoints(taskNew.getPoints());
         task.setRequiredTerm(taskNew.getRequiredTerm());
+        task.setAvailableSyntaxChecks(taskNew.getAvailableSyntaxChecks());
+        task.setAvailableSemanticChecks(taskNew.getAvailableSemanticChecks());
 
         task.update();
 
