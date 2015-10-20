@@ -130,7 +130,7 @@ angular
             this.tableDefinitions = [];
             this.foreignKeyRelations = [];
             this.tasks=[];
-            this.isHomework = false;
+            this.isHomeWork = false;
         };
 
 
@@ -146,7 +146,8 @@ angular
         }
 
         function selectTaskSet (taskSetIndex) {
-
+            $scope.selectedTable = undefined;
+            $scope.selectedTask = undefined;
             $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
             vm.tasks = $scope.selectedTaskSet.tasks;
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
@@ -365,6 +366,8 @@ angular
             this.points = 1;
             this.requiredTerm = 0;
             this.isCollapsed = true;
+            this.availableSyntaxChecks = 0;
+            this.availableSemanticChecks = 0;
         }
 
         /* Methods */

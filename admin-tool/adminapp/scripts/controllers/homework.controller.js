@@ -135,6 +135,19 @@ angular
         //  Path Functions (Changing STATES)
         //////////////////////////////777
 
+        $scope.newHomeWork = function () {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/makeHomeWork.template.html',
+                    controller: 'makeHWController',
+                    resolve: {
+                        sureTemplateMessage: function () {
+                                return "Are you sure you want to delete Homework: " + vm.homeworks[homeworkIndex].name + "?\nRemember, that only Homeworks with no submits until now can be deleted.";
+                            }
+                    }
+            });
+        }
+
         $scope.goSelectHomework = function() {
             $scope.selectedHomework = undefined;
             $scope.selectedTaskSet = undefined;
