@@ -25,6 +25,11 @@ game.TaskScreen = me.ScreenObject.extend({
 			me.audio.playTrack("task",game.data.musicVolume);
 		}
 
+        var backgroundTask = new game.BackgroundElement('backgroundTaskId', 100, 100, 0, 0, 'none');
+        backgroundTask.setImage("assets/data/img/gui/task_screen_new.png", "backgroundsheet");
+        me.game.world.addChild(backgroundTask);
+        $("#backgroundTaskId").fadeIn(100);
+
         game.data.count = 0;
     	// workaround fuer android bug CB-4404
     	if (me.device.android || me.device.android2) {
@@ -34,14 +39,15 @@ game.TaskScreen = me.ScreenObject.extend({
 			}
 	    }
 
-        me.game.world.addChild(
+        /**me.game.world.addChild(
             new me.Sprite (
                 0,0,
                 me.loader.getImage('task_screen')
             ),
             1
-        );
-     
+        );**/
+
+        //(id, width, height, left, top, rows)
         textOut          = new game.TextOutputElement('task', 73, 30, 12, 13, 10);
         textOutHead      = new game.TextOutputElement('task', 73, 30, 12, 4, 8);
         
