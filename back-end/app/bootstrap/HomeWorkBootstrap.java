@@ -2,6 +2,7 @@ package bootstrap;
 
 
 import dao.*;
+import models.HomeWork;
 import play.Logger;
 
 import java.util.Calendar;
@@ -25,8 +26,8 @@ class HomeWorkBootstrap {
 
         HomeWorkDAO.create("DefaultHomeWork 1", ProfileDAO.getByUsername("admin"), TaskSetDAO.getAll(), new Date(), tempDate);
 
-        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("admin"), TaskDAO.getAll().get(0),true, "Muhahaha");
-        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0),true, "Muhahaha2");
+        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("admin"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
+        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha2");
 
 
         Logger.info("Done initializing");

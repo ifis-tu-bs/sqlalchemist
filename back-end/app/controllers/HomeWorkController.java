@@ -74,7 +74,7 @@ public class HomeWorkController extends Controller {
 
         return ok(arrayNode);
     }
-    
+
     /**
      * Gives back the current HomeWork and whether the task is submitted for the given profile
      */
