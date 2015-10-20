@@ -82,6 +82,7 @@ public class SubmittedHomeWorkDAO  {
 
           if (existed != null) {
               try {
+                  existed.addSemanticCheck();
                   existed.setSolve(solve);
                   existed.setStatement(statement);
 
@@ -101,6 +102,7 @@ public class SubmittedHomeWorkDAO  {
                   statement);
 
           try {
+              submittedHomeWork.addSemanticCheck();
               submittedHomeWork.save();
 
               return submittedHomeWork;

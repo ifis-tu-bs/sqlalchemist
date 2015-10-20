@@ -47,6 +47,9 @@ public class Task extends Model {
     private final Date created_at;
     private Date updated_at;
 
+    private int availableSyntaxChecks;
+    private int availableSemanticChecks;
+
     public static final Finder<Long, Task> find = new Finder<>(Long.class, Task.class);
 
 //////////////////////////////////////////////////
@@ -70,7 +73,9 @@ public class Task extends Model {
             int evaluationStrategy,
             int points,
             int requiredTerm,
-            Profile creator) {
+            Profile creator,
+            int availableSyntaxChecks,
+            int availableSemanticChecks) {
 
         this.taskName           = taskName;
         this.taskText           = taskText;
@@ -87,6 +92,9 @@ public class Task extends Model {
 
         this.created_at         = new Date();
         this.updated_at         = new Date();
+
+        this.availableSyntaxChecks = availableSyntaxChecks;
+        this.availableSemanticChecks = availableSemanticChecks;
     }
 
     /**
@@ -156,6 +164,22 @@ public class Task extends Model {
 
     public int getRequiredTerm() {
         return requiredTerm;
+    }
+
+    public int getAvailableSyntaxChecks() {
+        return availableSyntaxChecks;
+    }
+
+    public int getAvailableSemanticChecks() {
+        return availableSemanticChecks;
+    }
+
+    public void setAvailableSyntaxChecks(int availableSyntaxChecks) {
+        this.availableSyntaxChecks = availableSyntaxChecks;
+    }
+
+    public void setAvailableSemanticChecks(int availableSemanticChecks) {
+        this.availableSemanticChecks = availableSemanticChecks;
     }
 
     public void setRequiredTerm(int requiredTerm) {

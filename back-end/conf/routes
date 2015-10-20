@@ -61,7 +61,7 @@ POST        /Task/:id/comment                   controllers.TaskController.comme
 #SQLController
 GET         /SQL/Story/:id/                     controllers.SQLController.story(id: Long)
 POST        /SQL/Story/:id/                     controllers.SQLController.storySolve(id: Long)
-GET         /SQL/Trivia/:id/:stay               controllers.SQLController.trivia(id: Int, stay ?= false: Boolean)
+#GET         /SQL/Trivia/:id/:stay               controllers.SQLController.trivia(id: Int, stay ?= false: Boolean)
 POST        /SQL/Trivia/:id/                    controllers.SQLController.triviaSolve(id: Long)
 GET         /SQL/Homework/                      controllers.SQLController.homework()
 #POST        /SQL/Homework/:id                   controllers.SQLController.homeworkSolve(id: Long)

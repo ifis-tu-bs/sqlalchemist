@@ -25,7 +25,7 @@
 - [TaskSet](#taskset)
     - [TaskSet.Form](#tasksetform)
 - [UserStatement](#userstatement)
-
+- [HomeWork] (#homework)
 
 ### Avatar
 | Name                      | Type                              | Description|
@@ -365,22 +365,24 @@ TableDefinition:
 }
 ```
 ### Task
-| Name                     | Type                        | Description|
-|--------------------------|-----------------------------|------------|
-| ```id```                 | ```Number ```               |            |
-| ```taskName```           | ```String```                |            |
-| ```taskSet```            | ```Number ```               |            |
-| ```relationsFormatted``` | ```String```                |            |
-| ```taskText```           | ```String```                |            |
-| ```refStatement```       | ```String```                |            |
-| ```evaluationStrategy``` | ```Number```                |[SET = 1, LIST = 2] |
-| ```points```             | ```Number```                |            |
-| ```requiredTerm```       | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
-| ```creator```            | [```Profile```](#profile)   |            |
-| ```rating```             | [```Rating```](#rating)     |            |
-| ```comments```           | [```Comment[]```](#comment) |            |
-| ```createdAt```          | ```String```                |            |
-| ```updatedAt```          | ```String```                |            |
+| Name                           | Type                        | Description|
+|--------------------------------|-----------------------------|------------|
+| ```id```                       | ```Number ```               |            |
+| ```taskName```                 | ```String```                |            |
+| ```taskSet```                  | ```Number ```               |            |
+| ```relationsFormatted```       | ```String```                |            |
+| ```taskText```                 | ```String```                |            |
+| ```refStatement```             | ```String```                |            |
+| ```evaluationStrategy```       | ```Number```                |[SET = 1, LIST = 2] |
+| ```points```                   | ```Number```                |            |
+| ```requiredTerm```             | ```Number```                |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```creator```                  | [```Profile```](#profile)   |            |
+| ```rating```                   | [```Rating```](#rating)     |            |
+| ```comments```                 | [```Comment[]```](#comment) |            |
+| ```createdAt```                | ```String```                |            |
+| ```updatedAt```                | ```String```                |            |
+| ```availableSyntaxChecks´´´    | ```Number´´´                |            |
+| ```availableSemanticChecks´´´  | ```Number´´´                |            |
 
 Example:  
 ```json
@@ -403,20 +405,25 @@ Task:
                         },
   "comments":           [],
   "createdAt":          "Mon Oct 12 06:18:37 CEST 2015",
-  "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015"
+  "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015",
+  "availableSyntaxChecks" : 5,
+  "availableSemanticChecks": 2
 }
 
 ```
 
 #### Task.Form
-| Name                     | Type          | Description|
-|--------------------------|---------------|------------|
-| ```taskSet```            | ```Number```  |            |
-| ```taskText```           | ```String```  |            |
-| ```refStatement```       | ```String```  |            |
-| ```evaluationStrategy``` | ```Number```  |[SET = 1, LIST = 2] |
-| ```points```             | ```Number```  |            |
-| ```requiredTerm```       | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| Name                           | Type          | Description|
+|--------------------------------|---------------|------------|
+| ```taskSet```                  | ```Number```  |            |
+| ```taskText```                 | ```String```  |            |
+| ```refStatement```             | ```String```  |            |
+| ```evaluationStrategy```       | ```Number```  |[SET = 1, LIST = 2] |
+| ```points```                   | ```Number```  |            |
+| ```requiredTerm```             | ```Number```  |[WITH, AS, SELECT, FROM, JOIN, ON, WHERE, GROUP BY, HAVING, ORDER BY, COUNT, SUM, LEFT OUTER JOIN, RIGHT OUTER JOIN, AVG, MAX, MIN] |
+| ```availableSyntaxChecks´´´    | ```Number´´´  |            |
+| ```availableSemanticChecks´´´  | ```Number´´´  |            |
+
 
 Example:  
 ```json
@@ -427,7 +434,9 @@ Task:
   "refStatement":       "SELECT * FROM User",
   "evaluationStrategy": Number,
   "points":             1,
-  "requiredTerm":       Number
+  "requiredTerm":       Number,
+  "availableSyntaxChecks" : 5,
+  "availableSemanticChecks": 2
 }
 
 ```
@@ -567,5 +576,84 @@ Columns:
 {
   "foreignKey": "SELECT * FROM User;",
   "datagenSet": 1000
+}
+```
+
+### HomeWork
+| Name                     | Type                     | Description|
+|--------------------------|--------------------------|------------|
+| ```id```                 | ```Number ```            |            |
+| ```homeWorkName```       | ```String```             |            |
+| ```taskSets```           | ```[```TaskSet[]```](#tabledefinitionform)``` |            |
+| ```creator```            | ```[```Profile```](#profile)```               |            |
+| ```start_at```           | ```Number```             | Milliseconds|
+| ```expire_at```          | ```Number```             | Milliseconds|
+
+Example:
+```json
+HomeWork: {
+  "id": 1,
+  "homeWorkName": "Homework1SS1415",
+  "taskSets": [
+    {
+      "id":                 1,
+      "taskSetName":        "yeah Namen",
+      "tableDefinitions":  [
+        {
+          "id":         13,
+          "tableName":  "User",
+          "columns":    [
+            {
+              "id":         12,
+              "columnName": "FirstName",
+              "data_type":  "Varchar(255)",
+              "primaryKey": false,
+              "notNull":    true,
+              "foreignKey":  null,
+              "datagenSet": 1
+            }
+          ],
+          "extension":  "INSERT INTO User(FirstName) Values ('Kéqz');"
+        }
+      ],
+      "foreignKeys":       [],
+      "relationsFormatted": "User(FirstName : String)",
+      "tasks":              Task[],
+      "creator":            Profile,
+      "isHomework":         false,
+      "rating":             {
+                                "positive":   true,
+                                "negative":   false,
+                                "needReview": false
+                            },
+      "comments":           [],
+      "createdAt":          "Mon Oct 12 06:18:37 CEST 2015",
+      "updatedAt":          "Mon Oct 12 06:18:37 CEST 2015"
+    }
+  ],
+  "creator": Profile,
+  "start_at":   Number,
+  "expire_at":  Number
+}
+```
+
+#### HomeWork.Form
+| Name                     | Type                     | Description|
+|--------------------------|--------------------------|------------|
+| ```homeWorkName```       | ```String```             |            |
+| ```taskSetIds```         | ```[Number]```           |            |
+| ```start_at```           | ```Number```             |            |
+| ```expire_at```          | ```Number```             |            |
+
+Example:
+```json
+HomeWork.Form: {
+  "homeWorkName": "Homework1SS1415",
+  "taskSets": [
+    1,
+    4
+  ],
+  "start_at":   Number,
+  "expire_at":  Number
 }
 ```

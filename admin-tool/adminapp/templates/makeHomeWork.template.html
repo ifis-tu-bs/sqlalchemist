@@ -3,6 +3,16 @@
     <h4 class="modal-title">Make HomeWork</h4>
 </div>
 <div class="modal-body">
+    <uib-accordion>
+        <uib-accordion-group>
+            <uib-accordion-heading>
+                TaskSets:
+            </uib-accordion-heading>
+
+        </uib-accordion-group>
+
+    </uib-accordion>
+
     <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
     <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
 
@@ -21,23 +31,6 @@
         <label>To &#60;inclusive&#62;</label><br>
         <datepicker id="date2" ng-model="datePickerToData" style="resize:none;height: 100%"></datepicker>
     </div>
-
-    <span hide="true">
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-    </span>
 
 </div>
 <div class="modal-footer">
