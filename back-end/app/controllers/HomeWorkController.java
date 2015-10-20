@@ -27,6 +27,7 @@ import secured.StudentSecured;
 import view.HomeWorkView;
 import view.TaskView;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 /**
@@ -91,8 +92,12 @@ public class HomeWorkController extends Controller {
     public Result delete(Long id) {
         User user = UserDAO.getByUsername(request().username());
 
-        HomeWorkDAO.getById(id).delete();
-
+        try {
+            HomeWorkDAO.getById(id).delete();
+        } catch (PersistenceException pe) {
+            Logger.warn("HomeWorkController.delete - Could not delete" + pe.getMessage());
+            return badRequest("Cannot delete. Maybe there are already Submits?");
+        }
         return ok("Deleted");
     }
 

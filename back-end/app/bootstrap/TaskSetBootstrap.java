@@ -91,7 +91,7 @@ public class TaskSetBootstrap {
                 "               \"availableSemanticChecks\":    2\n" +
                 "       }" +
                 "   ],\n" +
-                "    \"isHomework\":   true\n" +
+                "    \"isHomeWork\":   true\n" +
                 "}\n");
 
         Profile profile = ProfileDAO.getByUsername("admin");
