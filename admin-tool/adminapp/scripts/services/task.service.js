@@ -10,6 +10,7 @@
         /* TaskSetControlls */
         service.createTaskSet = createTaskSet;
         service.getAllTaskSets = getAllTaskSets;
+        service.getAllHomeWorkTaskSets = getAllHomeWorkTaskSets;
         service.editTaskSet = editTaskSet;
         service.viewTaskSet = viewTaskSet;
         service.rateTaskSet = rateTaskSet;
@@ -25,15 +26,14 @@
 
         /* HomeWorkControlls*/
         service.getAllHomeworks = getAllHomeworks;
+        service.createHomeWork = createHomeWork;
+        service.deleteHomework = deleteHomework;
+        service.getSubmitsForTaskInHomeWork = getSubmitsForTaskInHomeWork;
 
         /* Data */
         service.getColumnDefinitionDataTypes = getColumnDefinitionDataTypes;
 
-        service.getSubTask = getSubTask
-        service.createHomeWork = createHomeWork;
-        service.deleteHomework = deleteHomework;
         service.getAllSubmits = getAllSubmits;
-        service.getSubmitsForTaskInHomeWork = getSubmitsForTaskInHomeWork;
 
         return service;
 
@@ -68,6 +68,10 @@
             return $http.delete('/TaskSet/' + taskId + '/').then(handleSuccess, handleError);
         }
 
+        function getAllHomeWorkTaskSets() {
+            return $http.get('/TaskSet/homework').then(handleSuccess, handleError);
+        }
+
 
         /* Task Controlls */
 
@@ -97,10 +101,17 @@
             return $http.get('/Homework/').then(handleSuccess, handleError);
         }
 
-        function getSubmitsForTaskInHomeWork(subtaskId, homeworkId) {
-            return $http.get('/Homework/result/' + subtaskId + '/' + homeworkId + '/').then(handleSuccess, handleError);
+        function createHomeWork(homeWorkJson) {
+            return $http.post("/Homework/", homeWorkJson).then(handleSuccess, handleError);
         }
 
+        function deleteHomework(id) {
+            return $http.delete("/Homework/" + id + "/").then(handleSuccess, handleError);
+        }
+
+        function getSubmitsForTaskInHomeWork(taskId, homeworkId) {
+            return $http.get('/Homework/result/' + taskId + '/' + homeworkId + '/').then(handleSuccess, handleError);
+        }
 
         /* DataTypes */
 
@@ -111,31 +122,10 @@
 
         /* Left Overs*/
 
-        function createHomeWork(dateFromUTCString, dateToUTCString, taskFiles, name) {
-            return $http.post("/homework",{from: dateFromUTCString, to: dateToUTCString, tasks: taskFiles, name: name}).then(handleSuccess, handleError);
-        }
-
-
-
-
-        function deleteHomework(id) {
-            return $http.get('/homework/delete/' + id).then(handleSuccess, handleError);
-        }
 
         function getAllTasks() {
             return $http.get('/taskFile').then(handleSuccess, handleError);
         }
-
-        function viewTaskSet(id) {
-            return $http.get('/taskFile/' + id).then(handleSuccess, handleError);
-        }
-
-        function getSubTask(id) {
-            return $http.get('/task/' + id).then(handleSuccess, handleError);
-        }
-
-
-
 
         function getAllSubmits(homeworkId, taskFileName) {
             return $http.post('/homework/result', {homework: homeworkId, taskFile: taskFileName}).then(handleSuccess, handleError);

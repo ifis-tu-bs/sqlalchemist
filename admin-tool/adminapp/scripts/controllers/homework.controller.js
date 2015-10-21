@@ -18,14 +18,14 @@ angular
     .module('app')
     .controller('HomeworkController', HomeworkController);
 
-    HomeworkController.$inject = ['$scope', '$modal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout'];
-    function HomeworkController($scope, $modal, TaskService, FlashService, $rootScope, $location, $filter, $timeout) {
+    HomeworkController.$inject = ['$scope', '$uibModal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout', '$q'];
+    function HomeworkController($scope, $uibModal, TaskService, FlashService, $rootScope, $location, $filter, $timeout, $q) {
         var vm = this;
 
         $scope.orderReverse = false;
         $scope.orderHomeWorkPredicate = 'name';
-        $scope.ordertaskSetPredicate = 'filename';
-        $scope.ordertaskPredicate  = 'id';
+        $scope.orderTaskSetPredicate = 'taskSetName';
+        $scope.orderTaskPredicate  = 'id';
         $scope.orderSubmitPredicate   = 'student.matno';
         $scope.search = '';
 
@@ -140,12 +140,26 @@ angular
                     animation: $scope.animationsEnabled,
                     templateUrl: 'adminapp/templates/makeHomeWork.template.html',
                     controller: 'makeHWController',
-                    resolve: {
-                        sureTemplateMessage: function () {
-                                return "Are you sure you want to delete Homework: " + vm.homeworks[homeworkIndex].name + "?\nRemember, that only Homeworks with no submits until now can be deleted.";
-                            }
-                    }
+                    size: "lg"
             });
+
+            modalInstance.result.then(
+                    function (homework) {
+                        return TaskService.createHomeWork(homework);
+                    },
+                    function (error) {
+                        return $q.reject("");
+                    }
+            ).then(
+                    function (result) {
+                        if (result.error) {
+                            FlashService.Error(result.message);
+                        } else if (result != "") {
+                            initController();
+                            FlashService.Success("Homework created.");
+                        }
+                    }
+            );
         }
 
         $scope.goSelectHomework = function() {
@@ -264,7 +278,7 @@ angular
 
         $scope.deleteHomework = function (homework) {
             var homeworkIndex = findInArray(vm.homeworks, homework);
-            var modalInstance = $modal.open({
+            var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
                     templateUrl: 'adminapp/templates/sure.template.html',
                     controller: 'sureTemplateController',
