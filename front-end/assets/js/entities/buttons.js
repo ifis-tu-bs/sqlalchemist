@@ -1,5 +1,5 @@
 /*
- *  The buttons which contain pictures or a update fuction.
+ *  The buttons which contain a update function.
  */
 
 // used in trivia does save the information for the task
@@ -163,14 +163,14 @@ var beltSlot = me.GUI_Object.extend(
         onClick:function (event)
         {
             console.log("clicked!belt1!");
-            console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots)
+            console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots);
             //cycle through the game.skins.available and find next skin available
             if(game.belt.beltSlots[this.slot] !== null){
                 if(game.potion.usePotion(this.potion, this.slot)) {
                     game.belt.beltSlots[this.slot] = null;
                     this.width = 1;
                 }
-            }else{
+            } else {
                 console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots)
             }
 
@@ -184,35 +184,6 @@ var beltSlot = me.GUI_Object.extend(
                     }
                 }
             }
-        }
-    });
-
-var buyBelt = me.GUI_Object.extend(
-    {
-        init:function (x, y, id, i)
-        {
-            this.shopId = i;
-            this.spriteId = id;
-            var settings = {};
-            settings.image = "belt";
-            settings.spritewidth = 55;
-            settings.spriteheight = 330;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 200;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            console.log(this.shopId + "Belt" + this.spriteId);
-            game.data.spriteId  = this.spriteId;
-            game.data.shopId = this.shopId;
-
-            me.state.change(STATE_BUY);
-
         }
     });
 

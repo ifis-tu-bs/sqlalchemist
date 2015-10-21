@@ -94,34 +94,6 @@ game.HUDII.Container = me.Container.extend({
 //needs to be KICKED
 game.HUDIII = game.HUDIII || {};
 
-//this Container is used in game.collectorScreen.  NO!!
-game.HUDIII.Container = me.Container.extend({
-
-    init: function() {
-        // call the super constructor
-        this._super(me.Container, 'init');
-
-        // persistent across level change
-        this.isPersistent = true;
-
-        // make sure we use screen coordinates
-        this.floating = false;
-
-        // make sure our object is always drawn first
-        this.z = 222;
-
-        // give a name
-        this.name = "HUDIII";
-
-        //Add BeltSlotButtons
-        for(var i = 0; i < game.belt.beltSlots.length; i++) {
-            this.addChild(new beltSlotBelt(126 + 94 * i, 676, game.belt.beltSlots[i], i));
-        }
-
-    }
-
-});
-
 /**
  * a basic HUD item to display score in Game
  */
@@ -210,85 +182,6 @@ game.HUD.HealthScore = me.Renderable.extend( {
     }
 });
 
-//Used in charactersheet, Profilescreen
-game.SkinFront = me.Sprite.extend({
-    init: function (x,y,filename, team) {
-        this.currentSkin = game.skin.currentSkin;
-
-        //change the size of the image for the Teams
-        this.switch = 64;
-        if (team){
-            this.switch = 84;
-        }
-
-        this._super(me.Sprite, "init", [x, y, me.loader.getImage(filename.concat("_front")), this.switch, 64]);
-        this.z = 1000;
-    },
-
-    /**
-     * update function
-     */
-    update: function (dt) {
-        //update trigger
-        if (this.currentSkin !== game.skin.currentSkin) {
-            this.currentSkin = game.skin.currentSkin;
-            return true;
-        }
-        return false;
-    }
-});
-
-//Used in Scrollcolletion
-game.Scroll = me.Sprite.extend({
-    init: function (x,y,filename) {
-        this._super(me.Sprite, "init", [x, y, me.loader.getImage(filename), 32, 32]);
-        this.z = 100;
-    }
-});
-
-//Used in charactersheet, shows name and stats of the choosen skin
-game.HUD.SkinName = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, name) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-        this.name = name;
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-
-        // local copy of the
-        this.currentSkin = 0;
-    },
-
-    /**
-     * update function
-     */
-    update : function (dt) {
-        //update trigger
-        if (this.currentSkin !== game.skin.currentSkin) {
-            this.currentSkin = game.skin.currentSkin;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, this.name.substring(0,20), this.pos.x, this.pos.y+100);
-        renderer.drawFont(this.font, "Health:  " + game.stats.health , this.pos.x , this.pos.y+200);
-        renderer.drawFont(this.font, "Speed:     " + game.stats.speed , this.pos.x , this.pos.y+300);
-        renderer.drawFont(this.font, "Jump:      " + game.stats.jump , this.pos.x , this.pos.y+400);
-        renderer.drawFont(this.font, "Defense: " + game.stats.defense , this.pos.x , this.pos.y+500);
-    }
-});
-
 //Used in Settings
 game.HUD.SettingsElements = me.Renderable.extend( {
     /**
@@ -342,84 +235,6 @@ game.HUD.SettingsElements = me.Renderable.extend( {
     }
 });
 
-//Used in Shop
-game.HUD.LofiCoins = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        this.font = new me.Font("Trajan_Pro_Regular", 45, "white", "right");
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, game.data.lofiCoins, this.pos.x, this.pos.y);
-    }
-});
-
-game.HUD.Buy = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-        this.res = game.data.shop[game.data.shopId].desc.split("\\n");
-
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 30, "black", "middle");
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Name: " + game.data.shop[game.data.shopId].name, this.pos.x - 100, this.pos.y - 50);
-        renderer.drawFont(this.font, "Price: " + game.data.shop[game.data.shopId].price, this.pos.x - 100, this.pos.y - 100);
-        for(var i = 0; i < this.res.length; i++) {
-            renderer.drawFont(this.font,  this.res[i]   ,   this.pos.x  -  200, this.pos.y + 50 * i + 30);
-        }
-
-    }
-});
-
-game.HUD.BuyBelt = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 30, "black", "middle");
-    },
-
-    /**
-     * draw the elements
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, "Name: " + game.data.beltShop[game.data.shopId].name, this.pos.x - 100, this.pos.y - 50);
-        renderer.drawFont(this.font, "Price: " + game.data.beltShop[game.data.shopId].price, this.pos.x - 100, this.pos.y - 100);
-        renderer.drawFont(this.font,  "Get a brand new beltslot."   ,   this.pos.x  -  100, this.pos.y + 30);
-
-
-    }
-});
-
 game.HUD.Text = me.Renderable.extend( {
     /**
      * constructor
@@ -443,22 +258,6 @@ game.HUD.Text = me.Renderable.extend( {
         for(var i = 0; i < this.res.length; i++) {
             renderer.drawFont(this.font,  this.res[i], this.pos.x, this.pos.y + 30 * i);
         }
-
-    }
-});
-
-game.HUD.Homework = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 50, "white", "right");
 
     }
 });
@@ -568,28 +367,3 @@ function convertTime(seconds){
     res = res.concat(start);
     return res
 }
-
-game.HUD.OverlayAlert = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y, alertText) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create our font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-
-        // save Alert Text to display in this Object
-        this.alertText = alertText;
-    },
-
-    /**
-     * draw the AlertText given to this Object
-     */
-    draw : function (renderer) {
-        renderer.drawFont(this.font, this.alertText, this.pos.x, this.pos.y);
-    }
-});

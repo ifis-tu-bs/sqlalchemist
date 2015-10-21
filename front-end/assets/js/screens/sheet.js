@@ -93,7 +93,6 @@ game.SheetScreen = me.ScreenObject.extend({
 
 
         /**
-         *
          * @type {number[]} Array to set position of enchantment
          */
         var kind = [0,0,0,0];

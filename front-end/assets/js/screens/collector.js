@@ -22,16 +22,10 @@ game.CollectorScreen = me.ScreenObject.extend({
             if (game.data.sound) {
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
-            for (var j = 0; j < 2; j++) {
-                for (var k = 0; k < 5; k++) {
-                    for (var i = 0; i < 6; i++) {
-                        $("#scrolls" + i).fadeOut(100);
-                        $("#scrollsRed" + i).fadeOut(100);
-                    }
-                    $("#checkSymbol" + k).fadeOut(100);
-                }
-                $("#collectionBox" + j).fadeOut(100);
-            }
+            $("[id*='scrolls']").fadeOut(100);
+            $("[id*='scrollsRed']").fadeOut(100);
+            $("[id*='checkSymbol']").fadeOut(100);
+            $("[id*='collectionBox']").fadeOut(100);
             $("#backgroundCollectorId").fadeOut(100);
             $("#backToLabButton").fadeOut(100);
             setTimeout( function() {

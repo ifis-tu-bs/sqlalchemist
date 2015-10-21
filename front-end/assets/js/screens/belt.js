@@ -14,6 +14,13 @@ game.BeltScreen = me.ScreenObject.extend({
          * Create button and according callback-function to go back to teh Laboratory.
          */
         this.backToMenu = function () {
+            $("#backgroundBeltId").fadeOut(100);
+            $("#backFromBeltId").fadeOut(100);
+            $("[id*='ImageId']").fadeOut(100);
+            $("[id*='brewPotionId']").fadeOut(100);
+            $("[id*='setPotionId']").fadeOut(100);
+            $("[id*='potionAmountId']").fadeOut(100);
+            $("[id*='beltPotionId']").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
@@ -72,7 +79,17 @@ game.BeltScreen = me.ScreenObject.extend({
                     game.task.kind = 0;
                     game.task.name = this.potion.name;
                     //console.log("Potion: " + game.task.potionId, "Name: " + game.task.name ,"Result" + game.potion.potions[game.task.potionId].name);
-                    me.state.change(STATE_TASK);
+
+                    $("#backgroundBeltId").fadeOut(100);
+                    $("#backFromBeltId").fadeOut(100);
+                    $("[id*='ImageId']").fadeOut(100);
+                    $("[id*='brewPotionId']").fadeOut(100);
+                    $("[id*='setPotionId']").fadeOut(100);
+                    $("[id*='potionAmountId']").fadeOut(100);
+                    $("[id*='beltPotionId']").fadeOut(100);
+                    setTimeout( function() {
+                        me.state.change(STATE_TASK);
+                    }, 100);
                 }
             };
 
@@ -132,7 +149,6 @@ game.BeltScreen = me.ScreenObject.extend({
                 }
 
             };
-
 
             /**
              * Set buttons and images for all potions which the the user collected during the game. Information about
@@ -249,6 +265,14 @@ game.BeltScreen = me.ScreenObject.extend({
 
                     function onloadBelt(xmlHttpRequest) {
                         //console.log(xmlHttpRequest);
+
+                        $("#backgroundBeltId").fadeOut(50);
+                        $("#backFromBeltId").fadeOut(50);
+                        $("[id*='ImageId']").fadeOut(50);
+                        $("[id*='brewPotionId']").fadeOut(50);
+                        $("[id*='setPotionId']").fadeOut(50);
+                        $("[id*='potionAmountId']").fadeOut(50);
+                        $("[id*='beltPotionId']").fadeOut(50);
                         me.state.change(STATE_BELT);
 
                     }
@@ -288,6 +312,13 @@ game.BeltScreen = me.ScreenObject.extend({
                         this.setBelt();
                     }
 
+                    $("#backgroundBeltId").fadeOut(50);
+                    $("#backFromBeltId").fadeOut(50);
+                    $("[id*='ImageId']").fadeOut(50);
+                    $("[id*='brewPotionId']").fadeOut(50);
+                    $("[id*='setPotionId']").fadeOut(50);
+                    $("[id*='potionAmountId']").fadeOut(50);
+                    $("[id*='beltPotionId']").fadeOut(50);
                     me.state.change(STATE_BELT);
                 }
             };

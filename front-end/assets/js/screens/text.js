@@ -6,7 +6,7 @@ game.TextScreen = me.ScreenObject.extend({
     onResetEvent : function() {
         me.audio.stopTrack();
         if(game.persistent.boss){
-            game.persistent.boss = false
+            game.persistent.boss = false;
             game.data.text = 0;
         }
         var image = "lab_screen";
