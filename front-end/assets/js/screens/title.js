@@ -1,8 +1,5 @@
 game.TitleScreen = me.ScreenObject.extend({
 
-    /**
-     *  action to perform on state change
-     */
     onResetEvent : function() {
 
         /**
@@ -154,7 +151,7 @@ game.TitleScreen = me.ScreenObject.extend({
             } else {
 
                 var background2 = new game.BackgroundElement('background2', 100, 100, 0, 0, 'none');
-                background2.setImage("assets/data/img/gui/home_screen_2.png", "back2");
+                background2.setImage("assets/data/img/gui/test_homescreen.png", "back2");
                 me.game.world.addChild(background2);
 
                 $("#background2").fadeIn(100);
@@ -178,7 +175,7 @@ game.TitleScreen = me.ScreenObject.extend({
         ajaxSendProfileRequest(onProfileReply);
 
         /**
-         * Add all needed buttons to both title screens
+         * Add all needed buttons for both title screens
          */
         var logoutButton    = new game.ClickableElement('logoutButton', 'Logout', logoutReply, 15, 7.5, 43, 1.5, 2);
         var labButton       = new game.ClickableElement('labButton', 'Story Mode', onLab, 17, 40, 8, 9, 4);

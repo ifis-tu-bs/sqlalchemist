@@ -125,7 +125,7 @@ game.CollectorScreen = me.ScreenObject.extend({
         }
 
         /**
-         * Create TextOutPutElements to draw useful information and statistics.
+         * Create TextOutPutElements to draw information about the daily scroll-limit, the collected scrolls and statistics.
          */
         var scrollProgress = new game.TextOutputElement('scrollProgress', 60, 10, 30.151515, 26.041667, 2);
         me.game.world.addChild(scrollProgress);

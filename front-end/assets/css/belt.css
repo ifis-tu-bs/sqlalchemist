@@ -1,0 +1,11 @@
+[id^=setPotionId] {
+    z-index: 10;
+}
+
+[id^=potionAmountId] {
+    z-index: 5;
+}
+
+[id^=potionAmountId] {
+    text-align: center;
+}

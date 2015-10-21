@@ -364,43 +364,6 @@ game.HUD.LofiCoins = me.Renderable.extend( {
     }
 });
 
-//Used in Beltscreen, shows the amount of potions already created
-game.HUD.PotionAmount = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 32, "white", "middle");
-    },
-
-    /**renderer.drawFont(this.font, "USERNAME: " + this.user_object.username.toUpperCase(), this.pos.x + 760, this.pos.y);
-     * draw the elements
-     */
-    draw : function (renderer) {
-        for(var i = 1; i < 6; i++) {
-            if (game.potion.potions[i].available){
-                renderer.drawFont(this.font, "#"+game.potion.potions[i].amount , -17 + 105 * i, 265);
-            }
-            if (game.potion.potions[i + 5].available){
-                renderer.drawFont(this.font, "#"+game.potion.potions[i + 5].amount ,570 + 105 * i, 265);
-            }
-            if (game.potion.potions[i + 10].available){
-                renderer.drawFont(this.font, "#"+game.potion.potions[i + 10].amount , -17 + 105 * i, 460);
-            }
-            if (game.potion.potions[i + 15].available){
-                renderer.drawFont(this.font, "#"+game.potion.potions[i + 15].amount ,570 + 105 * i, 460);
-            }
-        }
-
-    }
-});
-
 game.HUD.Buy = me.Renderable.extend( {
     /**
      * constructor
