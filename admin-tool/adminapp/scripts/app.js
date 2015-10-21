@@ -67,21 +67,17 @@
             .otherwise({ redirectTo: '/' });
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookieStore', '$http'];
-    function run($rootScope, $location, $cookieStore, $http) {
-        // bleibt der Benutzer nach der Aktualisierung der Seite angemeldet
-        $rootScope.globals = $cookieStore.get('globals') || {};
+    run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
+    function run($rootScope, $location, $cookies, $http) {
+        // See if we got a Session stored...
+        $rootScope.session = $cookies.getObject('session') || {};
         $rootScope.Homework = $rootScope.Homework || {};
         $rootScope.Tasks = $rootScope.Tasks || {};
 
-        if ($rootScope.globals.currentUser) {
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata;
-        }
-
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // Umleitung zur Login-Seite in, wenn der Benutzer nicht angemeldet und versucht, einen eingeschränkten Seite zuzugreifen
-             var restrictedPage = $.inArray($location.path(), ['/login', '/register']) === -1 && !$location.path().startsWith('/passwordreset/');;
-            var loggedIn = $rootScope.globals.currentUser;
+            // redirect to login if not having a session stored
+            var restrictedPage = $.inArray($location.path(), ['/login']) === -1 && !$location.path().startsWith('/passwordreset/');;
+            var loggedIn = $rootScope.session.currentUser;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }
