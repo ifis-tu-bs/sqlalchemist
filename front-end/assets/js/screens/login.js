@@ -1,7 +1,5 @@
 game.LoginScreen = me.ScreenObject.extend({
-    /**
-     *  Action to perform on state change: STATE_LOGIN
-     */
+
     onResetEvent: function() {
 
         /**
@@ -44,15 +42,6 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * Create all necessary TextInputElements for Login
-         * @param : tag       : 'input' or 'textarea'
-         *          type      : the type of a 'input' element or the name of a 'textarea' element as string
-         *          wrapperId : a unique alphanumeric string
-         *          fieldId   : a unique alphanumeric string
-         *          width     : the width of the element in percent of the width of the canvas
-         *          height    : the height of the element in percent of the height of the canvas
-         *          left      : the left margin of the element in percent of the width of the canvas
-         *          top       : the top margin of the element in percent of the height of the canvas
-         *          rows      : the number of rows
          */
         var userid   = new game.TextInputElement('input', 'text', 'wId', 'fId', 55, 12, 22, 25, 2);
         var password = new game.TextInputElement('input', 'text', 'wPassword', 'fPassword', 55, 12, 22, 42, 2);
@@ -102,14 +91,6 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * Create necessary ClickableElements for Sign-UP
-         * @param : id       : a unique alphanumeric string
-         *          name     : text to display on screen
-         *          callback : the callback function
-         *          width    : the width of the element in percent of the width of the canvas
-         *          height   : the height of the element in percent of the height of the canvas
-         *          left     : the left margin of the element in percent of the width of the canvas
-         *          top      : the top margin of the element in percent of the height of the canvas
-         *          rows     : the number of rows
          */
         var loginButton     = new game.ClickableElement('loginButton', 'Enter', this.loginReply, 20, 6.5, 42.5, 64.5, 1);
         var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', this.toSignUp, 25, 2, 25, 58.5, 1);
@@ -129,7 +110,7 @@ game.LoginScreen = me.ScreenObject.extend({
     },
 
     /**
-     * Gets the Settings on Login and starts the Menu-Music
+     * Gets the settings on Login and starts the menu-music.
      */
     onDestroyEvent: function() {
 
