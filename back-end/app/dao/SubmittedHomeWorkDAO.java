@@ -40,19 +40,15 @@ public class SubmittedHomeWorkDAO  {
      * @param task task being submitted
      * @return The given Object, or null if none exists
      */
-    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTask(
+    public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTaskAndHomeWork(
             Profile profile,
-            Task task) {
-
-        HomeWork currentHomeWork;
-        if ((currentHomeWork = HomeWorkDAO.getCurrent()) == null ) {
-            return null;
-        }
+            Task task,
+            HomeWork homeWork) {
 
         return SubmittedHomeWork.find.where()
                 .eq("profile_id", profile.getId())
                 .eq("task_id", task.getId())
-                .eq("home_work_id", currentHomeWork.getId())
+                .eq("home_work_id", homeWork.getId())
                 .findUnique();
     }
 
@@ -61,56 +57,46 @@ public class SubmittedHomeWorkDAO  {
   //////////////////////////////////////////////////
 
 
-      public static SubmittedHomeWork submit(
-              Profile profile,
-              Task task,
-              boolean solve,
-              String statement) {
+    public static SubmittedHomeWork submit(
+            Profile profile,
+            Task task,
+            HomeWork homeWork,
+            boolean solve,
+            String statement) {
 
-          if (HomeWorkDAO.getCurrent() == null) {
-              Logger.warn("Trying to submit without having an active HomeWork!!!");
-              return null;
-          }
-
-          if (!HomeWorkDAO.getCurrent().contains(task)) {
-              Logger.info("SubmittedHomeWork.submit - SomeOne got Late");
-              return null;
-          }
-
-          SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndTask(profile, task);
+        SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndTaskAndHomeWork(profile, task, homeWork);
 
 
-          if (existed != null) {
-              try {
-                  existed.addSemanticCheck();
-                  existed.setSolve(solve);
-                  existed.setStatement(statement);
+        if (existed != null) {
+            try {
+                existed.addSemanticCheck(); // TODO Somewhere else?
+                existed.setSolve(solve);
+                existed.setStatement(statement);
 
-                  existed.update();
-                  return existed;
-              } catch (PersistenceException pe) {
-                  Logger.warn("Cannot Submit: " + pe.getMessage());
-              }
-          }
+                existed.update();
+                return existed;
+            } catch (PersistenceException pe) {
+                Logger.warn("Cannot Submit: " + pe.getMessage());
+            }
+        }
 
 
-          SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
-                  profile,
-                  task,
-                  HomeWorkDAO.getCurrent(),
-                  solve,
-                  statement);
+        SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
+                profile,
+                task,
+                homeWork,
+                solve,
+                statement);
 
-          try {
-              submittedHomeWork.addSemanticCheck();
-              submittedHomeWork.save();
+        try {
+                submittedHomeWork.addSemanticCheck();
+                submittedHomeWork.save();
 
-              return submittedHomeWork;
-          } catch (PersistenceException pe) {
-              Logger.warn("Not saving: " + pe.getMessage());
-              return null;
-          }
-      }
-
+                return submittedHomeWork;
+            } catch (PersistenceException pe) {
+                Logger.warn("Not saving: " + pe.getMessage());
+            return null;
+            }
+        }
 
 }

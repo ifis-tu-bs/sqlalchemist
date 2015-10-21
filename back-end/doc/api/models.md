@@ -26,6 +26,8 @@
     - [TaskSet.Form](#tasksetform)
 - [UserStatement](#userstatement)
 - [HomeWork] (#homework)
+    - [HomeWork.Form] (#Homeworkform)
+    - [HomeWork.Student] (#homeworkstudent)
 
 ### Avatar
 | Name                      | Type                              | Description|
@@ -112,7 +114,7 @@ Comment:
 #### Comment.Form
 | Name                     | Type              | Description|
 |--------------------------|-------------------|------------|
-| ```text```               | ```String```     |            |
+| ```text```               | ```String```      |            |
 
 Example:
 ```json
@@ -584,8 +586,8 @@ Columns:
 |--------------------------|--------------------------|------------|
 | ```id```                 | ```Number ```            |            |
 | ```homeWorkName```       | ```String```             |            |
-| ```taskSets```           | ```[```TaskSet[]```](#tabledefinitionform)``` |            |
-| ```creator```            | ```[```Profile```](#profile)```               |            |
+| ```taskSets```           | [```TaskSet[]```](#tabledefinitionform)|            |
+| ```creator```            | [```Profile```](#profile)              |            |
 | ```start_at```           | ```Number```             | Milliseconds|
 | ```expire_at```          | ```Number```             | Milliseconds|
 
@@ -653,6 +655,26 @@ HomeWork.Form: {
     1,
     4
   ],
+  "start_at":   Number,
+  "expire_at":  Number
+}
+```
+
+####HomeWork.Student
+| Name                     | Type                     | Description|
+|--------------------------|--------------------------|------------|
+| ```id```                 | ```Number ```            |            |
+| ```homeWorkName```       | ```String```             |            |
+| ```creator```            | [```Profile```](#profile)|            |
+| ```start_at```           | ```Number```             | Milliseconds|
+| ```expire_at```          | ```Number```             | Milliseconds|
+
+Example:
+```json
+HomeWork: {
+  "id": 1,
+  "homeWorkName": "Homework1SS1415",
+  "creator": Profile,
   "start_at":   Number,
   "expire_at":  Number
 }

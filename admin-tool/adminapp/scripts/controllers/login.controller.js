@@ -19,14 +19,13 @@
         vm.login = login;
 
         (function initController() {
-            // reseten des login status 
+            // reset login status
             AuthenticationService.ClearCredentials();
         })();
 
         function login() {
             vm.dataLoading = true;
             AuthenticationService.Login(vm.username, vm.password, function (response) {
-                console.log(response.username);
                 AuthenticationService.SetCredentials(vm.username, vm.password);
                 $location.path('/');
             },
