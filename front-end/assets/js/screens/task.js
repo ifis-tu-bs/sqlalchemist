@@ -40,9 +40,9 @@ game.TaskScreen = me.ScreenObject.extend({
 	    }
 
         //(id, width, height, left, top, rows)
-        textOut          = new game.TextOutputElement('task', 55, 42, 3, 8, 14);
-        textOutHead      = new game.TextOutputElement('head', 73, 8, 10, 2, 2);
-        textOutSchema    = new game.TextOutputElement('schemaa', 35, 81, 61, 8, 27);
+        textOut          = new game.TextOutputElement('task', 55, 30, 3, 10, 10);
+        textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
+        textOutSchema    = new game.TextOutputElement('schemaa', 35, 75, 61, 10, 25);
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
@@ -51,28 +51,79 @@ game.TaskScreen = me.ScreenObject.extend({
 
         nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
 
-        /*
-        codemirrorButton = new game.ClickableElement('codemirrorbutton', 'CodeMirror Editor', getCodemirrorEditor, 73, 6, 12, 50, 2);
-        */
-
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 80, 2);
 
-        likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 48, 40, 2);
-        dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 52, 40, 2);
+        likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 50, 40, 2);
+        dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 53, 40, 2);
         reviewButton     = new game.ClickableElement('reviewbutton', '', needReview, 2, 3, 56, 40, 2);
 
-        likeButtonSet       = new game.ClickableElement('likebuttonSet', '', likeItSet, 2, 3, 86, 90, 2);
-        dislikeButtonSet    = new game.ClickableElement('dislikebuttonSet', '', dislikeItSet, 2, 3, 90, 90, 2);
-        reviewButtonSet     = new game.ClickableElement('reviewbuttonSet', '', needReviewSet, 2, 3, 94, 90, 2);
+        likeButtonSet    = new game.ClickableElement('likebuttonSet', '', likeItSet, 2, 3, 88, 90, 2);
+        dislikeButtonSet = new game.ClickableElement('dislikebuttonSet', '', dislikeItSet, 2, 3, 91, 90, 2);
+        reviewButtonSet  = new game.ClickableElement('reviewbuttonSet', '', needReviewSet, 2, 3, 94, 90, 2);
+
+        setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
+
+        var chooseDifficulty1  = new game.ClickableElement('chooseDifficulty1', '', setDifficulty(1), 4, 6, 67, 89, 2);
+        chooseDifficulty1.setImage("assets/data/img/buttons/difficulty_coins/coin_one.png", "one");
+        me.game.world.addChild(chooseDifficulty1);
+        var chooseDifficulty2  = new game.ClickableElement('chooseDifficulty2', '', setDifficulty(2), 4, 6, 70, 88, 2);
+        chooseDifficulty2.setImage("assets/data/img/buttons/difficulty_coins/coin_two.png", "two");
+        me.game.world.addChild(chooseDifficulty2);
+        var chooseDifficulty3  = new game.ClickableElement('chooseDifficulty3', '', setDifficulty(3), 4, 6, 73, 87, 2);
+        chooseDifficulty3.setImage("assets/data/img/buttons/difficulty_coins/coin_three.png", "three");
+        me.game.world.addChild(chooseDifficulty3);
+        var chooseDifficulty4  = new game.ClickableElement('chooseDifficulty4', '', setDifficulty(4), 4, 6, 76, 88, 2);
+        chooseDifficulty4.setImage("assets/data/img/buttons/difficulty_coins/coin_four.png", "four");
+        me.game.world.addChild(chooseDifficulty4);
+        var chooseDifficulty5  = new game.ClickableElement('chooseDifficulty5', '', setDifficulty(5), 4, 6, 79, 89, 2);
+        chooseDifficulty5.setImage("assets/data/img/buttons/difficulty_coins/coin_five.png", "five");
+        me.game.world.addChild(chooseDifficulty5);
+        var chooseDifficulty6  = new game.ClickableElement('chooseDifficulty6', '', setDifficulty(6), 4, 6, 82, 88, 2);
+        chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_six.png", "six");
+        me.game.world.addChild(chooseDifficulty6);
+
 
         textIn = new Object();
 
-        console.log(1);
 
         submitButton.hide();
         tryButton.hide();
         sameTaskButton.hide();
         nextTaskButton.hide();
+
+        //hide ratings
+        likeButton.hide();
+        dislikeButton.hide();
+        reviewButton.hide();
+
+        likeButtonSet.hide();
+        dislikeButtonSet.hide();
+        reviewButtonSet.hide();
+
+        if(game.task.kind === 2){
+            switch(game.task.difficulty){
+                case 1:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_one.png", "one");
+                    break;
+                case 2:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_two.png", "two");
+                    break;
+                case 3:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_three.png", "three");
+                    break;
+                case 4:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_four.png", "four");
+                    break;
+                case 5:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_five.png", "five");
+                    break;
+                case 6:
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_six.png", "six");
+
+            }
+            setDifficultyButton.display();
+        }
+
 
     	if (game.task.kind != 3) {
             checkButton.hide();
@@ -92,6 +143,10 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(likeButton);
         me.game.world.addChild(dislikeButton);
         me.game.world.addChild(reviewButton);
+        me.game.world.addChild(likeButtonSet);
+        me.game.world.addChild(dislikeButtonSet);
+        me.game.world.addChild(reviewButtonSet);
+        me.game.world.addChild(setDifficultyButton);
 
 
         likeButton.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
@@ -163,6 +218,84 @@ game.TaskScreen = me.ScreenObject.extend({
 	        }
         }
 
+        /**
+         *
+         * @param difficulty
+         * @returns {Function}
+         */
+        function setDifficulty(difficulty){
+            return function() {
+                console.log(difficulty);
+                game.task.difficulty = difficulty;
+
+                setTimeout(function(){
+                    chooseDifficulty6.hide();
+                    setTimeout(function(){
+                        chooseDifficulty5.hide();
+                        setTimeout(function(){
+                            chooseDifficulty4.hide();
+                            setTimeout(function(){
+                                chooseDifficulty3.hide();
+                                setTimeout(function(){
+                                    chooseDifficulty2.hide();
+                                    setTimeout(function(){
+                                        chooseDifficulty1.hide();
+                                        //setDifficultyButton.destroy();
+                                        setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
+
+                                        setDifficultyButton.display();
+                                        me.game.world.addChild(setDifficultyButton);
+
+                                        switch(difficulty){
+                                            case 1:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_one.png", "one");
+                                                break;
+                                            case 2:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_two.png", "two");
+                                                break;
+                                            case 3:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_three.png", "three");
+                                                break;
+                                            case 4:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_four.png", "four");
+                                                break;
+                                            case 5:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_five.png", "five");
+                                                break;
+                                            case 6:
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_six.png", "six");
+
+                                        }
+                                    }, 100);
+                                }, 100);
+                            }, 100);
+                        }, 100);
+                    }, 100);
+                }, 100);
+            }
+        }
+
+        function showDifficulties(){
+            setTimeout(function(){
+                chooseDifficulty1.display();
+                setTimeout(function(){
+                    chooseDifficulty2.display();
+                    setTimeout(function(){
+                        chooseDifficulty3.display();
+                        setTimeout(function(){
+                            chooseDifficulty4.display();
+                            setTimeout(function(){
+                                chooseDifficulty5.display();
+                                setTimeout(function(){
+                                    chooseDifficulty6.display();
+                                }, 100);
+                            }, 100);
+                        }, 100);
+                    }, 100);
+                }, 100);
+            }, 100);
+        }
+
 		/**
 		 * Init Ace editor
 		 */
@@ -170,6 +303,7 @@ game.TaskScreen = me.ScreenObject.extend({
 			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 35, 3, 45, 10);
 			me.game.world.addChild(aceEditor);
 			textIn = aceEditor;
+            aceEditor.hide();
 			textIn.display();
 			if (!tryButton.visibility) {
 				submitButton.display();
@@ -252,9 +386,13 @@ game.TaskScreen = me.ScreenObject.extend({
 	     */
 	    function showSameTask() {
             textOut.clear();
-	    	textOut.writePara(dataTask.exercise, 'taskbody');
+	    	textOut.writeHTML(dataTask.taskText, 'taskbody');
 	    	sameTaskButton.hide();
 	    	nextTaskButton.hide();
+
+            handleRatingSet();
+            handleRating();
+
             submitButton.display();
         }
 
@@ -268,9 +406,15 @@ game.TaskScreen = me.ScreenObject.extend({
 	     */
 	    function renderSchema(schema) {
 
-	    	res = schema.replace(/(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
+            res = schema;
+            console.log("1: ", schema);
+            //# wird entfernt, ^ startet einfach so.
+	    	res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
+            console.log("2: ", res);
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
+            console.log("3: ", res);
 	    	res = res.replace(/\n/gmi, '<br>');
+            console.log("4: ", res);
 
 	        return res;
 
@@ -281,22 +425,21 @@ game.TaskScreen = me.ScreenObject.extend({
 	     */
         function writeHeadline() {
 
-            console.log(4);
             textOutHead.clear();
 
         	if ((game.task.kind == 0) || (game.task.kind == 1)) {
         	    // Story Collector
-        	    textOutHead.writePara(game.task.name, 'tasktitle');
+        	    textOutHead.writeHTML(game.task.name, 'tasktitle');
             }
 
             if (game.task.kind == 2) {
         	    // Trivia
-        	    textOutHead.writePara('Difficulty: ' + game.task.difficulty, 'tasktitle');
+        	    textOutHead.writeHTML('Difficulty: ' + game.task.difficulty, 'tasktitle');
             }
 
             if (game.task.kind == 3) {
         	    // Homework
-        	    textOutHead.writePara('Exercise', 'tasktitle');
+        	    textOutHead.writeHTML('Exercise', 'tasktitle');
             }
 
         };
@@ -335,34 +478,29 @@ game.TaskScreen = me.ScreenObject.extend({
                 // write data
                 writeHeadline();
                 textOut.clear();
-                textOut.writePara(dataTask.taskText, 'taskbody');
+                textOut.writeHTML(dataTask.taskText, 'taskbody');
 
                 //write Schema
                 textOutSchema.clear();
-                textOutSchema.writePara('Schema', 'schematitle');
+                textOutSchema.writeHTML('Schema', 'schematitle');
                 var schematext = renderSchema(dataTask.relationsFormatted);
                 console.log("SchemaText: ",schematext);
-                textOutSchema.writeHTML(schemaa, 'schematext');
-                console.log(4,5);
+                textOutSchema.writeHTML(schematext, 'taskbody');
 
 
                 // buttons to hide
                 tryButton.hide();
                 nextTaskButton.hide();
                 sameTaskButton.hide();
-                console.log(5);
+
+
+                handleRatingSet();
+                handleRating();
 
                 // buttons to display
                 submitButton.display();
                 backButton.display();
 
-                likeButton.display();
-                dislikeButton.display();
-                reviewButton.display();
-
-                likeButtonSet.display();
-                dislikeButtonSet.display();
-                reviewButtonSet.display();
 
                 if (game.task.kind == 3) {
                     // Homework
@@ -403,8 +541,8 @@ game.TaskScreen = me.ScreenObject.extend({
             textOut.clear();
 
             if(dataResult.DBMessage) {
-                textOut.writePara(dataResult.terry, 'taskbody');
-                textOut.writePara("Message: " + dataResult.DBMessage, 'taskbody');
+                textOut.writeHTML(dataResult.terry + "<br>" + "Message: " + dataResult.DBMessage, 'taskbody');
+                //textOut.writeHTML("Message: " + dataResult.DBMessage, 'taskbody');
             } else {
                 console.log( dataResult.score, (game.task.kind == 1 || game.task.kind == 0) && dataResult.score);
                 if ((game.task.kind == 1 || game.task.kind == 0) && dataResult.score ) {
@@ -413,8 +551,8 @@ game.TaskScreen = me.ScreenObject.extend({
                     me.state.change(STATE_RESULT);
                 }
 
-                textOut.writePara(dataResult.terry, 'taskbody');
-                textOut.writePara("Time: " + dataResult.time, 'taskbody');
+                textOut.writeHTML(dataResult.terry + "<br>" + "Time: " + dataResult.time, 'taskbody');
+                //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
             // buttons to hide
@@ -423,6 +561,14 @@ game.TaskScreen = me.ScreenObject.extend({
             // buttons to display
             sameTaskButton.display();
             nextTaskButton.display();
+
+            likeButton.display();
+            dislikeButton.display();
+            reviewButton.display();
+
+            likeButtonSet.display();
+            dislikeButtonSet.display();
+            reviewButtonSet.display();
 
         };
         
@@ -438,9 +584,9 @@ game.TaskScreen = me.ScreenObject.extend({
             // write data
             textOut.clear();
             if (dataResult.DBMessage) {
-                textOut.writePara(dataResult.terry + ":\n" + dataResult.DBMessage, 'taskbody');
+                textOut.writeHTML(dataResult.terry + ":\n" + dataResult.DBMessage, 'taskbody');
             } else {
-                textOut.writePara(dataResult.terry + "\nTime: " + dataResult.time, 'taskbody');
+                textOut.writeHTML(dataResult.terry + "\nTime: " + dataResult.time, 'taskbody');
             }
         };
         
@@ -555,10 +701,13 @@ game.TaskScreen = me.ScreenObject.extend({
         getTaskFromServer();
 
 		getAceEditor();
+
         
     },
 
 	onDestroyEvent: function(){
+
+        //setDifficultyButton.destroy();
 
 		if(game.data.music ){
 			me.audio.stopTrack();

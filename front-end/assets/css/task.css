@@ -32,6 +32,20 @@
 	font-size : inherit;
 }
 
+#chooseDifficulty {
+	background-color : transparent;
+	border-style : solid;
+	border-color: transparent;
+	font-family : Trajan_Pro_Regular, sans-serif;
+	color : transparent;
+	cursor : pointer;
+	overflow : visible;
+	position : absolute;
+	text-align : center;
+	vertical-align : middle;
+	z-Index : 4;
+}
+
 #likebutton, #likebuttonSet {
 	background-color : transparent;
 	border-style : none;
