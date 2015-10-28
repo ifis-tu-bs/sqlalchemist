@@ -26,6 +26,7 @@ back-end/.project
 back-end/RUNNING_PID
 back-end/.settings
 back-end/public/game
+back-end/public/download/*.*
 back-end/.sbtserver
 back-end/public/admintool
 *.h2.db

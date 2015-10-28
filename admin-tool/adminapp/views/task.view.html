@@ -36,7 +36,13 @@
             <div class="panel-heading">
               <h4 class="panel-title">
                 <span tooltip-placement="right" uib-tooltip="TaskSets contain a Schema and a Set of Tasks. Select a TaskSet for further editing." style="font-size:16pt">TaskSet: <b>select...</b></span>
+                <div class="btn-group" style="float:right">
+                  <button class="btn btn-primary btn-xs">Import...</button>
+                  <button class="btn btn-primary btn-xs" ng-click="exportTaskSets();">Export...</button>
+                </div>
+
               </h4>
+
             </div>
             <div class="panel-body">
               <table class="table table-hover">
