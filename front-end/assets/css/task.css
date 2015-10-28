@@ -82,7 +82,7 @@
 	z-Index : 4;
 }
 
-#mainmenu {
+#mainmenu, #staybutton {
     font-family: Trajan_Pro_Regular, sans-serif;
     cursor: pointer;
     color: white;

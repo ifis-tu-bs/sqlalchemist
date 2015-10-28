@@ -30,6 +30,12 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(backgroundTask);
         $("#backgroundTaskId").fadeIn(100);
 
+        var schemaCheck = new game.BackgroundElement('schemaCheckId', 4, 6, 32, 88, "none");
+        schemaCheck.setImage("assets/data/img/stuff/check_symbol.png", "check_symbol");
+        me.game.world.addChild(schemaCheck);
+        $("#schemaCheckId").fadeIn(100);
+
+
         game.data.count = 0;
     	// workaround fuer android bug CB-4404
     	if (me.device.android || me.device.android2) {
@@ -42,7 +48,7 @@ game.TaskScreen = me.ScreenObject.extend({
         //(id, width, height, left, top, rows)
         textOut          = new game.TextOutputElement('task', 55, 30, 3, 10, 10);
         textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
-        textOutSchema    = new game.TextOutputElement('schemaa', 35, 75, 61, 10, 25);
+        textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 28);
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
@@ -51,7 +57,8 @@ game.TaskScreen = me.ScreenObject.extend({
 
         nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
 
-        checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 80, 2);
+        checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 90, 2);
+        stayButton      = new game.ClickableElement('staybutton', 'stay in Schema', stayInSchema, 10, 6, 24, 88, 2);
 
         likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 50, 40, 2);
         dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 53, 40, 2);
@@ -90,6 +97,7 @@ game.TaskScreen = me.ScreenObject.extend({
         tryButton.hide();
         sameTaskButton.hide();
         nextTaskButton.hide();
+        schemaCheck.hide();
 
         //hide ratings
         likeButton.hide();
@@ -122,6 +130,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
             }
             setDifficultyButton.display();
+            stayButton.display();
         }
 
 
@@ -140,6 +149,7 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(sameTaskButton);
         me.game.world.addChild(nextTaskButton);
         me.game.world.addChild(checkButton);
+        me.game.world.addChild(stayButton);
         me.game.world.addChild(likeButton);
         me.game.world.addChild(dislikeButton);
         me.game.world.addChild(reviewButton);
@@ -225,7 +235,6 @@ game.TaskScreen = me.ScreenObject.extend({
          */
         function setDifficulty(difficulty){
             return function() {
-                console.log(difficulty);
                 game.task.difficulty = difficulty;
 
                 setTimeout(function(){
@@ -638,7 +647,7 @@ game.TaskScreen = me.ScreenObject.extend({
         };
         
         /**
-         *
+         * Needs to be
          */
         function checkAnswer() {
         	
@@ -667,6 +676,19 @@ game.TaskScreen = me.ScreenObject.extend({
             }
         	
         };
+
+        /**
+         *Checkbox Funktion
+         */
+        function stayInSchema() {
+
+            if(schemaCheck.isVisibile()){
+                schemaCheck.hide();
+            }else{
+                schemaCheck.display();
+            }
+
+        }
         
         /**
          *

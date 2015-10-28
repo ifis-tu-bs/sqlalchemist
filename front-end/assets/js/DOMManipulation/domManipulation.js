@@ -641,6 +641,15 @@ game.ClickableElement = me.Renderable.extend ({
         this.visibility = false;
 
     },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
+
+    },
     
     setImage : function (src, id) {
     	
@@ -712,6 +721,35 @@ game.BackgroundElement = me.Renderable.extend ({
 
         // append child
         parent.appendChild(this.elem);
+
+    },
+
+    /**
+     * method displays the element
+     */
+    display : function () {
+
+        this.elem.style.display = "block";
+        this.visibility = true;
+
+    },
+
+    /**
+     * method hides the element
+     */
+    hide : function () {
+
+        this.elem.style.display = "none";
+        this.visibility = false;
+
+    },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
 
     },
 
