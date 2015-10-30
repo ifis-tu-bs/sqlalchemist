@@ -126,4 +126,13 @@ public class TaskSetView {
 
         return taskSetNode;
     }
+
+    public static ObjectNode toJsonHomeWork(TaskSet taskSet) {
+        ObjectNode  taskSetJson             = Json.newObject();
+
+        taskSetJson.put("id",                   taskSet.getId());
+        taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
+
+        return taskSetJson;
+    }
 }
