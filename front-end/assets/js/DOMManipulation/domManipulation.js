@@ -423,6 +423,7 @@ game.TextOutputElement = me.Renderable.extend ({
         // create nodes
         this.elem                = document.createElement("div");
         this.wrapper             = document.createElement("div");
+
         this.elem.id             = id;
         this.elem.style.position = 'absolute';
         
@@ -456,6 +457,12 @@ game.TextOutputElement = me.Renderable.extend ({
     getNode : function () {
 
         return this.elem;
+
+    },
+
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
 
     },
 
@@ -621,6 +628,12 @@ game.ClickableElement = me.Renderable.extend ({
         return this.elem;
 
     },
+    //setTitle
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
 
     /**
      * method displays the element
@@ -731,6 +744,12 @@ game.BackgroundElement = me.Renderable.extend ({
 
         this.elem.style.display = "block";
         this.visibility = true;
+
+    },
+
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
 
     },
 

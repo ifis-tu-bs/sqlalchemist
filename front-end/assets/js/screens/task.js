@@ -52,13 +52,13 @@ game.TaskScreen = me.ScreenObject.extend({
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
-        tryButton        = new game.ClickableElement('trybutton', 'Try again', getTaskFromServer, 10, 6, 38, 90, 2);
-        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Try Again', showSameTask, 10, 6, 38, 90, 2);
+        tryButton        = new game.ClickableElement('trybutton', 'Retry', getTaskFromServer, 10, 6, 38, 90, 2);
+        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Retry', showSameTask, 10, 6, 38, 90, 2);
 
         nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 90, 2);
-        stayButton      = new game.ClickableElement('staybutton', 'stay in Schema', stayInSchema, 10, 6, 24, 88, 2);
+        stayButton      = new game.ClickableElement('submit', 'stay in Schema', stayInSchema, 10, 6, 24, 88, 2);
 
         likeButton       = new game.ClickableElement('likebutton', '', likeIt, 2, 3, 50, 40, 2);
         dislikeButton    = new game.ClickableElement('dislikebutton', '', dislikeIt, 2, 3, 53, 40, 2);
@@ -67,6 +67,7 @@ game.TaskScreen = me.ScreenObject.extend({
         likeButtonSet    = new game.ClickableElement('likebuttonSet', '', likeItSet, 2, 3, 88, 90, 2);
         dislikeButtonSet = new game.ClickableElement('dislikebuttonSet', '', dislikeItSet, 2, 3, 91, 90, 2);
         reviewButtonSet  = new game.ClickableElement('reviewbuttonSet', '', needReviewSet, 2, 3, 94, 90, 2);
+
 
         setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
 
@@ -108,6 +109,7 @@ game.TaskScreen = me.ScreenObject.extend({
         dislikeButtonSet.hide();
         reviewButtonSet.hide();
 
+
         if(game.task.kind === 2){
             switch(game.task.difficulty){
                 case 1:
@@ -130,12 +132,15 @@ game.TaskScreen = me.ScreenObject.extend({
 
             }
             setDifficultyButton.display();
+            setDifficultyButton.setTitle("change next tasks difficulty");
             stayButton.display();
+            stayButton.setTitle("toggle to keep the schema")
         }
 
 
     	if (game.task.kind != 3) {
             checkButton.hide();
+            checkButton.setTitle("syntax check, before submitting");
     	}
 
 
@@ -159,13 +164,28 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(setDifficultyButton);
 
 
+
         likeButton.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
+        likeButton.setTitle("good task");
         dislikeButton.setImage("assets/data/img/stuff/thumbs_down.png", "thumbdown");
+        dislikeButton.setTitle("bad task");
         reviewButton.setImage("assets/data/img/buttons/magnifier.png", "review");
+        reviewButton.setTitle("task needs review");
 
         likeButtonSet.setImage("assets/data/img/stuff/thumbs_up.png", "thumbup");
+        likeButtonSet.setTitle("good schema");
         dislikeButtonSet.setImage("assets/data/img/stuff/thumbs_down.png", "thumbdown");
+        dislikeButtonSet.setTitle("bad schema");
         reviewButtonSet.setImage("assets/data/img/buttons/magnifier.png", "review");
+        reviewButtonSet.setTitle("schema needs review");
+
+        tryButton.setTitle("back to the last Task");
+        sameTaskButton.setTitle("show Task again");
+
+        nextTaskButton.setTitle("another Task");
+        submitButton.setTitle("submit your Query");
+
+
 
 
         dataTask = {
@@ -237,6 +257,7 @@ game.TaskScreen = me.ScreenObject.extend({
             return function() {
                 game.task.difficulty = difficulty;
 
+
                 setTimeout(function(){
                     chooseDifficulty6.hide();
                     setTimeout(function(){
@@ -249,8 +270,8 @@ game.TaskScreen = me.ScreenObject.extend({
                                     chooseDifficulty2.hide();
                                     setTimeout(function(){
                                         chooseDifficulty1.hide();
-                                        //setDifficultyButton.destroy();
                                         setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
+                                        setDifficultyButton.setTitle("change next tasks difficulty");
 
                                         setDifficultyButton.display();
                                         me.game.world.addChild(setDifficultyButton);
@@ -688,8 +709,8 @@ game.TaskScreen = me.ScreenObject.extend({
                 schemaCheck.display();
             }
 
-        }
-        
+        };
+
         /**
          *
          */
@@ -710,7 +731,12 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             if (game.task.kind == 2) {
         	    // Trivia
-                ajaxSendTaskTriviaRequest(game.task.difficulty, handleGetTask);
+                if(schemaCheck.isVisibile()){
+                    ajaxSendTaskTriviaStayRequest(game.task.difficulty, handleGetTask);
+                }else{
+                    ajaxSendTaskTriviaRequest(game.task.difficulty, handleGetTask);
+                }
+
 
             }
             if (game.task.kind == 3) {
