@@ -91,15 +91,17 @@ public class HomeWorkView {
 
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
-            ObjectNode taskSetJson = TaskSetView.toJson(taskSet);
+            ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
             taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
 
             arrayNode.add(taskSetJson);
         }
 
 
-        objectNode.put("name",     homeWork.getHomeWorkName());
-        objectNode.set("taskSets", arrayNode);
+        objectNode.put("name",      homeWork.getHomeWorkName());
+        objectNode.set("taskSets",  arrayNode);
+        objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
+        objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
         return objectNode;
     }

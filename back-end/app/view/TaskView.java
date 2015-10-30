@@ -105,7 +105,7 @@ public class TaskView {
         ObjectNode json = Json.newObject();
 
         json.put("id",          task.getId());
-        json.put("exercise",    task.getTaskText());
+        json.put("name",        task.getTaskName());
         json.put("done",        SolvedTaskDAO.getByProfileAndTask(profile, task) != null);
 
         return json;
