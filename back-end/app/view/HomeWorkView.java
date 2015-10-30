@@ -35,7 +35,7 @@ public class HomeWorkView {
         }
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
-        for (JsonNode taskFileJson : node.findPath("taskSets")) {
+        for (JsonNode taskFileJson : node.findPath("taskSetIds")) {
             taskSets.add(TaskSetDAO.getById(taskFileJson.longValue()));
         }
 
@@ -48,12 +48,12 @@ public class HomeWorkView {
         Date end = new Date(utcTimeTo);
         Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskSets.toString());
 
-
-        if (HomeWorkDAO.create(name, profile, taskSets, start, end) == null) {
+        HomeWork homeWork;
+        if ((homeWork = new HomeWork(name, profile, taskSets, start, end)) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return null;
         }
-        return null;
+        return homeWork;
     }
 
     private static ObjectNode toJson(HomeWork homeWork) {
@@ -72,6 +72,33 @@ public class HomeWorkView {
         objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
         return objectNode;
+    }
+
+    private static ObjectNode toJsonStudent(HomeWork homeWork) {
+        ObjectNode objectNode = Json.newObject();
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (TaskSet taskSet : homeWork.getTaskSets()) {
+            arrayNode.add(TaskSetView.toJson(taskSet));
+        }
+
+        objectNode.put("id",    homeWork.getId());
+        objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
+        objectNode.set("creator",   homeWork.getCreator().toJson());
+        objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
+        objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
+
+        return objectNode;
+    }
+
+    public static ArrayNode toJsonStudent(List<HomeWork> homeWorkList) {
+        ArrayNode homeWorkNode = JsonNodeFactory.instance.arrayNode();
+
+        for(HomeWork homeWork : homeWorkList) {
+            homeWorkNode.add(HomeWorkView.toJsonStudent(homeWork));
+        }
+
+        return homeWorkNode;
     }
 
     public static ArrayNode toJson(List<HomeWork> homeWorkList) {

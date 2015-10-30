@@ -3,41 +3,72 @@
     <h4 class="modal-title">Make HomeWork</h4>
 </div>
 <div class="modal-body">
-    <uib-accordion>
+    <div class="container container-fluid" style="width:100%">
+        <label style="float:left">HomeWork Name:</label>
+        <input type="text" style="text-align: right;float:right" ng-model="homeWorkName"/>
+    </div>
+    <br>
+    <uib-accordion close-others="true">
+
+        <uib-accordion-group is-open="true">
+            <uib-accordion-heading>
+                Selected TaskSets: {{$scope.selectedTaskSets.length}}
+            </uib-accordion-heading>
+                <table class="table table-hover" style="float:left; width:50%">
+                    <thead>
+                        <tr>
+                            <th>Selected</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="taskSet in selectedTaskSets | orderBy:orderSelectedTaskSetsPredicate:orderReverse" ng-click="deselectTaskSet(taskSet);" style="cursor: pointer">
+                            <td>{{taskSet.taskSetName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-hover" style="float:right; width:50%">
+                    <thead>
+                        <tr>
+                            <th>Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="taskSet in taskSets | orderBy:orderTaskSetsPredicate:orderReverse" ng-click="selectTaskSet(taskSet);" style="cursor: pointer">
+                            <td>{{taskSet.taskSetName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+        </uib-accordion-group>
+
         <uib-accordion-group>
             <uib-accordion-heading>
-                TaskSets:
+                Alround information
             </uib-accordion-heading>
+            <div class="container container-fluid" style="float:left;width:48%">
+
+                <label>From &#60;inclusive&#62;</label>
+                <pre>Selected date is: <em>{{dates.from.toUTCString()}}</em></pre>
+                <uib-datepicker ng-model="dates.from" style="resize:none"></uib-datepicker>
+
+            </div>
+
+            <div class="container container-fluid" style="float:right;width:48%">
+                <label style="float:right">To &#60;inclusive&#62;</label><br>
+                <pre>Selected date is: <em>{{dates.to.toUTCString()}}</em></pre>
+                <uib-datepicker ng-model="dates.to" style="resize:none;float:right"></uib-datepicker>
+            </div>
+
 
         </uib-accordion-group>
 
     </uib-accordion>
 
-    <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
-    <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
-
-    <div class="contatiner-fluid" style="float:left; width: 47%; text-align:left">
-        <label>Name</label>
-        <br>
-        <label>From &#60;inclusive&#62;</label><br>
-        <datepicker id="date1" ng-model="datePickerFromData" style="resize:none"></datepicker>
-    </div>
-
-    <div class="contatiner-fluid" style="float:left; width: 6%"></div>
-
-    <div class="contatiner-fluid" style="float:right; width:47%; text-align:right">
-        <input type="text" style="text-align: right" ng-model="name"/>
-        <br>
-        <label>To &#60;inclusive&#62;</label><br>
-        <datepicker id="date2" ng-model="datePickerToData" style="resize:none;height: 100%"></datepicker>
-    </div>
-
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-primary btn-lg" ng-click="ok()" >
+    <button type="button" class="btn btn-primary" ng-click="ok();" >
         Submit
     </button>
-    <button type="button" class="btn btn-primary btn-lg" ng-click="close()">
+    <button type="button" class="btn btn-primary" ng-click="close();">
         Cancel
     </button>
 </div>

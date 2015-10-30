@@ -41,6 +41,7 @@ GET         /challenge/reset                    controllers.LevelController.rese
 #TaskSetController
 POST        /TaskSet/                           controllers.TaskSetController.create()
 GET         /TaskSet/                           controllers.TaskSetController.read()
+GET         /TaskSet/homework                   controllers.TaskSetController.readHomeWorks()
 GET         /TaskSet/:id/                       controllers.TaskSetController.view(id: Long)
 PATCH       /TaskSet/:id/                       controllers.TaskSetController.update(id: Long)
 DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
@@ -92,9 +93,10 @@ GET         /highscore/coins                    controllers.HighScoreController.
 #HomeWorkController
 GET         /Homework/                          controllers.HomeWorkController.getAll()
 POST        /Homework/                          controllers.HomeWorkController.create()
-GET         /Homework/tasks                     controllers.HomeWorkController.getCurrentHomeWorkForCurrentSession()
-#GET         /homework/students                  controllers.HomeWorkController.getAllStudents()
-GET         /Homework/delete/:id/               controllers.HomeWorkController.delete(id: Long)
+GET         /Homework/student/                  controllers.HomeWorkController.getAllStudent()
+GET         /Homework/student/:id/              controllers.HomeWorkController.getHomeWorkForCurrentSession(id: Long)
+#GET         /homework/students                 controllers.HomeWorkController.getAllStudents()
+DELETE      /Homework/:id/               controllers.HomeWorkController.delete(id: Long)
 POST        /Homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()
 GET         /Homework/result/:sid/:hid/         controllers.HomeWorkController.getForTaskInHomeWork(sid: Long, hid: Long)
 

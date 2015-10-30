@@ -27,6 +27,7 @@ import secured.StudentSecured;
 import view.HomeWorkView;
 import view.TaskView;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 /**
@@ -64,18 +65,25 @@ public class HomeWorkController extends Controller {
         return ok();
     }
 
+
+    @Authenticated(StudentSecured.class)
+    public Result getAllStudent() {
+        List<HomeWork> homeWorkList = HomeWorkDAO.getAllStudent();
+
+        ArrayNode arrayNode = HomeWorkView.toJsonStudent(homeWorkList);
+
+        return ok(arrayNode);
+    }
+
     /**
      * Gives back the current HomeWork and whether the task is submitted for the given profile
      */
     @Authenticated(StudentSecured.class)
-    public Result getCurrentHomeWorkForCurrentSession() {
+    public Result getHomeWorkForCurrentSession(Long id) {
         User user = UserDAO.getByUsername(request().username());
 
 
-        HomeWork homeWork;
-        if((homeWork = HomeWorkDAO.getCurrent()) == null) {
-            return badRequest("No Current HomeWork");
-        }
+        HomeWork homeWork = HomeWorkDAO.getById(id);
 
         ObjectNode objectNode = HomeWorkView.toJsonExerciseForProfile(homeWork, user.getProfile());
 
@@ -91,8 +99,12 @@ public class HomeWorkController extends Controller {
     public Result delete(Long id) {
         User user = UserDAO.getByUsername(request().username());
 
-        HomeWorkDAO.getById(id).delete();
-
+        try {
+            HomeWorkDAO.getById(id).delete();
+        } catch (PersistenceException pe) {
+            Logger.warn("HomeWorkController.delete - Could not delete" + pe.getMessage());
+            return badRequest("Cannot delete. Maybe there are already Submits?");
+        }
         return ok("Deleted");
     }
 

@@ -103,6 +103,23 @@ public class TaskSetController extends Controller {
         }
         return ok(TaskSetView.toJson(taskSet));
     }
+    /**
+     * This method returns all created TaskFiles
+     *
+     * GET      /TaskSet/
+     *
+     * @return returns a JSON Array filled with all taskSets
+     */
+    public Result readHomeWorks() {
+        List<TaskSet> taskSetList = TaskSetDAO.getAllHomeWorkTaskSets();
+
+        if (taskSetList == null) {
+            Logger.warn("TaskSet.index - no TaskSet found");
+            return badRequest("no TaskSet found");
+        }
+
+        return ok(TaskSetView.toJson(taskSetList));
+    }
 
     /**
      * This method updates the TaskSet

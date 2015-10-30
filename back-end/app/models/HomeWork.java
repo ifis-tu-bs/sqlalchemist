@@ -19,10 +19,9 @@ public class HomeWork extends Model {
     @ManyToOne
     private final Profile creator;
 
-    @ManyToMany()
+    @ManyToMany(cascade = CascadeType.ALL)
     private final List<TaskSet> taskSets;
 
-    @OneToMany(cascade = CascadeType.ALL)
     private List<SubmittedHomeWork> submittedHomeWorks;
 
     private final Date start_at;
