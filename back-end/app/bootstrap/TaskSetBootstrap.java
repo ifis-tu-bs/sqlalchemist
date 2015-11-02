@@ -89,7 +89,7 @@ public class TaskSetBootstrap {
                 "               \"requiredTerm\":               2,\n" +
                 "               \"availableSyntaxChecks\":      10,\n" +
                 "               \"availableSemanticChecks\":    2\n" +
-                "       }" +
+                "       }," +
                 "       {\n" +
                 "               \"taskSet\":                    2,\n" +
                 "               \"taskText\":                   \"Find Me\",\n" +
