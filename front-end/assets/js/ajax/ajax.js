@@ -342,6 +342,15 @@ function ajaxSendTaskTriviaRequest(difficulty, onload) {
     return xmlHttpRequest;
 }
 
+// ~ GET /SQL/Trivia/:id/:stay StoryTaskID | difficulty: DifficultyLevel
+function ajaxSendTaskTriviaStayRequest(difficulty, onload) {
+    var xmlHttpRequest = createRequest("GET", "/SQL/Trivia/" + difficulty + "/stay", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
 // ~ POST /SQL/Trivia/:id ~ id: TriviaTaskID, jsonData: JSON.task.solve
 function ajaxSendTaskTriviaSolveRequest(id, jsonData, onload) {
     var xmlHttpRequest = createRequest("POST", "/SQL/Trivia/" + id + "/", onload);
