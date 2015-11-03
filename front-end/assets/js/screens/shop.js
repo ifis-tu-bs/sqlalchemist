@@ -250,7 +250,7 @@ game.ShopScreen = me.ScreenObject.extend({
              * Button to buy a new BeltSlot.
              */
             var buyBeltSlot = new game.ClickableElement('buyBeltSlotId', '', goBuyBeltSlot(belt[t].id, t),
-                                                         7.121212, 44.010417, 64.393939, 5.208333, 1);
+                                                         7.121212, 44.010417, 63.5, 5.208333, 1);
             buyBeltSlot.setImage("assets/data/img/buttons/shopbelt.png", "beltSlotShop");
             $("#buyBeltSlotId").fadeIn(100);
             me.game.world.addChild(buyBeltSlot);

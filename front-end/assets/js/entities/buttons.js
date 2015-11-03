@@ -56,12 +56,12 @@ var exit = me.GUI_Object.extend(
         }
     });
 
-// used in Settings, Game
+// used in Game
 var music = me.GUI_Object.extend(
     {
         init:function (x, y)
         {
-            var settings = {}
+            var settings = {};
             settings.image = "ButtonsMusic";
             settings.spritewidth = 64;
             settings.spriteheight = 64;
@@ -75,14 +75,14 @@ var music = me.GUI_Object.extend(
         // when the object is clicked
         onClick:function (event)
         {
-            if (game.data.music){
+            if (game.data.music) {
                 game.data.music = false;
                 me.audio.stopTrack();
-            }else{
+            } else {
                 game.data.music = true;
-                if(me.state.isCurrent(me.state.PLAY)){
+                if (me.state.isCurrent(me.state.PLAY)) {
                     me.audio.playTrack(game.data.recentTitle ,game.data.musicVolume);
-                }else{
+                } else {
                     me.audio.playTrack("Menu",game.data.musicVolume);
                 }
             }
@@ -92,7 +92,7 @@ var music = me.GUI_Object.extend(
                 if (game.data.music){
                     game.data.music = false;
                     me.audio.stopTrack();
-                }else{
+                } else {
                     game.data.music = true;
                     me.audio.playTrack("level3",game.data.musicVolume);
 
@@ -101,12 +101,12 @@ var music = me.GUI_Object.extend(
         }
     });
 
-// used in Settings, Game
+// used in Game
 var sound = me.GUI_Object.extend(
     {
         init:function (x, y)
         {
-            var settings = {}
+            var settings = {};
             settings.image = "ButtonsSound";
             settings.spritewidth = 64;
             settings.spriteheight = 64;
@@ -120,9 +120,9 @@ var sound = me.GUI_Object.extend(
         // when the object is clicked
         onClick:function (event)
         {
-            if (game.data.sound){
+            if (game.data.sound) {
                 game.data.sound = false;
-            }else{
+            } else {
                 game.data.sound = true;
                 me.audio.play("cling", false, null, game.data.soundVolume);
             }
@@ -130,9 +130,9 @@ var sound = me.GUI_Object.extend(
         },
         update :function (){
             if (me.input.isKeyPressed("sound")) {
-                if (game.data.sound){
+                if (game.data.sound) {
                     game.data.sound = false;
-                }else{
+                } else {
                     game.data.sound = true;
                     me.audio.play("cling", false, null, game.data.soundVolume);
                 }

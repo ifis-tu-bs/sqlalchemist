@@ -182,59 +182,6 @@ game.HUD.HealthScore = me.Renderable.extend( {
     }
 });
 
-//Used in Settings
-game.HUD.SettingsElements = me.Renderable.extend( {
-    /**
-     * constructor
-     */
-    init: function(x, y) {
-
-        // call the parent constructor
-        // (size does not matter here)
-        this._super(me.Renderable, 'init', [x, y, 10, 10]);
-
-        // create a font
-        this.font = new me.Font("Trajan_Pro_Regular", 40, "black", "middle");
-
-        this.sound = game.data.sound;
-        this.music = game.data.music;
-
-    },
-
-    /**
-     * update function
-     */
-    update : function (dt) {
-        //update trigger
-        if ( this.sound !== game.data.sound) {
-            this.sound = game.data.sound;
-            return true;
-        }
-        if ( this.music !== game.data.music) {
-            this.music = game.data.music;
-            return true;
-        }
-        return false;
-    },
-
-    /**
-     * draw the elements
-     */
-
-    draw : function (renderer) {
-        if (this.music) {
-            renderer.drawFont(this.font, "Music:   ON", this.pos.x + 50, this.pos.y +15);
-        } else {
-            renderer.drawFont(this.font, "Music:  OFF", this.pos.x + 50, this.pos.y +15);
-        }
-        if(this.sound){
-            renderer.drawFont(this.font, "Sound:  ON", this.pos.x + 50, this.pos.y + 115);
-        } else {
-            renderer.drawFont(this.font, "Sound: OFF", this.pos.x + 50, this.pos.y + 115);
-        }
-    }
-});
-
 game.HUD.Text = me.Renderable.extend( {
     /**
      * constructor

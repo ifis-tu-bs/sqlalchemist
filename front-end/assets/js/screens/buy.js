@@ -51,7 +51,12 @@ game.BuyScreen = me.ScreenObject.extend({
             nameAndPrice.writeHTML("Name: " + game.data.beltShop[game.data.shopId].name  + "<br><br>" +
                                    "Price: " + game.data.beltShop[game.data.shopId].price, 'namePara');
             discriptiontext.writeHTML("Get a brand new beltslot! The more slots you have in your belt, the more potions " +
-                "you can take into the dungeon!", 'discPara');
+                                      "you can take into the dungeon!", 'discPara');
+
+            var buyBeltPotion = new game.BackgroundElement('buyBeltPotion', 7.272727, 12.5, 26.015152, 26.041667, 'none');
+            buyBeltPotion.setImage("assets/data/img/potion/GREAT_JUMPPOTION.png", "skin");
+            $("#buyBeltPotion").fadeIn(100);
+            me.game.world.addChild(buyBeltPotion);
 
         } else {
             var filename = game.data.shop[game.data.shopId].thumbnailUrl;
@@ -85,9 +90,11 @@ game.BuyScreen = me.ScreenObject.extend({
             $("#lofiCoinsId").fadeOut(100);
             $("#lofiCoins").fadeOut(100);
             $("#avatar").fadeOut(100);
-            $("#backgroundShopId").fadeOut(100);
-            $("#backgroundFadedId").fadeOut(100);
-            $("#backgroundTagId").fadeOut(100);
+            $("#buyBeltPotion").fadeOut(100);
+            $("[id*='background']").fadeOut(100);
+            //$("#backgroundShopId").fadeOut(100);
+            //$("#backgroundFadedId").fadeOut(100);
+            //$("#backgroundTagId").fadeOut(100);
             setTimeout( function() {
                 me.state.change(STATE_SHOP);
             }, 100);
