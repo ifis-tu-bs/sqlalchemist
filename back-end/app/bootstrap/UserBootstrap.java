@@ -26,8 +26,8 @@ public class UserBootstrap {
 
             User student = UserDAO.create("student", "student@test.de", "1234", User.ROLE_USER);
             if(student != null) {
-                user.setStudent();
-                user.update();
+                student.setStudent();
+                student.update();
             }
 
             UserDAO.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
