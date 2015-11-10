@@ -27,7 +27,7 @@ class HomeWorkBootstrap {
 
         HomeWorkDAO.create("DefaultHomeWork 1", ProfileDAO.getByUsername("sqlalchemist"), TaskSetDAO.getAll(), new Date(), tempDate);
 
-        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("admin"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
+        SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("sqlalchemist"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
 
           Logger.info("Done initializing");
         }

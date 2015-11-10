@@ -137,8 +137,6 @@ public class TaskSetController extends Controller {
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
 
-        Logger.info(jsonNode.toString());
-
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
             return badRequest("no TaskSet found");
