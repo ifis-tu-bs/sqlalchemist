@@ -69,7 +69,7 @@ public class ItemController extends Controller {
         Logger.info("calcLevel: " + calcLevel + " | currentLevel: " + currentLevel);
 
         if(depth > 1 && !profile.isTutorialDone()) {
-            profile.setTutorialDone();
+            //profile.setTutorialDone();
         }
 
         if(calcLevel > currentLevel) {
