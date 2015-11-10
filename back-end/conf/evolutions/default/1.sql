@@ -291,7 +291,6 @@ create sequence task_seq;
 create table taskset (
   id                            bigint not null,
   task_set_name                 varchar(255),
-  relations_formatted           varchar(255),
   is_homework                   boolean,
   creator_id                    bigint,
   created_at                    timestamp,
