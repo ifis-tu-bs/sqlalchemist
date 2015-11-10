@@ -16,7 +16,7 @@ import java.util.Date;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "UserSession")
+@Table(name = "usersession")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class UserSession extends Model {
     // unique ID

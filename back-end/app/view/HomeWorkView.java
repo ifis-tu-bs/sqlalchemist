@@ -116,7 +116,7 @@ public class HomeWorkView {
     public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd. MMMM yyyy", new DateFormatSymbols(Locale.US));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy", new DateFormatSymbols(Locale.US));
 
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {

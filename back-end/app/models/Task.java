@@ -14,7 +14,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "Task")
+@Table(name = "task")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Task extends Model {
 
