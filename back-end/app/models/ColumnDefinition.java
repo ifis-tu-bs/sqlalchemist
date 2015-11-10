@@ -12,7 +12,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "ColumnDefinition")
+@Table(name = "columndefinition")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ColumnDefinition extends Model {
     @Id

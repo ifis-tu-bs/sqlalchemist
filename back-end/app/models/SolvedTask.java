@@ -14,7 +14,7 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "SolvedSubTask")
+@Table(name = "solvedsubtask")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SolvedTask extends Model {
     @Id

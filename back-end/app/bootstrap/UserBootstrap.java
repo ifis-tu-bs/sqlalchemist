@@ -13,15 +13,21 @@ public class UserBootstrap {
     public static void init() {
         // Init residual Classes
         if(play.api.Play.isProd(play.api.Play.current())) {
-            String username = Play.application().configuration().getString("admin.username");
+            String username = Play.application().configuration().getString("sqlalchemist");
             String email = Play.application().configuration().getString("admin.email");
             String password = Play.application().configuration().getString("admin.password");
             UserDAO.create(username, email, password, User.ROLE_ADMIN);
         } else {
-            User user = UserDAO.create("admin", "admin@local.de", "password1234", User.ROLE_ADMIN);
+            User user = UserDAO.create("sqlalchemist", "admin@local.de", "password", User.ROLE_ADMIN);
             if(user != null) {
                 user.setStudent();
                 user.update();
+            }
+
+            User student = UserDAO.create("student", "student@test.de", "1234", User.ROLE_USER);
+            if(student != null) {
+                student.setStudent();
+                student.update();
             }
 
             UserDAO.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);

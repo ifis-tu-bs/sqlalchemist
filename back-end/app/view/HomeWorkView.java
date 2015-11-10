@@ -15,7 +15,9 @@ import play.libs.Json;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
 /**
  * @author Invisible
  */
@@ -112,21 +114,23 @@ public class HomeWorkView {
     }
 
     public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
-
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd. MMMM yyyy", new DateFormatSymbols(Locale.US));
 
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
-            ObjectNode taskSetJson = TaskSetView.toJson(taskSet);
+            ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
             taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
 
             arrayNode.add(taskSetJson);
         }
 
 
-        objectNode.put("name",     homeWork.getHomeWorkName());
-        objectNode.set("taskSets", arrayNode);
+        objectNode.put("name",      homeWork.getHomeWorkName());
+        objectNode.set("taskSets",  arrayNode);
+        objectNode.put("start_at",  sdf.format(homeWork.getStart_at()));
+        objectNode.put("expire_at", sdf.format(homeWork.getExpire_at()));
 
         return objectNode;
     }

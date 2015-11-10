@@ -9,7 +9,7 @@ import java.util.Calendar;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "LofiCoinFlowLog")
+@Table(name = "loficoinflowlog")
 public class LofiCoinFlowLog extends Model {
 
     @Id

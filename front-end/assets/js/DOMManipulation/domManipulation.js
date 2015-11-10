@@ -423,6 +423,7 @@ game.TextOutputElement = me.Renderable.extend ({
         // create nodes
         this.elem                = document.createElement("div");
         this.wrapper             = document.createElement("div");
+
         this.elem.id             = id;
         this.elem.style.position = 'absolute';
         
@@ -456,6 +457,12 @@ game.TextOutputElement = me.Renderable.extend ({
     getNode : function () {
 
         return this.elem;
+
+    },
+
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
 
     },
 
@@ -621,6 +628,12 @@ game.ClickableElement = me.Renderable.extend ({
         return this.elem;
 
     },
+    //setTitle
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
 
     /**
      * method displays the element
@@ -639,6 +652,15 @@ game.ClickableElement = me.Renderable.extend ({
 
         this.elem.style.display = "none";
         this.visibility = false;
+
+    },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
 
     },
     
@@ -712,6 +734,41 @@ game.BackgroundElement = me.Renderable.extend ({
 
         // append child
         parent.appendChild(this.elem);
+
+    },
+
+    /**
+     * method displays the element
+     */
+    display : function () {
+
+        this.elem.style.display = "block";
+        this.visibility = true;
+
+    },
+
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
+
+    /**
+     * method hides the element
+     */
+    hide : function () {
+
+        this.elem.style.display = "none";
+        this.visibility = false;
+
+    },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
 
     },
 
