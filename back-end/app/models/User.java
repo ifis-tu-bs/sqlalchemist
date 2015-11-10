@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
  * @author Fabio Mazzone
  */
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class User extends Model {
     // unique ID

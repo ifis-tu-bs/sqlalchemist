@@ -17,7 +17,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "TaskSet")
+@Table(name = "taskset")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TaskSet extends Model {
     @Id

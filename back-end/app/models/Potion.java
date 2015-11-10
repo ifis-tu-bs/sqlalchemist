@@ -16,7 +16,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(
-        name = "Potion",
+        name = "potion",
         uniqueConstraints = @UniqueConstraint(columnNames = {"type", "powerLevel"})
 )
 public class Potion extends Model {

@@ -19,7 +19,7 @@ import java.util.List;
  */
 @Entity
 @Table(
-        name = "SubmittedHomework",
+        name = "submittedhomework",
         uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id", "home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)

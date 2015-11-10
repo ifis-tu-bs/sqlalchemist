@@ -13,7 +13,7 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "Text")
+@Table(name = "text")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Text extends Model {
     @Id

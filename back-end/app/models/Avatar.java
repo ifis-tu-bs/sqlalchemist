@@ -11,7 +11,7 @@ import javax.persistence.*;
  *  @author fabiomazzone
  */
 @Entity
-@Table(name = "Avatar")
+@Table(name = "avatar")
 public class Avatar extends Model {
     @Id
     private Long id;

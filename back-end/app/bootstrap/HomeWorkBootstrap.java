@@ -14,6 +14,7 @@ import java.util.Date;
 class HomeWorkBootstrap {
 
     public static void init () {
+        if(!play.api.Play.isProd(play.api.Play.current())) {
         Logger.info("Initialize 'HomeWork' data");
 
         Calendar calendar = Calendar.getInstance();
@@ -30,6 +31,7 @@ class HomeWorkBootstrap {
         SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha2");
 
 
-        Logger.info("Done initializing");
+          Logger.info("Done initializing");
+        }
     }
 }

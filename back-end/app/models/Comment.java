@@ -11,7 +11,7 @@ import java.util.Date;
  * Every comment is related to a subTask, the profile of the user, who created the comment and the content (comment) as a string.
  */
 @Entity
-@Table(name = "Comment")
+@Table(name = "comment")
 public class Comment extends Model{
 
     /** auto-generated ID for this comment. */
