@@ -28,7 +28,7 @@ class ColumnDefinitionView {
 
         columnNode.put("id",            column.getId());
         columnNode.put("columnName",    column.getColumnName());
-        columnNode.put("dataType",     column.getDataType());
+        columnNode.put("dataType",      column.getDataType());
         columnNode.put("primaryKey",    column.isPrimaryKey());
         columnNode.put("notNull",       column.isNotNullable());
         columnNode.put("foreignKey",    (column.isForeignKey()) ? column.getForeignKey().getTableDefinition().getTableName() : null);
@@ -45,7 +45,7 @@ class ColumnDefinitionView {
             column = "!" + column + "!";
         }
 
-        column = "(" + columnDefinition.getDataType() +  ") " + column;
+        column = "%" + column + " : " + columnDefinition.getDataType();
 
         if(columnDefinition.isForeignKey()) {
             column = column + "->" + columnDefinition.getForeignKey().getTableDefinition().getTableName();

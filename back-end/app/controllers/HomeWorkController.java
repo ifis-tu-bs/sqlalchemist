@@ -65,28 +65,18 @@ public class HomeWorkController extends Controller {
         return ok();
     }
 
-
-    @Authenticated(StudentSecured.class)
-    public Result getAllStudent() {
-        List<HomeWork> homeWorkList = HomeWorkDAO.getAllStudent();
-
-        ArrayNode arrayNode = HomeWorkView.toJsonStudent(homeWorkList);
-
-        return ok(arrayNode);
-    }
-
     /**
      * Gives back the current HomeWork and whether the task is submitted for the given profile
      */
     @Authenticated(StudentSecured.class)
-    public Result getHomeWorkForCurrentSession(Long id) {
+    public Result getHomeWorkForCurrentSession() {
         User user = UserDAO.getByUsername(request().username());
 
-        HomeWork homeWork = HomeWorkDAO.getById(id);
+        List<HomeWork> homeWorkList = HomeWorkDAO.getAllStudent();
 
-        ObjectNode objectNode = HomeWorkView.toJsonExerciseForProfile(homeWork, user.getProfile());
+        ArrayNode arrayNode = HomeWorkView.toJsonExerciseForProfile(homeWorkList, user.getProfile());
 
-        return ok(objectNode);
+        return ok(arrayNode);
     }
 
     @Authenticated(AdminSecured.class)
