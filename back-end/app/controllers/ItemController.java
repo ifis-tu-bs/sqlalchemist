@@ -60,18 +60,22 @@ public class ItemController extends Controller {
             return badRequest("No Path for scrolls found");
         }
 
+
+        Logger.info(body.toString());
+
         int currentLevel = challenge.getLevel();
         int calcLevel   = (depth - 1)  / 5;
 
         Logger.info("calcLevel: " + calcLevel + " | currentLevel: " + currentLevel);
 
+        if(depth > 1 && !profile.isTutorialDone()) {
+            profile.setTutorialDone();
+        }
+
         if(calcLevel > currentLevel) {
             Logger.info("ItemController set next");
             profile.setCurrentStory(challenge.getNext());
         }
-
-
-        Logger.info(body.toString());
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         for(int i = 0; i < scrolls.size(); i++) {
