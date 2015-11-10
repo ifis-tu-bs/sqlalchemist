@@ -16,14 +16,6 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         /**
          * Create all necessary TextInputElements for Sign-UP
-         * @param : tag    : 'input' or 'textarea'
-         *          type   : the type of a 'input' element or the name of a 'textarea' element as string
-         *          id     : a unique alphanumeric string
-         *          width  : the width of the element in percent of the width of the canvas
-         *          height : the height of the element in percent of the height of the canvas
-         *          left   : the left margin of the element in percent of the width of the canvas
-         *          top    : the top margin of the element in percent of the height of the canvas
-         *          rows   : the number of rows
          */
         var useridSignUp           = new game.TextInputElement('input', 'text', 'wIdSignUp', 'fIdSignUp', 55, 7, 22, 24, 2);
         var usernameSignUp         = new game.TextInputElement('input', 'text', 'wUsernameSignUp', 'fUsernameSignUp', 55, 7, 22, 34, 2);
@@ -123,16 +115,6 @@ game.SignUpScreen = me.ScreenObject.extend({
             } else if (pw == null) {
                 alert("password may not be empty");
             } else {
-                /*  ~~~~~~~~~~~~ This is how to invoke the ajax-Call ~~~~~~~~~~~~
-                 *
-                 *  For POST, the first PARAM is the JSON.stringify() String (MUST BE JSON)
-                 *            the second PARAM is the function to be called when the Server responded. in this Case: onload
-                 *
-                 *  For GET,  the only PARAM is the function
-                 *
-                 *  If defining the Request for a special Id, it will always be the first PARAM
-                 *
-                 */
                 ajaxSendSignupRequest(this.user_object, onSubmit);
             }
         };
@@ -149,14 +131,6 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         /**
          * Create all necessary ClickableElements for Sign-UP
-         * @param : id       : a unique alphanumeric string
-         *          name     : text to display on screen
-         *          callback : the callback function
-         *          width    : the width of the element in percent of the width of the canvas
-         *          height   : the height of the element in percent of the height of the canvas
-         *          left     : the left margin of the element in percent of the width of the canvas
-         *          top      : the top margin of the element in percent of the height of the canvas
-         *          rows     : the number of rows
          */
 
         var submitButton      = new game.ClickableElement('submitButton', 'Enter', this.submitReply, 20, 6.5, 58.5, 64.5, 1);

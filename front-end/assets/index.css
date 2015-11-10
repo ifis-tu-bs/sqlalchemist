@@ -22,7 +22,7 @@ body {
 
 	/* Hide the gap for font descenders. */
 	display: block;
-	
+
 	/* disable scaling interpolation */
 	image-rendering: optimizeSpeed;
 	image-rendering: -moz-crisp-edges;
