@@ -14,7 +14,7 @@ public class ColumnDefinitionController extends Controller{
 
     public Result dataTypes() {
         ArrayNode dataTypesNode = JsonNodeFactory.instance.arrayNode();
-        String[] dataTypes = {"VARCHAR(255)", "BOOLEAN", "INTEGER", "INTEGER", "BIGINT", "DECIMAL", "NUMERIC", "FLOAT", "DATE", "TIME", "TIMESTAMP"};
+        String[] dataTypes = {"VARCHAR(255)", "BOOLEAN", "INTEGER", "BIGINT", "DECIMAL", "NUMERIC", "FLOAT", "DATE", "TIME", "TIMESTAMP"};
         for(String dataType : dataTypes) {
             ObjectNode dataTypeNode = Json.newObject();
 
