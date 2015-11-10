@@ -35,8 +35,10 @@ back-end/public/admintool
 
 ########
 # Front-End
+front-end/.idea
 front-end/build
 front-end/node_modules
+front-end/front-end.iml
 
 ########
 # Admin-Tool
