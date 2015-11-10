@@ -47,6 +47,7 @@ PATCH       /TaskSet/:id/                       controllers.TaskSetController.up
 DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
+#POST        /TaskSet/upload                     controllers.TaskSetController.upload()
 
 GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
 
