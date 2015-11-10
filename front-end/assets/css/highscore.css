@@ -1,5 +1,5 @@
 #mostCoins,#mostScore, #timeSpent, #numberOfRuns, #sqlStatements, #sqlRate  {
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     cursor: pointer;
     text-align: center;
     -webkit-border-radius: 14;
@@ -44,19 +44,19 @@
     color: black;
 }
 
-
-#ranks {
+#ranks, #position {
     background-color : transparent;
     border-style : none;
     color : black;
     display : block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
+    font-family : Amethysta-Regular, sans-serif;
     line-height : 1;
     margin : 0 auto;
     max-width : 100%;
     overflow : hidden;
     position : absolute;
     text-overflow : ellipsis;
+    text-align: center;
     -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
     z-Index : 3;
@@ -68,7 +68,7 @@
     border-style : none;
     color : black;
     display : inline-block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
+    font-family : Amethysta-Regular, sans-serif;
     line-height : 1;
     margin : 0 auto;
     max-width : 100%;
@@ -85,7 +85,7 @@
     border-style : none;
     color : black;
     display : block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
+    font-family : Amethysta-Regular, sans-serif;
     line-height : 1.2;
     margin : 0 auto;
     max-width : 100%;
@@ -97,46 +97,12 @@
     z-Index : 3;
 }
 
-#ownValue {
+#ownValue, #usernames, #ownUsername   {
     background-color : transparent;
     border-style : none;
     color : black;
     display : block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
-    line-height : 1;
-    margin : 0 auto;
-    max-width : 100%;
-    overflow : hidden;
-    position : absolute;
-    text-overflow : ellipsis;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;
-    z-Index : 3;
-}
-
-#usernames {
-     background-color : transparent;
-     border-style : none;
-     color : black;
-     display : block;
-     font-family : Trajan_Pro_Regular, Arial, sans-serif;
-     line-height : 1;
-     margin : 0 auto;
-     max-width : 100%;
-     overflow : hidden;
-     position : absolute;
-     text-overflow : ellipsis;
-     -webkit-line-clamp: 8;
-     -webkit-box-orient: vertical;
-     z-Index : 3;
-}
-
-#ownUsername {
-    background-color : transparent;
-    border-style : none;
-    color : black;
-    display : block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
+    font-family : Amethysta-Regular, sans-serif;
     line-height : 1;
     margin : 0 auto;
     max-width : 100%;
@@ -162,28 +128,14 @@
     text-overflow: ellipsis;
 }
 
-#usernamesPara {
+#usernamesPara, #ownUsernamePara  {
     text-align: left;
     overflow : hidden;
     padding: 6px 0px 6px 0px;
     text-overflow: ellipsis;
 }
 
-#ownUsernamePara {
-    text-align: left;
-    overflow : hidden;
-    padding: 6px 0px 6px 0px;
-    text-overflow: ellipsis;
-}
-
-#valuesPara {
-    text-align: right;
-    overflow : hidden;
-    padding: 6px 0px 6px 0px;
-    text-overflow: ellipsis;
-}
-
-#ownValuePara {
+#valuesPara, #ownValuePara {
     text-align: right;
     overflow : hidden;
     padding: 6px 0px 6px 0px;
@@ -193,7 +145,7 @@
 #headers {
     background-color: transparent;
     border-style: none;
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     overflow : hidden;
     position: absolute;
@@ -204,23 +156,5 @@
 
 #headerPara {
     overflow : hidden;
-}
-
-#position {
-    background-color : transparent;
-    border-style : none;
-    color : black;
-    display : block;
-    font-family : Trajan_Pro_Regular, Arial, sans-serif;
-    line-height : 1;
-    margin : 0 auto;
-    max-width : 100%;
-    overflow : hidden;
-    position : absolute;
-    text-overflow : ellipsis;
-    text-align: center;
-    -webkit-line-clamp: 8;
-    -webkit-box-orient: vertical;
-    z-Index : 3;
 }
 

@@ -2,17 +2,15 @@
     background-color : transparent;
     border-style : solid;
     border-color: transparent;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
     cursor : pointer;
     overflow : visible;
     position : absolute;
-    text-align : center;
     vertical-align : middle;
     z-Index : 4;
 }
 
 #lofiCoinsPara {
+    font-family: Amethysta-Regular, sans-serif;
     text-align : right;
     color: white;
 }
@@ -22,7 +20,6 @@
     border-style : none;
     color : black;
     display : block;
-    font-family : Trajan_Pro_Regular, sans-serif;
     line-height : 1;
     margin : 0 auto;
     max-width : 100%;

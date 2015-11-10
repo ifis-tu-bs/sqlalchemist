@@ -602,3 +602,14 @@ function ajaxSendHighscoreCoinsRequest(onload) {
 
     return xmlHttpRequest;
 }
+
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Homework ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+// ~ GET //homework/tasks
+function ajaxSendCurrentHomeworkRequest(id, onload) {
+    var xmlHttpRequest = createRequest("GET", "/Homework/student/" + id + "/", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}

@@ -134,7 +134,7 @@ game.HighscoreScreen = me.ScreenObject.extend({
         var values      = new game.TextOutputElement('values', 15, 70, 56, 23, 12);
         var ownRank     = new game.TextOutputElement('ownRank', 15, 11, 3.5, 87, 2);
         var ownUsername = new game.TextOutputElement('ownUsername', 35, 11, 20.5, 87, 2);
-        var ownValue    = new game.TextOutputElement('ownValue', 15, 9, 55.5, 88, 2);
+        var ownValue    = new game.TextOutputElement('ownValue', 15, 9, 55, 88, 2);
         var position    = new game.TextOutputElement('position', 50, 5, 17, 80.5, 1);
         position.writeHTML("your position:");
         me.game.world.addChild(ranks);

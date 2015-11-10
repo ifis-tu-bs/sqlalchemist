@@ -22,16 +22,10 @@ game.CollectorScreen = me.ScreenObject.extend({
             if (game.data.sound) {
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
-            for (var j = 0; j < 2; j++) {
-                for (var k = 0; k < 5; k++) {
-                    for (var i = 0; i < 6; i++) {
-                        $("#scrolls" + i).fadeOut(100);
-                        $("#scrollsRed" + i).fadeOut(100);
-                    }
-                    $("#checkSymbol" + k).fadeOut(100);
-                }
-                $("#collectionBox" + j).fadeOut(100);
-            }
+            $("[id*='scrolls']").fadeOut(100);
+            $("[id*='scrollsRed']").fadeOut(100);
+            $("[id*='checkSymbol']").fadeOut(100);
+            $("[id*='collectionBox']").fadeOut(100);
             $("#backgroundCollectorId").fadeOut(100);
             $("#backToLabButton").fadeOut(100);
             setTimeout( function() {
@@ -125,7 +119,7 @@ game.CollectorScreen = me.ScreenObject.extend({
         }
 
         /**
-         * Create TextOutPutElements to draw useful information and statistics.
+         * Create TextOutPutElements to draw information about the daily scroll-limit, the collected scrolls and statistics.
          */
         var scrollProgress = new game.TextOutputElement('scrollProgress', 60, 10, 30.151515, 26.041667, 2);
         me.game.world.addChild(scrollProgress);
