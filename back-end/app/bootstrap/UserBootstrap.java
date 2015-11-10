@@ -1,10 +1,16 @@
 package bootstrap;
 
+import dao.ScrollCollectionDAO;
+import dao.ScrollDAO;
 import dao.UserDAO;
 
+import models.Scroll;
+import models.ScrollCollection;
 import models.User;
 
 import play.Play;
+
+import java.util.List;
 
 /**
  * @author fabiomazzone
@@ -22,6 +28,15 @@ public class UserBootstrap {
             if(user != null) {
                 user.setStudent();
                 user.update();
+            }
+
+            User nicole = UserDAO.create("nicole", "nicole@nicole.de", "1234", User.ROLE_USER);
+            nicole.setStudent();
+            nicole.update();
+
+            List<Scroll> scrolls = ScrollDAO.getAll();
+            for(Scroll scroll : scrolls) {
+                ScrollCollectionDAO.setActive(nicole.getProfile(), scroll);
             }
 
             User student = UserDAO.create("student", "student@test.de", "1234", User.ROLE_USER);

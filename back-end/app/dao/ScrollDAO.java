@@ -6,6 +6,7 @@ import models.Scroll;
 import play.Logger;
 
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 public class ScrollDAO {
   //////////////////////////////////////////////////
@@ -87,4 +88,8 @@ public class ScrollDAO {
       public static Scroll getByType(int type) {
           return Scroll.find.where().eq("type", type).findUnique();
       }
+
+    public static List<Scroll> getAll() {
+        return Scroll.find.all();
+    }
 }
