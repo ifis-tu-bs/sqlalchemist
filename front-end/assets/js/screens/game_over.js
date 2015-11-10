@@ -85,7 +85,7 @@ game.GameOverScreen = me.ScreenObject.extend({
                             var playedRuns = profile_JSON.highScore.playedRuns;
 
                             this.scrollsObtained.writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
-                            "                               Well done " + username + "!!!"+"<br>" + "<br>" + "&nbsp;You have beaten the game in " + (playedRuns+1) + "&nbsp;Runs!" + "<br>" +
+                                                           "Well done " + username + "!!!"+"<br>" + "<br>" + "&nbsp;You have beaten the game in " + (playedRuns+1) + "&nbsp;Runs!" + "<br>" +
                                                            "&nbsp;reset the story in the settings" + "<br>" +  "&nbsp;if you want to finish it quicker.");
                         }
                         ajaxSendProfileIdRequest(id, profileID_Reply);

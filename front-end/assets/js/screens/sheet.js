@@ -56,7 +56,7 @@ game.SheetScreen = me.ScreenObject.extend({
 
             this.sheetName      = new game.TextOutputElement('sheetName',      42, 11.25, 28.5, 30, 2);
             this.sheetAttribute = new game.TextOutputElement('sheetAttribute', 20, 45,    30.5, 45, 8);
-            this.sheetValues    = new game.TextOutputElement('sheetValues',    10, 45,    58.5, 45, 8);
+            this.sheetValues    = new game.TextOutputElement('sheetValues',    5,  45,    63.5, 45, 8);
             me.game.world.addChild(sheetAttribute);
             me.game.world.addChild(sheetValues);
             me.game.world.addChild(sheetName);
@@ -93,7 +93,6 @@ game.SheetScreen = me.ScreenObject.extend({
 
 
         /**
-         *
          * @type {number[]} Array to set position of enchantment
          */
         var kind = [0,0,0,0];
