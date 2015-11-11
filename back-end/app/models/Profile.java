@@ -31,6 +31,8 @@ import java.util.*;
 public class Profile extends Model {
     // unique ID
     @Id
+    @SequenceGenerator(name="profile_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "profile_id_seq")
     private Long id;
 
     @OneToOne

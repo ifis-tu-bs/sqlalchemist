@@ -15,6 +15,8 @@ public class AvatarView {
     public static ObjectNode toJson(Avatar avatar) {
         ObjectNode node = Json.newObject();
 
+
+
         node.put("id",              avatar.getId());
         node.put("name",            avatar.getName());
         node.put("desc",            avatar.getDesc());

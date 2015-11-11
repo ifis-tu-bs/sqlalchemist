@@ -14,6 +14,8 @@ import javax.persistence.*;
 @Table(name = "avatar")
 public class Avatar extends Model {
     @Id
+    @SequenceGenerator(name="avatar_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "avatar_id_seq")
     private Long id;
 
     @Column(name = "avatar_name", unique = true)

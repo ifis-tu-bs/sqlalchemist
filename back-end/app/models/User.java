@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
 public class User extends Model {
     // unique ID
     @Id
+    @SequenceGenerator(name="user_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_id_seq")
     public Long id;
 
     //
