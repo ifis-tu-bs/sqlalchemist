@@ -64,7 +64,7 @@ activator run
 cd back-end
 
 # packaging the
-activator compile stage dist
+activator debian:packageBin
 ```
 ## API Reference
 
