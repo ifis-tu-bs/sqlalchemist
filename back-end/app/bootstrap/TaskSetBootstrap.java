@@ -104,7 +104,7 @@ public class TaskSetBootstrap {
                 "    \"isHomeWork\":   true\n" +
                 "}\n");
 
-        Profile profile = ProfileDAO.getByUsername("admin");
+        Profile profile = ProfileDAO.getByUsername("sqlalchemist");
 
         TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
         taskSet.save();

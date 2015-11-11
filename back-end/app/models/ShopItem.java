@@ -11,7 +11,7 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "ShopItem")
+@Table(name = "shopitem")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ShopItem extends Model{
     // unique ID

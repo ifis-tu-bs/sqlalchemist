@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "ForeignKeyRelation")
+@Table(name = "foreignkeyrelation")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ForeignKeyRelation extends Model {
     @Id

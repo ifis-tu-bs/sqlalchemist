@@ -82,7 +82,6 @@ public class HomeWorkController extends Controller {
     public Result getHomeWorkForCurrentSession(Long id) {
         User user = UserDAO.getByUsername(request().username());
 
-
         HomeWork homeWork = HomeWorkDAO.getById(id);
 
         ObjectNode objectNode = HomeWorkView.toJsonExerciseForProfile(homeWork, user.getProfile());

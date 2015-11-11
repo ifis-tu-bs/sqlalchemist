@@ -21,7 +21,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "ScrollCollection")
+@Table(name = "scrollcollection")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
     @Id

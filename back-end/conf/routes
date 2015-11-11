@@ -47,6 +47,7 @@ PATCH       /TaskSet/:id/                       controllers.TaskSetController.up
 DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
+POST        /TaskSet/download                   controllers.TaskSetController.download()
 
 GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
 
@@ -96,7 +97,7 @@ POST        /Homework/                          controllers.HomeWorkController.c
 GET         /Homework/student/                  controllers.HomeWorkController.getAllStudent()
 GET         /Homework/student/:id/              controllers.HomeWorkController.getHomeWorkForCurrentSession(id: Long)
 #GET         /homework/students                 controllers.HomeWorkController.getAllStudents()
-DELETE      /Homework/:id/               controllers.HomeWorkController.delete(id: Long)
+DELETE      /Homework/:id/                      controllers.HomeWorkController.delete(id: Long)
 POST        /Homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()
 GET         /Homework/result/:sid/:hid/         controllers.HomeWorkController.getForTaskInHomeWork(sid: Long, hid: Long)
 
@@ -104,3 +105,4 @@ GET         /Homework/result/:sid/:hid/         controllers.HomeWorkController.g
 GET         /assets/*file                       controllers.Assets.at(path="/public/game/assets", file)
 GET         /resources/*file                    controllers.Assets.at(path="/public/resources", file)
 GET         /adminapp/*file                     controllers.Assets.at(path="/public/admintool/adminapp", file)
+GET         /download/*file                     controllers.Assets.at(path="/public/download", file)

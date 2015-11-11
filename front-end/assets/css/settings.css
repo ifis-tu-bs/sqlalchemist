@@ -41,7 +41,7 @@
 
 
 #changePassword{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
     text-align: center;
@@ -78,7 +78,7 @@
 }
 
 #submitPassword{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
     text-align: center;
@@ -117,7 +117,7 @@
 }
 
 #submitReset, #studentRequest{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
     text-align: center;
@@ -160,7 +160,7 @@
 }
 
 #storyReset{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
     text-align: center;
@@ -199,7 +199,7 @@
 #changeHeader, #resetHeader, #keyBindingsHeader {
     background-color: transparent;
     border-style: none;
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     color: black;
     overflow: hidden;
     position: absolute;
@@ -209,7 +209,7 @@
 }
 
 #verifyGreen{
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     background-color: green;
     color: white;
     cursor: inherit;
@@ -237,7 +237,7 @@
 #keyBindings {
     background-color: transparent;
     border-style: none;
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     line-height: 10px;
     color: black;
     overflow: hidden;
@@ -250,7 +250,7 @@
 #keyBindingsDisc {
     background-color: transparent;
     border-style: none;
-    font-family: Trajan_Pro_Regular, sans-serif;
+    font-family: Amethysta-Regular, sans-serif;
     line-height: 10px;
     color: black;
     overflow: hidden;
@@ -260,4 +260,22 @@
     z-Index: 4;
 }
 
+#soundsElement, #soundPara {
+    background-color: transparent;
+    font-family: Amethysta-Regular, sans-serif;
+    color: black;
+    line-height: 200%;
+    text-align: center;
+    overflow: hidden;
+    z-Index: 4;
+}
+
+#settingsHeaderId {
+    background-color: transparent;
+    color: white;
+    text-align: center;
+    overflow: hidden;
+    z-index: 5;
+    font-family: Amethysta-Regular, sans-serif;
+}
 

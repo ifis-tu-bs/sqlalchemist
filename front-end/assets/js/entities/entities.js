@@ -20,7 +20,7 @@ game.LevelEntity = me.LevelEntity.extend({
 
         this.nextlevel = this.findNextLevel(Math.floor(game.persistent.depth / 5));
 
-        console.log(game.persistent.depth % 5)
+        console.log(game.persistent.depth % 5);
 
         //Play the background music
         var title;

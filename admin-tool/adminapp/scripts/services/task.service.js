@@ -16,6 +16,7 @@
         service.rateTaskSet = rateTaskSet;
         service.postTaskSetComment = postTaskSetComment;
         service.deleteTaskSet = deleteTaskSet;
+        service.exportTaskSets = exportTaskSets;
 
         /* TaskControlls */
         service.createTask = createTask;
@@ -72,6 +73,9 @@
             return $http.get('/TaskSet/homework').then(handleSuccess, handleError);
         }
 
+        function exportTaskSets(taskSetIds) {
+            return $http.post('/TaskSet/download', taskSetIds).then(function (result) {window.location = 'http://localhost:9000/download/' + result.data}, handleError);
+        }
 
         /* Task Controlls */
 
@@ -90,6 +94,7 @@
         function postTaskComment(taskId, comment) {
             return $http.post('/Task/' + taskId + '/comment', {text: comment}).then(handleSuccess, handleError);
         }
+
         function deleteTask(taskId) {
             $http.delete('/Task/'+ taskId + '/').then(handleSuccess, handleError);
         }

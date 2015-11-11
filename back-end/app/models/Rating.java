@@ -10,7 +10,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "Rating")
+@Table(name = "rating")
 public class Rating extends Model {
 
     @Id

@@ -3,7 +3,7 @@
     border-style : none;
     color : black;
     display : block;
-    font-family : Trajan_Pro_Regular, sans-serif;
+    font-family : Amethysta-Regular, sans-serif;
     line-height : 1;
     margin : 0 auto;
     max-width : 100%;
@@ -32,7 +32,6 @@
 #backFromProfile {
     background-color : transparent;
     border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
     color : transparent;
     cursor : pointer;
     overflow : visible;

@@ -25,7 +25,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "StoryChallenge")
+@Table(name = "storychallenge")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class StoryChallenge extends Model {
     @Id

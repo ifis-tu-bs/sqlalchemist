@@ -26,7 +26,7 @@ import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@Table(name = "Profile")
+@Table(name = "profile")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class Profile extends Model {
     // unique ID

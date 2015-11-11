@@ -16,7 +16,7 @@ game.ReadyScreen = me.ScreenObject.extend({
 
             var stat = JSON.parse(xmlHttpRequest.responseText);
             game.data.playerStat = stat;
-            console.log(game.data.playerStat);
+            //console.log(game.data.playerStat);
 
             //attributes
             game.stats.health = stat.characterState.attributes.health;

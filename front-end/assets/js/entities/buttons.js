@@ -1,5 +1,5 @@
 /*
- *  The buttons which contain pictures or a update fuction.
+ *  The buttons which contain a update function.
  */
 
 // used in trivia does save the information for the task
@@ -56,12 +56,12 @@ var exit = me.GUI_Object.extend(
         }
     });
 
-// used in Settings, Game
+// used in Game
 var music = me.GUI_Object.extend(
     {
         init:function (x, y)
         {
-            var settings = {}
+            var settings = {};
             settings.image = "ButtonsMusic";
             settings.spritewidth = 64;
             settings.spriteheight = 64;
@@ -75,14 +75,14 @@ var music = me.GUI_Object.extend(
         // when the object is clicked
         onClick:function (event)
         {
-            if (game.data.music){
+            if (game.data.music) {
                 game.data.music = false;
                 me.audio.stopTrack();
-            }else{
+            } else {
                 game.data.music = true;
-                if(me.state.isCurrent(me.state.PLAY)){
+                if (me.state.isCurrent(me.state.PLAY)) {
                     me.audio.playTrack(game.data.recentTitle ,game.data.musicVolume);
-                }else{
+                } else {
                     me.audio.playTrack("Menu",game.data.musicVolume);
                 }
             }
@@ -92,7 +92,7 @@ var music = me.GUI_Object.extend(
                 if (game.data.music){
                     game.data.music = false;
                     me.audio.stopTrack();
-                }else{
+                } else {
                     game.data.music = true;
                     me.audio.playTrack("level3",game.data.musicVolume);
 
@@ -101,12 +101,12 @@ var music = me.GUI_Object.extend(
         }
     });
 
-// used in Settings, Game
+// used in Game
 var sound = me.GUI_Object.extend(
     {
         init:function (x, y)
         {
-            var settings = {}
+            var settings = {};
             settings.image = "ButtonsSound";
             settings.spritewidth = 64;
             settings.spriteheight = 64;
@@ -120,9 +120,9 @@ var sound = me.GUI_Object.extend(
         // when the object is clicked
         onClick:function (event)
         {
-            if (game.data.sound){
+            if (game.data.sound) {
                 game.data.sound = false;
-            }else{
+            } else {
                 game.data.sound = true;
                 me.audio.play("cling", false, null, game.data.soundVolume);
             }
@@ -130,9 +130,9 @@ var sound = me.GUI_Object.extend(
         },
         update :function (){
             if (me.input.isKeyPressed("sound")) {
-                if (game.data.sound){
+                if (game.data.sound) {
                     game.data.sound = false;
-                }else{
+                } else {
                     game.data.sound = true;
                     me.audio.play("cling", false, null, game.data.soundVolume);
                 }
@@ -163,14 +163,14 @@ var beltSlot = me.GUI_Object.extend(
         onClick:function (event)
         {
             console.log("clicked!belt1!");
-            console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots)
+            console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots);
             //cycle through the game.skins.available and find next skin available
             if(game.belt.beltSlots[this.slot] !== null){
                 if(game.potion.usePotion(this.potion, this.slot)) {
                     game.belt.beltSlots[this.slot] = null;
                     this.width = 1;
                 }
-            }else{
+            } else {
                 console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots)
             }
 
@@ -187,241 +187,7 @@ var beltSlot = me.GUI_Object.extend(
         }
     });
 
-// used in Shop
-var beltSlotBelt = me.GUI_Object.extend(
-    {
-        init:function (x, y, potion, slot)
-        {
-            this.potion = potion;
-            this.slot = slot;
-            this.width = 64;
-            var settings = {};
-            settings.image = getPotionName(potion);
-            settings.spritewidth = 64;
-            settings.spriteheight = this.width;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 200;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            console.log("clicked!beltSlotbelt!" + this.potion + this.slot);
-
-            function onloadBelt(xmlHttpRequest) {
-
-                console.log(xmlHttpRequest);
-                me.state.change(STATE_BELT);
-
-            }
-            function setBelt() {
-
-
-                this.slots = [];
-
-
-                for(var i = 1; i <= game.belt.beltSlots.length; i++) {
-                    console.log(i-1);
-                    if(game.belt.beltSlots[i-1] === null) {
-                        this.slots.push({
-                            "slot" : i,
-                            "potion"  : "empty"
-                        });
-                    }else{
-                        this.slots.push({
-                            "slot" : i,
-                            "potion"  : game.belt.beltSlots[i-1].id
-                        });
-                    }
-                    console.log(this.slots);
-                }
-                this.user_json = JSON.stringify({slots : this.slots});
-
-
-                console.log(this.user_json);
-                ajaxSendProfileBeltSetRequest(this.user_json,onloadBelt);
-            }
-
-
-            //puts attched potion into the collection
-            if( game.belt.beltSlots[this.slot] !== null){
-                game.belt.beltSlots[this.slot] = null;
-                this.potion.amount ++;
-                console.log(this.potion.amount);
-                setBelt();
-            }
-
-            me.state.change(STATE_BELT);
-
-        }
-    });
-
-// used in Potioncollector
-var potionArrow = me.GUI_Object.extend(
-    {
-        init:function (x, y, potion)
-        {
-            this.potion = potion;
-            var settings = {};
-            settings.image = "spinning_scrolls";
-            settings.spritewidth = 32;
-            settings.spriteheight = 32;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 200;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-
-            game.task.potionId = this.potion.id;
-            game.task.kind = 0;
-            game.task.name = this.potion.name;
-            console.log("Potion: " + game.task.potionId, "Name: " + game.task.name ,"Result" + game.potion.potions[game.task.potionId].name)
-            me.state.change(STATE_TASK);
-
-        }
-    });
-
-var showPotion = me.GUI_Object.extend(
-    {
-        init:function (x, y, potion)
-        {
-            this.potion = potion;
-            this.width = 64;
-            var settings = {};
-            settings.image = getPotionName(potion);
-            settings.spritewidth = 64;
-            settings.spriteheight = this.width;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 200;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            function onloadBelt(xmlHttpRequest) {
-
-                console.log(xmlHttpRequest);
-                me.state.change(STATE_BELT);
-            }
-            function setBelt() {
-
-
-                this.slots = [];
-
-
-                for(var i = 1; i <= game.belt.beltSlots.length; i++) {
-                    console.log(i-1);
-                    if(game.belt.beltSlots[i-1] === null) {
-                        this.slots.push({
-                            "slot" : i,
-                            "potion"  : "empty"
-                        });
-                    }else{
-                        this.slots.push({
-                            "slot" : i,
-                            "potion"  : game.belt.beltSlots[i-1].id
-                        });
-                    }
-                    console.log(this.slots);
-                }
-                this.user_json = JSON.stringify({slots : this.slots});
-
-
-                console.log(this.user_json);
-                ajaxSendProfileBeltSetRequest(this.user_json,onloadBelt);
-            }
-
-
-
-            console.log(this.potion.amount + "arrow");
-            var i = 0;
-
-            while(i < game.belt.beltSlots.length && game.belt.beltSlots[i] !== null ){
-                console.log("giveMeThe i: " + i + "and slot: " + game.belt.beltSlots[i]);
-                i++;
-            };
-
-
-
-            //puts attched potion into the collection
-            if(i < game.belt.beltSlots.length && this.potion.amount > 0){
-                game.belt.beltSlots[i] = this.potion;
-                this.potion.amount --;
-                setBelt();
-            }
-
-        }
-    });
-
-
-var buyBelt = me.GUI_Object.extend(
-    {
-        init:function (x, y, id, i)
-        {
-            this.shopId = i;
-            this.spriteId = id;
-            var settings = {};
-            settings.image = "belt";
-            settings.spritewidth = 55;
-            settings.spriteheight = 330;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 200;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            console.log(this.shopId + "Belt" + this.spriteId);
-            game.data.spriteId  = this.spriteId;
-            game.data.shopId = this.shopId;
-
-            me.state.change(STATE_BUY);
-
-        }
-    });
-
-var backToTheLab = me.GUI_Object.extend(
-    {
-        init:function (x, y)
-        {
-            var settings = {};
-            settings.image = "new_back_button";
-            settings.spritewidth = 240;
-            settings.spriteheight = 136;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 4;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            console.log("clicked bac to lab!");
-            if(game.data.sound){
-                me.audio.play("switch", false, null, game.data.soundVolume);
-            }
-            me.state.change(me.state.READY);
-        }
-    });
-
 //tutorial Buttons
-
 var skipTutorial = me.GUI_Object.extend(
     {
         init:function (x, y)
@@ -487,35 +253,9 @@ var nextTutorial = me.GUI_Object.extend(
         }
     });
 
-var backFromLegend = me.GUI_Object.extend(
-    {
-        init:function (x, y)
-        {
-            var settings = {};
-            settings.image = "back_button_ink";
-            settings.spritewidth = 185;
-            settings.spriteheight = 150;
-            // super constructor
-            this._super(me.GUI_Object, "init", [x, y, settings]);
-            // define the object z order
-            this.z = 4;
-        },
-
-        // output something in the console
-        // when the object is clicked
-        onClick:function (event)
-        {
-            if(game.data.sound){
-                me.audio.play("page", false, null, game.data.soundVolume);
-            }
-            me.state.change(me.state.READY);
-        }
-    });
-
-
 var tutorialButton = me.GUI_Object.extend(
     {
-        init:function (x, y, image, width, height,to)
+        init:function (x, y, image, width, height, to)
         {
             var settings = {};
             settings.image = image;

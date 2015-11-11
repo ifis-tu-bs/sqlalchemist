@@ -66,14 +66,6 @@ game.StartScreen = me.ScreenObject.extend({
 
         /**
          * Add all needed buttons to start screen
-         * @param : id       : a unique alphanumeric string
-         *          name     : text to display on screen
-         *          callback : the callback function
-         *          width    : the width of the element in percent of the width of the canvas
-         *          height   : the height of the element in percent of the height of the canvas
-         *          left     : the left margin of the element in percent of the width of the canvas
-         *          top      : the top margin of the element in percent of the height of the canvas
-         *          rows     : the number of rows
          */
         var startButton  = new game.ClickableElement('startButton', 'start', this.onStart, 20, 8.7, 43, 50, 1);
         me.game.world.addChild(startButton);

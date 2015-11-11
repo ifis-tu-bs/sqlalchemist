@@ -17,7 +17,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "TaskSet")
+@Table(name = "taskset")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TaskSet extends Model {
     @Id
@@ -29,7 +29,7 @@ public class TaskSet extends Model {
     private List<TableDefinition>   tableDefinitions;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<ForeignKeyRelation>foreignKeyRelations;
-    private String                  relationsFormatted;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Task>              tasks;
     private final boolean                 isHomework;
@@ -124,19 +124,24 @@ public class TaskSet extends Model {
             }
         }
 
-        String relationsFormatted = "";
-        for(int i = 0; i < this.tableDefinitions.size(); i++)  {
-            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(i));
-            if(i < this.tableDefinitions.size() - 1)
-                relationsFormatted = relationsFormatted + ",";
-        }
-        this.relationsFormatted = relationsFormatted;
         this.updatedAt = new Date();
     }
 
 //////////////////////////////////////////////////
 //  getter & setter methods
 //////////////////////////////////////////////////
+
+
+    @Override
+    public String toString() {
+        String relationsFormatted = "";
+        for(int i = 0; i < this.tableDefinitions.size(); i++)  {
+            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(i));
+            if(i < this.tableDefinitions.size() - 1)
+                relationsFormatted = relationsFormatted + ",";
+        }
+        return relationsFormatted;
+    }
 
     public long getId() {
         return this.id;
@@ -168,10 +173,6 @@ public class TaskSet extends Model {
 
     public void setForeignKeyRelations(List<ForeignKeyRelation> foreignKeyRelations) {
         this.foreignKeyRelations = foreignKeyRelations;
-    }
-
-    public String getRelationsFormatted() {
-        return relationsFormatted;
     }
 
     public List<Task> getTasks() {

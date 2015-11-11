@@ -12,7 +12,10 @@ game.ShopScreen = me.ScreenObject.extend({
         me.game.world.addChild(backgroundShop);
         $("#backgroundShopId").fadeIn(100);
 
-
+        /**
+         * Ajax Call to get information about the LofiCoin amount the user owns and draw them in an OutputElement.
+         * @param xmlHttpRequest
+         */
         function getCash(xmlHttpRequest) {
             var profile = JSON.parse(xmlHttpRequest.responseText);
             game.data.lofiCoins = profile.coins;
@@ -23,14 +26,15 @@ game.ShopScreen = me.ScreenObject.extend({
         }
         ajaxSendProfileRequest(getCash);
 
-
+        /**
+         * Create Element to go back to the menu.
+         */
         this.backToMenu = function () {
-            for (var i = 0; i < 38; i++) {
-                $("#shopItem" + i).fadeOut(100);
-            }
+            $("[id*='shopItem']").fadeOut(100);
             $("#backgroundShopId").fadeOut(100);
             $("#lofiCoins").fadeOut(100);
             $("#backFromShop").fadeOut(100);
+            $("#buyBeltSlotId").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.MENU);
             }, 100);
@@ -42,21 +46,40 @@ game.ShopScreen = me.ScreenObject.extend({
         $("#backFromShop").fadeIn(100);
 
 
-
+        /**
+         * Get information about all shopItems which are not bought yet.
+         * @param xmlHttpRequest contains shop infos.
+         */
         function getShopInfo(xmlHttpRequest) {
-
-            function goBuy(id, spriteid) {
-                return function() {
-                    game.data.shopId = id;
-                    game.data.spriteId = spriteid;
-                    me.state.change(STATE_BUY);
-                }
-            }
 
             var shop = JSON.parse(xmlHttpRequest.responseText);
             console.log(shop);
             game.data.shop = shop;
 
+            /**
+             * This function will be called when the user wants to buy an item and the user is guided to the BuyScreen.
+             * @param id
+             * @param spriteid
+             * @returns {Function}
+             */
+            function goBuy(id, spriteid) {
+                return function() {
+                    game.data.shopId = id;
+                    game.data.spriteId = spriteid;
+                    $("[id*='shopItem']").fadeOut(100);
+                    $("#backgroundShopId").fadeOut(100);
+                    $("#lofiCoins").fadeOut(100);
+                    $("#backFromShop").fadeOut(100);
+                    $("#buyBeltSlotId").fadeOut(100);
+                    setTimeout( function() {
+                        me.state.change(STATE_BUY);
+                    }, 100);
+                }
+            }
+
+            /**
+             * Display all 500-coin-items that are not bought yet.
+             */
             for (var i = 0; i < 7; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -67,13 +90,16 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.size       = 0;
                     }
                     var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.948 + this.size,
-                                                            8.433, 23.436 - this.difference, 18.129167 + i * 10.9375, 1);
+                                                             8.433, 23.436 - this.difference, 18.129167 + i * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     $("#shopItem" + i).fadeIn(100);
                     me.game.world.addChild(shopItem);
                 }
             }
 
+            /**
+             * Display seven first 2000-coin-items that are not bought yet.
+             */
             for (var i = 7; i < 14; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -91,6 +117,9 @@ game.ShopScreen = me.ScreenObject.extend({
                 }
             }
 
+            /**
+             * Display next seven 2000-coin-items that are not bought yet.
+             */
             for (var i = 14; i < 21; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -108,6 +137,9 @@ game.ShopScreen = me.ScreenObject.extend({
                 }
             }
 
+            /**
+             * Display first row of 8000-coin-items that are not bought yet.
+             */
             for (var i = 21; i < 27; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -125,6 +157,9 @@ game.ShopScreen = me.ScreenObject.extend({
                 }
             }
 
+            /**
+             * Display next row of 8000-coin-items that are not bought yet.
+             */
             for (var i = 27; i < 32; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -142,6 +177,9 @@ game.ShopScreen = me.ScreenObject.extend({
                 }
             }
 
+            /**
+             * Display 20000-coin-items that are not bought yet.
+             */
             for (var i = 32; i < 38; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
@@ -163,13 +201,43 @@ game.ShopScreen = me.ScreenObject.extend({
 
         ajaxSendShopRequest(getShopInfo);
 
+        /**
+         * Call to check if or how many BeltSlots the user already bought.
+         * @param xmlHttpRequest
+         */
         function getBeltInfo(xmlHttpRequest) {
-            console.log("BELT");
-            console.log(xmlHttpRequest);
+
+            /**
+             * If the user wants to buy a new BeltSlot this function will be called an the user is guided to the BuyScreen.
+             * @param id: id of the shopItem.
+             * @param i: next slot to be bought.
+             * @returns {Function}
+             */
+            function goBuyBeltSlot(id, i) {
+                return function () {
+                    this.shopId = i;
+                    this.spriteId = id;
+                    console.log(this.shopId + "Belt" + this.spriteId);
+                    game.data.spriteId = this.spriteId;
+                    game.data.shopId = this.shopId;
+
+                    $("[id*='shopItem']").fadeOut(100);
+                    $("#backgroundShopId").fadeOut(100);
+                    $("#lofiCoins").fadeOut(100);
+                    $("#backFromShop").fadeOut(100);
+                    $("#buyBeltSlotId").fadeOut(100);
+                    setTimeout( function() {
+                        me.state.change(STATE_BUY);
+                    }, 100);
+                }
+            }
+
+            //console.log("BELT");
+            //console.log(xmlHttpRequest);
             var belt = JSON.parse(xmlHttpRequest.responseText);
-            console.log(belt);
+            //console.log(belt);
             game.data.beltShop = belt;
-            console.log("IN");
+            //console.log("IN");
 
             var t = 0;
 
@@ -177,7 +245,15 @@ game.ShopScreen = me.ScreenObject.extend({
                 //console.log(belt[t].id,!belt[t].bought,t );
                 t++;
             }
-            me.game.world.addChild(new buyBelt(850, 40 , belt[t].id, t));
+
+            /**
+             * Button to buy a new BeltSlot.
+             */
+            var buyBeltSlot = new game.ClickableElement('buyBeltSlotId', '', goBuyBeltSlot(belt[t].id, t),
+                                                         7.121212, 44.010417, 63.5, 5.208333, 1);
+            buyBeltSlot.setImage("assets/data/img/buttons/shopbelt.png", "beltSlotShop");
+            $("#buyBeltSlotId").fadeIn(100);
+            me.game.world.addChild(buyBeltSlot);
         }
 
         ajaxSendShopBeltRequest(getBeltInfo);
