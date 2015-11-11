@@ -35,9 +35,11 @@ public class AvatarDAO {
                 isTeam,
                 playerStats );
         try {
+
             avatar.save();
         } catch (PersistenceException pe) {
-            Avatar avatar_res = Avatar.find.where().eq("name", name).findUnique();
+            Logger.warn(pe.getMessage());
+            Avatar avatar_res = Avatar.find.where().eq("avatar_name", name).findUnique();
             if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
                 Logger.warn("Can't create Avatar(duplicate) " + AvatarView.toJson(avatar).toString());
                 return avatar_res;

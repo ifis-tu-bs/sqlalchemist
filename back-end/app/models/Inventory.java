@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @version 1.0
  */
 @Entity
-@Table (name = "Inventory")
+@Table (name = "inventory")
 public class Inventory extends Model{
     @Id
     private long id;

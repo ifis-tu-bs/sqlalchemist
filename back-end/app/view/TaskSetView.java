@@ -84,7 +84,7 @@ public class TaskSetView {
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
         taskSetJson.set("tableDefinitions",     tableDefNode);
         taskSetJson.set("foreignKeyRelations",  foreignKeyRelationNode);
-        taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
+        taskSetJson.put("relationsFormatted",   taskSet.toString());
         taskSetJson.set("tasks",                taskNode);
         taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
@@ -125,5 +125,14 @@ public class TaskSetView {
         }
 
         return taskSetNode;
+    }
+
+    public static ObjectNode toJsonHomeWork(TaskSet taskSet) {
+        ObjectNode  taskSetJson             = Json.newObject();
+
+        taskSetJson.put("id",                   taskSet.getId());
+        taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
+
+        return taskSetJson;
     }
 }

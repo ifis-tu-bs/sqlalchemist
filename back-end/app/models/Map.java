@@ -11,7 +11,7 @@ import javax.persistence.*;
  *  @author fabiomazzone
  */
 @Entity
-@Table(name = "Map")
+@Table(name = "map")
 public class Map extends Model {
     @Id
     private long id;

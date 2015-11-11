@@ -89,12 +89,22 @@ public class TaskSetBootstrap {
                 "               \"requiredTerm\":               2,\n" +
                 "               \"availableSyntaxChecks\":      10,\n" +
                 "               \"availableSemanticChecks\":    2\n" +
+                "       }," +
+                "       {\n" +
+                "               \"taskSet\":                    2,\n" +
+                "               \"taskText\":                   \"Find Me\",\n" +
+                "               \"refStatement\":               \"SELECT * FROM User Where FirstName = 'Fabio'\",\n" +
+                "               \"evaluationStrategy\":         1,\n" +
+                "               \"points\":                     1,\n" +
+                "               \"requiredTerm\":               2,\n" +
+                "               \"availableSyntaxChecks\":      10,\n" +
+                "               \"availableSemanticChecks\":    2\n" +
                 "       }" +
                 "   ],\n" +
                 "    \"isHomeWork\":   true\n" +
                 "}\n");
 
-        Profile profile = ProfileDAO.getByUsername("admin");
+        Profile profile = ProfileDAO.getByUsername("sqlalchemist");
 
         TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
         taskSet.save();

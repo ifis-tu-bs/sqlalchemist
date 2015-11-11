@@ -5,6 +5,7 @@ import dao.TaskSetDAO;
 
 import models.*;
 
+import play.mvc.Http;
 import secured.CreatorSecured;
 import secured.UserSecured;
 
@@ -20,7 +21,11 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -132,8 +137,6 @@ public class TaskSetController extends Controller {
         //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
-
-        Logger.info(jsonNode.toString());
 
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
@@ -250,5 +253,46 @@ public class TaskSetController extends Controller {
         taskSet.addComment(comment);
         taskSet.update();
         return ok(CommentView.toJson(comment));
+    }
+/*
+    public Result upload() {
+        Http.MultipartFormData body = request().body().asMultipartFormData();
+        Http.MultipartFormData.FilePart uploadJson = body.getFile("uploadJson");
+
+
+
+    }
+*/
+
+
+    /**
+     * Returns the FileName of the desired Download.
+     * @return
+     */
+    public Result download() {
+        JsonNode jsonNode = request().body().asJson();
+
+        ArrayList<TaskSet> taskSets = new ArrayList<>();
+        for (JsonNode node : jsonNode.findPath("taskSetIds")) {
+            taskSets.add(TaskSetDAO.getById(node.longValue()));
+        }
+
+        String fileName = "exportTaskSets_" + new Date().getTime() + ".json";
+
+        File outputFile = new File("public/download/" + fileName);
+        try {
+            outputFile.createNewFile();
+
+            PrintWriter printWriter = new PrintWriter(outputFile);
+
+            printWriter.print(TaskSetView.toJson(taskSets));
+
+            printWriter.close();
+
+            return ok(fileName);
+        } catch (IOException e) {
+            Logger.warn(e.getMessage());
+            return ok(fileName);
+        }
     }
 }

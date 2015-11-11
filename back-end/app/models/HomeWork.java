@@ -10,7 +10,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "HomeWork")
+@Table(name = "homework")
 public class HomeWork extends Model {
 
     @Id

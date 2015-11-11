@@ -36,7 +36,13 @@
             <div class="panel-heading">
               <h4 class="panel-title">
                 <span tooltip-placement="right" uib-tooltip="TaskSets contain a Schema and a Set of Tasks. Select a TaskSet for further editing." style="font-size:16pt">TaskSet: <b>select...</b></span>
+                <div class="btn-group" style="float:right">
+                  <button class="btn btn-primary btn-xs">Import...</button>
+                  <button class="btn btn-primary btn-xs" ng-click="exportTaskSets();">Export...</button>
+                </div>
+
               </h4>
+
             </div>
             <div class="panel-body">
               <table class="table table-hover">
@@ -244,6 +250,14 @@
               mode : 'sql',
               theme : 'twilight'
             }"></div>
+
+
+            <div class="container" ng-repeat="table in vm.tables">
+              <b>{{table.tableName}}</b><br>
+              <div class="container" ng-repeat="column in table.columns">
+                <u ng-if="column.primaryKey">{{column.columnName}}</u><span ng-if="column.primaryKey === false">{{column.columnName}}</span> : <i>{{column.dataType}}</i> <span ng-if="column.foreignKey">-> {{column.foreignKey}}</span>
+              </div>
+            </div>
           </uib-accordion-group>
         </uib-accordion>
       </uib-tab>

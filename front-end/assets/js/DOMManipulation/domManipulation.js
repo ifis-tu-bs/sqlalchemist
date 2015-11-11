@@ -423,6 +423,7 @@ game.TextOutputElement = me.Renderable.extend ({
         // create nodes
         this.elem                = document.createElement("div");
         this.wrapper             = document.createElement("div");
+
         this.elem.id             = id;
         this.elem.style.position = 'absolute';
         
@@ -459,11 +460,19 @@ game.TextOutputElement = me.Renderable.extend ({
 
     },
 
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
+
     update : function () {
 
         // scale element
         game.scaleElement(this);
-
+        /*if (me.state.isCurrent(me.state.SETTINGS)){
+            updateSettings();
+        }*/
     },
 
     /**
@@ -579,7 +588,6 @@ game.ClickableElement = me.Renderable.extend ({
 
         this.updateWhenPaused = true;
 
-
         // create child
         this.elem                = document.createElement('div');
         this.elem.id             = id;
@@ -621,6 +629,12 @@ game.ClickableElement = me.Renderable.extend ({
         return this.elem;
 
     },
+    //setTitle
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
 
     /**
      * method displays the element
@@ -641,6 +655,15 @@ game.ClickableElement = me.Renderable.extend ({
         this.visibility = false;
 
     },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
+
+    },
     
     setImage : function (src, id) {
     	
@@ -657,6 +680,9 @@ game.ClickableElement = me.Renderable.extend ({
 
         // scale element
         game.scaleElement(this);
+        /*if (me.state.isCurrent(me.state.SETTINGS)){
+            updateSettings();
+        }*/
 
     },
 
@@ -695,7 +721,8 @@ game.BackgroundElement = me.Renderable.extend ({
         // create child
         this.elem                = document.createElement('div');
         this.elem.id             = id;
-        this.elem.style.position = 'absolute';
+        this.elem.className      = 'backgroundElement';
+        this.elem.style.position = 'fixed';
 
         // scale element
         this.relWidth  = width;
@@ -712,6 +739,41 @@ game.BackgroundElement = me.Renderable.extend ({
 
         // append child
         parent.appendChild(this.elem);
+
+    },
+
+    /**
+     * method displays the element
+     */
+    display : function () {
+
+        this.elem.style.display = "block";
+        this.visibility = true;
+
+    },
+
+    setTitle : function (rename) {
+
+        this.elem.title = rename;
+
+    },
+
+    /**
+     * method hides the element
+     */
+    hide : function () {
+
+        this.elem.style.display = "none";
+        this.visibility = false;
+
+    },
+
+    /**
+     * method to tell if an element is visable
+     */
+    isVisibile : function () {
+
+        return this.visibility;
 
     },
 
@@ -736,6 +798,85 @@ game.BackgroundElement = me.Renderable.extend ({
         this.elem.appendChild(image);
 
     },
+
+    destroy : function () {
+        // remove element
+        this.elem.parentNode.removeChild(this.elem);
+
+    }
+
+});
+
+game.DropDownElement = me.Renderable.extend ({
+
+    /**
+     * constructor
+     * @param : id       : a unique alphanumeric string
+     *          width    : the width of the element in percent of the width of the canvas
+     *          height   : the height of the element in percent of the height of the canvas
+     *          left     : the left margin of the element in percent of the width of the canvas
+     *          top      : the top margin of the element in percent of the height of the canvas
+     */
+    init : function (id, width, height, left, top, optionLength, text) {
+
+        // get parent
+        var parent = document.getElementById('screen');
+        this.updateWhenPaused = true;
+
+
+        this.elem                = document.createElement("SELECT");
+        this.elem.id             = id;
+        this.elem.style.position = 'absolute';
+
+        for (var i = 0; i < optionLength; i++){
+
+        // create child
+            this.elem.option = document.createElement('option');
+            this.elem.option.text = text[i];
+            this.elem.options.add(this.elem.option, i);
+        }
+
+
+
+        //scale element
+        this.relWidth  = width;
+        this.relHeight = height;
+        this.relLeft   = left;
+        this.relTop    = top;
+        game.scaleElement(this);
+
+        // visibility
+        this.visibility = true;
+
+        //display background
+        this.elem.style.display = 'block';
+
+        // append child
+        parent.appendChild(this.elem);
+
+    },
+
+    getNode : function () {
+        return this.elem;
+
+    },
+
+    update : function () {
+        // scale element
+        game.scaleElement(this);
+
+
+    },
+
+    /*setImage : function (src, id) {
+        var image = document.createElement("img");
+        image.src = src;
+        image.id = id;
+        image.style.height = 'inherit';
+        image.style.width = 'inherit';
+        this.elem.appendChild(image);
+
+    },*/
 
     destroy : function () {
         // remove element

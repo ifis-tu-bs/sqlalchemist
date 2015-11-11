@@ -69,18 +69,14 @@ public class HomeWorkController extends Controller {
      * Gives back the current HomeWork and whether the task is submitted for the given profile
      */
     @Authenticated(StudentSecured.class)
-    public Result getCurrentHomeWorkForCurrentSession() {
+    public Result getHomeWorkForCurrentSession() {
         User user = UserDAO.getByUsername(request().username());
 
+        List<HomeWork> homeWorkList = HomeWorkDAO.getAllStudent();
 
-        HomeWork homeWork;
-        if((homeWork = HomeWorkDAO.getCurrent()) == null) {
-            return badRequest("No Current HomeWork");
-        }
+        ArrayNode arrayNode = HomeWorkView.toJsonExerciseForProfile(homeWorkList, user.getProfile());
 
-        ObjectNode objectNode = HomeWorkView.toJsonExerciseForProfile(homeWork, user.getProfile());
-
-        return ok(objectNode);
+        return ok(arrayNode);
     }
 
     @Authenticated(AdminSecured.class)

@@ -32,6 +32,20 @@
 	font-size : inherit;
 }
 
+#chooseDifficulty {
+	background-color : transparent;
+	border-style : solid;
+	border-color: transparent;
+	font-family : Trajan_Pro_Regular, sans-serif;
+	color : transparent;
+	cursor : pointer;
+	overflow : visible;
+	position : absolute;
+	text-align : center;
+	vertical-align : middle;
+	z-Index : 4;
+}
+
 #likebutton, #likebuttonSet {
 	background-color : transparent;
 	border-style : none;
@@ -68,7 +82,7 @@
 	z-Index : 4;
 }
 
-#mainmenu {
+#mainmenu, #staybutton {
     font-family: Trajan_Pro_Regular, sans-serif;
     cursor: pointer;
     color: white;
@@ -135,6 +149,23 @@
 	font-weight: normal;
 	font-stretch: normal;
 	line-height: normal;
+}
+
+#task, #schemaa {
+	background-color : transparent;
+	border-style : none;
+	color : #f4fff0;
+	display : block;
+	font-family : Amethysta-Regular, monospace;
+	line-height : 1;
+	margin : 0 auto;
+	max-width : 100%;
+	overflow : hidden;
+	position : absolute;
+	text-overflow : ellipsis;
+	-webkit-line-clamp: 8;
+	-webkit-box-orient: vertical;
+	z-Index : 3;
 }
 
 #schematitle {
@@ -227,7 +258,7 @@
     color: #a3743c;
 }
 
-#task, #head, #schemaa {
+#head {
 	background-color : transparent;
 	border-style : none;
 	color : white;
@@ -249,6 +280,30 @@
     height: 100%;
     overflow: auto;
     padding-right: 17px;
+}
+
+#infoText {
+	background-color : transparent;
+	border-style : none;
+	color : white;
+	display : block;
+	font-family : Trajan_Pro_Regular, Arial, sans-serif;
+	line-height : 1;
+	margin : 0 auto;
+	max-width : 100%;
+	overflow : hidden;
+	position : absolute;
+	text-overflow : ellipsis;
+	-webkit-line-clamp: 8;
+	-webkit-box-orient: vertical;
+	z-Index : 333;
+}
+
+#infobody {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	padding-right: 10px;
 }
 
 #taskbutton {
@@ -394,6 +449,11 @@
 	text-decoration : none;
 }
 
+.comment .distab {
+	color : darkgreen;
+	text-decoration : none;
+}
+
 .comment .relation {
 	color : darkgreen;
 }
@@ -409,6 +469,10 @@
 
 .keyattribute {
 	text-decoration : underline;
+}
+
+.distab {
+	text-indent: 400px;
 }
 
 .relation {
@@ -457,4 +521,23 @@ textarea::-webkit-scrollbar {
 
 .ace_scroller {
 	overflow: visible;
+}
+
+a.tooltip {
+	position: relative;
+}
+
+a.tooltip span {
+	display: none;
+}
+
+a.tooltip:hover span, a.tooltip:focus span {
+	display:block;
+	position:absolute;
+	top:1em;
+	left:1.5em;
+	padding: 0.2em 0.6em;
+	border:1px solid #996633;
+	background-color:#FFFF66;
+	color:#000;
 }

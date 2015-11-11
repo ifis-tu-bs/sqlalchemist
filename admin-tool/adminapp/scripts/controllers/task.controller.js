@@ -203,6 +203,22 @@ angular
             }
         }
 
+        $scope.exportTaskSets = function() {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/exportTaskSet.template.html',
+                    controller: 'exportTaskSetController'
+            });
+
+            modalInstance.result.then(
+                function (taskSetIds) {
+                    return TaskService.exportTaskSets({taskSetIds: taskSetIds});
+                }, null
+            );
+
+
+        }
+
         $scope.saveSelectedTaskSet = function () {
              $scope.saveTaskSet($scope.selectedTaskSet);
         }

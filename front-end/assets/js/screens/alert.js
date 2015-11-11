@@ -23,7 +23,8 @@ game.AlertScreen = me.ScreenObject.extend({
 
         $("#background").fadeIn(100);
 
-        me.game.world.addChild(new game.HUD.OverlayAlert(300, 150, game.alert.alertText));
+        //NOT EXITING ANYMORE
+        //me.game.world.addChild(new game.HUD.OverlayAlert(300, 150, game.alert.alertText));
 
         this.onAlertOkClick = function() {
             $("#alertOk").fadeOut(100);

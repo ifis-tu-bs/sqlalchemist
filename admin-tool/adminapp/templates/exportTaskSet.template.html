@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">Make HomeWork</h4>
+</div>
+<div class="modal-body">
+    <div class="container" style="max-width: 550px">
+        <table class="table table-hover" style="float:left; width:50%">
+            <thead>
+            <tr>
+                <th>Selected</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="taskSet in selectedTaskSets | orderBy:orderSelectedTaskSetsPredicate:orderReverse" ng-click="deselectTaskSet(taskSet);" style="cursor: pointer">
+                <td>{{taskSet.taskSetName}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-hover" style="float:right; width:50%">
+            <thead>
+            <tr>
+                <th>Available</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="taskSet in taskSets | orderBy:orderTaskSetsPredicate:orderReverse" ng-click="selectTaskSet(taskSet);" style="cursor: pointer">
+                <td>{{taskSet.taskSetName}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="ok();" >
+        Submit
+    </button>
+    <button type="button" class="btn btn-primary" ng-click="close();">
+        Cancel
+    </button>
+</div>

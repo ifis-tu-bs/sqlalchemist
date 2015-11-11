@@ -22,11 +22,13 @@ import java.util.regex.Pattern;
  * @author Fabio Mazzone
  */
 @Entity
-@Table(name = "User")
+@Table(name = "user")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class User extends Model {
     // unique ID
     @Id
+    @SequenceGenerator(name="user_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_id_seq")
     public Long id;
 
     //

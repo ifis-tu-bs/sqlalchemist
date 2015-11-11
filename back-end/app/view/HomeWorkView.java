@@ -15,7 +15,9 @@ import play.libs.Json;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.text.DateFormatSymbols;
 /**
  * @author Invisible
  */
@@ -74,6 +76,33 @@ public class HomeWorkView {
         return objectNode;
     }
 
+    private static ObjectNode toJsonStudent(HomeWork homeWork) {
+        ObjectNode objectNode = Json.newObject();
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (TaskSet taskSet : homeWork.getTaskSets()) {
+            arrayNode.add(TaskSetView.toJson(taskSet));
+        }
+
+        objectNode.put("id",    homeWork.getId());
+        objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
+        objectNode.set("creator",   homeWork.getCreator().toJson());
+        objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
+        objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
+
+        return objectNode;
+    }
+
+    public static ArrayNode toJsonStudent(List<HomeWork> homeWorkList) {
+        ArrayNode homeWorkNode = JsonNodeFactory.instance.arrayNode();
+
+        for(HomeWork homeWork : homeWorkList) {
+            homeWorkNode.add(HomeWorkView.toJsonStudent(homeWork));
+        }
+
+        return homeWorkNode;
+    }
+
     public static ArrayNode toJson(List<HomeWork> homeWorkList) {
         ArrayNode homeWorkNode = JsonNodeFactory.instance.arrayNode();
 
@@ -85,23 +114,34 @@ public class HomeWorkView {
     }
 
     public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
-
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy", new DateFormatSymbols(Locale.US));
 
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
-            ObjectNode taskSetJson = TaskSetView.toJson(taskSet);
+            ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
             taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
 
             arrayNode.add(taskSetJson);
         }
 
 
-        objectNode.put("name",     homeWork.getHomeWorkName());
-        objectNode.set("taskSets", arrayNode);
+        objectNode.put("name",      homeWork.getHomeWorkName());
+        objectNode.set("taskSets",  arrayNode);
+        objectNode.put("start_at",  sdf.format(homeWork.getStart_at()));
+        objectNode.put("expire_at", sdf.format(homeWork.getExpire_at()));
 
         return objectNode;
     }
 
+    public static ArrayNode toJsonExerciseForProfile(List<HomeWork> homeWorks, Profile profile) {
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (HomeWork homeWork : homeWorks) {
+            arrayNode.add(toJsonExerciseForProfile(homeWork, profile));
+        }
+
+        return arrayNode;
+    }
 }

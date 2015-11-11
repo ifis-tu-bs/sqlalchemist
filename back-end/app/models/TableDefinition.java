@@ -11,7 +11,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "TableDefinition")
+@Table(name = "tabledefinition")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class TableDefinition extends Model {
     @Id

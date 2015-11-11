@@ -26,14 +26,23 @@ back-end/.project
 back-end/RUNNING_PID
 back-end/.settings
 back-end/public/game
+back-end/public/download/*.*
 back-end/.sbtserver
 back-end/public/admintool
 *.h2.db
 *.trace.db
-back-end/conf/evolutions
 
 
 ########
 # Front-End
+front-end/.idea
 front-end/build
 front-end/node_modules
+front-end/front-end.iml
+
+########
+# Admin-Tool
+admin-tool/.idea
+admin-tool/build
+admin-tool/node_modules
+admin-tool/*.iml

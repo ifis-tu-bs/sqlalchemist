@@ -6,7 +6,7 @@ game.TextScreen = me.ScreenObject.extend({
     onResetEvent : function() {
         me.audio.stopTrack();
         if(game.persistent.boss){
-            game.persistent.boss = false
+            game.persistent.boss = false;
             game.data.text = 0;
         }
         var image = "lab_screen";
@@ -153,13 +153,46 @@ game.TextScreen = me.ScreenObject.extend({
                 ),
                 2
             );
+            skipAllButton      = new game.ClickableElement('skipAll', 'skip All', skipAll, 10, 6, 85, 90, 2);
+            skipOneButton      = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
 
             me.game.world.addChild(new game.HUD.Text(x, y, game.data.playerStat.texts[game.data.text].text), 5);
             if (game.data.playerStat.isTutorial) {
-                me.game.world.addChild(new skipTutorial(1050, 20));
-                me.game.world.addChild(new nextTutorial(1050, 680, state, change));
+                //me.game.world.addChild(new skipTutorial(1050, 20));
+                //me.game.world.addChild(new nextTutorial(1050, 680, state, change));
+                me.game.world.addChild(skipAllButton);
+                me.game.world.addChild(skipOneButton);
+                skipAllButton.display();
+                skipOneButton.display();
             }
 
+            function skipOne() {
+
+                me.audio.pause(game.data.audio);
+                if(change){
+                    me.state.change(state);
+                    game.data.text++;
+                }else{
+                    if(!game.data.wait){
+                        game.data.wait = true;
+                        game.data.text++;
+                    }
+                }
+            }
+
+            function skipAll() {
+
+                function skip(xmlHttpRequest) {
+
+                    console.log(xmlHttpRequest);
+                    //add sound name
+                    me.audio.pause(game.data.audio);
+                    game.data.text = game.data.playerStat.texts.length;
+                    me.state.change(me.state.READY);
+
+                }
+                ajaxNextChallengeRequest(skip)
+            }
 
             function onend() {
                 if (game.data.text !== game.data.playerStat.texts.length - 1) {
