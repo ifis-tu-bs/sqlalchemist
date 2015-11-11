@@ -254,15 +254,18 @@ public class TaskSetController extends Controller {
         taskSet.update();
         return ok(CommentView.toJson(comment));
     }
-/*
+
     public Result upload() {
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart uploadJson = body.getFile("uploadJson");
 
+        Logger.info("Have following file: " + uploadJson.getFilename());
 
 
+
+        return ok();
     }
-*/
+
 
 
     /**
