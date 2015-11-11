@@ -151,6 +151,23 @@
 	line-height: normal;
 }
 
+#task, #schemaa {
+	background-color : transparent;
+	border-style : none;
+	color : #f4fff0;
+	display : block;
+	font-family : Amethysta-Regular, monospace;
+	line-height : 1;
+	margin : 0 auto;
+	max-width : 100%;
+	overflow : hidden;
+	position : absolute;
+	text-overflow : ellipsis;
+	-webkit-line-clamp: 8;
+	-webkit-box-orient: vertical;
+	z-Index : 3;
+}
+
 #schematitle {
 	color : white;
 	text-Align : center;
@@ -241,7 +258,7 @@
     color: #a3743c;
 }
 
-#task, #head, #schemaa {
+#head {
 	background-color : transparent;
 	border-style : none;
 	color : white;
@@ -432,6 +449,11 @@
 	text-decoration : none;
 }
 
+.comment .distab {
+	color : darkgreen;
+	text-decoration : none;
+}
+
 .comment .relation {
 	color : darkgreen;
 }
@@ -447,6 +469,10 @@
 
 .keyattribute {
 	text-decoration : underline;
+}
+
+.distab {
+	text-indent: 400px;
 }
 
 .relation {

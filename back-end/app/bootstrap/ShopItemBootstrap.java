@@ -64,7 +64,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "Crabbe and Crabber",
-                "Drag'os henchmen. Known for \\ntheir strength. They always stay \\nat each others side.",
+                "Drago's henchmen. Known for \\ntheir strength. They always stay \\nat each others side.",
                 "crabbe_and_goyle",
                 true,
                 new PlayerStats(0,1,0,1,0));
@@ -81,7 +81,7 @@ public class ShopItemBootstrap {
 
 
         avatar = AvatarDAO.create(
-                "Draco Femalfoy",
+                "Drago Femalfoy",
                 "Not the nicest guy around.\\nQuite a big mouth and if push\\ncomes to shove, he is off in no time.",
                 "draco_malfoy",
                 false,
@@ -109,7 +109,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "James and Oliver",
-                "Inseparable,\\nthe two Weasleys are really though.\\nTogether they are unstoppable.",
+                "Inseparable,\\nthe two Weaslbeys are really though.\\nTogether they are unstoppable.",
                 "fred_and_george",
                 true,
                 new PlayerStats(4,0,0,0,0));
@@ -126,7 +126,7 @@ public class ShopItemBootstrap {
 
 
         avatar = AvatarDAO.create(
-                "Capt. Cockhard",
+                "Gilderoyal Ockhard",
                 "Simply the greatest Wizard of all time,\\nknown from all his adventures,\\nso this one is right up his alley.",
                 "gilderoy_lockhart",
                 false,
@@ -190,7 +190,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "Usain Shacklebolt",
-                "The famous Auror, is a great fighter.\\nLet us hope that is enough.",
+                "The famous Auror, is a great fighter,\\nwhen it comes to small beasts.\\nTry to dodge the big ones with your exeptional speed.",
                 "kingsley_shacklebolt",
                 false,
                 new PlayerStats(-4,1,5,0,0));
@@ -199,7 +199,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "Student 72",
-                "Mrs. Trelwaney's favourite student.\\nBrave and loyal. A typical Gryffindor.",
+                "Mrs. Lawntreeney's favourite student.\\nBrave and loyal. A typical Gryffindor.",
                 "lavender_brown",
                 false,
                 new PlayerStats(1,0,1,0,0));
@@ -235,7 +235,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "Grieving Grace",
-                "Myrtle is a ghost.\\nShe likes to get lost in great heights,\\nbut remember, for the purpose of\\nthis game, she is not immortal.",
+                "Grace is a ghost.\\nShe likes to get lost in great heights,\\nbut remember, for the purpose of\\nthis game, she is not immortal.",
                 "moaning_myrtle2",
                 false,
                 new PlayerStats(0,0,0,4,0));
@@ -289,7 +289,7 @@ public class ShopItemBootstrap {
 
         avatar = AvatarDAO.create(
                 "Party Partil",
-                "The Parti-Twins are the cheapest \\nteam with the best agility.",
+                "The Party-Twins are the cheapest \\nteam with the best agility.",
                 "padma_and_parvati_patil",
                 true,
                 new PlayerStats(0,0,1,1,0));
@@ -370,7 +370,7 @@ public class ShopItemBootstrap {
 
 
         avatar = AvatarDAO.create(
-                "Sybrille Truehorny",
+                "Sybrille Lawntreeney",
                 "Sybrille is gifted with the power \\nof foresight which gives her a \\nclear advantage in dodging obstacles.",
                 "sybill_trelawney",
                 false,
