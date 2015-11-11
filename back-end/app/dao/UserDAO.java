@@ -93,4 +93,7 @@ public class UserDAO {
     return User.find.all();
   }
 
+    public static List<User> getAll() {
+        return User.find.all();
+    }
 }

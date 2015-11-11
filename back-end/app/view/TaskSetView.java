@@ -84,7 +84,7 @@ public class TaskSetView {
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
         taskSetJson.set("tableDefinitions",     tableDefNode);
         taskSetJson.set("foreignKeyRelations",  foreignKeyRelationNode);
-        taskSetJson.put("relationsFormatted",   taskSet.toString());
+        taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
         taskSetJson.set("tasks",                taskNode);
         taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());

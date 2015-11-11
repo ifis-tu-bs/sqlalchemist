@@ -25,6 +25,8 @@ import play.libs.Json;
 import javax.persistence.*;
 import java.util.*;
 
+import play.Logger;
+
 @Entity
 @Table(name = "profile")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
@@ -323,6 +325,7 @@ public class Profile extends Model {
     }
 
     public void resetStory() {
+      Logger.info("Profile Reset !!!!");
         this.setCurrentStory(null);
         this.setCurrentScroll(null);
         this.setTutorialDone(false);

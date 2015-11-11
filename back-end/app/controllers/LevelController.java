@@ -6,6 +6,7 @@ import dao.StoryChallengeDAO;
 import models.Profile;
 import models.StoryChallenge;
 
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
@@ -38,10 +39,10 @@ public class LevelController extends Controller {
     }
 
     public Result reset() {
+        Logger.info("Reset !!!!");
         Profile profile = ProfileDAO.getByUsername(request().username());
 
-        profile.setCurrentStory(StoryChallengeDAO.getFirstLevel());
-        profile.setTutorialDone(false);
+        profile.resetStory();
 
         profile.update();
 

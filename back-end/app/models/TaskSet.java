@@ -131,18 +131,6 @@ public class TaskSet extends Model {
 //  getter & setter methods
 //////////////////////////////////////////////////
 
-
-    @Override
-    public String toString() {
-        String relationsFormatted = "";
-        for(int i = 0; i < this.tableDefinitions.size(); i++)  {
-            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.tableDefinitions.get(i));
-            if(i < this.tableDefinitions.size() - 1)
-                relationsFormatted = relationsFormatted + ",";
-        }
-        return relationsFormatted;
-    }
-
     public long getId() {
         return this.id;
     }
@@ -258,5 +246,18 @@ public class TaskSet extends Model {
             answer &= submits.contains(task.getId());
         }
         return answer;
+    }
+
+    public String getRelationsFormatted() {
+        String relationsFormatted = "";
+        if(this.getTableDefinitions() == null) {
+            return "";
+        }
+        for(int i = 0; i < this.getTableDefinitions().size(); i++)  {
+            relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.getTableDefinitions().get(i));
+            if(i < this.getTableDefinitions().size() - 1)
+                relationsFormatted = relationsFormatted + ",";
+        }
+        return relationsFormatted;
     }
 }

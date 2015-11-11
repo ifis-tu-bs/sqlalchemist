@@ -7,6 +7,7 @@ import play.Logger;
 import view.AvatarView;
 
 import javax.persistence.PersistenceException;
+import java.util.List;
 
 public class AvatarDAO {
 
@@ -72,4 +73,8 @@ public class AvatarDAO {
   public static Avatar getByName(String name) {
     return Avatar.find.where().eq("name", name).findUnique();
   }
+
+    public static List<Avatar> getAll() {
+        return Avatar.find.all();
+    }
 }

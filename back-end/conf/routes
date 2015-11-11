@@ -76,7 +76,6 @@ GET         /SQL/Homework/                      controllers.SQLController.homewo
 GET         /profile                            controllers.ProfileController.read()
 GET         /profile/character                  controllers.ProfileController.character()
 GET         /profile/avatar/:id                 controllers.ProfileController.avatar(id: Long)
-GET         /profile/reset                      controllers.ProfileController.reset()
 GET         /profile/homework                   controllers.ProfileController.getUserHomeworks()
 GET         /profile/:id                        controllers.ProfileController.view(id: Long)
 

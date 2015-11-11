@@ -4,4 +4,4 @@ DROP COLUMN relations_formatted;
 
 # --- !Downs
 ALTER TABLE taskset
-ADD COLUMN relations_formatted;
+ADD COLUMN relations_formatted TEXT;
