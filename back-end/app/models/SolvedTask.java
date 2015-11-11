@@ -21,11 +21,11 @@ public class SolvedTask extends Model {
     private long id;
 
     @ManyToOne
-    @Column(name = "profile_id")
+    @Column(name = "profile")
     private final Profile profile;
 
     @ManyToOne
-    @Column(name = "task_id")
+    @Column(name = "task")
     private final Task task;
 
     private int solved;

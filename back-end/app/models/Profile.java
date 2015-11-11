@@ -101,7 +101,11 @@ public class Profile extends Model {
     @OneToMany(mappedBy = "profile")
     private  List<Comment> comments;
 
+    @ManyToOne
+    private TaskSet currentTaskSet;
+
     public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+
 
 
 //////////////////////////////////////////////////
@@ -524,5 +528,13 @@ public class Profile extends Model {
 
     public Date getEdited_at() {
         return edited_at;
+    }
+
+    public TaskSet getCurrentTaskSet() {
+        return currentTaskSet;
+    }
+
+    public void setCurrentTaskSet(TaskSet currentTaskSet) {
+        this.currentTaskSet = currentTaskSet;
     }
 }
