@@ -117,9 +117,9 @@ public class HomeWorkView {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy", new DateFormatSymbols(Locale.US));
-
-
-        for (TaskSet taskSet : homeWork.getTaskSets()) {
+        objectNode.put("id",    homeWork.getId());
+      
+      for (TaskSet taskSet : homeWork.getTaskSets()) {
             ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
             taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
 

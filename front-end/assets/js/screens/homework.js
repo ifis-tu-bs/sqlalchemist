@@ -24,11 +24,20 @@ game.HomeworkScreen = me.ScreenObject.extend({
         me.game.world.addChild(homeworkHeader);
         homeworkHeader.write("Homework");
 
+        var chooseHomeworkTitle = new game.TextOutputElement('chooseHomeworkTitle', 100, 5, 0, 25, 1);
+        me.game.world.addChild(chooseHomeworkTitle);
+        chooseHomeworkTitle.writeHTML("choose a homework:");
+
 
         currentHomeworkReply = function(xmlHttpRequest){
             var currentHomework = JSON.parse(xmlHttpRequest.responseText);
             console.log(currentHomework);
+            var expireDate = currentHomework.expire_at.split(".");
 
+            var expireDateObject = new Date();
+
+            var day = new Date();
+            console.log(day.toDateString());
 
 
 
@@ -48,13 +57,30 @@ game.HomeworkScreen = me.ScreenObject.extend({
             $('#previousButton').fadeIn(100);
             me.game.world.addChild(previousHomeworkButton);
 
-            
+
+            this.homeworkButtonClick = function (homeworkId) {
+                return function(){
+                    game.homework.currentHomeworkId = homeworkId;
+                    me.state.change(STATE_HOMEWORKTASKSET);
+                }
+            };
+
+            for (var i = 0; i < currentHomework.length; i++) {
+                var homeworkId = currentHomework[i].id;
+                var homeworkButtons = new game.ClickableElement('homeworkButtonId' + i, "•  " + currentHomework[i].name + "  •",
+                                                                this.homeworkButtonClick(homeworkId), 70, 5, 15, 35 + 6 * i, 1);
+                me.game.world.addChild(homeworkButtons);
+                $('#homeworkButtonId' + i).fadeIn(100);
+
+            }
 
 
 
-            var homeworkTitle = new game.TextOutputElement('homeworkTitle', 50, 5, 10, 25, 1);
-            me.game.world.addChild(homeworkTitle);
-            homeworkTitle.writeHTML(currentHomework.taskSets[0].taskSetName);
+
+
+
+            /**
+
 
             this.taskButtonClick = function (taskId) {
                 return function () {
@@ -89,7 +115,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
 
             var expireDate = new game.TextOutputElement('expireDate', 35, 5, 60, 25, 1);
             me.game.world.addChild(expireDate);
-            expireDate.writeHTML("due to: " + currentHomework.expire_at);
+            expireDate.writeHTML("due to: " + currentHomework.expire_at);*/
 
         };
 
