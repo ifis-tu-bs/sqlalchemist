@@ -91,17 +91,6 @@ public class ProfileController extends Controller {
         return ok(profile.toJsonCharacterState());
     }
 
-
-    public Result reset() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-
-        profile.resetStory();
-
-        profile.update();
-
-        return ok();
-    }
-
     public Result getUserHomeworks() {
         List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
         List<HomeWork> homeWorks = HomeWorkDAO.getHomeWorksForSubmits(submits);
