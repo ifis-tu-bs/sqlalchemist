@@ -253,9 +253,9 @@
 
 
             <div class="container" ng-repeat="table in vm.tables">
-              {{table.tableName}}
+              <b>{{table.tableName}}</b><br>
               <div class="container" ng-repeat="column in table.columns">
-
+                <u ng-if="column.primaryKey">{{column.columnName}}</u><span ng-if="column.primaryKey === false">{{column.columnName}}</span> : <i>{{column.dataType}}</i> <span ng-if="column.foreignKey">-> {{column.foreignKey}}</span>
               </div>
             </div>
           </uib-accordion-group>
