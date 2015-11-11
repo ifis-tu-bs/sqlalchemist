@@ -48,7 +48,7 @@ game.TaskScreen = me.ScreenObject.extend({
         //(id, width, height, left, top, rows)
         textOut          = new game.TextOutputElement('task', 55, 30, 3, 10, 10);
         textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
-        textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 28);
+        textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 32);
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
@@ -439,11 +439,15 @@ game.TaskScreen = me.ScreenObject.extend({
             res = schema;
             console.log("1: ", schema);
             //# wird entfernt, ^ startet einfach so.
-	    	res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
+	    	//res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
+            res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline;">$1</div>');
             console.log("2: ", res);
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
             console.log("3: ", res);
-	    	res = res.replace(/\n/gmi, '<br>');
+	    	//res = res.replace(/\n/gmi, '<br />');
+            res = res.replace(/$/gmi, '<br />' + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            res = res.replace(/}/gmi, '<br />' + ')' + '<br />');
+            res = res.replace(/{/gmi, '(');
             console.log("4: ", res);
 
 	        return res;
