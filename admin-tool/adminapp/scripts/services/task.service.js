@@ -74,7 +74,7 @@
         }
 
         function exportTaskSets(taskSetIds) {
-            return $http.post('/TaskSet/download', taskSetIds).then(function (result) {window.location = 'http://localhost:9000/download/' + result.data}, handleError);
+            return $http.post('/TaskSet/download', taskSetIds).then(function (result) {location.href = 'http://localhost:9000/download/' + result.data}, handleError);
         }
 
         /* Task Controlls */

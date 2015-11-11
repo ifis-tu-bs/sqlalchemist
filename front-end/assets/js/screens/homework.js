@@ -32,15 +32,13 @@ game.HomeworkScreen = me.ScreenObject.extend({
         currentHomeworkReply = function(xmlHttpRequest){
             var currentHomework = JSON.parse(xmlHttpRequest.responseText);
             console.log(currentHomework);
-            var expireDate = currentHomework.expire_at;
-            var res = expireDate.split(' ');
+            var expireDate = currentHomework[0].expire_at;
 
-            var expireDateObject = new Date(expireDate[0],expireDate[1],expireDate[2]);
+            //var expireDateObject = new Date(expireDate[0],expireDate[1],expireDate[2]);
 
             var day = new Date();
             console.log(day.toDateString());
             console.log(expireDate);
-            console.log(res);
 
 
 

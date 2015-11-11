@@ -132,6 +132,7 @@ public class HomeWorkView {
         objectNode.set("taskSets",  arrayNode);
         objectNode.put("start_at",  sdf.format(homeWork.getStart_at()));
         objectNode.put("expire_at", sdf.format(homeWork.getExpire_at()));
+        objectNode.put("expired",   homeWork.getExpire_at().compareTo(new Date()) < 0);
 
         return objectNode;
     }

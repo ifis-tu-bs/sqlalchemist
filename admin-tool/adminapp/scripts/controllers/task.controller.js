@@ -215,8 +215,14 @@ angular
                     return TaskService.exportTaskSets({taskSetIds: taskSetIds});
                 }, null
             );
+        }
 
-
+        $scope.importTaskSets = function() {
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'adminapp/templates/importTaskSet.template.html',
+                    controller: 'importTaskSetController'
+            });
         }
 
         $scope.saveSelectedTaskSet = function () {
