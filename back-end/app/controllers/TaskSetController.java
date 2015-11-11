@@ -1,5 +1,7 @@
 package controllers;
 
+import com.fasterxml.jackson.core.*;
+import com.fasterxml.jackson.databind.MappingJsonFactory;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
@@ -21,9 +23,9 @@ import play.mvc.Result;
 import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -255,15 +257,39 @@ public class TaskSetController extends Controller {
         return ok(CommentView.toJson(comment));
     }
 
+    @Security.Authenticated(CreatorSecured.class)
     public Result upload() {
+        Profile profile = ProfileDAO.getByUsername(request().username());
+
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart uploadJson = body.getFile("uploadJson");
+
+        try {
+            JsonParser jsonParser = new MappingJsonFactory().createParser(uploadJson.getFile());
+
+            JsonNode node = jsonParser.readValueAsTree();
+
+            for (JsonNode taskSetNode : node) {
+                TaskSet taskSet = TaskSetView.fromJsonForm(profile, taskSetNode);
+
+                taskSet.save();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (JsonParseException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
 
         Logger.info("Have following file: " + uploadJson.getFilename());
 
 
 
-        return ok();
+        return redirect("/admin#/task");
     }
 
 
@@ -284,7 +310,7 @@ public class TaskSetController extends Controller {
 
         File outputFile = new File("public/download/" + fileName);
         try {
-            outputFile.createNewFile();
+            //outputFile.createNewFile();
 
             PrintWriter printWriter = new PrintWriter(outputFile);
 
