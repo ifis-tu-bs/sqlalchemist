@@ -606,8 +606,8 @@ function ajaxSendHighscoreCoinsRequest(onload) {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Homework ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // ~ GET //homework/tasks
-function ajaxSendCurrentHomeworkRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/Homework/student/" + id + "/", onload);
+function ajaxSendCurrentHomeworkRequest(onload) {
+    var xmlHttpRequest = createRequest("GET", "/Homework/student/", onload);
 
     xmlHttpRequest.send();
 

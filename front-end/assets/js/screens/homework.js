@@ -24,26 +24,33 @@ game.HomeworkScreen = me.ScreenObject.extend({
         me.game.world.addChild(homeworkHeader);
         homeworkHeader.write("Homework");
 
-        this.showCurrentHomework = function () {
-            console.log("current");
-        };
-
-        var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 3, 42, 14, 1);
-        $('#currentButton').fadeIn(100);
-        me.game.world.addChild(currentHomeworkButton);
-
-        this.showPreviousHomework = function () {
-            console.log("previous");
-        };
-
-        var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 3, 50, 14, 1);
-        $('#previousButton').fadeIn(100);
-        me.game.world.addChild(previousHomeworkButton);
-
 
         currentHomeworkReply = function(xmlHttpRequest){
             var currentHomework = JSON.parse(xmlHttpRequest.responseText);
             console.log(currentHomework);
+
+
+
+
+            this.showCurrentHomework = function () {
+                console.log("current");
+            };
+
+            var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 3, 42, 14, 1);
+            $('#currentButton').fadeIn(100);
+            me.game.world.addChild(currentHomeworkButton);
+
+            this.showPreviousHomework = function () {
+                console.log("previous");
+            };
+
+            var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 3, 50, 14, 1);
+            $('#previousButton').fadeIn(100);
+            me.game.world.addChild(previousHomeworkButton);
+
+            
+
+
 
             var homeworkTitle = new game.TextOutputElement('homeworkTitle', 50, 5, 10, 25, 1);
             me.game.world.addChild(homeworkTitle);
@@ -84,34 +91,9 @@ game.HomeworkScreen = me.ScreenObject.extend({
             me.game.world.addChild(expireDate);
             expireDate.writeHTML("due to: " + currentHomework.expire_at);
 
-            //27,31
-
-            this.showPreviousTaskSet = function () {
-                console.log("left chalk button");
-            };
-
-
-            var previousTaskSetButton = new game.ClickableElement('previousTaskSetButton', '', this.showPreviousTaskSet, 3.5, 7, 7, 55, 1);
-            $('#previousTaskSetButton').fadeIn(100);
-            me.game.world.addChild(previousTaskSetButton);
-            previousTaskSetButton.setImage("assets/data/img/buttons/chalk_arrow_left.png", "chalkLeftImage");
-
-
-
-            this.showNextTaskSet = function () {
-                console.log("right chalk button");
-            };
-
-            var nextTaskSetButton = new game.ClickableElement('nextTaskSetButton', '', this.showNextTaskSet, 3.5, 7, 89.5, 55, 1);
-            $('#nextTaskSetButton').fadeIn(100);
-            me.game.world.addChild(nextTaskSetButton);
-            nextTaskSetButton.setImage("assets/data/img/buttons/chalk_arrow_right.png", "chalkRightImage");
-
-
         };
 
-        var id = game.data.profile.id;
-        ajaxSendCurrentHomeworkRequest(id, currentHomeworkReply);
+        ajaxSendCurrentHomeworkRequest(currentHomeworkReply);
 
 
 
