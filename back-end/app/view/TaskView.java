@@ -4,10 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import dao.SolvedTaskDAO;
-import models.Comment;
-import models.Profile;
-import models.Rating;
-import models.Task;
+import models.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.libs.Json;
@@ -48,7 +45,7 @@ public class TaskView {
         json.put("id",                  task.getId());
         json.put("taskName",            task.getTaskName());
         json.put("taskSet",             task.getTaskSet().getId());
-        json.put("relationsFormatted",  task.getTaskSet().toString());
+        json.put("relationsFormatted",  task.getTaskSet().getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("refStatement",        task.getRefStatement());
         json.put("evaluationStrategy",  task.getEvaluationStrategy());
@@ -70,10 +67,11 @@ public class TaskView {
     public static ObjectNode toJsonExercise(Task task) {
         ObjectNode  json        = Json.newObject();
         Rating      rating_sum  = Rating.sum(task.getRatings());
+        TaskSet     taskSet     = task.getTaskSet();
 
         json.put("id",                  task.getId());
         json.put("taskName",            task.getTaskName());
-        json.put("relationsFormatted",  task.getTaskSet().toString());
+        json.put("relationsFormatted",  taskSet.getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("points",              task.getPoints());
         json.put("requiredTerm",        task.getRequiredTerm());

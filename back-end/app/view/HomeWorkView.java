@@ -116,7 +116,7 @@ public class HomeWorkView {
     public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.mm.yyyy", new DateFormatSymbols(Locale.US));
+        SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy", new DateFormatSymbols(Locale.US));
 
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
@@ -131,6 +131,7 @@ public class HomeWorkView {
         objectNode.set("taskSets",  arrayNode);
         objectNode.put("start_at",  sdf.format(homeWork.getStart_at()));
         objectNode.put("expire_at", sdf.format(homeWork.getExpire_at()));
+        objectNode.put("expired",   homeWork.getExpire_at().compareTo(new Date()) < 0);
 
         return objectNode;
     }
