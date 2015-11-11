@@ -135,4 +135,13 @@ public class HomeWorkView {
         return objectNode;
     }
 
+    public static ArrayNode toJsonExerciseForProfile(List<HomeWork> homeWorks, Profile profile) {
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (HomeWork homeWork : homeWorks) {
+            arrayNode.add(toJsonExerciseForProfile(homeWork, profile));
+        }
+
+        return arrayNode;
+    }
 }

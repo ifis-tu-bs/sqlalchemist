@@ -92,8 +92,7 @@ class DBConnection{
             statement = statement + " );";
 
 
-
-            Logger.debug(statement) ;
+            dataGenSetInsertStatement = dataGenSetInsertStatement + ");";
             Logger.debug("DBConnection.create - dataGenInsertStatement: " + dataGenSetInsertStatement);
 
             // Execute the Statements

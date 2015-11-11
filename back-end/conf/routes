@@ -47,6 +47,8 @@ PATCH       /TaskSet/:id/                       controllers.TaskSetController.up
 DELETE      /TaskSet/:id/                       controllers.TaskSetController.delete(id: Long)
 POST        /TaskSet/:id/rate                   controllers.TaskSetController.rate(id: Long)
 POST        /TaskSet/:id/comment                controllers.TaskSetController.comment(id: Long)
+
+#POST        /TaskSet/upload                     controllers.TaskSetController.upload()
 POST        /TaskSet/download                   controllers.TaskSetController.download()
 
 GET         /ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
@@ -94,8 +96,7 @@ GET         /highscore/coins                    controllers.HighScoreController.
 #HomeWorkController
 GET         /Homework/                          controllers.HomeWorkController.getAll()
 POST        /Homework/                          controllers.HomeWorkController.create()
-GET         /Homework/student/                  controllers.HomeWorkController.getAllStudent()
-GET         /Homework/student/:id/              controllers.HomeWorkController.getHomeWorkForCurrentSession(id: Long)
+GET         /Homework/student/                  controllers.HomeWorkController.getHomeWorkForCurrentSession()
 #GET         /homework/students                 controllers.HomeWorkController.getAllStudents()
 DELETE      /Homework/:id/                      controllers.HomeWorkController.delete(id: Long)
 POST        /Homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()

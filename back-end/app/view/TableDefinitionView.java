@@ -55,7 +55,7 @@ public class TableDefinitionView {
                 columns = columns + ",";
         }
 
-        return tableDefinition.getTableName() + "(" + columns + ")";
+        return "#" + tableDefinition.getTableName() + "{" + columns + "}";
     }
 
 }

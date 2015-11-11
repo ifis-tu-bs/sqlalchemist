@@ -36,7 +36,7 @@ public class UserBootstrap {
 
             List<Scroll> scrolls = ScrollDAO.getAll();
             for(Scroll scroll : scrolls) {
-                ScrollCollectionDAO.setActive(nicole.getProfile(), scroll);
+                ScrollCollectionDAO.add(nicole.getProfile(), scroll);
             }
 
             User student = UserDAO.create("student", "student@test.de", "1234", User.ROLE_USER);
