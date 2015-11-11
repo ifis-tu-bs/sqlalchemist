@@ -58,4 +58,7 @@ public class MapDAO {
           return Map.find.where().eq("level", level).findList();
       }
 
+    public static List<Map> getAll() {
+        return Map.find.all();
+    }
 }
