@@ -19,7 +19,7 @@ public class UserBootstrap {
     public static void init() {
         // Init residual Classes
         if(play.api.Play.isProd(play.api.Play.current())) {
-            String username = Play.application().configuration().getString("sqlalchemist");
+            String username = "sqlalchemist";
             String email = Play.application().configuration().getString("admin.email");
             String password = Play.application().configuration().getString("admin.password");
             UserDAO.create(username, email, password, User.ROLE_ADMIN);

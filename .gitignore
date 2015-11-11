@@ -46,3 +46,4 @@ admin-tool/.idea
 admin-tool/build
 admin-tool/node_modules
 admin-tool/*.iml
+back-end/conf/evolutions/default/

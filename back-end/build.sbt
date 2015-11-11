@@ -33,7 +33,7 @@ maintainer in Linux := "Fabio Mazzone<fabio.mazzone@me.com>"
 
 packageSummary in Linux := "SQL Alchemist"
 
-debianPackageDependencies in Debian ++= Seq("nginx", "mysql-server")
+debianPackageDependencies in Debian ++= Seq("nginx", "mysql-server-5.6")
 
 serverLoading in Debian := Upstart
 
