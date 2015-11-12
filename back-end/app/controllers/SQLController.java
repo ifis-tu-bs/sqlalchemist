@@ -1,5 +1,6 @@
 package controllers;
 
+import akka.actor.Nobody;
 import dao.*;
 
 import models.*;
@@ -174,28 +175,82 @@ public class SQLController extends Controller {
     }
 
 
-    public Result homework(long homeWorkID, long taskSetID, long taskID) {
+    public Result homework(long homeWorkID, long taskID) {
         Profile profile = ProfileDAO.getByUsername(request().username());
         HomeWork homeWork = HomeWorkDAO.getById(homeWorkID);
-        Task task = null;
-        for(TaskSet taskSetI : homeWork.getTaskSets()) {
-            if(taskSetI.getId() == taskSetID) {
-                for (Task taskI : taskSetI.getTasks()) {
-                    if (taskI.getId() == taskID) {
-                        task = taskI;
-                        break;
-                    }
-                }
+        Task task = TaskDAO.getById(taskID);
+        boolean contains = false;
+        for(TaskSet taskSet : homeWork.getTaskSets()) {
+            if(taskSet.contains(task)) {
+                contains = true;
+                break;
             }
         }
 
-        if(task == null) {
+        if(!contains) {
             Logger.info("Keine Task gefunden :(");
             return badRequest("Keine Task gefunden :(");
         }
 
-
+        profile.setCurrentHomeWork(homeWork);
+        profile.update();
         return ok(TaskView.toJsonExercise(task));
+    }
+
+    public Result homeworkSolve(long TaskID, boolean submit) {
+        Profile         profile         = ProfileDAO.getByUsername(request().username());
+        HomeWork        homeWork        = profile.getCurrentHomeWork();
+        Task            task            = TaskDAO.getById(TaskID);
+        JsonNode        body            = request().body().asJson();
+        UserStatement   userStatement   = UserStatementView.fromJsonForm(body);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homeWork, task);
+
+        if (homeWork == null) {
+            Logger.warn("No active HomeWork");
+            return badRequest("No active HomeWork");
+        }
+        if (userStatement == null) {
+            Logger.warn("TaskController.triviaSolve - invalid json body");
+            return badRequest("invalid json body");
+        }
+        if(task == null) {
+            Logger.warn("TaskController.triviaSolve - no task found");
+            return badRequest("no task found");
+        }
+        if (submittedHomeWork == null) {
+            submittedHomeWork = SubmittedHomeWorkDAO.create(profile, task, homeWork);
+            if(submittedHomeWork == null) {
+                Logger.warn("Cant Create SubmittedHomeWork object");
+                return badRequest("Cant Create SubmittedHomeWork object");
+            }
+        }
+
+        SQLResult   sqlResult   = SQLParser.checkUserStatement(task, userStatement);
+        ObjectNode  resultNode;
+        Result      result;
+        boolean     status;
+
+        if(sqlResult.getType() == SQLResult.SEMANTICS) {
+            status = false;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement);
+            result = badRequest(resultNode);
+        } else {
+            status = true;
+            resultNode = SQLResultView.toJson(sqlResult, userStatement, 0);
+            result = ok(resultNode);
+        }
+
+        profile.addStatement();
+        profile.addTime(userStatement.getTime());
+
+        if (submit) {
+            submittedHomeWork.submit(status, userStatement.getStatement());
+        } else {
+            submittedHomeWork.addSyntaxCheck();
+        }
+
+        submittedHomeWork.update();
+        return result;
     }
 
     /*

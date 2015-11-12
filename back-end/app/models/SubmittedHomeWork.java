@@ -55,18 +55,13 @@ public class SubmittedHomeWork extends Model {
     public SubmittedHomeWork (
             Profile profile,
             Task task,
-            HomeWork homeWork,
-            boolean solve,
-            String statement) {
+            HomeWork homeWork) {
 
         this.profile = profile;
         this.task = task;
         this.homeWork = homeWork;
         this.syntaxChecksDone = 0;
         this.semanticChecksDone = 0;
-
-        this.solve = solve;
-        this.statement = statement;
     }
 
 //////////////////////////////////////////////////
@@ -129,5 +124,10 @@ public class SubmittedHomeWork extends Model {
 
     public void setSolve(boolean solve) {
       this.solve = solve;
+    }
+
+    public void submit(boolean solved, String statement) {
+        this.solve = solved;
+        this.statement = statement;
     }
 }

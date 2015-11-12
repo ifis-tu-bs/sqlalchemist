@@ -86,6 +86,9 @@ public class UserController extends Controller {
 
         User user;
 
+        if(role <= 0) {
+            role = 1;
+        }
         try {
             user = UserDAO.create(username, email, password, role);
         } catch (IllegalArgumentException ex) {
