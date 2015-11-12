@@ -136,7 +136,6 @@ public class TaskSetController extends Controller {
      */
     @Security.Authenticated(CreatorSecured.class)
     public Result update(Long id) {
-        //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
 
@@ -221,6 +220,15 @@ public class TaskSetController extends Controller {
         }
 
         taskSet.addRating(rating);
+        taskSet.update();
+
+        Rating      rating_sum  = Rating.sum(taskSet.getRatings());
+        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
+            taskSet.setAvailable(false);
+        } else if(rating_sum.getPositiveRatings() >= 200) {
+            taskSet.setAvailable(true);
+        }
+
         taskSet.update();
 
         return redirect(routes.TaskSetController.view(taskSet.getId()));

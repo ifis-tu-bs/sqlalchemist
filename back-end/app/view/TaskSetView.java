@@ -57,7 +57,7 @@ public class TaskSetView {
         ArrayNode   tableDefNode            = JsonNodeFactory.instance.arrayNode();
         ArrayNode   foreignKeyRelationNode  = JsonNodeFactory.instance.arrayNode();
         ArrayNode   taskNode                = JsonNodeFactory.instance.arrayNode();
-        List<Rating>ratings                 = taskSet.getRatings();
+        Rating      rating                  = Rating.sum(taskSet.getRatings());
         ArrayNode   commentNode             = JsonNodeFactory.instance.arrayNode();
 
 
@@ -69,16 +69,9 @@ public class TaskSetView {
             foreignKeyRelationNode.add(ForeignKeyRelationView.toJson(foreignKeyRelation));
         }
 
-        for(Task task : taskSet.getTasks()) {
-            taskNode.add(TaskView.toJsonList(task));
-            ratings.addAll(task.getRatings());
-        }
-
         for(Comment comment : taskSet.getComments()) {
             commentNode.add(CommentView.toJson(comment));
         }
-
-        Rating      rating_sum  = Rating.sum(ratings);
 
         taskSetJson.put("id",                   taskSet.getId());
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
@@ -88,7 +81,7 @@ public class TaskSetView {
         taskSetJson.set("tasks",                taskNode);
         taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
-        taskSetJson.set("rating",               RatingView.toJson(rating_sum));
+        taskSetJson.set("rating",               RatingView.toJson(rating));
         taskSetJson.set("comments",             commentNode);
         taskSetJson.put("createdAt",            String.valueOf(taskSet.getCreatedAt()));
         taskSetJson.put("updatedAt",            String.valueOf(taskSet.getUpdatedAt()));

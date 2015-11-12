@@ -2,8 +2,10 @@ package bootstrap;
 
 import dao.ProfileDAO;
 
+import dao.TaskDAO;
 import dao.TaskSetDAO;
 import models.Profile;
+import models.Task;
 import models.TaskSet;
 
 import play.Logger;
@@ -13,6 +15,8 @@ import view.TaskSetView;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import play.libs.Json;
+
+import java.util.List;
 
 /**
  *
@@ -109,6 +113,7 @@ public class TaskSetBootstrap {
             Profile profile = ProfileDAO.getByUsername("sqlalchemist");
 
             TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
+            taskSet.setAvailable(true);
             taskSet.save();
             SQLStatus err;
             if((err = SQLParser.createDB(taskSet)) != null) {
@@ -202,11 +207,19 @@ public class TaskSetBootstrap {
             profile = ProfileDAO.getByUsername("sqlalchemist");
 
             taskSet = TaskSetView.fromJsonForm(profile, node);
+            taskSet.setAvailable(true);
             taskSet.save();
             if((err = SQLParser.createDB(taskSet)) != null) {
                 Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
                 taskSet.delete();
             }
+            List<Task> taskList = TaskDAO.getAll();
+
+            for(Task task : taskList) {
+                task.setAvailable(true);
+                task.update();
+            }
+
             Logger.info("Done initializing");
         }
     }

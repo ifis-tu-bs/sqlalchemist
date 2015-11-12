@@ -104,4 +104,10 @@ public class Rating extends Model {
 
         return rating_sum;
     }
+
+    public void setRating(Rating rating) {
+        this.positiveRatings = rating.positiveRatings;
+        this.editRatings = rating.editRatings;
+        this.negativeRatings = rating.negativeRatings;
+    }
 }

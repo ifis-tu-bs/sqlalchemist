@@ -104,8 +104,10 @@ public class Profile extends Model {
     @ManyToOne
     private TaskSet currentTaskSet;
 
-    public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+    @ManyToOne
+    private HomeWork currentHomeWork;
 
+    public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
 
 
 //////////////////////////////////////////////////
@@ -536,5 +538,13 @@ public class Profile extends Model {
 
     public void setCurrentTaskSet(TaskSet currentTaskSet) {
         this.currentTaskSet = currentTaskSet;
+    }
+
+    public void setCurrentHomeWork(HomeWork currentHomeWork) {
+        this.currentHomeWork = currentHomeWork;
+    }
+
+    public HomeWork getCurrentHomeWork() {
+        return currentHomeWork;
     }
 }

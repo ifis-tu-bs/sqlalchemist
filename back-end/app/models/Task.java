@@ -45,6 +45,7 @@ public class Task extends Model {
             mappedBy = "task")
     private List<Rating>    ratings;
 
+    private boolean available;
 
     private final Date created_at;
     private Date updated_at;
@@ -91,6 +92,8 @@ public class Task extends Model {
         // Initialize Social Components
         this.comments           = new ArrayList<>();
         this.ratings            = new ArrayList<>();
+
+        this.available          = false;
 
         this.created_at         = new Date();
         this.updated_at         = new Date();
@@ -200,20 +203,17 @@ public class Task extends Model {
         if(this.ratings != null && this.ratings.size() > 0) {
             for(Rating ratingI : this.ratings) {
                 if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
-                    this.ratings.remove(ratingI);
-                    this.update();
-                    ratingI.delete();
+                    ratingI.setRating(rating);
+                    ratingI.update();
                     break;
                 }
             }
         } else {
             this.ratings = new ArrayList<>();
+            this.ratings.add(rating);
+            rating.setTask(this);
+            rating.save();
         }
-
-        this.ratings.add(rating);
-        rating.setTask(this);
-        rating.save();
-        this.update();
     }
 
     public List<Comment> getComments() {
@@ -240,5 +240,9 @@ public class Task extends Model {
 
     public int getScore() {
         return (this.points * 100) * 50;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
