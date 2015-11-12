@@ -147,21 +147,31 @@ public class User extends Model {
 
         node.put("id",          this.id);
 
-        switch (this.role) {
-            case ROLE_USER:
-                node.put("role",    "User");
-                break;
-            case ROLE_CREATOR:
-                node.put("role",    "Creator");
-                break;
-            case ROLE_ADMIN:
-                node.put("role",    "Admin");
-                break;
-        }
+        node.put("role",        this.getUserRoleString());
 
         node.put("email",       this.email);
 
         return node;
+    }
+
+    private String getUserRoleString() {
+        String userRole = "";
+        switch (this.role) {
+            case ROLE_USER:
+                userRole = "User";
+                break;
+            case ROLE_CREATOR:
+                userRole = "Creator";
+                break;
+            case ROLE_ADMIN:
+                userRole = "Admin";
+                break;
+        }
+
+        if(this.isStudent)
+            userRole += " & Student";
+
+        return userRole;
     }
 
 

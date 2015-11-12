@@ -156,6 +156,16 @@ public class TaskController extends Controller {
 
         task.addRating(rating);
         task.update();
+
+        Rating      rating_sum  = Rating.sum(task.getRatings());
+        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
+            task.setAvailable(false);
+        } else if(rating_sum.getPositiveRatings() >= 200) {
+            task.setAvailable(true);
+        }
+
+        task.update();
+
         return redirect(routes.TaskController.view(task.getId()));
     }
 

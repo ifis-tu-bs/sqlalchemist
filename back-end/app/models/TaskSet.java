@@ -44,6 +44,8 @@ public class TaskSet extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Comment> comments;
 
+    private boolean available;
+
     private final Date createdAt;
     private Date updatedAt;
 
@@ -76,12 +78,14 @@ public class TaskSet extends Model {
         this.creator                = creator;
         this.isHomework             = isHomeWork;
 
+        this.available              = false;
+
         // Initialize Social Components
         this.ratings                = new ArrayList<>();
         this.comments               = new ArrayList<>();
 
-        this.updatedAt = new Date();
-        this.createdAt = new Date();
+        this.updatedAt              = new Date();
+        this.createdAt              = new Date();
     }
 
     @Override
@@ -194,19 +198,17 @@ public class TaskSet extends Model {
         if(this.ratings != null && this.ratings.size() > 0) {
             for(Rating ratingI : this.ratings) {
                 if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
-                    this.ratings.remove(ratingI);
-                    this.update();
-                    ratingI.delete();
+                    ratingI.setRating(rating);
+                    ratingI.update();
                     break;
                 }
             }
         } else {
             this.ratings = new ArrayList<>();
+            this.ratings.add(rating);
+            rating.setTaskSet(this);
+            rating.save();
         }
-
-        this.ratings.add(rating);
-        rating.setTaskSet(this);
-        rating.save();
     }
 
     public List<Comment> getComments() {
@@ -259,5 +261,9 @@ public class TaskSet extends Model {
                 relationsFormatted = relationsFormatted + ",";
         }
         return relationsFormatted;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

@@ -74,22 +74,22 @@ public class UserDAO {
     return userProfile.getUser();
   }
 
-  private static User getByY_ID(String y_ID) {
-    if(y_ID == null) {
-      return null;
+    private static User getByY_ID(String y_ID) {
+        if(y_ID == null) {
+            return null;
+        }
+        return User.find.where().eq("y_ID",y_ID).findUnique();
     }
-    return User.find.where().eq("y_ID",y_ID).findUnique();
-  }
 
-  public static List<User> getAllStudendts() {
-    List<User> studentList = User.find.where().eq("isStudent", true).findList();
-    if (studentList.size() == 0) {
-      return null;
+    public static List<User> getAllStudendts() {
+        List<User> studentList = User.find.where().eq("isStudent", true).findList();
+        if (studentList.size() == 0) {
+            return null;
+        }
+        return studentList;
     }
-    return studentList;
-  }
 
-  public static List<User> getAllUsers() {
+    public static List<User> getAllUsers() {
     return User.find.all();
   }
 
