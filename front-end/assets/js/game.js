@@ -103,7 +103,7 @@ var game = {
         ]
     },
     homework: {
-        currentHomeworkId: 0
+        currentHomeworkIndex: 0
     },
 
 

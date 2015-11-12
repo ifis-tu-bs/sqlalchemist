@@ -24,99 +24,56 @@ game.HomeworkScreen = me.ScreenObject.extend({
         me.game.world.addChild(homeworkHeader);
         homeworkHeader.write("Homework");
 
-        var chooseHomeworkTitle = new game.TextOutputElement('chooseHomeworkTitle', 100, 5, 0, 25, 1);
+        var chooseHomeworkTitle = new game.TextOutputElement('chooseHomeworkTitle', 100, 5, 0, 16, 1);
         me.game.world.addChild(chooseHomeworkTitle);
         chooseHomeworkTitle.writeHTML("choose a homework:");
 
 
         currentHomeworkReply = function(xmlHttpRequest){
-            var currentHomework = JSON.parse(xmlHttpRequest.responseText);
-            console.log(currentHomework);
-            var expireDate = currentHomework[0].expire_at;
+            var homeworks = JSON.parse(xmlHttpRequest.responseText);
+            console.log(homeworks);
 
-            //var expireDateObject = new Date(expireDate[0],expireDate[1],expireDate[2]);
+            function homeworkButtonClick(homeworkIndex) {
+                return function(){
+                    game.homework.currentHomeworkIndex = homeworkIndex;
+                    me.state.change(STATE_HOMEWORKTASKSET);
+                }
+            }
 
-            var day = new Date();
-            console.log(day.toDateString());
-            console.log(expireDate);
-
-
+            for (var i = 0; i < homeworks.length; i++) {
+                if (!homeworks[i].expired) {
+                    var currentHomeworkButtons = new game.ClickableElement('currentHomeworkButtonId' + i, "•  " + homeworks[i].name + "  •",
+                        homeworkButtonClick(i), 70, 5, 15, 35 + 6 * i, 1);
+                    me.game.world.addChild(currentHomeworkButtons);
+                }
+                if (homeworks[i].expired) {
+                    var previousHomeworkButtons = new game.ClickableElement('previousHomeworkButtonId' + i, "•  " + homeworks[i].name + "  •",
+                        homeworkButtonClick(i), 70, 5, 15, 35 + 6 * i, 1);
+                    me.game.world.addChild(previousHomeworkButtons);
+                }
+            }
 
             this.showCurrentHomework = function () {
+                $("[id*='previousHomeworkButtonId']").hide();
+                $("[id*='currentHomeworkButtonId']").fadeIn();
                 console.log("current");
             };
 
-            var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 3, 42, 14, 1);
+            var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 3, 42, 25, 1);
             $('#currentButton').fadeIn(100);
             me.game.world.addChild(currentHomeworkButton);
 
             this.showPreviousHomework = function () {
+                $("[id*='currentHomeworkButtonId']").hide();
+                $("[id*='previousHomeworkButtonId']").fadeIn();
                 console.log("previous");
             };
 
-            var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 3, 50, 14, 1);
+            var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 3, 50, 25, 1);
             $('#previousButton').fadeIn(100);
             me.game.world.addChild(previousHomeworkButton);
 
-
-            this.homeworkButtonClick = function (homeworkId) {
-                return function(){
-                    game.homework.currentHomeworkId = homeworkId;
-                    me.state.change(STATE_HOMEWORKTASKSET);
-                }
-            };
-
-            for (var i = 0; i < currentHomework.length; i++) {
-                var homeworkId = currentHomework[i].id;
-                var homeworkButtons = new game.ClickableElement('homeworkButtonId' + i, "•  " + currentHomework[i].name + "  •",
-                                                                this.homeworkButtonClick(homeworkId), 70, 5, 15, 35 + 6 * i, 1);
-                me.game.world.addChild(homeworkButtons);
-                $('#homeworkButtonId' + i).fadeIn(100);
-
-            }
-
-
-
-
-
-
-            /**
-
-
-            this.taskButtonClick = function (taskId) {
-                return function () {
-                    console.log(taskId);
-                }
-
-            };
-
-            var donetask = 0;
-
-            for (var i = 0; i < currentHomework.taskSets[0].tasks.length; i++ ) {
-                console.log(currentHomework.taskSets[0].tasks.id);
-                var taskId = currentHomework.taskSets[0].tasks.id;
-                var taskButtons = new game.ClickableElement('taskButtonId' + i, "•" + currentHomework.taskSets[0].tasks[i].name,
-                                                            this.taskButtonClick(taskId), 35, 5, 15, 35 + 6 * i, 1);
-                me.game.world.addChild(taskButtons);
-                $('#taskButtonId' + i).fadeIn(100);
-
-                if (!currentHomework.taskSets[0].tasks[i].done) {
-                    var checkbox = new game.BackgroundElement('checkboxId' + i, 3.5, 5, 70, 35 + 6 * i, 'none');
-                    checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
-                    me.game.world.addChild(checkbox);
-                    $('#checkboxId' + i).fadeIn(100);
-                    donetask++;
-                }
-
-            }
-
-            var doneCounter = new game.TextOutputElement('doneCounter', 25, 5, 38, 25, 1);
-            me.game.world.addChild(doneCounter);
-            doneCounter.writeHTML(donetask + "/" + currentHomework.taskSets[0].tasks.length);
-
-            var expireDate = new game.TextOutputElement('expireDate', 35, 5, 60, 25, 1);
-            me.game.world.addChild(expireDate);
-            expireDate.writeHTML("due to: " + currentHomework.expire_at);*/
+            this.showCurrentHomework();
 
         };
 
