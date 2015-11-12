@@ -369,9 +369,27 @@ function ajaxSendTaskHomeworkRequest(onload) {
     return xmlHttpRequest;
 }
 
-// ~ POST /SQL/Homework/:id ~ id: HomeworkID, jsonData: JSON.task.solve
-function ajaxSendTaskHomeworkSolveRequest(HomeworkId, TaskId, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
+// ~ GET /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+function ajaxSendTaskHomeworkRequest(HomeworkId, TaskId, onload) {
+    var xmlHttpRequest = createRequest("GET", "/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
+// ~ POST /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+function ajaxSendTaskHomeworkSolveRequest( TaskId, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + TaskId + "/submit", onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
+// ~ POST /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+function ajaxSendTaskHomeworkSyntaxSolveRequest( TaskId, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + TaskId + "/" , onload);
 
     xmlHttpRequest.send(jsonData);
 
