@@ -174,11 +174,28 @@ public class SQLController extends Controller {
     }
 
 
-    public Result homework() {
-        //Profile profile = ProfileDAO.getByUsername(request().username());
-        //Task task = TaskDAO.getByChallengeID(1L, profile);
+    public Result homework(long homeWorkID, long taskSetID, long taskID) {
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        HomeWork homeWork = HomeWorkDAO.getById(homeWorkID);
+        Task task = null;
+        for(TaskSet taskSetI : homeWork.getTaskSets()) {
+            if(taskSetI.getId() == taskSetID) {
+                for (Task taskI : taskSetI.getTasks()) {
+                    if (taskI.getId() == taskID) {
+                        task = taskI;
+                        break;
+                    }
+                }
+            }
+        }
 
-        return badRequest("not implemented yet");
+        if(task == null) {
+            Logger.info("Keine Task gefunden :(");
+            return badRequest("Keine Task gefunden :(");
+        }
+
+
+        return ok(TaskView.toJsonExercise(task));
     }
 
     /*

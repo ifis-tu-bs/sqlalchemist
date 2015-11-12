@@ -70,7 +70,7 @@ public class TaskView {
         TaskSet     taskSet     = task.getTaskSet();
 
         json.put("id",                  task.getId());
-        json.put("taskName",            task.getTaskName());
+        json.put("name",            task.getTaskName());
         json.put("relationsFormatted",  taskSet.getRelationsFormatted());
         json.put("taskText",            task.getTaskText());
         json.put("points",              task.getPoints());
@@ -100,11 +100,11 @@ public class TaskView {
      * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
      */
     public static ObjectNode toJsonHomeWorkForProfile(Task task, Profile profile) {
-        ObjectNode json = Json.newObject();
+        ObjectNode json = toJsonExercise(task);
 
-        json.put("id",          task.getId());
-        json.put("name",        task.getTaskName());
+
         json.put("done",        SolvedTaskDAO.getByProfileAndTask(profile, task) != null);
+
 
         return json;
     }
