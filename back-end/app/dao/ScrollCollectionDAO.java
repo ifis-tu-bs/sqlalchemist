@@ -138,9 +138,9 @@ public class ScrollCollectionDAO {
       }
 
       public static void reset(Profile profile) {
+          Logger.info("ScrollCollection Reset !!!!");
           List<ScrollCollection> scrollCollectionList = ScrollCollection.find.where().eq("profile", profile).findList();
-
+          Logger.info("Size: " + scrollCollectionList.size());
           scrollCollectionList.forEach(models.ScrollCollection::delete);
-
       }
 }
