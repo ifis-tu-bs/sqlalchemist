@@ -8,22 +8,29 @@ game.SettingsScreen = me.ScreenObject.extend({
         var backgroundsettings = new game.BackgroundElement('backgroundsettings', 100, 100, 0, 0, 'none');
         backgroundsettings.setImage("assets/data/img/gui/settings_screen.png", "back");
         me.game.world.addChild(backgroundsettings);
-        $("#backgroundsettings").fadeIn(100);
 
         var settingsBackgroundHeader = new game.TextOutputElement('settingsHeaderId', 40, 10, 30, 3, 1);
         me.game.world.addChild(settingsBackgroundHeader);
         settingsBackgroundHeader.writeHTML("SETTINGS");
 
-        /**
-         *  add all necessary buttons to screen
-         */
-        this.backToMenu = function () {
+        function fadeOutElements(){
             $("#studentRequest").fadeOut(100);
+            $("#backgroundsettings").fadeOut(100);
             $("#storyReset").fadeOut(100);
             $("#changePassword").fadeOut(100);
             $("#backFromSettings").fadeOut(100);
             $("#soundButtonId").fadeOut(100);
             $("#musicButtonId").fadeOut(100);
+            $("#soundsElement").fadeOut(100);
+            $("[id*=Header]").fadeOut(100);
+            $("[id^=keyBindings]").fadeOut(100);
+        }
+
+        /**
+         *  add all necessary buttons to screen
+         */
+        this.backToMenu = function () {
+            fadeOutElements();
             setTimeout( function() {
                 me.state.change(me.state.MENU);
             }, 100);
@@ -32,7 +39,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         var backFromSettings = new game.ClickableElement('backFromSettings','', this.backToMenu, 14.01515, 19.53125, 77, 0, 1);
         backFromSettings.setImage("assets/data/img/buttons/back_button_ink.png", "back");
         me.game.world.addChild(backFromSettings);
-        $("#backFromSettings").fadeIn(100);
 
         var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
         var newPassword       = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);
@@ -91,12 +97,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         SubmitResetClicked = function(){
 
             resetReply = function(xmlHttpRequest){
-                $("#studentRequest").fadeOut(100);
-                $("#storyReset").fadeOut(100);
-                $("#changePassword").fadeOut(100);
-                $("#backFromSettings").fadeOut(100);
-                $("#soundButtonId").fadeOut(100);
-                $("#musicButtonId").fadeOut(100);
+                fadeOutElements();
                 setTimeout( function() {
                     window.location.reload();
                 }, 100);
@@ -195,7 +196,6 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var changePassword = new game.ClickableElement('changePassword', 'change password?', ChangePasswordClicked, 23, 10, 13, 53, 2);
         me.game.world.addChild(changePassword);
-        $("#changePassword").fadeIn(100);
 
 
         this.resetStoryClicked = function(){
@@ -215,7 +215,6 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', this.resetStoryClicked, 23, 10, 13, 70, 2);
         me.game.world.addChild(storyReset);
-        $("#storyReset").fadeIn(100);
 
         this.musicClicked = function () {
             $("[id*='musicImage']").remove();
@@ -241,7 +240,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         } else {
             musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
         }
-        $("#musicButtonId").fadeIn(100);
 
         this.soundClicked = function (){
             $("[id*='soundImage']").remove();
@@ -262,7 +260,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         } else {
             soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
         }
-        $("#soundButtonId").fadeIn(100);
 
         var soundsElement = new game.TextOutputElement('soundsElement', 15, 20, 15, 26, 4);
         me.game.world.addChild(soundsElement);
@@ -289,3 +286,12 @@ game.SettingsScreen = me.ScreenObject.extend({
     }
 
 });
+
+
+/**
+ $("#soundsElement")
+ [id*=Header]
+ [id^=keyBindings]
+ *
+ *
+ * */

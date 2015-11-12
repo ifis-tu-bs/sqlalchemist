@@ -11,7 +11,6 @@ game.ProfileScreen = me.ScreenObject.extend({
         var backgroundProfile = new game.BackgroundElement('backgroundProfileId', 100, 100, 0, 0, 'none');
         backgroundProfile.setImage("assets/data/img/gui/profile_screen.png", "backgroundprofile");
         me.game.world.addChild(backgroundProfile);
-        $("#backgroundProfileId").fadeIn(100);
 
         /**
          * Create button for state change back to the menu with corresponding callback function.
@@ -27,7 +26,6 @@ game.ProfileScreen = me.ScreenObject.extend({
         var backFromProfile = new game.ClickableElement('backFromProfile','', this.backToMenu, 18.1818, 17.7083, 72, -5, 1);
         backFromProfile.setImage("assets/data/img/buttons/new_back_button.png", "back");
         me.game.world.addChild(backFromProfile);
-        $("#backFromProfile").fadeIn(100);
 
 
         /**
@@ -75,12 +73,10 @@ game.ProfileScreen = me.ScreenObject.extend({
                 if (!isTeam) {
                     var avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                    $("#avatar").fadeIn(100);
                     me.game.world.addChild(avatar);
                 } else {
                     var avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                    $("#avatar").fadeIn(100);
                     me.game.world.addChild(avatar);
                 }
 

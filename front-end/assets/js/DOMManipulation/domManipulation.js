@@ -426,6 +426,7 @@ game.TextOutputElement = me.Renderable.extend ({
 
         this.elem.id             = id;
         this.elem.style.position = 'absolute';
+        this.elem.style.display  = 'none';
         
         this.wrapper.style.width = '100%';
         this.wrapper.style.height = '100%';
@@ -447,6 +448,8 @@ game.TextOutputElement = me.Renderable.extend ({
         // append nodes
         this.elem.appendChild(this.wrapper);
         div.appendChild(this.elem);
+
+        $("#" + id).fadeIn(100);
 
     },
 
@@ -618,6 +621,8 @@ game.ClickableElement = me.Renderable.extend ({
         // make element clickable
         myAddEvent(this.elem, 'click', callback);
 
+        $("#" + id).fadeIn(100);
+
     },
 
     /**
@@ -735,10 +740,12 @@ game.BackgroundElement = me.Renderable.extend ({
         this.visibility = true;
 
         //display background
-        this.elem.style.display = display;
+        this.elem.style.display = 'none';
 
         // append child
         parent.appendChild(this.elem);
+
+        $("#" + id).fadeIn();
 
     },
 

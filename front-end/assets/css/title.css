@@ -1,7 +1,18 @@
+[id^=Student], [id^=Button], [id^=Image] {
+    background-color : transparent;
+    border-style : none;
+    color : transparent;
+    cursor : pointer;
+    overflow : hidden;
+    position : absolute;
+    text-align : center;
+    vertical-align : middle;
+    z-Index : 4;
+}
+
 #logoutButton {
     background-color : transparent;
     border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
     color : transparent;
     cursor : pointer;
     overflow : hidden;
@@ -10,133 +21,7 @@
     vertical-align : middle;
     z-Index : 4;
 }
-
-#labButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#triviaButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#profileButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#settingsButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#settingsButtonStudent {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#highscoreButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#highscoreButtonStudent {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#shopButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#shopButtonStudent {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#homeworkButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : hidden;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
+#logoutButton:hover, #logoutButton:focus, #logoutButton:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
