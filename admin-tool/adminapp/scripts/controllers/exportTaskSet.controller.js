@@ -23,7 +23,7 @@ angular
         $scope.orderSelectedTaskSetsPredicate = "taskSetName";
 
         var getTaskSets = function () {
-            TaskService.getAllHomeWorkTaskSets().then(
+            TaskService.getAllTaskSets().then(
                 function (result) {
                     $scope.taskSets = result;
 
