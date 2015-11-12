@@ -90,4 +90,8 @@ public class StoryChallengeDAO {
           }
           return challenge;
       }
+
+    public static List<StoryChallenge> getAll() {
+        return StoryChallenge.find.all();
+    }
 }

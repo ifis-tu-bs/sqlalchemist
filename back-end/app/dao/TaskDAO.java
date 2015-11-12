@@ -1,5 +1,7 @@
 package dao;
 
+import com.avaje.ebean.Ebean;
+import com.fasterxml.jackson.databind.deser.std.UntypedObjectDeserializer;
 import helper.Random;
 
 import models.Profile;
@@ -28,34 +30,55 @@ public class TaskDAO {
     /**
      *
      * @param profile       the profile
-     * @param points        the difficulty
+     * @param difficulty    the difficulty
      * @return              an task object that matches to the given parameter
      */
-      public static Task getByDifficulty(Profile profile, int points) {
-          List<Task> TaskList           = Task.find.where().eq("points", points).findList(); //.eq("is_home_work", false).findList();
-          List<SolvedTask> solvedTasks  = SolvedTaskDAO.getAllDoneTask(profile);
+    public static Task getNewTask(Profile profile, int difficulty, boolean stay) {
+        List<Task>          taskList    = null;
+        if(stay) {
+            taskList = profile.getCurrentTaskSet().getTasks();
+        } else {
+            taskList = Task.find.select("id").where().eq("points", difficulty).eq("taskSet.isHomework", false).findList();
+        }
+        List<SolvedTask>    solvedTasks = SolvedTask.find.fetch("task").where().eq("profile", profile).in("task", taskList).findList();
 
-          if(TaskList == null || TaskList.size() == 0) {
-              Logger.warn("Task.getByDifficulty - No isAvailable Tasks found");
-              return null;
-          }
+        if((taskList.size() == 0)) {
+            if(difficulty > 1)
+                return getNewTask(profile, difficulty -1, stay);
+            else
+                return null;
+        }
 
-          if(solvedTasks == null || solvedTasks.size() == 0) {
-              return TaskList.get(Random.randomInt(TaskList.size() - 1));
-          }
-          for(SolvedTask solvedTask : solvedTasks) {
-              if(TaskList.contains(solvedTask.getTask())) {
-                  TaskList.remove(solvedTask.getTask());
-              }
-          }
-          if(TaskList.size() == 0) {
-              TaskList           = Task.find.where().eq("available", true).eq("points", points).findList();
-          }
+        if(taskList.size() > solvedTasks.size()) {
+            for(SolvedTask solvedTask : solvedTasks) {
+                taskList.remove(solvedTask.getTask());
+            }
+        } else {
+            int avg = 0;
+            for(SolvedTask solvedTask : solvedTasks) {
+                avg += solvedTask.getTrys();
+            }
+            avg /= solvedTasks.size();
+            Logger.info("Avg = " + avg);
+            for(SolvedTask solvedTask : solvedTasks) {
+                if(solvedTask.getTrys() > avg) {
+                    taskList.remove(solvedTask.getTask());
+                }
+            }
+        }
 
-          int i = Random.randomInt(TaskList.size() - 1);
+        Logger.info("TaskList   Size: " + taskList.size());
+        Logger.info("SolvedTask Size: " + solvedTasks.size());
 
-          return TaskList.get(i);
-      }
+        if((taskList.size() == 0)) {
+            if(difficulty > 1)
+                return getNewTask(profile, difficulty -1, stay);
+            else
+                return null;
+        }
+
+        return taskList.get(Random.randomInt(taskList.size() -1 ));
+    }
 
       /**
        *

@@ -25,6 +25,8 @@ import play.libs.Json;
 import javax.persistence.*;
 import java.util.*;
 
+import play.Logger;
+
 @Entity
 @Table(name = "profile")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
@@ -99,7 +101,11 @@ public class Profile extends Model {
     @OneToMany(mappedBy = "profile")
     private  List<Comment> comments;
 
+    @ManyToOne
+    private TaskSet currentTaskSet;
+
     public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+
 
 
 //////////////////////////////////////////////////
@@ -323,6 +329,7 @@ public class Profile extends Model {
     }
 
     public void resetStory() {
+      Logger.info("Profile Reset !!!!");
         this.setCurrentStory(null);
         this.setCurrentScroll(null);
         this.setTutorialDone(false);
@@ -521,5 +528,13 @@ public class Profile extends Model {
 
     public Date getEdited_at() {
         return edited_at;
+    }
+
+    public TaskSet getCurrentTaskSet() {
+        return currentTaskSet;
+    }
+
+    public void setCurrentTaskSet(TaskSet currentTaskSet) {
+        this.currentTaskSet = currentTaskSet;
     }
 }
