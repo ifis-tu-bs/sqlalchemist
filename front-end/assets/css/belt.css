@@ -3,6 +3,18 @@
 }
 
 [id^=potionAmountId] {
-    text-align: center;
-    z-index: 5;
+    background-color: transparent;
+    border-style: none;
+    color: #ffffff;
+    display: block;
+    font-family: Amethysta-Regular, monospace;
+    line-height: 1;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index: 5;
 }
