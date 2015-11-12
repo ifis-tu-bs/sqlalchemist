@@ -24,10 +24,10 @@
     color: black;
 }
 
-[id^=taskButtonId] {
+[id^=currentHomeworkButtonId], [id^=previousHomeworkButtonId] {
     font-family: Amethysta-Regular, sans-serif;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
     -webkit-border-radius: 14;
     -moz-border-radius: 14;
     border-radius: 14px;
@@ -46,7 +46,11 @@
     transition-property: color, background-color;
     padding-left: 5px;
 }
-[id^=taskButtonId]:hover, [id^=taskButtonId]:focus, [id^=taskButtonId]:active {
+[id^=currentHomeworkButtonId]:hover, [id^=currentHomeworkButtonId]:focus, [id^=currentHomeworkButtonId]:active {
+    background-color: white;
+    color: black;
+}
+[id^=previousHomeworkButtonId]:hover, [id^=previousHomeworkButtonId]:focus, [id^=previousHomeworkButtonId]:active {
     background-color: white;
     color: black;
 }
@@ -61,13 +65,13 @@
     z-Index : 3;
 }
 
-#homeworkTitle{
+#chooseHomeworkTitle {
     background-color : transparent;
     color : white;
     display : block;
     font-family : Amethysta-Regular, sans-serif;
     position : absolute;
-    text-align: left;
+    text-align: center;
     z-Index : 3;
     text-decoration: underline;
 }
@@ -125,15 +129,6 @@
     cursor: pointer;
 }
 
-/*#currentButton:hover, #currentButton:focus, #currentButton:active {
-    background-color: white;
-    color: red;
-}
-#previousButton:hover, #previousButton:focus, #previousButton:active {
-    background-color: white;
-    color: red;
-}*/
-
 #previousButton:hover {
     background: #d9d9d9;
     background-image: -webkit-linear-gradient(top, #d9d9d9, #b2b9bd);
@@ -152,9 +147,4 @@
     background-image: -o-linear-gradient(top, #d9d9d9, #b2b9bd);
     background-image: linear-gradient(to bottom, #d9d9d9, #b2b9bd);
     text-decoration: none;
-}
-
-
-#nextTaskSetButton, #previousTaskSetButton, #chalkLeftImage, #chalkRightImage {
-    cursor: pointer;
 }
