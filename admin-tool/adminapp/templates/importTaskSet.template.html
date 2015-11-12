@@ -1,17 +1,21 @@
+<form action="/TaskSet/upload" method="post" enctype="multipart/form-data">
 <div class="modal-header">
     <button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
     <h4 class="modal-title">Import TaskSets</h4>
 </div>
 <div class="modal-body">
-    You can import previously exported TaskSets from File.
-    <form action="/TaskSet/upload" method="post" enctype="multipart/form-data">
+    <div class="container container-fluid">
+        You can import previously exported TaskSets from File.
+        <br>
+        <br>
+        <br>
         <input class="" type="file" accept="application/json" name="uploadJson">
-
-        <button class="btn btn-default" type="submit">Submit</button>
-    </form>
+    </div>
 </div>
 <div class="modal-footer">
+    <button class="btn btn-primary" type="submit">Submit</button>
     <button type="button" class="btn btn-primary" ng-click="close();">
         Cancel
     </button>
 </div>
+</form>
