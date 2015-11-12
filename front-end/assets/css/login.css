@@ -53,7 +53,7 @@
 }
 
 
-#signUpFirst, #forgotPassword  {
+#signUpFirst, #forgotPassword {
     background-color : transparent;
     border-style : none;
     font-family : Trajan_Pro_Regular, sans-serif;
@@ -64,4 +64,11 @@
     text-align : center;
     vertical-align : middle;
     z-Index : 4;
+}
+
+#signUpFirst:hover, #signUpFirst:focus, #signUpFirst:active {
+    color: #ff3e41;
+}
+#forgotPassword:hover, #forgotPassword:focus, #forgotPassword:active {
+    color: #ff3e41;
 }

@@ -108,7 +108,7 @@ game.ReadyScreen = me.ScreenObject.extend({
         // lab_screen
 
         var background = new game.BackgroundElement('background', 100, 100, 0, 0);
-        background.setImage("assets/data/img/gui/lab_screen.png", "back");
+        background.setImage("assets/data/img/gui/new_lab.png", "back");
         $("#background").fadeIn(100);
         me.game.world.addChild(background);
 
@@ -176,14 +176,22 @@ game.ReadyScreen = me.ScreenObject.extend({
         /**
          * Add all needed buttons to Lab screen
          */
-        var runButton        = new game.ClickableElement('runButton', 'R U N', this.onRun, 15, 50, 33, 15, 4);
-        var colButton        = new game.ClickableElement('colButton', 'Coll ector', this.onCollector, 20, 13, 60, 70, 2);
-        var sheetButton      = new game.ClickableElement('sheetButton', 'Sh eet', this.onSheet, 9, 22, 18, 11, 3);
-        var scrollColButton  = new game.ClickableElement('scrollColButton', 'Be lt', this.onScrollCol, 28, 25, 17, 75, 2);
-        var backButton       = new game.ClickableElement('backButton', 'BACK', this.onMenu, 15, 34, 81, 14, 4);
-        var bookButton       = new game.ClickableElement('bookButton', 'Bo ok', this.onBooks, 16, 37, 83, 59, 2);
-        var catButton        = new game.ClickableElement('catButton', 'c a t', this.onCat, 10, 30, 49, 49, 3);
-        var terryButton      = new game.ClickableElement('terryButton', 'terry', this.onTerry, 18, 40, 56, 12, 5);
+        var runButton        = new game.ClickableElement('runButton', '', this.onRun, 17.2, 49.6, 31.7, 14.5, 1);
+        var colButton        = new game.ClickableElement('colButton', '', this.onCollector, 20, 13, 60, 70, 2);
+        var sheetButton      = new game.ClickableElement('sheetButton', '', this.onSheet, 12, 27.2, 16.3, 8.3, 1);
+        var scrollColButton  = new game.ClickableElement('scrollColButton', '', this.onScrollCol, 29.7, 23.7, 17.6, 76.3, 1);
+        var backButton       = new game.ClickableElement('backButton', '', this.onMenu, 14.6, 43.2, 83.5, 9.8, 1);
+        var bookButton       = new game.ClickableElement('bookButton', '', this.onBooks, 18.6, 46.5, 81.74, 53.5, 1);
+        var catButton        = new game.ClickableElement('catButton', '', this.onCat, 9.24, 20.96, 46.89, 52.99, 1);
+        var terryButton      = new game.ClickableElement('terryButton', '', this.onTerry, 19.32, 66.15, 53.3, 10.29, 1);
+        runButton.setImage("assets/data/img/buttons/menubuttons/dungeon_door.png", "dungeonImage");
+        colButton.setImage("assets/data/img/buttons/menubuttons/scroll_collection.png", "scrollsImage");
+        sheetButton.setImage("assets/data/img/buttons/menubuttons/mirror.png", "sheetImage");
+        scrollColButton.setImage("assets/data/img/buttons/menubuttons/potion_belt_cut.png", "beltImage");
+        backButton.setImage("assets/data/img/buttons/menubuttons/fat_lady.png", "fatLadyImage");
+        bookButton.setImage("assets/data/img/buttons/menubuttons/table.png", "tableImage");
+        catButton.setImage("assets/data/img/buttons/menubuttons/cat.png", "catImage");
+        terryButton.setImage("assets/data/img/buttons/menubuttons/schrank.png", "terryImage");
         me.game.world.addChild(runButton);
         me.game.world.addChild(sheetButton);
         me.game.world.addChild(colButton);

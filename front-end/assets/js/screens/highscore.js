@@ -14,6 +14,7 @@ game.HighscoreScreen = me.ScreenObject.extend({
         $("#backgroundRankingId").fadeIn(100);
 
         this.backToMenu = function() {
+            $("#backgroundRankingId").fadeOut(100);
             $("#backgroundRanking").fadeOut(100);
             $("#backFromRankings").fadeOut(100);
             $("#mostScore").fadeOut(100);
@@ -28,9 +29,8 @@ game.HighscoreScreen = me.ScreenObject.extend({
         };
 
         var backFromRankings = new game.ClickableElement('backFromRankings','', this.backToMenu, 14.01515, 19.53125, 82, 0, 1);
-        backFromRankings.setImage("assets/data/img/buttons/back_button_ink.png", "back");
+        backFromRankings.setImage("assets/data/img/buttons/back_button_ink.png", "backFromRankingsImage");
         me.game.world.addChild(backFromRankings);
-        $("#backFromRankings").fadeIn(100);
 
         /**
          * Create header element
@@ -256,12 +256,6 @@ game.HighscoreScreen = me.ScreenObject.extend({
         me.game.world.addChild(numberOfRuns);
         me.game.world.addChild(sqlStatements);
         me.game.world.addChild(sqlRate);
-        $("#mostScore").fadeIn(100);
-        $("#mostCoins").fadeIn(100);
-        $("#timeSpent").fadeIn(100);
-        $("#numberOfRuns").fadeIn(100);
-        $("#sqlStatements").fadeIn(100);
-        $("#sqlRate").fadeIn(100);
 
         this.scoreReply();
 
