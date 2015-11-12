@@ -32,7 +32,7 @@
           TaskSet: <b>{{selectedTaskSet.taskSetName}}</b>
         </uib-tab-heading>
         <div style="width:100%;float:left">
-          <div class="panel {{panelClass || 'panel-warning'}}">
+          <div class="panel {{panelClass || 'panel-default'}}">
             <div class="panel-heading">
               <h4 class="panel-title">
                 <span tooltip-placement="right" uib-tooltip="TaskSets contain a Schema and a Set of Tasks. Select a TaskSet for further editing." style="font-size:16pt">TaskSet: <b>select...</b></span>
@@ -92,6 +92,9 @@
                   </td>
                   <td/>
                   <td/>
+                  <td/>
+                  <td/>
+                  <td/>
                 </tr>
                 </tbody>
               </table>
@@ -106,7 +109,7 @@
           <span>Intension <i>(tableDefinition)</i></span>
         </tab-heading>
         <uib-accordion close-others=true>
-          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
+          <uib-accordion-group panel-class="panel-default" is-open="tableSelectionStatus.tableNotSelected">
             <uib-accordion-heading>
               Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
             </uib-accordion-heading>
@@ -130,6 +133,7 @@
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTable(); $event.stopPropagation();">New...</button>
                   </td>
+                  <td/>
                   <td/>
                 </tr>
               </tbody>
@@ -164,6 +168,7 @@
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewColumn(); $event.stopPropagation();">New...</button>
                   </td>
+                  <td/>
                   <td/>
                   <td/>
                   <td/>
@@ -209,6 +214,10 @@
               <td/>
               <td/>
               <td/>
+              <td/>
+              <td/>
+              <td/>
+              <td/>
             </tr>
           </tbody>
         </table>
@@ -219,7 +228,7 @@
           Extension
         </tab-heading>
         <uib-accordion close-others=true>
-          <uib-accordion-group panel-class="panel-warning" is-open="tableSelectionStatus.tableNotSelected">
+          <uib-accordion-group panel-class="panel-default" is-open="tableSelectionStatus.tableNotSelected">
             <uib-accordion-heading>
               Table: <b>{{selectedTable.$$hashKey === undefined ? "select..." : selectedTable.tableName}}</b>
             </uib-accordion-heading>

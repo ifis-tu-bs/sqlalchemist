@@ -106,4 +106,4 @@ GET         /Homework/result/:sid/:hid/         controllers.HomeWorkController.g
 GET         /assets/*file                       controllers.Assets.at(path="/public/game/assets", file)
 GET         /resources/*file                    controllers.Assets.at(path="/public/resources", file)
 GET         /adminapp/*file                     controllers.Assets.at(path="/public/admintool/adminapp", file)
-GET         /download/*file                     controllers.Assets.at(path="/public/download", file)
+GET         /download/:file                     controllers.DownloadController.download(file:String)
