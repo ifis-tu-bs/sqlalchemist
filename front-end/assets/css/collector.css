@@ -11,20 +11,26 @@
 	z-Index : 4;
 }
 
-#scrollLimitPara, #scrollProgressPara {
-	background-color : transparent;
-	border-style : none;
-	color : black;
-	display : block;
-	font-family : Trajan_Pro_Regular, Arial, sans-serif;
-	line-height : 1;
-	margin : 0 auto;
-	max-width : 100%;
-	overflow : hidden;
-	position : absolute;
-	text-overflow : ellipsis;
-    text-align: center;
+#limtext, #protext {
+	background-color: transparent;
+	border-style: none;
+	color: #03001f;
+	display: block;
+	font-family: Amethysta-Regular, monospace;
+	line-height: 1;
+	margin: 0 auto;
+	max-width: 100%;
+	overflow: hidden;
+	position: absolute;
+	text-overflow: ellipsis;
 	-webkit-line-clamp: 8;
 	-webkit-box-orient: vertical;
-	z-Index : 3;
+	z-Index: 3;
+}
+
+#limtextbody, #protextbody {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	padding-right: 17px;
 }

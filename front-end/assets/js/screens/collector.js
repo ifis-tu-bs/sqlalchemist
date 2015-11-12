@@ -48,6 +48,15 @@ game.CollectorScreen = me.ScreenObject.extend({
          * Go trought the matrix and set images for every collected potion or enchantment entity.
          */
         for (var j = 0; j < 2; j++) {
+
+            /**
+             * Set image for checkBoxes.
+             */
+            var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 14.772727 + j * 37.878788, 35.5, 'none');
+            collectionBox.setImage("assets/data/img/stuff/scroll_collection_box.png", "boxImg");
+            $("#collectionBox" + j).fadeIn(100);
+            me.game.world.addChild(collectionBox);
+
             for (var k = 0; k < 5; k++) {
                 //console.log(game.scroll.enchantments,game.potion.potions);
                 /*console.log(k + j * 5,game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].available,
@@ -63,15 +72,15 @@ game.CollectorScreen = me.ScreenObject.extend({
                     && game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used
                     && game.potion.potions[game.level.scrolls[k + j * 5][4]].available
                     && game.potion.potions[game.level.scrolls[k + j * 5][5]].available){
-
                     level++;
 
-                    var checkSymbol = new game.BackgroundElement('check' + k, 2.424242, 4.166667,
-                        17.045455 + 3.030303 * 0.454545 + j * 37.878788, 39.713542 + 6.510417 * k, 'none');
+                    var checkSymbol = new game.BackgroundElement('check' + k, 4.5, 6.5,
+                        35 + j * 37.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
                     $("#checkSymbol" + k).fadeIn(100);
                     me.game.world.addChild(checkSymbol);
                     console.log('check' + k);
+                    checkSymbol.display();
 
                     //me.game.world.addChild(new me.Sprite(225 + 40 * 6 + j * 500, 305 + 50 * k, me.loader.getImage('check_symbol')),3);
                 }
@@ -85,6 +94,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                             $("#scrolls" + i).fadeIn(100);
                             me.game.world.addChild(scrolls);
                             console.log('scrolls' + i);
+                            scrolls.display();
 
                             progress++;
                             /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
@@ -99,6 +109,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                             $("#scrollsRed" + i).fadeIn(100);
                             me.game.world.addChild(scrollsRed);
                             console.log('scrollsRed' + i);
+                            scrollsRed.display();
 
                             progress++;
                             /*console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,
@@ -109,24 +120,18 @@ game.CollectorScreen = me.ScreenObject.extend({
                 }
             }
 
-            /**
-             * Set image for checkBoxes.
-             */
-            var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 14.772727 + j * 37.878788, 37.307292, 'none');
-            collectionBox.setImage("assets/data/img/stuff/scroll_collection_box.png", "boxImg");
-            $("#collectionBox" + j).fadeIn(100);
-            me.game.world.addChild(collectionBox);
+
         }
 
         /**
          * Create TextOutPutElements to draw information about the daily scroll-limit, the collected scrolls and statistics.
          */
-        var scrollProgress = new game.TextOutputElement('scrollProgress', 60, 10, 30.151515, 26.041667, 2);
+        var scrollProgress = new game.TextOutputElement('protext', 60, 18, 19.151515, 26.041667, 3);
         me.game.world.addChild(scrollProgress);
-        scrollProgress.writeHTML(level + " of 10 levels cleared." + "<br>" + progress + " of 60 scrolls collected.", 'scrollProgressPara');
+        scrollProgress.writeHTML(level + " of 10 levels cleared." + "<br>" + progress + " of 60 scrolls collected.", 'protextbody');
 
-        var scrollLimit = new game.TextOutputElement('scrollLimit', 80, 5, 19.151515, 78.125, 1);
+        var scrollLimit = new game.TextOutputElement('limtext', 70, 12, 19.151515, 77, 2);
         me.game.world.addChild(scrollLimit);
-        scrollLimit.writeHTML("You can only collect 3 scrolls a day!", 'scrollLimitPara');
+        scrollLimit.writeHTML("You can only collect 3 scrolls a day!", 'limtextbody');
     }
 });

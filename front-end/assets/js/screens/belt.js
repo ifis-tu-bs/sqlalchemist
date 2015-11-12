@@ -194,7 +194,7 @@ game.BeltScreen = me.ScreenObject.extend({
                     me.game.world.addChild(setPotion);
                     $("#setPotionId" + i + 5).fadeIn(100);
 
-                    var potionAmount = new game.TextOutputElement('potionAmountId' + i + 5, 5, 4, 42.681818 + 7.954545 * i, 36.505208, 1);
+                    var potionAmount = new game.TextOutputElement('potionAmountId' + i + 5, 6 , 8, 42.681818 + 7.954545 * i, 36.505208, 2);
                     me.game.world.addChild(potionAmount);
                     if (game.potion.potions[i + 5].amount > 9){
                         potionAmount.writeHTML("#9+");

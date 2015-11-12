@@ -46,4 +46,5 @@ admin-tool/.idea
 admin-tool/build
 admin-tool/node_modules
 admin-tool/*.iml
-back-end/conf/evolutions/default
+front-end/.idea/workspace.xml
+back-end/conf/evolutions/default/refs/remotes/origin/master
