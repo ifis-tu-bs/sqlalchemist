@@ -96,4 +96,8 @@ public class UserDAO {
     public static List<User> getAll() {
         return User.find.all();
     }
+
+    public static User getByVerifyCode(String verifyCode) {
+        return User.find.where().eq("email_verify_code", verifyCode).findUnique();
+    }
 }

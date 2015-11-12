@@ -160,12 +160,15 @@ public class UserController extends Controller {
             return badRequest("Sorry, this Verify-Code has not been sent");
         }
 
-        int success = User.verifyEmail(verifyCode);
-        if (success == User.USER_EMAIL_VERIFY_ALREADY_VERIFIED) {
-            return badRequest("User already verified");
-        } else if (success == User.USER_EMAIL_VERIFY_NOT_FOUND) {
+        User user = UserDAO.getByVerifyCode(verifyCode);
+        if (user == null) {
             return badRequest("User not found. Please register again");
+        } else if(user.isEmailVerified()) {
+            return badRequest("User already verified");
         }
+        user.setEmailVerified();
+        user.update();
+
         return ok("Successfully verified email");
     }
 

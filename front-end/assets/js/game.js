@@ -16,6 +16,7 @@ var STATE_BUY = me.state.USER + 13;
 var STATE_FORGOTPASSWORD = me.state.USER + 14;
 var STATE_TEXT = me.state.USER + 15;
 var STATE_LEGEND = me.state.USER + 16;
+var STATE_HOMEWORKTASKSET = me.state.USER + 17;
 
 //set game fps for better performance
 me.sys.fps = 45;
@@ -101,6 +102,9 @@ var game = {
             [5,15,25,35,13,18],[6,16,26,36,9,19],[7,17,27,37,4,14],[8,18,28,38,5,15],[9,19,29,39,10,20]
         ]
     },
+    homework: {
+        currentHomeworkIndex: 0
+    },
 
 
 
@@ -161,6 +165,7 @@ var game = {
         me.state.set(STATE_FORGOTPASSWORD, new game.ForgotPasswordScreen());
         me.state.set(STATE_TEXT, new game.TextScreen());
         me.state.set(STATE_LEGEND, new game.LegendScreen());
+        me.state.set(STATE_HOMEWORKTASKSET, new game.HomeworkTaskSetScreen());
 
 
         // set the "Play/Ingame" Screen Object
