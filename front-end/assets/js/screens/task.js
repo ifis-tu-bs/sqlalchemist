@@ -440,13 +440,13 @@ game.TaskScreen = me.ScreenObject.extend({
             console.log("1: ", schema);
             //# wird entfernt, ^ startet einfach so.
 	    	//res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
-            res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline;">$1</div>');
+            res = res.replace(/#(\w+\b)/gmi, '<div class="relation" style="display: inline;">$1</div>');
             console.log("2: ", res);
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
             console.log("3: ", res);
 	    	//res = res.replace(/\n/gmi, '<br />');
-            res = res.replace(/$/gmi, '<br />' + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-            res = res.replace(/}/gmi, '<br />' + ')' + '<br />');
+            res = res.replace(/%/gmi, '<br />' + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+            res = res.replace(/}/gmi, '<br />' + ')' + '<br /><br />');
             res = res.replace(/{/gmi, '(');
             console.log("4: ", res);
 

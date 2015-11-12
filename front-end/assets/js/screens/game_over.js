@@ -5,6 +5,7 @@ game.GameOverScreen = me.ScreenObject.extend({
         /**
          * Check if last maps was a bossmap and go to according state.
          */
+        console.log("drinn:", game.data.text);
         if (game.data.text === 7) {
             $("#backgroundGameOverId").fadeOut(100);
             $("#next").fadeOut(100);
