@@ -370,8 +370,8 @@ function ajaxSendTaskHomeworkRequest(onload) {
 }
 
 // ~ POST /SQL/Homework/:id ~ id: HomeworkID, jsonData: JSON.task.solve
-function ajaxSendTaskHomeworkSolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + id + "/", onload);
+function ajaxSendTaskHomeworkSolveRequest(HomeworkId, TaskId, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
 
     xmlHttpRequest.send(jsonData);
 

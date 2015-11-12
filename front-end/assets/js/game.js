@@ -64,7 +64,9 @@ var game = {
         startTime : 0,
         finishTime : 0,
         gainScore : 0,
-        gainCoins: 0
+        gainCoins: 0,
+        homeworkId: 0,
+        exercise: 0
     },
     //Spielerattribute
     stats : {
@@ -103,7 +105,11 @@ var game = {
         ]
     },
     homework: {
-        currentHomeworkIndex: 0
+        currentHomeworkIndex: 0,
+        page : 1,
+        pages: 1,
+        taskSet: 1,
+        taskSets: 1
     },
 
 
