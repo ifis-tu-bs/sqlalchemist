@@ -305,22 +305,6 @@ public class User extends Model {
         return false;
     }
 
-    /**
-     *
-     * @param emailVerifyCode verification code
-     * @return returns 0 if successful
-     */
-    public static int verifyEmail(String emailVerifyCode) {
-        User user = find.where().eq("email_verify_code", emailVerifyCode).findUnique();
-        if (user == null) {
-            return USER_EMAIL_VERIFY_NOT_FOUND;
-        } else if(user.emailVerified) {
-            return USER_EMAIL_VERIFY_ALREADY_VERIFIED;
-        }
-        user.emailVerified = true;
-        return 0;
-    }
-
     public void setStudent() {
         this.isStudent = true;
     }
@@ -329,5 +313,14 @@ public class User extends Model {
         this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
+    }
+
+    public boolean isEmailVerified() {
+        return this.emailVerified;
+    }
+
+    public void setEmailVerified() {
+        this.emailVerified = true;
+        this.emailVerifyCode = null;
     }
 }
