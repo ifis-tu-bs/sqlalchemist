@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.MappingJsonFactory;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
+import dao.UserSessionDAO;
 import models.*;
 
 import play.mvc.Http;
@@ -136,7 +137,6 @@ public class TaskSetController extends Controller {
      */
     @Security.Authenticated(CreatorSecured.class)
     public Result update(Long id) {
-        //Profile     profile     = ProfileDAO.getByUsername("admin");
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
 
@@ -223,6 +223,15 @@ public class TaskSetController extends Controller {
         taskSet.addRating(rating);
         taskSet.update();
 
+        Rating      rating_sum  = Rating.sum(taskSet.getRatings());
+        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
+            taskSet.setAvailable(false);
+        } else if(rating_sum.getPositiveRatings() >= 200) {
+            taskSet.setAvailable(true);
+        }
+
+        taskSet.update();
+
         return redirect(routes.TaskSetController.view(taskSet.getId()));
     }
 
@@ -301,6 +310,10 @@ public class TaskSetController extends Controller {
     public Result download() {
         JsonNode jsonNode = request().body().asJson();
 
+        UserSession userSession = UserSessionDAO.getBySessionID(session().get("sessionID"));
+
+        Logger.info(userSession.getSessionID());
+
         ArrayList<TaskSet> taskSets = new ArrayList<>();
         for (JsonNode node : jsonNode.findPath("taskSetIds")) {
             taskSets.add(TaskSetDAO.getById(node.longValue()));
@@ -308,10 +321,14 @@ public class TaskSetController extends Controller {
 
         String fileName = "exportTaskSets_" + new Date().getTime() + ".json";
 
-        File outputFile = new File("public/download/" + fileName);
+        File downloadDir = new File("download");
+
+        if (!downloadDir.exists())
+            downloadDir.mkdir();
+
+        File outputFile = new File("download/" + fileName);
         try {
             //outputFile.createNewFile();
-
             PrintWriter printWriter = new PrintWriter(outputFile);
 
             printWriter.print(TaskSetView.toJson(taskSets));

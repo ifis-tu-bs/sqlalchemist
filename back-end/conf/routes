@@ -65,11 +65,12 @@ POST        /Task/:id/comment                   controllers.TaskController.comme
 #SQLController
 GET         /SQL/Story/:id/                     controllers.SQLController.story(id: Long)
 POST        /SQL/Story/:id/                     controllers.SQLController.storySolve(id: Long)
-GET         /SQL/Trivia/:id/                    controllers.SQLController.trivia(id: Int, stay: Boolean ?= false)
-GET         /SQL/Trivia/:id/stay                controllers.SQLController.trivia(id: Int, stay: Boolean ?= true)
+GET         /SQL/Trivia/:difficulty/            controllers.SQLController.trivia(difficulty: Int, stay: Boolean ?= false)
+GET         /SQL/Trivia/:difficulty/stay        controllers.SQLController.trivia(difficulty: Int, stay: Boolean ?= true)
 POST        /SQL/Trivia/:id/                    controllers.SQLController.triviaSolve(id: Long)
-GET         /SQL/Homework/                      controllers.SQLController.homework()
-#POST        /SQL/Homework/:id                   controllers.SQLController.homeworkSolve(id: Long)
+GET         /SQL/Homework/:HomeWorkID/:TaskID/  controllers.SQLController.homework(HomeWorkID: Long, TaskID: Long)
+POST        /SQL/Homework/:TaskID/              controllers.SQLController.homeworkSolve(TaskID: Long, submit: Boolean ?= false)
+POST        /SQL/Homework/:TaskID/submit        controllers.SQLController.homeworkSolve(TaskID: Long, submit: Boolean ?= true)
 
 
 #ProfileController
@@ -105,4 +106,4 @@ GET         /Homework/result/:sid/:hid/         controllers.HomeWorkController.g
 GET         /assets/*file                       controllers.Assets.at(path="/public/game/assets", file)
 GET         /resources/*file                    controllers.Assets.at(path="/public/resources", file)
 GET         /adminapp/*file                     controllers.Assets.at(path="/public/admintool/adminapp", file)
-GET         /download/*file                     controllers.Assets.at(path="/public/download", file)
+GET         /download/:file                     controllers.DownloadController.download(file:String)

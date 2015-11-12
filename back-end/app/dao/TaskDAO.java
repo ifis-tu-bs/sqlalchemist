@@ -38,9 +38,20 @@ public class TaskDAO {
         if(stay) {
             taskList = profile.getCurrentTaskSet().getTasks();
         } else {
-            taskList = Task.find.select("id").where().eq("points", difficulty).eq("taskSet.isHomework", false).findList();
+            taskList = Task.find
+                    .where()
+                    .eq("points", difficulty)
+                    .eq("available", true)
+                    .eq("taskSet.available", true)
+                    .eq("taskSet.isHomework", false)
+                    .findList();
         }
-        List<SolvedTask>    solvedTasks = SolvedTask.find.fetch("task").where().eq("profile", profile).in("task", taskList).findList();
+        List<SolvedTask>    solvedTasks = SolvedTask.find
+                .fetch("task")
+                .where()
+                .eq("profile", profile)
+                .in("task", taskList)
+                .findList();
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)

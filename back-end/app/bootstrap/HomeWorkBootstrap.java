@@ -3,10 +3,12 @@ package bootstrap;
 
 import dao.*;
 import models.HomeWork;
+import models.TaskSet;
 import play.Logger;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Invisible
@@ -26,10 +28,13 @@ class HomeWorkBootstrap {
 
                 Date tempDate = calendar.getTime();
 
-                HomeWorkDAO.create("DefaultHomeWork 1", ProfileDAO.getByUsername("sqlalchemist"), TaskSetDAO.getAll(), new Date(), tempDate);
+                List<TaskSet> taskSetList = TaskSetDAO.getAll();
+                taskSetList.remove(1);
 
-                SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("sqlalchemist"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
-                SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha2");
+                HomeWorkDAO.create("DefaultHomeWork 1", ProfileDAO.getByUsername("sqlalchemist"), taskSetList, new Date(), tempDate);
+
+                //SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("sqlalchemist"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
+                //SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha2");
 
                 Logger.info("Done initializing");
             }

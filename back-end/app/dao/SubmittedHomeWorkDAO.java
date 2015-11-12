@@ -12,7 +12,20 @@ import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class SubmittedHomeWorkDAO  {
+    public static SubmittedHomeWork create(Profile profile, Task task, HomeWork homeWork) {
+        SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
+                profile,
+                task,
+                homeWork);
 
+        try {
+            submittedHomeWork.save();
+        } catch (PersistenceException pe) {
+            Logger.warn("Not saving: " + pe.getMessage());
+            return null;
+        }
+        return submittedHomeWork;
+    }
   //////////////////////////////////////////////////
   //  Getter Object
   //////////////////////////////////////////////////
@@ -29,6 +42,9 @@ public class SubmittedHomeWorkDAO  {
           return SubmittedHomeWork.find.where().eq("task_id", taskId).eq("home_work_id", homeWorkId).findList();
       }
 
+    public static SubmittedHomeWork getSubmitsForProfileHomeWorkTask(Profile profile, HomeWork homeWork, Task task) {
+        return SubmittedHomeWork.find.where().eq("profile", profile).eq("homework", homeWork).eq("task", task).findUnique();
+    }
   //////////////////////////////////////////////////
   //  Special Getter Object
   //////////////////////////////////////////////////
@@ -51,52 +67,4 @@ public class SubmittedHomeWorkDAO  {
                 .eq("home_work_id", homeWork.getId())
                 .findUnique();
     }
-
-  //////////////////////////////////////////////////
-  //  Submit Method
-  //////////////////////////////////////////////////
-
-
-    public static SubmittedHomeWork submit(
-            Profile profile,
-            Task task,
-            HomeWork homeWork,
-            boolean solve,
-            String statement) {
-
-        SubmittedHomeWork existed = getCurrentSubmittedHomeWorkForProfileAndTaskAndHomeWork(profile, task, homeWork);
-
-
-        if (existed != null) {
-            try {
-                existed.addSemanticCheck(); // TODO Somewhere else?
-                existed.setSolve(solve);
-                existed.setStatement(statement);
-
-                existed.update();
-                return existed;
-            } catch (PersistenceException pe) {
-                Logger.warn("Cannot Submit: " + pe.getMessage());
-            }
-        }
-
-
-        SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
-                profile,
-                task,
-                homeWork,
-                solve,
-                statement);
-
-        try {
-                submittedHomeWork.addSemanticCheck();
-                submittedHomeWork.save();
-
-                return submittedHomeWork;
-            } catch (PersistenceException pe) {
-                Logger.warn("Not saving: " + pe.getMessage());
-            return null;
-            }
-        }
-
 }

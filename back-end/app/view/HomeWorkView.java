@@ -127,7 +127,7 @@ public class HomeWorkView {
             arrayNode.add(taskSetJson);
         }
 
-        objectNode.put("id",    homeWork.getId());
+        objectNode.put("id",        homeWork.getId());
         objectNode.put("name",      homeWork.getHomeWorkName());
         objectNode.set("taskSets",  arrayNode);
         objectNode.put("start_at",  sdf.format(homeWork.getStart_at()));
