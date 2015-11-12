@@ -2,6 +2,11 @@ game.HomeworkScreen = me.ScreenObject.extend({
 
     onResetEvent: function () {
 
+        game.homework.page = 1;
+        game.homework.pages = 1;
+        game.homework.taskSet = 1;
+        game.homework.taskSets = 1;
+
         /**
          * Create background-div and add image to it.
          */
@@ -31,7 +36,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
 
         currentHomeworkReply = function(xmlHttpRequest){
             var homeworks = JSON.parse(xmlHttpRequest.responseText);
-            console.log(homeworks);
+            console.log("Homework: ",homeworks);
 
             function homeworkButtonClick(homeworkIndex) {
                 return function(){
