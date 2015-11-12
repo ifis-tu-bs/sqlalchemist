@@ -665,7 +665,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	    }
         	    if (game.task.kind == 3) {
         	    	// Homework
-        	    	ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostTask);
+                    ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostTask);
         	    }
         	    
         	}
@@ -675,29 +675,30 @@ game.TaskScreen = me.ScreenObject.extend({
          * Needs to be
          */
         function checkAnswer() {
-        	
-        	// get answer
-        	var answer = textIn.getText();
-        	
-        	if ((!answer) || (answer == '\u00a0') || (answer == '')) {
-        		
-        		//leere Eingabe
-        		textIn.insertText('Your query is empty. I do not accept empty queries! Do you think I am a fool?');
-        		
-        	}
-        	else {
-        		
-        		//get timestap;
-		        game.task.finishTime = me.timer.getTime();
-		        var ellapsedTime = game.task.finishTime - game.task.startTime;
-		        
-		        // create JSON Object
-        	    dataTaskSolve.statement = answer;
-        	    dataTaskSolve.time = ellapsedTime;
-        	    dataTaskSolve.check = true;
-        	    var jsonData = JSON.stringify(dataTaskSolve);
 
-                ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostCheckTask);
+            // get answer
+            var answer = textIn.getText();
+
+            if ((!answer) || (answer == '\u00a0') || (answer == '')) {
+
+                //leere Eingabe
+                textIn.insertText('Your query is empty. I do not accept empty queries! Do you think I am a fool?');
+
+            }
+            else {
+
+                //get timestap;
+                game.task.finishTime = me.timer.getTime();
+                var ellapsedTime = game.task.finishTime - game.task.startTime;
+
+                // create JSON Object
+                dataTaskSolve.statement = answer;
+                dataTaskSolve.time = ellapsedTime;
+                var jsonData = JSON.stringify(dataTaskSolve);
+
+                // ajax request
+                ajaxSendTaskHomeworkSyntaxSolveRequest(dataTask.id, jsonData, handlePostTask);
+
             }
         	
         };
@@ -745,7 +746,7 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             if (game.task.kind == 3) {
         	    // Homework
-        	    ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.task.exercise ,handleGetTask);
+                ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.task.exercise ,handleGetTask);
             }
             
         };

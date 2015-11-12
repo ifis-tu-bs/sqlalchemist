@@ -41,6 +41,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
             function homeworkButtonClick(homeworkIndex) {
                 return function(){
                     game.homework.currentHomeworkIndex = homeworkIndex;
+                    game.task.homeworkId = homeworks[homeworkIndex].id;
                     me.state.change(STATE_HOMEWORKTASKSET);
                 }
             }
