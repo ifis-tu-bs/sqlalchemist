@@ -33,7 +33,7 @@ game.TaskScreen = me.ScreenObject.extend({
         var schemaCheck = new game.BackgroundElement('schemaCheckId', 4, 6, 32, 88, "none");
         schemaCheck.setImage("assets/data/img/stuff/check_symbol.png", "check_symbol");
         me.game.world.addChild(schemaCheck);
-        $("#schemaCheckId").fadeIn(100);
+        schemaCheck.hide();
 
 
         game.data.count = 0;
@@ -90,6 +90,13 @@ game.TaskScreen = me.ScreenObject.extend({
         var chooseDifficulty6  = new game.ClickableElement('chooseDifficulty6', '', setDifficulty(6), 4, 6, 82, 88, 2);
         chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "six");
         me.game.world.addChild(chooseDifficulty6);
+
+        chooseDifficulty1.hide();
+        chooseDifficulty2.hide();
+        chooseDifficulty3.hide();
+        chooseDifficulty4.hide();
+        chooseDifficulty5.hide();
+        chooseDifficulty6.hide();
 
 
         textIn = new Object();
