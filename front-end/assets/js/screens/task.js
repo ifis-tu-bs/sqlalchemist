@@ -33,7 +33,7 @@ game.TaskScreen = me.ScreenObject.extend({
         var schemaCheck = new game.BackgroundElement('schemaCheckId', 4, 6, 32, 88, "none");
         schemaCheck.setImage("assets/data/img/stuff/check_symbol.png", "check_symbol");
         me.game.world.addChild(schemaCheck);
-        $("#schemaCheckId").fadeIn(100);
+        schemaCheck.hide();
 
 
         game.data.count = 0;
@@ -71,6 +71,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
         setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
 
+
         var chooseDifficulty1  = new game.ClickableElement('chooseDifficulty1', '', setDifficulty(1), 4, 6, 67, 89, 2);
         chooseDifficulty1.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "one");
         me.game.world.addChild(chooseDifficulty1);
@@ -90,6 +91,13 @@ game.TaskScreen = me.ScreenObject.extend({
         chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "six");
         me.game.world.addChild(chooseDifficulty6);
 
+        chooseDifficulty1.hide();
+        chooseDifficulty2.hide();
+        chooseDifficulty3.hide();
+        chooseDifficulty4.hide();
+        chooseDifficulty5.hide();
+        chooseDifficulty6.hide();
+
 
         textIn = new Object();
 
@@ -108,6 +116,8 @@ game.TaskScreen = me.ScreenObject.extend({
         likeButtonSet.hide();
         dislikeButtonSet.hide();
         reviewButtonSet.hide();
+
+        setDifficultyButton.hide();
 
 
         if(game.task.kind === 2){
@@ -589,20 +599,22 @@ game.TaskScreen = me.ScreenObject.extend({
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
-            // buttons to hide
+            sameTaskButton.display();
             submitButton.hide();
 
-            // buttons to display
-            sameTaskButton.display();
-            nextTaskButton.display();
+            // buttons to display and hide
+            if(game.task.kind !== 3){
 
-            likeButton.display();
-            dislikeButton.display();
-            reviewButton.display();
+                nextTaskButton.display();
 
-            likeButtonSet.display();
-            dislikeButtonSet.display();
-            reviewButtonSet.display();
+                likeButton.display();
+                dislikeButton.display();
+                reviewButton.display();
+
+                likeButtonSet.display();
+                dislikeButtonSet.display();
+                reviewButtonSet.display();
+            }
 
         };
         

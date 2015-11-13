@@ -286,6 +286,8 @@ game.TextScreen = me.ScreenObject.extend({
             if (game.data.playerStat.isTutorial) {
                 var audio = "take".concat(game.data.text + 1);
             } else {
+                skipAllButton.hide();
+                skipOneButton.hide();
                 var audio = "bosstext".concat(Math.floor((game.persistent.depth - 1) / 5));
             }
 
