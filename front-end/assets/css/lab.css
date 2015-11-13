@@ -1,104 +1,22 @@
-#backButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
+[id$=Image] {
     cursor : pointer;
-    overflow : visible;
     position : absolute;
-    text-align : center;
     vertical-align : middle;
     z-Index : 4;
 }
+[id$=Button] {
+    cursor: pointer;
+}
 
-#bookButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
+#colButton, #catButton {
+    z-index: 5;
 }
 
 #runButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
+    z-index: 4;
 }
 
-#colButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
+[id$=Image]:hover, [id$=Image]:focus, [id$=Image]:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
-
-#sheetButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#scrollColButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#catButton {
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-
-#cheatButton, #terryButton{
-    background-color : transparent;
-    border-style : none;
-    font-family : Trajan_Pro_Regular, sans-serif;
-    color : transparent;
-    cursor : pointer;
-    overflow : visible;
-    position : absolute;
-    text-align : center;
-    vertical-align : middle;
-    z-Index : 4;
-}
-

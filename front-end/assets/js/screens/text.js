@@ -133,7 +133,7 @@ game.TextScreen = me.ScreenObject.extend({
                     game.data.text =10;
                     me.state.change(STATE_BELT);
                     skip = true;
-                }else{
+                } else {
                     nextState = 1;
                     buttonImage = "dungeon_door";
                     position = [17.2, 49.6, 31.7, 14.5];

@@ -2,8 +2,8 @@
     font-family: Amethysta-Regular, sans-serif;
     cursor: pointer;
     text-align: center;
-    -webkit-border-radius: 14;
-    -moz-border-radius: 14;
+    -webkit-border-radius: 14px;
+    -moz-border-radius: 14px;
     border-radius: 14px;
     display: inline-block;
     vertical-align: middle;
@@ -158,3 +158,7 @@
     overflow : hidden;
 }
 
+
+#backFromRankingsImage:hover, #backFromRankingsImage:focus, #backFromRankingsImage:active {
+    filter: invert(100%);
+}

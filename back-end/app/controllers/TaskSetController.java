@@ -319,7 +319,7 @@ public class TaskSetController extends Controller {
             taskSets.add(TaskSetDAO.getById(node.longValue()));
         }
 
-        String fileName = "exportTaskSets_" + new Date().getTime() + ".json";
+        String fileName = "exportTaskSets_" + userSession.getSessionID() + ".json";
 
         File downloadDir = new File("download");
 

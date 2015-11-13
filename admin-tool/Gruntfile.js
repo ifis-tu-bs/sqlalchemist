@@ -36,6 +36,11 @@ module.exports = function(grunt) {
                     src: 'adminapp/scripts/libraries/**/*',
                     dest: 'build/',
                     expand: true
+                },
+                {
+                    src: 'adminapp/data/**/*',
+                    dest: 'build/',
+                    expand: true
                 }]
             },
             move: {

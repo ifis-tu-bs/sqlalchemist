@@ -1,4 +1,4 @@
-#shopItem {
+[id^=shopItem] {
     background-color : transparent;
     border-style : solid;
     border-color: transparent;
@@ -28,4 +28,18 @@
     -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
     z-Index : 3;
+}
+
+#avatar, #beltSlotShop {
+    cursor: pointer;
+}
+
+#avatar:hover, #avatar:focus, #avatar:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+#beltSlotShop:hover, #beltSlotShop:focus, #beltSlotShop:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
