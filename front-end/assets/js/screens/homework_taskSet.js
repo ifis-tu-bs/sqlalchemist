@@ -87,7 +87,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                 me.game.world.addChild(taskButtons);
                 $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
 
-                if (!currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].done) {
+                if (currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].done) {
                     var checkbox = new game.BackgroundElement('checkboxId' + (i + 5 *(game.homework.page -1)), 3.5, 5, 70, 35 + 6 * i, 'none');
                     checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
                     me.game.world.addChild(checkbox);
