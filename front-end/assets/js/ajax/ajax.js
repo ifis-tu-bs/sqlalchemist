@@ -360,15 +360,6 @@ function ajaxSendTaskTriviaSolveRequest(id, jsonData, onload) {
     return xmlHttpRequest;
 }
 
-// ~ GET /SQL/Homework
-function ajaxSendTaskHomeworkRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Homework/", onload);
-
-    xmlHttpRequest.send();
-
-    return xmlHttpRequest;
-}
-
 // ~ GET /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
 function ajaxSendTaskHomeworkRequest(HomeworkId, TaskId, onload) {
     var xmlHttpRequest = createRequest("GET", "/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
