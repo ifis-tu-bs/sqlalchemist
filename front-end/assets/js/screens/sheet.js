@@ -12,20 +12,25 @@ game.SheetScreen = me.ScreenObject.extend({
         me.game.world.addChild(backgroundSheet);
         $("#backgroundSheetId").fadeIn(100);
 
-        /**
-         * Create back-buttons with matching function and effects
-         */
-        this.onLab = function () {
+        function fadeOutElements(){
             $("#backgroundSheetId").fadeOut(100);
             $("#avatar1").fadeOut(100);
             $("#avatar2").fadeOut(100);
             $("#backButton1").fadeOut(100);
             $("#backButton2").fadeOut(100);
-            for (var i = 1; i < 5; i++){
-                $("#upgrade" + (2 + i * 10)).fadeOut(100);
-            }
+            $("[id^=upgrade]").fadeOut(100);
             $("#skinLeft").fadeOut(100);
             $("#skinRight").fadeOut(100);
+        }
+
+
+
+
+        /**
+         * Create back-buttons with matching function and effects
+         */
+        this.onLab = function () {
+            fadeOutElements();
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
@@ -35,8 +40,6 @@ game.SheetScreen = me.ScreenObject.extend({
         var backButton2  = new game.ClickableElement('backButton2', 'B a c k', this.onLab, 15, 95, 84, 2.5, 4);
         me.game.world.addChild(backButton1);
         me.game.world.addChild(backButton2);
-        $("#backButton1").fadeIn(100);
-        $("#backButton2").fadeIn(100);
 
 
         /**
@@ -80,12 +83,10 @@ game.SheetScreen = me.ScreenObject.extend({
             if (!team) {
                 var avatar = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                $("#avatar1").fadeIn(100);
                 me.game.world.addChild(avatar);
             } else {
                 var avatar = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                $("#avatar2").fadeIn(100);
                 me.game.world.addChild(avatar);
             }
         }
@@ -124,7 +125,6 @@ game.SheetScreen = me.ScreenObject.extend({
                                                         57.575757, 44.921875 + 13.020833 * j, 1);
                 upgrade.setImage("assets/data/img/collectables/upgrade_scroll.png", "scroll");
                 me.game.world.addChild(upgrade);
-                $("#upgrade" + i).fadeIn(100);
                 kind[j] = 1;
                 //console.log("painted");
             }
@@ -154,16 +154,7 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.speed = avatarId.attributes.speed;
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
-                $("#backgroundSheetId").fadeOut(50);
-                $("#avatar1").fadeOut(50);
-                $("#avatar2").fadeOut(50);
-                $("#backButton1").fadeOut(50);
-                $("#backButton2").fadeOut(50);
-                for (var i = 1; i < 5; i++){
-                    $("#upgrade" + (2 + i * 10)).fadeOut(50);
-                }
-                $("#skinLeft").fadeOut(50);
-                $("#skinRight").fadeOut(50);
+                fadeOutElements();
                 setTimeout( function() {
                     me.state.change(STATE_SHEET);
                 }, 100);
@@ -174,7 +165,6 @@ game.SheetScreen = me.ScreenObject.extend({
         var skinLeft  = new game.ClickableElement('skinLeft', '', this.onLeft, 4.848485, 8.333333,  33.33333, 16.927083, 1);
         skinLeft.setImage("assets/data/img/buttons/character_arrow_left.png", "left");
         me.game.world.addChild(skinLeft);
-        $("#skinLeft").fadeIn(100);
 
 
         this.onRight = function(){
@@ -191,16 +181,7 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.speed = avatarId.attributes.speed;
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
-                $("#backgroundSheetId").fadeOut(50);
-                $("#avatar1").fadeOut(50);
-                $("#avatar2").fadeOut(50);
-                $("#backButton1").fadeOut(50);
-                $("#backButton2").fadeOut(50);
-                for (var i = 1; i < 5; i++){
-                    $("#upgrade" + (2 + i * 10)).fadeOut(50);
-                }
-                $("#skinLeft").fadeOut(50);
-                $("#skinRight").fadeOut(50);
+                fadeOutElements();
                 setTimeout( function() {
                     me.state.change(STATE_SHEET);
                 }, 100);
@@ -211,6 +192,5 @@ game.SheetScreen = me.ScreenObject.extend({
         var skinRight = new game.ClickableElement('skinRight', '', this.onRight, 4.848485, 8.333333,  60.606061, 16.927083, 1);
         skinRight.setImage("assets/data/img/buttons/character_arrow_right.png", "right");
         me.game.world.addChild(skinRight);
-        $("#skinRight").fadeIn(100);
     }
 });
