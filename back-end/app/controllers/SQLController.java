@@ -197,7 +197,7 @@ public class SQLController extends Controller {
         return ok(TaskView.toJsonExercise(task));
     }
 
-    public Result homeworkSolve(long TaskID, boolean submit) {
+    public Result homeworkSolve(Long TaskID, Boolean submit) {
         Profile         profile         = ProfileDAO.getByUsername(request().username());
         HomeWork        homeWork        = profile.getCurrentHomeWork();
         Task            task            = TaskDAO.getById(TaskID);
