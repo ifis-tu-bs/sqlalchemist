@@ -82,7 +82,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
             for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks.length ; i++) {
 
                 var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].name,
-                    taskButtonClick(i), 35, 5, 15, 35 + 6 * i, 1);
+                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].id), 35, 5, 15, 35 + 6 * i, 1);
                 me.game.world.addChild(taskButtons);
                 $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
 
