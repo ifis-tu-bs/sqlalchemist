@@ -24,3 +24,18 @@
     background-color: #a3743c;
     color: white;
 }
+
+[id^=taskLevel]:hover, [id^=taskLevel]:focus, [id^=taskLevel]:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+#triviaHeader {
+    background-color : transparent;
+    color : #a3743c;
+    display : block;
+    font-family : Amethysta-Regular, sans-serif;
+    position : absolute;
+    text-align: center;
+    z-Index : 3;
+}

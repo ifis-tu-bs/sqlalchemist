@@ -10,6 +10,21 @@ game.ReadyScreen = me.ScreenObject.extend({
      */
     onResetEvent : function() {
 
+
+
+        function fadeOutElements() {
+            $("#runButton").fadeOut(100);
+            $("#colButton").fadeOut(100);
+            $("#sheetButton").fadeOut(100);
+            $("#scrollColButton").fadeOut(100);
+            $("#backButton").fadeOut(100);
+            $("#bookButton").fadeOut(100);
+            $("#catButton").fadeOut(100);
+            $("#terryButton").fadeOut(100);
+            $("#backgroundLab").fadeOut(100);
+        }
+
+
         //gets the playerstate
         function getStats(xmlHttpRequest) {
             console.log(xmlHttpRequest);
@@ -107,9 +122,8 @@ game.ReadyScreen = me.ScreenObject.extend({
 
         // lab_screen
 
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0);
+        var background = new game.BackgroundElement('backgroundLab', 100, 100, 0, 0);
         background.setImage("assets/data/img/gui/new_lab.png", "back");
-        $("#background").fadeIn(100);
         me.game.world.addChild(background);
 
         /**
@@ -120,37 +134,55 @@ game.ReadyScreen = me.ScreenObject.extend({
             if(game.data.sound){
                 me.audio.play("door", false, null, game.data.soundVolume);
             }
-            me.state.change(me.state.PLAY);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(me.state.PLAY);
+            }, 100);
         };
         this.onCollector = function(){
             if(game.data.sound){
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
-            me.state.change(STATE_COLLECTOR);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(STATE_COLLECTOR);
+            }, 100);
         };
         this.onSheet = function(){
             if(game.data.sound){
                 me.audio.play("switch", false, null, game.data.soundVolume);
             }
-            me.state.change(STATE_SHEET);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(STATE_SHEET);
+            }, 100);
         };
         this.onScrollCol = function(){
             if(game.data.sound){
                 me.audio.play("switch", false, null, game.data.soundVolume);
             }
-            me.state.change(STATE_BELT);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(STATE_BELT);
+            }, 100);
         };
         this.onMenu = function(){
             if(game.data.sound){
                 me.audio.play("door", false, null, game.data.soundVolume);
             }
-            me.state.change(me.state.MENU);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(me.state.MENU);
+            }, 100);
         };
         this.onBooks = function(){
             if(game.data.sound){
                 me.audio.play("page", false, null, game.data.soundVolume);
             }
-            me.state.change(STATE_LEGEND);
+            fadeOutElements();
+            setTimeout( function() {
+                me.state.change(STATE_LEGEND);
+            }, 100);
         };
         this.stopDouble = function() {
             game.data.playing = false;
@@ -200,13 +232,6 @@ game.ReadyScreen = me.ScreenObject.extend({
         me.game.world.addChild(bookButton);
         me.game.world.addChild(catButton);
         me.game.world.addChild(terryButton);
-        $("#runButton").fadeIn(100);
-        $("#colButton").fadeIn(100);
-        $("#sheetButton").fadeIn(100);
-        $("#scrollColButton").fadeIn(100);
-        $("#backButton").fadeIn(100);
-        $("#bookButton").fadeIn(100);
-        $("#catButton").fadeIn(100);
-        $("#terryButton").fadeIn(100);
+
     }
 });

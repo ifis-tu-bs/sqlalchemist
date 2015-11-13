@@ -11,15 +11,12 @@ game.BuyScreen = me.ScreenObject.extend({
         var backgroundShop = new game.BackgroundElement('backgroundShopId', 100, 100, 0, 0, 'none');
         backgroundShop.setImage("assets/data/img/gui/shop_screen.png", "backgroundshop");
         me.game.world.addChild(backgroundShop);
-        $("#backgroundShopId").fadeIn(100);
         var backgroundFaded = new game.BackgroundElement('backgroundFadedId', 100, 100, 0, 0, 'none');
         backgroundFaded.setImage("assets/data/img/gui/faded_lab_screen.png", "backgroundfaded");
         me.game.world.addChild(backgroundFaded);
-        $("#backgroundFadedId").fadeIn(100);
         var backgroundTag = new game.BackgroundElement('backgroundTagId', 88.863636, 68.489583, 0, 15.885417, 'none');
         backgroundTag.setImage("assets/data/img/gui/price_tag.png", "backgroundtag");
         me.game.world.addChild(backgroundTag);
-        $("#backgroundTagId").fadeIn(100);
 
         /**
          * display amount of available coins.
@@ -55,7 +52,6 @@ game.BuyScreen = me.ScreenObject.extend({
 
             var buyBeltPotion = new game.BackgroundElement('buyBeltPotion', 7.272727, 12.5, 26.015152, 26.041667, 'none');
             buyBeltPotion.setImage("assets/data/img/potion/GREAT_JUMPPOTION.png", "skin");
-            $("#buyBeltPotion").fadeIn(100);
             me.game.world.addChild(buyBeltPotion);
 
         } else {
@@ -63,12 +59,10 @@ game.BuyScreen = me.ScreenObject.extend({
             if (game.data.shop[game.data.shopId].avatar.isTeam) {
                 var avatar = new game.BackgroundElement('avatar', 9.545455, 12.5, 26.015152, 26.041667, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                $("#avatar").fadeIn(100);
                 me.game.world.addChild(avatar);
             } else {
                 var avatar = new game.BackgroundElement('avatar', 7.272727, 12.5, 27.272727, 26.041667, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                $("#avatar").fadeIn(100);
                 me.game.world.addChild(avatar);
             }
 
@@ -92,9 +86,6 @@ game.BuyScreen = me.ScreenObject.extend({
             $("#avatar").fadeOut(100);
             $("#buyBeltPotion").fadeOut(100);
             $("[id*='background']").fadeOut(100);
-            //$("#backgroundShopId").fadeOut(100);
-            //$("#backgroundFadedId").fadeOut(100);
-            //$("#backgroundTagId").fadeOut(100);
             setTimeout( function() {
                 me.state.change(STATE_SHOP);
             }, 100);
@@ -142,8 +133,6 @@ game.BuyScreen = me.ScreenObject.extend({
         var buyButton  = new game.ClickableElement('buyButton','Buy', this.onBuy, 20, 7, 60, 73, 1);
         me.game.world.addChild(backToShop);
         me.game.world.addChild(buyButton);
-        $("#backToShop").fadeIn(100);
-        $("#buyButton").fadeIn(100);
     }
 
 });
