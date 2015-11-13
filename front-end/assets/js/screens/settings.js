@@ -22,6 +22,12 @@ game.SettingsScreen = me.ScreenObject.extend({
             $("#soundButtonId").fadeOut(100);
             $("#musicButtonId").fadeOut(100);
             $("#soundsElement").fadeOut(100);
+            $("#deleteUser").fadeOut(100);
+            $("#submitDeletion").fadeOut(100);
+            $("#verifyGreen").fadeOut(100);
+            $("#submitVerification").fadeOut(100);
+            $("#submitPassword").fadeOut(100);
+            $("#submitReset").fadeOut(100);
             $("[id*=Header]").fadeOut(100);
             $("[id^=keyBindings]").fadeOut(100);
         }
@@ -48,6 +54,8 @@ game.SettingsScreen = me.ScreenObject.extend({
         var keyBindingsHeader = new game.TextOutputElement('keyBindingsHeader', 50, 5, 40, 26, 1);
         var keyBindings       = new game.TextOutputElement('keyBindings', 30, 25, 45, 36, 5);
         var keyBindingsDisc   = new game.TextOutputElement('keyBindingsDisc', 25, 25, 62, 36, 5);
+        var deleteUserHeader  = new game.TextOutputElement('deleteUserHeader', 50, 20, 41, 36, 4);
+        var verifyUserHeader  = new game.TextOutputElement('verifyUserHeader', 50, 25, 41, 36, 5);
         me.game.world.addChild(oldPassword);
         me.game.world.addChild(newPassword);
         me.game.world.addChild(newPasswordAck);
@@ -56,6 +64,8 @@ game.SettingsScreen = me.ScreenObject.extend({
         me.game.world.addChild(keyBindingsHeader);
         me.game.world.addChild(keyBindings);
         me.game.world.addChild(keyBindingsDisc);
+        me.game.world.addChild(deleteUserHeader);
+        me.game.world.addChild(verifyUserHeader);
 
         oldPassword.insertText('old password');
         newPassword.insertText('new password');
@@ -76,23 +86,62 @@ game.SettingsScreen = me.ScreenObject.extend({
                               "leave dungeon:" + "<br>" +
                               "jump:" + "<br>" +
                               "use potion:");
+        deleteUserHeader.writeHTML("Are you sure about" + "<br>" +
+                                   "deleting your account?" + "<br>" +
+                                   "All your data" + "<br>" +
+                                   "will be deleted!");
+        verifyUserHeader.writeHTML("As a student, you have to sign" + "<br>" +
+                                   "up at the HMS first!" + "<br>" +
+                                   "If you signed up here first," + "<br>" +
+                                   "then you have to verify" + "<br>" +
+                                   "yourself as student.");
 
         oldPassword.hide();
         newPassword.hide();
         newPasswordAck.hide();
         changeHeader.hide();
         resetHeader.hide();
+        deleteUserHeader.hide();
+        verifyUserHeader.hide();
 
         this.sendStudentRequest = function() {
-            studentReply = function(xmlHttpRequest) {
-                studentRequest.changeColor('verifyGreen');
-                //console.log(xmlHttpRequest);
+
+            keyBindingsHeader.hide();
+            keyBindings.hide();
+            keyBindingsDisc.hide();
+            oldPassword.hide();
+            newPassword.hide();
+            newPasswordAck.hide();
+            changeHeader.hide();
+            resetHeader.hide();
+            submitReset.hide();
+            submitPassword.hide();
+            studentRequest.hide();
+            deleteUserHeader.hide();
+            submitDeletion.hide();
+            verifyUserHeader.display();
+            submitVerification.display();
+
+            this.sendVerificationRequest = function (){
+                studentReply = function(xmlHttpRequest) {
+                    studentRequest.changeColor('verifyGreen');
+                    //console.log(xmlHttpRequest);
+                };
+                ajaxSendUserStudentRequest(studentReply);
             };
-            ajaxSendUserStudentRequest(studentReply);
+
         };
-        var studentRequest = new game.ClickableElement('studentRequest', "verify as student", this.sendStudentRequest, 33, 5, 48, 72, 1);
-        me.game.world.addChild(studentRequest);
-        $("#studentRequest").fadeIn(100);
+
+        var submitVerification = new game.ClickableElement('submitVerification', "verify!", this.sendVerificationRequest, 33, 5, 48, 72, 1);
+        me.game.world.addChild(submitVerification);
+
+        if (game.data.profile.student) {
+            var studentRequest = new game.ClickableElement('verifyGreen', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
+            me.game.world.addChild(studentRequest);
+        } else {
+            var studentRequest = new game.ClickableElement('studentRequest', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
+            me.game.world.addChild(studentRequest);
+        }
 
         SubmitResetClicked = function(){
 
@@ -135,9 +184,7 @@ game.SettingsScreen = me.ScreenObject.extend({
              *  on load function: confirmation for password change
              */
             function userReply() {
-                $("#studentRequest").fadeOut(100);
-                $("#storyReset").fadeOut(100);
-                $("#changePassword").fadeOut(100);
+                fadeOutElements();
                 setTimeout( function() {
                     me.state.change(me.state.SETTINGS);
                 }, 100);
@@ -170,6 +217,10 @@ game.SettingsScreen = me.ScreenObject.extend({
             submitReset.hide();
             submitPassword.display();
             studentRequest.hide();
+            deleteUserHeader.hide();
+            submitDeletion.hide();
+            verifyUserHeader.hide();
+            submitVerification.hide();
 
 
             clearOldPasswordField = function () {
@@ -194,7 +245,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             newPasswordAck.addEvent('click', clearNewPasswordAckField);
         };
 
-        var changePassword = new game.ClickableElement('changePassword', 'change password?', ChangePasswordClicked, 23, 10, 13, 53, 2);
+        var changePassword = new game.ClickableElement('changePassword', 'change password?', ChangePasswordClicked, 23, 10, 13, 45, 2);
         me.game.world.addChild(changePassword);
 
 
@@ -211,10 +262,51 @@ game.SettingsScreen = me.ScreenObject.extend({
             submitPassword.hide();
             submitReset.display();
             studentRequest.hide();
+            deleteUserHeader.hide();
+            submitDeletion.hide();
+            verifyUserHeader.hide();
+            submitVerification.hide();
         };
 
-        var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', this.resetStoryClicked, 23, 10, 13, 70, 2);
+        var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', this.resetStoryClicked, 23, 10, 13, 58, 2);
         me.game.world.addChild(storyReset);
+
+
+        this.submitDeletionClicked = function () {
+            function deletionReply(xmlHttpRequest) {
+                console.log(xmlHttpRequest);
+                fadeOutElements();
+                setTimeout( function() {
+                    window.location.reload();
+                }, 100);
+            }
+            ajaxSendUsersDeleteRequest(deletionReply);
+        };
+
+        var submitDeletion = new game.ClickableElement('submitDeletion', 'Yes I\'m sure', this.submitDeletionClicked, 24, 5, 53.5, 65, 1);
+        me.game.world.addChild(submitDeletion);
+        submitDeletion.hide();
+
+        this.deleteUserClicked = function () {
+            keyBindingsHeader.hide();
+            keyBindings.hide();
+            keyBindingsDisc.hide();
+            oldPassword.hide();
+            newPassword.hide();
+            newPasswordAck.hide();
+            changeHeader.hide();
+            resetHeader.hide();
+            submitPassword.hide();
+            submitReset.hide();
+            studentRequest.hide();
+            verifyUserHeader.hide();
+            deleteUserHeader.display();
+            submitDeletion.display();
+            submitVerification.hide();
+        };
+
+        var deleteUser = new game.ClickableElement('deleteUser', "delete your account?", this.deleteUserClicked, 23, 10, 13, 71, 2);
+        me.game.world.addChild(deleteUser);
 
         this.musicClicked = function () {
             $("[id*='musicImage']").remove();
@@ -233,7 +325,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             }
         };
 
-        var musicButton = new game.ClickableElement('musicButtonId', '', this.musicClicked, 4.848485, 8.333333, 30, 25.390625, 1);
+        var musicButton = new game.ClickableElement('musicButtonId', '', this.musicClicked, 4.848485, 8.333333, 30, 22, 1);
         me.game.world.addChild(musicButton);
         if (game.data.music) {
             musicButton.setImage("assets/data/img/buttons/ButtonsMusic.png", "musicImage");
@@ -253,7 +345,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             }
         };
 
-        var soundButton = new game.ClickableElement('soundButtonId', '', this.soundClicked, 4.848485, 8.333333, 30, 38.411458, 1);
+        var soundButton = new game.ClickableElement('soundButtonId', '', this.soundClicked, 4.848485, 8.333333, 30, 32, 1);
         me.game.world.addChild(soundButton);
         if (game.data.music) {
             soundButton.setImage("assets/data/img/buttons/ButtonsSound.png", "soundImage");
@@ -261,7 +353,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
         }
 
-        var soundsElement = new game.TextOutputElement('soundsElement', 15, 20, 15, 26, 4);
+        var soundsElement = new game.TextOutputElement('soundsElement', 15, 20, 15, 21, 4);
         me.game.world.addChild(soundsElement);
         soundsElement.writeHTML("music:" + "<br>" + "sound:", 'soundPara');
     },
@@ -286,12 +378,3 @@ game.SettingsScreen = me.ScreenObject.extend({
     }
 
 });
-
-
-/**
- $("#soundsElement")
- [id*=Header]
- [id^=keyBindings]
- *
- *
- * */
