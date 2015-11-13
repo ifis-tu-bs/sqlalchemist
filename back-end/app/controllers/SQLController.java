@@ -179,6 +179,7 @@ public class SQLController extends Controller {
         Profile profile = ProfileDAO.getByUsername(request().username());
         HomeWork homeWork = HomeWorkDAO.getById(homeWorkID);
         Task task = TaskDAO.getById(taskID);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homeWork, task);
         boolean contains = false;
         for(TaskSet taskSet : homeWork.getTaskSets()) {
             if(taskSet.contains(task)) {
@@ -191,10 +192,19 @@ public class SQLController extends Controller {
             Logger.info("Keine Task gefunden :(");
             return badRequest("Keine Task gefunden :(");
         }
+        ObjectNode taskNode = TaskView.toJsonExercise(task);
+
+        if(submittedHomeWork == null) {
+            taskNode.put("syntaxChecksDone", 0);
+            taskNode.put("semanticChecksDone", 0);
+        } else {
+            taskNode.put("syntaxChecksDone", submittedHomeWork.getSyntaxChecksDone());
+            taskNode.put("semanticChecksDone", submittedHomeWork.getSemanticChecksDone());
+        }
 
         profile.setCurrentHomeWork(homeWork);
         profile.update();
-        return ok(TaskView.toJsonExercise(task));
+        return ok(taskNode);
     }
 
     public Result homeworkSolve(Long TaskID, Boolean submit) {
@@ -225,18 +235,27 @@ public class SQLController extends Controller {
             }
         }
 
+        if((submittedHomeWork.getSyntaxChecksDone() - task.getAvailableSyntaxChecks()) <= 0) {
+            Logger.warn("You have no SyntaxChecks left");
+            return badRequest("You have no SyntaxChecks left");
+        }
+
+        if((submittedHomeWork.getSemanticChecksDone() - task.getAvailableSemanticChecks()) <= 0) {
+            Logger.warn("You have no SemanticChecks left");
+            return badRequest("You have no SemanticChecks left");
+        }
+
         SQLResult   sqlResult   = SQLParser.checkUserStatement(task, userStatement);
         ObjectNode  resultNode;
         Result      result;
         boolean     status;
 
+        resultNode = SQLResultView.toJson(sqlResult, userStatement, submit);
         if(sqlResult.getType() == SQLResult.SEMANTICS) {
             status = false;
-            resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
         } else {
             status = true;
-            resultNode = SQLResultView.toJson(sqlResult, userStatement, 0);
             result = ok(resultNode);
         }
 
@@ -252,38 +271,4 @@ public class SQLController extends Controller {
         submittedHomeWork.update();
         return result;
     }
-
-    /*
-    public Result homeworkSolve(Long id) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        JsonNode body   = request().body().asJson();
-        Task task = TaskDAO.getById(id);
-
-        if (profile == null || body == null) {
-            Logger.warn("TaskController.homeworkSolve - no profile or no jsonBody or wrong TaskId");
-            return badRequest("no profile or no jsonBody or wrong TaskId");
-        }
-
-        String  statement   = body.findPath("statement").asText();
-        int     time        = body.findPath("time").asInt();
-
-        if(statement == null || time == 0) {
-            Logger.warn("TaskController.triviaSolve - Expecting Json Data");
-            return badRequest("Expecting Json data");
-        }
-
-        profile.addTime(time);
-        boolean correct;
-        try {
-            correct = task.solve(statement);
-        } catch (SQLAlchemistException e) {
-            correct = false;
-        }
-
-        SubmittedHomeWorkDAO.submit(profile, task, correct, statement);
-
-        return ok("HomeWork Has Been Submitted");
-    }
-*/
-
 }
