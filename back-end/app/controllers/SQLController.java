@@ -230,13 +230,12 @@ public class SQLController extends Controller {
         Result      result;
         boolean     status;
 
+        resultNode = SQLResultView.toJson(sqlResult, userStatement, submit);
         if(sqlResult.getType() == SQLResult.SEMANTICS) {
             status = false;
-            resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
         } else {
             status = true;
-            resultNode = SQLResultView.toJson(sqlResult, userStatement, 0);
             result = ok(resultNode);
         }
 

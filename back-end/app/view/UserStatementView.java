@@ -9,7 +9,7 @@ import models.UserStatement;
 public class UserStatementView {
     public static UserStatement fromJsonForm(JsonNode body) {
         String  statement   = body.findPath("statement").asText();
-        int     time        =(body.findPath("time").asInt()/1000);
+        int     time        =(body.findPath("time").asInt()/1000) + 1;
 
 
         return new UserStatement(statement, time);

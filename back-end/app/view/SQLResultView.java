@@ -38,4 +38,30 @@ public class SQLResultView {
 
         return sqlResultNode;
     }
+
+    public static ObjectNode toJson(SQLResult sqlResult, UserStatement userStatement, boolean submit) {
+        ObjectNode sqlResultNode = Json.newObject();
+
+        sqlResultNode.put("type",       sqlResult.getType());
+
+        if ( sqlResult.getType() == SQLResult.SEMANTICS) {
+            if( submit ) {
+                sqlResultNode.put("terry", "semantic error");
+            } else {
+                sqlResultNode.put("terry", "Your Syntax is correct");
+            }
+           sqlResultNode.put("SQLError", sqlResult.getMessage());
+       } else if(sqlResult.getType() == SQLResult.ERROR) {
+            sqlResultNode.put("terry", "syntax error");
+            sqlResultNode.put("SQLError", sqlResult.getSqlStatus().getSqlException().getMessage());
+        } else {
+            sqlResultNode.put("terry",      "your answer was correct");
+        }
+
+        sqlResultNode.put("time",       userStatement.getTime());
+        sqlResultNode.put("score",      sqlResult.getTask().getScore() / userStatement.getTime());
+
+
+        return sqlResultNode;
+    }
 }
