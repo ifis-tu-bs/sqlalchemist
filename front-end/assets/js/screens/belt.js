@@ -29,7 +29,6 @@ game.BeltScreen = me.ScreenObject.extend({
         var backFromBelt = new game.ClickableElement('backFromBeltId','', this.backToMenu, 18.1818, 17.7083, 1.893939, -5, 1);
         backFromBelt.setImage("assets/data/img/buttons/new_back_button.png", "back");
         me.game.world.addChild(backFromBelt);
-        $("#backFromBeltId").fadeIn(100);
 
 
         /**
@@ -51,20 +50,17 @@ game.BeltScreen = me.ScreenObject.extend({
             var beltLeftImage = new game.BackgroundElement('beltLeftImageId', 7.121212, 12.239583, 8.863636, 78.125, 'none');
             beltLeftImage.setImage("assets/data/img/stuff/belt_left.png", "beltLeft");
             me.game.world.addChild(beltLeftImage);
-            $("#beltLeftImageId").fadeIn(100);
 
             for (var i = 0; i < game.belt.beltSlots.length; i++) {
 
                 var beltMiddleImage = new game.BackgroundElement('beltMiddleImageId' + i, 7.121212, 12.239583, 15.984848 + 7.121212 * i, 78.125, 'none');
                 beltMiddleImage.setImage("assets/data/img/stuff/belt_middle.png", "beltMiddle");
                 me.game.world.addChild(beltMiddleImage);
-                $("#beltMiddleImageId" + i).fadeIn(100);
             }
 
             var beltRightImage = new game.BackgroundElement('beltRightImageId', 7.121212, 12.239583, 15.984848 + 7.121212 * game.belt.beltSlots.length, 78.125, 'none');
             beltRightImage.setImage("assets/data/img/stuff/belt_right.png", "beltRight");
             me.game.world.addChild(beltRightImage);
-            $("#beltRightImageId").fadeIn(100);
 
             /**
              * This function will be called when the user wants to brew a potion. The user is guided to the Taskscreen.
@@ -163,13 +159,11 @@ game.BeltScreen = me.ScreenObject.extend({
                                                                 2.424242, 4.166667, 2.19697 + 7.954545 * i, 30.078125, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
-                    $("#brewPotionId" + i).fadeIn(100);
 
                     var setPotion = new game.ClickableElement('setPotionId' + i, '', this.setPotion(game.potion.potions[i]),
                                                                4.848485, 8.333333, 0.984848 + 7.954545 * i, 35.026042, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
-                    $("#setPotionId" + i).fadeIn(100);
 
                     var potionAmount = new game.TextOutputElement('potionAmountId' + i, 5, 4, -1.787879 + 7.954545 * i, 36.505208, 1);
                     me.game.world.addChild(potionAmount);
@@ -186,13 +180,11 @@ game.BeltScreen = me.ScreenObject.extend({
                                                                 2.424242, 4.166667, 46.666667 + 7.954545 * i, 30.078125, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
-                    $("#brewPotionId" + i + 5).fadeIn(100);
 
                     var setPotion = new game.ClickableElement('setPotionId' + i + 5, '', this.setPotion(game.potion.potions[i + 5]),
                                                                4.848485, 8.333333, 45.454545 + 7.954545 * i, 35.026042, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
-                    $("#setPotionId" + i + 5).fadeIn(100);
 
                     var potionAmount = new game.TextOutputElement('potionAmountId' + i + 5, 6 , 8, 42.681818 + 7.954545 * i, 36.505208, 2);
                     me.game.world.addChild(potionAmount);
@@ -209,13 +201,11 @@ game.BeltScreen = me.ScreenObject.extend({
                                                                 2.424242, 4.166667, 2.19697 + 7.954545 * i, 55.46875, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
-                    $("#brewPotionId" + i + 10).fadeIn(100);
 
                     var setPotion = new game.ClickableElement('setPotionId' + i + 10, '', this.setPotion(game.potion.potions[i + 10]),
                                                                4.848485, 8.333333, 0.984848 + 7.954545 * i, 60.416667, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
-                    $("#setPotionId" + i + 10).fadeIn(100);
 
                     var potionAmount = new game.TextOutputElement('potionAmountId' + i + 10, 5, 4, -1.787879 + 7.954545 * i, 61.895833, 1);
                     me.game.world.addChild(potionAmount);
@@ -232,13 +222,11 @@ game.BeltScreen = me.ScreenObject.extend({
                                                                 2.424242, 4.166667, 46.666667 + 7.954545 * i, 55.46875, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
-                    $("#brewPotionId" + i + 15).fadeIn(100);
 
                     var setPotion = new game.ClickableElement('setPotionId' + i + 15, '', this.setPotion(game.potion.potions[i + 15]),
                                                                4.848485, 8.333333, 45.454545 + 7.954545 * i, 60.416667, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
-                    $("#setPotionId" + i + 15).fadeIn(100);
 
                     var potionAmount = new game.TextOutputElement('potionAmountId' + i + 15, 5, 4, 42.681818 + 7.954545 * i, 61.895833, 1);
                     me.game.world.addChild(potionAmount);
@@ -333,7 +321,6 @@ game.BeltScreen = me.ScreenObject.extend({
                                                             4.848485, 8.333333, 17.121212 + 7.121212 * i, 80.729167, 1);
                 beltPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                 me.game.world.addChild(beltPotion);
-                $("#beltPotionId" + i).fadeIn(100);
             }
 
         }

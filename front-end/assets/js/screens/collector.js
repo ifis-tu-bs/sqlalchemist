@@ -33,9 +33,8 @@ game.CollectorScreen = me.ScreenObject.extend({
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backToLabButton', 'Back', this.backToLab, 15, 7.3, 3, 6, 1);
+        var backToLabButton = new game.ClickableElement('backToFromCollector', 'Back', this.backToLab, 15, 7.3, 3, 6, 1);
         me.game.world.addChild(backToLabButton);
-        $("#backToLabButton").fadeIn(100);
 
         /**
          * Init matrix to set symbols for enchantment and potion scrolls.
@@ -54,7 +53,6 @@ game.CollectorScreen = me.ScreenObject.extend({
              */
             var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 14.772727 + j * 37.878788, 35.5, 'none');
             collectionBox.setImage("assets/data/img/stuff/scroll_collection_box.png", "boxImg");
-            $("#collectionBox" + j).fadeIn(100);
             me.game.world.addChild(collectionBox);
 
             for (var k = 0; k < 5; k++) {
@@ -77,7 +75,6 @@ game.CollectorScreen = me.ScreenObject.extend({
                     var checkSymbol = new game.BackgroundElement('check' + k, 4.5, 6.5,
                         35 + j * 37.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
-                    $("#checkSymbol" + k).fadeIn(100);
                     me.game.world.addChild(checkSymbol);
                     console.log('check' + k);
                     checkSymbol.display();
@@ -91,10 +88,9 @@ game.CollectorScreen = me.ScreenObject.extend({
                             var scrolls = new game.BackgroundElement('scrolls' + i, 2.424243, 4.166668,
                                 17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
                             scrolls.setImage("assets/data/img/stuff/spinning_scroll_32.png", "scrollImg");
-                            $("#scrolls" + i).fadeIn(100);
                             me.game.world.addChild(scrolls);
                             console.log('scrolls' + i);
-                            scrolls.display();
+                            scrolls.fadeIn(100);
 
                             progress++;
                             /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
@@ -106,10 +102,9 @@ game.CollectorScreen = me.ScreenObject.extend({
                             var scrollsRed = new game.BackgroundElement('scrollsRed' + i, 2.424243, 4.166668,
                                 17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
                             scrollsRed.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "scrollRedImg");
-                            $("#scrollsRed" + i).fadeIn(100);
                             me.game.world.addChild(scrollsRed);
                             console.log('scrollsRed' + i);
-                            scrollsRed.display();
+                            scrollsRed.fadeIn(100);
 
                             progress++;
                             /*console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,
