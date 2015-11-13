@@ -71,24 +71,27 @@ game.TaskScreen = me.ScreenObject.extend({
 
         setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
 
-        var chooseDifficulty1  = new game.ClickableElement('chooseDifficulty1', '', setDifficulty(1), 4, 6, 67, 89, 2);
-        chooseDifficulty1.setImage("assets/data/img/buttons/difficulty_coins/coin_one.png", "one");
-        me.game.world.addChild(chooseDifficulty1);
-        var chooseDifficulty2  = new game.ClickableElement('chooseDifficulty2', '', setDifficulty(2), 4, 6, 70, 88, 2);
-        chooseDifficulty2.setImage("assets/data/img/buttons/difficulty_coins/coin_two.png", "two");
-        me.game.world.addChild(chooseDifficulty2);
-        var chooseDifficulty3  = new game.ClickableElement('chooseDifficulty3', '', setDifficulty(3), 4, 6, 73, 87, 2);
-        chooseDifficulty3.setImage("assets/data/img/buttons/difficulty_coins/coin_three.png", "three");
-        me.game.world.addChild(chooseDifficulty3);
-        var chooseDifficulty4  = new game.ClickableElement('chooseDifficulty4', '', setDifficulty(4), 4, 6, 76, 88, 2);
-        chooseDifficulty4.setImage("assets/data/img/buttons/difficulty_coins/coin_four.png", "four");
-        me.game.world.addChild(chooseDifficulty4);
-        var chooseDifficulty5  = new game.ClickableElement('chooseDifficulty5', '', setDifficulty(5), 4, 6, 79, 89, 2);
-        chooseDifficulty5.setImage("assets/data/img/buttons/difficulty_coins/coin_five.png", "five");
-        me.game.world.addChild(chooseDifficulty5);
-        var chooseDifficulty6  = new game.ClickableElement('chooseDifficulty6', '', setDifficulty(6), 4, 6, 82, 88, 2);
-        chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_six.png", "six");
-        me.game.world.addChild(chooseDifficulty6);
+        if(game.task.kind === 2){
+            var chooseDifficulty1  = new game.ClickableElement('chooseDifficulty1', '', setDifficulty(1), 4, 6, 67, 89, 2);
+            chooseDifficulty1.setImage("assets/data/img/buttons/difficulty_coins/coin_one.png", "one");
+            me.game.world.addChild(chooseDifficulty1);
+            var chooseDifficulty2  = new game.ClickableElement('chooseDifficulty2', '', setDifficulty(2), 4, 6, 70, 88, 2);
+            chooseDifficulty2.setImage("assets/data/img/buttons/difficulty_coins/coin_two.png", "two");
+            me.game.world.addChild(chooseDifficulty2);
+            var chooseDifficulty3  = new game.ClickableElement('chooseDifficulty3', '', setDifficulty(3), 4, 6, 73, 87, 2);
+            chooseDifficulty3.setImage("assets/data/img/buttons/difficulty_coins/coin_three.png", "three");
+            me.game.world.addChild(chooseDifficulty3);
+            var chooseDifficulty4  = new game.ClickableElement('chooseDifficulty4', '', setDifficulty(4), 4, 6, 76, 88, 2);
+            chooseDifficulty4.setImage("assets/data/img/buttons/difficulty_coins/coin_four.png", "four");
+            me.game.world.addChild(chooseDifficulty4);
+            var chooseDifficulty5  = new game.ClickableElement('chooseDifficulty5', '', setDifficulty(5), 4, 6, 79, 89, 2);
+            chooseDifficulty5.setImage("assets/data/img/buttons/difficulty_coins/coin_five.png", "five");
+            me.game.world.addChild(chooseDifficulty5);
+            var chooseDifficulty6  = new game.ClickableElement('chooseDifficulty6', '', setDifficulty(6), 4, 6, 82, 88, 2);
+            chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_six.png", "six");
+            me.game.world.addChild(chooseDifficulty6);
+        }
+
 
 
         textIn = new Object();
@@ -108,6 +111,8 @@ game.TaskScreen = me.ScreenObject.extend({
         likeButtonSet.hide();
         dislikeButtonSet.hide();
         reviewButtonSet.hide();
+
+        setDifficultyButton.hide();
 
 
         if(game.task.kind === 2){
@@ -589,20 +594,22 @@ game.TaskScreen = me.ScreenObject.extend({
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
-            // buttons to hide
+            sameTaskButton.display();
             submitButton.hide();
 
-            // buttons to display
-            sameTaskButton.display();
-            nextTaskButton.display();
+            // buttons to display and hide
+            if(game.task.kind !== 3){
 
-            likeButton.display();
-            dislikeButton.display();
-            reviewButton.display();
+                nextTaskButton.display();
 
-            likeButtonSet.display();
-            dislikeButtonSet.display();
-            reviewButtonSet.display();
+                likeButton.display();
+                dislikeButton.display();
+                reviewButton.display();
+
+                likeButtonSet.display();
+                dislikeButtonSet.display();
+                reviewButtonSet.display();
+            }
 
         };
         
