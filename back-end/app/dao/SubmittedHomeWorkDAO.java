@@ -43,7 +43,7 @@ public class SubmittedHomeWorkDAO  {
       }
 
     public static SubmittedHomeWork getSubmitsForProfileHomeWorkTask(Profile profile, HomeWork homeWork, Task task) {
-        return SubmittedHomeWork.find.where().eq("profile", profile).eq("homework", homeWork).eq("task", task).findUnique();
+        return SubmittedHomeWork.find.where().eq("profile", profile).eq("home_work_id", homeWork).eq("task", task).findUnique();
     }
   //////////////////////////////////////////////////
   //  Special Getter Object
