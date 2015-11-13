@@ -235,7 +235,7 @@ public class SQLController extends Controller {
             }
         }
 
-        if((task.getAvailableSyntaxChecks() - submittedHomeWork.getSyntaxChecksDone() - ) <= 0) {
+        if((task.getAvailableSyntaxChecks() - submittedHomeWork.getSyntaxChecksDone()) <= 0) {
             Logger.warn("You have no SyntaxChecks left");
             return badRequest("You have no SyntaxChecks left");
         }
