@@ -16,6 +16,8 @@ public class SolvedTaskDAO {
 
       solvedTask.save();
 
+      Logger.info("Saving SolvedTask: ProfileID: " + profile.getId() + ", taskID: " + task.getId() );
+
       return solvedTask;
   }
 
@@ -40,18 +42,21 @@ public class SolvedTaskDAO {
 
   public static SolvedTask getByProfileAndTask(Profile profile, Task task) {
       if(profile == null || task == null) {
-          Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
+          Logger.warn("SolvedTaskDAO.getByProfileAndSubTask - profile or subTask is null");
           return null;
       }
+
+      Logger.info("try getting SolvedTask for: ProfileID: " + profile.getId() + ", taskID: " + task.getId() );
+
       try {
-          SolvedTask solvedTask = SolvedTask.find.where().eq("profile", profile).eq("task", task).findUnique();
+          SolvedTask solvedTask = SolvedTask.find.where().eq("profile_id", profile.getId()).eq("task_id", task.getId()).findUnique();
           if(solvedTask == null) {
-              Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
+              Logger.warn("SolvedTaskDAO.getByProfileAndSubTask - Can't find existing solvedTask object!");
               return null;
           }
           return solvedTask;
       } catch (NullPointerException e) {
-          Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
+          Logger.warn("SolvedTaskDAO.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
           return null;
       }
   }
@@ -61,7 +66,7 @@ public class SolvedTaskDAO {
           float mittelwert_try = 0;
           int i = 0;
 
-          List<SolvedTask> solvedTaskList = SolvedTask.find.where().eq("profile", profile).findList();
+          List<SolvedTask> solvedTaskList = SolvedTask.find.where().eq("profile_id", profile).findList();
 
           for(SolvedTask solvedTask : solvedTaskList) {
               if(i == 0) {
@@ -73,15 +78,15 @@ public class SolvedTaskDAO {
               i++;
           }
 
-          List<SolvedTask> solvedTasks = SolvedTask.find.where().eq("profile", profile).ge("trys", mittelwert_try).findList();
+          List<SolvedTask> solvedTasks = SolvedTask.find.where().eq("profile_id", profile.getId()).ge("trys", mittelwert_try).findList();
           if(solvedTasks == null || solvedTaskList.size() == 0) {
-              Logger.warn("SolvedTask.getAllDoneSubTask - no SubTaskCandidates found");
+              Logger.warn("SolvedTaskDAO.getAllDoneSubTask - no SubTaskCandidates found");
               return null;
           }
 
           return solvedTasks;
       } catch (NullPointerException e) {
-          Logger.warn("SolvedTask.getAllDoneSubTask - no SubTaskCandidates found");
+          Logger.warn("SolvedTaskDAO.getAllDoneSubTask - no SubTaskCandidates found");
           return null;
       }
   }

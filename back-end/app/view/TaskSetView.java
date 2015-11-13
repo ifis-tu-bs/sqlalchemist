@@ -69,6 +69,8 @@ public class TaskSetView {
             foreignKeyRelationNode.add(ForeignKeyRelationView.toJson(foreignKeyRelation));
         }
 
+        taskNode = TaskView.toJsonList(taskSet.getTasks());
+
         for(Comment comment : taskSet.getComments()) {
             commentNode.add(CommentView.toJson(comment));
         }

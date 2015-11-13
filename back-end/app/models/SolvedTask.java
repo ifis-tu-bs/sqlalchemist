@@ -21,11 +21,11 @@ public class SolvedTask extends Model {
     private long id;
 
     @ManyToOne
-    @Column(name = "profile")
+    @Column(name = "profile_id")
     private final Profile profile;
 
     @ManyToOne
-    @Column(name = "task")
+    @Column(name = "task_id")
     private final Task task;
 
     private int solved;
@@ -54,7 +54,6 @@ public class SolvedTask extends Model {
     public void pushSolved() {
         this.solved = this.solved +  1;
     }
-
 
     public int getTrys() {
       return this.trys;

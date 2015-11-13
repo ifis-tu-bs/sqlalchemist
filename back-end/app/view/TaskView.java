@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import dao.SolvedTaskDAO;
+import dao.SubmittedHomeWorkDAO;
 import models.*;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -99,21 +100,22 @@ public class TaskView {
     /**
      * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
      */
-    public static ObjectNode toJsonHomeWorkForProfile(Task task, Profile profile) {
+    public static ObjectNode toJsonHomeWorkForProfileAndHomeWork(Task task, Profile profile, HomeWork homeWork) {
         ObjectNode json = toJsonExercise(task);
 
-
-        json.put("done",        SolvedTaskDAO.getByProfileAndTask(profile, task) != null);
-
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homeWork, task);
+        boolean existing = submittedHomeWork != null;
+        json.put("done", existing);
+        json.put("statement", existing ? submittedHomeWork.getStatement() : "");
 
         return json;
     }
 
-    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, Profile profile) {
+    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, Profile profile, HomeWork homework) {
         ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
 
         for(Task task : taskList) {
-            taskNode.add(TaskView.toJsonHomeWorkForProfile(task, profile));
+            taskNode.add(TaskView.toJsonHomeWorkForProfileAndHomeWork(task, profile, homework));
         }
 
         return taskNode;
