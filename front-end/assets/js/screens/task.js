@@ -746,6 +746,7 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             if (game.task.kind == 3) {
         	    // Homework
+                console.log("Homework/",game.task.homeworkId+ "/"+ game.task.exercise);
                 ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.task.exercise ,handleGetTask);
             }
             

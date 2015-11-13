@@ -64,12 +64,14 @@ public class ItemController extends Controller {
         Logger.info(body.toString());
 
         int currentLevel = challenge.getLevel();
-        int calcLevel   = (depth - 1)  / 5;
+        int calcLevel    = (depth - 1) / 5;
 
         Logger.info("calcLevel: " + calcLevel + " | currentLevel: " + currentLevel);
 
         if(depth > 1 && !profile.isTutorialDone()) {
+          Logger.info("ItemController set Tutorial Done");
             profile.setTutorialDone(true);
+            profile.setCurrentStory(challenge.getNext());
         }
 
         if(calcLevel > currentLevel) {
