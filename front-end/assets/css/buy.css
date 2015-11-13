@@ -34,3 +34,10 @@
 #discPara {
     line-height: 150%;
 }
+
+#backToShop:hover, #backToShop:focus, #backToShop:active {
+    color: #532e1f;
+}
+#buyButton:hover, #buyButton:focus, #buyButton:active {
+    color: #532e1f;
+}

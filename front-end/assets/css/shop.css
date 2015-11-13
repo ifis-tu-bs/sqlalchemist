@@ -43,3 +43,8 @@
     -webkit-filter: contrast(150%);
     -webkit-filter: brightness(150%);
 }
+
+#backFromShop:hover, #backFromShop:focus, #backFromShop:active {
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}

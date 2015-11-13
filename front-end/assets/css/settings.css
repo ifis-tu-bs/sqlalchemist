@@ -116,7 +116,7 @@
     color: white;
 }
 
-#submitReset, #studentRequest{
+#submitReset, #studentRequest, #submitDeletion, #submitVerification {
     font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
@@ -159,7 +159,17 @@
     color: white;
 }
 
-#storyReset{
+#submitDeletion:hover, #submitDeletion:focus, #submitDeletion:active {
+    background-color: #a40202;
+    color: white;
+}
+#submitVerification:hover, #submitVerification:focus, #submitVerification:active {
+    background-color: #a40202;
+    color: white;
+}
+
+
+#storyReset, #deleteUser {
     font-family: Amethysta-Regular, sans-serif;
     color: black;
     cursor: pointer;
@@ -195,8 +205,12 @@
     background-color: #919191;
     color: white;
 }
+#deleteUser:hover, #deleteUser:focus, #deleteUser:active {
+    background-color: #919191;
+    color: white;
+}
 
-#changeHeader, #resetHeader, #keyBindingsHeader {
+#changeHeader, #resetHeader, #keyBindingsHeader, #deleteUserHeader, #verifyUserHeader {
     background-color: transparent;
     border-style: none;
     font-family: Amethysta-Regular, sans-serif;
