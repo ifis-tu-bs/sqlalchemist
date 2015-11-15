@@ -8,7 +8,6 @@ import dao.TaskSetDAO;
 import models.HomeWork;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Profile;
-import models.SubmittedHomeWork;
 import models.TaskSet;
 import play.Logger;
 import play.libs.Json;
@@ -123,8 +122,7 @@ public class HomeWorkView {
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
             ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
-            TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile, homeWork);
-            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile, homeWork));
+            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
 
             arrayNode.add(taskSetJson);
         }

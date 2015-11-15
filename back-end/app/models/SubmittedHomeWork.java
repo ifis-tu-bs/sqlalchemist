@@ -28,11 +28,9 @@ public class SubmittedHomeWork extends Model {
     private Long id;
 
     @ManyToOne
-    @Column(name = "profile_id")
     final Profile profile;
 
     @ManyToOne
-    @Column(name = "task_id")
     final Task task;
 
     @ManyToOne
