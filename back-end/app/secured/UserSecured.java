@@ -28,6 +28,6 @@ public class UserSecured extends Authenticator {
 
     @Override
     public Result onUnauthorized(Context context) {
-        return forbidden("restricted page, you need User permissions");
+        return forbidden("restricted page, you need user permissions");
     }
 }

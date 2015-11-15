@@ -20,25 +20,20 @@ public class ShopItem extends Model{
 
     public static final int TYPE_AVATAR = 0;
     public static final int TYPE_BELT = 1;
-    @Column(name = "type")
     private final int type;
 
-    @Column(name = "ShopItemName")
-    private final String name;
+    private final String title;
 
-    @Column(name ="ShopItem_desc")
-    private final String desc;
+    private final String description;
 
     private final String thumbnailUrl;
 
-    @Column(name = "price")
     private final int price;
 
     @OneToOne
     private Avatar avatar;
 
-    public static final Model.Finder<Long, ShopItem> find = new Model.Finder<>(
-            Long.class, ShopItem.class);
+    public static final Model.Finder<Long, ShopItem> find = new Model.Finder<>(ShopItem.class);
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -46,15 +41,15 @@ public class ShopItem extends Model{
 
     /**
      *
-     * @param name          name of the item
+     * @param name          title of the item
      * @param thumbnailUrl  url of the thumbnail
      * @param price         price of the item
      * @param avatar        optional avatar
      */
-    public ShopItem(String name, String desc, String thumbnailUrl, int type, Avatar avatar, int price) {
+    public ShopItem(String name, String description, String thumbnailUrl, int type, Avatar avatar, int price) {
 
-        this.name           = name;
-        this.desc           = desc;
+        this.title = name;
+        this.description = description;
         this.thumbnailUrl   = thumbnailUrl;
         this.type           = type;
         this.price          = price;
@@ -88,12 +83,12 @@ public class ShopItem extends Model{
         return this.type == TYPE_BELT;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
     public String getThumbnailUrl() {

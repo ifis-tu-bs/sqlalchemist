@@ -22,7 +22,7 @@ public class LofiCoinFlowLog extends Model {
 
     private final Calendar collected;
 
-    public static final Finder<Long, LofiCoinFlowLog> find = new Finder<>(Long.class, LofiCoinFlowLog.class);
+    public static final Finder<Long, LofiCoinFlowLog> find = new Finder<>(LofiCoinFlowLog.class);
 
     public LofiCoinFlowLog(Profile profile, int coins) {
         this.profile = profile;

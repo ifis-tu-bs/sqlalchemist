@@ -64,7 +64,7 @@ public class HomeWorkDAO {
     }
 
     public static List<HomeWork> getHomeWorksForSubmits(List<Object> submits) {
-    return HomeWork.find.where().in("id", submits).findList();
+        return HomeWork.find.where().in("id", submits).findList();
     }
 
     public static HomeWork getById (long id) {

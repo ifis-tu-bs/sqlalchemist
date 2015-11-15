@@ -251,7 +251,7 @@ Usage: $script_name <command> [options]
 
   Command:
   ui                 Start the Activator UI
-  new [name] [template-id]  Create a new project with [name] using template [template-id]
+  new [title] [template-id]  Create a new project with [title] using template [template-id]
   list-templates     Print all available template names
   -h | -help         Print this message
 

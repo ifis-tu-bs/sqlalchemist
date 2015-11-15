@@ -20,7 +20,7 @@ public class ShopItemDAO {
        * @return  returns the ShopItem
        */
       public static ShopItem create(Avatar avatar, int price) {
-          return create(avatar.getName(), avatar.getDesc(), avatar.getAvatarFilename(), ShopItem.TYPE_AVATAR, avatar, price);
+          return create(avatar.getTitle(), avatar.getDescription(), avatar.getAvatarFilename(), ShopItem.TYPE_AVATAR, avatar, price);
       }
 
       /**
@@ -76,10 +76,10 @@ public class ShopItemDAO {
           return ShopItem.find.byId(id);
       }
 
-      public static ShopItem getByName(String name) {
+      public static ShopItem getByName(String title) {
           ShopItem shopItem;
-          if ((shopItem = ShopItem.find.where().eq("name", name).findUnique()) == null) {
-              Logger.warn("ShopItem.getByName(" + name + ") - No ShopItem found !");
+          if ((shopItem = ShopItem.find.where().eq("title", title).findUnique()) == null) {
+              Logger.warn("ShopItem.getByName(" + title + ") - No ShopItem found !");
               return null;
           }
           return shopItem;

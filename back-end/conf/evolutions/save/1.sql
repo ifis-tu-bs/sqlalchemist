@@ -207,7 +207,7 @@ create table solvedsubtask (
 
 create table storychallenge (
   id                            bigint auto_increment not null,
-  name                          varchar(255),
+  title                          varchar(255),
   is_tutorial                   tinyint(1) default 0,
   level                         integer,
   next_id                       bigint,

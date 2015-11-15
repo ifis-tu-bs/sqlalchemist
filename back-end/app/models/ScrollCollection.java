@@ -37,7 +37,7 @@ public class ScrollCollection extends Model {
 
     private final Calendar added;
 
-    public static final Finder<Long, ScrollCollection> find = new Finder<>(Long.class, ScrollCollection.class);
+    public static final Finder<Long, ScrollCollection> find = new Finder<>(ScrollCollection.class);
 
 //////////////////////////////////////////////////
 //  constructor

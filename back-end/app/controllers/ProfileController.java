@@ -92,7 +92,8 @@ public class ProfileController extends Controller {
     }
 
     public Result getUserHomeworks() {
-        List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(ProfileDAO.getByUsername(request().username()));
+        Profile profile = ProfileDAO.getByUsername(request().username());
+        List<Object> submits = SubmittedHomeWorkDAO.getSubmitsForProfile(profile);
         List<HomeWork> homeWorks = HomeWorkDAO.getHomeWorksForSubmits(submits);
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 

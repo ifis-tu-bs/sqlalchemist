@@ -53,7 +53,7 @@ public class Task extends Model {
     private int availableSyntaxChecks;
     private int availableSemanticChecks;
 
-    public static final Finder<Long, Task> find = new Finder<>(Long.class, Task.class);
+    public static final Finder<Long, Task> find = new Finder<>(Task.class);
 
 //////////////////////////////////////////////////
 //  constructor

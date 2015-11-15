@@ -34,7 +34,7 @@ public class ColumnDefinition extends Model {
 
     private final int     datagenSet;
 
-    public static Finder<Long, ColumnDefinition> find = new Finder<>(Long.class, ColumnDefinition.class);
+    public static Finder<Long, ColumnDefinition> find = new Finder<>(ColumnDefinition.class);
 
 
 //////////////////////////////////////////////////

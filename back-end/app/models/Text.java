@@ -22,23 +22,21 @@ public class Text extends Model {
     public static final int TEXT_TYPE_TERRY_SUCCESSFUL = 200;
     public static final int TEXT_TYPE_TERRY_FAILURE = 201;
     public static final int TEXT_TYPE_TERRY_URGE = 202;
-    @Column(name = "type")
+
     private final int type;
 
     private final int prerequisite;
 
     private final int chronology;
 
-    @Column(name = "text", columnDefinition = "Text")
+    @Column(columnDefinition = "Text")
     private final String text;
 
-    @Column(name = "sound_url")
     private final String sound_url;
 
-    @Column(name = "count_of_lines")
-    private final int lines;
+    private final int content_rows;
 
-    public static final Finder<Long, Text> find = new Finder<>(Long.class, Text.class);
+    public static final Finder<Long, Text> find = new Finder<>(Text.class);
 
 
 //////////////////////////////////////////////////
@@ -51,7 +49,7 @@ public class Text extends Model {
             String sound_url,
             int prerequisite,
             int chronology,
-            int lines) {
+            int content_rows) {
 
         super();
 
@@ -60,7 +58,7 @@ public class Text extends Model {
         this.sound_url      = sound_url;
         this.prerequisite = prerequisite;
         this.chronology = chronology;
-        this.lines = lines;
+        this.content_rows = content_rows;
     }
 
 //////////////////////////////////////////////////
@@ -79,7 +77,7 @@ public class Text extends Model {
         node.put("prerequisite",this.prerequisite);
         node.put("chronology",  this.chronology);
         node.put("text",        this.text);
-        node.put("lines",       this.lines);
+        node.put("content_rows",       this.content_rows);
         node.put("sound_url",   this.sound_url);
 
         return node;

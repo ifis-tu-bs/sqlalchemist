@@ -1,6 +1,5 @@
 package controllers;
 
-import akka.actor.Nobody;
 import dao.*;
 
 import models.*;
@@ -207,7 +206,7 @@ public class SQLController extends Controller {
         return ok(taskNode);
     }
 
-    public Result homeworkSolve(Long TaskID, Boolean submit) {
+    public Result homeworkSolve(Long TaskID, boolean submit) {
         Profile         profile         = ProfileDAO.getByUsername(request().username());
         HomeWork        homeWork        = profile.getCurrentHomeWork();
         Task            task            = TaskDAO.getById(TaskID);

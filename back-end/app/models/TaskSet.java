@@ -49,7 +49,7 @@ public class TaskSet extends Model {
     private final Date createdAt;
     private Date updatedAt;
 
-    public static final Finder<Long, TaskSet> find = new Finder<>(Long.class, TaskSet.class);
+    public static final Finder<Long, TaskSet> find = new Finder<>(TaskSet.class);
 
 //////////////////////////////////////////////////
 //  constructor

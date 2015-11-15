@@ -78,7 +78,7 @@ public class UserDAO {
         if(y_ID == null) {
             return null;
         }
-        return User.find.where().eq("y_ID",y_ID).findUnique();
+        return User.find.where().eq("y_id",y_ID).findUnique();
     }
 
     public static List<User> getAllStudendts() {
@@ -98,6 +98,6 @@ public class UserDAO {
     }
 
     public static User getByVerifyCode(String verifyCode) {
-        return User.find.where().eq("email_verify_code", verifyCode).findUnique();
+        return User.find.where().eq("emailVerifyCode", verifyCode).findUnique();
     }
 }
