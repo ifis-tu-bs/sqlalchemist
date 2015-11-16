@@ -10,9 +10,9 @@
     <br>
     <uib-accordion close-others="true">
 
-        <uib-accordion-group is-open="true">
+        <uib-accordion-group>
             <uib-accordion-heading>
-                Selected TaskSets: {{$scope.selectedTaskSets.length}}
+                <a><b>First: </b>Select TaskSets</a>
             </uib-accordion-heading>
                 <table class="table table-hover" style="float:left; width:50%">
                     <thead>
@@ -42,19 +42,15 @@
 
         <uib-accordion-group>
             <uib-accordion-heading>
-                Alround information
+                <a><b>Second: </b>Select start and expire dates</a>
             </uib-accordion-heading>
             <div class="container container-fluid" style="float:left;width:48%">
-
                 <label>From &#60;inclusive&#62;</label>
-                <pre>Selected date is: <em>{{dates.from.toUTCString()}}</em></pre>
                 <uib-datepicker ng-model="dates.from" style="resize:none"></uib-datepicker>
-
             </div>
 
             <div class="container container-fluid" style="float:right;width:48%">
                 <label style="float:right">To &#60;inclusive&#62;</label><br>
-                <pre>Selected date is: <em>{{dates.to.toUTCString()}}</em></pre>
                 <uib-datepicker ng-model="dates.to" style="resize:none;float:right"></uib-datepicker>
             </div>
 
