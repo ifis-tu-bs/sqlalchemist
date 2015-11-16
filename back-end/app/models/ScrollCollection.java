@@ -21,7 +21,10 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "scrollcollection")
+@Table(
+        name = "scrollcollection",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "scroll_id"})
+)
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
     @Id
