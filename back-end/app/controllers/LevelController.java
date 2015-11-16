@@ -39,7 +39,6 @@ public class LevelController extends Controller {
     }
 
     public Result reset() {
-        Logger.info("Reset !!!!");
         Profile profile = ProfileDAO.getByUsername(request().username());
 
         profile.resetStory();

@@ -56,7 +56,6 @@ public class SQLController extends Controller {
                 }
             }
         }
-        Logger.info("Difficulty: " + Math.round(difficulty / 2));
         Task task = TaskDAO.getNewTask(profile, Math.round(difficulty / 2), false);
 
         if(task == null) {
