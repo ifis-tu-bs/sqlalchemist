@@ -18,8 +18,8 @@ angular
     .module('app')
     .controller('TasksController', TasksController);
 
-    TasksController.$inject = ['$scope', '$uibModal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout'];
-    function TasksController($scope, $uibModal, TaskService, FlashService, $rootScope, $location, $filter, $timeout) {
+    TasksController.$inject = ['$scope', '$uibModal', 'TaskService', 'FlashService', '$rootScope', '$location', '$filter', '$timeout', '$q'];
+    function TasksController($scope, $uibModal, TaskService, FlashService, $rootScope, $location, $filter, $timeout, $q) {
         var vm = this;
 
         $scope.orderReverse = false;
@@ -62,13 +62,12 @@ angular
             } else {
                 TaskService.getAllTaskSets().then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
-                            console.log(result);
-                                vm.taskSets = result;
-                                $scope.getCurrentPath();
-                            }
+                            vm.taskSets = result;
+                            $scope.getCurrentPath();
+
+                        }, function (error) {
+                            FlashService.Error(result.message);
+
                         }
                 );
 
@@ -170,8 +169,7 @@ angular
             });
 
             modalInstance.result.then(
-            FlashService.Clear,
-            null
+                FlashService.Clear
             );
         }
 
@@ -182,23 +180,23 @@ angular
 
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
-                                FlashService.Success("Updated TaskSet");
-                            }
+                            FlashService.Success("Updated TaskSet");
+
+                        }, function (error) {
+                            FlashService.Error(result.message);
+
                         }
                 );
 
             } else {
                 return TaskService.createTaskSet(taskSet).then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
-                                FlashService.Success("Created new TaskSet");
-                                vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
-                            }
+                            FlashService.Success("Created new TaskSet");
+                            vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
+
+                        }, function (error) {
+                            FlashService.Error(result.message);
+
                         }
                 );
 
@@ -253,16 +251,16 @@ angular
                 function () {
                     return TaskService.deleteTaskSet(taskSet.id);
                 },
-                null
+                function () {
+                    return $q.reject({});
+                }
             ).then(
                  function () {
                      vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1);
                  },
                  function (error) {
-                         if (error.message) {
-                             FlashService.Error(error.message);
-                         }
-                     }
+                         FlashService.Error(error);
+                 }
             );
         }
 
@@ -285,12 +283,12 @@ angular
 
             TaskService.rateTaskSet(taskSet.id, ratingJson).then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
-                    }
-            });
+                    vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
+
+                }, function (error) {
+                    FlashService.Error(error);
+
+                });
         }
 
 
@@ -413,8 +411,7 @@ angular
             });
 
             modalInstance.result.then(
-            FlashService.Clear,
-            null
+                FlashService.Clear
             );
         }
 
@@ -423,25 +420,22 @@ angular
             if (task.id != undefined) {
                 TaskService.editTask(task.id, task).then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
-                                FlashService.Success("Updated Task");
-                            }
+                            FlashService.Success("Updated Task");
+                        }, function (error) {
+                            FlashService.Error(error);
                         }
                 );
             } else {
                 TaskService.createTask(task.taskSet, task).then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
+                            /* Let's put in the new values we just created in BackEnd */
+                            vm.tasks[findInArray(vm.tasks, task)] = result;
 
-                                /* Let's put in the new values we just created in BackEnd */
-                                vm.tasks[findInArray(vm.tasks, task)] = result;
+                            FlashService.Success("Created new Task");
 
-                                FlashService.Success("Created new Task");
-                            }
+                        }, function (error) {
+                            FlashService.Error(result.message);
+
                         }
                 );
             }
@@ -471,17 +465,16 @@ angular
             .then(
                 function () {
                     return TaskService.deleteTask(task.id);
-                },
-                null
+                }, function () {
+                    return $q.reject({});
+                }
             ).then(
-                 function () {
-                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
-                 },
-                 function (error) {
-                         if (error.message) {
-                             FlashService.Error(error.message);
-                         }
-                     }
+                function () {
+                    vm.tasks.splice(findInArray(vm.tasks, task), 1);
+                },
+                function (error) {
+                    FlashService.Error(error);
+                }
             );
         }
 
@@ -503,13 +496,13 @@ angular
                     }
                     TaskService.rateTask(task.id, ratingJson).then(
                         function (result) {
-                            if (result.error) {
-                                FlashService.Error(result.message);
-                            } else {
-                                console.log($scope.tabActive);
-                                vm.tasks[findInArray(vm.tasks, task)] = result;
-                            }
-                    });
+                            vm.tasks[findInArray(vm.tasks, task)] = result;
+
+                        }, function (error) {
+                            FlashService.Error(result.message);
+
+                        }
+                    );
                 }
 
         //////////////////////////////777
