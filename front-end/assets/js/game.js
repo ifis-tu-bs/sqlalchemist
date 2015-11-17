@@ -111,7 +111,9 @@ var game = {
         taskSet: 1,
         taskSets: 1,
         currentHomework: 0,
-        currentExercise: 1
+        currentExercise: 1,
+        checks: 0,
+        submits: 0
     },
 
 
