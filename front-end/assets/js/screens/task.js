@@ -798,7 +798,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
         var stopp = 0;
         function getNextExerciseFromServer() {
-            console.log("Kahn",stopp);
+            console.log("Stopp: ",stopp);
             // buttons to hide
             sameTaskButton.hide();
             nextTaskButton.hide();
@@ -827,8 +827,10 @@ game.TaskScreen = me.ScreenObject.extend({
             }else{
                 stopp++;
                 //badly done
-                if(stopp > 30){
+                if(stopp < 30){
                     getNextExerciseFromServer();
+                }else{
+                    me.state.change(STATE_HOMEWORKTASKSET);
                 }
             }
 
