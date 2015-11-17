@@ -16,12 +16,6 @@
 
         return service;
 
-        function GetAll() {
-            //TODO
-            //return $http.get('/api/users').then(handleSuccess, handleError('Fehler beim Abrufen aller Benutzer'));
-            return "Not yet implemented";
-        }
-
         function resetPassword(resetCode, password) {
             return $http.post('/users/dopasswordreset/' + resetCode, {newpassword: password}).then(handleSuccess, handleError);
         }
@@ -59,11 +53,11 @@
         // private Funktionen
 
         function handleSuccess(data) {
-            return data;
+            return data.data;
         }
 
         function handleError(error) {
-            return { error: true, message: error.data };
+            throw error.data
         }
     }
 
