@@ -18,10 +18,10 @@ public class Scroll extends  Model {
     @Id
     private long id;
 
-    @Column(name = "posId", unique = true)
+    @Column(unique = true)
     private final int posId;
 
-    @Column(name = "Scrollname", unique = true)
+    @Column(unique = true)
     private final String name;
 
     public static final int TYPE_RECIPE = -1;
@@ -30,17 +30,16 @@ public class Scroll extends  Model {
     public static final int TYPE_SCROLL_JUMP = 2;
     public static final int TYPE_SCROLL_DEFENSE = 3;
 
-    @Column(name = "type")
     private final int type;
 
     @OneToOne
-    @Column(name = "potion", unique = true)
+    @Column(unique = true)
     private Potion potion;
 
     @Embedded
     private PlayerStats playerstats;
 
-    public static final Finder<Long, Scroll> find = new Finder<>(Long.class, Scroll.class);
+    public static final Finder<Long, Scroll> find = new Finder<>(Scroll.class);
 
 
 //////////////////////////////////////////////////

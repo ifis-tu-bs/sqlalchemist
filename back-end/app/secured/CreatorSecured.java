@@ -29,6 +29,6 @@ public class CreatorSecured extends Authenticator {
 
      @Override
     public Result onUnauthorized(Context context) {
-        return forbidden("restricted page, you need higher permissions, than \"Creator\"");
+         return forbidden("restricted page, you need creator permissions");
     }
 }

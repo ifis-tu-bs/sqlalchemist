@@ -30,7 +30,7 @@ public class HomeWork extends Model {
 
     private final String homeWorkName;
 
-    public static final Model.Finder<Long, HomeWork> find = new Model.Finder<>(Long.class, HomeWork.class);
+    public static final Model.Finder<Long, HomeWork> find = new Finder<>(HomeWork.class);
 
 //////////////////////////////////////////////////
 //  Constructor

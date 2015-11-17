@@ -17,13 +17,13 @@ import javax.persistence.*;
 @Entity
 @Table(
         name = "potion",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"type", "powerLevel"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"type", "power_level"})
 )
 public class Potion extends Model {
     @Id
     private long id;
 
-    @Column(name = "potionName", unique = true)
+    @Column(unique = true)
     private final String name;
 
     public static final int HEALTH_POTION = 0;
@@ -31,7 +31,6 @@ public class Potion extends Model {
     public static final int JUMP_POTION = 2;
     public static final int DEFENSE_POTION = 3;
 
-    @Column(name = "type")
     private final int type;
 
     public static final int POWER_LEVEL_1 = 1;
@@ -40,16 +39,14 @@ public class Potion extends Model {
     public static final int POWER_LEVEL_4 = 4;
     public static final int POWER_LEVEL_5 = 5;
 
-    @Column(name = "powerLevel")
     private final int powerLevel;
 
-    @Column(name = "buffValue")
     private final int buffValue;
 
     @Embedded
     private final PlayerStats playerStats;
 
-    public static final Finder<Long, Potion> find = new Finder<>(Long.class, Potion.class);
+    public static final Finder<Long, Potion> find = new Finder<>(Potion.class);
 
 //////////////////////////////////////////////////
 //  Constructor

@@ -32,7 +32,7 @@ public class TaskView {
         return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, creator, availableSyntaxChecks, availableSemanticChecks);
     }
 
-    public static ObjectNode toJsonList(Task task) {
+    public static ObjectNode toJson(Task task) {
         ObjectNode json = Json.newObject();
         ArrayNode commentNode = JsonNodeFactory.instance.arrayNode();
 
@@ -90,7 +90,7 @@ public class TaskView {
         ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
 
         for(Task task : taskList) {
-            taskNode.add(TaskView.toJsonList(task));
+            taskNode.add(TaskView.toJson(task));
         }
 
         return taskNode;

@@ -33,8 +33,8 @@
 | Name                      | Type                              | Description|
 |---------------------------|-----------------------------------|------------|
 | ```id```                  | ```Number ```                     |            |
-| ```name```                | ```String```                      |            |
-| ```desc```                | ```String```                      |            |
+| ```title```                | ```String```                      |            |
+| ```description```                | ```String```                      |            |
 | ```avatarFilename```      | ```String```                      |            |
 | ```isTeam```              | ```Boolean```                     |            |
 | ```attributes```          | [```PlayerState```](#playerstate) |            |
@@ -44,8 +44,8 @@ Example:
 Avatar:
 {
   "id":             12,
-  "name":           "FirstName",
-  "desc":           "Yeah",
+  "title":           "FirstName",
+  "description":           "Yeah",
   "avatarFilename": "parryhitter",
   "isTeam":         true,
   "attributes":     PlayerState
@@ -255,8 +255,8 @@ Settings:
 | Name                      | Type                              | Description|
 |---------------------------|-----------------------------------|------------|
 | ```id```                  | ```Number ```                     |            |
-| ```name```                | ```String```                      |            |
-| ```desc```                | ```String```                      |            |
+| ```title```                | ```String```                      |            |
+| ```description```                | ```String```                      |            |
 | ```type```                | ```Number```                      | 0 = Avatar - 1 = Belt |
 | ```thumbnailUrl```        | ```String```                      |            |
 | ```price```               | ```Number```                      |            |
@@ -268,8 +268,8 @@ Example:
 ShopItem:
 {
   "id":             12,
-  "name":           "FirstName",
-  "desc":           "Yeah",
+  "title":           "FirstName",
+  "description":           "Yeah",
   "type":           1,
   "thumbnailUrl":   "parryhitter",
   "price":          true,

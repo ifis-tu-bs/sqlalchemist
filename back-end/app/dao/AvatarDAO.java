@@ -41,7 +41,7 @@ public class AvatarDAO {
         } catch (PersistenceException pe) {
             Logger.warn(pe.getMessage());
             Avatar avatar_res = Avatar.find.where().eq("avatar_name", name).findUnique();
-            if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
+            if(avatar_res != null && avatar_res.getTitle().equalsIgnoreCase(name)) {
                 Logger.warn("Can't create Avatar(duplicate) " + AvatarView.toJson(avatar).toString());
                 return avatar_res;
             }

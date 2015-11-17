@@ -38,6 +38,6 @@ public class AdminSecured extends Authenticator {
      */
     @Override
     public Result onUnauthorized(Context context) {
-        return forbidden("restricted page, you need higher permissions, than ");
+        return forbidden("restricted page, you need admin permissions");
     }
 }

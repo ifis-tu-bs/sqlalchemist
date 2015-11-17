@@ -1,5 +1,6 @@
 package dao;
 
+import com.avaje.ebean.Expr;
 import models.TaskSet;
 
 import play.Logger;
@@ -16,9 +17,9 @@ public class TaskSetDAO {
     * get a list of all TaskSet objects
     * @return returns a list of all TaskSet objects
     */
-    public static List<TaskSet> getAll()
+    public static List<TaskSet> getAll(boolean withHomeWorks)
     {
-        List<TaskSet> taskSetList = TaskSet.find.all();
+        List<TaskSet> taskSetList = TaskSet.find.where().or(Expr.eq("isHomework", false), Expr.eq("isHomework", withHomeWorks)).findList();
 
         if (taskSetList == null)
         {

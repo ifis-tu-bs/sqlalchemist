@@ -30,7 +30,6 @@ public class Comment extends Model{
     private final Profile profile;
 
     /** Content of the comment. */
-    @Column(name = "comment")
     private final String comment;
 
     private final Date created_at;
@@ -38,8 +37,7 @@ public class Comment extends Model{
     /**
      * Finder for this class
      */
-    public static final Model.Finder<Long, Comment> find = new Model.Finder<>(
-            Long.class, Comment.class);
+    public static final Model.Finder<Long, Comment> find = new Finder<>(Comment.class);
 
 //////////////////////////////////////////////////
 //  Constructor

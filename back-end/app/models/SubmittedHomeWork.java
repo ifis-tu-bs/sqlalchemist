@@ -34,7 +34,6 @@ public class SubmittedHomeWork extends Model {
     final Task task;
 
     @ManyToOne
-    @Column(name = "home_work_id")
     final HomeWork homeWork;
 
     private int syntaxChecksDone;
@@ -43,7 +42,7 @@ public class SubmittedHomeWork extends Model {
     String statement;
     boolean solve;
 
-    public static final Finder<Long, SubmittedHomeWork> find = new Finder<>(Long.class, SubmittedHomeWork.class);
+    public static final Finder<Long, SubmittedHomeWork> find = new Finder<>(SubmittedHomeWork.class);
 
 
 //////////////////////////////////////////////////

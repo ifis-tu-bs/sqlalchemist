@@ -23,7 +23,7 @@ public class TableDefinition extends Model {
     private final String                  tableName;
     @OneToMany(mappedBy = "tableDefinition", cascade = CascadeType.ALL)
     private List<ColumnDefinition>  columnDefinitions;
-    @Column(columnDefinition = "Text")
+
     private final String                  extension;
 
 //////////////////////////////////////////////////

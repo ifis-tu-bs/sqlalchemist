@@ -31,19 +31,19 @@ public class SubmittedHomeWorkDAO  {
   //////////////////////////////////////////////////
 
       public static List<SubmittedHomeWork> getSubmitsForSubtask(Task task) {
-          return SubmittedHomeWork.find.where().eq("task_id", task.getId()).findList();
+          return SubmittedHomeWork.find.where().eq("task", task).findList();
       }
 
       public static List<Object> getSubmitsForProfile(Profile profile) {
-          return SubmittedHomeWork.find.where().eq("profile_id", profile.getId()).findIds();
+          return SubmittedHomeWork.find.where().eq("profile", profile).findIds();
       }
 
       public static List<SubmittedHomeWork> getSubmitsForTaskInHomeWork(long taskId, long homeWorkId) {
-          return SubmittedHomeWork.find.where().eq("task_id", taskId).eq("home_work_id", homeWorkId).findList();
+          return SubmittedHomeWork.find.where().eq("task.id", taskId).eq("homeWork.id", homeWorkId).findList();
       }
 
     public static SubmittedHomeWork getSubmitsForProfileHomeWorkTask(Profile profile, HomeWork homeWork, Task task) {
-        return SubmittedHomeWork.find.where().eq("profile", profile).eq("home_work_id", homeWork.getId()).eq("task", task).findUnique();
+        return SubmittedHomeWork.find.where().eq("profile", profile).eq("homeWork", homeWork).eq("task", task).findUnique();
     }
   //////////////////////////////////////////////////
   //  Special Getter Object
@@ -62,9 +62,9 @@ public class SubmittedHomeWorkDAO  {
             HomeWork homeWork) {
 
         return SubmittedHomeWork.find.where()
-                .eq("profile_id", profile.getId())
-                .eq("task_id", task.getId())
-                .eq("home_work_id", homeWork.getId())
+                .eq("profile", profile)
+                .eq("task", task)
+                .eq("home_work", homeWork)
                 .findUnique();
     }
 }

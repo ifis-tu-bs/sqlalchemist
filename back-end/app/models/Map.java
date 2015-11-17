@@ -16,16 +16,14 @@ public class Map extends Model {
     @Id
     private long id;
 
-    @Column(name = "level")
     private final int level;
 
-    @Column(name = "path", unique = true)
+    @Column(unique = true)
     private final String path;
 
-    @Column(name = "boss_map")
     private final boolean isBossMap;
 
-    public static final Finder<Long, Map> find = new Finder<>(Long.class, Map.class);
+    public static final Finder<Long, Map> find = new Finder<>(Map.class);
 
 //////////////////////////////////////////////////
 //  Constructor

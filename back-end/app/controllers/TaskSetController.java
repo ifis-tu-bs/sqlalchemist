@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.MappingJsonFactory;
 import dao.ProfileDAO;
 import dao.TaskSetDAO;
 
+import dao.UserDAO;
 import dao.UserSessionDAO;
 import models.*;
 
@@ -84,7 +85,9 @@ public class TaskSetController extends Controller {
      * @return returns a JSON Array filled with all taskSets
      */
     public Result read() {
-        List<TaskSet> taskSetList = TaskSetDAO.getAll();
+        User user = UserDAO.getByUsername(request().username());
+
+        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.isAdmin());
 
         if (taskSetList == null) {
             Logger.warn("TaskSet.index - no TaskSet found");

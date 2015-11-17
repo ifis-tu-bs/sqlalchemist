@@ -70,16 +70,12 @@ public class TaskDAO {
                 avg += solvedTask.getTrys();
             }
             avg /= solvedTasks.size();
-            Logger.info("Avg = " + avg);
             for(SolvedTask solvedTask : solvedTasks) {
                 if(solvedTask.getTrys() > avg) {
                     taskList.remove(solvedTask.getTask());
                 }
             }
         }
-
-        Logger.info("TaskList   Size: " + taskList.size());
-        Logger.info("SolvedTask Size: " + solvedTasks.size());
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)

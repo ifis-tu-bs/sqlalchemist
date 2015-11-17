@@ -51,18 +51,24 @@ public class SessionController extends Controller {
         User user;
 
         if ((user = User.validate(id, password, adminTool)) != null) {
-            UserSession userSession = UserSession.create(
-                    user,
-                    Play.application().configuration().getInt("UserManagement.SessionDuration"),
-                    request().remoteAddress()
-            );
+            if(user.isActive()) {
+                UserSession userSession = UserSession.create(
+                        user,
+                        Play.application().configuration().getInt("UserManagement.SessionDuration"),
+                        request().remoteAddress()
+                );
 
-            if (userSession != null ) {
-                session().put("sessionID", userSession.getSessionID());
-                return redirect(routes.ProfileController.read());
+                if (userSession != null) {
+                    session().put("sessionID", userSession.getSessionID());
+                    return redirect(routes.ProfileController.read());
+                }
+                Logger.warn("SessionController.create - Can't create userSession");
+                return badRequest("Can't create userSession");
+            } else {
+                Logger.warn("Cannot login because it is an disabled User");
+                return badRequest("Cannot login because it is an disabled User");
             }
-            Logger.warn("SessionController.create - Can't create userSession");
-            return badRequest("Can't create userSession");
+
         }
         Logger.warn("SessionController.create - Wrong ID or Password: " + id);
         return forbidden("Wrong ID/Password");
