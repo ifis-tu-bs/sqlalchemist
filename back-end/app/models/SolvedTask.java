@@ -21,11 +21,9 @@ public class SolvedTask extends Model {
     private long id;
 
     @ManyToOne
-    @Column(name = "profile")
     private final Profile profile;
 
     @ManyToOne
-    @Column(name = "task")
     private final Task task;
 
     private int solved;
@@ -33,7 +31,7 @@ public class SolvedTask extends Model {
 
     private Date lastSolved;
 
-    public static final Finder<Long, SolvedTask> find = new Finder<>(Long.class, SolvedTask.class);
+    public static final Finder<Long, SolvedTask> find = new Finder<>(SolvedTask.class);
 
     public SolvedTask(
             Profile profile,

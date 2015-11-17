@@ -21,7 +21,10 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "scrollcollection")
+@Table(
+        name = "scrollcollection",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "scroll_id"})
+)
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
     @Id
@@ -37,7 +40,7 @@ public class ScrollCollection extends Model {
 
     private final Calendar added;
 
-    public static final Finder<Long, ScrollCollection> find = new Finder<>(Long.class, ScrollCollection.class);
+    public static final Finder<Long, ScrollCollection> find = new Finder<>(ScrollCollection.class);
 
 //////////////////////////////////////////////////
 //  constructor

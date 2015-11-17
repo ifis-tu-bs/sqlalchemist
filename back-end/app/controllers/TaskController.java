@@ -89,7 +89,7 @@ public class TaskController extends Controller {
             return badRequest("no task found");
         }
 
-        return ok(TaskView.toJsonList(task));
+        return ok(TaskView.toJson(task));
     }
 
     @Security.Authenticated(CreatorSecured.class)

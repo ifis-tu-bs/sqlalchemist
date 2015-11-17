@@ -1,6 +1,5 @@
 package controllers;
 
-import akka.actor.Nobody;
 import dao.*;
 
 import models.*;
@@ -57,7 +56,6 @@ public class SQLController extends Controller {
                 }
             }
         }
-        Logger.info("Difficulty: " + Math.round(difficulty / 2));
         Task task = TaskDAO.getNewTask(profile, Math.round(difficulty / 2), false);
 
         if(task == null) {
@@ -207,7 +205,7 @@ public class SQLController extends Controller {
         return ok(taskNode);
     }
 
-    public Result homeworkSolve(Long TaskID, Boolean submit) {
+    public Result homeworkSolve(Long TaskID, boolean submit) {
         Profile         profile         = ProfileDAO.getByUsername(request().username());
         HomeWork        homeWork        = profile.getCurrentHomeWork();
         Task            task            = TaskDAO.getById(TaskID);
@@ -235,12 +233,12 @@ public class SQLController extends Controller {
             }
         }
 
-        if((submittedHomeWork.getSyntaxChecksDone() - task.getAvailableSyntaxChecks()) <= 0) {
+        if((task.getAvailableSyntaxChecks() - submittedHomeWork.getSyntaxChecksDone()) <= 0) {
             Logger.warn("You have no SyntaxChecks left");
             return badRequest("You have no SyntaxChecks left");
         }
 
-        if((submittedHomeWork.getSemanticChecksDone() - task.getAvailableSemanticChecks()) <= 0) {
+        if((task.getAvailableSemanticChecks()- submittedHomeWork.getSemanticChecksDone()) <= 0) {
             Logger.warn("You have no SemanticChecks left");
             return badRequest("You have no SemanticChecks left");
         }

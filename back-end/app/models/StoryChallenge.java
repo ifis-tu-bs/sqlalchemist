@@ -54,7 +54,7 @@ public class StoryChallenge extends Model {
     Profile profile;
 
 
-    public static final Finder<Long, StoryChallenge> find = new Finder<>(Long.class, StoryChallenge.class);
+    public static final Finder<Long, StoryChallenge> find = new Finder<>(StoryChallenge.class);
 
 //////////////////////////////////////////////////
 //  Constructor

@@ -21,8 +21,8 @@ public class ShopItemView {
         ObjectNode node = Json.newObject();
 
         node.put("id",              shopItem.getId());
-        node.put("name",            shopItem.getName());
-        node.put("desc",            shopItem.getDesc());
+        node.put("name",            shopItem.getTitle());
+        node.put("desc",            shopItem.getDescription());
         node.put("type",            shopItem.getType());
         node.put("thumbnailUrl",    shopItem.getThumbnailUrl());
         node.put("price",           shopItem.getPrice());

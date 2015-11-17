@@ -56,7 +56,7 @@ public class TaskSetView {
         ObjectNode  taskSetJson             = Json.newObject();
         ArrayNode   tableDefNode            = JsonNodeFactory.instance.arrayNode();
         ArrayNode   foreignKeyRelationNode  = JsonNodeFactory.instance.arrayNode();
-        ArrayNode   taskNode                = JsonNodeFactory.instance.arrayNode();
+        ArrayNode   taskNode                = TaskView.toJsonList(taskSet.getTasks());
         Rating      rating                  = Rating.sum(taskSet.getRatings());
         ArrayNode   commentNode             = JsonNodeFactory.instance.arrayNode();
 

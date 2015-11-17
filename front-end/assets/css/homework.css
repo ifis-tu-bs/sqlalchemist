@@ -56,24 +56,39 @@
 }
 
 #homeworkHeader, #doneCounter {
-    background-color : transparent;
-    color : white;
-    display : block;
-    font-family : Amethysta-Regular, sans-serif;
-    position : absolute;
+    background-color: transparent;
+    border-style: none;
+    color: #f4fff0;
+    display: block;
+    font-family: Amethysta-Regular, monospace;
+    line-height: 1;
     text-align: center;
-    z-Index : 3;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index: 3;
 }
 
 #chooseHomeworkTitle {
-    background-color : transparent;
-    color : white;
-    display : block;
-    font-family : Amethysta-Regular, sans-serif;
-    position : absolute;
+    background-color: transparent;
+    border-style: none;
+    color: #f4fff0;
+    display: block;
+    font-family: Amethysta-Regular, monospace;
+    line-height: 1;
     text-align: center;
-    z-Index : 3;
-    text-decoration: underline;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 8;
+    -webkit-box-orient: vertical;
+    z-Index: 3;
 }
 
 #expireDate {

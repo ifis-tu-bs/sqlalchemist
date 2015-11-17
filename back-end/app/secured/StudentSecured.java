@@ -28,6 +28,6 @@ public class StudentSecured extends Authenticator {
 
     @Override
     public Result onUnauthorized(Context context) {
-        return forbidden("restricted page, you need higher permissions, than \"User\"");
+        return forbidden("restricted page, you need student permissions");
     }
 }

@@ -33,8 +33,6 @@ import play.Logger;
 public class Profile extends Model {
     // unique ID
     @Id
-    @SequenceGenerator(name="profile_id_seq")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "profile_id_seq")
     private Long id;
 
     @OneToOne
@@ -76,7 +74,6 @@ public class Profile extends Model {
     private int totalScore;
     private int playedTime;
     private int playedRuns;
-    @Column(name = "totalCoins")
     private int totalCoins;
     private int doneSQL;
     private int solvedSQL;
@@ -107,7 +104,7 @@ public class Profile extends Model {
     @ManyToOne
     private HomeWork currentHomeWork;
 
-    public static final Finder<Long, Profile> find = new Finder<>(Long.class, Profile.class);
+    public static final Finder<Long, Profile> find = new Finder<>(Profile.class);
 
 
 //////////////////////////////////////////////////

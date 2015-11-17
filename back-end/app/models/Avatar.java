@@ -14,17 +14,14 @@ import javax.persistence.*;
 @Table(name = "avatar")
 public class Avatar extends Model {
     @Id
-    @SequenceGenerator(name="avatar_id_seq")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "avatar_id_seq")
     private Long id;
 
-    @Column(name = "avatar_name", unique = true)
-    private final String name;
+    @Column(unique = true)
+    private final String title;
 
-    @Column(name = "Avatardesc")
-    private final String desc;
+    private final String description;
 
-    @Column(name = "avatar_filename", unique = true)
+    @Column(unique = true)
     private final String avatarFilename;
 
     private final boolean isTeam;
@@ -32,7 +29,7 @@ public class Avatar extends Model {
     @Embedded
     private final PlayerStats playerStats;
 
-    public static final Finder<Long, Avatar> find = new Model.Finder<>(Long.class, Avatar.class);
+    public static final Finder<Long, Avatar> find = new Finder<>(Avatar.class);
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -40,19 +37,19 @@ public class Avatar extends Model {
 
     /**
      * Avatar constructor
-     * @param name                  name of the avatar
+     * @param title                  title of the avatar
      * @param desc                  avatar description
      * @param avatarFilename        avatarFilename
      * @param playerStats           avatar PlayerStats
      */
     public Avatar(
-            String name,
+            String title,
             String desc,
             String avatarFilename,
             boolean isTeam,
             PlayerStats playerStats) {
-        this.name           = name;
-        this.desc           = desc;
+        this.title = title;
+        this.description = desc;
         this.avatarFilename= avatarFilename;
         this.isTeam         = isTeam;
         this.playerStats    = playerStats;
@@ -63,14 +60,14 @@ public class Avatar extends Model {
         return this.id;
     }
 
-    public String getName() {
-        if(this.name.contains(" 2"))
-            return this.name.replace(" 2", "");
-        return this.name;
+    public String getTitle() {
+        if(this.title.contains(" 2"))
+            return this.title.replace(" 2", "");
+        return this.title;
     }
 
-    public String getDesc() {
-        return this.desc;
+    public String getDescription() {
+        return this.description;
     }
 
     public String getAvatarFilename() {

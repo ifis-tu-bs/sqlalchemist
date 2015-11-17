@@ -33,7 +33,7 @@ game.TaskScreen = me.ScreenObject.extend({
         var schemaCheck = new game.BackgroundElement('schemaCheckId', 4, 6, 32, 88, "none");
         schemaCheck.setImage("assets/data/img/stuff/check_symbol.png", "check_symbol");
         me.game.world.addChild(schemaCheck);
-        $("#schemaCheckId").fadeIn(100);
+        schemaCheck.hide();
 
 
         game.data.count = 0;
@@ -53,9 +53,10 @@ game.TaskScreen = me.ScreenObject.extend({
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
         tryButton        = new game.ClickableElement('trybutton', 'Retry', getTaskFromServer, 10, 6, 38, 90, 2);
-        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Retry', showSameTask, 10, 6, 38, 90, 2);
+        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Show Task Again', showSameTask, 12, 6, 38, 88, 2);
 
         nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
+        nextExerciseButton= new game.ClickableElement('nextexercisebutton', 'Next Exercise', getNextExerciseFromServer, 10, 6, 52, 88, 2);
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 90, 2);
         stayButton      = new game.ClickableElement('submit', 'stay in Schema', stayInSchema, 10, 6, 24, 88, 2);
@@ -70,6 +71,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
 
         setDifficultyButton  = new game.ClickableElement('setDifficultyButton', '', showDifficulties, 4, 6, 62, 88, 2);
+
 
         var chooseDifficulty1  = new game.ClickableElement('chooseDifficulty1', '', setDifficulty(1), 4, 6, 67, 89, 2);
         chooseDifficulty1.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "one");
@@ -90,6 +92,13 @@ game.TaskScreen = me.ScreenObject.extend({
         chooseDifficulty6.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "six");
         me.game.world.addChild(chooseDifficulty6);
 
+        chooseDifficulty1.hide();
+        chooseDifficulty2.hide();
+        chooseDifficulty3.hide();
+        chooseDifficulty4.hide();
+        chooseDifficulty5.hide();
+        chooseDifficulty6.hide();
+
 
         textIn = new Object();
 
@@ -108,6 +117,8 @@ game.TaskScreen = me.ScreenObject.extend({
         likeButtonSet.hide();
         dislikeButtonSet.hide();
         reviewButtonSet.hide();
+
+        setDifficultyButton.hide();
 
 
         if(game.task.kind === 2){
@@ -139,6 +150,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
 
     	if (game.task.kind != 3) {
+            nextExerciseButton.hide();
             checkButton.hide();
             checkButton.setTitle("syntax check, before submitting");
     	}
@@ -153,6 +165,7 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(tryButton);
         me.game.world.addChild(sameTaskButton);
         me.game.world.addChild(nextTaskButton);
+        me.game.world.addChild(nextExerciseButton)
         me.game.world.addChild(checkButton);
         me.game.world.addChild(stayButton);
         me.game.world.addChild(likeButton);
@@ -244,7 +257,7 @@ game.TaskScreen = me.ScreenObject.extend({
 	            me.state.change(STATE_TRIVIA);
 	        }
 	        if (game.task.kind == 3) {
-	            me.state.change(STATE_HOMEWORK);
+	            me.state.change(STATE_HOMEWORKTASKSET);
 	        }
         }
 
@@ -564,7 +577,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
         };
         
-        /**
+        /*
          *
          */
         function handlePostTask(xhr) {
@@ -589,20 +602,23 @@ game.TaskScreen = me.ScreenObject.extend({
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
-            // buttons to hide
-            submitButton.hide();
-
-            // buttons to display
             sameTaskButton.display();
-            nextTaskButton.display();
+            submitButton.hide();
+            checkButton.hide();
 
-            likeButton.display();
-            dislikeButton.display();
-            reviewButton.display();
+            // buttons to display and hide
+            if(game.task.kind !== 3){
 
-            likeButtonSet.display();
-            dislikeButtonSet.display();
-            reviewButtonSet.display();
+                nextTaskButton.display();
+
+                likeButton.display();
+                dislikeButton.display();
+                reviewButton.display();
+
+                likeButtonSet.display();
+                dislikeButtonSet.display();
+                reviewButtonSet.display();
+            }
 
         };
         
@@ -750,6 +766,35 @@ game.TaskScreen = me.ScreenObject.extend({
                 ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.task.exercise ,handleGetTask);
             }
             
+        };
+
+        function getNextExerciseFromServer() {
+            console.log("Kahn");
+            // buttons to hide
+            sameTaskButton.hide();
+            nextTaskButton.hide();
+            submitButton.hide();
+
+            // clear output
+            textOut.clear();
+
+            // Homework
+            game.homework.currentExercise++;
+            if(game.homework.currentExercise > 5*game.homework.page){
+                game.homework.page++;
+                if(game.homework.page > game.homework.pages){
+                    game.homework.page = 0;
+                }
+
+            }
+            if(game.homework.currentExercise === game.homework.currentHomework.length){
+                game.homework.currentExercise = 0;
+                console.log("Switch");
+            }
+            console.log("INFO:",game.homework.currentHomework[game.homework.currentExercise].length,game.homework.currentExercise )
+            console.log("Homework/",game.task.homeworkId+ "/"+ game.homework.currentHomework[game.homework.currentExercise].id);
+            ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.homework.currentHomework[game.homework.currentExercise].id ,handleGetTask);
+
         };
         
         getTaskFromServer();

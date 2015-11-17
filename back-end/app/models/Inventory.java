@@ -16,18 +16,14 @@ public class Inventory extends Model{
     private long id;
 
     @ManyToOne
-    @Column(name = "profile")
     public final Profile profile;
 
     @ManyToOne
-    @Column(name = "potion")
     public final Potion potion;
 
-
-    @Column(name = "beltSlot")
     private int beltSlot;
 
-    public static final Finder<Long, Inventory> find = new Finder<>(Long.class, Inventory.class);
+    public static final Finder<Long, Inventory> find = new Finder<>(Inventory.class);
 
 //////////////////////////////////////////////////
 //  Constructor

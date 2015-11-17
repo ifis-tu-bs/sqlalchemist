@@ -27,8 +27,6 @@ import java.util.regex.Pattern;
 public class User extends Model {
     // unique ID
     @Id
-    @SequenceGenerator(name="user_id_seq")
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "user_id_seq")
     public Long id;
 
     //
@@ -40,13 +38,13 @@ public class User extends Model {
     public static final int USER_EMAIL_VERIFY_ALREADY_VERIFIED = -2;
 
     private boolean emailVerified = false;
-    @Column(name = "email_verify_code", unique = true)
+    @Column(unique = true)
     private String emailVerifyCode;
 
-    @Column(unique = true, name = "user_mnr")
+    @Column(unique = true)
     public String matNR;
 
-    @Column(unique = true, name = "user_ynr")
+    @Column(unique = true)
     public String y_id;
 
     public boolean isStudent;
@@ -58,7 +56,6 @@ public class User extends Model {
      * 2 | Creator
      * 3 | Admin
      */
-    @Column(name = "user_role")
     private int role;
 
     public static final int ROLE_USER = 1;
@@ -74,7 +71,8 @@ public class User extends Model {
     private Date created_at;
     private Date edited_at;
 
-    public static final Finder<Long, User> find = new Finder<>(Long.class, User.class);
+    public static final Finder<Long, User> find = new Finder<>(User.class);
+    private boolean isActive = true;
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -255,7 +253,7 @@ public class User extends Model {
         super.update();
     }
 
-//////////////////////////////////////////////////
+    //////////////////////////////////////////////////
 //  Actions Methods
 //////////////////////////////////////////////////
 
@@ -332,5 +330,17 @@ public class User extends Model {
     public void setEmailVerified() {
         this.emailVerified = true;
         this.emailVerifyCode = null;
+    }
+
+    public boolean isAdmin() {
+        return this.role == User.ROLE_ADMIN;
+    }
+
+    public void disable() {
+        this.isActive = false;
+    }
+
+    public boolean isActive() {
+        return this.isActive;
     }
 }

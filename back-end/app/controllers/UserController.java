@@ -148,9 +148,10 @@ public class UserController extends Controller {
     public Result destroy() {
         User user = UserDAO.getByUsername(request().username());
 
-        user.delete();
+        user.disable();
+        user.update();
 
-        return ok("test");
+        return redirect(routes.SessionController.delete());
     }
 
     /**

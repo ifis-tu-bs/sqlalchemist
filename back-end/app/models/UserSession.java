@@ -23,30 +23,26 @@ public class UserSession extends Model {
     @Id
     public Long id;
 
-    @Column(name = "sessionID", unique = true, length=30)
+    @Column(unique = true)
     @Constraints.Required
     private final String sessionID;
 
     @ManyToOne
     public final User user;
 
-    @Column(name = "remoteAddress")
     @Constraints.Required
     private final String remoteAddress;
 
-    @Column(name = "created_at")
     @Constraints.Required
     private final Date created_at;
 
-    @Column(name = "expires_at")
     @Constraints.Required
     private final Date expires_at;
 
     /**
      * Need for Database Communication
      */
-    public static final Finder<Long,UserSession> find = new Finder<>(
-            Long.class, UserSession.class
+    public static final Finder<Long,UserSession> find = new Finder<>(UserSession.class
     );
 
     public UserSession(User user, int duration, String remoteAddress) {

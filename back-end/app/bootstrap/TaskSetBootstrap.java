@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class TaskSetBootstrap {
     public static void init(){
-        if(TaskSetDAO.getAll().size() == 0) {
+        if(TaskSetDAO.getAll(true).size() == 0) {
             Logger.info("Initialize 'TaskSet' data");
             JsonNode node = Json.parse("{\n " +
                                        "   \"taskSetName\":          \"DefaultTaskSet\"," +

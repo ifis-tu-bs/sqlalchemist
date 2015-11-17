@@ -231,7 +231,7 @@
     color: #a3743c;
 }
 
-#nexttaskbutton {
+#nexttaskbutton, #nextexercisebutton {
     font-family: Trajan_Pro_Regular, sans-serif;
     cursor: pointer;
     color: white;
@@ -256,6 +256,10 @@
 #nexttaskbutton:hover, #nexttaskbutton:focus, #nexttaskbutton:active {
     background-color: transparent;
     color: #a3743c;
+}
+#nextexercisebutton:hover, #nextexercisebutton:focus, #nextexercisebutton:active {
+	background-color: transparent;
+	color: #a3743c;
 }
 
 #head {
