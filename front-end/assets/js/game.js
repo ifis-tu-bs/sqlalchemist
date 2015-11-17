@@ -109,7 +109,9 @@ var game = {
         page : 1,
         pages: 1,
         taskSet: 1,
-        taskSets: 1
+        taskSets: 1,
+        currentHomework: 0,
+        currentExercise: 1
     },
 
 
