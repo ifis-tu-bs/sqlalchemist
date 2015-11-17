@@ -13,7 +13,7 @@ libraryDependencies ++= Seq(
     evolutions,
     "org.mindrot" % "jbcrypt" % "0.3m",
     "com.typesafe.play" %% "play-mailer" % "3.0.1",
-    "mysql" % "mysql-connector-java" % "5.1.35"
+    "mysql" % "mysql-connector-java" % "5.1.37"
 )
 
 // Play provides two styles of routers, one expects its actions to be injected, the
