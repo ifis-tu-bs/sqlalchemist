@@ -153,6 +153,8 @@ angular
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
             vm.foreignKeyRelations = $scope.selectedTaskSet.foreignKeyRelations;
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;
+            $scope.tableSelectionStatus.tableNotSelected = true;
+            $scope.tableSelectionStatus.tableSelected = false;
         }
 
         $scope.viewTaskSetComments = function(taskSet) {
@@ -338,7 +340,7 @@ angular
         /* Data */
         var DefaultColumn = function () {
             this.columnName = "";
-            this.dataType = "bigint"
+            this.dataType = "BIGINT"
             this.notNull = true;
             this.primaryKey = false;
         }

@@ -315,7 +315,7 @@ public class TaskSetController extends Controller {
 
         UserSession userSession = UserSessionDAO.getBySessionID(session().get("sessionID"));
 
-        Logger.info(userSession.getSessionID());
+        Logger.info("Export:" + userSession.getSessionID());
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
         for (JsonNode node : jsonNode.findPath("taskSetIds")) {
