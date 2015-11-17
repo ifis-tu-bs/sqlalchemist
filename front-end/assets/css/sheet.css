@@ -44,11 +44,11 @@
 }
 
 #skinRight:hover, #skinRight:focus, #skinRight:active {
-    -webkit-filter: contrast(150%);
-    -webkit-filter: brightness(150%);
+    filter: contrast(150%);
+    filter: brightness(150%);
 }
 
 #skinLeft:hover, #skinLeft:focus, #skinLeft:active {
-    -webkit-filter: contrast(150%);
-    -webkit-filter: brightness(150%);
+    filter: contrast(150%);
+    filter: brightness(150%);
 }

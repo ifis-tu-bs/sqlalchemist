@@ -24,8 +24,8 @@
 	position: absolute;
 	text-overflow: ellipsis;
 	text-align: center;
-	-webkit-line-clamp: 8;
-	-webkit-box-orient: vertical;
+	line-clamp: 8;
+	box-orient: vertical;
 	z-Index: 3;
 }
 
@@ -37,7 +37,7 @@
 }
 
 #backToFromCollector:hover, #backToFromCollector:focus, #backToFromCollector:active {
-    -webkit-filter: contrast(150%);
-    -webkit-filter: brightness(150%);
+    filter: contrast(150%);
+    filter: brightness(150%);
 }
 

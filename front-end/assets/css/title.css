@@ -22,6 +22,6 @@
     z-Index : 4;
 }
 #logoutButton:hover, #logoutButton:focus, #logoutButton:active {
-    -webkit-filter: contrast(150%);
-    -webkit-filter: brightness(150%);
+    filter: contrast(150%);
+    filter: brightness(150%);
 }
