@@ -32,16 +32,14 @@
             vm.dataLoading = true;
             UserService.resetPassword($routeParams.code, vm.password).then(
                 function(data) {
-                    console.log(data);
-                    if(data.error) {
-                        FlashService.Error(data.message);
-                        vm.dataLoading = false;
-                    } else {
-                        FlashService.Success(data.data);
-                        vm.dataLoading = false;
-                        vm.done = true;
-                    }
-                });
+                    FlashService.Success(data);
+                    vm.dataLoading = false;
+                    vm.done = true;
+                }, function (error) {
+                    FlashService.Error(error);
+                    vm.dataLoading = false;
+                }
+            );
         };
     }
 

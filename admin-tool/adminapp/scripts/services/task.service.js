@@ -142,7 +142,7 @@
         }
 
         function handleError(data) {
-            return {error: true, message: data.data};
+            throw data.data;
         }
 
     }

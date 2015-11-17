@@ -56,13 +56,11 @@ angular
         function getAllHomeworks() {
             TaskService.getAllHomeworks().then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        vm.homeworks = result;
-                        console.log(result);
-                        getCurrentPath();
-                    }
+                    vm.homeworks = result;
+                    console.log(result);
+                    getCurrentPath();
+                }, function (error) {
+                    FlashService.Error(result.message);
                 }
             );
         }
@@ -84,15 +82,14 @@ angular
             var taskIndex = findInArray(vm.tasks, task);
             selectTask(taskIndex).then(
                 function (result) {
-                    if (result.error) {
+                    $scope.selectedTask = vm.tasks[taskIndex];
+                    vm.submits = result;
+                    $rootScope.Homework.selectedTask = $scope.selectedTask;
+                    $scope.state = 'SubmitSelection';
+                }, function (error) {
                         FlashService.Error(result.message);
-                    } else {
-                        $scope.selectedTask = vm.tasks[taskIndex];
-                        vm.submits = result;
-                        $rootScope.Homework.selectedTask = $scope.selectedTask;
-                        $scope.state = 'SubmitSelection';
-                    }
-                });
+                }
+            );
         }
 
         $scope.selectSubmit = function (submit) {
@@ -152,12 +149,10 @@ angular
                     }
             ).then(
                     function (result) {
-                        if (result.error) {
-                            FlashService.Error(result.message);
-                        } else if (result != "") {
-                            initController();
-                            FlashService.Success("Homework created.");
-                        }
+                        initController();
+                        FlashService.Success("Homework created.");
+                    }, function (error) {
+                        FlashService.Error(result.message);
                     }
             );
         }
@@ -221,22 +216,21 @@ angular
                         selectTaskIndex = findInArray(vm.tasks, path.selectedTask);
                         selectTask(selectTaskIndex).then(
                             function (result) {
-                                if (result.error) {
-                                    FlashService.Error(result.message);
-                                    $scope.state = 'taskSelection';
-                                } else {
-                                    $scope.selectedTask = vm.tasks[selectTaskIndex];
-                                    vm.submits = result;
-                                    $rootScope.Homework.selectedTask = $scope.selectedTask;
+                                $scope.selectedTask = vm.tasks[selectTaskIndex];
+                                vm.submits = result;
+                                $rootScope.Homework.selectedTask = $scope.selectedTask;
 
-                                    if (path.selectSubmit) {
-                                        selectSubmit(findInArray(vm.submits, path.selectedSubmit));
-                                        $scope.state = 'InspectSubmit'
-                                    } else {
-                                        $scope.state = 'SubmitSelection';
-                                    }
+                                if (path.selectSubmit) {
+                                    selectSubmit(findInArray(vm.submits, path.selectedSubmit));
+                                    $scope.state = 'InspectSubmit'
+                                } else {
+                                    $scope.state = 'SubmitSelection';
                                 }
-                             });
+                            }, function (error) {
+                                FlashService.Error(result.message);
+                                $scope.state = 'taskSelection';
+                            }
+                        );
                     } else {
                         $scope.state = 'taskSelection'
                     }
@@ -289,13 +283,16 @@ angular
                     }
             });
 
-            modalInstance.result.then(function (result) {
-                if (result == true) {
-                    TaskService.deleteHomework(vm.homeworks[homeworkIndex].id).then(
-                        initController
-                    );
+            modalInstance.result.then(
+                function (result) {
+                    return TaskService.deleteHomework(vm.homeworks[homeworkIndex].id);
+                }, function () {
+                    return $q.reject({});
                 }
-            });
+            ).then(
+                initController,
+                null
+            );
         }
 
         //////////////////////////////777
@@ -322,12 +319,11 @@ angular
 
             TaskService.rateTaskSet(taskSet.id, ratingJson).then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        initController();
-                    }
-            });
+                    initController();
+                }, function (error) {
+                    FlashService.Error(error);
+                }
+            );
         }
 
         $scope.rateTask = function (task, decision) {
@@ -349,12 +345,11 @@ angular
             }
             TaskService.rateTask(task.id, ratingJson).then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message)
-                    } else {
-                        initController();
-                    }
-            });
+                    initController();
+                }, function (error) {
+                    FlashService.Error(error);
+                }
+            );
         }
 
         //////////////////////////////777
