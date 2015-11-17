@@ -32,8 +32,10 @@ game.CollectorScreen = me.ScreenObject.extend({
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backToFromCollector', 'Back', this.backToLab, 15, 7.3, 3, 6, 1);
+        var backToLabButton = new game.ClickableElement('backToFromCollector', '', this.backToLab, 15.22, 13.15, 2.8, 2.5, 1);
+        backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
         me.game.world.addChild(backToLabButton);
+
 
         /**
          * Init matrix to set symbols for enchantment and potion scrolls.
@@ -50,7 +52,7 @@ game.CollectorScreen = me.ScreenObject.extend({
             /**
              * Set image for checkBoxes.
              */
-            var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 14.772727 + j * 37.878788, 35.5, 'none');
+            var collectionBox = new game.BackgroundElement('collectionBox' + j, 26.060606, 42.1875, 20.772727 + j * 30.878788, 35.5, 'none');
             collectionBox.setImage("assets/data/img/stuff/scroll_collection_box.png", "boxImg");
             me.game.world.addChild(collectionBox);
 
@@ -72,24 +74,23 @@ game.CollectorScreen = me.ScreenObject.extend({
                     level++;
 
                     var checkSymbol = new game.BackgroundElement('check' + k, 4.5, 6.5,
-                        35 + j * 37.878788, 40 + 6.510417 * k, 'none');
+                        35 + j * 30.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
                     me.game.world.addChild(checkSymbol);
                     console.log('check' + k);
                     checkSymbol.display();
 
-                    //me.game.world.addChild(new me.Sprite(225 + 40 * 6 + j * 500, 305 + 50 * k, me.loader.getImage('check_symbol')),3);
                 }
+
                 for (var i = 0; i < 6; i++) {
                     if (i < 4) {
                         if (game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available) {
 
-                            var scrolls = new game.BackgroundElement('scrolls' + i, 2.424243, 4.166668,
-                                17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
+                            var scrolls = new game.BackgroundElement('scrolls' + i + k * 4 + j * 20, 2.424243, 4.166668,
+                                23.272727 + 3.030303 * i + j * 30.878788, 41.666667 + 6.510417 * k, 'none');
                             scrolls.setImage("assets/data/img/stuff/spinning_scroll_32.png", "scrollImg");
                             me.game.world.addChild(scrolls);
-                            console.log('scrolls' + i);
-                            scrolls.fadeIn(100);
+                            console.log('scrolls' + i + k * 4 + j * 20);
 
                             progress++;
                             /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
@@ -98,19 +99,18 @@ game.CollectorScreen = me.ScreenObject.extend({
                     } else {
                         if (game.potion.potions[game.level.scrolls[k + j * 5][i]].available){
 
-                            var scrollsRed = new game.BackgroundElement('scrollsRed' + i, 2.424243, 4.166668,
-                                17.272727 + 3.030303 * i + j * 37.878788, 41.666667 + 6.510417 * k, 'none');
+                            var scrollsRed = new game.BackgroundElement('scrollsRed' + i + k * 2 + j * 10, 2.424243, 4.166668,
+                                23.272727 + 3.030303 * i + j * 30.878788, 41.666667 + 6.510417 * k, 'none');
                             scrollsRed.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "scrollRedImg");
                             me.game.world.addChild(scrollsRed);
-                            console.log('scrollsRed' + i);
-                            scrollsRed.fadeIn(100);
+                            console.log('scrollsRed' + i + k * 2 + j * 10);
 
                             progress++;
                             /*console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,
                                     game.potion.potions[game.level.scrolls[k + j * 5][i]].name, k + j * 5);*/
                         }
                     }
-                    //console.log(game.level.scrolls[k+ j * 5][i],  "  k+ j * 5:"+(k + j * 5 ),"  i:"+i);
+                    //console.log(game.level.scrolls[k + j * 5][i],  "  k+ j * 5:"+(k + j * 5 ),"  i:"+i);
                 }
             }
 
@@ -124,7 +124,7 @@ game.CollectorScreen = me.ScreenObject.extend({
         me.game.world.addChild(scrollProgress);
         scrollProgress.writeHTML(level + " of 10 levels cleared." + "<br>" + progress + " of 60 scrolls collected.", 'protextbody');
 
-        var scrollLimit = new game.TextOutputElement('limtext', 70, 12, 19.151515, 77, 2);
+        var scrollLimit = new game.TextOutputElement('limtext', 70, 12, 15, 77, 2);
         me.game.world.addChild(scrollLimit);
         scrollLimit.writeHTML("You can only collect 3 scrolls a day!", 'limtextbody');
     }
