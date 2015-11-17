@@ -13,7 +13,6 @@ game.CollectorScreen = me.ScreenObject.extend({
         var backgroundCollector = new game.BackgroundElement('backgroundCollectorId', 100, 100, 0, 0, 'none');
         backgroundCollector.setImage("assets/data/img/gui/scrollcollection_screen.png", "backgroundCollectorImg");
         me.game.world.addChild(backgroundCollector);
-        $("#backgroundCollectorId").fadeIn(100);
 
         /**
          * Create element with according callback function to get back into the Laboratory.

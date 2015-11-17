@@ -19,6 +19,8 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
         me.game.world.addChild(returnFromHWTaskButton);
 
 
+
+
         currentHomeworkTaskSetsReply = function(xmlHttpRequest) {
             var currentHomeworks = JSON.parse(xmlHttpRequest.responseText);
             console.log(currentHomeworks);
@@ -67,23 +69,25 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                 index.writeHTML(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].taskSetName, 'indexbody');
             }
 
-             function taskButtonClick(taskId) {
+             function taskButtonClick(taskId,exercise) {
                 return function () {
                     game.task.kind = 3;
                     game.task.exercise = taskId;
+                    game.homework.currentExercise = exercise;
                     me.state.change(STATE_TASK);
 
                 }
 
             }
 
-            var donetask = 0;
+            game.homework.currentHomework = currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks;
+            console.log("!!!",game.homework.currentHomework);
 
             //Schleife verbessern
             for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks.length ; i++) {
 
                 var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].name,
-                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].id), 35, 5, 15, 35 + 6 * i, 1);
+                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].id, (i + 5 *(game.homework.page -1)) ), 35, 5, 15, 35 + 6 * i, 1);
                 me.game.world.addChild(taskButtons);
                 $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
 
@@ -92,7 +96,6 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                     checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
                     me.game.world.addChild(checkbox);
                     $('#checkboxId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
-                    donetask++;
 
                 }
             }
