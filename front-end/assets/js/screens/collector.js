@@ -74,7 +74,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                     level++;
 
                     var checkSymbol = new game.BackgroundElement('check' + k, 4.5, 6.5,
-                        35 + j * 30.878788, 40 + 6.510417 * k, 'none');
+                        41 + j * 30.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
                     me.game.world.addChild(checkSymbol);
                     console.log('check' + k);

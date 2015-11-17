@@ -184,13 +184,13 @@ game.ReadyScreen = me.ScreenObject.extend({
                 me.state.change(STATE_LEGEND);
             }, 100);
         };
-        this.stopDouble = function() {
+        function stopDouble() {
             game.data.playing = false;
         };
         this.onCat = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;
-                me.audio.play("cat", false, this.stopDouble, game.data.soundVolume);
+                me.audio.play("cat", false, stopDouble(), game.data.soundVolume);
             }
         };
 
@@ -200,7 +200,7 @@ game.ReadyScreen = me.ScreenObject.extend({
                 var number = Math.floor(Math.random() * 4 + 1);
                 var sound = "lofi";
                 sound = sound.concat(number);
-                me.audio.play(sound, false, this.stopDouble, game.data.soundVolume);
+                me.audio.play(sound, false, stopDouble(), game.data.soundVolume);
             }
         };
 
