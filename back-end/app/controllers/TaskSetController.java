@@ -191,9 +191,14 @@ public class TaskSetController extends Controller {
             return badRequest("no TaskSet found");
         }
 
-        taskSet.delete();
+        try {
+            taskSet.delete();
+        } catch (PersistenceException pe) {
+            Logger.warn("Not deleting TaskSet: " + taskSet.getId() + ", - " + pe.getMessage());
+            return badRequest("Cannot delete TaskSet. There are already solved Tasks");
+        }
 
-        return redirect(routes.TaskSetController.read());
+        return ok();
     }
 
     /**
@@ -310,12 +315,13 @@ public class TaskSetController extends Controller {
      * Returns the FileName of the desired Download.
      * @return
      */
+    @Security.Authenticated(CreatorSecured.class)
     public Result download() {
         JsonNode jsonNode = request().body().asJson();
 
         UserSession userSession = UserSessionDAO.getBySessionID(session().get("sessionID"));
 
-        Logger.info(userSession.getSessionID());
+        Logger.info("Export:" + userSession.getSessionID());
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
         for (JsonNode node : jsonNode.findPath("taskSetIds")) {
