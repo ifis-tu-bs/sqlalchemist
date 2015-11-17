@@ -261,6 +261,7 @@ public class SQLController extends Controller {
         profile.addTime(userStatement.getTime());
 
         if (submit) {
+            Logger.info("Submit");
             submittedHomeWork.submit(status, userStatement.getStatement());
         } else {
             submittedHomeWork.addSyntaxCheck();

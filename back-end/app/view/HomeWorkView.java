@@ -122,7 +122,7 @@ public class HomeWorkView {
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
             ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
-            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), profile));
+            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), homeWork, profile));
 
             arrayNode.add(taskSetJson);
         }
