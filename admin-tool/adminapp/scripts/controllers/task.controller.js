@@ -102,7 +102,6 @@ angular
         $scope.getCurrentPath = function () {
             var path = $rootScope.Tasks;
 
-            console.log(path);
             //Find out if a TaskSet is currently selected
             if (path.selectedTaskSet) {
                 $scope.tabActive = path.tabActive;
@@ -252,15 +251,16 @@ angular
                     return TaskService.deleteTaskSet(taskSet.id);
                 },
                 function () {
-                    return $q.reject({});
+                    return $q.reject({noerror: true});
                 }
             ).then(
-                 function () {
-                     vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1);
-                 },
-                 function (error) {
-                         FlashService.Error(error);
-                 }
+                function () {
+                    vm.taskSets.splice(findInArray(vm.taskSets, taskSet), 1);
+                },
+                function (error) {
+                    if (!error.noerror)
+                        FlashService.Error(error);
+                }
             );
         }
 
@@ -466,14 +466,15 @@ angular
                 function () {
                     return TaskService.deleteTask(task.id);
                 }, function () {
-                    return $q.reject({});
+                    return $q.reject({noerror: true});
                 }
             ).then(
                 function () {
                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
                 },
                 function (error) {
-                    FlashService.Error(error);
+                    if (!error.noerror)
+                        FlashService.Error(error);
                 }
             );
         }

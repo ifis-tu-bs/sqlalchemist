@@ -26,8 +26,6 @@ angular
             TaskService.getAllHomeWorkTaskSets().then(
                 function (result) {
                     $scope.taskSets = result;
-
-                    console.log(vm.taskSets);
                 },
                 function (error) {
                     $modalInstance.dismiss(error);
