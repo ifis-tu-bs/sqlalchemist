@@ -151,7 +151,7 @@
 	line-height: normal;
 }
 
-#task, #schemaa {
+#task, #schemaa, #checksleft, #submitsleft {
 	background-color : transparent;
 	border-style : none;
 	color : #f4fff0;

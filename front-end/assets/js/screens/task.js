@@ -50,8 +50,8 @@ game.TaskScreen = me.ScreenObject.extend({
         textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
         textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 32);
 
-        checksLeft          = new game.TextOutputElement('checksleft', 5, 5, 3, 10, 2);
-        submitsLeft         = new game.TextOutputElement('submitsleft', 5, 5, 3, 10, 2);
+        checksLeft          = new game.TextOutputElement('checksleft', 8, 4.6, 33, 90.7, 2);
+        submitsLeft         = new game.TextOutputElement('submitsleft', 8, 4.6, 47, 90.7, 2);
 
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
@@ -444,6 +444,8 @@ game.TaskScreen = me.ScreenObject.extend({
             submitButton.display();
             if(game.task.kind === 3){
                 checkButton.display();
+                checksLeft.display();
+                submitsLeft.display();
             }
         }
 
@@ -549,11 +551,11 @@ game.TaskScreen = me.ScreenObject.extend({
                 nextTaskButton.hide();
                 sameTaskButton.hide();
 
-                var checksLeft = dataTask.availableSemanticChecks - dataTask.semanticChecksDone;
-                var submitsLeft = dataTask.availableSyntaxChecks - dataTask.syntaxChecksDone;
+                game.homework.checks = dataTask.availableSyntaxChecks - dataTask.syntaxChecksDone;
+                game.homework.submits = dataTask.availableSemanticChecks - dataTask.semanticChecksDone;
 
                 if(game.task.kind === 3){
-                    displayTries(checksLeft,submitsLeft);
+                    displayTries();
                 }
 
                 handleRatingSet();
@@ -633,6 +635,10 @@ game.TaskScreen = me.ScreenObject.extend({
                 likeButtonSet.display();
                 dislikeButtonSet.display();
                 reviewButtonSet.display();
+            }else{
+                checksLeft.hide();
+                submitsLeft.hide();
+                displayTries();
             }
 
         };
@@ -675,7 +681,6 @@ game.TaskScreen = me.ScreenObject.extend({
         		
         	}
         	else {
-        		
         		//get timestap;
 		        game.task.finishTime = me.timer.getTime();
 		        var ellapsedTime = game.task.finishTime - game.task.startTime;
@@ -696,6 +701,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	    }
         	    if (game.task.kind == 3) {
         	    	// Homework
+                    game.homework.submits--;
                     ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostTask);
         	    }
         	    
@@ -717,7 +723,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
             }
             else {
-
+                game.homework.checks--;
                 //get timestap;
                 game.task.finishTime = me.timer.getTime();
                 var ellapsedTime = game.task.finishTime - game.task.startTime;
@@ -747,10 +753,11 @@ game.TaskScreen = me.ScreenObject.extend({
 
         };
 
-        function displayTries(cheksLeft ,subsLeft){
-            console.log("Checks: ",cheksLeft ,subsLeft);
-            submitsLeft.writeHTML(subsLeft);
-            checksLeft.writeHTML(cheksLeft);
+        function displayTries(){
+            submitsLeft.clear();
+            checksLeft.clear();
+            submitsLeft.writeHTML(game.homework.submits + " left");
+            checksLeft.writeHTML(game.homework.checks + " left");
         }
 
         /**
