@@ -50,6 +50,9 @@ game.TaskScreen = me.ScreenObject.extend({
         textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
         textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 32);
 
+        checksLeft          = new game.TextOutputElement('checksleft', 8, 4.6, 33, 90.7, 2);
+        submitsLeft         = new game.TextOutputElement('submitsleft', 8, 4.6, 47, 90.7, 2);
+
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
         tryButton        = new game.ClickableElement('trybutton', 'Retry', getTaskFromServer, 10, 6, 38, 90, 2);
@@ -159,6 +162,8 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(textOut);
         me.game.world.addChild(textOutHead);
         me.game.world.addChild(textOutSchema);
+        me.game.world.addChild(checksLeft);
+        me.game.world.addChild(submitsLeft);
         me.game.world.addChild(submitButton);
         me.game.world.addChild(backButton);
         $("#backButton").fadeIn(100);
@@ -437,6 +442,11 @@ game.TaskScreen = me.ScreenObject.extend({
             handleRating();
 
             submitButton.display();
+            if(game.task.kind === 3){
+                checkButton.display();
+                checksLeft.display();
+                submitsLeft.display();
+            }
         }
 
 
@@ -454,14 +464,13 @@ game.TaskScreen = me.ScreenObject.extend({
             //# wird entfernt, ^ startet einfach so.
 	    	//res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
             res = res.replace(/#(\w+\b)/gmi, '<div class="relation" style="display: inline;">$1</div>');
-            console.log("2: ", res);
+            //console.log("2: ", res);
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
-            console.log("3: ", res);
-	    	//res = res.replace(/\n/gmi, '<br />');
+            //console.log("3: ", res);
             res = res.replace(/%/gmi, '<br />' + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             res = res.replace(/}/gmi, '<br />' + ')' + '<br /><br />');
             res = res.replace(/{/gmi, '(');
-            console.log("4: ", res);
+            //console.log("4: ", res);
 
 	        return res;
 
@@ -513,6 +522,8 @@ game.TaskScreen = me.ScreenObject.extend({
             reviewButton.hide();
         };
 
+
+
 		/**
          *
          */
@@ -540,6 +551,12 @@ game.TaskScreen = me.ScreenObject.extend({
                 nextTaskButton.hide();
                 sameTaskButton.hide();
 
+                game.homework.checks = dataTask.availableSyntaxChecks - dataTask.syntaxChecksDone;
+                game.homework.submits = dataTask.availableSemanticChecks - dataTask.semanticChecksDone;
+
+                if(game.task.kind === 3){
+                    displayTries();
+                }
 
                 handleRatingSet();
                 handleRating();
@@ -587,9 +604,9 @@ game.TaskScreen = me.ScreenObject.extend({
             // write data
             textOut.clear();
 
-            if(dataResult.DBMessage) {
-                textOut.writeHTML(dataResult.terry + "<br>" + "Message: " + dataResult.DBMessage, 'taskbody');
-                //textOut.writeHTML("Message: " + dataResult.DBMessage, 'taskbody');
+            if(dataResult.SQLError) {
+                textOut.writeHTML(dataResult.terry + "<br>" + dataResult.SQLError, 'taskbody');
+                sameTaskButton.display();
             } else {
                 console.log( dataResult.score, (game.task.kind == 1 || game.task.kind == 0) && dataResult.score);
                 if ((game.task.kind == 1 || game.task.kind == 0) && dataResult.score ) {
@@ -602,7 +619,7 @@ game.TaskScreen = me.ScreenObject.extend({
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
-            sameTaskButton.display();
+
             submitButton.hide();
             checkButton.hide();
 
@@ -618,6 +635,10 @@ game.TaskScreen = me.ScreenObject.extend({
                 likeButtonSet.display();
                 dislikeButtonSet.display();
                 reviewButtonSet.display();
+            }else{
+                checksLeft.hide();
+                submitsLeft.hide();
+                displayTries();
             }
 
         };
@@ -633,8 +654,8 @@ game.TaskScreen = me.ScreenObject.extend({
 
             // write data
             textOut.clear();
-            if (dataResult.DBMessage) {
-                textOut.writeHTML(dataResult.terry + ":\n" + dataResult.DBMessage, 'taskbody');
+            if (dataResult.SQLError) {
+                textOut.writeHTML(dataResult.terry + ":\n" + dataResult.SQLError, 'taskbody');
             } else {
                 textOut.writeHTML(dataResult.terry + "\nTime: " + dataResult.time, 'taskbody');
             }
@@ -660,7 +681,6 @@ game.TaskScreen = me.ScreenObject.extend({
         		
         	}
         	else {
-        		
         		//get timestap;
 		        game.task.finishTime = me.timer.getTime();
 		        var ellapsedTime = game.task.finishTime - game.task.startTime;
@@ -681,6 +701,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	    }
         	    if (game.task.kind == 3) {
         	    	// Homework
+                    game.homework.submits--;
                     ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostTask);
         	    }
         	    
@@ -702,7 +723,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
             }
             else {
-
+                game.homework.checks--;
                 //get timestap;
                 game.task.finishTime = me.timer.getTime();
                 var ellapsedTime = game.task.finishTime - game.task.startTime;
@@ -731,6 +752,13 @@ game.TaskScreen = me.ScreenObject.extend({
             }
 
         };
+
+        function displayTries(){
+            submitsLeft.clear();
+            checksLeft.clear();
+            submitsLeft.writeHTML(game.homework.submits + " left");
+            checksLeft.writeHTML(game.homework.checks + " left");
+        }
 
         /**
          *
@@ -768,8 +796,9 @@ game.TaskScreen = me.ScreenObject.extend({
             
         };
 
+        var stopp = 0;
         function getNextExerciseFromServer() {
-            console.log("Kahn");
+            console.log("Stopp: ",stopp);
             // buttons to hide
             sameTaskButton.hide();
             nextTaskButton.hide();
@@ -793,7 +822,18 @@ game.TaskScreen = me.ScreenObject.extend({
             }
             console.log("INFO:",game.homework.currentHomework[game.homework.currentExercise].length,game.homework.currentExercise )
             console.log("Homework/",game.task.homeworkId+ "/"+ game.homework.currentHomework[game.homework.currentExercise].id);
-            ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.homework.currentHomework[game.homework.currentExercise].id ,handleGetTask);
+            if(!game.homework.currentHomework[game.homework.currentExercise].done){
+                ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.homework.currentHomework[game.homework.currentExercise].id ,handleGetTask);
+            }else{
+                stopp++;
+                //badly done
+                if(stopp < 30){
+                    getNextExerciseFromServer();
+                }else{
+                    me.state.change(STATE_HOMEWORKTASKSET);
+                }
+            }
+
 
         };
         
