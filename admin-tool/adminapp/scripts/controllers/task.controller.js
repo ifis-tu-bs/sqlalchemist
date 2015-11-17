@@ -338,7 +338,7 @@ angular
         /* Data */
         var DefaultColumn = function () {
             this.columnName = "";
-            this.dataType = "bigint"
+            this.dataType = "BIGINT"
             this.notNull = true;
             this.primaryKey = false;
         }
