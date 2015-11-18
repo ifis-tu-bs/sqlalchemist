@@ -11,8 +11,8 @@ angular
     .module('app')
     .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', '$modal', 'UserService', 'FlashService', '$filter'];
-    function UsersController($scope, $modal, UserService, FlashService, $filter) {
+    UsersController.$inject = ['$scope', 'UserService', 'FlashService', '$filter'];
+    function UsersController($scope, UserService, FlashService, $filter) {
         var vm = this;
         vm.users = [];
 
@@ -29,11 +29,9 @@ angular
         function getAllUsers() {
             UserService.getAllUsers().then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        vm.users = result.data;
-                    }
+                    vm.users = result;
+                }, function (error) {
+                    FlashService.Error(error);
                 }
             );
         }
@@ -42,11 +40,9 @@ angular
             console.log(user);
             UserService.promoteUser(user.id, role).then(
                 function (result) {
-                    if (result.error) {
-                        FlashService.Error(result.message);
-                    } else {
-                        initController();
-                    }
+                    initController();
+                }, function (error) {
+                    FlashService.Error(error);
                 }
             );
         }

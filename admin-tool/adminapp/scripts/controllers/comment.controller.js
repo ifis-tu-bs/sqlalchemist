@@ -33,13 +33,12 @@ angular
             if (commentTaskObject.type === 'task') {
                 TaskService.postTaskComment(commentTaskObject.content.id, $scope.textAreaDataInputComment).then(
                     function (data) {
-                        if (data.error) {
-                            FlashService.Error(data.message);
-                        } else {
-                        console.log(data);
-                            addCommentToTextArea(data);
-                            $scope.textAreaDataInputComment = "";
-                        }
+                        addCommentToTextArea(data);
+                        $scope.textAreaDataInputComment = "";
+
+                    }, function (error) {
+                        FlashService.Error(data.message);
+
                     }
                 );
             }
@@ -47,12 +46,12 @@ angular
             if (commentTaskObject.type === 'taskSet') {
                 TaskService.postTaskSetComment(commentTaskObject.content.id, $scope.textAreaDataInputComment).then(
                     function (data) {
-                        if (data.error) {
-                            FlashService.Error(data.message);
-                        } else {
-                            addCommentToTextArea(data);
-                            $scope.textAreaDataInputComment = "";
-                        }
+                        addCommentToTextArea(data);
+                        $scope.textAreaDataInputComment = "";
+
+                    }, function (error) {
+                        FlashService.Error(data.message);
+
                     }
                 );
             }

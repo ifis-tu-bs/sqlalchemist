@@ -38,7 +38,8 @@ public class SubmittedHomeWork extends Model {
 
     private int syntaxChecksDone;
     private int semanticChecksDone;
-
+    
+    @Column(columnDefinition = "Text")
     String statement;
     boolean solve;
 
