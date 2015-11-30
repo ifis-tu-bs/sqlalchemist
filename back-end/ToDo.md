@@ -1,5 +1,3 @@
-#ToDo List
-
 - extract the admin tool and front end from the back end deployment circle
 
 - rewrite the session & login system
@@ -33,3 +31,5 @@
     - uniqe and cleared controllers for inventroy / scrollcollection
 
 - implement the adaptive diffculty system for tasks
+
+- write an detailed ER-Scheme
