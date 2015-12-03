@@ -147,12 +147,7 @@ game.TextInputElement = me.Renderable.extend ({
         this.field.id            = fieldId;
         this.elem.style.position = 'absolute';
 
-        if (tag == 'div') {
-        	this.field.style.overflow = 'scroll';
-        }
-        else {
-        	this.field.style.overflow = 'scroll';
-        }
+        this.field.style.overflow = 'hidden';
 
         this.field.style.width = '100%';
         this.field.style.height = '100%';
@@ -428,7 +423,7 @@ game.TextOutputElement = me.Renderable.extend ({
 
         this.wrapper.style.width = '100%';
         this.wrapper.style.height = '100%';
-        this.wrapper.style.overflow = 'scroll';
+        this.wrapper.style.overflow = 'hidden';
         this.wrapper.style.paddingRight = '17px';
         this.wrapper.style.paddingBottom = '17px';
 
