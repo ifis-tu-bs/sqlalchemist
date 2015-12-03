@@ -96,7 +96,7 @@ game.SheetScreen = me.ScreenObject.extend({
              */
              var avatar;
             if (!team) {
-                //avatar1.destroy();
+                avatar1.hide();
                 avatar1 = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
 
                 avatar1.display();
@@ -104,7 +104,7 @@ game.SheetScreen = me.ScreenObject.extend({
                 avatar1.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                 me.game.world.addChild(avatar1);
             } else {
-                //avatar2.destroy();
+                avatar2.hide();
                 avatar2 = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
 
                 avatar2.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
@@ -179,9 +179,8 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
                 fadeOutElements();
-                setTimeout( function() {
-                    me.state.change(STATE_SHEET);
-                }, 100);
+
+                ajaxSendChallengeStoryRequest(getStats);
             }
             ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
         };
@@ -205,10 +204,7 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.speed = avatarId.attributes.speed;
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
-                /**fadeOutElements();
-                setTimeout( function() {
-                    me.state.change(STATE_SHEET);
-                }, 100);*/
+
                 ajaxSendChallengeStoryRequest(getStats);
             }
             ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
