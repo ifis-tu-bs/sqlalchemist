@@ -7,27 +7,34 @@ module.exports = function (grunt) {
     frontEnd:'front-end'
   };
 
+  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
   grunt.initConfig({
     globalConfig: globalConfig,
 
+
+
     connect: {
-      options: {
-        port: 9000,
-        // Change this to '0.0.0.0' to access the server from outside.
-        hostname: 'localhost',
-        base: 'front-end/front-end'
-      },
-      proxies: [
-        {
+      server: {
+        options: {
+          port: 8000,
+          // Change this to '0.0.0.0' to access the server from outside.
+          hostname: 'localhost',
+          base: 'front-end/front-end',
+          middleware: function (connect, options) {
+            return [proxySnippet];
+          }
+        },
+        proxies: [{
           context: '/API', // the context of the data service
           host: 'localhost', // wherever the data service is running
-          port: 9090, // the port that the data service is running on
+          port: 9000, // the port that the data service is running on
           changeOrigin: true
-        }
-      ],
+        }]
+      }
     },
     watch: {
-      files: ['front-end/**/*'],
+      files: ['front-end/src/**/*'],
       tasks: ['grunt-frontEnd']
     }
   });
@@ -37,7 +44,7 @@ module.exports = function (grunt) {
       grunt.util.spawn(
         {
           grunt: true,
-          args: ['default', '--force'],
+          args: ['default'],
           opts: {
               cwd: 'front-end'
           }
@@ -53,5 +60,5 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-connect-proxy');
 
-  grunt.registerTask('default', ['grunt-frontEnd', 'connect', 'watch']);
+  grunt.registerTask('default', ['grunt-frontEnd', 'configureProxies:server', 'connect:server', 'watch']);
 }
