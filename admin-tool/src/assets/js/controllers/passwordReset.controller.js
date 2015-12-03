@@ -40,8 +40,7 @@
                     vm.dataLoading = false;
                 }
             );
-        };
+        }
     }
 
 })();
-

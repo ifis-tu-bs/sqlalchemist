@@ -33,8 +33,7 @@
                 FlashService.Error(response);
                 vm.dataLoading = false;
             });
-        };
+        }
     }
 
 })();
-

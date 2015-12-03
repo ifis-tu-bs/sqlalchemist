@@ -10,7 +10,7 @@
         var service = {};
 
         service.Success = Success;
-        service.Error = Error;
+        service.Error = ErrorMessage;
         service.Clear = clearFlashMessage;
 
         initService();
@@ -37,12 +37,12 @@
         function Success(message, keepAfterLocationChange) {
             $rootScope.flash = {
                 message: message,
-                type: 'success', 
+                type: 'success',
                 keepAfterLocationChange: keepAfterLocationChange
             };
         }
 
-        function Error(message, keepAfterLocationChange) {
+        function ErrorMessage(message, keepAfterLocationChange) {
             $rootScope.flash = {
                 message: message,
                 type: 'error',
@@ -52,4 +52,3 @@
     }
 
 })();
-

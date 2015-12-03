@@ -19,13 +19,12 @@ angular
 
         $scope.ok = function() {
             $modalInstance.close(true);
-        }
+        };
 
         $scope.close = function() {
             $modalInstance.dismiss("closed");
-        }
+        };
     }
 
 
 })();
-

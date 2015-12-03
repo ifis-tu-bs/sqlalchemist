@@ -5,7 +5,7 @@ module.exports = function(grunt) {
     name: 'sql-alchemist',
     src: 'src',
     build:'build',
-    dest:'front-end'
+    dest:'admin-tool'
   };
   grunt.initConfig({
     globalConfig: globalConfig,
@@ -14,99 +14,106 @@ module.exports = function(grunt) {
       dist: ['<%= globalConfig.src %>/assets/js/**/*.js']
     },
 
+
     concat: {
-            dist: {
-                src: ["adminapp/scripts/app.js", "adminapp/scripts/services/*.js", "adminapp/scripts/controllers/*.js"],
-                dest: "build/adminapp/scripts/app.js"
-            }
-        },
-        copy: {
-            dist: {
-                files: [{
-                    src: 'adminapp/css/**/*',
-                    dest: 'build/',
-                    expand: true
-                },
-                {
-                    src: "adminapp/views/**/*",
-                    dest: "build/",
-                    expand: true
-                },
-                {
-                    src: 'adminapp/templates/**/*',
-                    dest: 'build/',
-                    expand: true
-                },
-                {
-                    src: 'index.html',
-                    dest: 'build/index.html'
-                },
-                {
-                    src: 'adminapp/scripts/libraries/**/*',
-                    dest: 'build/',
-                    expand: true
-                },
-                {
-                    src: 'adminapp/data/**/*',
-                    dest: 'build/',
-                    expand: true
-                }]
-            },
-            move: {
-                files: [{
-                    cwd: 'build/',
-                    src: '**/*',
-                    dest: '../back-end/public/admintool/',
-                    expand: true
-                }]
-            }
-        },
-        uglify: {
-            options: {
-                report: 'min',
-                preserveComments: 'some'
-            },
-            dist: {
-                files: {
-                    'build/adminapp/scripts/app.min.js': [
-                        'build/adminapp/scripts/app.js'
-                    ]
-                }
-            }
-        },
-        connect: {
-            server: {
-                options: {
-                    port: 9001,
-                    keepalive: true
-                }
-            }
-        },
-        processhtml: {
-            dist: {
-                options: {
-                    process: true,
-                    data: {
-                        title: '<%= pkg.name %>'
-                    }
-                },
-                files: {
-                    'build/index.html': ['index.html']
-                }
-            },
-        },
-    });
+      js: {
+        src: [
+          '<%= globalConfig.src %>/assets/lib/*.js',
+          '<%= globalConfig.src %>/assets/js/app.js',
+          '<%= globalConfig.src %>/assets/js/services/*.js',
+          '<%= globalConfig.src %>/assets/js/controllers/*.js'
+        ],
+        dest: '<%= globalConfig.build %>/assets/js/app.js'
+      },
+      css: {
+        src: [
+          '<%= globalConfig.src %>/assets/css/bootstrap.min.css',
+          '<%= globalConfig.src %>/assets/css/app.css',
+          '<%= globalConfig.src %>/assets/css/modalStyleClass.css'
+        ],
+        dest: '<%= globalConfig.build %>/assets/css/app.css'
+      }
+    },
 
-    grunt.loadNpmTasks('grunt-contrib-jshint');
+    processhtml: {
+      dist: {
+        files: {
+          '<%= globalConfig.build %>/index.html': ['<%= globalConfig.src %>/index.html']
+        }
+      },
+    },
 
-    grunt.loadNpmTasks('grunt-processhtml');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-connect');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
+    uglify: {
+      options: {
+        report: 'min',
+        preserveComments: 'some',
+        banner: '/*! <%= grunt.template.today("yyyy-mm-dd") %> */'
+      },
+      dist: {
+        files: {
+          '<%= globalConfig.dest %>/assets/js/app.min.js': [
+            '<%= globalConfig.build %>/assets/js/app.js'
+          ]
+        }
+      }
+    },
+    cssmin: {
+      dist: {
+        files: {
+          '<%= globalConfig.dest %>/assets/css/app.min.css': ['<%= globalConfig.build %>/assets/css/app.css']
+        }
+      }
+    },
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {
+          '<%= globalConfig.dest %>/index.html': '<%= globalConfig.build %>/index.html',
+        }
+      }
+    },
 
-    grunt.registerTask('default', ['concat:dist', 'copy:dist', 'processhtml:dist', 'uglify:dist']);
-    grunt.registerTask('serve', ['connect:server']);
-    grunt.registerTask('move', ['default', 'copy:move']);
+    copy: {
+      dist: {
+        files: [
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/data/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          },
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/templates/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          },
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/views/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          }
+        ]
+      }
+    },
+    clean: {
+      app: ['<%= globalConfig.build %>'],
+      dist: ['<%= globalConfig.dest %>']
+    }
+  });
 
+  grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-processhtml');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
+  grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
+
+  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
 };

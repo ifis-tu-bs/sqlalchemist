@@ -76,7 +76,7 @@
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login if not having a session stored
-            var restrictedPage = $.inArray($location.path(), ['/login']) === -1 && !$location.path().startsWith('/passwordreset/');;
+            var restrictedPage = $.inArray($location.path(), ['/login']) === -1 && !$location.path().startsWith('/passwordreset/');
             var loggedIn = $rootScope.session.currentUser;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');

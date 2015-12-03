@@ -33,21 +33,21 @@ angular
                     $modalInstance.dismiss(error);
                 }
                 );
-        }
+        };
 
         getTaskSets();
 
         $scope.selectTaskSet = function (taskSet) {
             var index = findInArray($scope.taskSets, taskSet);
-            $scope.selectedTaskSets.push(taskSet)
+            $scope.selectedTaskSets.push(taskSet);
             $scope.taskSets.splice(index, 1);
-        }
+        };
 
         $scope.deselectTaskSet = function (taskSet) {
             var index = findInArray($scope.selectedTaskSets, taskSet);
-            $scope.taskSets.push(taskSet)
+            $scope.taskSets.push(taskSet);
             $scope.selectedTaskSets.splice(index, 1);
-        }
+        };
 
         $scope.ok = function() {
 
@@ -76,4 +76,3 @@ angular
     }
 
 })();
-
