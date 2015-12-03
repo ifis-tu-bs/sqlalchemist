@@ -1,0 +1,79 @@
+#explanationHeaders, #explanation {
+    background-color: transparent;
+    border-style: none;
+    font-family: Amethysta-Regular, sans-serif;
+    color: black;
+    overflow : hidden;
+    position: absolute;
+    text-align: left;
+    vertical-align: middle;
+    z-Index: 4;
+}
+
+#fatLady, #scrollCol, #door, #mirror, #belt, #tutorial, #triviamode, #homeworks, #rating{
+    font-family: Amethysta-Regular, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    -webkit-border-radius: 14;
+    -moz-border-radius: 14;
+    border-radius: 14px;
+    display: inline-block;
+    vertical-align: middle;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    -webkit-transition-property: color, background-color;
+    transition-property: color, background-color;
+}
+#fatLady:hover, #fatLady:focus, #fatLady:active {
+    background-color: white;
+    color: black;
+}
+#scrollCol:hover, #scrollCol:focus, #scrollCol:active {
+    background-color: white;
+    color: black;
+}
+#door:hover, #door:focus, #door:active {
+    background-color: white;
+    color: black;
+}
+#mirror:hover, #mirror:focus, #mirror:active {
+    background-color: white;
+    color: black;
+}
+#belt:hover, #belt:focus, #belt:active {
+    background-color: white;
+    color: black;
+}
+#belt:hover, #belt:focus, #belt:active {
+    background-color: white;
+    color: black;
+}
+#tutorial:hover, #tutorial:focus, #tutorial:active {
+    background-color: white;
+    color: black;
+}
+#triviamode:hover, #triviamode:focus, #triviamode:active {
+    background-color: white;
+    color: black;
+}
+#rating:hover, #rating:focus, #rating:active {
+    background-color: white;
+    color: black;
+}
+#homeworks:hover, #homeworks:focus, #homeworks:active {
+    background-color: white;
+    color: black;
+}
+
+
+
+
+
+

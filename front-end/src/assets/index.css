@@ -1,0 +1,122 @@
+body {
+	background-color: #000;
+	color: #fff;
+
+	/* Allow mouse dragging. */
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+
+	/* disable touch panning/zooming */
+	-ms-touch-action: none;
+	touch-action: none;
+
+	/* Allow canvas to hit the edges of the browser viewport. */
+	margin: 0;
+}
+
+#screen canvas {
+	margin: auto;
+
+	/* Hide the gap for font descenders. */
+	display: block;
+
+	/* disable scaling interpolation */
+	image-rendering: optimizeSpeed;
+	image-rendering: -moz-crisp-edges;
+	image-rendering: -o-crisp-edges;
+	image-rendering: -webkit-optimize-contrast;
+	image-rendering: optimize-contrast;
+	-ms-interpolation-mode: nearest-neighbor;
+}
+
+
+
+@font-face {
+	font-family: 'NARROW';
+	src: url('/assets/data/img/font/NARROW.eot');
+	src: url('/assets/data/img/font/NARROW.eot?#iefix') format('embedded-opentype'),
+	url('/assets/data/img/font/NARROW.woff') format('woff'),
+	url('/assets/data/img/font/NARROW.TTF') format('truetype'),
+	url('/assets/data/img/font/NARROW.svg#NARROW') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Trajan_Pro_Regular';
+	src: url('/assets/data/img/font/Trajan_Pro_Regular.eot');
+	src: url('/assets/data/img/font/Trajan_Pro_Regular.eot?#iefix') format('embedded-opentype'),
+	url('/assets/data/img/font/Trajan_Pro_Regular.woff') format('woff'),
+	url('/assets/data/img/font/Trajan_Pro_Regular.TTF') format('truetype'),
+	url('/assets/data/img/font/Trajan_Pro_Regular.svg#Trajan_Pro_Regular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'DiscipuliBritannica';
+	src: url('/assets/data/img/font/discipuli_britannica-webfont.eot');
+	src: url('/assets/data/img/font/discipuli_britannica-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/assets/data/img/font/discipuli_britannica-webfont.woff') format('woff'),
+	url('/assets/data/img/font/discipuli_britannica-webfont.ttf') format('truetype'),
+	url('/assets/data/img/font/discipuli_britannica-webfont.svg#DiscipuliBritannica') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'DiscipuliBritannicaBold';
+	src: url('/assets/data/img/font/discipuli_britannica_bold-webfont.eot');
+	src: url('/assets/data/img/font/discipuli_britannica_bold-webfont.eot?#iefix') format('embedded-opentype'),
+	url('/assets/data/img/font/discipuli_britannica_bold-webfont.woff') format('woff'),
+	url('/assets/data/img/font/discipuli_britannica_bold-webfont.ttf') format('truetype'),
+	url('/assets/data/img/font/discipuli_britannica_bold-webfont.svg#DiscipuliBritannicaBold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'LinBiolinum';
+	src: url('/assets/data/img/font/LinBiolinum_Rah.eot');
+	src: url('/assets/data/img/font/LinBiolinum_Rah.eot?#iefix') format('embedded-opentype'),
+	url('/assets/data/img/font/LinBiolinum_R.woff') format('woff'),
+	url('/assets/data/img/font/LinBiolinum_Rah.ttf') format('truetype'),
+	url('/assets/data/img/font/LinBiolinum_R.svg#LinBiolinum') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+    font-family: 'Coolvetica';
+    src: url('/assets/data/img/font/coolvetica_rg.eot');
+    src: url('/assets/data/img/font/coolvetica_rg.eot?#iefix') format('embedded-opentype'),
+    url('/assets/data/img/font/coolvetica_rg.woff') format('woff'),
+    url('/assets/data/img/font/coolvetica_rg.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Prociono-Regular';
+    src: url('/assets/data/img/font/Prociono-Regular.eot');
+    src: url('/assets/data/img/font/Prociono-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/assets/data/img/font/Prociono-Regular.woff') format('woff'),
+    url('/assets/data/img/font/Prociono-Regular.ttf') format('truetype'),
+    url('/assets/data/img/font/Prociono-Regular.svg#Prociono-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Amethysta-Regular';
+    src: url('/assets/data/img/font/Amethysta-Regular.eot');
+    src: url('/assets/data/img/font/Amethysta-Regular.eot?#iefix') format('embedded-opentype'),
+    url('/assets/data/img/font/Amethysta-Regular.woff') format('woff'),
+    url('/assets/data/img/font/Amethysta-Regular.ttf') format('truetype'),
+    url('/assets/data/img/font/Amethysta-Regular.svg#Amethysta-Regular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
