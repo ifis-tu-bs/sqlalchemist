@@ -42,6 +42,17 @@ game.SheetScreen = me.ScreenObject.extend({
         me.game.world.addChild(backButton2);
 
 
+
+        var sheetName      = new game.TextOutputElement('sheetName',      42, 11.25, 28.5, 30, 2);
+        var sheetAttribute = new game.TextOutputElement('sheetAttribute', 20, 45,    30.5, 45, 8);
+        var sheetValues    = new game.TextOutputElement('sheetValues',    5,  45,    63.5, 45, 8);
+
+        avatar2 = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
+        avatar1 = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
+
+        me.game.world.addChild(sheetAttribute);
+        me.game.world.addChild(sheetValues);
+        me.game.world.addChild(sheetName);
         /**
          * Ajax-Call to get the characters stats.
          * @param xmlHttpRequest: contains the characterState
@@ -49,7 +60,7 @@ game.SheetScreen = me.ScreenObject.extend({
         function getStats(xmlHttpRequest){
 
             var stat = JSON.parse(xmlHttpRequest.responseText);
-            //console.log(stat);
+            console.log("Stat:",stat);
 
             var avatarName = stat.characterState.currentAvatar.name;
             var filename = stat.characterState.currentAvatar.avatarFilename;
@@ -57,22 +68,25 @@ game.SheetScreen = me.ScreenObject.extend({
             game.data.sprite = stat.characterState.currentAvatar.avatarFilename;
             //console.log(stat.characterState.currentAvatar.id);
 
-            this.sheetName      = new game.TextOutputElement('sheetName',      42, 11.25, 28.5, 30, 2);
-            this.sheetAttribute = new game.TextOutputElement('sheetAttribute', 20, 45,    30.5, 45, 8);
-            this.sheetValues    = new game.TextOutputElement('sheetValues',    5,  45,    63.5, 45, 8);
-            me.game.world.addChild(sheetAttribute);
-            me.game.world.addChild(sheetValues);
-            me.game.world.addChild(sheetName);
 
+            /*
+
+            */
             /**
              * set values to according TextOutPutElements
              */
-            this.sheetName.writeHTML(avatarName, 'sheetNamePara');
-            this.sheetAttribute.writeHTML("Health: " + "<br><br>" +
+
+
+            sheetAttribute.clear();
+            sheetValues.clear();
+            sheetName.clear();
+
+            sheetName.writeHTML(avatarName, 'sheetNamePara');
+            sheetAttribute.writeHTML("Health: " + "<br><br>" +
                                           "Speed: " + "<br><br>" +
                                           "Jump: " + "<br><br>" +
                                           "Defense: ", 'sheetAttributePara');
-            this.sheetValues.writeHTML(game.stats.health + "<br><br>" +
+            sheetValues.writeHTML(game.stats.health + "<br><br>" +
                                        game.stats.speed + "<br><br>" +
                                        game.stats.jump + "<br><br>" +
                                        game.stats.defense, 'sheetValuesPara');
@@ -82,13 +96,21 @@ game.SheetScreen = me.ScreenObject.extend({
              */
              var avatar;
             if (!team) {
-                avatar = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
-                avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                me.game.world.addChild(avatar);
+                //avatar1.destroy();
+                avatar1 = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
+
+                avatar1.display();
+                avatar2.hide();
+                avatar1.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                me.game.world.addChild(avatar1);
             } else {
-                avatar = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
-                avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                me.game.world.addChild(avatar);
+                //avatar2.destroy();
+                avatar2 = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
+
+                avatar2.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                avatar2.display();
+                avatar1.hide();
+                me.game.world.addChild(avatar2);
             }
         }
         ajaxSendChallengeStoryRequest(getStats);
@@ -120,6 +142,7 @@ game.SheetScreen = me.ScreenObject.extend({
                         "position: " + kind[j]);*/
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
 
+
                 var name = game.scroll.enchantments[i].name;
                 var id   = game.scroll.enchantments[i].id;
                 var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 4.848485, 8.333333,
@@ -139,7 +162,7 @@ game.SheetScreen = me.ScreenObject.extend({
             //console.log("clicked! skinLeft");
             do {
                 game.skin.currentSkin = (game.skin.currentSkin - 1 + game.skin.skins.length) % game.skin.skins.length;
-                console.log(game.skin.currentSkin);
+                //console.log(game.skin.currentSkin);
             } while(game.skin.skins[game.skin.currentSkin].available === 0);
 
             /**
@@ -171,7 +194,7 @@ game.SheetScreen = me.ScreenObject.extend({
         this.onRight = function(){
             do {
                 game.skin.currentSkin = (game.skin.currentSkin + 1) % game.skin.skins.length ;
-                console.log(game.skin.currentSkin);
+                //console.log(game.skin.currentSkin);
             } while(game.skin.skins[game.skin.currentSkin].available === 0);
 
             function getAvatarId(xmlHttpRequest) {
@@ -182,10 +205,11 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.speed = avatarId.attributes.speed;
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
-                fadeOutElements();
+                /**fadeOutElements();
                 setTimeout( function() {
                     me.state.change(STATE_SHEET);
-                }, 100);
+                }, 100);*/
+                ajaxSendChallengeStoryRequest(getStats);
             }
             ajaxSendProfileAvatarIdRequest(game.skin.currentSkin, getAvatarId);
         };

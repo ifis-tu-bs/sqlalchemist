@@ -85,6 +85,7 @@ game.BeltScreen = me.ScreenObject.extend({
                     $("[id*='potionAmountId']").fadeOut(100);
                     $("[id*='beltPotionId']").fadeOut(100);
                     setTimeout( function() {
+                        game.data.to = STATE_BELT;
                         me.state.change(STATE_TASK);
                     }, 100);
                 };
