@@ -7,8 +7,6 @@ module.exports = function (grunt) {
     frontEnd:'front-end'
   };
 
-  var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
-
   grunt.initConfig({
     globalConfig: globalConfig,
 
@@ -18,11 +16,15 @@ module.exports = function (grunt) {
       server: {
         options: {
           port: 8000,
-          // Change this to '0.0.0.0' to access the server from outside.
-          hostname: 'localhost',
           base: 'front-end/front-end',
-          middleware: function (connect, options) {
-            return [proxySnippet];
+          hostname: 'localhost',
+
+          middleware: function (connect, options, defaultMiddleware) {
+             var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+             return [
+                // Include the proxy first
+                proxy
+             ].concat(defaultMiddleware);
           }
         },
         proxies: [{

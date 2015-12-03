@@ -57,9 +57,8 @@
         }
 
         function handleError(error) {
-            throw error.data
+            throw error.data;
         }
     }
 
 })();
-
