@@ -20,16 +20,13 @@
             templateUrl: "adminapp/templates/navigationBar.template.html",
             controller: navigationBarController
         };
-
-        navigationBarController.$inject = ['$scope'];
-        function navigationBarController($scope) {
-            $scope.routes = routeNavigation.routes;
-            $scope.activeRoute = routeNavigation.activeRoute;
-        };
-
+    }
+    navigationBarController.$inject = ['$scope'];
+    function navigationBarController($scope) {
+        $scope.routes = routeNavigation.routes;
+        $scope.activeRoute = routeNavigation.activeRoute;
     }
 
 
 
 })();
-

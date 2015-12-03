@@ -69,13 +69,13 @@ angular
             var index = findInArray(vm.homeworks, homework);
             selectHomework(index);
             $scope.state = 'taskSetSelection';
-        }
+        };
 
         $scope.selectTaskSet = function(taskSet) {
             var index = findInArray(vm.taskSets, taskSet);
             selectTaskSet(index);
             $scope.state = 'taskSelection';
-        }
+        };
 
         $scope.selectTask = function(task){
             var taskIndex = findInArray(vm.tasks, task);
@@ -89,12 +89,12 @@ angular
                         FlashService.Error(result.message);
                 }
             );
-        }
+        };
 
         $scope.selectSubmit = function (submit) {
             var index = findInArray(vm.submits, submit);
             selectSubmit(index);
-        }
+        };
 
         function selectHomework (homeworkIndex) {
             $scope.selectedHomework = vm.homeworks[homeworkIndex];
@@ -155,7 +155,7 @@ angular
                             FlashService.Error(error);
                     }
             );
-        }
+        };
 
         $scope.goSelectHomework = function() {
             $scope.selectedHomework = undefined;
@@ -170,7 +170,7 @@ angular
             $rootScope.Homework.selectedTask = undefined;
             $rootScope.Homework.selectedSubmit = undefined;
             getCurrentPath();
-        }
+        };
 
         $scope.goSelectTaskSet = function() {
             $scope.selectedTaskSet = undefined;
@@ -182,7 +182,7 @@ angular
             $rootScope.Homework.selectedTask = undefined;
             $rootScope.Homework.selectedSubmit = undefined;
             getCurrentPath();
-        }
+        };
 
         $scope.goSelectTask = function() {
             $scope.selectedTask = undefined;
@@ -191,13 +191,13 @@ angular
             $rootScope.Homework.selectedTask = undefined;
             $rootScope.Homework.selectedSubmit = undefined;
             getCurrentPath();
-        }
+        };
 
         $scope.goSelectSubmit = function() {
             $scope.selectedSubmit = undefined;
             $rootScope.Homework.selectedSubmit = undefined;
             getCurrentPath();
-        }
+        };
 
         //////////////////////////////777
         //  Path Finding and Display organization
@@ -222,7 +222,7 @@ angular
 
                                 if (path.selectSubmit) {
                                     selectSubmit(findInArray(vm.submits, path.selectedSubmit));
-                                    $scope.state = 'InspectSubmit'
+                                    $scope.state = 'InspectSubmit';
                                 } else {
                                     $scope.state = 'SubmitSelection';
                                 }
@@ -232,13 +232,13 @@ angular
                             }
                         );
                     } else {
-                        $scope.state = 'taskSelection'
+                        $scope.state = 'taskSelection';
                     }
                 } else {
-                    $scope.state = 'taskSetSelection'
+                    $scope.state = 'taskSetSelection';
                 }
             } else {
-                $scope.state = 'HomeWorkSelection'
+                $scope.state = 'HomeWorkSelection';
             }
         }
 
@@ -251,19 +251,19 @@ angular
                 }
             }
             return answer;
-        }
+        };
 
         $scope.prevSubmit = function() {
             var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
             currentSpot = (currentSpot + vm.submits.length - 1) % vm.submits.length;
             selectSubmit(currentSpot);
-        }
+        };
 
         $scope.nextSubmit = function() {
             var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
             currentSpot = (currentSpot + 1) % vm.submits.length;
             selectSubmit(currentSpot);
-        }
+        };
 
         //////////////////////////////777
         //  HomeWork Deletion
@@ -293,7 +293,7 @@ angular
                 initController,
                 null
             );
-        }
+        };
 
         //////////////////////////////777
         //  Rating stuff
@@ -324,7 +324,7 @@ angular
                     FlashService.Error(error);
                 }
             );
-        }
+        };
 
         $scope.rateTask = function (task, decision) {
 
@@ -350,7 +350,7 @@ angular
                     FlashService.Error(error);
                 }
             );
-        }
+        };
 
         //////////////////////////////777
         //  Array functions
@@ -367,9 +367,8 @@ angular
 
         $scope.setAceReadOnly = function (_editor) {
             _editor.setReadOnly(true);
-        }
+        };
     }
 
 
 })();
-

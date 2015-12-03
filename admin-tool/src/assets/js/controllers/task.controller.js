@@ -88,11 +88,11 @@ angular
 
         $scope.keepTabActive = function () {
             $rootScope.Tasks.tabActive = $scope.tabActive;
-        }
+        };
 
         $scope.keepTaskSets = function () {
             $rootScope.Tasks.taskSets = vm.taskSets;
-        }
+        };
 
         $scope.$on('$locationChangeStart', function(event) {
             $scope.keepTabActive();
@@ -111,7 +111,7 @@ angular
             }
 
 
-        }
+        };
 
         //////////////////////////////777
         //  TaskSet - Control
@@ -121,7 +121,7 @@ angular
         /* Data */
         $scope.taskSetSelectionStatus = {
             taskSetSelected : false
-        }
+        };
 
         var DefaultTaskSet = function() {
             this.taskSetName = "";
@@ -135,13 +135,13 @@ angular
         /* Methods */
         $scope.pushNewTaskSet = function () {
             vm.taskSets.push(new DefaultTaskSet());
-        }
+        };
 
         $scope.selectTaskSet = function(taskSet, destination) {
             var index = findInArray(vm.taskSets, taskSet);
             selectTaskSet(index);
             $scope.tabActive.intensionTables = true;
-        }
+        };
 
         function selectTaskSet (taskSetIndex) {
             $scope.selectedTable = undefined;
@@ -170,12 +170,12 @@ angular
             modalInstance.result.then(
                 FlashService.Clear
             );
-        }
+        };
 
 
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {
-            if (taskSet.id != undefined) {
+            if (taskSet.id !== undefined) {
 
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
@@ -200,7 +200,7 @@ angular
                 );
 
             }
-        }
+        };
 
         $scope.exportTaskSets = function() {
             var modalInstance = $uibModal.open({
@@ -214,7 +214,7 @@ angular
                     return TaskService.exportTaskSets({taskSetIds: taskSetIds});
                 }, null
             );
-        }
+        };
 
         $scope.importTaskSets = function() {
             var modalInstance = $uibModal.open({
@@ -222,11 +222,11 @@ angular
                     templateUrl: 'adminapp/templates/importTaskSet.template.html',
                     controller: 'importTaskSetController'
             });
-        }
+        };
 
         $scope.saveSelectedTaskSet = function () {
              $scope.saveTaskSet($scope.selectedTaskSet);
-        }
+        };
 
         $scope.deleteTaskSet = function (taskSet) {
             if (taskSet.id === undefined) {
@@ -262,7 +262,7 @@ angular
                         FlashService.Error(error);
                 }
             );
-        }
+        };
 
         $scope.rateTaskSet = function (taskSet, decision) {
             var ratingJson = {};
@@ -289,7 +289,7 @@ angular
                     FlashService.Error(error);
 
                 });
-        }
+        };
 
 
         //////////////////////////////777
@@ -300,18 +300,18 @@ angular
         $scope.tableSelectionStatus = {
             tableSelected : false,
             tableNotSelected : true
-        }
+        };
 
         var DefaultTable = function () {
             this.tableName = "";
             this.columns = [];
             this.extension = "";
-        }
+        };
 
         /* Methods */
         $scope.pushNewTable = function () {
             vm.tables.push(new DefaultTable());
-        }
+        };
 
         $scope.selectTable = function (table) {
             var index = findInArray(vm.tables, table);

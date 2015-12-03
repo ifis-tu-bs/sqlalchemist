@@ -159,5 +159,4 @@ module.exports = function(grunt) {
 
 
   grunt.registerTask('default', ['resources', 'jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
-  //grunt.registerTask('serve', ['default', 'connect', 'watch']);
 }

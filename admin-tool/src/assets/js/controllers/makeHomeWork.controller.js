@@ -31,27 +31,27 @@ angular
                     $modalInstance.dismiss(error);
                 }
                 );
-        }
+        };
 
         getTaskSets();
 
         $scope.selectTaskSet = function (taskSet) {
             var index = findInArray($scope.taskSets, taskSet);
-            $scope.selectedTaskSets.push(taskSet)
+            $scope.selectedTaskSets.push(taskSet);
             $scope.taskSets.splice(index, 1);
-        }
+        };
 
         $scope.deselectTaskSet = function (taskSet) {
             var index = findInArray($scope.selectedTaskSets, taskSet);
-            $scope.taskSets.push(taskSet)
+            $scope.taskSets.push(taskSet);
             $scope.selectedTaskSets.splice(index, 1);
-        }
+        };
 
         // We need a non-primitive, else the accoridion is going do mess with the scopes
         $scope.dates = {
             from: new Date(),
             to: new Date()
-        }
+        };
 
         $scope.ok = function() {
             $scope.dates.from.setSeconds(0);
@@ -94,4 +94,3 @@ angular
     }
 
 })();
-
