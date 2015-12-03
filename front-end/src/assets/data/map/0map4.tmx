@@ -118,16 +118,6 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="73" name="EnemyEntity" x="249" y="677" width="240" height="64">
-   <properties>
-    <property name="attack" value="0"/>
-    <property name="image" value="walking_stone"/>
-    <property name="jump" value="0"/>
-    <property name="speed" value="2"/>
-    <property name="spriteheight" value="64"/>
-    <property name="spritewidth" value="64"/>
-   </properties>
-  </object>
   <object id="74" name="EnemyEntity" x="2388" y="411" width="400" height="300">
    <properties>
     <property name="attack" value="0"/>

@@ -116,7 +116,7 @@
   <object id="37" name="Ground" x="134" y="323" width="192" height="32"/>
   <object id="38" name="Ground" x="512" y="322" width="192" height="32"/>
   <object id="39" name="Ground" x="1471" y="513" width="384" height="32"/>
-  <object id="43" x="1280" y="259">
+  <object id="43" x="1280" y="264" rotation="-3">
    <polygon points="0,0 96,-95 191,0"/>
   </object>
   <object id="46" name="Ground" x="928" y="385" width="160" height="383"/>
