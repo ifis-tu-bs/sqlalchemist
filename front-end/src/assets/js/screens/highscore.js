@@ -123,7 +123,7 @@ game.HighscoreScreen = me.ScreenObject.extend({
         function drawSQLRate(xmlHttpRequest) {
             headers.clear();
             var header = "SUCCESS RATE";
-            drawHighscore(xmlHttpRequest, 6, header)
+            drawHighscore(xmlHttpRequest, 6, header);
         }
 
         /**

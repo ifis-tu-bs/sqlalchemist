@@ -53,7 +53,7 @@ game.LegendScreen = me.ScreenObject.extend({
          */
         onProfileReply = function(xmlHttpRequest) {
             var profileObject = JSON.parse(xmlHttpRequest.responseText);
-            if (profileObject.student == true) {
+            if (profileObject.student === true) {
 
                 this.homeworkClick = function () {
                     if (game.data.sound) {
@@ -188,8 +188,8 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.writeHTML("Tutorial");
             explanation.clear();
             explanation.writeHTML("The tutorial is supposed to give you a small tour around the game. If you accidentally" +
-                " skipped the whole tutorial and would like to revise it, you can reset the story in the settings."
-                + "<br>" +
+                " skipped the whole tutorial and would like to revise it, you can reset the story in the settings." + 
+                "<br>" +
                 "Be aware, that you entire progress will be deleted!");
         };
         var tutorial = new game.ClickableElement('tutorial', 'Tutorial', this.tutorialClick, 15, 4, 81, 68, 1);

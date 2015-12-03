@@ -76,7 +76,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                     game.homework.currentExercise = exercise;
                     me.state.change(STATE_TASK);
 
-                }
+                };
 
             }
 

@@ -80,12 +80,13 @@ game.SheetScreen = me.ScreenObject.extend({
             /**
              * The position of the avatars need to be set differently. If the current avatar is a team or not.
              */
+             var avatar;
             if (!team) {
-                var avatar = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
+                avatar = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                 me.game.world.addChild(avatar);
             } else {
-                var avatar = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
+                avatar = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                 me.game.world.addChild(avatar);
             }
@@ -98,6 +99,18 @@ game.SheetScreen = me.ScreenObject.extend({
          */
         var kind = [0,0,0,0];
 
+        function onUpgrade(name, id){
+            return function () {
+                game.task.name = name;
+                game.task.potionId = id;
+                game.task.kind = 1;
+                /*console.log("Upgrade: " + game.task.potionId,
+                            "Name: " + game.task.name,
+                            "Result" + game.scroll.enchantments[game.task.potionId].name);*/
+                me.state.change(STATE_TASK);
+            };
+        }
+
        for (var i = 0; i < game.scroll.enchantments.length; i++){
             var j = Math.floor(i/10);
             /*console.log(game.scroll.enchantments[i].name,
@@ -106,18 +119,6 @@ game.SheetScreen = me.ScreenObject.extend({
                         " availible: " + game.scroll.enchantments[i].available,
                         "position: " + kind[j]);*/
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
-
-                function onUpgrade(name, id){
-                    return function () {
-                        game.task.name = name;
-                        game.task.potionId = id;
-                        game.task.kind = 1;
-                        /*console.log("Upgrade: " + game.task.potionId,
-                                    "Name: " + game.task.name,
-                                    "Result" + game.scroll.enchantments[game.task.potionId].name);*/
-                        me.state.change(STATE_TASK);
-                    }
-                }
 
                 var name = game.scroll.enchantments[i].name;
                 var id   = game.scroll.enchantments[i].id;

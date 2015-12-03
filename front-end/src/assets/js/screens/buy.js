@@ -56,12 +56,13 @@ game.BuyScreen = me.ScreenObject.extend({
 
         } else {
             var filename = game.data.shop[game.data.shopId].thumbnailUrl;
+            var avatar;
             if (game.data.shop[game.data.shopId].avatar.isTeam) {
-                var avatar = new game.BackgroundElement('avatar', 9.545455, 12.5, 26.015152, 26.041667, 'none');
+                avatar = new game.BackgroundElement('avatar', 9.545455, 12.5, 26.015152, 26.041667, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                 me.game.world.addChild(avatar);
             } else {
-                var avatar = new game.BackgroundElement('avatar', 7.272727, 12.5, 27.272727, 26.041667, 'none');
+                avatar = new game.BackgroundElement('avatar', 7.272727, 12.5, 27.272727, 26.041667, 'none');
                 avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                 me.game.world.addChild(avatar);
             }

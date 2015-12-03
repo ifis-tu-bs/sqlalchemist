@@ -19,7 +19,7 @@ game.TaskScreen = me.ScreenObject.extend({
      *  action to perform on state change
      */
     onResetEvent: function() {
-    	
+
 		if(game.data.music){
 			me.audio.stopTrack();
 			me.audio.playTrack("task",game.data.musicVolume);
@@ -103,7 +103,7 @@ game.TaskScreen = me.ScreenObject.extend({
         chooseDifficulty6.hide();
 
 
-        textIn = new Object();
+        textIn = {};
 
 
         submitButton.hide();
@@ -148,7 +148,7 @@ game.TaskScreen = me.ScreenObject.extend({
             setDifficultyButton.display();
             setDifficultyButton.setTitle("change next tasks difficulty");
             stayButton.display();
-            stayButton.setTitle("toggle to keep the schema")
+            stayButton.setTitle("toggle to keep the schema");
         }
 
 
@@ -170,7 +170,7 @@ game.TaskScreen = me.ScreenObject.extend({
         me.game.world.addChild(tryButton);
         me.game.world.addChild(sameTaskButton);
         me.game.world.addChild(nextTaskButton);
-        me.game.world.addChild(nextExerciseButton)
+        me.game.world.addChild(nextExerciseButton);
         me.game.world.addChild(checkButton);
         me.game.world.addChild(stayButton);
         me.game.world.addChild(likeButton);
@@ -252,7 +252,7 @@ game.TaskScreen = me.ScreenObject.extend({
          * backButton
          */
         function backTo() {
-	        if (game.task.kind == 0) {
+	        if (game.task.kind === 0) {
 	            me.state.change(STATE_BELT);
 	        }
 	        if (game.task.kind == 1) {
@@ -320,7 +320,7 @@ game.TaskScreen = me.ScreenObject.extend({
                         }, 100);
                     }, 100);
                 }, 100);
-            }
+            };
         }
 
         function showDifficulties(){
@@ -474,7 +474,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
 	        return res;
 
-	    };
+	    }
 
 	    /**
 	     *
@@ -483,7 +483,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
             textOutHead.clear();
 
-        	if ((game.task.kind == 0) || (game.task.kind == 1)) {
+        	if ((game.task.kind === 0) || (game.task.kind == 1)) {
         	    // Story Collector
         	    textOutHead.writeHTML(game.task.name, 'tasktitle');
             }
@@ -498,7 +498,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	    textOutHead.writeHTML('Exercise', 'tasktitle');
             }
 
-        };
+        }
 
         //
         // callback functions for ajax requests
@@ -511,7 +511,7 @@ game.TaskScreen = me.ScreenObject.extend({
             likeButtonSet.hide();
             dislikeButtonSet.hide();
             reviewButtonSet.hide();
-        };
+        }
 
         /**
          *
@@ -520,7 +520,7 @@ game.TaskScreen = me.ScreenObject.extend({
             likeButton.hide();
             dislikeButton.hide();
             reviewButton.hide();
-        };
+        }
 
 
 
@@ -592,8 +592,8 @@ game.TaskScreen = me.ScreenObject.extend({
             }
 
 
-        };
-        
+        }
+
         /*
          *
          */
@@ -608,8 +608,8 @@ game.TaskScreen = me.ScreenObject.extend({
                 textOut.writeHTML(dataResult.terry + "<br>" + dataResult.SQLError, 'taskbody');
                 sameTaskButton.display();
             } else {
-                console.log( dataResult.score, (game.task.kind == 1 || game.task.kind == 0) && dataResult.score);
-                if ((game.task.kind == 1 || game.task.kind == 0) && dataResult.score ) {
+                console.log( dataResult.score, (game.task.kind == 1 || game.task.kind === 0) && dataResult.score);
+                if ((game.task.kind == 1 || game.task.kind === 0) && dataResult.score ) {
                     game.task.gainScore = dataResult.score;
                     game.task.gainCoins = dataResult.coins;
                     me.state.change(STATE_RESULT);
@@ -641,8 +641,8 @@ game.TaskScreen = me.ScreenObject.extend({
                 displayTries();
             }
 
-        };
-        
+        }
+
         /**
          *
          */
@@ -659,39 +659,39 @@ game.TaskScreen = me.ScreenObject.extend({
             } else {
                 textOut.writeHTML(dataResult.terry + "\nTime: " + dataResult.time, 'taskbody');
             }
-        };
-        
+        }
+
         //
         // ajax requests
         //
-           
+
         /**
          *
          */
         function submitAnswer() {
             game.data.count ++;
-        	
+
         	// get answer
         	var answer = textIn.getText();
-        	
-        	if ((!answer) || (answer == '\u00a0') || (answer == '')) {
-        		
+
+        	if ((!answer) || (answer == '\u00a0') || (answer === '')) {
+
         		//leere Eingabe
         		textIn.insertText('Your query is empty. I do not accept empty queries! Do you think I am a fool?');
-        		
+
         	}
         	else {
         		//get timestap;
 		        game.task.finishTime = me.timer.getTime();
 		        var ellapsedTime = game.task.finishTime - game.task.startTime;
-		        
+
 		        // create JSON Object
         	    dataTaskSolve.statement = answer;
         	    dataTaskSolve.time = ellapsedTime;
         	    var jsonData = JSON.stringify(dataTaskSolve);
-        	    
+
         	    // ajax requests
-        	    if ((game.task.kind == 0) || (game.task.kind == 1)) {
+        	    if ((game.task.kind === 0) || (game.task.kind == 1)) {
         	    	// Story
         	    	ajaxSendTaskStorySolveRequest(dataTask.id, jsonData, handlePostTask);
         	    }
@@ -704,10 +704,10 @@ game.TaskScreen = me.ScreenObject.extend({
                     game.homework.submits--;
                     ajaxSendTaskHomeworkSolveRequest(dataTask.id, jsonData, handlePostTask);
         	    }
-        	    
+
         	}
-        };
-        
+        }
+
         /**
          * Needs to be
          */
@@ -716,7 +716,7 @@ game.TaskScreen = me.ScreenObject.extend({
             // get answer
             var answer = textIn.getText();
 
-            if ((!answer) || (answer == '\u00a0') || (answer == '')) {
+            if ((!answer) || (answer == '\u00a0') || (answer === '')) {
 
                 //leere Eingabe
                 textIn.insertText('Your query is empty. I do not accept empty queries! Do you think I am a fool?');
@@ -737,8 +737,8 @@ game.TaskScreen = me.ScreenObject.extend({
                 ajaxSendTaskHomeworkSyntaxSolveRequest(dataTask.id, jsonData, handlePostTask);
 
             }
-        	
-        };
+
+        }
 
         /**
          *Checkbox Funktion
@@ -751,7 +751,7 @@ game.TaskScreen = me.ScreenObject.extend({
                 schemaCheck.display();
             }
 
-        };
+        }
 
         function displayTries(){
             submitsLeft.clear();
@@ -764,17 +764,17 @@ game.TaskScreen = me.ScreenObject.extend({
          *
          */
         function getTaskFromServer() {
-        	
+
         	// buttons to hide
         	sameTaskButton.hide();
         	nextTaskButton.hide();
         	submitButton.hide();
-        	
+
         	// clear output
         	textOut.clear();
-        	
+
 	        // ajax requests
-            if ((game.task.kind == 0) || (game.task.kind == 1)){
+            if ((game.task.kind === 0) || (game.task.kind == 1)){
         	    // Story
         	    ajaxSendTaskStoryIDRequest(game.task.potionId, handleGetTask);
             }
@@ -793,8 +793,8 @@ game.TaskScreen = me.ScreenObject.extend({
                 console.log("Homework/",game.task.homeworkId+ "/"+ game.task.exercise);
                 ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.task.exercise ,handleGetTask);
             }
-            
-        };
+
+        }
 
         var stopp = 0;
         function getNextExerciseFromServer() {
@@ -820,7 +820,7 @@ game.TaskScreen = me.ScreenObject.extend({
                 game.homework.currentExercise = 0;
                 console.log("Switch");
             }
-            console.log("INFO:",game.homework.currentHomework[game.homework.currentExercise].length,game.homework.currentExercise )
+            console.log("INFO:",game.homework.currentHomework[game.homework.currentExercise].length,game.homework.currentExercise );
             console.log("Homework/",game.task.homeworkId+ "/"+ game.homework.currentHomework[game.homework.currentExercise].id);
             if(!game.homework.currentHomework[game.homework.currentExercise].done){
                 ajaxSendTaskHomeworkRequest(game.task.homeworkId, game.homework.currentHomework[game.homework.currentExercise].id ,handleGetTask);
@@ -835,13 +835,13 @@ game.TaskScreen = me.ScreenObject.extend({
             }
 
 
-        };
-        
+        }
+
         getTaskFromServer();
 
 		getAceEditor();
 
-        
+
     },
 
 	onDestroyEvent: function(){

@@ -25,7 +25,6 @@ game.ResultScreen = me.ScreenObject.extend({
                         me.state.change(me.state.READY);
                     }, 100);
                     return true;
-                    break;
                 }
                 case 1 : {
                     $("#backgroundResultId").fadeOut(100);
@@ -34,7 +33,6 @@ game.ResultScreen = me.ScreenObject.extend({
                         me.state.change(me.state.READY);
                     }, 100);
                     return true;
-                    break;
                 }
                 case 2 : {
                     $("#backgroundResultId").fadeOut(100);
@@ -43,7 +41,6 @@ game.ResultScreen = me.ScreenObject.extend({
                         me.state.change(STATE_TRIVIA);
                     }, 100);
                     return true;
-                    break;
                 }
                 case 3 : {
                     $("#backgroundResultId").fadeOut(100);

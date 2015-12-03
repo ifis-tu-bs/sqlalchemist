@@ -171,7 +171,7 @@ var beltSlot = me.GUI_Object.extend(
                     this.width = 1;
                 }
             } else {
-                console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots)
+                console.log(game.belt.beltSlots[this.slot], this.slot,game.belt.beltSlots);
             }
 
         },
@@ -216,7 +216,7 @@ var skipTutorial = me.GUI_Object.extend(
                 me.state.change(me.state.READY);
 
             }
-            ajaxNextChallengeRequest(skip)
+            ajaxNextChallengeRequest(skip);
         }
     });
 
@@ -300,5 +300,3 @@ var tutorialButton = me.GUI_Object.extend(
 
         }
     });
-
-

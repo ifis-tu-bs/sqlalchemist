@@ -43,7 +43,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
                     game.homework.currentHomeworkIndex = homeworkIndex;
                     game.task.homeworkId = homeworks[homeworkIndex].id;
                     me.state.change(STATE_HOMEWORKTASKSET);
-                }
+                };
             }
 
             for (var i = 0; i < homeworks.length; i++) {

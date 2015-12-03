@@ -4,7 +4,7 @@ game.SignUpScreen = me.ScreenObject.extend({
      *  Action to perform on state change: STATE_SIGNUP
      */
     onResetEvent: function() {
-        
+
         /**
          * Load screen-image for Sign-Up
          */
@@ -112,7 +112,7 @@ game.SignUpScreen = me.ScreenObject.extend({
              */
             if (pw != pwAck) {
                 alert("entered passwords do not match");
-            } else if (pw == null) {
+            } else if (pw === null) {
                 alert("password may not be empty");
             } else {
                 ajaxSendSignupRequest(this.user_object, onSubmit);

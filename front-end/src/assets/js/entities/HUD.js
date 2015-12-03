@@ -223,8 +223,8 @@ function getPotionName(potion){
     var rank = 0;
     var kind = 0;
     var res = 0;
-    if(potion == null){
-        return "IS_EMPTY"
+    if(potion === null){
+        return "IS_EMPTY";
     }else {
         switch (potion.type) {
             case 0:
@@ -292,25 +292,25 @@ function convertTime(seconds){
     if(month >= 1){
         var m = month + ":";
         if(month < 10){
-            m = "0"+ m
+            m = "0"+ m;
         }
         res = res.concat(m);
     }
     if(days >= 1){
         var d = days + ":";
         if(days < 10){
-            d = "0"+ d
+            d = "0"+ d;
         }
         res = res.concat(d);
     }
     if(hours >= 1){
         var h = hours + ":";
         if(hours < 10){
-            h = "0"+ h
+            h = "0"+ h;
         }
         res = res.concat(h);
     }
-    var start = minutes + ":" + second
+    var start = minutes + ":" + second;
     res = res.concat(start);
-    return res
+    return res;
 }

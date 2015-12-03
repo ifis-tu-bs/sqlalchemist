@@ -15,19 +15,24 @@ module.exports = function(grunt) {
           varname: 'game.resources',
         },
         files: [{
-          src: ['<%= globalConfig.src %>/assets/data/img/**/*.png'],
+          cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/img/**/*.png'],
           type: 'image'
         },{
-          src: ['<%= globalConfig.src %>/assets/data/bgm/**/*', '<%= globalConfig.src %>/assets/data/sfx/**/*'],
+          cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/bgm/**/*', 'assets/data/sfx/**/*'],
           type: 'audio'
         },{
-          src: ['<%= globalConfig.src %>/assets/data/img/**/*.json'],
+          cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/img/**/*.json'],
           type: 'json'
         },{
-          src: ['<%= globalConfig.src %>/assets/data/map/**/*.tmx', '<%= globalConfig.src %>/assets/data/map/**/*.json'],
+          cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/map/**/*.tmx', 'assets/data/map/**/*.json'],
           type: 'tmx'
         },{
-          src: ['<%= globalConfig.src %>/assets/data/map/**/*.tsx'],
+          cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/map/**/*.tsx'],
           type: 'tsx'
         }]
       }
@@ -40,12 +45,13 @@ module.exports = function(grunt) {
     concat: {
       js: {
         src: [
-          '<%= globalConfig.src %>/assets/lib/*.js',
-          '<%= globalConfig.build %>/assets/js/resources.js',
+          '<%= globalConfig.src %>/assets/lib/melonJS-2.0.2.js',
+          '<%= globalConfig.src %>/assets/lib/codemirror.js',
           '<%= globalConfig.src %>/assets/js/game.js',
-          '<%= globalConfig.src %>/assets/js/DOMManipulation/*.js',
+          '<%= globalConfig.build %>/assets/js/resources.js',
           '<%= globalConfig.src %>/assets/js/DataTypes/*.js',
-          '<%= globalConfig.src %>/assets/js/ajax/ajax.js',
+          '<%= globalConfig.src %>/assets/js/DOMManipulation/*.js',
+          '<%= globalConfig.src %>/assets/js/ajax/*.js',
           '<%= globalConfig.src %>/assets/js/screens/*.js',
           '<%= globalConfig.src %>/assets/js/entities/*.js'
         ],
@@ -149,8 +155,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  //grunt.loadNpmTasks('grunt-contrib-watch');
-  //grunt.loadNpmTasks('grunt-contrib-connect');
 
 
   grunt.registerTask('default', ['resources', 'jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);

@@ -26,7 +26,7 @@ function myRemoveEvent(node, type, fn) {
     else if (node.detachEvent) {
         node.detachEvent ('on'+type, fn);
     }
-};
+}
 
 /**
  *
@@ -39,7 +39,7 @@ function getTextFromNode(node) {
         text = null;
         if (child.nodeType === 1) {
             text = getTextFromNode(child);
-        } 
+        }
         else if (child.nodeType === 3) {
             text = child.nodeValue;
         }
@@ -70,17 +70,16 @@ game.scaleElement = function(object) {
     var leftMargin = canvasWidth * object.relLeft / 100;
     var topMargin  = canvasHeight * object.relTop / 100;
 
+    var lineHeight = 0;
     if (object.row == 1) {
-    	var lineHeight = height * 0.9;
-    }
-    else if (object.row == 0) {
+    	lineHeight = height * 0.9;
+    } else if (object.row === 0) {
     	console.log("ERROR: Division by 0 in game.scaleElement");
-    	var lineHeight = height * 0.9;
+    	lineHeight = height * 0.9;
+    } else {
+      lineHeight = height / object.rows;
     }
-    else {
-        var lineHeight = height / object.rows;
-    }
-    
+
     var fontSize   = lineHeight;
 
     // set values
@@ -88,11 +87,10 @@ game.scaleElement = function(object) {
     object.elem.style.top    = (topMargin + canvasOffsetTop) + "px";
     object.elem.style.width  = width + 'px';
     object.elem.style.height = height + 'px';
-    
+
     object.getNode().style.lineHeight = lineHeight + 'px';
     object.getNode().style.fontSize   = fontSize + 'px';
-   
-}
+};
 
 /**
  * defines a scaleable object for text input
@@ -155,14 +153,14 @@ game.TextInputElement = me.Renderable.extend ({
         else {
         	this.field.style.overflow = 'scroll';
         }
-        
+
         this.field.style.width = '100%';
         this.field.style.height = '100%';
         this.field.style.paddingRight = '17px';
         this.field.style.paddingBottom = '17px';
         this.field.style.outlineColor = 'transparent'; // for the strange behaviour of Chrome
         this.field.style.whiteSpace = 'pre-wrap';
-        
+
         // scale element
         this.relWidth  = width;
         this.relHeight = height;
@@ -173,7 +171,7 @@ game.TextInputElement = me.Renderable.extend ({
 
         // visibility
         this.visibility = true;
-        
+
         // tag
         this.tag = tag;
 
@@ -181,7 +179,7 @@ game.TextInputElement = me.Renderable.extend ({
 
         this.elem.appendChild(this.field);
         divScreen.appendChild(this.elem);
-        
+
         if (tag == 'textarea' ) {
         	if (type == 'codemirror') {
         		this.editor = CodeMirror.fromTextArea(this.field, {
@@ -262,7 +260,7 @@ game.TextInputElement = me.Renderable.extend ({
      * @param : text : a string
      */
     insertText : function (text) {
-    	
+
     	if (this.tag == 'div') {
     		if (this.field.innerText) {
     			this.field.innerText = this.field.innerText + text;
@@ -279,17 +277,17 @@ game.TextInputElement = me.Renderable.extend ({
         }
 
     },
-    
+
     /**
      * method inserts html into the element
      * @param : text : a string
      */
     insertTextAsHTML : function (text) {
-    	
+
     	if (!this.isCodeMirror) {
     	    this.field.innerHTML = text;
     	}
-       
+
     },
 
     /**
@@ -344,8 +342,8 @@ game.TextInputElement = me.Renderable.extend ({
     			var textWithMagicChar = textWithoutTags + '\u00a0';
     			// delete second extra whitespace
     			text = textWithMagicChar.replace(/\u0020+\u00a0/, '\u00a0');
-    			
-    		}	
+
+    		}
     	}
     	else if (this.isCodeMirror) {
     		text = this.editor.getValue();
@@ -353,7 +351,7 @@ game.TextInputElement = me.Renderable.extend ({
     	else if (this.isAce) {
             //console.log(this.editor.getValue());
             text = this.editor.getValue();
-        } 
+        }
         else {
     		text = this.value;
     	}
@@ -427,13 +425,13 @@ game.TextOutputElement = me.Renderable.extend ({
         this.elem.id             = id;
         this.elem.style.position = 'absolute';
         this.elem.style.display  = 'none';
-        
+
         this.wrapper.style.width = '100%';
         this.wrapper.style.height = '100%';
         this.wrapper.style.overflow = 'scroll';
         this.wrapper.style.paddingRight = '17px';
         this.wrapper.style.paddingBottom = '17px';
-        
+
         // scale element
         this.relWidth  = width;
         this.relHeight = height;
@@ -546,7 +544,7 @@ game.TextOutputElement = me.Renderable.extend ({
     writePara : function (text, id) {
 
         var textNode = document.createTextNode(text);
-        if (document.getElementById(id) != null){
+        if (document.getElementById(id) !== null){
             var br = document.createElement("br");
             document.getElementById(id).appendChild(br);
             document.getElementById(id).appendChild(textNode);
@@ -669,16 +667,16 @@ game.ClickableElement = me.Renderable.extend ({
         return this.visibility;
 
     },
-    
+
     setImage : function (src, id) {
-    	
+
     	var image = document.createElement("img");
     	image.src = src;
     	image.id = id;
     	image.style.height = 'inherit';
     	image.style.width = 'inherit';
     	this.elem.appendChild(image);
-    	
+
     },
 
     update : function () {

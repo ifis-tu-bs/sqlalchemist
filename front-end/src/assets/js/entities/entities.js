@@ -59,7 +59,7 @@ game.LevelEntity = me.LevelEntity.extend({
         //Increase the depth for every level
         game.persistent.depth++;
 
-        console.log(game.persistent.depth)
+        console.log(game.persistent.depth);
         //Every fifth map shall be a boooooosss map
         if (game.persistent.depth % 5 === 0) {
             //Return the bosslevel for current difficulty
@@ -222,7 +222,7 @@ game.PlayerEntity = me.Entity.extend({
                     if (game.stats.hp < 1 ){
                         setTimeout(function(){
                             me.state.change(me.state.GAMEOVER);
-                        }, 300)
+                        }, 300);
                     }
                     // after a given time it sets hurt back to false to allow another triggering
                     setTimeout(function(){
@@ -230,7 +230,6 @@ game.PlayerEntity = me.Entity.extend({
                     }, 1500);
                 }
                 return false;
-                break;
 
 
             default:
@@ -474,7 +473,7 @@ game.FireEntity = me.CollectableEntity.extend({
         if (game.stats.hp < 1 ){
             setTimeout(function(){
                 me.state.change(me.state.GAMEOVER);
-            }, 100)
+            }, 100);
         }
 
         // play a "fire" sound

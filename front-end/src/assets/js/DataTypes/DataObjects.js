@@ -11,16 +11,16 @@
 function Skin(available, name, id) {
     this.available = available;
     this.name = name;
-};
+}
 
 /*
  * Object to hold all information for the Skins
  */
-game.skin = new Object();
+game.skin = {};
 
 
 //Skins Array (Contains Skin Objects)
-game.skin.skins = new Array();
+game.skin.skins = [];
 
 //Skin index to point to current Skin
 game.skin.currentSkin = 0;
@@ -51,7 +51,7 @@ function Potion(type, power, amount, available,id,name) {
 /*
  * Obect to hold all information for the Potions
  */
-game.potion = new Object();
+game.potion = {};
 
 game.potion.usePotion = function(potion, slot) {
     switch(potion.type) {
@@ -62,7 +62,7 @@ game.potion.usePotion = function(potion, slot) {
                 if(game.data.sound){
                     me.audio.play("healthpotion", false, null, game.data.soundVolume);
                 }
-                ajaxSendProfileUsedRequest((slot + 1), deletePotion)
+                ajaxSendProfileUsedRequest((slot + 1), deletePotion);
                 return true;
             }
             break;
@@ -79,7 +79,7 @@ game.potion.usePotion = function(potion, slot) {
                     game.stats.addspeed = 0;
                     game.persistent.speedOn = false;
                 }, 7500);
-                ajaxSendProfileUsedRequest((slot + 1), deletePotion)
+                ajaxSendProfileUsedRequest((slot + 1), deletePotion);
                 return true;
             }
             break;
@@ -96,7 +96,7 @@ game.potion.usePotion = function(potion, slot) {
                     game.stats.addjump = 0;
                     game.persistent.jumpOn = false;
                 }, 7500);
-                ajaxSendProfileUsedRequest((slot + 1), deletePotion)
+                ajaxSendProfileUsedRequest((slot + 1), deletePotion);
                 return true;
             }
             break;
@@ -113,7 +113,7 @@ game.potion.usePotion = function(potion, slot) {
                     game.persistent.defenseOn = false;
 
                 }, 7500);
-                ajaxSendProfileUsedRequest((slot + 1), deletePotion)
+                ajaxSendProfileUsedRequest((slot + 1), deletePotion);
                 return true;
             }
         }
@@ -124,11 +124,11 @@ game.potion.usePotion = function(potion, slot) {
     }
 
     return false;
-}
+};
 
 
 //Potion Array (Contains Potion Obects)
-game.potion.potions = new Array();
+game.potion.potions = [];
 
 //Potion index to point to current Potion
 game.potion.currentPotion = 0;
@@ -148,10 +148,10 @@ for (var i = 0; i <= 20; i++) {
 /*
  * Object to hold all information for the belt(Slots)
  */
-game.belt = new Object();
+game.belt = {};
 
 //beltSlot Array (Contains Potion Objects)
-game.belt.beltSlots = new Array();
+game.belt.beltSlots = [];
 
 //Load Potions into game.belt.beltSlots
 for (var i = 0; i < 1; i++) {
@@ -171,16 +171,16 @@ function Enchantment(type, difficulty, available, used, id, name) {
 
     this.setUsed = function() {
         this.used = true;
-    }
+    };
 }
 
 /*
  * Object to hold all information for the Scrolls
  */
-game.scroll = new Object();
+game.scroll = {};
 
 //Scroll Array (Contains Scroll Objects)
-game.scroll.enchantments = new Array();
+game.scroll.enchantments = [];
 
 //enchantmentIndex to point to current enchantment
 game.scroll.currentEnchantment = 0;
@@ -197,12 +197,3 @@ for (var i = 0; i <= 61; i++) {
         );
 
 }
-
-
-
-
-
-
-
-
-

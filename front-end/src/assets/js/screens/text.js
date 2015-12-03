@@ -26,7 +26,7 @@ game.TextScreen = me.ScreenObject.extend({
                 console.log("we entered: " + game.data.text);
                 nextState = 0;
                 buttonImage = "mirror";
-                position = [12, 27.2, 16.3, 8.3]
+                position = [12, 27.2, 16.3, 8.3];
                 //me.game.world.addChild(new tutorialButton(220, 66, "lab_mirror", 153, 210, 0));
                 change = false;
                 y = 37.7;
@@ -156,6 +156,77 @@ game.TextScreen = me.ScreenObject.extend({
             }
         }
 
+        function skipOne() {
+
+            me.audio.pause(game.data.audio);
+            if(change){
+                me.state.change(state);
+                game.data.text++;
+            }else{
+                if(!game.data.wait){
+                    game.data.wait = true;
+                    game.data.text++;
+                }
+            }
+        }
+
+        function skipAll() {
+
+            function skip(xmlHttpRequest) {
+
+                console.log(xmlHttpRequest);
+                //add sound name
+                me.audio.pause(game.data.audio);
+                game.data.text = game.data.playerStat.texts.length;
+                me.state.change(me.state.READY);
+
+            }
+            ajaxNextChallengeRequest(skip);
+        }
+
+        function tutorialClick() {
+            console.log("clicked!");
+            if(game.data.wait) {
+                game.data.wait = false;
+                switch (nextState) {
+                    case 0 :
+                    {
+                        me.state.change(STATE_TEXT);
+                        break;
+                    }
+                    case 1 :
+                    {
+                        me.state.change(me.state.PLAY);
+                        break;
+                    }
+                    case 2 :
+                    {
+                        me.state.change(me.state.MENU);
+                        break;
+                    }
+                    case 3 :
+                    {
+                        me.state.change(STATE_COLLECTOR);
+                    }
+                }
+            }
+        }
+
+        function onend() {
+            if (game.data.text !== game.data.playerStat.texts.length - 1) {
+                game.data.text++;
+                console.log("next: " + game.data.text);
+
+                if (change) {
+                    me.state.change(state);
+                } else {
+                    game.data.wait = true;
+                }
+            } else {
+                me.state.change(me.state.READY);
+            }
+        }
+
         if(!skip) {
             console.log("leave Switch");
             // lab_screen
@@ -212,83 +283,14 @@ game.TextScreen = me.ScreenObject.extend({
                 skipOneButton.display();
             }
 
-            function skipOne() {
 
-                me.audio.pause(game.data.audio);
-                if(change){
-                    me.state.change(state);
-                    game.data.text++;
-                }else{
-                    if(!game.data.wait){
-                        game.data.wait = true;
-                        game.data.text++;
-                    }
-                }
-            }
-
-            function skipAll() {
-
-                function skip(xmlHttpRequest) {
-
-                    console.log(xmlHttpRequest);
-                    //add sound name
-                    me.audio.pause(game.data.audio);
-                    game.data.text = game.data.playerStat.texts.length;
-                    me.state.change(me.state.READY);
-
-                }
-                ajaxNextChallengeRequest(skip)
-            }
-
-            function tutorialClick() {
-                console.log("clicked!");
-                if(game.data.wait) {
-                    game.data.wait = false;
-                    switch (nextState) {
-                        case 0 :
-                        {
-                            me.state.change(STATE_TEXT);
-                            break;
-                        }
-                        case 1 :
-                        {
-                            me.state.change(me.state.PLAY);
-                            break;
-                        }
-                        case 2 :
-                        {
-                            me.state.change(me.state.MENU);
-                            break;
-                        }
-                        case 3 :
-                        {
-                            me.state.change(STATE_COLLECTOR);
-                        }
-                    }
-                }
-            }
-
-            function onend() {
-                if (game.data.text !== game.data.playerStat.texts.length - 1) {
-                    game.data.text++;
-                    console.log("next: " + game.data.text);
-
-                    if (change) {
-                        me.state.change(state);
-                    } else {
-                        game.data.wait = true;
-                    }
-                } else {
-                    me.state.change(me.state.READY);
-                }
-            }
-
+            var audio;
             if (game.data.playerStat.isTutorial) {
-                var audio = "take".concat(game.data.text + 1);
+                audio = "take".concat(game.data.text + 1);
             } else {
                 skipAllButton.hide();
                 skipOneButton.hide();
-                var audio = "bosstext".concat(Math.floor((game.persistent.depth - 1) / 5));
+                audio = "bosstext".concat(Math.floor((game.persistent.depth - 1) / 5));
             }
 
             game.data.audio = audio;
@@ -299,4 +301,3 @@ game.TextScreen = me.ScreenObject.extend({
 
     }
 });
-

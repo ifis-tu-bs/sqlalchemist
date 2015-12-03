@@ -72,13 +72,15 @@ game.ShopScreen = me.ScreenObject.extend({
                     setTimeout( function() {
                         me.state.change(STATE_BUY);
                     }, 100);
-                }
+                };
             }
 
             /**
              * Display all 500-coin-items that are not bought yet.
              */
-            for (var i = 0; i < 7; i++) {
+             var shopItem;
+             var i;
+            for (i = 0; i < 7; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -87,7 +89,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.948 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.948 + this.size,
                                                              8.433, 23.436 - this.difference, 18.129167 + i * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -97,7 +99,7 @@ game.ShopScreen = me.ScreenObject.extend({
             /**
              * Display seven first 2000-coin-items that are not bought yet.
              */
-            for (var i = 7; i < 14; i++) {
+            for (i = 7; i < 14; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -106,7 +108,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
                                                             8.333, 33.330 - this.difference, 18.129167 + (i - 7) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -116,7 +118,7 @@ game.ShopScreen = me.ScreenObject.extend({
             /**
              * Display next seven 2000-coin-items that are not bought yet.
              */
-            for (var i = 14; i < 21; i++) {
+            for (i = 14; i < 21; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -125,7 +127,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
                                                             8.333, 38.942 - this.difference, 18.129167 + (i - 14) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -135,7 +137,7 @@ game.ShopScreen = me.ScreenObject.extend({
             /**
              * Display first row of 8000-coin-items that are not bought yet.
              */
-            for (var i = 21; i < 27; i++) {
+            for (i = 21; i < 27; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -144,7 +146,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
                                                             8.333, 51.994 - this.difference, 29.06666 + (i - 21) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -154,7 +156,7 @@ game.ShopScreen = me.ScreenObject.extend({
             /**
              * Display next row of 8000-coin-items that are not bought yet.
              */
-            for (var i = 27; i < 32; i++) {
+            for (i = 27; i < 32; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -163,7 +165,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size       = 0;
                     }
-                     var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
                                                              8.333, 57.782 - this.difference, 40.00417 + (i - 27) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -173,7 +175,7 @@ game.ShopScreen = me.ScreenObject.extend({
             /**
              * Display 20000-coin-items that are not bought yet.
              */
-            for (var i = 32; i < 38; i++) {
+            for (i = 32; i < 38; i++) {
                 if (!shop[i].bought) {
                     if (shop[i].avatar.isTeam) {
                         this.difference = 0.5575;
@@ -182,7 +184,7 @@ game.ShopScreen = me.ScreenObject.extend({
                         this.difference = 0;
                         this.size = 0;
                     }
-                    var shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
+                    shopItem = new game.ClickableElement('shopItem' + i, '', goBuy(i, shop[i].id), 4.848 + this.size,
                                                             8.333, 70.2545 - this.difference, 29.06666 + (i - 32) * 10.9375, 1);
                     shopItem.setImage("assets/data/img/avatare/" + shop[i].thumbnailUrl + "_front.png", "avatar");
                     me.game.world.addChild(shopItem);
@@ -212,12 +214,12 @@ game.ShopScreen = me.ScreenObject.extend({
                     console.log(this.shopId + "Belt" + this.spriteId);
                     game.data.spriteId = this.spriteId;
                     game.data.shopId = this.shopId;
-                    
+
                     fadeOutElements();
                     setTimeout( function() {
                         me.state.change(STATE_BUY);
                     }, 100);
-                }
+                };
             }
 
             //console.log("BELT");

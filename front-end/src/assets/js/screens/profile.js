@@ -70,12 +70,13 @@ game.ProfileScreen = me.ScreenObject.extend({
                 console.log("Kahn",profile_JSON);
                 var filename = profile_JSON.avatar.avatarFilename;
                 var isTeam = profile_JSON.avatar.isTeam;
+                var avatar;
                 if (!isTeam) {
-                    var avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'none');
+                    avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 } else {
-                    var avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'none');
+                    avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 }

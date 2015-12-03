@@ -65,12 +65,12 @@ game.CollectorScreen = me.ScreenObject.extend({
                   game.potion.potions[game.level.scrolls[k + j * 5][4]].available,
                   game.potion.potions[game.level.scrolls[k + j * 5][5]].available)*/
 
-                if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used
-                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used
-                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used
-                    && game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used
-                    && game.potion.potions[game.level.scrolls[k + j * 5][4]].available
-                    && game.potion.potions[game.level.scrolls[k + j * 5][5]].available){
+                if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used &&
+                    game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used && 
+                    game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used &&
+                    game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used &&
+                    game.potion.potions[game.level.scrolls[k + j * 5][4]].available &&
+                    game.potion.potions[game.level.scrolls[k + j * 5][5]].available){
                     level++;
 
                     var checkSymbol = new game.BackgroundElement('check' + k, 4.5, 6.5,

@@ -135,11 +135,12 @@ game.SettingsScreen = me.ScreenObject.extend({
         var submitVerification = new game.ClickableElement('submitVerification', "verify!", this.sendVerificationRequest, 33, 5, 48, 72, 1);
         me.game.world.addChild(submitVerification);
 
+        var studentRequest;
         if (game.data.profile.student) {
-            var studentRequest = new game.ClickableElement('verifyGreen', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
+            studentRequest = new game.ClickableElement('verifyGreen', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
             me.game.world.addChild(studentRequest);
         } else {
-            var studentRequest = new game.ClickableElement('studentRequest', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
+            studentRequest = new game.ClickableElement('studentRequest', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
             me.game.world.addChild(studentRequest);
         }
 
@@ -169,9 +170,10 @@ game.SettingsScreen = me.ScreenObject.extend({
             var oldPasswordData    = document.getElementById("fOld").value;
             var newPasswordData    = document.getElementById("fNew").value;
             var newPasswordAckData = document.getElementById("fNewAck").value;
+            var passwordJSON;
 
             if (newPasswordData == newPasswordAckData) {
-                var passwordJSON = JSON.stringify({password_old: oldPasswordData, password_new: newPasswordData});
+                passwordJSON = JSON.stringify({password_old: oldPasswordData, password_new: newPasswordData});
             } else {
                 alert("entered passwords do not match!");
             }

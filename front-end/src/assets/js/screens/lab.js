@@ -44,7 +44,8 @@ game.ReadyScreen = me.ScreenObject.extend({
             game.data.sprite = stat.characterState.currentAvatar.avatarFilename;
             game.skin.currentSkin = stat.characterState.currentAvatar.id;
             //get scrolls
-            for (var i = 0; i < stat.characterState.scrollCollection.scrolls.length; i++) {
+            var i;
+            for (i = 0; i < stat.characterState.scrollCollection.scrolls.length; i++) {
 
                 if (stat.characterState.scrollCollection.scrolls[i].scroll.id > 19) {
                     game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].available = true;
@@ -59,7 +60,7 @@ game.ReadyScreen = me.ScreenObject.extend({
             game.data.scollLimit = stat.characterState.scrollLimit;
 
             //get Potions 1-20
-            for (var i = 0; i < stat.characterState.inventory.potions.length; i++) {
+            for (i = 0; i < stat.characterState.inventory.potions.length; i++) {
                 game.potion.potions[i + 1].amount = stat.characterState.inventory.potions[i].count;
                 game.potion.potions[i + 1].name = stat.characterState.inventory.potions[i].potion.name;
                 game.potion.potions[i + 1].id = stat.characterState.inventory.potions[i].potion.id;
@@ -73,9 +74,9 @@ game.ReadyScreen = me.ScreenObject.extend({
             }
 
             //get avatars
-            for (var i = 0; i < stat.characterState.avatars_bought.length; i++) {
+            for (i = 0; i < stat.characterState.avatars_bought.length; i++) {
                 game.skin.skins[stat.characterState.avatars_bought[i].id].available = 1;
-                console.log(i, stat.characterState.avatars_bought[i].id, game.skin.skins[stat.characterState.avatars_bought[i].id].name)
+                console.log(i, stat.characterState.avatars_bought[i].id, game.skin.skins[stat.characterState.avatars_bought[i].id].name);
             }
 
             //start the Text
@@ -186,7 +187,7 @@ game.ReadyScreen = me.ScreenObject.extend({
         };
         function stopDouble() {
             game.data.playing = false;
-        };
+        }
         this.onCat = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;

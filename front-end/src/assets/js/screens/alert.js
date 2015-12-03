@@ -8,8 +8,8 @@ game.AlertScreen = me.ScreenObject.extend({
 
     onResetEvent: function() {
         //We have no alert!
-        if (!game.alert.isAlert || game.alert.alertText == null) {
-            if (game.alert.toState != null) {
+        if (!game.alert.isAlert || game.alert.alertText === null) {
+            if (game.alert.toState !== null) {
                 //Go to given State
                 me.state.change(game.alert.toState);
             }
