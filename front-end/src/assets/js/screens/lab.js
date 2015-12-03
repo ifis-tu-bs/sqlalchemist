@@ -234,8 +234,7 @@ game.ReadyScreen = me.ScreenObject.extend({
         me.game.world.addChild(catButton);
         me.game.world.addChild(terryButton);
 
-        console.log("AAAAAAAAAAA",game.data.to );
-        if(game.data.to != null){
+        if(game.data.to !== null){
             console.log(game.data.to );
             var state = game.data.to;
             game.data.to = null;

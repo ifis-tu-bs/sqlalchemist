@@ -59,18 +59,18 @@ function createRequest(method, url, callback) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Session ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /login ~ jsonData: JSON.login
+// ~ POST /API/login ~ jsonData: JSON.login
 function ajaxSendLoginRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/login", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/login", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /logout
+// ~ GET /API/logout
 function ajaxSendLogoutRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/logout", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/logout", onload);
 
     xmlHttpRequest.send();
 
@@ -79,45 +79,45 @@ function ajaxSendLogoutRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /signup ~ jsonData: JSON.signup
+// ~ POST /API/signup ~ jsonData: JSON.signup
 function ajaxSendSignupRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/signup", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/signup", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /users ~ jsonData: JSON.user
+// ~ POST /API/users ~ jsonData: JSON.user
 function ajaxSendUsersRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/users", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/users", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ DELETE /users
+// ~ DELETE /API/users
 function ajaxSendUsersDeleteRequest(onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/users", onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/users", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /users/password
+// ~ POST /API/users/password
 function ajaxSendUsersResetPasswordRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/users/password", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/users/password", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /users/student
+// ~ GET /API/users/student
 function ajaxSendUserStudentRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/users/student", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/users/student", onload);
 
     xmlHttpRequest.send();
 
@@ -127,45 +127,45 @@ function ajaxSendUserStudentRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Profile ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /profile/homework
+// ~ GET /API/profile/homework
 function ajaxSendProfileHomeworkRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/homework", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/homework", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /profile
+// ~ GET /API/profile
 function ajaxSendProfileRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /profile/:id ~ id: the ProfileID
+// ~ GET /API/profile/:id ~ id: the ProfileID
 function ajaxSendProfileIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/" + id, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /profile/character
+// ~ GET /API/profile/character
 function ajaxSendProfileCharacterRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/character", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/character", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /profile/inventory
+// ~ GET /API/profile/inventory
 function ajaxSendProfileInventoryRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/character", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/character", onload);
 
     xmlHttpRequest.send();
 
@@ -174,36 +174,36 @@ function ajaxSendProfileInventoryRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Item ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /profile/character
+// ~ GET /API/profile/character
 function ajaxSendProfileBeltRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/belt", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/belt", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /profile/belt ~ jsonData: JSON.belt
+// ~ POST /API/profile/belt ~ jsonData: JSON.belt
 function ajaxSendProfileBeltSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/profile/belt", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/profile/belt", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /profile/used/:potion,slot ~ potion: PotionID slot: SlotID ~ jsonData: JSON.potionused
+// ~ GET /API/profile/used/:potion,slot ~ potion: PotionID slot: SlotID ~ jsonData: JSON.potionused
 function ajaxSendProfileUsedRequest( slot, onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/used/" + slot, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/used/" + slot, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /profile/collected ~ jsonData: JSON.collected
+// ~ POST /API/profile/collected ~ jsonData: JSON.collected
 function ajaxSendProfileCollectedRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/profile/collected", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/profile/collected", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -212,18 +212,18 @@ function ajaxSendProfileCollectedRequest(jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /profile/settings
+// ~ GET /API/profile/settings
 function ajaxSendProfileSettingsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/settings", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/settings", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /profile/settings ~ jsonData: JSON.settings
+// ~ POST /API/profile/settings ~ jsonData: JSON.settings
 function ajaxSendProfileSettingsSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/profile/settings", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/profile/settings", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -232,81 +232,81 @@ function ajaxSendProfileSettingsSetRequest(jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Challenge ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /challenge/reset
+// ~ GET /API/challenge/reset
 function ajaxSendChallengeResetRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/reset", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/reset", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge
+// ~ GET /API/challenge
 function ajaxSendChallengeRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge/skip
+// ~ GET /API/challenge/skip
 function ajaxNextChallengeRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/skip", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/skip", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge ~ id: ChallengeID
+// ~ GET /API/challenge ~ id: ChallengeID
 function ajaxSendChallengeIDRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/" + id, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /challenge ~ jsonData: JSON.challenge
+// ~ POST /API/challenge ~ jsonData: JSON.challenge
 function ajaxSendChallengeCreateRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/challenge", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/challenge", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge/story
+// ~ GET /API/challenge/story
 function ajaxSendChallengeStoryRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/story", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/story", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET  /profile/avatar/:id
+// ~ GET  /API/profile/avatar/:id
 function ajaxSendProfileAvatarIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/profile/avatar/"+ id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/profile/avatar/"+ id, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge/trivia
+// ~ GET /API/challenge/trivia
 function ajaxSendChallengeTriviaRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/trivia", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/trivia", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /challenge/homework
+// ~ GET /API/challenge/homework
 function ajaxSendChallengeHomeworkRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/challenge/homework", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/challenge/homework", onload);
 
     xmlHttpRequest.send();
 
@@ -315,72 +315,72 @@ function ajaxSendChallengeHomeworkRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ SQLController ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /SQL/Story/:id ~ id: StoryTaskID
+// ~ GET /API/SQL/Story/:id ~ id: StoryTaskID
 function ajaxSendTaskStoryIDRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Story/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/SQL/Story/" + id + "/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /SQL/Story/:id ~ id: StoryTaskID, jsonData: JSON.task.solve
+// ~ POST /API/SQL/Story/:id ~ id: StoryTaskID, jsonData: JSON.task.solve
 function ajaxSendTaskStorySolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Story/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/SQL/Story/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /SQL/Trivia/:id: StoryTaskID | difficulty: DifficultyLevel
+// ~ GET /API/SQL/Trivia/:id: StoryTaskID | difficulty: DifficultyLevel
 function ajaxSendTaskTriviaRequest(difficulty, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Trivia/" + difficulty + "/", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/SQL/Trivia/" + difficulty + "/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /SQL/Trivia/:id/:stay StoryTaskID | difficulty: DifficultyLevel
+// ~ GET /API/SQL/Trivia/:id/:stay StoryTaskID | difficulty: DifficultyLevel
 function ajaxSendTaskTriviaStayRequest(difficulty, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Trivia/" + difficulty + "/stay", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/SQL/Trivia/" + difficulty + "/stay", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /SQL/Trivia/:id ~ id: TriviaTaskID, jsonData: JSON.task.solve
+// ~ POST /API/SQL/Trivia/:id ~ id: TriviaTaskID, jsonData: JSON.task.solve
 function ajaxSendTaskTriviaSolveRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Trivia/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/SQL/Trivia/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ GET /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+// ~ GET /API/SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
 function ajaxSendTaskHomeworkRequest(HomeworkId, TaskId, onload) {
-    var xmlHttpRequest = createRequest("GET", "/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
+    var xmlHttpRequest = createRequest("GET", "/API/SQL/Homework/" + HomeworkId + "/" + TaskId + "/" , onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+// ~ POST /API/SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
 function ajaxSendTaskHomeworkSolveRequest( TaskId, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + TaskId + "/submit", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/SQL/Homework/" + TaskId + "/submit", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
+// ~ POST /API/SQL/Homework/:HomeworId/:TaskId/ ~ id: HomeworkID, jsonData: JSON.task.solve
 function ajaxSendTaskHomeworkSyntaxSolveRequest( TaskId, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/SQL/Homework/" + TaskId + "/" , onload);
+    var xmlHttpRequest = createRequest("POST", "/API/SQL/Homework/" + TaskId + "/" , onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -389,63 +389,63 @@ function ajaxSendTaskHomeworkSyntaxSolveRequest( TaskId, jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TaskController ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /TaskSet/:id/Task
+// ~ POST /API/TaskSet/:id/Task
 function ajaxSendTaskOverTaskSetRequest(id, onload) {
-    var xmlHttpRequest = createRequest("Post", "/TaskSet/" + id + "/Task", onload);
+    var xmlHttpRequest = createRequest("Post", "/API/TaskSet/" + id + "/Task", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /Task
+// ~ GET /API/Task
 function ajaxSendTaskRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/Task/", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/Task/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /Task/:id/ ~ id: TaskID
+// ~ GET /API/Task/:id/ ~ id: TaskID
 function ajaxSendTaskIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/Task/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/Task/" + id + "/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ PATCH /Task/:id ~ id: TaskID, jsonData: JSON.task
+// ~ PATCH /API/Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdPatchRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/Task/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("PATCH", "/API/Task/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ DELETE /Task/:id ~ id: TaskID, jsonData: JSON.task
+// ~ DELETE /API/Task/:id ~ id: TaskID, jsonData: JSON.task
 function ajaxSendTaskIdDeleteRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/Task/" + id + "/", onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/Task/" + id + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /Task/:id/rate ~ id: TaskID, jsonData: JSON.rating
+// ~ POST /API/Task/:id/rate ~ id: TaskID, jsonData: JSON.rating
 function ajaxSendTaskIdRatingRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/Task/" + id + "/rate", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/Task/" + id + "/rate", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /task/:id/comment ~ id: TaskID, jsonData: JSON.comment
+// ~ POST /API/task/:id/comment ~ id: TaskID, jsonData: JSON.comment
 function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/task/" + id + "/comment", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/task/" + id + "/comment", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -454,63 +454,63 @@ function ajaxSendTaskIdCommentSetRequest(id, jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ TaskSetController ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /TaskSet
+// ~ POST /API/TaskSet
 function ajaxSendTaskSetResolveRequest(id, onload) {
-    var xmlHttpRequest = createRequest("Post", "/TaskSet", onload);
+    var xmlHttpRequest = createRequest("Post", "/API/TaskSet", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /TaskSet
+// ~ GET /API/TaskSet
 function ajaxSendTaskSetRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/TaskSet", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/TaskSet", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /TaskSet/:id ~ id: TaskSetID
+// ~ GET /API/TaskSet/:id ~ id: TaskSetID
 function ajaxSendTaskSetIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/TaskSet/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/TaskSet/" + id, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ PATCH /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
+// ~ PATCH /API/TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
 function ajaxSendTaskSetIdPatchRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/TaskSet/" + id, onload);
+    var xmlHttpRequest = createRequest("PATCH", "/API/TaskSet/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ DELETE /TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
+// ~ DELETE /API/TaskSet/:id ~ id: TaskSetID, jsonData: JSON.task
 function ajaxSendTaskSetIdDeleteRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/TaskSet/" + id, onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/TaskSet/" + id, onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /TaskSet/:id/rate ~ id: TaskSetID, jsonData: JSON.rating
+// ~ POST /API/TaskSet/:id/rate ~ id: TaskSetID, jsonData: JSON.rating
 function ajaxSendTaskSetIdRatingRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/TaskSet/" + id + "/rate", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/TaskSet/" + id + "/rate", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
-// ~ POST /task/:id/comment ~ id: TaskSetID, jsonData: JSON.comment
+// ~ POST /API/task/:id/comment ~ id: TaskSetID, jsonData: JSON.comment
 function ajaxSendTaskSetIdCommentSetRequest(id, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/task/" + id + "/comment", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/task/" + id + "/comment", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -520,36 +520,36 @@ function ajaxSendTaskSetIdCommentSetRequest(id, jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Shop ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /shop
+// ~ GET /API/shop
 function ajaxSendShopRequest(onload) {
-  var xmlHttpRequest = createRequest("GET", "/shop/avatar", onload);
+  var xmlHttpRequest = createRequest("GET", "/API/shop/avatar", onload);
 
   xmlHttpRequest.send();
 
   return xmlHttpRequest;
 }
 
-// ~ GET /shop/belt
+// ~ GET /API/shop/belt
 function ajaxSendShopBeltRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/shop/belt", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/shop/belt", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /shop/:id ~ id: ItemID, [jsonData: JSON.shopitem]
+// ~ GET /API/shop/:id ~ id: ItemID, [jsonData: JSON.shopitem]
 function ajaxSendShopIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/shop/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/shop/" + id, onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /shop/belt/:id ~ id: ItemID, [jsonData: JSON.shopitem]
+// ~ GET /API/shop/belt/:id ~ id: ItemID, [jsonData: JSON.shopitem]
 function ajaxSendShopBeltIdRequest(id, onload) {
-    var xmlHttpRequest = createRequest("GET", "/shop/belt/" + id, onload);
+    var xmlHttpRequest = createRequest("GET", "/API/shop/belt/" + id, onload);
 
     xmlHttpRequest.send();
 
@@ -558,54 +558,54 @@ function ajaxSendShopBeltIdRequest(id, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Highscore ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /highscore/points
+// ~ GET /API/highscore/points
 function ajaxSendHighscorePointsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/points", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/points", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /highscore/time
+// ~ GET /API/highscore/time
 function ajaxSendHighscoreTimeRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/time", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/time", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /highscore/runs
+// ~ GET /API/highscore/runs
 function ajaxSendHighscoreRunsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/runs", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/runs", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /highscore/sql
+// ~ GET /API/highscore/sql
 function ajaxSendHighscoreSQLRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/sql", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/sql", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /highscore/rate
+// ~ GET /API/highscore/rate
 function ajaxSendHighscoreRateRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/rate", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/rate", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ GET /highscore/coins
+// ~ GET /API/highscore/coins
 function ajaxSendHighscoreCoinsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/highscore/coins", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/highscore/coins", onload);
 
     xmlHttpRequest.send();
 
@@ -614,9 +614,9 @@ function ajaxSendHighscoreCoinsRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Homework ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET //homework/tasks
+// ~ GET /API/homework/tasks
 function ajaxSendCurrentHomeworkRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/Homework/student/", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/Homework/student/", onload);
 
     xmlHttpRequest.send();
 
