@@ -13,19 +13,20 @@
 
     directNavigationBar.$inject = ['routeNavigation'];
     function directNavigationBar(routeNavigation) {
+        navigationBarController.$inject = ['$scope'];
+        function navigationBarController($scope) {
+            $scope.routes = routeNavigation.routes;
+            $scope.activeRoute = routeNavigation.activeRoute;
+        }
 
         return {
             restrict: "E",
             replace: true,
-            templateUrl: "adminapp/templates/navigationBar.template.html",
+            templateUrl: "assets/templates/navigationBar.template.html",
             controller: navigationBarController
         };
     }
-    navigationBarController.$inject = ['$scope'];
-    function navigationBarController($scope) {
-        $scope.routes = routeNavigation.routes;
-        $scope.activeRoute = routeNavigation.activeRoute;
-    }
+
 
 
 

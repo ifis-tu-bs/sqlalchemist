@@ -158,7 +158,7 @@ angular
         $scope.viewTaskSetComments = function(taskSet) {
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/comment.template.html',
+                    templateUrl: 'assets/templates/comment.template.html',
                     controller: 'CommentController',
                     resolve: {
                         commentTaskObject: function() {
@@ -205,7 +205,7 @@ angular
         $scope.exportTaskSets = function() {
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/exportTaskSet.template.html',
+                    templateUrl: 'assets/templates/exportTaskSet.template.html',
                     controller: 'exportTaskSetController'
             });
 
@@ -219,7 +219,7 @@ angular
         $scope.importTaskSets = function() {
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/importTaskSet.template.html',
+                    templateUrl: 'assets/templates/importTaskSet.template.html',
                     controller: 'importTaskSetController'
             });
         };
@@ -236,7 +236,7 @@ angular
 
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/sure.template.html',
+                    templateUrl: 'assets/templates/sure.template.html',
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {
@@ -401,7 +401,7 @@ angular
         $scope.viewTaskComments = function(task) {
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/comment.template.html',
+                    templateUrl: 'assets/templates/comment.template.html',
                     controller: 'CommentController',
                     resolve: {
                         commentTaskObject: function() {
@@ -452,7 +452,7 @@ angular
 
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/sure.template.html',
+                    templateUrl: 'assets/templates/sure.template.html',
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {
@@ -515,7 +515,7 @@ angular
             var taskSetIndex = findInArray(vm.taskSets, taskSet);
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/sure.template.html',
+                    templateUrl: 'assets/templates/sure.template.html',
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {

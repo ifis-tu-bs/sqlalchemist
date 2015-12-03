@@ -134,7 +134,7 @@ angular
         $scope.newHomeWork = function () {
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/makeHomeWork.template.html',
+                    templateUrl: 'assets/templates/makeHomeWork.template.html',
                     controller: 'makeHWController',
                     size: "lg"
             });
@@ -274,7 +274,7 @@ angular
             var homeworkIndex = findInArray(vm.homeworks, homework);
             var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
-                    templateUrl: 'adminapp/templates/sure.template.html',
+                    templateUrl: 'assets/templates/sure.template.html',
                     controller: 'sureTemplateController',
                     resolve: {
                         sureTemplateMessage: function () {

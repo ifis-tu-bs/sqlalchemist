@@ -18,12 +18,23 @@ module.exports = function(grunt) {
     concat: {
       js: {
         src: [
-          '<%= globalConfig.src %>/assets/lib/*.js',
+          '<%= globalConfig.src %>/assets/lib/angular.js',
+          '<%= globalConfig.src %>/assets/lib/angular-animate.min.js',
+          '<%= globalConfig.src %>/assets/lib/angular-cookies.min.js',
+          '<%= globalConfig.src %>/assets/lib/angular-route.min.js',
+          '<%= globalConfig.src %>/assets/lib/angular-sanitize.min.js',
+          '<%= globalConfig.src %>/assets/lib/ace.min.js',
+          '<%= globalConfig.src %>/assets/lib/ui-ace.min.js',
+          '<%= globalConfig.src %>/assets/lib/mode-sql.js',
+          '<%= globalConfig.src %>/assets/lib/theme-twilight.js',
+          '<%= globalConfig.src %>/assets/lib/jquery-2.1.4.min.js',
+          '<%= globalConfig.src %>/assets/lib/bootstrap.min.js',
+          '<%= globalConfig.src %>/assets/lib/ui-bootstrap-tpls-0.14.2.min.js',
           '<%= globalConfig.src %>/assets/js/app.js',
           '<%= globalConfig.src %>/assets/js/services/*.js',
-          '<%= globalConfig.src %>/assets/js/controllers/*.js'
+          '<%= globalConfig.src %>/assets/js/controllers/*.js',
         ],
-        dest: '<%= globalConfig.build %>/assets/js/app.js'
+        dest: '<%= globalConfig.dest %>/assets/js/app.min.js'
       },
       css: {
         src: [
@@ -45,8 +56,8 @@ module.exports = function(grunt) {
 
     uglify: {
       options: {
-        report: 'min',
-        preserveComments: 'some',
+        report: 'none',
+        preserveComments: 'none',
         banner: '/*! <%= grunt.template.today("yyyy-mm-dd") %> */'
       },
       dist: {
@@ -79,6 +90,12 @@ module.exports = function(grunt) {
     copy: {
       dist: {
         files: [
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/fonts/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          },
           {
             cwd: '<%= globalConfig.src %>',
             src: 'assets/data/**/*',
@@ -115,5 +132,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
+  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
 };
