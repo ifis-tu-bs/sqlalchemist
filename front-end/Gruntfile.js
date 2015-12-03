@@ -108,7 +108,7 @@ module.exports = function(grunt) {
       dist: {
         files: [
           {
-            src: 'manifest.json',
+            src: '<%= globalConfig.src %>/manifest.json',
             dest: '<%= globalConfig.dest %>/manifest.json'
           },
           {
