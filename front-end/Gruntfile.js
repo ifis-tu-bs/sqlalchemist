@@ -45,8 +45,9 @@ module.exports = function(grunt) {
     concat: {
       js: {
         src: [
-          '<%= globalConfig.src %>/assets/lib/melonJS-2.0.2.js',
           '<%= globalConfig.src %>/assets/lib/ace.js',
+          '<%= globalConfig.src %>/assets/lib/mode-sql.js',
+          '<%= globalConfig.src %>/assets/lib/melonJS-2.0.2.js',
           '<%= globalConfig.src %>/assets/js/game.js',
           '<%= globalConfig.build %>/assets/js/resources.js',
           '<%= globalConfig.src %>/assets/js/DataTypes/*.js',

@@ -318,7 +318,7 @@ angular
             selectTable(index);
             $scope.tableSelectionStatus.tableNotSelected = false;
             $scope.tableSelectionStatus.tableSelected = true;
-        }
+        };
 
         function selectTable(tableIndex) {
             $scope.selectedTable = vm.tables[tableIndex];
@@ -329,7 +329,7 @@ angular
         /* Changes are only changed on the Server via TaskSet Actions */
         $scope.deleteTable = function (table) {
             vm.tables.splice(findInArray(vm.tables, table), 1);
-        }
+        };
 
         //////////////////////////////777
         //  Intension: TableDefinition: Column - Control
@@ -338,20 +338,20 @@ angular
         /* Data */
         var DefaultColumn = function () {
             this.columnName = "";
-            this.dataType = "BIGINT"
+            this.dataType = "BIGINT";
             this.notNull = true;
             this.primaryKey = false;
-        }
+        };
 
         /* Methods */
         $scope.pushNewColumn = function () {
             vm.columns.push(new DefaultColumn());
-        }
+        };
 
         /* Changes are only changed on the Server via TaskSet Actions */
         $scope.deleteColumn = function (column) {
             vm.columns.splice(findInArray(vm.columns, column), 1);
-        }
+        };
 
         //////////////////////////////777
         //  Tasks: Control
@@ -363,17 +363,17 @@ angular
             this.sourceColumn = "";
             this.destinationTable = "";
             this.destinationColumn = "";
-        }
+        };
 
         /* Methods */
         $scope.pushNewForeignKey = function () {
             vm.foreignKeyRelations.push(new DefaultForeignKey());
-        }
+        };
 
         /* Changes are only changed on the Server via TaskSet Actions */
         $scope.deleteForeignKey = function (foreignKey) {
             vm.foreignKeyRelations.splice(findInArray(vm.foreignKeyRelations, foreignKey), 1);
-        }
+        };
 
         //////////////////////////////777
         //  Tasks: Control
@@ -390,13 +390,13 @@ angular
             this.isCollapsed = true;
             this.availableSyntaxChecks = 0;
             this.availableSemanticChecks = 0;
-        }
+        };
 
         /* Methods */
 
         $scope.pushNewTask = function () {
             vm.tasks.push(new DefaultTask());
-        }
+        };
 
         $scope.viewTaskComments = function(task) {
             var modalInstance = $uibModal.open({
@@ -413,11 +413,11 @@ angular
             modalInstance.result.then(
                 FlashService.Clear
             );
-        }
+        };
 
         /* Server Side Methods */
         $scope.saveTask = function (task) {
-            if (task.id != undefined) {
+            if (task.id !== undefined) {
                 TaskService.editTask(task.id, task).then(
                         function (result) {
                             FlashService.Success("Updated Task");
@@ -439,7 +439,7 @@ angular
                         }
                 );
             }
-        }
+        };
 
 
         $scope.deleteTask = function (task) {
@@ -477,7 +477,7 @@ angular
                         FlashService.Error(error);
                 }
             );
-        }
+        };
 
         $scope.rateTask = function (task, decision) {
                     var ratingJson = {};
@@ -504,7 +504,7 @@ angular
 
                         }
                     );
-                }
+                };
 
         //////////////////////////////777
         //  HomeWork Deletion
