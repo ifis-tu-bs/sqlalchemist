@@ -42,8 +42,8 @@ game.TriviaScreen = me.ScreenObject.extend({
         /**
          * Create buttons that return the specific difficulty of a task to the callback function.
          */
-        for (var i = 0; i < 2; i++) {
-            var taskLevel = new game.ClickableElement('taskLevel' + i + 1, '', this.CoinClick(i + 1), 12.5, 21.484375, 30.30303 + i * 24.242424, 26.041667, 1);
+        for (var i = 0; i < 3; i++) {
+            var taskLevel = new game.ClickableElement('taskLevel' + i + 1, '', this.CoinClick(i + 1), 12.5, 21.484375, 18.484848 + i * 23.560606, 26.041667, 1);
             taskLevel.setImage("assets/data/img/buttons/difficulty_coins/coin_" + (i + 1) + ".png", "coin");
             me.game.world.addChild(taskLevel);
         }

@@ -26,13 +26,13 @@ game.CollectorScreen = me.ScreenObject.extend({
             $("[id*='checkSymbol']").fadeOut(100);
             $("[id*='collectionBox']").fadeOut(100);
             $("#backgroundCollectorId").fadeOut(100);
-            $("#backToLabButton").fadeOut(100);
+            $("#backFromCollector").fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backToFromCollector', '', this.backToLab, 15.22, 13.15, 2.8, 2.5, 1);
+        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 2.8, 2.5, 1);
         backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
         me.game.world.addChild(backToLabButton);
 
