@@ -45,8 +45,6 @@ module.exports = function(grunt) {
     concat: {
       js: {
         src: [
-          '<%= globalConfig.src %>/assets/lib/ace.js',
-          '<%= globalConfig.src %>/assets/lib/mode-sql.js',
           '<%= globalConfig.src %>/assets/lib/melonJS-2.0.2.js',
           '<%= globalConfig.src %>/assets/js/game.js',
           '<%= globalConfig.build %>/assets/js/resources.js',
@@ -54,7 +52,10 @@ module.exports = function(grunt) {
           '<%= globalConfig.src %>/assets/js/DOMManipulation/*.js',
           '<%= globalConfig.src %>/assets/js/ajax/*.js',
           '<%= globalConfig.src %>/assets/js/screens/*.js',
-          '<%= globalConfig.src %>/assets/js/entities/*.js'
+          '<%= globalConfig.src %>/assets/js/entities/*.js',
+          '<%= globalConfig.src %>/assets/lib/ace.js',
+          '<%= globalConfig.src %>/assets/lib/mode-sql.js',
+          '<%= globalConfig.src %>/assets/lib/theme-twilight.js'
         ],
         dest: '<%= globalConfig.build %>/assets/js/app.js'
       },

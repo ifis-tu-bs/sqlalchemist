@@ -1,6 +1,5 @@
 'use strict'
 
-
 module.exports = function (grunt) {
   var globalConfig = {
     adminTool:'admin-tool',
@@ -10,21 +9,34 @@ module.exports = function (grunt) {
   grunt.initConfig({
     globalConfig: globalConfig,
 
-
+    copy: {
+      frontEnd: {
+        cwd: 'front-end/front-end',
+        src: '**/*',
+        dest: 'data',
+        expand:true
+      },
+      adminTool: {
+        cwd: 'admin-tool/admin-tool',
+        src: '**/*',
+        dest: 'data/admin',
+        expand: true
+      }
+    },
 
     connect: {
       server: {
         options: {
           port: 8000,
-          base: 'front-end/front-end',
+          base: 'data',
           hostname: 'localhost',
 
           middleware: function (connect, options, defaultMiddleware) {
-             var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
-             return [
-                // Include the proxy first
-                proxy
-             ].concat(defaultMiddleware);
+            var proxy = require('grunt-connect-proxy/lib/utils').proxyRequest;
+            return [
+              // Include the proxy first
+              proxy
+            ].concat(defaultMiddleware);
           }
         },
         proxies: [{
@@ -36,8 +48,17 @@ module.exports = function (grunt) {
       }
     },
     watch: {
-      files: ['front-end/src/**/*'],
-      tasks: ['grunt-frontEnd']
+      frontEnd: {
+        files: ['front-end/src/**/*'],
+        tasks: ['grunt-frontEnd', 'copy:frontEnd']
+      },
+      adminTool: {
+        files: ['admin-tool/src/**/*'],
+        tasks: ['grunt-adminTool', 'copy:adminTool']
+      }
+    },
+    clean: {
+      app: ['data']
     }
   });
 
@@ -52,15 +73,33 @@ module.exports = function (grunt) {
           }
         },
         function (err, result, code) {
-          console.log(result.stdout);
           done();
         }
       );
   });
 
+  grunt.registerTask('grunt-adminTool', function () {
+      var done = this.async();
+      grunt.util.spawn(
+        {
+          grunt: true,
+          args: ['default'],
+          opts: {
+              cwd: 'front-end'
+          }
+        },
+        function (err, result, code) {
+          done();
+        }
+      );
+  });
+
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-connect-proxy');
+  grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['grunt-frontEnd', 'configureProxies:server', 'connect:server', 'watch']);
-}
+  grunt.registerTask('default', ['grunt-frontEnd', 'grunt-adminTool', 'copy', 'configureProxies:server', 'connect:server', 'watch']);
+};

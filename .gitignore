@@ -7,6 +7,9 @@
 .DS_Store
 *.log
 node_modules
+*.ini
+
+/data
 
 ########
 # Back-End
@@ -25,35 +28,23 @@ back-end/.classpath
 back-end/.project
 back-end/RUNNING_PID
 back-end/.settings
-back-end/public/game
-back-end/public/download/*.*
 back-end/.sbtserver
-back-end/public/admintool
+back-end/public
+back-end/conf/evolutions/default
 *.h2.db
 *.trace.db
 
 
 ########
 # Front-End
-front-end/.idea
+/front-end/front-end
+front-end/front-end.iml
 front-end/build
-front-end/node_modules
 front-end/front-end.iml
 
 ########
 # Admin-Tool
 admin-tool/.idea
 admin-tool/build
-admin-tool/node_modules
 admin-tool/*.iml
-<<<<<<< HEAD
-front-end/.idea/workspace.xml
-back-end/conf/evolutions/default/refs/remotes/origin/master
-=======
-back-end/conf/evolutions/default
->>>>>>> refs/remotes/origin/master
-front-end/front-end
-front-end/front-end.iml
-*.ini
-.idea
 /admin-tool/admin-tool
