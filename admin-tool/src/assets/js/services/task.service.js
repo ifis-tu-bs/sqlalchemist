@@ -23,7 +23,7 @@
         service.editTask = editTask;
         service.rateTask = rateTask;
         service.deleteTask = deleteTask;
-        service.postTaskComment = postTaskComment
+        service.postTaskComment = postTaskComment;
 
         /* HomeWorkControlls*/
         service.getAllHomeworks = getAllHomeworks;
@@ -74,7 +74,12 @@
         }
 
         function exportTaskSets(taskSetIds) {
-            return $http.post('/TaskSet/download', taskSetIds).then(function (result) {location.href = '/download/' + result.data}, handleError);
+            return $http.post('/TaskSet/download', taskSetIds).then(
+              function (result) {
+                location.href = '/download/' + result.data;
+              },
+              handleError
+            );
         }
 
         /* Task Controlls */
@@ -150,4 +155,3 @@
 
 
 })();
-

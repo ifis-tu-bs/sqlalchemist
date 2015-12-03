@@ -98,7 +98,7 @@ angular
             $scope.keepTabActive();
             $scope.keepTaskSets();
         });
-        
+
         $scope.getCurrentPath = function () {
             var path = $rootScope.Tasks;
 
@@ -557,11 +557,10 @@ angular
                 }
             }
             return columns;
-        }
+        };
 
 
 
         initController();
     }
 })();
-
