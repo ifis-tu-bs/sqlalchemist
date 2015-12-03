@@ -45,7 +45,7 @@ angular
                     FlashService.Error(error);
                 }
             );
-        }
+        };
 
         //////////////////////////////777
         //  Array functions
@@ -61,4 +61,3 @@ angular
         }
     }
 })();
-

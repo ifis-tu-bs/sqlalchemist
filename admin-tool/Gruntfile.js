@@ -8,9 +8,11 @@ module.exports = function(grunt) {
     dest:'front-end'
   };
   grunt.initConfig({
-    globalConfig: globalConfig;
+    globalConfig: globalConfig,
 
-
+    jshint: {
+      dist: ['<%= globalConfig.src %>/assets/js/**/*.js']
+    },
 
     concat: {
             dist: {
@@ -94,6 +96,8 @@ module.exports = function(grunt) {
             },
         },
     });
+
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     grunt.loadNpmTasks('grunt-processhtml');
     grunt.loadNpmTasks('grunt-contrib-concat');
