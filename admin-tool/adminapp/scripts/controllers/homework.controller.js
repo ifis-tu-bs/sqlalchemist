@@ -57,7 +57,6 @@ angular
             TaskService.getAllHomeworks().then(
                 function (result) {
                     vm.homeworks = result;
-                    console.log(result);
                     getCurrentPath();
                 }, function (error) {
                     FlashService.Error(result.message);
@@ -145,14 +144,15 @@ angular
                         return TaskService.createHomeWork(homework);
                     },
                     function (error) {
-                        return $q.reject("");
+                        return $q.reject({noerror: true});
                     }
             ).then(
                     function (result) {
                         initController();
                         FlashService.Success("Homework created.");
                     }, function (error) {
-                        FlashService.Error(result.message);
+                        if (!error.noerror)
+                            FlashService.Error(error);
                     }
             );
         }
