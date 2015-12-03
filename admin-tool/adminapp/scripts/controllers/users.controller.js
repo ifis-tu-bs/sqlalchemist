@@ -11,8 +11,8 @@ angular
     .module('app')
     .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', '$modal', 'UserService', 'FlashService', '$filter'];
-    function UsersController($scope, $modal, UserService, FlashService, $filter) {
+    UsersController.$inject = ['$scope', 'UserService', 'FlashService', '$filter'];
+    function UsersController($scope, UserService, FlashService, $filter) {
         var vm = this;
         vm.users = [];
 

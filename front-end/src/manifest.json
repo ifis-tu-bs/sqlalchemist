@@ -1,0 +1,33 @@
+{
+  "short_name": "SQLAlchemist",
+  "name": "The SQL Alchemist",
+  "orientation": "landscape",
+  "developer": {
+    "name": "ifis",
+    "url": "http://www.ifis.cs.tu-bs.de/"
+  },
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "assets/icons/touch-icon-iphone-60x60.png",
+      "sizes": "60x60"
+    },
+    {
+      "src": "assets/icons/touch-icon-ipad-76x76.png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "assets/icons/touch-icon-iphone-retina-120x120",
+      "sizes": "120x120"
+    },
+    {
+      "src": "assets/icons/touch-icon-marketplace-128x128",
+      "sizes": "128x128"
+    },
+    {
+      "src": "assets/icons/touch-icon-ipad-retina-152x152",
+      "sizes": "152x152"
+    }
+  ]
+}
