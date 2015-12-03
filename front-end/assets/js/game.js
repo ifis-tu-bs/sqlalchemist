@@ -26,6 +26,7 @@ var game = {
      * an object where to store game global data
      */
     data : {
+        //Userstats
         playerStat : 0,
         gotSession: false,
         score : 0,
@@ -39,10 +40,13 @@ var game = {
         musicVolume: 0.5,
         playing: false,
         sprite: "",
+        to: null,
+        //shop
         shop : 0,
         beltShop: 0,
         spriteId: 0,
         shopId: 0,
+        //scrolls
         scollLimit: 0,
         collectedScrolls: 0,
         scrolls: [],
