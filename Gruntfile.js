@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = function (grunt) {
   var globalConfig = {
     adminTool:'admin-tool',
