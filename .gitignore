@@ -52,3 +52,6 @@ back-end/conf/evolutions/default/refs/remotes/origin/master
 =======
 back-end/conf/evolutions/default
 >>>>>>> refs/remotes/origin/master
+front-end/front-end
+front-end/front-end.iml
+*.ini
