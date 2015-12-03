@@ -113,7 +113,8 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                 previousTaskSetButton.display();
                 nextTaskSetButton.hide();
             }
-            me.state.change(STATE_HOMEWORKTASKSET);
+            ajaxSendCurrentHomeworkRequest(currentHomeworkTaskSetsReply);
+            //me.state.change(STATE_HOMEWORKTASKSET);
         };
 
         var previousTaskSetButton = new game.ClickableElement('previousTaskSetButton', '', this.showPreviousTaskSet, 3.5, 7, 17, 9.7, 1);
