@@ -132,5 +132,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
+  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
 };
