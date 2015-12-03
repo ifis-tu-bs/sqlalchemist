@@ -55,3 +55,4 @@ back-end/conf/evolutions/default
 front-end/front-end
 front-end/front-end.iml
 *.ini
+.idea
