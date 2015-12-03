@@ -191,7 +191,7 @@ game.ReadyScreen = me.ScreenObject.extend({
         this.onCat = function() {
             if(game.data.sound && !game.data.playing){
                 game.data.playing = true;
-                me.audio.play("cat", false, stopDouble(), game.data.soundVolume);
+                me.audio.play("cat", false, stopDouble, game.data.soundVolume);
             }
         };
 
@@ -201,7 +201,7 @@ game.ReadyScreen = me.ScreenObject.extend({
                 var number = Math.floor(Math.random() * 4 + 1);
                 var sound = "lofi";
                 sound = sound.concat(number);
-                me.audio.play(sound, false, stopDouble(), game.data.soundVolume);
+                me.audio.play(sound, false, stopDouble, game.data.soundVolume);
             }
         };
 
@@ -233,6 +233,13 @@ game.ReadyScreen = me.ScreenObject.extend({
         me.game.world.addChild(bookButton);
         me.game.world.addChild(catButton);
         me.game.world.addChild(terryButton);
+
+        if(game.data.to !== null){
+            console.log(game.data.to );
+            var state = game.data.to;
+            game.data.to = null;
+            me.state.change(state);
+        }
 
     }
 });
