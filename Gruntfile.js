@@ -15,17 +15,20 @@ module.exports = function (grunt) {
         port: 9000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
-        base: 'front-end/front-end',
-        keepalive:true
+        base: 'front-end/front-end'
       },
       proxies: [
         {
-          context: '/api', // the context of the data service
+          context: '/API', // the context of the data service
           host: 'localhost', // wherever the data service is running
           port: 9090, // the port that the data service is running on
           changeOrigin: true
         }
       ],
+    },
+    watch: {
+      files: ['front-end/**/*'],
+      tasks: ['grunt-frontEnd']
     }
   });
 
@@ -47,7 +50,8 @@ module.exports = function (grunt) {
   });
 
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-connect-proxy');
 
-  grunt.registerTask('default', ['grunt-frontEnd', 'connect']);
+  grunt.registerTask('default', ['grunt-frontEnd', 'connect', 'watch']);
 }
