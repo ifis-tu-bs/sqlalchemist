@@ -1,11 +1,18 @@
 'use strict';
 
 module.exports = function(grunt) {
+  var globalConfig = {
+    name: 'sql-alchemist',
+    src: 'src',
+    build:'build',
+    dest:'front-end'
+  };
+  grunt.initConfig({
+    globalConfig: globalConfig;
 
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
 
-        concat: {
+
+    concat: {
             dist: {
                 src: ["adminapp/scripts/app.js", "adminapp/scripts/services/*.js", "adminapp/scripts/controllers/*.js"],
                 dest: "build/adminapp/scripts/app.js"
