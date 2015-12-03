@@ -61,7 +61,7 @@ public class Profile extends Model {
     @ManyToOne
     private StoryChallenge currentStory;
 
-    @OneToOne
+    @ManyToOne
     private Scroll currentScroll;
 
     private int depth;

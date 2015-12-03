@@ -23,7 +23,6 @@ routesGenerator := InjectedRoutesGenerator
 javacOptions += "-Xlint:deprecation"
 
 
-
 /// packageSummary
 import com.typesafe.sbt.packager.archetypes.ServerLoader.{SystemV, Upstart}
 

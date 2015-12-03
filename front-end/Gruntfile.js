@@ -1,182 +1,163 @@
 module.exports = function(grunt) {
+  var globalConfig = {
+    name: 'sql-alchemist',
+    src: 'src',
+    build:'build',
+    dest:'front-end'
+  };
+
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
-    concat: {
-      dist: {
-        src: ['assets/lib/melonJS-2.0.2.js', 'assets/lib/plugins/*.js', 'assets/js/game.js', 'assets/js/DOMManipulation/*.js','build/assets/js/resources.js','assets/js/DataTypes/*.js', 'assets/js/ajax/ajax.js', 'assets/js/screens/*.js', 'assets/js/entities/*.js'],
-        dest: 'build/assets/js/app.js'
-      }
-    },
-    copy: {
-      dist: {
-        files: [{
-          src: 'assets/index.css',
-          dest: 'build/assets/index.css'
-        },{
-          src: 'assets/main.js',
-          dest: 'build/assets/main.js'
-        },{
-          src: 'manifest.json',
-          dest: 'build/manifest.json'
-        },{
-          src: 'package.json',
-          dest: 'build/package.json'
-        },{
-          src: 'assets/data/**/*',
-          dest: 'build/',
-          expand: true
-        },{
-          src: 'assets/icons/**/*',
-          dest: 'build/',
-          expand: true
-        },{
-          src: 'assets/css/*.css',
-          dest: 'build/',
-          expand: true
-        }, {
-          src: 'assets/lib/sql.js',
-          dest: 'build/assets/lib/sql.js'
-        },
-        {
-          src: 'assets/lib/codemirror.js',
-          dest: 'build/assets/lib/codemirror.js'
-        },
-        {
-          src: 'assets/lib/matchbrackets.js',
-          dest: 'build/assets/lib/matchbrackets.js'
-        },
-        {
-          src: 'assets/lib/mode-sql.js',
-          dest: 'build/assets/lib/mode-sql.js'
-        },
-        {
-          src: 'assets/lib/ace.js',
-          dest: 'build/assets/lib/ace.js'
-        },
-        {
-          src: 'assets/lib/theme-twilight.js',
-          dest: 'build/assets/lib/theme-twilight.js'
-        },
-        {
-          src: 'assets/lib/theme-ambiance.js',
-          dest: 'build/assets/lib/theme-ambiance.js'
-        }
-        ]
-      },
-      move: {
-        files: [{
-          cwd: 'build/',
-          src: '**/*',
-          dest: '../back-end/public/game/',
-          expand: true
-        }]
-      }
-    },
-    clean: {
-      app: ['build/assets/js/app.js'],
-      dist: ['build/assets/','bin/'], ///////////bin?
-    },
-    processhtml: {
-      dist: {
-        options: {
-          process: true,
-          data: {
-            title: '<%= pkg.name %>',
-          }
-        },
-        files: {
-          'build/index.html': ['index.html']
-        }
-      }
-    },
-    uglify: {
-      options: {
-        report: 'min',
-        preserveComments: 'some'
-      },
-      dist: {
-        files: {
-          'build/assets/js/app.min.js': [
-            'build/assets/js/app.js'
-          ]
-        }
-      }
-    },
-    connect: {
-      server: {
-        options: {
-          port: 8000,
-          keepalive: true
-        }
-      }
-    },
-    'download-electron': {
-      version: '0.24.0',
-      outputDir: 'bin'
-    },
-    asar: {
-      dist: {
-        cwd: 'build',
-        src: ['**/*', '!assets/js/app.js'],
-        expand: true,
-        dest: 'bin/' + (
-          process.platform === 'darwin'
-            ? 'Electron.app/Contents/Resources/'
-            : 'resources/'
-        ) + 'app.asar'
-      },
-    },
+    globalConfig: globalConfig,
     resources: {
       dist: {
         options: {
-          dest: 'build/assets/js/resources.js',
+          dest: '<%= globalConfig.build %>/assets/js/resources.js',
           varname: 'game.resources',
         },
         files: [{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/img/**/*.png'],
           type: 'image'
         },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/bgm/**/*', 'assets/data/sfx/**/*'],
           type: 'audio'
         },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/img/**/*.json'],
           type: 'json'
         },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/map/**/*.tmx', 'assets/data/map/**/*.json'],
           type: 'tmx'
         },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/map/**/*.tsx'],
           type: 'tsx'
         }]
       }
     },
-    watch: {
-      resources: {
-        files: ['data/**/*'],
-        tasks: ['resources'],
-        options: {
-          spawn: false,
-        },
-      },
+
+    jshint: {
+      dist: ['<%= globalConfig.src %>/assets/js/**/*.js']
     },
+
+    concat: {
+      js: {
+        src: [
+          '<%= globalConfig.src %>/assets/lib/melonJS-2.0.2.js',
+          '<%= globalConfig.src %>/assets/js/game.js',
+          '<%= globalConfig.build %>/assets/js/resources.js',
+          '<%= globalConfig.src %>/assets/js/DataTypes/*.js',
+          '<%= globalConfig.src %>/assets/js/DOMManipulation/*.js',
+          '<%= globalConfig.src %>/assets/js/ajax/*.js',
+          '<%= globalConfig.src %>/assets/js/screens/*.js',
+          '<%= globalConfig.src %>/assets/js/entities/*.js',
+          '<%= globalConfig.src %>/assets/lib/ace.js',
+          '<%= globalConfig.src %>/assets/lib/mode-sql.js',
+          '<%= globalConfig.src %>/assets/lib/theme-twilight.js'
+        ],
+        dest: '<%= globalConfig.build %>/assets/js/app.js'
+      },
+      css: {
+        src: [
+            '<%= globalConfig.src %>/assets/reset.css',
+            '<%= globalConfig.src %>/assets/index.css',
+            '<%= globalConfig.src %>/assets/css/*.css'
+        ],
+        dest: '<%= globalConfig.build %>/assets/css/app.css'
+      }
+    },
+
+    processhtml: {
+      dist: {
+        files: {
+          '<%= globalConfig.build %>/index.html': ['<%= globalConfig.src %>/index.html']
+        }
+      }
+    },
+
+    uglify: {
+      options: {
+        report: 'min',
+        preserveComments: 'some',
+        banner: '/*! <%= grunt.template.today("yyyy-mm-dd") %> */'
+      },
+      dist: {
+        files: {
+          '<%= globalConfig.dest %>/assets/js/app.min.js': [
+            '<%= globalConfig.build %>/assets/js/app.js'
+          ]
+        }
+      }
+    },
+
+    cssmin: {
+      dist: {
+        files: {
+          '<%= globalConfig.dest %>/assets/css/app.min.css': ['<%= globalConfig.build %>/assets/css/app.css']
+        }
+      }
+    },
+
+    htmlmin: {
+      dist: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true
+        },
+        files: {
+          '<%= globalConfig.dest %>/index.html': '<%= globalConfig.build %>/index.html',
+        }
+      }
+    },
+
+    copy: {
+      dist: {
+        files: [
+          {
+            src: '<%= globalConfig.src %>/manifest.json',
+            dest: '<%= globalConfig.dest %>/manifest.json'
+          },
+          {
+            src: 'package.json',
+            dest: '<%= globalConfig.dest %>/package.json'
+          },
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/data/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          },
+          {
+            cwd: '<%= globalConfig.src %>',
+            src: 'assets/icons/**/*',
+            dest: '<%= globalConfig.dest %>/',
+            expand: true
+          }
+        ]
+      }
+    },
+
+
+    clean: {
+      app: ['<%= globalConfig.build %>'],
+      dist: ['<%= globalConfig.dest %>']
+    }
   });
 
+
+  // resource Tasks
+  grunt.loadTasks('tasks');
+  grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-processhtml');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-htmlmin');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-processhtml');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-download-electron');
-  grunt.loadNpmTasks('grunt-asar');
 
-  // Custom Tasks
-  grunt.loadTasks('tasks');
 
-  grunt.registerTask('default', ['resources', 'concat', 'uglify', 'copy:dist', 'processhtml', 'clean:app']);
-  grunt.registerTask('dist', ['default', 'download-electron', 'asar']);
-  grunt.registerTask('serve', ['resources', 'connect', 'watch']);
-  grunt.registerTask('move', ['default', 'copy']);
-
+  grunt.registerTask('default', ['resources', 'jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
 }
