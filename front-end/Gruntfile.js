@@ -297,7 +297,7 @@ module.exports = function(grunt) {
   );
 
   grunt.registerTask(
-    'dev',
+    'devdist',
     [
       'clean:tmp',
       'resources',
@@ -307,13 +307,21 @@ module.exports = function(grunt) {
       'concat:distCSS',
       'processhtml',
       'copy:dev',
+    ]
+  );
+
+
+  grunt.registerTask(
+    'dev',
+    [
+      'devdist',
       'configureProxies:development',
       'connect:development',
       'watch'
     ]
   );
 
-  grunt.registerTask('default', ['dev']);
+  grunt.registerTask('default', ['devdist']);
 
   grunt.registerTask(
     'dist',
