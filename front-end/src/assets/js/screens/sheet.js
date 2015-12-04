@@ -178,7 +178,6 @@ game.SheetScreen = me.ScreenObject.extend({
                 game.stats.speed = avatarId.attributes.speed;
                 game.stats.jump = avatarId.attributes.jump;
                 game.stats.defense = avatarId.attributes.defense;
-                fadeOutElements();
 
                 ajaxSendChallengeStoryRequest(getStats);
             }

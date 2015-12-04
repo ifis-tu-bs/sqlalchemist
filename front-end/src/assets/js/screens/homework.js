@@ -46,7 +46,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
                 };
             }
 
-            for (var i = 0; i < homeworks.length; i++) {
+            for (var i = 0; i < homeworks.length && i < 8 ; i++) {
                 if (!homeworks[i].expired) {
                     var currentHomeworkButtons = new game.ClickableElement('currentHomeworkButtonId' + i, "•  " + homeworks[i].name +"  due  "+ homeworks[i].expire_at + "  •",
                         homeworkButtonClick(i), 70, 5, 15, 35 + 6 * i, 1);
