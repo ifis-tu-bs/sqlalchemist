@@ -9,7 +9,7 @@ module.exports = function (grunt) {
 
     copy: {
       frontEnd: {
-        cwd: 'front-end/front-end',
+        cwd: 'front-end/tmp',
         src: '**/*',
         dest: 'data',
         expand:true
