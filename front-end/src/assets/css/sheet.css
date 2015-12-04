@@ -43,12 +43,16 @@
     text-align: right;
 }
 
+
 #skinRight:hover, #skinRight:focus, #skinRight:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
-
 #skinLeft:hover, #skinLeft:focus, #skinLeft:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
