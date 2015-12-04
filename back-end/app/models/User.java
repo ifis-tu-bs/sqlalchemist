@@ -23,31 +23,27 @@ import java.util.regex.Pattern;
  */
 @Entity
 @Table(name = "user")
-@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class User extends Model {
-    // unique ID
     @Id
-    public Long id;
+    private Long id;
 
-    //
     @Constraints.Email
     @Column(unique = true)
     private String email;
 
-    public static final int USER_EMAIL_VERIFY_NOT_FOUND = -1;
-    public static final int USER_EMAIL_VERIFY_ALREADY_VERIFIED = -2;
+    @Column(unique = true)
+    private String username;
 
-    private boolean emailVerified = false;
     @Column(unique = true)
     private String emailVerifyCode;
 
     @Column(unique = true)
-    public String matNR;
+    private String matNR;
 
     @Column(unique = true)
-    public String y_id;
+    private String y_id;
 
-    public boolean isStudent;
+    private boolean isStudent;
 
     private String password;
 
@@ -56,17 +52,19 @@ public class User extends Model {
      * 2 | Creator
      * 3 | Admin
      */
-    private int role;
+    @ManyToOne
+    private Role role;
+
 
     public static final int ROLE_USER = 1;
     public static final int ROLE_CREATOR = 2;
     public static final int ROLE_ADMIN = 3;
 
     @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    public List<UserSession> sessions;
+    private List<UserSession> sessions;
 
     @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
-    public Profile profile;
+    private Profile profile;
 
     private Date created_at;
     private Date edited_at;
@@ -93,8 +91,6 @@ public class User extends Model {
         }
 
         this.email = id;
-
-        this.emailVerified = false;
 
         long verifyNumber = (long) this.hashCode();
         long checksum = (98 - ((verifyNumber * 100) % 97)) % 97;
@@ -183,7 +179,7 @@ public class User extends Model {
      * @param newPassword new User Password
      * @return  returns true if successful
      */
-    public boolean changePassword(String oldPassword, String newPassword) {
+    public boolean setPassword(String oldPassword, String newPassword) {
         if(BCrypt.checkpw(oldPassword, this.password)) {
             this.setPassword(newPassword);
             return true;
@@ -195,7 +191,7 @@ public class User extends Model {
      * Setting password (used by doResetPassword)
      * @param newPassword    asd
      */
-    public void setPassword(String newPassword) {
+    public void resetPassword(String newPassword) {
         this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
@@ -321,15 +317,6 @@ public class User extends Model {
         this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
-    }
-
-    public boolean isEmailVerified() {
-        return this.emailVerified;
-    }
-
-    public void setEmailVerified() {
-        this.emailVerified = true;
-        this.emailVerifyCode = null;
     }
 
     public boolean isAdmin() {

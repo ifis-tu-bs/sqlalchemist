@@ -27,9 +27,6 @@ import java.util.List;
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
-    @Id
-    private long id;
-
     @ManyToOne
     private final Profile profile;
 
@@ -63,6 +60,10 @@ public class ScrollCollection extends Model {
 //////////////////////////////////////////////////
 //  getter & setter methods
 //////////////////////////////////////////////////
+    public Profile getProfile() {
+        return this.profile;
+    }
+
     public Scroll getScroll() {
       return this.scroll;
     }
