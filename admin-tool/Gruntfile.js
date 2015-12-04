@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           '<%= globalConfig.src %>/assets/js/services/*.js',
           '<%= globalConfig.src %>/assets/js/controllers/*.js',
         ],
-        dest: '<%= globalConfig.dest %>/assets/js/app.min.js'
+        dest: '<%= globalConfig.build %>/assets/js/app.min.js'
       },
       css: {
         src: [
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
           '<%= globalConfig.src %>/assets/css/app.css',
           '<%= globalConfig.src %>/assets/css/modalStyleClass.css'
         ],
-        dest: '<%= globalConfig.build %>/assets/css/app.css'
+        dest: '<%= globalConfig.build %>/assets/css/app.min.css'
       }
     },
 
@@ -63,7 +63,7 @@ module.exports = function(grunt) {
       dist: {
         files: {
           '<%= globalConfig.dest %>/assets/js/app.min.js': [
-            '<%= globalConfig.build %>/assets/js/app.js'
+            '<%= globalConfig.build %>/assets/js/app.min.js'
           ]
         }
       }
@@ -71,7 +71,7 @@ module.exports = function(grunt) {
     cssmin: {
       dist: {
         files: {
-          '<%= globalConfig.dest %>/assets/css/app.min.css': ['<%= globalConfig.build %>/assets/css/app.css']
+          '<%= globalConfig.dest %>/assets/css/app.min.css': ['<%= globalConfig.build %>/assets/css/app.min.css']
         }
       }
     },

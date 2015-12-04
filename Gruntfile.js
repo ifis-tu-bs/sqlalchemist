@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = function (grunt) {
   var globalConfig = {
     adminTool:'admin-tool',
@@ -11,7 +9,7 @@ module.exports = function (grunt) {
 
     copy: {
       frontEnd: {
-        cwd: 'front-end/front-end',
+        cwd: 'front-end/tmp',
         src: '**/*',
         dest: 'data',
         expand:true
@@ -85,7 +83,7 @@ module.exports = function (grunt) {
           grunt: true,
           args: ['default'],
           opts: {
-              cwd: 'front-end'
+              cwd: 'admin-tool'
           }
         },
         function (err, result, code) {
