@@ -24,15 +24,7 @@ public class ForeignKeyRelation extends Model {
     private final String destinationTable;
     private final String destinationColumn;
 
-
-    /**
-     *  This is the constructor for ForeignKeyRelations
-     */
-    public ForeignKeyRelation(
-            String sourceTable,
-            String sourceColumn,
-            String destinationTable,
-            String destinationColumn) {
+    public ForeignKeyRelation(String sourceTable, String sourceColumn, String destinationTable, String destinationColumn) {
         this.sourceTable = sourceTable;
         this.sourceColumn = sourceColumn;
         this.destinationTable = destinationTable;

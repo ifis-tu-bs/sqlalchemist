@@ -28,11 +28,7 @@ public class Task extends Model {
     private TaskSet taskSet;
 
     private String  taskName;
-
-    @Column(columnDefinition = "Text")
     private String  taskText;
-
-    @Column(columnDefinition = "Text")
     private String  refStatement;
     private int     evaluationStrategy;
     private int     points;
@@ -40,12 +36,9 @@ public class Task extends Model {
 
     @ManyToOne
     private final Profile   creator;
-
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "task")
-
-
     private List<Comment>   comments;
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -54,7 +47,7 @@ public class Task extends Model {
 
     private boolean available;
 
-    private Date created_at;
+    private final Date created_at;
     private Date updated_at;
 
     private int availableSyntaxChecks;

@@ -25,6 +25,7 @@ public class HomeWork extends Model {
     private List<SubmittedHomeWork> submittedHomeWorks;
 
     private final Date start_at;
+
     private final Date expire_at;
 
     private final String homeWorkName;
