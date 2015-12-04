@@ -28,6 +28,8 @@
 [id^=taskLevel]:hover, [id^=taskLevel]:focus, [id^=taskLevel]:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 #triviaHeader {

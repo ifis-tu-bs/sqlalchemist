@@ -22,21 +22,29 @@
 #backFromBeltId:hover, #backFromBeltId:focus, #backFromBeltId:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 [id*='brewPotionId']:hover, [id*='brewPotionId']:focus, [id*='brewPotionId']:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 [id*='setPotionId']:hover, [id*='setPotionId']:focus, [id*='setPotionId']:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 [id*='beltPotionId']:hover, [id*='beltPotionId']:focus, [id*='beltPotionId']:active {
     filter: contrast(150%);
     filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 

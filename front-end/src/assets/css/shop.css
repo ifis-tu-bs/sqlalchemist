@@ -35,16 +35,22 @@
 }
 
 #avatar:hover, #avatar:focus, #avatar:active {
+    filter: contrast(150%);
+    filter: brightness(150%);
     -webkit-filter: contrast(150%);
     -webkit-filter: brightness(150%);
 }
 
 #beltSlotShop:hover, #beltSlotShop:focus, #beltSlotShop:active {
+    filter: contrast(150%);
+    filter: brightness(150%);
     -webkit-filter: contrast(150%);
     -webkit-filter: brightness(150%);
 }
 
 #backFromShop:hover, #backFromShop:focus, #backFromShop:active {
+    filter: contrast(150%);
+    filter: brightness(150%);
     -webkit-filter: contrast(150%);
     -webkit-filter: brightness(150%);
 }
