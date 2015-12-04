@@ -34,7 +34,7 @@ module.exports = function(grunt) {
           '<%= globalConfig.src %>/assets/js/services/*.js',
           '<%= globalConfig.src %>/assets/js/controllers/*.js',
         ],
-        dest: '<%= globalConfig.dest %>/assets/js/app.min.js'
+        dest: '<%= globalConfig.build %>/assets/js/app.min.js'
       },
       css: {
         src: [
