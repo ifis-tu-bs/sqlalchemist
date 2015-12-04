@@ -864,8 +864,6 @@ game.DropDownElement = me.Renderable.extend ({
     update : function () {
         // scale element
         game.scaleElement(this);
-
-
     },
 
     /*setImage : function (src, id) {
@@ -884,4 +882,119 @@ game.DropDownElement = me.Renderable.extend ({
 
     }
 
+});
+////////////////////////////////////////////////////////////////////////////////
+// Fabios DOMmanipulation
+////////////////////////////////////////////////////////////////////////////////
+game.fdom = {};
+game.fdom.RootContainer = me.Renderable.extend({
+    init: function(backgroundImage) {
+        this.parent             = document.getElementById('screen');
+        this.elem               = document.createElement('div');
+        this.elem.id            = 'rootContainer';
+        this.elem.style.backgroundImage = "url('" + backgroundImage + "')";
+
+
+        //scale element
+        this.relWidth  = 100;
+        this.relHeight = 100;
+        this.relLeft   = 0;
+        this.relTop    = 0;
+        game.scaleElement(this);
+
+        this.updateWhenPaused = true;
+        this.visibility = true;
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});
+game.fdom.ButtonElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, text, className, action) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('button');
+        this.elem.className     = className;
+        this.elem.innerHTML     = text;
+        this.elem.onclick       = action;
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.visibility = true;
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});
+game.fdom.ContainerElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, className) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('div');
+        this.elem.className     = className;
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.parent.appendChild(this.elem);
+    },
+    hide: function() {
+        this.elem.style.display = "none";
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});
+game.fdom.TitleElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, text, className) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('h1');
+        this.elem.className     = className;
+        this.elem.innerHTML     = text;
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
 });

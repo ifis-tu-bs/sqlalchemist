@@ -1,74 +1,60 @@
-
+/**
+ * PreGame Screen
+ */
 game.StartScreen = me.ScreenObject.extend({
-
     onResetEvent: function() {
+        //var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/title_screen.png');
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/login_screen.png');
+        me.game.world.addChild(rootContainer);
 
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('black')
-            ),
-            1
-        );
-        
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
-        background.setImage("assets/data/img/gui/title_screen.png", "back");
-        me.game.world.addChild(background);
-        $("#background").fadeIn(100);
+        var parchment     = new game.fdom.ContainerElement(rootContainer, '84%','82%','8%','1%', 'StartScreen Parchment');
+        me.game.world.addChild(parchment);
+        parchment.hide();
 
-        //get the users settings
-        function getSettings(xmlHttpRequest) {
+        function displayStartScreen() {
+            var isSessionValid = false;
 
-
-            var profile = JSON.parse(xmlHttpRequest.responseText);
-            console.log(profile);
-            game.data.music = profile.settings.music;
-            game.data.sound = profile.settings.sound;
-            game.data.lofiCoins = profile.coins;
-
-            //starts background music
-            if (game.data.music) {
-                me.audio.playTrack("menu", game.data.musicVolume);
-
-            }
-            if (game.data.sound) {
-                me.audio.play("switch", false, null, game.data.soundVolume);
-            }
-        }
-
-        function checkSession(xmlHttpRequest){
-            console.log(xmlHttpRequest);
-
-            game.data.gotSession = true;
-            var session = JSON.parse(xmlHttpRequest.responseText);
-            console.log(session);
-            ajaxSendProfileRequest(getSettings);
-
-        }
-        ajaxSendProfileRequest(checkSession);
-
-
-        /**
-         * these functions are called when buttons are clicked.
-         * Here: simple state change.
-         */
-        this.onStart = function() {
-            $("#background").fadeOut(100);
-            $("#startButton").fadeOut(100);
-            setTimeout( function() {
-                if (game.data.gotSession) {
-                    me.state.change(me.state.MENU);
-                } else {
-                    me.state.change(STATE_LOGIN);
+            function validateCookie(xmlHttpRequest) {
+                console.log(xmlHttpRequest);
+                var response = JSON.parse(xmlHttpRequest.responseText);
+                console.log(response);
+                if(response.status === true) {
+                    isSessionValid = true;
                 }
-            }, 100);
-        };
+            }
 
-        /**
-         * Add all needed buttons to start screen
-         */
-        var startButton  = new game.ClickableElement('startButton', 'start', this.onStart, 20, 8.7, 43, 50, 1);
-        me.game.world.addChild(startButton);
-        $("#startButton").fadeIn(100);
-    }
+            if(typeof ($.cookie('SQL-Alchemist-Session')) !== 'undefined') {
+                ajaxValidateCookie($.cookie('SQL-Alchemist-Session'), validateCookie);
+            }
+
+            var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'Start', 'Button Start', function() {
+                $(startButton.getNode()).fadeOut(50);
+                setTimeout(function() {
+                    if(isSessionValid) {
+                        console.log("Switch to Main Menu");
+                        me.state.change(me.state.MENU);
+                    } else {
+                        me.game.world.removeChild(startButton);
+                        displayLoginScreen();
+                    }
+                }, 100);
+            });
+            me.game.world.addChild(startButton);
+        }
+
+        function displayLoginScreen() {
+            var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','15%', 'Login', 'Title Login');
+            me.game.world.addChild(title);
+
+            var login = new game.fdom.ButtonElement(parchment, '28%','17%','35%','75%', 'Login', 'Button Login', function() {
+                alert("login");
+            });
+            me.game.world.addChild(login);
+
+            $(parchment.getNode()).fadeIn(100);
+        }
+
+        displayStartScreen();
+        //displayLoginScreen();
+    },
 });

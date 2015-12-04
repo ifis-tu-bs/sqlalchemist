@@ -2,19 +2,18 @@ package controllers;
 
 import dao.UserSessionDAO;
 
-import models.User;
+import forms.Login;
 import models.UserSession;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import play.data.Form;
+import play.mvc.BodyParser;
+import secured.*;
 
 import play.Logger;
-import play.Play;
+
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-
-
-import secured.*;
 
 /**
  * The SessionController
@@ -30,16 +29,23 @@ public class SessionController extends Controller {
      *
      * @return Returns the Global ProfileState
      */
+    @BodyParser.Of(BodyParser.Json.class)
     public Result create() {
-        JsonNode json = request().body().asJson();
-        if (json == null) {
-            Logger.info("SessionController.create - Could not retrieve Json from POST body");
-            return badRequest("Could not retrieve Json from POST body");
+        Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
+
+        if(loginForm.hasErrors()) {
+            Logger.error("LoginForm has errors");
+            Logger.error(loginForm.errorsAsJson().toString());
+            return badRequest(loginForm.errorsAsJson());
         }
+
+        Login       login   = loginForm.bindFromRequest().get();
+
+        return forbidden("Wrong ID/Password");
+    /*
 
         String  id          = json.path("id").textValue();
         String  password    = json.path("password").textValue();
-        boolean adminTool   = json.path("adminTool").asBoolean();
 
         if (id.length() == 0 || password.length() == 0) {
             Logger.info("SessionController.create - Expecting Json data");
@@ -50,7 +56,7 @@ public class SessionController extends Controller {
         id = id.trim();
         User user;
 
-        if ((user = User.validate(id, password, adminTool)) != null) {
+        if ((user = User.validate(id, password)) != null) {
             if(user.isActive()) {
                 UserSession userSession = UserSession.create(
                         user,
@@ -71,7 +77,7 @@ public class SessionController extends Controller {
 
         }
         Logger.warn("SessionController.create - Wrong ID or Password: " + id);
-        return forbidden("Wrong ID/Password");
+        return forbidden("Wrong ID/Password");*/
     }
 
     @Authenticated(UserSecured.class)

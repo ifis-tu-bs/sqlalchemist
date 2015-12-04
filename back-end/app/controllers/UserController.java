@@ -127,7 +127,7 @@ public class UserController extends Controller {
 
         User user = UserDAO.getByUsername(request().username());
 
-        if (user.changePassword(
+        if (user.setPassword(
                 json.findPath("password_old").textValue(),
                 json.findPath("password_new").textValue())) {
 

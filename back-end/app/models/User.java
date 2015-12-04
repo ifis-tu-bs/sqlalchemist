@@ -99,7 +99,7 @@ public class User extends Model {
 
         this.setPassword(password);
 
-        this.role = role;
+
 
         this.created_at = new Date();
         if(play.api.Play.isProd(play.api.Play.current())) {
@@ -118,17 +118,8 @@ public class User extends Model {
         } else {
             node.put("matno",       "");
         }
-        switch (this.role) {
-            case ROLE_USER:
-                node.put("role",    "User");
-                break;
-            case ROLE_CREATOR:
-                node.put("role",    "Creator");
-                break;
-            case ROLE_ADMIN:
-                node.put("role",    "Admin");
-                break;
-        }
+        node.put("role",    "User");
+
 
         node.put("email",       this.email);
         node.put("createdAt",   String.valueOf(this.created_at));
@@ -149,18 +140,8 @@ public class User extends Model {
     }
 
     private String getUserRoleString() {
-        String userRole = "";
-        switch (this.role) {
-            case ROLE_USER:
-                userRole = "User";
-                break;
-            case ROLE_CREATOR:
-                userRole = "Creator";
-                break;
-            case ROLE_ADMIN:
-                userRole = "Admin";
-                break;
-        }
+        String userRole = "User";
+
 
         if(this.isStudent)
             userRole += " & Student";
@@ -191,7 +172,7 @@ public class User extends Model {
      * Setting password (used by doResetPassword)
      * @param newPassword    asd
      */
-    public void resetPassword(String newPassword) {
+    public void setPassword(String newPassword) {
         this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
@@ -228,7 +209,7 @@ public class User extends Model {
      * @return returns the role of the user
      */
     public int getRole(){
-        return this.role;
+        return 1;
     }
 
     /**
@@ -253,44 +234,7 @@ public class User extends Model {
 //  Actions Methods
 //////////////////////////////////////////////////
 
-    /**
-     *
-     * @param id        User Identifier
-     * @param password  User password
-     * @param adminTool asd
-     * @return  asd
-     */
-    public static User validate(String id, String password, boolean adminTool) {
 
-
-        if(id == null || password == null) {
-            return null;
-        }
-        /*
-        if(id.charAt(0) == 'y'){
-            User user = getByY_ID(id);
-            // ToDo
-            // LDAP Magic
-        } else {
-            User user = getByEmail(id);
-            if (user != null && user.isStudent) {
-                // ToDO WE NEED THIS?
-                // LDAP Magic
-            } else if (user != null &&  BCrypt.checkpw(password, user.password)) {
-                if(adminTool && user.getRole() > ROLE_USER || !adminTool) {
-                    return user;
-                }
-            }
-        }
-           */
-        User user = dao.UserDAO.getByEmail(id);
-        if (user != null &&  BCrypt.checkpw(password, user.password)) {
-            if (adminTool && user.getRole() > ROLE_USER || !adminTool) {
-                return user;
-            }
-        }
-        return null;
-    }
 
     /**
      *  updates the isStudent flag
@@ -314,13 +258,13 @@ public class User extends Model {
     }
 
     public void promote(int role) {
-        this.role = role;
+    //    this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
     }
 
     public boolean isAdmin() {
-        return this.role == User.ROLE_ADMIN;
+        return false;
     }
 
     public void disable() {
@@ -329,5 +273,17 @@ public class User extends Model {
 
     public boolean isActive() {
         return this.isActive;
+    }
+
+    public boolean isEmailVerified() {
+        return this.emailVerifyCode == null;
+    }
+
+    public void setEmailVerified() {
+        this.emailVerifyCode = null;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

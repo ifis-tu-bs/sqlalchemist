@@ -1,0 +1,33 @@
+#rootContainer {
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.Button, .Button:focus{
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    background: none;
+    background-color: red;
+    opacity: 0.5;
+
+    outline: none;
+}
+
+.StartScreen.Parchment {
+    position: absolute;
+    background: green;
+    opacity: 0.5;
+}
+
+.Title {
+    position: absolute;
+    text-align: center;
+    font-size: 50px;
+    font-size: 8vh;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: default;
+}

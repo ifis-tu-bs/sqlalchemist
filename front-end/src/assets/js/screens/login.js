@@ -11,19 +11,22 @@ game.LoginScreen = me.ScreenObject.extend({
 
         $("#background").fadeIn("slow");
 
+        var loginContainer = new game.ContainerElement('', 'parchment', '8%', '1%', '82%', '84%', '#background');
+
         /**
          * Function will be called when server responded.
          * @param xmlHttpRequest
          */
         function onLogin(xmlHttpRequest) {
             //console.log("STATUS :" + xmlHttpRequest.status);
-            if (xmlHttpRequest.status == 401){
-                alert("wrong id or password!");
-            } else{
+            if (xmlHttpRequest.status == 200 ){
                 $("#background").fadeOut(100);
                 setTimeout( function() {
                     me.state.change(me.state.MENU);
                 }, 100);
+            } else {
+                console.log(xmlHttpRequest);
+                alert("wrong id or password!");
             }
         }
 
@@ -35,7 +38,7 @@ game.LoginScreen = me.ScreenObject.extend({
         this.loginReply = function () {
             var userid     = document.getElementById("fId").value;
             var pw         = document.getElementById("fPassword").value;
-            this.user_json = JSON.stringify({id: userid, password: pw});
+            this.user_json = JSON.stringify({email: userid, password: pw});
             ajaxSendLoginRequest(this.user_json, onLogin);
         };
 

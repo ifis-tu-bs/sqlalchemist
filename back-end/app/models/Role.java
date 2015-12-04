@@ -30,11 +30,11 @@ public class Role extends Model {
     @OneToOne
     private Role        followingRole   = null;
 
-    @OneToOne(mappedBy = "role", targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User        creator;
     private Calendar    created_at;
 
-    @OneToMany(mappedBy = "role", targetEntity = User.class)
+    @ManyToOne(targetEntity = User.class)
     private User        updated_from;
     private Calendar    updated_at;
 
@@ -164,6 +164,4 @@ public class Role extends Model {
         this.updated_at = Calendar.getInstance();
         super.update();
     }
-
-    ca
 }
