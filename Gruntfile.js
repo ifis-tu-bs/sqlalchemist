@@ -83,7 +83,7 @@ module.exports = function (grunt) {
           grunt: true,
           args: ['default'],
           opts: {
-              cwd: 'front-end'
+              cwd: 'admin-tool'
           }
         },
         function (err, result, code) {
