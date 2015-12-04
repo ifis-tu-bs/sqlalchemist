@@ -247,7 +247,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             newPasswordAck.addEvent('click', clearNewPasswordAckField);
         };
 
-        var changePassword = new game.ClickableElement('changePassword', 'change password?', ChangePasswordClicked, 23, 10, 13, 45, 2);
+        var changePassword = new game.ClickableElement('changePassword', 'change password', ChangePasswordClicked, 23, 10, 13, 45, 2);
         me.game.world.addChild(changePassword);
 
 
@@ -270,7 +270,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             submitVerification.hide();
         };
 
-        var storyReset = new game.ClickableElement('storyReset', 'reset story mode?', this.resetStoryClicked, 23, 10, 13, 58, 2);
+        var storyReset = new game.ClickableElement('storyReset', 'reset story mode', this.resetStoryClicked, 23, 10, 13, 58, 2);
         me.game.world.addChild(storyReset);
 
 
@@ -307,7 +307,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             submitVerification.hide();
         };
 
-        var deleteUser = new game.ClickableElement('deleteUser', "delete your account?", this.deleteUserClicked, 23, 10, 13, 71, 2);
+        var deleteUser = new game.ClickableElement('deleteUser', "delete your account", this.deleteUserClicked, 23, 10, 13, 71, 2);
         me.game.world.addChild(deleteUser);
 
         this.musicClicked = function () {
