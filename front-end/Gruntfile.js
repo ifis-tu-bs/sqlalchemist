@@ -52,7 +52,7 @@ module.exports = function(grunt) {
           '<%= globalConfig.src %>/assets/lib/jquery-2.1.4.js',
           '<%= globalConfig.src %>/assets/lib/ace.js',
           '<%= globalConfig.src %>/assets/lib/mode-sql.js',
-          '<%= globalConfig.src %>/assets/lib/theme-twilight.js',
+          '<%= globalConfig.src %>/assets/lib/theme-ambiance.js',
         ],
         dest: '<%= globalConfig.tmp %>/assets/js/lib.min.js'
       },
