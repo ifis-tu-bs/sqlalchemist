@@ -23,7 +23,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
 
         currentHomeworkTaskSetsReply = function(xmlHttpRequest) {
             var currentHomeworks = JSON.parse(xmlHttpRequest.responseText);
-            console.log(currentHomeworks);
+            console.log("CurrentHomeworks:",currentHomeworks);
             var choosenHomework  = game.homework.currentHomeworkIndex;
             var choosenTaskSet   = 0;
             var numberPages = Math.ceil(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks.length/5);
@@ -33,7 +33,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
             console.log("Choosen & Current: ",choosenHomework, currentHomeworks);
 
             index          = new game.TextOutputElement('index', 40, 10, 30, 10, 2);
-            pages          = new game.TextOutputElement('page', 20, 10, 40, 25, 2);
+            pages          = new game.TextOutputElement('page', 40, 10, 30, 25, 2);
 
 
 
@@ -56,7 +56,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
 
                 me.game.world.addChild(index);
                 index.clear();
-                index.writeHTML(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].taskSetName + " : " + (choosenTaskSet +1) + "/" + numberSets , 'indexbody');
+                index.writeHTML(currentHomeworks[choosenHomework].name + " : " + (choosenTaskSet +1) + "/" + numberSets , 'indexbody');
                 if(game.homework.taskSet !== game.homework.taskSets && numberSets > 1){
                     nextTaskSetButton.display();
                 }
@@ -66,7 +66,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
             }else{
                 me.game.world.addChild(index);
                 index.clear();
-                index.writeHTML(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].taskSetName, 'indexbody');
+                index.writeHTML(currentHomeworks[choosenHomework].name, 'indexbody');
             }
 
              function taskButtonClick(taskId,exercise) {
@@ -80,23 +80,25 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
 
             }
 
-            game.homework.currentHomework = currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks;
-            console.log("!!!",game.homework.currentHomework);
+            console.log("game.homework.currentHomeworkIndex",game.homework.currentHomeworkIndex);
+            game.homework.currentHomework = currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks;
+            console.log("Exercises:",game.homework.currentHomework);
 
             //Schleife verbessern
-            for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks.length ; i++) {
+            for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks.length ; i++) {
 
-                var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].name,
-                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].id, (i + 5 *(game.homework.page -1)) ), 35, 5, 15, 35 + 6 * i, 1);
+                var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].name,
+                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].id, (i + 5 *(game.homework.page -1)) ), 35, 5, 15, 35 + 6 * i, 1);
+                taskButtons.hide();
                 me.game.world.addChild(taskButtons);
                 $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
 
-                if (currentHomeworks[choosenHomework].taskSets[game.homework.currentHomeworkIndex].tasks[(i + 5 *(game.homework.page -1))].done) {
+                if (currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].done) {
                     var checkbox = new game.BackgroundElement('checkboxId' + (i + 5 *(game.homework.page -1)), 3.5, 5, 70, 35 + 6 * i, 'none');
                     checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
+                    checkbox.hide();
                     me.game.world.addChild(checkbox);
                     $('#checkboxId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
-
                 }
             }
 
@@ -113,8 +115,8 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                 previousTaskSetButton.display();
                 nextTaskSetButton.hide();
             }
-            ajaxSendCurrentHomeworkRequest(currentHomeworkTaskSetsReply);
-            //me.state.change(STATE_HOMEWORKTASKSET);
+            //ajaxSendCurrentHomeworkRequest(currentHomeworkTaskSetsReply);
+            me.state.change(STATE_HOMEWORKTASKSET);
         };
 
         var previousTaskSetButton = new game.ClickableElement('previousTaskSetButton', '', this.showPreviousTaskSet, 3.5, 7, 17, 9.7, 1);

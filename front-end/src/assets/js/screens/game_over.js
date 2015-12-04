@@ -8,7 +8,7 @@ game.GameOverScreen = me.ScreenObject.extend({
       function collectedOnload(xmlHttpRequest) {
           //console.log(xmlHttpRequest);
           var gotten = JSON.parse(xmlHttpRequest.responseText);
-          //console.log(gotten);
+          console.log("Gotten:",gotten);
           for (var i = 0; i < gotten.scrolls.length; i++) {
               if (gotten.scrolls[i].id > 20) {
                   game.data.scrolls[i] = gotten.scrolls[i].name;
@@ -43,7 +43,7 @@ game.GameOverScreen = me.ScreenObject.extend({
               function profileID_Reply(xmlHttpRequest) {
 
                   var profile_JSON = JSON.parse(xmlHttpRequest.responseText);
-                  //console.log("Kahn",profile_JSON);
+                  console.log("THIS:",profile_JSON);
                   var playedRuns = profile_JSON.highScore.playedRuns;
 
                   this.scrollsObtained.writeHTML("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
@@ -123,7 +123,7 @@ game.GameOverScreen = me.ScreenObject.extend({
                 score: game.data.score,
                 scrolls: game.data.scrolls
             });
-            //console.log("collected: " + collected);
+            console.log("Send: " + collected);
             ajaxSendProfileCollectedRequest(collected, collectedOnload);
 
             /**

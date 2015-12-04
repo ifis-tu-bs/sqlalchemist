@@ -567,7 +567,9 @@ game.TaskScreen = me.ScreenObject.extend({
 
 
                 if (game.task.kind == 3) {
-                    // Homework
+                    // Homework !!!!!!!!!
+                    checksLeft.display();
+                    submitsLeft.display();
                     checkButton.display();
                 }
 
