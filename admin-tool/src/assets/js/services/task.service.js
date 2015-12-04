@@ -42,41 +42,41 @@
         /* TaskSet Controlls */
 
         function createTaskSet(json) {
-            return $http.post('/TaskSet/', json).then(handleSuccess, handleError);
+            return $http.post('/API/TaskSet/', json).then(handleSuccess, handleError);
         }
 
         function getAllTaskSets() {
-            return $http.get('/TaskSet/').then(handleSuccess, handleError);
+            return $http.get('/API/TaskSet/').then(handleSuccess, handleError);
         }
 
         function editTaskSet(json, taskSetId) {
-            return $http.patch('/TaskSet/' + taskSetId + "/", json).then(handleSuccess, handleError);
+            return $http.patch('/API/TaskSet/' + taskSetId + "/", json).then(handleSuccess, handleError);
         }
 
         function viewTaskSet(json, taskSetId) {
-            return $http.get('/TaskSet/' + taskSetId, json).then(handleSuccess, handleError);
+            return $http.get('/API/TaskSet/' + taskSetId, json).then(handleSuccess, handleError);
         }
 
         function rateTaskSet(id, ratingJson) {
-            return $http.post("/TaskSet/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
+            return $http.post("/API/TaskSet/" + id + "/rate", ratingJson).then(handleSuccess, handleError);
         }
 
         function postTaskSetComment(id, comment) {
-            return $http.post('/TaskSet/' + id + '/comment', {text: comment}).then(handleSuccess, handleError);
+            return $http.post('/API/TaskSet/' + id + '/comment', {text: comment}).then(handleSuccess, handleError);
         }
 
         function deleteTaskSet(taskId) {
-            return $http.delete('/TaskSet/' + taskId + '/').then(handleSuccess, handleError);
+            return $http.delete('/API/TaskSet/' + taskId + '/').then(handleSuccess, handleError);
         }
 
         function getAllHomeWorkTaskSets() {
-            return $http.get('/TaskSet/homework').then(handleSuccess, handleError);
+            return $http.get('/API/TaskSet/homework').then(handleSuccess, handleError);
         }
 
         function exportTaskSets(taskSetIds) {
-            return $http.post('/TaskSet/download', taskSetIds).then(
+            return $http.post('/API/TaskSet/download', taskSetIds).then(
               function (result) {
-                location.href = '/download/' + result.data;
+                location.href = '/API/Download/' + result.data;
               },
               handleError
             );
@@ -85,61 +85,56 @@
         /* Task Controlls */
 
         function createTask(taskSetId, taskJson) {
-            return $http.post('/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
+            return $http.post('/API/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
         }
 
         function editTask(taskId, taskJson) {
-            return $http.patch('/Task/' + taskId + '/', taskJson).then(handleSuccess, handleError);
+            return $http.patch('/API/Task/' + taskId + '/', taskJson).then(handleSuccess, handleError);
         }
 
         function rateTask(taskId, ratingJson) {
-            return $http.post("/Task/" + taskId + "/rate", ratingJson).then(handleSuccess, handleError);
+            return $http.post("/API/Task/" + taskId + "/rate", ratingJson).then(handleSuccess, handleError);
         }
 
         function postTaskComment(taskId, comment) {
-            return $http.post('/Task/' + taskId + '/comment', {text: comment}).then(handleSuccess, handleError);
+            return $http.post('/API/Task/' + taskId + '/comment', {text: comment}).then(handleSuccess, handleError);
         }
 
         function deleteTask(taskId) {
-            $http.delete('/Task/'+ taskId + '/').then(handleSuccess, handleError);
+            $http.delete('/API/Task/'+ taskId + '/').then(handleSuccess, handleError);
         }
 
 
         /* HomeWork Controlls */
 
         function getAllHomeworks() {
-            return $http.get('/Homework/').then(handleSuccess, handleError);
+            return $http.get('/API/Homework/').then(handleSuccess, handleError);
         }
 
         function createHomeWork(homeWorkJson) {
-            return $http.post("/Homework/", homeWorkJson).then(handleSuccess, handleError);
+            return $http.post("/API/Homework/", homeWorkJson).then(handleSuccess, handleError);
         }
 
         function deleteHomework(id) {
-            return $http.delete("/Homework/" + id + "/").then(handleSuccess, handleError);
+            return $http.delete("/API/Homework/" + id + "/").then(handleSuccess, handleError);
         }
 
         function getSubmitsForTaskInHomeWork(taskId, homeworkId) {
-            return $http.get('/Homework/result/' + taskId + '/' + homeworkId + '/').then(handleSuccess, handleError);
+            return $http.get('/API/Homework/result/' + taskId + '/' + homeworkId + '/').then(handleSuccess, handleError);
         }
 
         /* DataTypes */
 
         function getColumnDefinitionDataTypes() {
-            return $http.get("/ColumnDefinition/DataTypes/").then(handleSuccess, handleError);
+            return $http.get("/API/ColumnDefinition/DataTypes/").then(handleSuccess, handleError);
         }
 
 
-        /* Left Overs*/
-
-
-        function getAllTasks() {
-            return $http.get('/taskFile').then(handleSuccess, handleError);
-        }
-
+          // Left overs
         function getAllSubmits(homeworkId, taskFileName) {
-            return $http.post('/homework/result', {homework: homeworkId, taskFile: taskFileName}).then(handleSuccess, handleError);
+            return $http.post('/API/Homework/result', {homework: homeworkId, taskFile: taskFileName}).then(handleSuccess, handleError);
         }
+
 
 
         function handleSuccess(data) {

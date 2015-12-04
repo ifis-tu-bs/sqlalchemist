@@ -11,30 +11,11 @@
         <link href="assets/css/modalStyleClass.css" rel="stylesheet" />
         <!-- /build -->
 
-    </head>
-    <body ng-app="app">
-
-        <navigation></navigation>
-
-        <div class="jumbotron" id="jumbo">
-            <div class="container">
-                <div class="container-fluid" style="align:center">
-                    <div ng-view></div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <center>
-                <img src="adminapp/data/admin_banner.png">
-            </center>
-        </footer>
-
-        <!-- build:js adminapp/scripts/app.min.js -->
+        <!-- build:js assets/js/app.min.js -->
 
         <!-- RequireJS (used by Ace) -->
 <!--
-        <script src="adminapp/scripts/libraries/require.js"></script>
+        <script src="assets/lib/require.js"></script>
       -->
         <script src="adminapp/scripts/libraries/ace.js"></script>
 
@@ -79,5 +60,24 @@
         <script src="adminapp/scripts/controllers/login.controller.js"></script>
 
         <!-- /build -->
+
+    </head>
+    <body ng-app="app">
+
+        <navigation></navigation>
+
+        <div class="jumbotron" id="jumbo">
+            <div class="container">
+                <div class="container-fluid" style="align:center">
+                    <div ng-view></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <center>
+                <img src="assets/data/admin_banner.png">
+            </center>
+        </footer>
     </body>
 </html>

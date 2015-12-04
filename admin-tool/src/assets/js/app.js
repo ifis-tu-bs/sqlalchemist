@@ -18,25 +18,25 @@
         $routeProvider
             .when('/', {
                 controller: 'HomeController',
-                templateUrl: 'adminapp/views/home.view.html',
+                templateUrl: 'assets/views/home.view.html',
                 controllerAs: 'vm'
             })
 
             .when('/home', {
                 controller: 'HomeController',
-                templateUrl: 'adminapp/views/home.view.html',
+                templateUrl: 'assets/views/home.view.html',
                 controllerAs: 'vm'
             })
 
             .when('/login', {
                 controller: 'LoginController',
-                templateUrl: 'adminapp/views/login.view.html',
+                templateUrl: 'assets/views/login.view.html',
                 controllerAs: 'vm'
             })
 
             .when('/task', {
                 controller: 'TasksController',
-                templateUrl: 'adminapp/views/task.view.html',
+                templateUrl: 'assets/views/task.view.html',
                 controllerAs: 'vm',
                 name : 'Tasks',
                 see: ['/home', '/task', '/homework', '/users']
@@ -44,7 +44,7 @@
 
             .when('/homework', {
                 controller: 'HomeworkController',
-                templateUrl: 'adminapp/views/homework.view.html',
+                templateUrl: 'assets/views/homework.view.html',
                 controllerAs: 'vm',
                 name : 'Homework',
                 see: ['/home', '/task', '/homework', '/users']
@@ -52,7 +52,7 @@
 
             .when('/users', {
                 controller: 'UsersController',
-                templateUrl: 'adminapp/views/users.view.html',
+                templateUrl: 'assets/views/users.view.html',
                 controllerAs: 'vm',
                 name : 'Users',
                 see: ['/home', '/task', '/homework', '/users']
@@ -60,7 +60,7 @@
 
             .when('/passwordreset/:code', {
                 controller: 'PasswordResetController',
-                templateUrl: 'adminapp/views/passwordReset.view.html',
+                templateUrl: 'assets/views/passwordReset.view.html',
                 controllerAs: 'vm'
             })
 
