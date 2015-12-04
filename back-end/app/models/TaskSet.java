@@ -23,16 +23,19 @@ public class TaskSet extends Model {
     @Id
     private Long id;
 
-    private String                  taskSetName;
+    private String                    taskSetName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<TableDefinition>   tableDefinitions;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<ForeignKeyRelation>foreignKeyRelations;
+    private List<TableDefinition>     tableDefinitions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<Task>              tasks;
-    private final boolean                 isHomework;
+    private List<ForeignKeyRelation>  foreignKeyRelations;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
+    private List<Task>                tasks;
+
+    private final boolean             isHomework;
+
     @ManyToMany(cascade = CascadeType.ALL)
     private List<HomeWork> homeWorks;
 
@@ -46,7 +49,7 @@ public class TaskSet extends Model {
 
     private boolean available;
 
-    private final Date createdAt;
+    private Date createdAt;
     private Date updatedAt;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(TaskSet.class);
