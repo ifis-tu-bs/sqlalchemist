@@ -22,6 +22,10 @@ module.exports = function(grunt) {
         },
         files: [{
           cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/img/*.png'],
+          type: 'image'
+        },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/img/**/*.png'],
           type: 'image'
         },{
