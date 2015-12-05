@@ -998,3 +998,27 @@ game.fdom.TitleElement = me.Renderable.extend({
         this.parent.removeChild(this.elem);
     }
 });
+game.fdom.FormElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, className) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('form');
+        this.elem.className     = className;
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});

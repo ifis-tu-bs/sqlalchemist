@@ -1,10 +1,33 @@
 game.LoginScreen = me.ScreenObject.extend({
 
     onResetEvent: function() {
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/login_screen.png');
+        me.game.world.addChild(rootContainer);
+
+        var parchment     = new game.fdom.ContainerElement(rootContainer, '84%','82%','8%','1%', 'StartScreen Parchment');
+        me.game.world.addChild(parchment);
+        parchment.hide();
+
+        var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','15%', 'Login', 'Title Login');
+        me.game.world.addChild(title);
+
+        var LoginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form Login');
+        me.game.world.addChild(LoginForm);
+
+        var login = new game.fdom.ButtonElement(LoginForm, '28%','17%','35%','75%', 'Login', 'Button Login', function() {
+            alert("login");
+        });
+        me.game.world.addChild(login);
+
+        $(parchment.getNode()).fadeIn(100);
+
+
+
+
 
         /**
          * Load screen-image for Login
-         */
+         *
         var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
         background.setImage("assets/data/img/gui/login_screen.png", "back");
         me.game.world.addChild(background);
@@ -16,7 +39,7 @@ game.LoginScreen = me.ScreenObject.extend({
         /**
          * Function will be called when server responded.
          * @param xmlHttpRequest
-         */
+         *
         function onLogin(xmlHttpRequest) {
             //console.log("STATUS :" + xmlHttpRequest.status);
             if (xmlHttpRequest.status == 200 ){
@@ -34,7 +57,7 @@ game.LoginScreen = me.ScreenObject.extend({
          * Ajax POST /login
          * returned value: xmlHttpRequest
          * on success: user session is created
-         */
+         *
         this.loginReply = function () {
             var userid     = document.getElementById("fId").value;
             var pw         = document.getElementById("fPassword").value;
@@ -45,7 +68,7 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * Create all necessary TextInputElements for Login
-         */
+         *
         var userid   = new game.TextInputElement('input', 'text', 'wId', 'fId', 55, 12, 22, 25, 2);
         var password = new game.TextInputElement('input', 'text', 'wPassword', 'fPassword', 55, 12, 22, 42, 2);
         me.game.world.addChild(userid);
@@ -53,7 +76,7 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * Insert Text in TextInputElement as placeholder and workaround for clearing it by clicking in TextInputElement
-         */
+         *
         userid.insertText('e-mail');
         password.insertText('password');
 
@@ -94,7 +117,7 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * Create necessary ClickableElements for Sign-UP
-         */
+         *
         var loginButton     = new game.ClickableElement('loginButton', 'Enter', this.loginReply, 20, 6.5, 42.5, 64.5, 1);
         var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', this.toSignUp, 25, 2, 25, 58.5, 1);
         var forgotPassword  = new game.ClickableElement('forgotPassword', 'Forgot Password? Click here!', this.toPasswordReset, 22, 2, 52, 58.5, 1);
@@ -104,11 +127,11 @@ game.LoginScreen = me.ScreenObject.extend({
 
         /**
          * add children to container
-         */
+         *
         me.game.world.addChild(loginButton);
         me.game.world.addChild(signUpFirst);
         me.game.world.addChild(forgotPassword);
-
+        */
 
     },
 
