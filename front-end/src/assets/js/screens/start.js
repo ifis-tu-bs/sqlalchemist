@@ -4,7 +4,7 @@
 game.StartScreen = me.ScreenObject.extend({
     onResetEvent: function() {
         //var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/title_screen.png');
-        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/login_screen.png');
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
         me.game.world.addChild(rootContainer);
 
         function displayStartScreen() {
