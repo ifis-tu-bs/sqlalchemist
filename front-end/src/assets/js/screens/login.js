@@ -11,11 +11,21 @@ game.LoginScreen = me.ScreenObject.extend({
         var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','15%', 'Login', 'Title Login');
         me.game.world.addChild(title);
 
-        var LoginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form Login');
-        me.game.world.addChild(LoginForm);
+        var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form Login');
+        me.game.world.addChild(loginForm);
 
-        var login = new game.fdom.ButtonElement(LoginForm, '28%','17%','35%','75%', 'Login', 'Button Login', function() {
-            alert("login");
+        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '60%','15%','20%','33%', 'Email Address', 'InputField Login');
+        me.game.world.addChild(formEmailInputField);
+
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(loginForm, '60%','15%','20%','53%', 'Password', 'InputPasswordField Login');
+        me.game.world.addChild(formPasswordInputField);
+
+        var login = new game.fdom.ButtonElement(loginForm, '28%','17%','35%','75%', 'Login', 'Button Login', function() {
+            var loginFormData = JSON.stringify({email: formEmailInputField.getNode().value, password: formPasswordInputField.getNode().value});
+            console.log(loginFormData);
+            ajaxSendLoginRequest(loginFormData, function(xmlHttpRequest) {
+                console.log(xmlHttpRequest);
+            });
         });
         me.game.world.addChild(login);
 

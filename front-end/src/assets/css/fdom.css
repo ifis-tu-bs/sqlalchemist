@@ -31,3 +31,18 @@
     color: black;
     cursor: default;
 }
+
+.InputField ,.InputPasswordField, .InputField:focus, .InputPasswordField:focus {
+    color: black;
+    position: absolute;
+    font-size: 50px;
+    font-size: 6vh;
+    font-family: LinBiolinum,sans-serif;
+
+    outline: none;
+    background: transparent;
+    border: solid 1px black;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: inset 0px 0px 20px -5px;
+}
