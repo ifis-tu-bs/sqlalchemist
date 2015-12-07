@@ -1,12 +1,12 @@
 package bootstrap;
 
-import dao.ProfileDAO;
-
 import dao.TaskDAO;
 import dao.TaskSetDAO;
-import models.Profile;
+import dao.UserDAO;
+
 import models.Task;
 import models.TaskSet;
+import models.User;
 
 import play.Logger;
 import sqlparser.SQLParser;
@@ -110,9 +110,9 @@ public class TaskSetBootstrap {
                                        "    \"isHomeWork\":   true\n" +
                                        "}\n");
 
-            Profile profile = ProfileDAO.getByUsername("sqlalchemist");
+            User user = UserDAO.getByUsername("sqlalchemist");
 
-            TaskSet taskSet = TaskSetView.fromJsonForm(profile, node);
+            TaskSet taskSet = TaskSetView.fromJsonForm(user, node);
             taskSet.setAvailable(true);
             taskSet.save();
             SQLStatus err;
@@ -204,9 +204,9 @@ public class TaskSetBootstrap {
                                        "    \"isHomeWork\":   false\n" +
                                        "}\n");
 
-            profile = ProfileDAO.getByUsername("sqlalchemist");
+            user = UserDAO.getByUsername("sqlalchemist");
 
-            taskSet = TaskSetView.fromJsonForm(profile, node);
+            taskSet = TaskSetView.fromJsonForm(user, node);
             taskSet.setAvailable(true);
             taskSet.save();
             if((err = SQLParser.createDB(taskSet)) != null) {

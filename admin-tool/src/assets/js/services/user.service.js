@@ -21,7 +21,7 @@
         }
 
         function getAllUsers() {
-            return $http.get("/API/Users").then(handleSuccess, handleError);
+            return $http.get("/API/Users/").then(handleSuccess, handleError);
         }
 
         function promoteUser(userId, roleId) {

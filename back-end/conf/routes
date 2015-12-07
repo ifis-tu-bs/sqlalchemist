@@ -2,13 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-#SessionController
-POST        /API/Login                              controllers.SessionController.create()
-GET         /API/Logout                             controllers.SessionController.delete()
+#ControllerSession
+GET         /API/Session/                           controllers.ControllerSession.index()
+POST        /API/Login                              controllers.ControllerSession.login()
+DELETE      /API/Logout                             controllers.ControllerSession.logout()
 
 #UserController
-POST        /API/Users                              controllers.UserController.create()
-GET         /API/Users                              controllers.UserController.getAllUsers()
+POST        /API/Users/                             controllers.UserController.create()
+GET         /API/Users/                             controllers.UserController.index()
 GET         /API/Users/student                      controllers.UserController.checkStudent()
 PATCH       /API/Users/password                     controllers.UserController.edit()
 GET         /API/Users/verify/:code                 controllers.UserController.verifyEmail(code: String)
@@ -25,8 +26,8 @@ GET         /API/Profile/used/:id                   controllers.ItemController.u
 POST        /API/Profile/collected                  controllers.ItemController.collected()
 
 #SettingsController
-GET         /API/Profile/settings                   controllers.SettingsController.index()
-POST        /API/Profile/settings                   controllers.SettingsController.edit()
+GET         /API/User/Settings/                     controllers.SettingsController.index()
+POST        /API/User/Settings/                     controllers.SettingsController.edit()
 
 #LevelController
 GET         /API/Challenge/story                    controllers.LevelController.story()
@@ -81,12 +82,12 @@ GET         /API/Shop/belt                          controllers.ShopController.b
 GET         /API/Shop/:id                           controllers.ShopController.buy(id: Long)
 
 #HighScoreController
-GET         /API/Highscore/points                   controllers.HighScoreController.byPoints()
-GET         /API/Highscore/time                     controllers.HighScoreController.byTime()
-GET         /API/Highscore/runs                     controllers.HighScoreController.byRuns()
-GET         /API/Highscore/sql                      controllers.HighScoreController.bySQL()
-GET         /API/Highscore/rate                     controllers.HighScoreController.byRate()
-GET         /API/Highscore/coins                    controllers.HighScoreController.byCoins()
+GET         /API/Highscore/points                   controllers.ScoreController.byPoints()
+GET         /API/Highscore/time                     controllers.ScoreController.byTime()
+GET         /API/Highscore/runs                     controllers.ScoreController.byRuns()
+GET         /API/Highscore/sql                      controllers.ScoreController.bySQL()
+GET         /API/Highscore/rate                     controllers.ScoreController.byRate()
+GET         /API/Highscore/coins                    controllers.ScoreController.byCoins()
 
 #HomeWorkController
 GET         /API/Homework/                          controllers.HomeWorkController.getAll()

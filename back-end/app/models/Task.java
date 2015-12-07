@@ -28,17 +28,24 @@ public class Task extends Model {
     private TaskSet taskSet;
 
     private String  taskName;
+
+    @Column(columnDefinition = "Text")
     private String  taskText;
+
+    @Column(columnDefinition = "Text")
     private String  refStatement;
     private int     evaluationStrategy;
     private int     points;
     private int     requiredTerm;
 
     @ManyToOne
-    private final Profile   creator;
+    private User   creator;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "task")
+
+
     private List<Comment>   comments;
     @OneToMany(
             cascade = CascadeType.ALL,
@@ -47,7 +54,7 @@ public class Task extends Model {
 
     private boolean available;
 
-    private final Date created_at;
+    private Date created_at;
     private Date updated_at;
 
     private int availableSyntaxChecks;
@@ -76,7 +83,7 @@ public class Task extends Model {
             int evaluationStrategy,
             int points,
             int requiredTerm,
-            Profile creator,
+            User creator,
             int availableSyntaxChecks,
             int availableSemanticChecks) {
 
@@ -191,7 +198,7 @@ public class Task extends Model {
         this.requiredTerm = requiredTerm;
     }
 
-    public Profile getCreator() {
+    public User getCreator() {
         return creator;
     }
 
@@ -202,7 +209,7 @@ public class Task extends Model {
     public void addRating(Rating rating) {
         if(this.ratings != null && this.ratings.size() > 0) {
             for(Rating ratingI : this.ratings) {
-                if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+                if(ratingI.getUser().getId() == rating.getUser().getId()) {
                     ratingI.setRating(rating);
                     ratingI.update();
                     break;

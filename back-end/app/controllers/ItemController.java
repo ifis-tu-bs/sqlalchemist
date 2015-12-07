@@ -1,18 +1,8 @@
 package controllers;
 
-import dao.InventoryDAO;
-import dao.PotionDAO;
-import dao.ProfileDAO;
-import dao.ScrollDAO;
-import dao.ScrollCollectionDAO;
-import dao.StoryChallengeDAO;
+import dao.*;
 
-import models.Inventory;
-import models.Potion;
-import models.Profile;
-import models.Scroll;
-import models.ScrollCollection;
-import models.StoryChallenge;
+import models.*;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -24,12 +14,15 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import secured.UserAuthenticator;
+import service.ServiceScore;
+import service.ServiceUser;
 
 
 /**
  * @author fabiomazzone
  */
-@Authenticated(secured.UserSecured.class)
+@Authenticated(UserAuthenticator.class)
 public class ItemController extends Controller {
 
     /**
@@ -38,11 +31,11 @@ public class ItemController extends Controller {
      * @return ok
      */
     public Result collected() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
         JsonNode body = request().body().asJson();
-        StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
+        StoryChallenge challenge = StoryChallengeDAO.getForUser(user);
 
-        if( profile == null) {
+        if( user == null) {
             Logger.warn("ItemController.collected - not a valid User");
             return badRequest("not a valid User");
         }
@@ -63,13 +56,13 @@ public class ItemController extends Controller {
         int currentLevel = challenge.getLevel();
         int calcLevel    = (depth - 1) / 5;
 
-        if(depth > 1 && !profile.isTutorialDone()) {
-            profile.setTutorialDone(true);
-            profile.setCurrentStory(challenge.getNext());
+        if(depth > 1 && !user.isTutorialDone()) {
+            user.setTutorialDone(true);
+            user.setCurrentStory(challenge.getNext());
         }
 
         if(calcLevel > currentLevel) {
-            profile.setCurrentStory(challenge.getNext());
+            user.setCurrentStory(challenge.getNext());
         }
 
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
@@ -77,16 +70,16 @@ public class ItemController extends Controller {
             JsonNode singleScroll = scrolls.get(i);
             int posId = singleScroll.asInt();
             Scroll scroll = ScrollDAO.getByPosId(posId);
-            if (scroll != null && !ScrollCollectionDAO.contains(profile, scroll)) {
-                profile.addScroll(scroll);
+            if (scroll != null && !ScrollCollectionDAO.contains(user, scroll)) {
+                ServiceUser.addScroll(user, scroll);
                 arrayNode.add(scroll.toJson());
             }
         }
 
-        int coinsDifference = profile.addScore(score * 50);
-        profile.addRun();
-        profile.setDepth(depth);
-        profile.update();
+        int coinsDifference = ServiceScore.addScore(user, score * 50);
+        ServiceScore.addRun(user);
+        user.setDepth(depth);
+        user.update();
 
         ObjectNode node = Json.newObject();
 
@@ -103,12 +96,12 @@ public class ItemController extends Controller {
      */
 
     public Result scrollCollection() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        if(profile == null) {
+        User user = UserDAO.getBySession(request().username());
+        if(user == null) {
             Logger.warn("ProfileController.scrollCollection - No profile found");
             return badRequest("no profile found");
         }
-        return ok(ScrollCollection.toJsonAll(profile));
+        return ok(ScrollCollection.toJsonAll(user));
     }
 
     /**
@@ -117,9 +110,9 @@ public class ItemController extends Controller {
      * @return ok
      */
     public Result belt() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
-        return ok(InventoryDAO.getJson_Belt(profile));
+        return ok(InventoryDAO.getJson_Belt(user));
     }
 
 
@@ -129,14 +122,14 @@ public class ItemController extends Controller {
      * @return ok
      */
     public Result edit() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
         JsonNode belt = request().body().asJson().path("slots");
 
         if (belt == null) {
             Logger.warn("ItemController.edit - could not retrieve Json from POST body");
             return badRequest("could not retrieve Json from POST body");
         }
-        InventoryDAO.clearBelt(profile);
+        InventoryDAO.clearBelt(user);
 
         int size = belt.size();
         for(int i = 1; i <= size; i++) {
@@ -144,10 +137,10 @@ public class ItemController extends Controller {
             int id = beltSlot.findPath("potion").asInt();
             Potion potion = PotionDAO.getById(id);
             if (potion != null) {
-                InventoryDAO.updateBeltSlot(profile, potion, i);
+                InventoryDAO.updateBeltSlot(user, potion, i);
             }
         }
-        return ok(InventoryDAO.getJson_Belt(profile));
+        return ok(InventoryDAO.getJson_Belt(user));
     }
 
     /**
@@ -156,9 +149,9 @@ public class ItemController extends Controller {
      * @return ok
      */
     public Result used(int id) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
-        Inventory inventory = InventoryDAO.getBeltSlot(profile, id);
+        Inventory inventory = InventoryDAO.getBeltSlot(user, id);
         if(inventory == null){
             Logger.warn("ItemController.used - no beltSlot for profile and id found");
             return badRequest("no beltSlot for profile and id found");
@@ -174,7 +167,7 @@ public class ItemController extends Controller {
      * @return ok
      */
     public Result inventory() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        return ok(InventoryDAO.getJson_Inventory(profile));
+        User user = UserDAO.getBySession(request().username());
+        return ok(InventoryDAO.getJson_Inventory(user));
     }
 }

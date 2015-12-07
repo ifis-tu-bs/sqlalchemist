@@ -1,137 +1,79 @@
 game.LoginScreen = me.ScreenObject.extend({
 
     onResetEvent: function() {
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
+        me.game.world.addChild(rootContainer);
 
-        /**
-         * Load screen-image for Login
-         */
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
-        background.setImage("assets/data/img/gui/login_screen.png", "back");
-        me.game.world.addChild(background);
+        var parchment     = new game.fdom.ContainerElement(rootContainer, '84%','83%','8%','0%', 'StartScreen Parchment');
+        parchment.setBackgroundImage('/assets/data/img/gui/parchment.png');
+        me.game.world.addChild(parchment);
+        parchment.hide();
 
-        $("#background").fadeIn("slow");
+        var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','10%', 'Login', 'Title LoginScreen');
+        me.game.world.addChild(title);
 
-        /**
-         * Function will be called when server responded.
-         * @param xmlHttpRequest
-         */
-        function onLogin(xmlHttpRequest) {
-            //console.log("STATUS :" + xmlHttpRequest.status);
-            if (xmlHttpRequest.status == 401){
-                alert("wrong id or password!");
-            } else{
-                $("#background").fadeOut(100);
-                setTimeout( function() {
-                    me.state.change(me.state.MENU);
-                }, 100);
-            }
-        }
+        var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form LoginScreen', function() {
+            var loginFormData = JSON.stringify({email: formEmailInputField.getNode().value, password: formPasswordInputField.getNode().value});
+            console.log(loginFormData);
+            ajaxSendLoginRequest(loginFormData, function(xmlHttpRequest) {
+                if(xmlHttpRequest.status == 200) {
+                    console.log("Login Successfull");
+                    /*ajaxSendUserSettingsRequest(function(xmlHttpRequest) {
+                        if( xmlHttpRequest.status == 200 ) {
+                            var settings = JSON.parse(xmlHttpRequest.responseText);
 
-        /**
-         * Ajax POST /login
-         * returned value: xmlHttpRequest
-         * on success: user session is created
-         */
-        this.loginReply = function () {
-            var userid     = document.getElementById("fId").value;
-            var pw         = document.getElementById("fPassword").value;
-            this.user_json = JSON.stringify({id: userid, password: pw});
-            ajaxSendLoginRequest(this.user_json, onLogin);
-        };
+                            game.data.music = profile.settings.music;
+                            game.data.sound = profile.settings.sound;
 
+                            if(game.data.music ){
+                                me.audio.playTrack("menu",game.data.musicVolume);
+                            }
+                            if(game.data.sound) {
+                                me.audio.play("switch", false, null, game.data.soundVolume);
+                            }*/
+                            $(rootContainer.getNode()).fadeOut(100);
+                            setTimeout(function() {
+                                me.state.change(me.state.MENU);
+                            }, 50);
 
-        /**
-         * Create all necessary TextInputElements for Login
-         */
-        var userid   = new game.TextInputElement('input', 'text', 'wId', 'fId', 55, 12, 22, 25, 2);
-        var password = new game.TextInputElement('input', 'text', 'wPassword', 'fPassword', 55, 12, 22, 42, 2);
-        me.game.world.addChild(userid);
-        me.game.world.addChild(password);
+//                        }
+//                     });
+                } else if(xmlHttpRequest.status == 401) {
+                    console.log("Wrong EMAIL or Password");
+                } else if(xmlHttpRequest.staus == 400) {
+                    console.log("Bad Request");
+                }
+            });
+        });
+        me.game.world.addChild(loginForm);
 
-        /**
-         * Insert Text in TextInputElement as placeholder and workaround for clearing it by clicking in TextInputElement
-         */
-        userid.insertText('e-mail');
-        password.insertText('password');
+        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '64%','10%','17%','31%', 'Email Address', 'InputField LoginScreen');
+        me.game.world.addChild(formEmailInputField);
 
-        this.clearUserIDField = function () {
-            userid.clear();
-            userid.removeEvent('click', this.clearUserIDField);
-        };
-        userid.addEvent('click', this.clearUserIDField);
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(loginForm, '64%','10%','17%','47%', 'Password', 'InputPasswordField LoginScreen');
+        me.game.world.addChild(formPasswordInputField);
 
-        this.clearPasswordField = function () {
-            password.clear();
-            password.changeType('password');
-            password.removeEvent('click', this.clearPasswordField);
-        };
-        password.addEvent('focus', this.clearPasswordField);
-
-
-        this.toSignUp = function () {
-            $("#background").fadeOut(100);
-            $("#loginButton").fadeOut(100);
-            $("#signUpFirst").fadeOut(100);
-            $("#forgotPassword").fadeOut(100);
-            setTimeout( function() {
-                me.state.change(STATE_SIGNUP);
-            }, 100);
-        };
-
-        this.toPasswordReset = function () {
-            $("#background").fadeOut(100);
-            $("#loginButton").fadeOut(100);
-            $("#signUpFirst").fadeOut(100);
-            $("#forgotPassword").fadeOut(100);
-            setTimeout( function() {
-                me.state.change(STATE_FORGOTPASSWORD);
-            }, 100);
-        };
-
-
-        /**
-         * Create necessary ClickableElements for Sign-UP
-         */
-        var loginButton     = new game.ClickableElement('loginButton', 'Enter', this.loginReply, 20, 6.5, 42.5, 64.5, 1);
-        var signUpFirst     = new game.ClickableElement('signUpFirst', 'No Login yet? You can Sign Up here!', this.toSignUp, 25, 2, 25, 58.5, 1);
-        var forgotPassword  = new game.ClickableElement('forgotPassword', 'Forgot Password? Click here!', this.toPasswordReset, 22, 2, 52, 58.5, 1);
-        $("#loginButton").fadeIn(100);
-        $("#signUpFirst").fadeIn(100);
-        $("#forgotPassword").fadeIn(100);
-
-        /**
-         * add children to container
-         */
+        // Login Button
+        var loginButton = new game.fdom.ButtonElement(loginForm, '28%','17%','35%','74%', 'Enter', 'Button LoginScreen Enter', true);
         me.game.world.addChild(loginButton);
-        me.game.world.addChild(signUpFirst);
-        me.game.world.addChild(forgotPassword);
 
+        // Password Reset Button
+        var passwordReset = new game.fdom.ButtonElement(loginForm, '27%','5%','54%','65%', 'Forgot Password? Click Here!', 'Button LoginScreen PasswordReset', false, function() {
+            $(parchment.getNode()).fadeOut(100);
+            setTimeout(function() {
+                me.state.change(STATE_FORGOTPASSWORD);
+            }, 50);
+        });
+        me.game.world.addChild(passwordReset);
+        // SignUp Button
+        var signUpButton = new game.fdom.ButtonElement(loginForm, '31%','5%','17%','65%', 'No Login Yet? You Can Sign Up Here!', 'Button LoginScreen SignUp', false, function() {
+            $(parchment.getNode()).fadeOut(100);
+            setTimeout(function() {
+                me.state.change(STATE_SIGNUP);
+            }, 50);
+        });
+        me.game.world.addChild(signUpButton);
 
-    },
-
-    /**
-     * Gets the settings on Login and starts the menu-music.
-     */
-    onDestroyEvent: function() {
-
-        //get the users settings
-        function getSettings(xmlHttpRequest){
-
-            var profile = JSON.parse(xmlHttpRequest.responseText);
-            game.data.music = profile.settings.music;
-            game.data.sound = profile.settings.sound;
-            game.data.lofiCoins = profile.coins;
-
-             //starts background music
-            if(game.data.music ){
-                me.audio.playTrack("menu",game.data.musicVolume);
-            }
-            if(game.data.sound) {
-                me.audio.play("switch", false, null, game.data.soundVolume);
-            }
-
-
-        }
-        ajaxSendProfileRequest(getSettings);
+        $(parchment.getNode()).fadeIn(100);
     }
 });

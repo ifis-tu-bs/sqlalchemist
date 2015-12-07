@@ -372,7 +372,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             var sound = game.data.sound;
             this.user_json_setting = JSON.stringify({music: music, sound: sound});
             //console.log("AJAX: ", this.user_json_setting);
-            ajaxSendProfileSettingsSetRequest(this.user_json_setting, changeSet);
+            ajaxSendUserSettingsSetRequest(this.user_json_setting, changeSet);
         }
 
         setSettings();

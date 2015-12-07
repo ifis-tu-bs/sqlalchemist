@@ -1,0 +1,88 @@
+#rootContainer {
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Image {
+    position: absolute;
+}
+
+.Button, .Button:focus{
+    position: absolute;
+    cursor: pointer;
+    border: none;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    font-size: 2vh;
+    background: none;
+    outline: none;
+}
+
+.Button:hover {
+    color: red;
+}
+
+.Button.StartScreen.Start {
+    background: url('/assets/data/img/buttons/start_scroll.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    font-size: 7vh;
+    padding-bottom: 3%;
+    text-shadow: -1px 0px 5px rgba(133, 133, 133, 0.75);
+}
+
+.Button.LoginScreen.Enter {
+    font-size: 6vh;
+    color: black;
+    background: url('/assets/data/img/buttons/key.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.LoginScreen.Enter:hover {
+    color: black;
+}
+
+.Button.SignUpScreen, .Button.PasswordResetScreen{
+    font-size: 6vh;
+}
+
+.Button.SignUpScreen:hover, .Button.PasswordResetScreen:hover {
+    color: black;
+}
+
+.StartScreen.Parchment {
+    position: absolute;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: url('/assets/data/img/gui/parchment.png');
+}
+
+.Title {
+    position: absolute;
+    text-align: center;
+    font-size: 50px;
+    font-size: 8vh;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    cursor: default;
+}
+
+.InputField ,.InputPasswordField, .InputField:focus, .InputPasswordField:focus {
+    color: black;
+    position: absolute;
+    font-size: 50px;
+    font-size: 6vh;
+    font-family: LinBiolinum,sans-serif;
+
+    outline: none;
+    background: transparent;
+    border: solid 1px black;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: inset 0px 0px 20px -5px;
+}
