@@ -10,6 +10,8 @@ import models.*;
 
 import play.mvc.Http;
 
+import play.mvc.Security;
+import secured.UserAuthenticator;
 import sqlparser.SQLParser;
 import sqlparser.SQLStatus;
 import view.*;
@@ -31,7 +33,7 @@ import java.util.List;
  *
  * @author fabiomazzone
  */
-
+@Security.Authenticated(UserAuthenticator.class)
 public class TaskSetController extends Controller {
     /**
      * This method creates TaskFile objects from Json

@@ -297,7 +297,7 @@ public class User extends Model {
     }
 
     public boolean isAdmin() {
-        return false;
+        return true;
     }
 
     public void disable() {
