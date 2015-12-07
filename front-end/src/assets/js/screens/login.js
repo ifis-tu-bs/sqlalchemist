@@ -45,22 +45,8 @@ game.LoginScreen = me.ScreenObject.extend({
          */
         var userid   = new game.TextInputElement('input', 'text', 'wId', 'fId', 55, 12, 22, 25, 2);
         var password = new game.TextInputElement('input', 'text', 'wPassword', 'fPassword', 55, 12, 22, 42, 2);
-
         me.game.world.addChild(userid);
         me.game.world.addChild(password);
-
-        $('#fPassword').keypress(function (e){
-            if (e.which == 13) {
-                me.state.current().loginReply();
-                return false;
-            }
-        });
-        $('#userid').keypress(function (e){
-            if (e.which == 13) {
-                me.state.current().loginReply();
-                return false;
-            }
-        });
 
         /**
          * Insert Text in TextInputElement as placeholder and workaround for clearing it by clicking in TextInputElement
@@ -113,13 +99,13 @@ game.LoginScreen = me.ScreenObject.extend({
         $("#signUpFirst").fadeIn(100);
         $("#forgotPassword").fadeIn(100);
 
-
         /**
          * add children to container
          */
         me.game.world.addChild(loginButton);
         me.game.world.addChild(signUpFirst);
         me.game.world.addChild(forgotPassword);
+
 
     },
 
