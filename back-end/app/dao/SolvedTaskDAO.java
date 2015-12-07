@@ -1,8 +1,8 @@
 package dao;
 
-import models.Profile;
 import models.SolvedTask;
 import models.Task;
+import models.User;
 
 import play.Logger;
 
@@ -11,8 +11,8 @@ import java.util.Date;
 
 public class SolvedTaskDAO {
 
-  private static SolvedTask create(Profile profile, Task task) {
-      SolvedTask solvedTask = new SolvedTask(profile, task);
+  private static SolvedTask create(User user, Task task) {
+      SolvedTask solvedTask = new SolvedTask(user, task);
 
       solvedTask.save();
 
@@ -20,13 +20,13 @@ public class SolvedTaskDAO {
   }
 
   public static void update(
-          Profile profile,
+          User user,
           Task task,
           boolean solved ) {
 
-      SolvedTask solvedTask = getByProfileAndTask(profile, task);
+      SolvedTask solvedTask = getByProfileAndTask(user, task);
       if (solvedTask == null) {
-          solvedTask = create(profile, task);
+          solvedTask = create(user, task);
       }
 
       solvedTask.pushTrys();
@@ -38,13 +38,13 @@ public class SolvedTaskDAO {
       solvedTask.update();
   }
 
-  public static SolvedTask getByProfileAndTask(Profile profile, Task task) {
-      if(profile == null || task == null) {
+  public static SolvedTask getByProfileAndTask(User user, Task task) {
+      if(user == null || task == null) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
           return null;
       }
       try {
-          SolvedTask solvedTask = SolvedTask.find.where().eq("profile", profile).eq("task", task).findUnique();
+          SolvedTask solvedTask = SolvedTask.find.where().eq("user", user).eq("task", task).findUnique();
           if(solvedTask == null) {
               Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
               return null;
@@ -56,12 +56,12 @@ public class SolvedTaskDAO {
       }
   }
 
-  public static List<SolvedTask> getAllDoneTask(Profile profile) {
+  public static List<SolvedTask> getAllDoneTask(User user) {
       try {
           float mittelwert_try = 0;
           int i = 0;
 
-          List<SolvedTask> solvedTaskList = SolvedTask.find.where().eq("profile", profile).findList();
+          List<SolvedTask> solvedTaskList = SolvedTask.find.where().eq("user", user).findList();
 
           for(SolvedTask solvedTask : solvedTaskList) {
               if(i == 0) {
@@ -73,7 +73,7 @@ public class SolvedTaskDAO {
               i++;
           }
 
-          List<SolvedTask> solvedTasks = SolvedTask.find.where().eq("profile", profile).ge("trys", mittelwert_try).findList();
+          List<SolvedTask> solvedTasks = SolvedTask.find.where().eq("user", user).ge("trys", mittelwert_try).findList();
           if(solvedTasks == null || solvedTaskList.size() == 0) {
               Logger.warn("SolvedTask.getAllDoneSubTask - no SubTaskCandidates found");
               return null;

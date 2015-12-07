@@ -22,6 +22,10 @@ module.exports = function(grunt) {
         },
         files: [{
           cwd: '<%= globalConfig.src %>',
+          src: ['assets/data/img/*.png'],
+          type: 'image'
+        },{
+          cwd: '<%= globalConfig.src %>',
           src: ['assets/data/img/**/*.png'],
           type: 'image'
         },{
@@ -50,6 +54,7 @@ module.exports = function(grunt) {
       distJSLib: {
         src: [
           '<%= globalConfig.src %>/assets/lib/jquery-2.1.4.js',
+          '<%= globalConfig.src %>/assets/lib/jquery.cookie.js',
           '<%= globalConfig.src %>/assets/lib/ace.js',
           '<%= globalConfig.src %>/assets/lib/mode-sql.js',
           '<%= globalConfig.src %>/assets/lib/theme-ambiance.js',
@@ -244,7 +249,7 @@ module.exports = function(grunt) {
         tasks: ['jshint:beforeconcat', 'concat:distJS']
       },
       css: {
-        files: ['<%= globalConfig.src %>/assets/css/**/*.js'],
+        files: ['<%= globalConfig.src %>/assets/css/**/*.css'],
         tasks: ['concat:distCSS']
       },
       html: {
@@ -260,7 +265,7 @@ module.exports = function(grunt) {
         tasks: ['uglify:distlib']
       },
       cssmin: {
-        files: ['<%= globalConfig.tmp %>/assets/css/*.js'],
+        files: ['<%= globalConfig.tmp %>/assets/css/*.css'],
         tasks: ['cssmin:dist']
       },
       htmlmin: {

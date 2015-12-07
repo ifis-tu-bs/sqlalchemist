@@ -31,7 +31,7 @@ class HomeWorkBootstrap {
                 List<TaskSet> taskSetList = TaskSetDAO.getAll(true);
                 taskSetList.remove(1);
 
-                HomeWorkDAO.create("DefaultHomeWork 1", ProfileDAO.getByUsername("sqlalchemist"), taskSetList, new Date(), tempDate);
+                HomeWorkDAO.create("DefaultHomeWork 1", UserDAO.getByUsername("sqlalchemist"), taskSetList, new Date(), tempDate);
 
                 //SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("sqlalchemist"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha");
                 //SubmittedHomeWorkDAO.submit(ProfileDAO.getByUsername("test2"), TaskDAO.getAll().get(0), HomeWorkDAO.getAll().get(0), true, "Muhahaha2");

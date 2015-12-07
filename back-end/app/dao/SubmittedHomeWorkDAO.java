@@ -2,7 +2,7 @@ package dao;
 
 
 import models.HomeWork;
-import models.Profile;
+import models.User;
 import models.SubmittedHomeWork;
 import models.Task;
 
@@ -12,9 +12,9 @@ import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class SubmittedHomeWorkDAO  {
-    public static SubmittedHomeWork create(Profile profile, Task task, HomeWork homeWork) {
+    public static SubmittedHomeWork create(User user, Task task, HomeWork homeWork) {
         SubmittedHomeWork submittedHomeWork = new SubmittedHomeWork(
-                profile,
+                user,
                 task,
                 homeWork);
 
@@ -34,16 +34,16 @@ public class SubmittedHomeWorkDAO  {
           return SubmittedHomeWork.find.where().eq("task", task).findList();
       }
 
-      public static List<Object> getSubmitsForProfile(Profile profile) {
-          return SubmittedHomeWork.find.where().eq("profile", profile).findIds();
+      public static List<Object> getSubmitsForUser(User user) {
+          return SubmittedHomeWork.find.where().eq("user", user).findIds();
       }
 
       public static List<SubmittedHomeWork> getSubmitsForTaskInHomeWork(long taskId, long homeWorkId) {
           return SubmittedHomeWork.find.where().eq("task.id", taskId).eq("homeWork.id", homeWorkId).findList();
       }
 
-    public static SubmittedHomeWork getSubmitsForProfileHomeWorkTask(Profile profile, HomeWork homeWork, Task task) {
-        return SubmittedHomeWork.find.where().eq("profile", profile).eq("homeWork", homeWork).eq("task", task).findUnique();
+    public static SubmittedHomeWork getSubmitsForProfileHomeWorkTask(User user, HomeWork homeWork, Task task) {
+        return SubmittedHomeWork.find.where().eq("user", user).eq("homeWork", homeWork).eq("task", task).findUnique();
     }
   //////////////////////////////////////////////////
   //  Special Getter Object
@@ -52,17 +52,17 @@ public class SubmittedHomeWorkDAO  {
     /**
      * Returns current the Submit for given Subtask and Profile HomeWork
      * (Only on the Current HomeWork: See HomeWorkChallengeDAO.getCurrent())
-     * @param profile Profile of the Submitter
+     * @param user Profile of the Submitter
      * @param task task being submitted
      * @return The given Object, or null if none exists
      */
     public static SubmittedHomeWork getCurrentSubmittedHomeWorkForProfileAndTaskAndHomeWork(
-            Profile profile,
+            User user,
             Task task,
             HomeWork homeWork) {
 
         return SubmittedHomeWork.find.where()
-                .eq("profile", profile)
+                .eq("user", user)
                 .eq("task", task)
                 .eq("home_work", homeWork)
                 .findUnique();

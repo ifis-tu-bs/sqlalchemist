@@ -27,7 +27,7 @@ public class Comment extends Model{
 
     /** Relation to the profile of the user, who created the comment. */
     @ManyToOne
-    private final Profile profile;
+    private final User creator;
 
     /** Content of the comment. */
     private final String comment;
@@ -43,8 +43,8 @@ public class Comment extends Model{
 //  Constructor
 //////////////////////////////////////////////////
 
-    public Comment(String comment, Profile profile) {
-        this.profile    = profile;
+    public Comment(String comment, User creator) {
+        this.creator    = creator;
         this.comment    = comment;
 
         this.created_at = new Date();
@@ -75,8 +75,8 @@ public class Comment extends Model{
         this.task = task;
     }
 
-    public Profile getProfile() {
-        return profile;
+    public User getCreator() {
+        return creator;
     }
 
     public String getComment() {

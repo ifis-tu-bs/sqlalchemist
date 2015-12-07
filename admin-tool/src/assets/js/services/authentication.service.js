@@ -16,7 +16,7 @@
         return service;
 
         function Login(username, password, callbackSuccess, callbackError) {
-            $http.post('/API/Login', { id: username, password: password, adminTool: true })
+            $http.post('/API/Login', { email: username, password: password, adminTool: true })
                 .success(function (response) {
                     callbackSuccess(response);
                 })

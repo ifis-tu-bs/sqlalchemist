@@ -12,8 +12,6 @@ import models.Task;
 import models.TaskSet;
 import models.User;
 
-import secured.AdminSecured;
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -22,8 +20,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security.Authenticated;
-import secured.StudentSecured;
+
 import view.HomeWorkView;
 import view.TaskView;
 
@@ -36,9 +33,8 @@ import java.util.List;
 public class HomeWorkController extends Controller {
 
 
-    @Authenticated(AdminSecured.class)
     public Result getAll() {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         List<HomeWork> homeWorkList = HomeWorkDAO.getAll();
 
@@ -47,13 +43,12 @@ public class HomeWorkController extends Controller {
         return ok(arrayNode);
     }
 
-    @Authenticated(AdminSecured.class)
     public Result create() {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         JsonNode json = request().body().asJson();
 
-        HomeWork homeWork = HomeWorkView.fromJsonForm(user.getProfile(), json);
+        HomeWork homeWork = HomeWorkView.fromJsonForm(user, json);
 
         if (homeWork == null) {
             Logger.warn("HomeWorkController.create - The request body doesn't contain a valid HomeWork Json Object");
@@ -68,25 +63,22 @@ public class HomeWorkController extends Controller {
     /**
      * Gives back the current HomeWork and whether the task is submitted for the given profile
      */
-    @Authenticated(StudentSecured.class)
     public Result getHomeWorkForCurrentSession() {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         List<HomeWork> homeWorkList = HomeWorkDAO.getAllStudent();
 
-        ArrayNode arrayNode = HomeWorkView.toJsonExerciseForProfile(homeWorkList, user.getProfile());
+        ArrayNode arrayNode = HomeWorkView.toJsonExerciseForUser(homeWorkList, user);
 
         return ok(arrayNode);
     }
 
-    @Authenticated(AdminSecured.class)
     public Result getAllStudents () {
         return ok("dummy");
     }
 
-    @Authenticated(AdminSecured.class)
     public Result delete(Long id) {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         try {
             HomeWorkDAO.getById(id).delete();
@@ -97,7 +89,6 @@ public class HomeWorkController extends Controller {
         return ok("Deleted");
     }
 
-    @Authenticated(AdminSecured.class)
     public Result getSubmitsForHomeworkTaskSet() {
 
         JsonNode json = request().body().asJson();
@@ -128,7 +119,6 @@ public class HomeWorkController extends Controller {
     }
 
 
-    @Authenticated(AdminSecured.class)
     public Result getForTaskInHomeWork(Long taskId, Long homeWorkId) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 

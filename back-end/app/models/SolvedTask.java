@@ -21,7 +21,7 @@ public class SolvedTask extends Model {
     private long id;
 
     @ManyToOne
-    private final Profile profile;
+    private User user;
 
     @ManyToOne
     private final Task task;
@@ -34,11 +34,11 @@ public class SolvedTask extends Model {
     public static final Finder<Long, SolvedTask> find = new Finder<>(SolvedTask.class);
 
     public SolvedTask(
-            Profile profile,
+            User user,
             Task task) {
         super();
 
-        this.profile = profile;
+        this.user = user;
         this.task = task;
 
         this.solved = 0;

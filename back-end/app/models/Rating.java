@@ -17,7 +17,7 @@ public class Rating extends Model {
     private Long id;
 
     @ManyToOne
-    private Profile profile;
+    private User user;
 
     @ManyToOne
     private TaskSet taskSet;
@@ -33,12 +33,12 @@ public class Rating extends Model {
         boolean positive,
         boolean negative,
         boolean needReview,
-        Profile profile) {
+        User user) {
 
-        if(profile != null) {
-            this.profile = profile;
+        if(user != null) {
+            this.user = user;
 
-            int votes = profile.getUser().getRole() == User.ROLE_ADMIN ? Play.application().configuration().getInt("Rating.Admin.votes") : 1;
+            int votes = user.getVotes();
 
             this.positiveRatings = positive   ? votes : 0;
             this.negativeRatings = negative   ? votes : 0;
@@ -54,12 +54,8 @@ public class Rating extends Model {
         return id;
     }
 
-    /**
-     * getter for profile
-     * @return returns the profile
-     */
-    public Profile getProfile() {
-        return this.profile;
+    public User getUser() {
+        return user;
     }
 
     public TaskSet getTaskSet() {
