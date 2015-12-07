@@ -11,6 +11,7 @@ import models.Action;
 import models.Session;
 import models.User;
 
+import secured.SessionAuthenticator;
 import secured.UserAuthenticator;
 
 import play.Logger;
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author Fabio Mazzone
  */
-@Authenticated(UserAuthenticator.class)
+@Authenticated(SessionAuthenticator.class)
 public class UserController extends Controller {
 
     /**
@@ -88,6 +89,7 @@ public class UserController extends Controller {
      *
      * @return returns a ok if the old password is valid or a badRequest Status
      */
+    @Authenticated(UserAuthenticator.class)
     public Result edit() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
@@ -113,6 +115,7 @@ public class UserController extends Controller {
      *
      * @return ok
      */
+    @Authenticated(UserAuthenticator.class)
     public Result destroy() {
         User user = UserDAO.getByUsername(request().username());
 
@@ -127,6 +130,7 @@ public class UserController extends Controller {
      * @param verifyCode The given Code by URL
      * @return Success state
      */
+    @Authenticated(UserAuthenticator.class)
     public Result verifyEmail(String verifyCode) {
         if (Long.parseLong(verifyCode, 16) % 97 != 1) {
             return badRequest("Sorry, this Verify-Code has not been sent");
@@ -149,6 +153,7 @@ public class UserController extends Controller {
      *
      * @return Success state
      */
+    @Authenticated(UserAuthenticator.class)
     public Result sendResetPasswordMail() {
         JsonNode  json = request().body().asJson();
         if (json == null) {
@@ -169,6 +174,7 @@ public class UserController extends Controller {
         return ok("Email has been sent");
     }
 
+    @Authenticated(UserAuthenticator.class)
     public Result checkStudent() {
         User user = UserDAO.getByUsername(request().username());
 
@@ -187,6 +193,7 @@ public class UserController extends Controller {
         return ok();
     }
 
+    @Authenticated(UserAuthenticator.class)
     public Result index() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
         List<User> userList = UserDAO.getAllUsers();
@@ -202,6 +209,7 @@ public class UserController extends Controller {
         return ok(arrayNode);
     }
 
+    @Authenticated(UserAuthenticator.class)
     public Result promote(long id) {
         User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);

@@ -13,35 +13,25 @@ game.LoginScreen = me.ScreenObject.extend({
         me.game.world.addChild(title);
 
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form LoginScreen', function() {
+            $(formPasswordInputField.getNode()).removeClass("invalid");
+            $(formEmailInputField.getNode()).removeClass("invalid");
             var loginFormData = JSON.stringify({email: formEmailInputField.getNode().value, password: formPasswordInputField.getNode().value});
-            console.log(loginFormData);
             ajaxSendLoginRequest(loginFormData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 200) {
-                    console.log("Login Successfull");
-                    /*ajaxSendUserSettingsRequest(function(xmlHttpRequest) {
-                        if( xmlHttpRequest.status == 200 ) {
-                            var settings = JSON.parse(xmlHttpRequest.responseText);
-
-                            game.data.music = profile.settings.music;
-                            game.data.sound = profile.settings.sound;
-
-                            if(game.data.music ){
-                                me.audio.playTrack("menu",game.data.musicVolume);
-                            }
-                            if(game.data.sound) {
-                                me.audio.play("switch", false, null, game.data.soundVolume);
-                            }*/
-                            $(rootContainer.getNode()).fadeOut(100);
-                            setTimeout(function() {
-                                me.state.change(me.state.MENU);
-                            }, 50);
-
-//                        }
-//                     });
+                    $(rootContainer.getNode()).fadeOut(100);
+                    setTimeout(function() {
+                        me.state.change(me.state.MENU);
+                    }, 50);
                 } else if(xmlHttpRequest.status == 401) {
-                    console.log("Wrong EMAIL or Password");
-                } else if(xmlHttpRequest.staus == 400) {
-                    console.log("Bad Request");
+                    alert("Wrong EMAIL or Password");
+                } else if(xmlHttpRequest.status == 400) {
+                    var errorMessage = JSON.parse(xmlHttpRequest.responseText);
+                    if(typeof errorMessage.email !== 'undefined') {
+                        $(formEmailInputField.getNode()).addClass("invalid");
+                    }
+                    if(typeof errorMessage.password !== 'undefined') {
+                        $(formPasswordInputField.getNode()).addClass("invalid");
+                    }
                 }
             });
         });

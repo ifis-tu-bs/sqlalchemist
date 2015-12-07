@@ -71,9 +71,9 @@ function ajaxSendLogoutRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /API/signup ~ jsonData: JSON.signup
+// ~ POST /API/User/ ~ jsonData: JSON.signup
 function ajaxSendSignupRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/signup", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -82,7 +82,7 @@ function ajaxSendSignupRequest(jsonData, onload) {
 
 // ~ POST /API/Users ~ jsonData: JSON.user
 function ajaxSendUsersRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -91,7 +91,7 @@ function ajaxSendUsersRequest(jsonData, onload) {
 
 // ~ GET /API/Users ~ jsonData: JSON.user
 function ajaxSendGetUsersRequest( onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/User/", onload);
 
     xmlHttpRequest.send();
 
@@ -100,7 +100,7 @@ function ajaxSendGetUsersRequest( onload) {
 
 // ~ GET /API/Users/student
 function ajaxSendUserStudentRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Users/student", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/User/student", onload);
 
     xmlHttpRequest.send();
 
@@ -109,7 +109,7 @@ function ajaxSendUserStudentRequest(onload) {
 
 // ~ DELETE /API/Users
 function ajaxSendUsersDeleteRequest(onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/User/", onload);
 
     xmlHttpRequest.send();
 
@@ -118,7 +118,7 @@ function ajaxSendUsersDeleteRequest(onload) {
 
 // ~ POST /API/Users/password
 function ajaxSendUsersResetPasswordRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/API/Users/password", onload);
+    var xmlHttpRequest = createRequest("PATCH", "/API/User/password", onload);
 
     xmlHttpRequest.send(jsonData);
 
