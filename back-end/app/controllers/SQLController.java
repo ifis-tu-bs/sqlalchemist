@@ -265,6 +265,7 @@ public class SQLController extends Controller {
             Logger.info("Submit");
             submittedHomeWork.submit(status, userStatement.getStatement());
         } else {
+            Logger.info("check");
             submittedHomeWork.addSyntaxCheck();
         }
 

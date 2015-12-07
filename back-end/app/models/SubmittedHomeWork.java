@@ -127,6 +127,7 @@ public class SubmittedHomeWork extends Model {
     }
 
     public void submit(boolean solved, String statement) {
+        this.addSemanticCheck();
         this.solve = solved;
         this.statement = statement;
     }
