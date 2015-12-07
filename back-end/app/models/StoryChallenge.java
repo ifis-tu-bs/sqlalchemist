@@ -51,7 +51,7 @@ public class StoryChallenge extends Model {
     private final Date createdAt;
 
     @Transient
-    Profile profile;
+    User user;
 
 
     public static final Finder<Long, StoryChallenge> find = new Finder<>(StoryChallenge.class);
@@ -110,7 +110,7 @@ public class StoryChallenge extends Model {
 
         node.put("isTutorial", this.isTutorial);
 
-        node.set("characterState", this.profile.toJsonCharacterState());
+        node.set("characterState", this.user.toJsonCharacterState());
 
         node.put("createdAt", String.valueOf(this.getCreatedAt()));
 
@@ -143,8 +143,8 @@ public class StoryChallenge extends Model {
         return this.next;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public String getName() {

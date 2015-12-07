@@ -16,7 +16,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class TaskView {
-    public static Task fromJsonForm(JsonNode taskNode, String taskNameDefault, Profile creator) {
+    public static Task fromJsonForm(JsonNode taskNode, String taskNameDefault, User user) {
         String  taskName            = taskNameDefault;
         if(taskNode.has("taskName")) {
             taskName = taskNode.get("taskName").asText();
@@ -30,7 +30,7 @@ public class TaskView {
         int     availableSyntaxChecks       = taskNode.get("availableSyntaxChecks").asInt();
         int     availableSemanticChecks     = taskNode.get("availableSemanticChecks").asInt();
 
-        return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, creator, availableSyntaxChecks, availableSemanticChecks);
+        return new Task(taskName, taskText, refStatement, evaluationStrategy, points, requiredTerm, user, availableSyntaxChecks, availableSemanticChecks);
     }
 
     public static ObjectNode toJson(Task task) {
@@ -55,7 +55,7 @@ public class TaskView {
         json.put("availableSyntaxChecks",   task.getAvailableSyntaxChecks());
         json.put("availableSemanticChecks", task.getAvailableSemanticChecks());
 
-        json.set("creator",             task.getCreator().toJson());
+        json.set("creator",             task.getCreator().toJsonUser());
 
         json.set("rating",              RatingView.toJson(rating_sum));
         json.set("comments",            commentNode);
@@ -100,9 +100,9 @@ public class TaskView {
     /**
      * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task
      */
-    public static ObjectNode toJsonHomeWorkForProfile(Task task, HomeWork homework, Profile profile) {
+    public static ObjectNode toJsonHomeWorkForProfile(Task task, HomeWork homework, User user) {
         ObjectNode json = toJsonExercise(task);
-        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homework, task);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(user, homework, task);
         if(submittedHomeWork != null) {
             json.put("done",        submittedHomeWork.getSolve());
         } else {
@@ -114,11 +114,11 @@ public class TaskView {
         return json;
     }
 
-    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, HomeWork homework, Profile profile) {
+    public static ArrayNode toJsonHomeWorkForProfileList(List<Task> taskList, HomeWork homework, User user) {
         ArrayNode taskNode = JsonNodeFactory.instance.arrayNode();
 
         for(Task task : taskList) {
-            taskNode.add(TaskView.toJsonHomeWorkForProfile(task, homework, profile));
+            taskNode.add(TaskView.toJsonHomeWorkForProfile(task, homework, user));
         }
 
         return taskNode;

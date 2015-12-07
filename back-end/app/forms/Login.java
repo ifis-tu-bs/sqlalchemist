@@ -1,7 +1,6 @@
 package forms;
 
 import play.data.validation.Constraints;
-import service.ServiceUser;
 
 /**
  * @author fabiomazzone
@@ -20,13 +19,6 @@ public class Login {
                 "email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
-    }
-
-    public String validate() {
-        if(ServiceUser.authenticate(this.email, this.password) == null){
-            return "Invalid email or password";
-        }
-        return null;
     }
 
     public String getEmail() {

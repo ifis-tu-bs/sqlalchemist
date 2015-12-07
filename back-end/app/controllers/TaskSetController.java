@@ -2,16 +2,13 @@ package controllers;
 
 import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.MappingJsonFactory;
-import dao.ProfileDAO;
+import dao.SessionDAO;
 import dao.TaskSetDAO;
 
 import dao.UserDAO;
-import dao.UserSessionDAO;
 import models.*;
 
 import play.mvc.Http;
-import secured.CreatorSecured;
-import secured.UserSecured;
 
 import sqlparser.SQLParser;
 import sqlparser.SQLStatus;
@@ -22,14 +19,11 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
 
 import javax.persistence.PersistenceException;
 import java.io.*;
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 
 /**
@@ -38,7 +32,6 @@ import java.util.List;
  * @author fabiomazzone
  */
 
-@Security.Authenticated(UserSecured.class)
 public class TaskSetController extends Controller {
     /**
      * This method creates TaskFile objects from Json
@@ -49,12 +42,11 @@ public class TaskSetController extends Controller {
      * @return returns the created TaskSet
      */
 
-    @Security.Authenticated(CreatorSecured.class)
     public Result create() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
         JsonNode jsonNode = request().body().asJson();
 
-        TaskSet taskSet = TaskSetView.fromJsonForm(profile, jsonNode);
+        TaskSet taskSet = TaskSetView.fromJsonForm(user, jsonNode);
 
         if (taskSet == null) {
             Logger.warn("TaskSetController.create - The request body doesn't contain a valid TaskSet Json Object");
@@ -85,7 +77,7 @@ public class TaskSetController extends Controller {
      * @return returns a JSON Array filled with all taskSets
      */
     public Result read() {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         List<TaskSet> taskSetList = TaskSetDAO.getAll(user.isAdmin());
 
@@ -138,7 +130,6 @@ public class TaskSetController extends Controller {
      * @param id        the if of the taskSet
      * @return          returns an redirection to the updated taskSet
      */
-    @Security.Authenticated(CreatorSecured.class)
     public Result update(Long id) {
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
@@ -182,7 +173,6 @@ public class TaskSetController extends Controller {
     /**
      * This method deletes an TaskSet object
      */
-    @Security.Authenticated(CreatorSecured.class)
     public Result delete(Long id) {
         TaskSet taskSet = TaskSetDAO.getById(id);
 
@@ -216,8 +206,8 @@ public class TaskSetController extends Controller {
     public Result rate(Long id) {
         JsonNode   ratingBody  = request().body().asJson();
         TaskSet    taskSet     = TaskSetDAO.getById(id);
-        Profile    profile     = ProfileDAO.getByUsername(request().username());
-        Rating     rating      = RatingView.fromJsonForm(ratingBody, profile);
+        User user = UserDAO.getBySession(request().username());
+        Rating     rating      = RatingView.fromJsonForm(ratingBody, user);
 
         if(taskSet == null) {
             Logger.warn("TaskSetController.rate("+id+") - no task found");
@@ -254,10 +244,10 @@ public class TaskSetController extends Controller {
      * @return      returns a http code with a result message
      */
     public Result comment(Long id) {
-        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
         JsonNode    commentBody = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
-        Comment     comment     = CommentView.fromJsonForm(commentBody, profile);
+        Comment     comment     = CommentView.fromJsonForm(commentBody, user);
 
         if (taskSet == null) {
             Logger.warn("TaskSetController.comment("+id+") - no TaskSet found");
@@ -274,9 +264,8 @@ public class TaskSetController extends Controller {
         return ok(CommentView.toJson(comment));
     }
 
-    @Security.Authenticated(CreatorSecured.class)
     public Result upload() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         Http.MultipartFormData body = request().body().asMultipartFormData();
         Http.MultipartFormData.FilePart uploadJson = body.getFile("uploadJson");
@@ -287,7 +276,7 @@ public class TaskSetController extends Controller {
             JsonNode node = jsonParser.readValueAsTree();
 
             for (JsonNode taskSetNode : node) {
-                TaskSet taskSet = TaskSetView.fromJsonForm(profile, taskSetNode);
+                TaskSet taskSet = TaskSetView.fromJsonForm(user, taskSetNode);
 
                 taskSet.save();
             }
@@ -315,20 +304,19 @@ public class TaskSetController extends Controller {
      * Returns the FileName of the desired Download.
      * @return
      */
-    @Security.Authenticated(CreatorSecured.class)
     public Result download() {
         JsonNode jsonNode = request().body().asJson();
 
-        UserSession userSession = UserSessionDAO.getBySessionID(session().get("sessionID"));
+        Session userSession = SessionDAO.getById(request().username());
 
-        Logger.info("Export:" + userSession.getSessionID());
+        Logger.info("Export:" + userSession.getId());
 
         ArrayList<TaskSet> taskSets = new ArrayList<>();
         for (JsonNode node : jsonNode.findPath("taskSetIds")) {
             taskSets.add(TaskSetDAO.getById(node.longValue()));
         }
 
-        String fileName = "exportTaskSets_" + userSession.getSessionID() + ".json";
+        String fileName = "exportTaskSets_" + userSession.getId() + ".json";
 
         File downloadDir = new File("download");
 

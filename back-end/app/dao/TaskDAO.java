@@ -1,14 +1,10 @@
 package dao;
 
-import com.avaje.ebean.Ebean;
-import com.fasterxml.jackson.databind.deser.std.UntypedObjectDeserializer;
 import helper.Random;
 
-import models.Profile;
 import models.SolvedTask;
 import models.Task;
-
-import play.Logger;
+import models.User;
 
 import java.util.List;
 
@@ -29,14 +25,14 @@ public class TaskDAO {
 
     /**
      *
-     * @param profile       the profile
+     * @param user       the profile
      * @param difficulty    the difficulty
      * @return              an task object that matches to the given parameter
      */
-    public static Task getNewTask(Profile profile, int difficulty, boolean stay) {
+    public static Task getNewTask(User user, int difficulty, boolean stay) {
         List<Task>          taskList    = null;
         if(stay) {
-            taskList = profile.getCurrentTaskSet().getTasks();
+            taskList = user.getCurrentTaskSet().getTasks();
         } else {
             taskList = Task.find
                     .where()
@@ -49,13 +45,13 @@ public class TaskDAO {
         List<SolvedTask>    solvedTasks = SolvedTask.find
                 .fetch("task")
                 .where()
-                .eq("profile", profile)
+                .eq("profile", user)
                 .in("task", taskList)
                 .findList();
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)
-                return getNewTask(profile, difficulty -1, stay);
+                return getNewTask(user, difficulty -1, stay);
             else
                 return null;
         }
@@ -79,7 +75,7 @@ public class TaskDAO {
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)
-                return getNewTask(profile, difficulty -1, stay);
+                return getNewTask(user, difficulty -1, stay);
             else
                 return null;
         }

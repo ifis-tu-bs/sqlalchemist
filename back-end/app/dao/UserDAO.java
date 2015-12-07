@@ -1,8 +1,10 @@
 package dao;
 
+import com.avaje.ebean.Model;
+import forms.SignUp;
 import helper.MailSender;
 
-import models.Profile;
+import models.Session;
 import models.User;
 
 import play.Logger;
@@ -11,78 +13,71 @@ import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class UserDAO {
+    public static Model.Finder<Long, User> find = new Model.Finder<>(User.class);
 
-  /**
-   *
-   * @param username  Player Username
-   * @param id        User Identifier
-   * @param password  User Password
-   * @param role      User role
-   * @return returns the user object
-   */
-  public static User create(
-          String username,
-          String id,
-          String password,
-          int    role) {
-      User user = new User(id, password, role);
-      try {
-          user.save();
+    /**
+     *
+     * @param signUp  signUp Data
+     * @return returns the user object
+     */
+    public static User create(SignUp signUp) {
+        User user;
+        user = new User(
+                signUp.getEmail(),
+                signUp.getUsername(),
+                signUp.getPassword()
+        );
 
-          Profile profile;
-          if(( profile = ProfileDAO.create(username)) == null) {
-              user.delete();
-              return null;
-          } else {
-              user.setProfile(profile);
-              profile.setUser(user);
+        try {
+            user.save();
 
-              user.update();
-              profile.update();
+            if(play.api.Play.isProd(play.api.Play.current())) {
+                MailSender.getInstance().sendVerifyEmail(user.getEmail(), user.getEmailVerifyCode());
+            }
 
-              if(play.api.Play.isProd(play.api.Play.current())) {
-                  MailSender.getInstance().sendVerifyEmail(user.getEmail(), user.getEmailVerifyCode());
-              }
-          }
-
-          return user;
-      } catch (PersistenceException ex) {
-          Logger.warn("User.create PersistenceExcretion: " + ex.getMessage());
-          return null;
-      }
-  }
-
-  public static User getById(long id) {
-      return User.find.byId(id);
-  }
-
-  public static User getByEmail(String email) {
-    if(email == null) {
-      return null;
+            return user;
+        } catch (PersistenceException ex) {
+            Logger.warn("User.create PersistenceExcretion: " + ex.getMessage());
+            return null;
+        }
     }
-    return User.find.where().eq("email", email).findUnique();
-  }
 
-  public static User getByUsername(String username) {
-    if(username == null) {
-      return null;
+    public static User getById(long id) {
+        return find.byId(id);
     }
-    Profile userProfile = ProfileDAO.getByUsername(username);
-    if (userProfile == null) {
-      return null;
+
+    public static User getByEmail(String email) {
+        if(email == null) {
+            return null;
+        }
+        return find.where().eq("email", email).findUnique();
     }
-    return userProfile.getUser();
-  }
+
+    public static User getByUsername(String username) {
+        if(username == null) {
+            return null;
+        }
+        return find.where().eq("username", username).findUnique();
+    }
+
+
+    public static User getBySession(String sessionID) {
+        Session session = SessionDAO.getById(sessionID);
+        if(session != null && session.getOwner() != null) {
+            return session.getOwner();
+        }
+        return null;
+    }
 
     private static User getByY_ID(String y_ID) {
         if(y_ID == null) {
             return null;
         }
-        return User.find.where().eq("y_id",y_ID).findUnique();
+        return find.where().eq("y_id",y_ID).findUnique();
     }
 
     public static List<User> getAllStudendts() {
-        List<User> studentList = User.find.where().eq("isStudent", true).findList();
+        List<User> studentList = find.where().eq("isStudent", true).findList();
         if (studentList.size() == 0) {
             return null;
         }
@@ -90,14 +85,14 @@ public class UserDAO {
     }
 
     public static List<User> getAllUsers() {
-    return User.find.all();
+    return find.all();
   }
 
     public static List<User> getAll() {
-        return User.find.all();
+        return find.all();
     }
 
     public static User getByVerifyCode(String verifyCode) {
-        return User.find.where().eq("emailVerifyCode", verifyCode).findUnique();
+        return find.where().eq("emailVerifyCode", verifyCode).findUnique();
     }
 }

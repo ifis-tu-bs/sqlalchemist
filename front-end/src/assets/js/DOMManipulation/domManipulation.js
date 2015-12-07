@@ -919,12 +919,18 @@ game.fdom.RootContainer = me.Renderable.extend({
     }
 });
 game.fdom.ButtonElement = me.Renderable.extend({
-    init: function(parent, width, height, left, top, text, className, action) {
+    init: function(parent, width, height, left, top, text, className, submit, action) {
         this.parent             = parent.getNode();
         this.elem               = document.createElement('button');
         this.elem.className     = className;
         this.elem.innerHTML     = text;
-        this.elem.onclick       = action;
+        if(submit === true) {
+            this.elem.type="submit";
+        } else {
+            $(this.elem).on('click', action);
+            this.elem.type="button";
+        }
+
 
         this.elem.style.width       = width;
         this.elem.style.height      = height;
@@ -962,6 +968,10 @@ game.fdom.ContainerElement = me.Renderable.extend({
     hide: function() {
         this.elem.style.display = "none";
     },
+    setBackgroundImage: function(backgroundImage) {
+        this.elem.style.backgroundImage = "url('" + backgroundImage + "')";
+    },
+
     getNode : function () {
         return this.elem;
     },
@@ -999,17 +1009,20 @@ game.fdom.TitleElement = me.Renderable.extend({
     }
 });
 game.fdom.FormElement = me.Renderable.extend({
-    init: function(parent, width, height, left, top, className) {
+    init: function(parent, width, height, left, top, className, submitAction) {
         this.parent             = parent.getNode();
         this.elem               = document.createElement('form');
         this.elem.className     = className;
-
-        this.elem.action        = '#';
 
         this.elem.style.width       = width;
         this.elem.style.height      = height;
         this.elem.style.left        = left;
         this.elem.style.top         = top;
+
+        $(this.elem).on('submit', function(e) {
+            e.preventDefault();
+            submitAction();
+        });
 
         this.parent.appendChild(this.elem);
     },

@@ -18,7 +18,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class TaskSetView {
-    public static TaskSet fromJsonForm(Profile profile, JsonNode jsonNode) {
+    public static TaskSet fromJsonForm(User user, JsonNode jsonNode) {
         String                  taskSetName             = jsonNode.path("taskSetName").asText();
         JsonNode                tableDefinitionArray    = jsonNode.path("tableDefinitions");
         JsonNode                foreignKeyArray         = jsonNode.path("foreignKeyRelations");
@@ -38,11 +38,11 @@ public class TaskSetView {
             foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyNode));
         }
 
-        taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, profile, isHomework);
+        taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, user, isHomework);
 
         for(int i = 0; i < taskArray.size(); i++) {
             JsonNode taskNode = taskArray.get(i);
-            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, profile);
+            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, user);
             task.setTaskSet(taskSet);
             tasks.add(task);
         }
@@ -79,7 +79,7 @@ public class TaskSetView {
         taskSetJson.set("foreignKeyRelations",  foreignKeyRelationNode);
         taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
         taskSetJson.set("tasks",                taskNode);
-        taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
+        taskSetJson.set("creator",              taskSet.getCreator().toJsonProfile()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
         taskSetJson.set("rating",               RatingView.toJson(rating));
         taskSetJson.set("comments",             commentNode);

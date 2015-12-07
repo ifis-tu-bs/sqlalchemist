@@ -4,7 +4,10 @@ import dao.*;
 
 import models.*;
 
-import secured.UserSecured;
+import play.mvc.Security;
+import secured.UserAuthenticator;
+import service.ServiceScore;
+import service.ServiceUser;
 import sqlparser.SQLParser;
 
 import view.SQLResultView;
@@ -18,26 +21,25 @@ import play.Logger;
 import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
 
 import java.util.List;
 
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(UserSecured.class)
+@Security.Authenticated(UserAuthenticator.class)
 public class SQLController extends Controller {
     public Result story(long id) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        Scroll scroll   = ScrollDAO.getById(id);
+        User    user    = UserDAO.getBySession(request().username());
+        Scroll  scroll  = ScrollDAO.getById(id);
 
         if(scroll == null) {
             Logger.warn("SQLController.story - invalid Scroll ID");
             return badRequest("invalid Scroll ID");
         }
 
-        if(ScrollCollectionDAO.contains(profile, scroll)) {
-            profile.setCurrentScroll(scroll);
+        if(ScrollCollectionDAO.contains(user, scroll)) {
+            user.setCurrentScroll(scroll);
         } else {
             Logger.warn("TaskController.story - Scroll not in the collection: " + scroll.toJson());
             return badRequest("Scroll not in the collection");
@@ -48,7 +50,7 @@ public class SQLController extends Controller {
             difficulty = scroll.getPotion().getPowerLevel();
         } else {
             difficulty++;
-            List<ScrollCollection> scrollList = ScrollCollectionDAO.getScrollCollection(profile);
+            List<ScrollCollection> scrollList = ScrollCollectionDAO.getScrollCollection(user);
             for(ScrollCollection scrollCollection : scrollList) {
                 Scroll scrollI = scrollCollection.getScroll();
                 if( !scrollI.isRecipe() && scrollI.getType() == scroll.getType()) {
@@ -56,19 +58,19 @@ public class SQLController extends Controller {
                 }
             }
         }
-        Task task = TaskDAO.getNewTask(profile, Math.round(difficulty / 2), false);
+        Task task = TaskDAO.getNewTask(user, Math.round(difficulty / 2), false);
 
         if(task == null) {
             Logger.warn("TaskController.story - no task found for ScrollID: " + id);
             return badRequest("no task found for given ScrollID");
         }
 
-        profile.update();
+        user.update();
         return ok(TaskView.toJsonExercise(task));
     }
 
     public Result storySolve(long id) {
-        Profile         profile         = ProfileDAO.getByUsername(request().username());
+        User            user            = UserDAO.getBySession(request().username());
         JsonNode        body            = request().body().asJson();
         Task            task            = TaskDAO.getById(id);
         UserStatement   userStatement   = UserStatementView.fromJsonForm(body);
@@ -92,26 +94,25 @@ public class SQLController extends Controller {
             resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
         } else {
-            profile.addSuccessfully();
-            int coins = profile.addScore(task.getScore() / userStatement.getTime());
-            profile.addCurrentScroll();
+            ServiceScore.addSuccessfully(user);
+            int coins = ServiceScore.addScore(user, task.getScore() / userStatement.getTime());
+            ServiceUser.addCurrentScroll(user);
             status = true;
             resultNode = SQLResultView.toJson(sqlResult, userStatement, coins);
             result = ok(resultNode);
         }
+        ServiceScore.addStatement(user);
+        ServiceScore.addTime(user, userStatement.getTime());
 
-        profile.addStatement();
-        profile.addTime(userStatement.getTime());
+        SolvedTaskDAO.update(user, task, status);
 
-        SolvedTaskDAO.update(profile, task, status);
-
-        profile.update();
+        user.update();
         return result;
 
     }
 
     public Result trivia(int difficulty, boolean stay) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User    user    = UserDAO.getBySession(request().username());
 
         if(difficulty < 0 && difficulty > Play.application().configuration().getInt("HighestTaskDifficulty")) {
             Logger.warn("SQLController.trivia - difficulty is out of range");
@@ -119,20 +120,20 @@ public class SQLController extends Controller {
         }
         Logger.info("SQLCOntroller.trivia");
 
-        Task task = TaskDAO.getNewTask(profile, difficulty, stay);
+        Task task = TaskDAO.getNewTask(user, difficulty, stay);
 
 
         if(task == null) {
             Logger.warn("SQLController.trivia - no task available");
             return badRequest("no task available");
         }
-        profile.setCurrentTaskSet(task.getTaskSet());
-        profile.update();
+        user.setCurrentTaskSet(task.getTaskSet());
+        user.update();
         return ok(TaskView.toJsonExercise(task));
     }
 
     public Result triviaSolve(Long id) {
-        Profile         profile         = ProfileDAO.getByUsername(request().username());
+        User    user    = UserDAO.getBySession(request().username());
         JsonNode        body            = request().body().asJson();
         Task            task            = TaskDAO.getById(id);
         UserStatement userStatement     = UserStatementView.fromJsonForm(body);
@@ -156,28 +157,28 @@ public class SQLController extends Controller {
             resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
         } else {
-            profile.addSuccessfully();
-            int coins = profile.addScore(task.getScore() / userStatement.getTime());
+            ServiceScore.addSuccessfully(user);
+            int coins = ServiceScore.addScore(user, task.getScore() / userStatement.getTime());
             status = true;
             resultNode = SQLResultView.toJson(sqlResult, userStatement, coins);
             result = ok(resultNode);
         }
 
-        profile.addStatement();
-        profile.addTime(userStatement.getTime());
+        ServiceScore.addStatement(user);
+        ServiceScore.addTime(user, userStatement.getTime());
 
-        SolvedTaskDAO.update(profile, task, status);
+        SolvedTaskDAO.update(user, task, status);
 
-        profile.update();
+        user.update();
         return result;
     }
 
 
     public Result homework(long homeWorkID, long taskID) {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User    user    = UserDAO.getBySession(request().username());
         HomeWork homeWork = HomeWorkDAO.getById(homeWorkID);
         Task task = TaskDAO.getById(taskID);
-        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homeWork, task);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(user, homeWork, task);
         boolean contains = false;
         for(TaskSet taskSet : homeWork.getTaskSets()) {
             if(taskSet.contains(task)) {
@@ -200,18 +201,18 @@ public class SQLController extends Controller {
             taskNode.put("semanticChecksDone", submittedHomeWork.getSemanticChecksDone());
         }
 
-        profile.setCurrentHomeWork(homeWork);
-        profile.update();
+        user.setCurrentHomeWork(homeWork);
+        user.update();
         return ok(taskNode);
     }
 
     public Result homeworkSolve(Long TaskID, boolean submit) {
-        Profile         profile         = ProfileDAO.getByUsername(request().username());
-        HomeWork        homeWork        = profile.getCurrentHomeWork();
+        User            user            = UserDAO.getBySession(request().username());
+        HomeWork        homeWork        = user.getCurrentHomeWork();
         Task            task            = TaskDAO.getById(TaskID);
         JsonNode        body            = request().body().asJson();
         UserStatement   userStatement   = UserStatementView.fromJsonForm(body);
-        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(profile, homeWork, task);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(user, homeWork, task);
 
         if (homeWork == null) {
             Logger.warn("No active HomeWork");
@@ -226,7 +227,7 @@ public class SQLController extends Controller {
             return badRequest("no task found");
         }
         if (submittedHomeWork == null) {
-            submittedHomeWork = SubmittedHomeWorkDAO.create(profile, task, homeWork);
+            submittedHomeWork = SubmittedHomeWorkDAO.create(user, task, homeWork);
             if(submittedHomeWork == null) {
                 Logger.warn("Cant Create SubmittedHomeWork object");
                 return badRequest("Cant Create SubmittedHomeWork object");
@@ -257,8 +258,8 @@ public class SQLController extends Controller {
             result = ok(resultNode);
         }
 
-        profile.addStatement();
-        profile.addTime(userStatement.getTime());
+        ServiceScore.addStatement(user);
+        ServiceScore.addTime(user, userStatement.getTime());
 
         if (submit) {
             Logger.info("Submit");

@@ -6,37 +6,31 @@ game.StartScreen = me.ScreenObject.extend({
         //var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/title_screen.png');
         var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
         me.game.world.addChild(rootContainer);
+        var isSignedIn = false;
 
-        function displayStartScreen() {
-            var isSessionValid = false;
+        ajaxGetSession(function(xmlHttpRequest) {
+            if(xmlHttpRequest.status != 200) {
+                console.log("Error");
+                return;
+            }
+            var session = JSON.parse(xmlHttpRequest.responseText);
+            if(session.owner !== "") {
+                isSignedIn = true;
+            }
+            console.log(session);
+        });
 
-            function validateCookie(xmlHttpRequest) {
-                console.log(xmlHttpRequest);
-                var response = JSON.parse(xmlHttpRequest.responseText);
-                console.log(response);
-                if(response.status === true) {
-                    isSessionValid = true;
+        var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'Start', 'Button Start', false, function() {
+            $(startButton.getNode()).fadeOut(50);
+            setTimeout(function() {
+                if(isSignedIn) {
+                    me.state.change(me.state.MENU);
+                } else {
+                    me.game.world.removeChild(startButton);
+                    me.state.change(STATE_LOGIN);
                 }
-            }
-
-            if(typeof ($.cookie('SQL-Alchemist-Session')) !== 'undefined') {
-                ajaxValidateCookie($.cookie('SQL-Alchemist-Session'), validateCookie);
-            }
-
-            var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'Start', 'Button Start', function() {
-                $(startButton.getNode()).fadeOut(50);
-                setTimeout(function() {
-                    if(isSessionValid) {
-                        console.log("Switch to Main Menu");
-                        me.state.change(me.state.MENU);
-                    } else {
-                        me.game.world.removeChild(startButton);
-                        me.state.change(STATE_LOGIN);
-                    }
-                }, 100);
-            });
-            me.game.world.addChild(startButton);
-        }
-        displayStartScreen();
+            }, 100);
+        });
+        me.game.world.addChild(startButton);
     },
 });

@@ -3,12 +3,13 @@ package view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import dao.HomeWorkDAO;
+
 import dao.TaskSetDAO;
 import models.HomeWork;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import models.Profile;
+
 import models.TaskSet;
+import models.User;
 import play.Logger;
 import play.libs.Json;
 
@@ -23,7 +24,7 @@ import java.text.DateFormatSymbols;
  */
 public class HomeWorkView {
 
-    public static HomeWork fromJsonForm (Profile profile, JsonNode node) {
+    public static HomeWork fromJsonForm (User user, JsonNode node) {
         if (node == null) {
             return null;
         }
@@ -51,7 +52,7 @@ public class HomeWorkView {
         Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskSets.toString());
 
         HomeWork homeWork;
-        if ((homeWork = new HomeWork(name, profile, taskSets, start, end)) == null) {
+        if ((homeWork = new HomeWork(name, user, taskSets, start, end)) == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return null;
         }
@@ -69,7 +70,7 @@ public class HomeWorkView {
         objectNode.put("id",    homeWork.getId());
         objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
         objectNode.set("taskSets",  arrayNode);
-        objectNode.set("creator",   homeWork.getCreator().toJson());
+        objectNode.set("creator",   homeWork.getCreator().toJsonUser());
         objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
         objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
@@ -86,7 +87,7 @@ public class HomeWorkView {
 
         objectNode.put("id",    homeWork.getId());
         objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
-        objectNode.set("creator",   homeWork.getCreator().toJson());
+        objectNode.set("creator",   homeWork.getCreator().toJsonUser());
         objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
         objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
@@ -113,7 +114,7 @@ public class HomeWorkView {
         return homeWorkNode;
     }
 
-    public static ObjectNode toJsonExerciseForProfile(HomeWork homeWork, Profile profile) {
+    public static ObjectNode toJsonExerciseForUser(HomeWork homeWork, User user) {
         ObjectNode objectNode = Json.newObject();
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
@@ -122,7 +123,7 @@ public class HomeWorkView {
 
         for (TaskSet taskSet : homeWork.getTaskSets()) {
             ObjectNode taskSetJson = TaskSetView.toJsonHomeWork(taskSet);
-            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), homeWork, profile));
+            taskSetJson.set("tasks",    TaskView.toJsonHomeWorkForProfileList(taskSet.getTasks(), homeWork, user));
 
             arrayNode.add(taskSetJson);
         }
@@ -137,11 +138,11 @@ public class HomeWorkView {
         return objectNode;
     }
 
-    public static ArrayNode toJsonExerciseForProfile(List<HomeWork> homeWorks, Profile profile) {
+    public static ArrayNode toJsonExerciseForUser(List<HomeWork> homeWorks, User user) {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
         for (HomeWork homeWork : homeWorks) {
-            arrayNode.add(toJsonExerciseForProfile(homeWork, profile));
+            arrayNode.add(toJsonExerciseForUser(homeWork, user));
         }
 
         return arrayNode;

@@ -1,49 +1,49 @@
 package controllers;
 
-import dao.ProfileDAO;
 import dao.StoryChallengeDAO;
+import dao.UserDAO;
 
-import models.Profile;
 import models.StoryChallenge;
+import models.User;
 
-import play.Logger;
+import secured.UserAuthenticator;
+
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security.Authenticated;
-
-import secured.UserSecured;
+import play.mvc.Security;
+import service.ServiceUser;
 
 /**
  * @author fabiomazzone
  */
-
-@Authenticated(UserSecured.class)
+@Security.Authenticated(UserAuthenticator.class)
 public class LevelController extends Controller {
 
     public Result story() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
-        StoryChallenge challenge = StoryChallengeDAO.getForProfile(profile);
+        StoryChallenge challenge = StoryChallengeDAO.getForUser(user);
 
         return ok(challenge.toJson());
     }
 
     public Result skipChallenge() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        profile.setTutorialDone(true);
+        User user = UserDAO.getBySession(request().username());
 
-        profile.setCurrentStory(StoryChallengeDAO.getFirstLevel());
+        user.setTutorialDone(true);
 
-        profile.update();
+        user.setCurrentStory(StoryChallengeDAO.getFirstLevel());
+
+        user.update();
         return ok();
     }
 
     public Result reset() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
-        profile.resetStory();
+        ServiceUser.resetStory(user);
 
-        profile.update();
+        user.update();
 
         return ok();
     }

@@ -17,7 +17,7 @@ public class HomeWork extends Model {
     private long id;
 
     @ManyToOne
-    private final Profile creator;
+    private final User creator;
 
     @ManyToMany(cascade = CascadeType.ALL)
     private final List<TaskSet> taskSets;
@@ -37,7 +37,7 @@ public class HomeWork extends Model {
 
     public HomeWork(
             String homeWorkName,
-            Profile creator,
+            User creator,
             List<TaskSet> taskFiles,
             Date start_at,
             Date expires_at) {
@@ -60,7 +60,7 @@ public class HomeWork extends Model {
         return this.taskSets;
     }
 
-    public Profile getCreator() {
+    public User getCreator() {
         return this.creator;
     }
 

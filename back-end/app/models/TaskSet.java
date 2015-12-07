@@ -23,34 +23,34 @@ public class TaskSet extends Model {
     @Id
     private Long id;
 
-    private String                    taskSetName;
+    private String                      taskSetName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<TableDefinition>     tableDefinitions;
+    private List<TableDefinition>       tableDefinitions;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<ForeignKeyRelation>  foreignKeyRelations;
+    private List<ForeignKeyRelation>    foreignKeyRelations;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<Task>                tasks;
+    private List<Task>                  tasks;
 
-    private final boolean             isHomework;
+    private final boolean               isHomework;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    private List<HomeWork> homeWorks;
+    private List<HomeWork>              homeWorks;
 
     // Social Information's
     @ManyToOne
-    private final Profile creator;
+    private final User                  creator;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<Rating> ratings;
+    private List<Rating>                ratings;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
-    private List<Comment> comments;
+    private List<Comment>               comments;
 
-    private boolean available;
+    private boolean                     available;
 
-    private Date createdAt;
-    private Date updatedAt;
+    private Date                        createdAt;
+    private Date                        updatedAt;
 
     public static final Finder<Long, TaskSet> find = new Finder<>(TaskSet.class);
 
@@ -71,7 +71,7 @@ public class TaskSet extends Model {
             String                      taskSetName,
             List<TableDefinition>       tableDefinitions,
             List<ForeignKeyRelation>    foreignKeyRelations,
-            Profile                     creator,
+            User                        creator,
             boolean                     isHomeWork) {
 
         this.taskSetName            = taskSetName;
@@ -186,7 +186,7 @@ public class TaskSet extends Model {
         return isHomework;
     }
 
-    public Profile getCreator() {
+    public User getCreator() {
         return creator;
     }
 
@@ -200,7 +200,7 @@ public class TaskSet extends Model {
     public void addRating(Rating rating) {
         if(this.ratings != null && this.ratings.size() > 0) {
             for(Rating ratingI : this.ratings) {
-                if(ratingI.getProfile().getId() == rating.getProfile().getId()) {
+                if(ratingI.getUser().getId() == rating.getUser().getId()) {
                     ratingI.setRating(rating);
                     ratingI.update();
                     break;

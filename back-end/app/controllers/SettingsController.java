@@ -1,17 +1,20 @@
 package controllers;
 
-import dao.ProfileDAO;
 
-import models.Profile;
+import dao.UserDAO;
 
+import models.User;
+
+import secured.UserAuthenticator;
 import view.SettingsView;
+
+
+import play.mvc.Security;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security.Authenticated;
 
 
 
@@ -20,7 +23,7 @@ import play.mvc.Security.Authenticated;
  *
  * @author fabiomazzone
  */
-@Authenticated(secured.UserSecured.class)
+@Security.Authenticated(UserAuthenticator.class)
 public class SettingsController extends Controller {
     /**
      * GET      /profile/settings
@@ -28,8 +31,9 @@ public class SettingsController extends Controller {
      * @return  returns the Player Settings as JSON Object
      */
     public Result index() {
-        Profile profile = ProfileDAO.getByUsername(request().username());
-        return ok(SettingsView.toJson(profile.settings));
+        User user = UserDAO.getBySession(request().username());
+
+        return ok(SettingsView.toJson(user.getSettings()));
     }
 
     /**
@@ -38,10 +42,12 @@ public class SettingsController extends Controller {
      * @return  returns a http responds code if the action was successfully or not
      */
     public Result edit() {
-        Profile profile     = ProfileDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
+
         JsonNode json       = request().body().asJson();
-        profile.setSettings(SettingsView.fromJson(json));
-        profile.update();
+        user.setSettings(SettingsView.fromJson(json));
+        user.update();
+
         return redirect(routes.SettingsController.index());
     }
 }
