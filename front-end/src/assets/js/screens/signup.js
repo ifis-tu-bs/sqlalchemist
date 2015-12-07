@@ -90,60 +90,6 @@ game.SignUpScreen = me.ScreenObject.extend({
 
         $(parchment.getNode()).fadeIn(100);
 
-        toStart = function () {
-            $("#background").fadeOut(100);
-            $("#submitButton").fadeOut(100);
-            $("#backToLoginButton").fadeOut(100);
-            setTimeout( function() {
-                me.state.change(me.state.MENU);
-            }, 100);
-        };
-
-
-        /**
-         *  action to perform when Submit-Button is clicked.
-         */
-        this.submitReply = function() {
-
-            var id       = document.getElementById("fIdSignUp").value;
-            var username = document.getElementById("fUsernameSignUp").value;
-            var pw       = document.getElementById("fPasswordSignUp").value;
-            var pwAck    = document.getElementById("fPasswordAckSignUp").value;
-
-
-            /**
-             * Parse TextInputElement values into JSON-String.
-             */
-            this.user_object = JSON.stringify({username: username, id: id, password: pw});
-
-
-            function onSubmit(xmlHttpRequest) {
-                //console.log("Response of POST" + xmlHttpRequest.responseText);
-                /**
-                 * Check if username or id already taken.
-                 */
-                var signUp_JSON = JSON.parse(xmlHttpRequest.responseText);
-                if (signUp_JSON.id == 1) {
-                    alert("id already taken");
-                } else if (signUp_JSON.username == 1) {
-                    alert("username already taken!");
-                } else {
-                    toStart();
-                }
-
-            }
-            /**
-             * Ckeck if entered Password is valid.
-             */
-            if (pw != pwAck) {
-                alert("entered passwords do not match");
-            } else if (pw === null) {
-                alert("password may not be empty");
-            } else {
-                ajaxSendSignupRequest(this.user_object, onSubmit);
-            }
-        };
     }
-
 
 });
