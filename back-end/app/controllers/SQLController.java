@@ -118,7 +118,7 @@ public class SQLController extends Controller {
             Logger.warn("SQLController.trivia - difficulty is out of range");
             return badRequest("difficulty is out of range");
         }
-        Logger.info("SQLCOntroller.trivia");
+        Logger.info("SQLController.trivia");
 
         Task task = TaskDAO.getNewTask(user, difficulty, stay);
 

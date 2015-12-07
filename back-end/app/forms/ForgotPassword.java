@@ -19,7 +19,7 @@ public class ForgotPassword {
 
             errors.add(new ValidationError("email", "This field is required"));
 
-        } else if(!SignUp.isValidEmailAddress(email)) {
+        } else if(SignUp.isNotValidEmailAddress(email)) {
 
             errors.add(new ValidationError("email", "Valid email required"));
 

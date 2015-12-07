@@ -37,11 +37,11 @@ public class UserBootstrap {
                     user.update();
                 }
 
-                SignUp nicnac = new SignUp();
-                nicnac.setUsername("nicnac");
-                nicnac.setEmail("nicole@nicole.de");
-                nicnac.setPassword("1234");
-                User nicole = UserDAO.create(nicnac);
+                SignUp nicNac = new SignUp();
+                nicNac.setUsername("nicNac");
+                nicNac.setEmail("nicole@nicole.de");
+                nicNac.setPassword("1234");
+                User nicole = UserDAO.create(nicNac);
                 nicole.setStudent(true);
                 nicole.update();
                 List<Scroll> scrolls = ScrollDAO.getAll();

@@ -42,7 +42,7 @@ public class User extends Model {
     @Column(unique = true)
     private String                      email;
     @Column(unique = true)
-    private String                      username;
+    private final String                      username;
     private String                      password;
 
     @Column(unique = true)
@@ -99,7 +99,7 @@ public class User extends Model {
     private boolean                     isActive;
 
 
-    private Calendar                    created_at;
+    private final Calendar                    created_at;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
@@ -370,11 +370,11 @@ public class User extends Model {
         this.matNR = matNR;
     }
 
-    public String getyID() {
+    public String getYID() {
         return yID;
     }
 
-    public void setyID(String yID) {
+    public void setYID(String yID) {
         this.yID = yID;
     }
 

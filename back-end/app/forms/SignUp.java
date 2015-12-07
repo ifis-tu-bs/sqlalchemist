@@ -22,7 +22,7 @@ public class SignUp {
 
         if(email.isEmpty()) {
             errors.add(new ValidationError("email", "This field is required"));
-        } else if(!isValidEmailAddress(email)) {
+        } else if(isNotValidEmailAddress(email)) {
             errors.add(new ValidationError("email", "Valid email required"));
         } else if (UserDAO.getByEmail(email) != null) {
             errors.add(new ValidationError("email", "already taken"));
@@ -65,7 +65,7 @@ public class SignUp {
         this.password = password;
     }
 
-    public static boolean isValidEmailAddress(String email) {
+    public static boolean isNotValidEmailAddress(String email) {
         String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
         java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
         java.util.regex.Matcher m = p.matcher(email);
