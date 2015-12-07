@@ -116,9 +116,9 @@ function ajaxSendUsersDeleteRequest(onload) {
     return xmlHttpRequest;
 }
 
-// ~ POST /API/Users/password
+// ~ POST /API/Users/ForgotPassword
 function ajaxSendUsersResetPasswordRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/API/User/password", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/ForgotPassword", onload);
 
     xmlHttpRequest.send(jsonData);
 

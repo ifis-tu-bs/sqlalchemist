@@ -12,7 +12,22 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         me.game.world.addChild(title);
 
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form PasswordResetScreen', function() {
-            console.log("passwordReset");
+            $(formEmailInputField.getNode()).removeClass("invalid");
+            var resetPasswordData = JSON.stringify({ email: formEmailInputField.getNode().value });
+            ajaxSendUsersResetPasswordRequest(resetPasswordData, function(xmlHttpRequest) {
+                if(xmlHttpRequest.status == 200) {
+                    $(parchment.getNode()).fadeOut(100);
+                    setTimeout(function() {
+                        me.state.change(STATE_LOGIN);
+                    }, 50);
+                } else if( xmlHttpRequest.status == 400 ) {
+                    var errorMessage = JSON.parse(xmlHttpRequest.responseText);
+                    if(typeof errorMessage.email !== 'undefined') {
+                        $(formEmailInputField.getNode()).addClass("invalid");
+                    }
+                    console.log(errorMessage);
+                }
+            });
         });
         me.game.world.addChild(loginForm);
 

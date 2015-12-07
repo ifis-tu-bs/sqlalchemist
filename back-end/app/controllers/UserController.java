@@ -4,6 +4,7 @@ import dao.ActionDAO;
 import dao.SessionDAO;
 import dao.UserDAO;
 
+import forms.ForgotPassword;
 import forms.SignUp;
 import helper.MailSender;
 
@@ -117,12 +118,14 @@ public class UserController extends Controller {
      */
     @Authenticated(UserAuthenticator.class)
     public Result destroy() {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
         user.disable();
         user.update();
 
-        return redirect(routes.ControllerSession.logout());
+        session().clear();
+
+        return redirect(routes.ControllerSession.index());
     }
 
     /**
@@ -153,16 +156,18 @@ public class UserController extends Controller {
      *
      * @return Success state
      */
-    @Authenticated(UserAuthenticator.class)
     public Result sendResetPasswordMail() {
-        JsonNode  json = request().body().asJson();
-        if (json == null) {
-            return badRequest("Could not retrieve Json from POST body!");
+        Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class).bindFromRequest();
+
+        if(forgotPasswordForm.hasErrors()) {
+            Logger.error("forgetPasswordForm has errors");
+            Logger.error(forgotPasswordForm.errorsAsJson().toString());
+            return badRequest(forgotPasswordForm.errorsAsJson());
         }
-        User user = UserDAO.getByEmail(json.path("id").textValue());
-        if(user == null) {
-            return badRequest();
-        }
+
+        ForgotPassword forgotPassword = forgotPasswordForm.bindFromRequest().get();
+
+        User user = UserDAO.getByEmail(forgotPassword.getEmail());
 
         String newPassword = Integer.toHexString(user.getUsername().hashCode());
 

@@ -8,14 +8,14 @@ POST        /API/Login                              controllers.ControllerSessio
 DELETE      /API/Logout                             controllers.ControllerSession.logout()
 
 #UserController
-POST        /API/User/                             controllers.UserController.create()
-GET         /API/User/                             controllers.UserController.index()
-GET         /API/User/student                      controllers.UserController.checkStudent()
-PATCH       /API/User/password                     controllers.UserController.edit()
-GET         /API/User/verify/:code                 controllers.UserController.verifyEmail(code: String)
-POST        /API/User/password                     controllers.UserController.sendResetPasswordMail()
-POST        /API/User/:id                          controllers.UserController.promote(id :Long)
-DELETE      /API/User                              controllers.UserController.destroy()
+POST        /API/User/                              controllers.UserController.create()
+GET         /API/User/                              controllers.UserController.index()
+GET         /API/User/student                       controllers.UserController.checkStudent()
+POST        /API/User/password                      controllers.UserController.edit()
+GET         /API/User/verify/:code                  controllers.UserController.verifyEmail(code: String)
+POST        /API/User/ForgotPassword                controllers.UserController.sendResetPasswordMail()
+POST        /API/User/:id                           controllers.UserController.promote(id :Long)
+DELETE      /API/User/                              controllers.UserController.destroy()
 
 #ItemController
 GET         /API/Profile/inventory                  controllers.ItemController.inventory()
