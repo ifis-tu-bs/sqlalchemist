@@ -25,7 +25,7 @@ public class TaskDAO {
 
     /**
      *
-     * @param user       the profile
+     * @param user       the user
      * @param difficulty    the difficulty
      * @return              an task object that matches to the given parameter
      */
@@ -45,7 +45,7 @@ public class TaskDAO {
         List<SolvedTask>    solvedTasks = SolvedTask.find
                 .fetch("task")
                 .where()
-                .eq("profile", user)
+                .eq("user", user)
                 .in("task", taskList)
                 .findList();
 

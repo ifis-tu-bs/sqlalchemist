@@ -225,7 +225,7 @@ function ajaxSendUserSettingsRequest(onload) {
 
 // ~ POST /API/User/Settings/ ~ jsonData: JSON.settings
 function ajaxSendUserSettingsSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/Profile/Settings&", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/Settings/", onload);
 
     xmlHttpRequest.send(jsonData);
 

@@ -58,7 +58,7 @@ game.LoginScreen = me.ScreenObject.extend({
         me.game.world.addChild(loginButton);
 
         // Password Reset Button
-        var passwordReset = new game.fdom.ButtonElement(loginForm, '27%','5%','54%','65%', 'Forgot Passoword? Click Here!', 'Button LoginScreen PasswordReset', false, function() {
+        var passwordReset = new game.fdom.ButtonElement(loginForm, '27%','5%','54%','65%', 'Forgot Password? Click Here!', 'Button LoginScreen PasswordReset', false, function() {
             $(parchment.getNode()).fadeOut(100);
             setTimeout(function() {
                 me.state.change(STATE_FORGOTPASSWORD);

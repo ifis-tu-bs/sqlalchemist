@@ -946,7 +946,9 @@ game.fdom.ButtonElement = me.Renderable.extend({
     update : function () {
         game.scaleElement(this);
     },
-
+    hide: function() {
+        this.elem.style.display = "none";
+    },
     destroy : function () {
         // remove element
         this.parent.removeChild(this.elem);
@@ -1080,6 +1082,35 @@ game.fdom.InputPasswordFieldElement = me.Renderable.extend({
     },
     getNode : function () {
         return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});
+
+game.fdom.ImageElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, className, imageURL) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('img');
+        this.elem.src           = imageURL;
+        this.elem.className     = className;
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    hide: function() {
+        this.elem.style.display = "none";
     },
     update : function () {
         game.scaleElement(this);

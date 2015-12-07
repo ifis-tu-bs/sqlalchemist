@@ -2,8 +2,6 @@ package models;
 
 import dao.ScrollCollectionDAO;
 
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -25,8 +23,10 @@ import java.util.List;
         name = "scrollcollection",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "scroll_id"})
 )
-@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
+    @Id
+    private long id;
+
     @ManyToOne
     private User user;
 

@@ -20,8 +20,12 @@ game.StartScreen = me.ScreenObject.extend({
             console.log(session);
         });
 
-        var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'Start', 'Button Start', false, function() {
+
+        var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
+        titleBanner.hide();
+        var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'START', 'Button StartScreen Start', false, function() {
             $(startButton.getNode()).fadeOut(50);
+            $(titleBanner.getNode()).fadeOut(50);
             setTimeout(function() {
                 if(isSignedIn) {
                     me.state.change(me.state.MENU);
@@ -31,6 +35,10 @@ game.StartScreen = me.ScreenObject.extend({
                 }
             }, 100);
         });
+        startButton.hide();
+
+        $(startButton.getNode()).fadeIn(50);
+        $(titleBanner.getNode()).fadeIn(50);
         me.game.world.addChild(startButton);
     },
 });

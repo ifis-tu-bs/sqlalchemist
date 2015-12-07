@@ -5,6 +5,10 @@
     background-size: contain;
 }
 
+.Image {
+    position: absolute;
+}
+
 .Button, .Button:focus{
     position: absolute;
     cursor: pointer;
@@ -17,6 +21,16 @@
 
 .Button:hover {
     color: red;
+}
+
+.Button.StartScreen.Start {
+    background: url('/assets/data/img/buttons/start_scroll.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    font-size: 7vh;
+    padding-bottom: 3%;
+    text-shadow: -1px 0px 5px rgba(133, 133, 133, 0.75);
 }
 
 .Button.LoginScreen.Enter {

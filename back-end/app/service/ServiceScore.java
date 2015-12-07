@@ -26,27 +26,27 @@ public class ServiceScore {
     }
 
     public static List<User> sortByScore(User user) {
-        return getQuery(user, "totalScore desc");
+        return getQuery(user, "total_score desc");
     }
 
     public static List<User> sortByTime(User user) {
-        return getQuery(user, "playedTime desc");
+        return getQuery(user, "played_time desc");
     }
 
     public static List<User> sortByRuns(User user) {
-        return getQuery(user, "playedRuns desc");
+        return getQuery(user, "played_runs desc");
     }
 
     public static List<User> sortBySQL(User user) {
-        return getQuery(user, "solvedSQL desc");
+        return getQuery(user, "solved_sql desc");
     }
 
     public static List<User> sortByRate(User user) {
-        return getQuery(user, "quote desc");
+        return getQuery(user, "success_rate desc");
     }
 
     public static List<User> sortByCoins(User user) {
-        return getQuery(user, "totalCoins desc");
+        return getQuery(user, "total_coins desc");
     }
 
     public static void addSuccessfully(User user) {
