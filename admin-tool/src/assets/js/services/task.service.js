@@ -108,7 +108,7 @@
         /* HomeWork Controlls */
 
         function getAllHomeworks() {
-            return $http.get('/API/Homework/').then(function (data) {console.log(data.data); return data.data;}, handleError);
+            return $http.get('/API/Homework/').then(handleSuccess, handleError);
         }
 
         function createHomeWork(homeWorkJson) {
