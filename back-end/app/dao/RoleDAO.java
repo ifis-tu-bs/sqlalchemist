@@ -55,6 +55,10 @@ public class RoleDAO {
     }
 
     public static Role getUser() {
-        return find.query().where().eq("priority", 100).findUnique();
+        return find.query().where().eq("priority", 10).findUnique();
+    }
+
+    public static Role getAdmin() {
+        return find.query().where().eq("priority", 10000).findUnique();
     }
 }

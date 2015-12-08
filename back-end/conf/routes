@@ -27,7 +27,7 @@ POST        /API/Profile/collected                  controllers.ItemController.c
 
 #SettingsController
 GET         /API/User/Settings/                     controllers.SettingsController.index()
-POST        /API/User/Settings/                     controllers.SettingsController.edit()
+POST        /API/User/Settings/                     controllers.SettingsController.update()
 
 #LevelController
 GET         /API/Challenge/story                    controllers.LevelController.story()
