@@ -9,6 +9,7 @@ import models.Scroll;
 
 import models.User;
 
+import play.Logger;
 import play.Play;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserBootstrap {
     public static void init() {
         if(UserDAO.getAll().size() == 0) {
+            Logger.info("Initialize 'User' data");
             // Init residual Classes
             if(play.api.Play.isProd(play.api.Play.current())) {
                 SignUp signUp = new SignUp();
@@ -69,6 +71,7 @@ public class UserBootstrap {
                     test2.save();
                 }
             }
+            Logger.info("Done Initialize");
         }
     }
 }

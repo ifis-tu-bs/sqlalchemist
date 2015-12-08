@@ -41,7 +41,7 @@ public class SettingsController extends Controller {
      *
      * @return  returns a http responds code if the action was successfully or not
      */
-    public Result edit() {
+    public Result update() {
         User user = UserDAO.getBySession(request().username());
 
         JsonNode json       = request().body().asJson();

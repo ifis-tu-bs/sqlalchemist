@@ -30,7 +30,7 @@ import java.util.Calendar;
  * Created by fabiomazzone on 25/04/15.
  * @author fabiomazzone
  */
-public class ControllerSession extends Controller {
+public class SessionController extends Controller {
     /**
      * Needs a JSON Body Request with values:
      *  email:      String
@@ -49,14 +49,11 @@ public class ControllerSession extends Controller {
         Form<Login> loginForm   = Form.form(Login.class).bindFromRequest();
 
         if(loginForm.hasErrors()) {
-            Logger.error("LoginForm has errors");
-            Logger.error(loginForm.errorsAsJson().toString());
             return badRequest(loginForm.errorsAsJson());
         }
 
         Login       login       = loginForm.bindFromRequest().get();
 
-        Logger.info(login.toString());
         User user = ServiceUser.authenticate(login);
         if(user == null) {
             return unauthorized("Wrong email or password, mist");
@@ -71,7 +68,7 @@ public class ControllerSession extends Controller {
 
     public Result logout() {
         session().clear();
-        return redirect(routes.ControllerSession.index());
+        return redirect(routes.SessionController.index());
     }
 
     public Result index() {

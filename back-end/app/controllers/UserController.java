@@ -9,6 +9,7 @@ import forms.SignUp;
 import helper.MailSender;
 
 import models.Action;
+import models.Role;
 import models.Session;
 import models.User;
 
@@ -61,8 +62,6 @@ public class UserController extends Controller {
         Form<SignUp>signUpForm  = Form.form(SignUp.class).bindFromRequest();
 
         if(signUpForm.hasErrors()) {
-            Logger.error("signUpForm has errors");
-            Logger.error(signUpForm.errorsAsJson().toString());
             return badRequest(signUpForm.errorsAsJson());
         }
 
@@ -125,7 +124,7 @@ public class UserController extends Controller {
 
         session().clear();
 
-        return redirect(routes.ControllerSession.index());
+        return redirect(routes.SessionController.index());
     }
 
     /**
@@ -216,6 +215,8 @@ public class UserController extends Controller {
 
     @Authenticated(UserAuthenticator.class)
     public Result promote(long id) {
+        return temporaryRedirect("out of order");
+        /*
         User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();
@@ -225,7 +226,7 @@ public class UserController extends Controller {
             return badRequest("User not found");
         }
 
-        int role = body.path("role").asInt();
+        Role role = body.path("role").asInt();
 
         if(role <= user.getRole() ) {
             user1.promote(role);
@@ -233,5 +234,6 @@ public class UserController extends Controller {
         }
         Logger.warn("UserController.promote - No Valid Role");
         return badRequest("No valid Role");
+        */
     }
 }

@@ -18,7 +18,7 @@ public class ServiceScore {
     private static List<User> getQuery(User user, String query) {
         List<User> ranking;
 
-        Query<User> orderBy = UserDAO.find.orderBy(query);
+        Query<User> orderBy = UserDAO.find.order().desc(query);
         user.getScore().setOwnRank(orderBy.findList().indexOf(user));
         ranking = orderBy.setMaxRows(10).findList();
 
@@ -26,27 +26,27 @@ public class ServiceScore {
     }
 
     public static List<User> sortByScore(User user) {
-        return getQuery(user, "total_score desc");
+        return getQuery(user, "total_score");
     }
 
     public static List<User> sortByTime(User user) {
-        return getQuery(user, "played_time desc");
+        return getQuery(user, "played_time");
     }
 
     public static List<User> sortByRuns(User user) {
-        return getQuery(user, "played_runs desc");
+        return getQuery(user, "played_runs");
     }
 
     public static List<User> sortBySQL(User user) {
-        return getQuery(user, "solved_sql desc");
+        return getQuery(user, "solved_sql");
     }
 
     public static List<User> sortByRate(User user) {
-        return getQuery(user, "success_rate desc");
+        return getQuery(user, "success_rate");
     }
 
     public static List<User> sortByCoins(User user) {
-        return getQuery(user, "total_coins desc");
+        return getQuery(user, "total_coins");
     }
 
     public static void addSuccessfully(User user) {

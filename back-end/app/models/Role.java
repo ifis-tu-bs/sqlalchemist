@@ -3,7 +3,9 @@ package models;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * the role class
@@ -12,156 +14,119 @@ import java.util.Calendar;
 @Table(name = "role")
 public class Role extends Model {
     @Id
-    private long        id;
+    private long            id;
 
     @Column(unique = true)
-    private String      name;
+    private int             priority;
 
-    private boolean     TasksBrowse     = false;
-    private boolean     TasksCreate     = false;
-    private boolean     TasksAdmin      = false;
+    @Column(unique = true, nullable = false)
+    private String          roleName;
 
-    private boolean     RolesAdmin      = false;
-    private boolean     UserAdmin       = false;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "own_task_set_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "own_task_set_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "own_task_set_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "own_task_set_delete"))
+    })
+    private ActionRule      ownTaskSet;
 
-    private boolean     HomeworkCreate  = false;
-    private boolean     HomeworkBrowse  = false;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "foreign_task_set_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "foreign_task_set_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "foreign_task_set_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_set_delete"))
+    })
+    private ActionRule      foreignTaskSet;
 
-    @OneToOne
-    private Role        followingRole   = null;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "own_task_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "own_task_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "own_task_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "own_task_delete"))
+    })
+    private ActionRule      ownTask;
 
-    @ManyToOne(targetEntity = User.class)
-    private User        creator;
-    private Calendar    created_at;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "foreign_task_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "foreign_task_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "foreign_task_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_delete"))
+    })
+    private ActionRule      foreignTask;
 
-    @ManyToOne(targetEntity = User.class)
-    private User        updated_from;
-    private Calendar    updated_at;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "homework_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "homework_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "homework_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "homework_delete"))
+    })
+    private ActionRule      homework;
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Constructor
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "role_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "role_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "role_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "role_delete"))
+    })
+    private ActionRule      role;
 
-    /**
-     * the role constructor
-     * @param name      the name of the role
-     * @param creator   the create of the role
-     */
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "user_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "user_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "user_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "user_delete"))
+    })
+    private ActionRule      user;
+
+    private boolean         isDeletable = true;
+
+    private List<User>      assigendUser;
+
+    private User            creator;
+
+    private Calendar        createdAt;
+
     public Role(
-            String name,
-            User creator) {
+            int         priority,
+            String      roleName,
+            ActionRule ownTaskSet,
+            ActionRule foreignTaskSet,
+            ActionRule ownTask,
+            ActionRule foreignTask,
+            ActionRule homework,
+            ActionRule role,
+            ActionRule user,
+            boolean     isDeletable,
+            User        creator) {
 
-        this.name       = name;
-        this.creator    = creator;
-        this.created_at = Calendar.getInstance();
+        this.priority       = priority;
+        this.roleName       = roleName;
+        this.ownTaskSet     = ownTaskSet;
+        this.foreignTaskSet = foreignTaskSet;
+        this.ownTask        = ownTask;
+        this.foreignTask    = foreignTask;
+        this.homework       = homework;
+        this.role           = role;
+        this.user           = user;
+        this.isDeletable    = isDeletable;
+        this.assigendUser   = new ArrayList<>();
+        this.creator        = creator;
+
+        this.createdAt      = Calendar.getInstance();
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Getter & Setter
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-    public String getName() {
-        return name;
+    public void signOffUser(User user) {
+        this.assigendUser.remove(user);
     }
 
-    public boolean isTasksBrowse() {
-        return TasksBrowse;
-    }
-
-    public void setTasksBrowse(boolean tasksBrowse) {
-        TasksBrowse = tasksBrowse;
-    }
-
-    public boolean isTasksCreate() {
-        return TasksCreate;
-    }
-
-    public void setTasksCreate(boolean tasksCreate) {
-        TasksCreate = tasksCreate;
-    }
-
-    public boolean isTasksAdmin() {
-        return TasksAdmin;
-    }
-
-    public void setTasksAdmin(boolean tasksAdmin) {
-        TasksAdmin = tasksAdmin;
-    }
-
-    public boolean isRolesAdmin() {
-        return RolesAdmin;
-    }
-
-    public void setRolesAdmin(boolean rolesAdmin) {
-        RolesAdmin = rolesAdmin;
-    }
-
-    public boolean isUserAdmin() {
-        return UserAdmin;
-    }
-
-    public void setUserAdmin(boolean userAdmin) {
-        UserAdmin = userAdmin;
-    }
-
-    public boolean isHomeworkCreate() {
-        return HomeworkCreate;
-    }
-
-    public void setHomeworkCreate(boolean homeworkCreate) {
-        HomeworkCreate = homeworkCreate;
-    }
-
-    public boolean isHomeworkBrowse() {
-        return HomeworkBrowse;
-    }
-
-    public void setHomeworkBrowse(boolean homeworkBrowse) {
-        HomeworkBrowse = homeworkBrowse;
-    }
-
-    public Role getFollowingRole() {
-        return followingRole;
-    }
-
-    public void setFollowingRole(Role followingRole) {
-        this.followingRole = followingRole;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public Calendar getCreated_at() {
-        return created_at;
-    }
-
-    public Calendar getUpdated_at() {
-        return updated_at;
-    }
-
-    public User getUpdated_from() {
-        return updated_from;
-    }
-
-    public void setUpdated_from(User updated_from) {
-        this.updated_from = updated_from;
-    }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Ebean Overrides
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public void save() {
-        this.updated_at = Calendar.getInstance();
-        super.save();
-    }
-
-    @Override
-    public void update() {
-        this.updated_at = Calendar.getInstance();
-        super.update();
+    public void signOnUser(User user) {
+        this.assigendUser.add(user);
     }
 }

@@ -42,8 +42,12 @@ public class User extends Model {
     @Column(unique = true)
     private String                      email;
     @Column(unique = true)
-    private final String                      username;
+    private String                      username;
+
     private String                      password;
+
+    @ManyToOne
+    private Role                        role;
 
     @Column(unique = true)
     private String                      emailVerifyCode;
@@ -111,13 +115,17 @@ public class User extends Model {
      * @param password  password
      */
     public User(
-            String email,
-            String username,
-            String password) {
+            String  email,
+            String  username,
+            String  password,
+            Role    role) {
 
         this.email = email;
         this.username = username;
         setPassword(password);
+
+        setRole(role);
+
         emailVerifyCode = UUID.randomUUID().toString();
 
         if(play.api.Play.isProd(play.api.Play.current())) {
@@ -263,14 +271,6 @@ public class User extends Model {
 
     /**
      *
-     * @return returns the role of the user
-     */
-    public int getRole(){
-        return 1;
-    }
-
-    /**
-     *
      * @return returns true if the user is a student
      */
     public boolean isStudent() {
@@ -357,6 +357,15 @@ public class User extends Model {
     public String getPassword() {
         return password;
     }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 
     public String getEmailVerifyCode() {
         return this.emailVerifyCode;

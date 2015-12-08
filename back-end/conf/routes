@@ -2,10 +2,10 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-#ControllerSession
-GET         /API/Session/                           controllers.ControllerSession.index()
-POST        /API/Login                              controllers.ControllerSession.login()
-DELETE      /API/Logout                             controllers.ControllerSession.logout()
+#SessionController
+GET         /API/Session/                           controllers.SessionController.index()
+POST        /API/Login                              controllers.SessionController.login()
+DELETE      /API/Logout                             controllers.SessionController.logout()
 
 #UserController
 POST        /API/User/                              controllers.UserController.create()
