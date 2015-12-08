@@ -269,7 +269,7 @@ Usage: $script_name <command> [options]
   -J-X               Pass option -X directly to the java runtime
                      (-J is stripped)
 
-  # environment variables (read from context)
+  # environment variables (canRead from context)
   JAVA_OPTS          Environment variable, if unset uses ""
   SBT_OPTS           Environment variable, if unset uses ""
   ACTIVATOR_OPTS     Environment variable, if unset uses ""

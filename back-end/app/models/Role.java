@@ -29,7 +29,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "own_task_set_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "own_task_set_delete"))
     })
-    private ActionRule      ownTaskSet;
+    private PermissionRules ownTaskSetPermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -38,7 +38,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "foreign_task_set_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_set_delete"))
     })
-    private ActionRule      foreignTaskSet;
+    private PermissionRules foreignTaskSetPermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -47,7 +47,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "own_task_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "own_task_delete"))
     })
-    private ActionRule      ownTask;
+    private PermissionRules ownTaskPermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -56,7 +56,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "foreign_task_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_delete"))
     })
-    private ActionRule      foreignTask;
+    private PermissionRules foreignTaskPermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -65,7 +65,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "homework_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "homework_delete"))
     })
-    private ActionRule      homework;
+    private PermissionRules homeworkPermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -74,7 +74,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "role_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "role_delete"))
     })
-    private ActionRule      role;
+    private PermissionRules rolePermissions;
 
     @Embedded
     @AttributeOverrides({
@@ -83,11 +83,11 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "user_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "user_delete"))
     })
-    private ActionRule      user;
+    private PermissionRules userPermissions;
 
     private boolean         isDeletable = true;
 
-    private List<User>      assigendUser;
+    private List<User>      assignedUser;
 
     private User            creator;
 
@@ -96,37 +96,42 @@ public class Role extends Model {
     public Role(
             int         priority,
             String      roleName,
-            ActionRule ownTaskSet,
-            ActionRule foreignTaskSet,
-            ActionRule ownTask,
-            ActionRule foreignTask,
-            ActionRule homework,
-            ActionRule role,
-            ActionRule user,
+            PermissionRules ownTaskSet,
+            PermissionRules foreignTaskSet,
+            PermissionRules ownTask,
+            PermissionRules foreignTask,
+            PermissionRules homework,
+            PermissionRules role,
+            PermissionRules user,
             boolean     isDeletable,
             User        creator) {
 
-        this.priority       = priority;
-        this.roleName       = roleName;
-        this.ownTaskSet     = ownTaskSet;
-        this.foreignTaskSet = foreignTaskSet;
-        this.ownTask        = ownTask;
-        this.foreignTask    = foreignTask;
-        this.homework       = homework;
-        this.role           = role;
-        this.user           = user;
-        this.isDeletable    = isDeletable;
-        this.assigendUser   = new ArrayList<>();
-        this.creator        = creator;
+        this.priority                   = priority;
+        this.roleName                   = roleName;
+        this.ownTaskSetPermissions      = ownTaskSet;
+        this.foreignTaskSetPermissions  = foreignTaskSet;
+        this.ownTaskPermissions         = ownTask;
+        this.foreignTaskPermissions     = foreignTask;
+        this.homeworkPermissions        = homework;
+        this.rolePermissions            = role;
+        this.userPermissions            = user;
+        this.isDeletable                = isDeletable;
+        this.assignedUser               = new ArrayList<>();
+        this.creator                    = creator;
 
-        this.createdAt      = Calendar.getInstance();
+        this.createdAt                  = Calendar.getInstance();
+    }
+
+
+    public PermissionRules getRolePermissions() {
+        return rolePermissions;
     }
 
     public void signOffUser(User user) {
-        this.assigendUser.remove(user);
+        this.assignedUser.remove(user);
     }
 
     public void signOnUser(User user) {
-        this.assigendUser.add(user);
+        this.assignedUser.add(user);
     }
 }

@@ -7,6 +7,13 @@ GET         /API/Session/                           controllers.SessionControlle
 POST        /API/Login                              controllers.SessionController.login()
 DELETE      /API/Logout                             controllers.SessionController.logout()
 
+#RoleController
+POST        /API/Role/                              controllers.RoleController.create()
+GET         /API/Role/                              controllers.RoleController.index()
+GET         /API/Role/:id/                          controllers.RoleController.show(id: Long)
+POST        /API/Role/:id/                          controllers.RoleController.update(id: Long)
+DELETE      /API/Role/:id/                          controllers.RoleController.delete(id: Long)
+
 #UserController
 POST        /API/User/                              controllers.UserController.create()
 GET         /API/User/                              controllers.UserController.index()

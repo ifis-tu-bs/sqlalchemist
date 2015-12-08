@@ -2,8 +2,9 @@ package bootstrap;
 
 import dao.RoleDAO;
 
-import models.ActionRule;
+import models.PermissionRules;
 
+import models.Role;
 import play.Logger;
 
 /**
@@ -14,60 +15,68 @@ public class BootstrapRole {
         if(RoleDAO.getAll().size() == 0) {
             Logger.info("Initializing 'Role' data");
             // Create Admin
-            RoleDAO.create(
+            Role admin = new Role(
                     10000,
                     "Admin",
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
                     false,
                     null);
+
+            admin.save();
 
             // Create HiWi
-            RoleDAO.create(
+            Role hiwi = new Role(
                     1000,
                     "HiWi",
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getNoControl(),
-                    ActionRule.getReadControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getNoControl(),
+                    PermissionRules.getReadControl(),
                     false,
                     null);
+
+            hiwi.save();
 
             // Create Creator
-            RoleDAO.create(
+            Role creator = new Role(
                     100,
                     "Creator",
-                    ActionRule.getFullControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getFullControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getNoControl(),
-                    ActionRule.getNoControl(),
-                    ActionRule.getNoControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getFullControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getNoControl(),
+                    PermissionRules.getNoControl(),
+                    PermissionRules.getNoControl(),
                     false,
                     null);
 
+            creator.save();
+
             // Create User
-            RoleDAO.create(
+            Role user = new Role(
                     10,
                     "User",
-                    ActionRule.getReadControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getReadControl(),
-                    ActionRule.getNoControl(),
-                    ActionRule.getNoControl(),
-                    ActionRule.getNoControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getReadControl(),
+                    PermissionRules.getNoControl(),
+                    PermissionRules.getNoControl(),
+                    PermissionRules.getNoControl(),
                     false,
                     null);
+
+            user.save();
 
             Logger.info("Done Initializing");
         }

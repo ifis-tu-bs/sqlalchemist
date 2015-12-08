@@ -1,6 +1,6 @@
 # --- !Ups
 
-create table avatar (
+canCreate table avatar (
   id                            bigint auto_increment not null,
   title                         varchar(255),
   description                   varchar(255),
@@ -16,7 +16,7 @@ create table avatar (
   constraint pk_avatar primary key (id)
 );
 
-create table columndefinition (
+canCreate table columndefinition (
   id                            bigint auto_increment not null,
   table_definition_id           bigint,
   column_name                   varchar(255),
@@ -28,7 +28,7 @@ create table columndefinition (
   constraint pk_columndefinition primary key (id)
 );
 
-create table comment (
+canCreate table comment (
   id                            bigint auto_increment not null,
   task_set_id                   bigint,
   task_id                       bigint,
@@ -38,7 +38,7 @@ create table comment (
   constraint pk_comment primary key (id)
 );
 
-create table foreignkeyrelation (
+canCreate table foreignkeyrelation (
   id                            bigint auto_increment not null,
   task_set_id                   bigint,
   source_table                  varchar(255),
@@ -48,7 +48,7 @@ create table foreignkeyrelation (
   constraint pk_foreignkeyrelation primary key (id)
 );
 
-create table homework (
+canCreate table homework (
   id                            bigint auto_increment not null,
   creator_id                    bigint,
   start_at                      datetime(6),
@@ -57,13 +57,13 @@ create table homework (
   constraint pk_homework primary key (id)
 );
 
-create table homework_taskset (
+canCreate table homework_taskset (
   homework_id                   bigint not null,
   taskset_id                    bigint not null,
   constraint pk_homework_taskset primary key (homework_id,taskset_id)
 );
 
-create table inventory (
+canCreate table inventory (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   potion_id                     bigint,
@@ -71,7 +71,7 @@ create table inventory (
   constraint pk_inventory primary key (id)
 );
 
-create table loficoinflowlog (
+canCreate table loficoinflowlog (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   lofi_coins_collected          integer,
@@ -79,7 +79,7 @@ create table loficoinflowlog (
   constraint pk_loficoinflowlog primary key (id)
 );
 
-create table map (
+canCreate table map (
   id                            bigint auto_increment not null,
   level                         integer,
   path                          varchar(255),
@@ -88,7 +88,7 @@ create table map (
   constraint pk_map primary key (id)
 );
 
-create table potion (
+canCreate table potion (
   id                            bigint auto_increment not null,
   name                          varchar(255),
   type                          integer,
@@ -104,7 +104,7 @@ create table potion (
   constraint pk_potion primary key (id)
 );
 
-create table profile (
+canCreate table profile (
   id                            bigint auto_increment not null,
   user_id                       bigint,
   username                      varchar(255),
@@ -142,13 +142,13 @@ create table profile (
   constraint pk_profile primary key (id)
 );
 
-create table profile_shopitem (
+canCreate table profile_shopitem (
   profile_id                    bigint not null,
   shopitem_id                   bigint not null,
   constraint pk_profile_shopitem primary key (profile_id,shopitem_id)
 );
 
-create table rating (
+canCreate table rating (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   task_set_id                   bigint,
@@ -159,7 +159,7 @@ create table rating (
   constraint pk_rating primary key (id)
 );
 
-create table scroll (
+canCreate table scroll (
   id                            bigint auto_increment not null,
   pos_id                        integer,
   name                          varchar(255),
@@ -176,7 +176,7 @@ create table scroll (
   constraint pk_scroll primary key (id)
 );
 
-create table scrollcollection (
+canCreate table scrollcollection (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   scroll_id                     bigint,
@@ -186,7 +186,7 @@ create table scrollcollection (
   constraint pk_scrollcollection primary key (id)
 );
 
-create table shopitem (
+canCreate table shopitem (
   id                            bigint auto_increment not null,
   type                          integer,
   title                         varchar(255),
@@ -198,7 +198,7 @@ create table shopitem (
   constraint pk_shopitem primary key (id)
 );
 
-create table solvedsubtask (
+canCreate table solvedsubtask (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   task_id                       bigint,
@@ -208,7 +208,7 @@ create table solvedsubtask (
   constraint pk_solvedsubtask primary key (id)
 );
 
-create table storychallenge (
+canCreate table storychallenge (
   id                            bigint auto_increment not null,
   name                          varchar(255),
   is_tutorial                   tinyint(1) default 0,
@@ -219,19 +219,19 @@ create table storychallenge (
   constraint pk_storychallenge primary key (id)
 );
 
-create table storychallenge_text (
+canCreate table storychallenge_text (
   storychallenge_id             bigint not null,
   text_id                       bigint not null,
   constraint pk_storychallenge_text primary key (storychallenge_id,text_id)
 );
 
-create table storychallenge_map (
+canCreate table storychallenge_map (
   storychallenge_id             bigint not null,
   map_id                        bigint not null,
   constraint pk_storychallenge_map primary key (storychallenge_id,map_id)
 );
 
-create table submittedhomework (
+canCreate table submittedhomework (
   id                            bigint auto_increment not null,
   profile_id                    bigint,
   task_id                       bigint,
@@ -244,7 +244,7 @@ create table submittedhomework (
   constraint pk_submittedhomework primary key (id)
 );
 
-create table tabledefinition (
+canCreate table tabledefinition (
   id                            bigint auto_increment not null,
   task_set_id                   bigint,
   table_name                    varchar(255),
@@ -252,7 +252,7 @@ create table tabledefinition (
   constraint pk_tabledefinition primary key (id)
 );
 
-create table task (
+canCreate table task (
   id                            bigint auto_increment not null,
   task_set_id                   bigint,
   task_name                     varchar(255),
@@ -270,7 +270,7 @@ create table task (
   constraint pk_task primary key (id)
 );
 
-create table taskset (
+canCreate table taskset (
   id                            bigint auto_increment not null,
   task_set_name                 varchar(255),
   is_homework                   tinyint(1) default 0,
@@ -281,13 +281,13 @@ create table taskset (
   constraint pk_taskset primary key (id)
 );
 
-create table taskset_homework (
+canCreate table taskset_homework (
   taskset_id                    bigint not null,
   homework_id                   bigint not null,
   constraint pk_taskset_homework primary key (taskset_id,homework_id)
 );
 
-create table text (
+canCreate table text (
   id                            bigint auto_increment not null,
   type                          integer,
   prerequisite                  integer,
@@ -298,7 +298,7 @@ create table text (
   constraint pk_text primary key (id)
 );
 
-create table user (
+canCreate table user (
   id                            bigint auto_increment not null,
   email                         varchar(255),
   email_verified                tinyint(1) default 0,
@@ -318,7 +318,7 @@ create table user (
   constraint pk_user primary key (id)
 );
 
-create table usersession (
+canCreate table usersession (
   id                            bigint auto_increment not null,
   session_id                    varchar(255),
   user_id                       bigint,
@@ -329,132 +329,132 @@ create table usersession (
   constraint pk_usersession primary key (id)
 );
 
-alter table columndefinition add constraint fk_columndefinition_table_definition_id foreign key (table_definition_id) references tabledefinition (id) on delete restrict on update restrict;
-create index ix_columndefinition_table_definition_id on columndefinition (table_definition_id);
+alter table columndefinition add constraint fk_columndefinition_table_definition_id foreign key (table_definition_id) references tabledefinition (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_columndefinition_table_definition_id on columndefinition (table_definition_id);
 
-alter table columndefinition add constraint fk_columndefinition_foreign_key_id foreign key (foreign_key_id) references columndefinition (id) on delete restrict on update restrict;
-create index ix_columndefinition_foreign_key_id on columndefinition (foreign_key_id);
+alter table columndefinition add constraint fk_columndefinition_foreign_key_id foreign key (foreign_key_id) references columndefinition (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_columndefinition_foreign_key_id on columndefinition (foreign_key_id);
 
-alter table comment add constraint fk_comment_task_set_id foreign key (task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_comment_task_set_id on comment (task_set_id);
+alter table comment add constraint fk_comment_task_set_id foreign key (task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_comment_task_set_id on comment (task_set_id);
 
-alter table comment add constraint fk_comment_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
-create index ix_comment_task_id on comment (task_id);
+alter table comment add constraint fk_comment_task_id foreign key (task_id) references task (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_comment_task_id on comment (task_id);
 
-alter table comment add constraint fk_comment_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_comment_profile_id on comment (profile_id);
+alter table comment add constraint fk_comment_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_comment_profile_id on comment (profile_id);
 
-alter table foreignkeyrelation add constraint fk_foreignkeyrelation_task_set_id foreign key (task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_foreignkeyrelation_task_set_id on foreignkeyrelation (task_set_id);
+alter table foreignkeyrelation add constraint fk_foreignkeyrelation_task_set_id foreign key (task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_foreignkeyrelation_task_set_id on foreignkeyrelation (task_set_id);
 
-alter table homework add constraint fk_homework_creator_id foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_homework_creator_id on homework (creator_id);
+alter table homework add constraint fk_homework_creator_id foreign key (creator_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_homework_creator_id on homework (creator_id);
 
-alter table homework_taskset add constraint fk_homework_taskset_homework foreign key (homework_id) references homework (id) on delete restrict on update restrict;
-create index ix_homework_taskset_homework on homework_taskset (homework_id);
+alter table homework_taskset add constraint fk_homework_taskset_homework foreign key (homework_id) references homework (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_homework_taskset_homework on homework_taskset (homework_id);
 
-alter table homework_taskset add constraint fk_homework_taskset_taskset foreign key (taskset_id) references taskset (id) on delete restrict on update restrict;
-create index ix_homework_taskset_taskset on homework_taskset (taskset_id);
+alter table homework_taskset add constraint fk_homework_taskset_taskset foreign key (taskset_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_homework_taskset_taskset on homework_taskset (taskset_id);
 
-alter table inventory add constraint fk_inventory_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_inventory_profile_id on inventory (profile_id);
+alter table inventory add constraint fk_inventory_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_inventory_profile_id on inventory (profile_id);
 
-alter table inventory add constraint fk_inventory_potion_id foreign key (potion_id) references potion (id) on delete restrict on update restrict;
-create index ix_inventory_potion_id on inventory (potion_id);
+alter table inventory add constraint fk_inventory_potion_id foreign key (potion_id) references potion (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_inventory_potion_id on inventory (potion_id);
 
-alter table loficoinflowlog add constraint fk_loficoinflowlog_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_loficoinflowlog_profile_id on loficoinflowlog (profile_id);
+alter table loficoinflowlog add constraint fk_loficoinflowlog_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_loficoinflowlog_profile_id on loficoinflowlog (profile_id);
 
-alter table profile add constraint fk_profile_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+alter table profile add constraint fk_profile_user_id foreign key (user_id) references user (id) on canDelete restrict on canUpdate restrict;
 
-alter table profile add constraint fk_profile_avatar_id foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
-create index ix_profile_avatar_id on profile (avatar_id);
+alter table profile add constraint fk_profile_avatar_id foreign key (avatar_id) references avatar (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_avatar_id on profile (avatar_id);
 
-alter table profile add constraint fk_profile_current_story_id foreign key (current_story_id) references storychallenge (id) on delete restrict on update restrict;
-create index ix_profile_current_story_id on profile (current_story_id);
+alter table profile add constraint fk_profile_current_story_id foreign key (current_story_id) references storychallenge (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_current_story_id on profile (current_story_id);
 
-alter table profile add constraint fk_profile_current_scroll_id foreign key (current_scroll_id) references scroll (id) on delete restrict on update restrict;
+alter table profile add constraint fk_profile_current_scroll_id foreign key (current_scroll_id) references scroll (id) on canDelete restrict on canUpdate restrict;
 
-alter table profile add constraint fk_profile_current_task_set_id foreign key (current_task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_profile_current_task_set_id on profile (current_task_set_id);
+alter table profile add constraint fk_profile_current_task_set_id foreign key (current_task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_current_task_set_id on profile (current_task_set_id);
 
-alter table profile add constraint fk_profile_current_home_work_id foreign key (current_home_work_id) references homework (id) on delete restrict on update restrict;
-create index ix_profile_current_home_work_id on profile (current_home_work_id);
+alter table profile add constraint fk_profile_current_home_work_id foreign key (current_home_work_id) references homework (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_current_home_work_id on profile (current_home_work_id);
 
-alter table profile_shopitem add constraint fk_profile_shopitem_profile foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_profile_shopitem_profile on profile_shopitem (profile_id);
+alter table profile_shopitem add constraint fk_profile_shopitem_profile foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_shopitem_profile on profile_shopitem (profile_id);
 
-alter table profile_shopitem add constraint fk_profile_shopitem_shopitem foreign key (shopitem_id) references shopitem (id) on delete restrict on update restrict;
-create index ix_profile_shopitem_shopitem on profile_shopitem (shopitem_id);
+alter table profile_shopitem add constraint fk_profile_shopitem_shopitem foreign key (shopitem_id) references shopitem (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_profile_shopitem_shopitem on profile_shopitem (shopitem_id);
 
-alter table rating add constraint fk_rating_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_rating_profile_id on rating (profile_id);
+alter table rating add constraint fk_rating_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_rating_profile_id on rating (profile_id);
 
-alter table rating add constraint fk_rating_task_set_id foreign key (task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_rating_task_set_id on rating (task_set_id);
+alter table rating add constraint fk_rating_task_set_id foreign key (task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_rating_task_set_id on rating (task_set_id);
 
-alter table rating add constraint fk_rating_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
-create index ix_rating_task_id on rating (task_id);
+alter table rating add constraint fk_rating_task_id foreign key (task_id) references task (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_rating_task_id on rating (task_id);
 
-alter table scroll add constraint fk_scroll_potion_id foreign key (potion_id) references potion (id) on delete restrict on update restrict;
+alter table scroll add constraint fk_scroll_potion_id foreign key (potion_id) references potion (id) on canDelete restrict on canUpdate restrict;
 
-alter table scrollcollection add constraint fk_scrollcollection_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_scrollcollection_profile_id on scrollcollection (profile_id);
+alter table scrollcollection add constraint fk_scrollcollection_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_scrollcollection_profile_id on scrollcollection (profile_id);
 
-alter table scrollcollection add constraint fk_scrollcollection_scroll_id foreign key (scroll_id) references scroll (id) on delete restrict on update restrict;
-create index ix_scrollcollection_scroll_id on scrollcollection (scroll_id);
+alter table scrollcollection add constraint fk_scrollcollection_scroll_id foreign key (scroll_id) references scroll (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_scrollcollection_scroll_id on scrollcollection (scroll_id);
 
-alter table shopitem add constraint fk_shopitem_avatar_id foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
+alter table shopitem add constraint fk_shopitem_avatar_id foreign key (avatar_id) references avatar (id) on canDelete restrict on canUpdate restrict;
 
-alter table solvedsubtask add constraint fk_solvedsubtask_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_solvedsubtask_profile_id on solvedsubtask (profile_id);
+alter table solvedsubtask add constraint fk_solvedsubtask_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_solvedsubtask_profile_id on solvedsubtask (profile_id);
 
-alter table solvedsubtask add constraint fk_solvedsubtask_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
-create index ix_solvedsubtask_task_id on solvedsubtask (task_id);
+alter table solvedsubtask add constraint fk_solvedsubtask_task_id foreign key (task_id) references task (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_solvedsubtask_task_id on solvedsubtask (task_id);
 
-alter table storychallenge add constraint fk_storychallenge_next_id foreign key (next_id) references storychallenge (id) on delete restrict on update restrict;
+alter table storychallenge add constraint fk_storychallenge_next_id foreign key (next_id) references storychallenge (id) on canDelete restrict on canUpdate restrict;
 
-alter table storychallenge_text add constraint fk_storychallenge_text_storychallenge foreign key (storychallenge_id) references storychallenge (id) on delete restrict on update restrict;
-create index ix_storychallenge_text_storychallenge on storychallenge_text (storychallenge_id);
+alter table storychallenge_text add constraint fk_storychallenge_text_storychallenge foreign key (storychallenge_id) references storychallenge (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_storychallenge_text_storychallenge on storychallenge_text (storychallenge_id);
 
-alter table storychallenge_text add constraint fk_storychallenge_text_text foreign key (text_id) references text (id) on delete restrict on update restrict;
-create index ix_storychallenge_text_text on storychallenge_text (text_id);
+alter table storychallenge_text add constraint fk_storychallenge_text_text foreign key (text_id) references text (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_storychallenge_text_text on storychallenge_text (text_id);
 
-alter table storychallenge_map add constraint fk_storychallenge_map_storychallenge foreign key (storychallenge_id) references storychallenge (id) on delete restrict on update restrict;
-create index ix_storychallenge_map_storychallenge on storychallenge_map (storychallenge_id);
+alter table storychallenge_map add constraint fk_storychallenge_map_storychallenge foreign key (storychallenge_id) references storychallenge (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_storychallenge_map_storychallenge on storychallenge_map (storychallenge_id);
 
-alter table storychallenge_map add constraint fk_storychallenge_map_map foreign key (map_id) references map (id) on delete restrict on update restrict;
-create index ix_storychallenge_map_map on storychallenge_map (map_id);
+alter table storychallenge_map add constraint fk_storychallenge_map_map foreign key (map_id) references map (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_storychallenge_map_map on storychallenge_map (map_id);
 
-alter table submittedhomework add constraint fk_submittedhomework_profile_id foreign key (profile_id) references profile (id) on delete restrict on update restrict;
-create index ix_submittedhomework_profile_id on submittedhomework (profile_id);
+alter table submittedhomework add constraint fk_submittedhomework_profile_id foreign key (profile_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_submittedhomework_profile_id on submittedhomework (profile_id);
 
-alter table submittedhomework add constraint fk_submittedhomework_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
-create index ix_submittedhomework_task_id on submittedhomework (task_id);
+alter table submittedhomework add constraint fk_submittedhomework_task_id foreign key (task_id) references task (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_submittedhomework_task_id on submittedhomework (task_id);
 
-alter table submittedhomework add constraint fk_submittedhomework_home_work_id foreign key (home_work_id) references homework (id) on delete restrict on update restrict;
-create index ix_submittedhomework_home_work_id on submittedhomework (home_work_id);
+alter table submittedhomework add constraint fk_submittedhomework_home_work_id foreign key (home_work_id) references homework (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_submittedhomework_home_work_id on submittedhomework (home_work_id);
 
-alter table tabledefinition add constraint fk_tabledefinition_task_set_id foreign key (task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_tabledefinition_task_set_id on tabledefinition (task_set_id);
+alter table tabledefinition add constraint fk_tabledefinition_task_set_id foreign key (task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_tabledefinition_task_set_id on tabledefinition (task_set_id);
 
-alter table task add constraint fk_task_task_set_id foreign key (task_set_id) references taskset (id) on delete restrict on update restrict;
-create index ix_task_task_set_id on task (task_set_id);
+alter table task add constraint fk_task_task_set_id foreign key (task_set_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_task_task_set_id on task (task_set_id);
 
-alter table task add constraint fk_task_creator_id foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_task_creator_id on task (creator_id);
+alter table task add constraint fk_task_creator_id foreign key (creator_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_task_creator_id on task (creator_id);
 
-alter table taskset add constraint fk_taskset_creator_id foreign key (creator_id) references profile (id) on delete restrict on update restrict;
-create index ix_taskset_creator_id on taskset (creator_id);
+alter table taskset add constraint fk_taskset_creator_id foreign key (creator_id) references profile (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_taskset_creator_id on taskset (creator_id);
 
-alter table taskset_homework add constraint fk_taskset_homework_taskset foreign key (taskset_id) references taskset (id) on delete restrict on update restrict;
-create index ix_taskset_homework_taskset on taskset_homework (taskset_id);
+alter table taskset_homework add constraint fk_taskset_homework_taskset foreign key (taskset_id) references taskset (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_taskset_homework_taskset on taskset_homework (taskset_id);
 
-alter table taskset_homework add constraint fk_taskset_homework_homework foreign key (homework_id) references homework (id) on delete restrict on update restrict;
-create index ix_taskset_homework_homework on taskset_homework (homework_id);
+alter table taskset_homework add constraint fk_taskset_homework_homework foreign key (homework_id) references homework (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_taskset_homework_homework on taskset_homework (homework_id);
 
-alter table usersession add constraint fk_usersession_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_usersession_user_id on usersession (user_id);
+alter table usersession add constraint fk_usersession_user_id foreign key (user_id) references user (id) on canDelete restrict on canUpdate restrict;
+canCreate index ix_usersession_user_id on usersession (user_id);
 
 
 # --- !Downs

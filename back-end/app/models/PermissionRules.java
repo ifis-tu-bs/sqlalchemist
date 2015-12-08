@@ -6,17 +6,35 @@ import javax.persistence.Embeddable;
  * @author fabiomazzone
  */
 @Embeddable
-public class ActionRule {
+public class PermissionRules {
     private boolean create;
     private boolean read;
     private boolean update;
     private boolean delete;
 
-    public ActionRule(boolean create, boolean read, boolean update, boolean delete) {
+    public PermissionRules(boolean create, boolean read, boolean update, boolean delete) {
         this.create = create;
-        this.read = read;
+        this.read   = read;
         this.update = update;
         this.delete = delete;
+    }
+
+    // Nicer Calls :)
+
+    public boolean canCreate() {
+        return create;
+    }
+
+    public boolean canRead() {
+        return read;
+    }
+
+    public boolean canUpdate() {
+        return update;
+    }
+
+    public boolean canDelete() {
+        return delete;
     }
 
     public boolean isCreate() {
@@ -51,15 +69,15 @@ public class ActionRule {
         this.delete = delete;
     }
 
-    public static ActionRule getFullControl() {
-        return new ActionRule(true, true, true, true);
+    public static PermissionRules getFullControl() {
+        return new PermissionRules(true, true, true, true);
     }
 
-    public static ActionRule getReadControl() {
-        return new ActionRule(false, true, false, false);
+    public static PermissionRules getReadControl() {
+        return new PermissionRules(false, true, false, false);
     }
 
-    public static ActionRule getNoControl() {
-        return new ActionRule(false, false, false, false);
+    public static PermissionRules getNoControl() {
+        return new PermissionRules(false, false, false, false);
     }
 }
