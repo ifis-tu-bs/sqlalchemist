@@ -21,6 +21,7 @@ import view.ScoreView;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -102,7 +103,7 @@ public class User extends Model {
     private boolean                     isActive;
 
 
-    private final Calendar                    created_at;
+    private final Calendar createdAt;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
@@ -162,7 +163,7 @@ public class User extends Model {
 
         votes               = 1;
         isActive            = true;
-        created_at          = Calendar.getInstance();
+        createdAt = Calendar.getInstance();
     }
 
 
@@ -212,7 +213,10 @@ public class User extends Model {
 
 
         node.put("email",       this.email);
-        node.put("createdAt",   String.valueOf(this.created_at));
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        node.put("createdAt",   simpleDateFormat.format(this.createdAt.getTime()));
 
         return node;
     }
