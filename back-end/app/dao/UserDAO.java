@@ -25,7 +25,8 @@ public class UserDAO {
         user = new User(
                 signUp.getEmail(),
                 signUp.getUsername(),
-                signUp.getPassword()
+                signUp.getPassword(),
+                RoleDAO.getUser()
         );
 
         try {

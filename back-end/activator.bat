@@ -25,7 +25,7 @@ if defined var1 (
     echo Options:
     echo -jvm-debug [port]  Turn on JVM debugging, open at the given port.  Defaults to 9999 if no port given.
     echo.
-    echo Environment variables ^(read from context^):
+    echo Environment variables ^(canRead from context^):
     echo JAVA_OPTS          Environment variable, if unset uses ""
     echo SBT_OPTS           Environment variable, if unset uses ""
     echo ACTIVATOR_OPTS     Environment variable, if unset uses ""

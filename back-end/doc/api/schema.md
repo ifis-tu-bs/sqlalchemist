@@ -5,17 +5,17 @@
 |GET   |/admin                      |Application|.admin                |              |200-                         |                     |
 |GET   |/init                       |Application|.init                 |              |200-                         |                     |
 |Session|
-|POST  |/login                      |Session    |.create               |Login.Form    |Redirect(Profile.read)       |400-Login.Error      |
-|GET   |/logout                     |Session    |.delete               |              |Redirect(Application.index)  |                     |
+|POST  |/login                      |Session    |.canCreate               |Login.Form    |Redirect(Profile.canRead)       |400-Login.Error      |
+|GET   |/logout                     |Session    |.canDelete               |              |Redirect(Application.index)  |                     |
 |User|
-|POST  |/signup                     |User       |.create               |Signup.Form   |Redirect(Session.create)     |400-Signup.Error     |
+|POST  |/signup                     |User       |.canCreate               |Signup.Form   |Redirect(Session.canCreate)     |400-Signup.Error     |
 |GET   |/users                      |User       |.getAllUsers          |              |User[]                       |                     |
 |GET   |/users/student              |User       |.checkStudent         |              |200-                         |                     |
 |POST  |/users                      |User       |.edit                 |User.Form     |200-                         |                     |
 |GET   |/users/verify/:code         |User       |.verifyEmail          |              |200-                         |                     |
 |POST  |/users/password             |User       |.sendResetPasswordMail|              |200-                         |                     |
 |POST  |/users/:id                  |User       |.promote              |              |200-                         |                     |
-|DELETE|/users                      |User       |.delete               |              |200-                         |                     |
+|DELETE|/users                      |User       |.canDelete               |              |200-                         |                     |
 |Item|
 |GET   |/profile/inventory          |Item       |.inventory            |              |200-Inventory                |                     |
 |GET   |/profile/scrolls            |Item       |.scrollCollection     |              |200-Scroll[]                 |                     |
@@ -31,19 +31,19 @@
 |GET   |/challenge/skip             |Challenge  |.skip                 |              |200-                         |                     |
 |GET   |/challenge/reset            |Challenge  |.reset                |              |200-                         |                     |
 |TaskSetController|
-|POST  |/TaskSet/                   |TaskSet    |.create               |TaskSet.Form  |Redirect(TaskSet.view)       |400-                 |
-|GET   |/TaskSet/                   |TaskSet    |.read                 |              |200-TaskSet[]                |400-                 |
+|POST  |/TaskSet/                   |TaskSet    |.canCreate               |TaskSet.Form  |Redirect(TaskSet.view)       |400-                 |
+|GET   |/TaskSet/                   |TaskSet    |.canRead                 |              |200-TaskSet[]                |400-                 |
 |GET   |/TaskSet/:id                |TaskSet    |.view                 |              |200-TaskSet                  |400-                 |
-|PATCH |/TaskSet/:id                |TaskSet    |.update               |TaskSet       |Redirect(TaskSet.view)       |400-                 |
-|DELETE|/TaskSet/:id/               |TaskSet    |.delete               |              |Redirect(TaskSet.read)       |400-                 |
+|PATCH |/TaskSet/:id                |TaskSet    |.canUpdate               |TaskSet       |Redirect(TaskSet.view)       |400-                 |
+|DELETE|/TaskSet/:id/               |TaskSet    |.canDelete               |              |Redirect(TaskSet.canRead)       |400-                 |
 |POST  |/TaskSet/:id/rate           |TaskSet    |.rate                 |Rating.Form   |Redirect(TaskSet.view)       |400-                 |
 |POST  |/TaskSet/:id/comment        |TaskSet    |.comment              |Comment.Form  |Redirect(TaskSet.view)       |400-                 |
 |TaskController
-|POST  |/TaskSet/:id/Task           |Task       |.create               |Task.Form     |Redirect(Task.view)          |400-                 |
-|GET   |/Task/                      |Task       |.read                 |              |200-Task[]                   |400-                 |
+|POST  |/TaskSet/:id/Task           |Task       |.canCreate               |Task.Form     |Redirect(Task.view)          |400-                 |
+|GET   |/Task/                      |Task       |.canRead                 |              |200-Task[]                   |400-                 |
 |GET   |/Task/:id/                  |Task       |.view                 |              |200-Task                     |400-                 |
-|PATCH |/Task/:id/                  |Task       |.update               |Task          |Redirect(Task.view)          |400-                 |
-|DELETE|/Task/:id/                  |Task       |.delete               |              |Redirect(Task.read)          |400-                 |
+|PATCH |/Task/:id/                  |Task       |.canUpdate               |Task          |Redirect(Task.view)          |400-                 |
+|DELETE|/Task/:id/                  |Task       |.canDelete               |              |Redirect(Task.canRead)          |400-                 |
 |POST  |/Task/:id/rate              |Task       |.rate                 |Rating.Form   |Redirect(Task.view)          |400-                 |
 |POST  |/Task/:id/comment           |Task       |.comment              |Comment.Form  |Redirect(Task.view)          |400-                 |
 |SQLController
@@ -54,7 +54,7 @@
 |GET   |/SQL/Homework/              |SQL        |.homework()
 |POST  |/SQL/Homework/:id/          |SQL        |.homeworkSolve(id: Long)
 |ProfileController
-|GET   |/profile                     |Profile    |.read                |              |200-Profile.PlayerState      |400-                 |
+|GET   |/profile                     |Profile    |.canRead                |              |200-Profile.PlayerState      |400-                 |
 |GET   |/profile/character           |Profile    |.character           |              |200-Profile.CharacterState   |400-                 |
 |GET   |/profile/avatar/:id          |Profile    |.avatar              |              |200-Profile.Attributes       |400-                 |
 |GET   |/profile/reset               |Profile    |.reset               |              |                             |400-                 |
@@ -76,9 +76,9 @@
 
 #HomeWorkController
 GET         /homework                           controllers.HomeWorkController.getAll()
-POST        /homework                           controllers.HomeWorkController.create()
+POST        /homework                           controllers.HomeWorkController.canCreate()
 GET         /homework/tasks                     controllers.HomeWorkController.getCurrentHomeWorkForCurrentSession()
 GET         /homework/students                  controllers.HomeWorkController.getAllStudents()
-GET         /homework/delete/:id                controllers.HomeWorkController.delete(id: Long)
+GET         /homework/canDelete/:id                controllers.HomeWorkController.canDelete(id: Long)
 POST        /homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()
 GET         /homework/result/:sid/:hid          controllers.HomeWorkController.getForTask(sid: Long, hid: Long)

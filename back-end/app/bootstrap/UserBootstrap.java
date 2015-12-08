@@ -1,5 +1,6 @@
 package bootstrap;
 
+import dao.RoleDAO;
 import dao.ScrollCollectionDAO;
 import dao.ScrollDAO;
 import dao.UserDAO;
@@ -9,6 +10,7 @@ import models.Scroll;
 
 import models.User;
 
+import play.Logger;
 import play.Play;
 
 import java.util.List;
@@ -19,13 +21,15 @@ import java.util.List;
 public class UserBootstrap {
     public static void init() {
         if(UserDAO.getAll().size() == 0) {
+            Logger.info("Initialize 'User' data");
             // Init residual Classes
             if(play.api.Play.isProd(play.api.Play.current())) {
                 SignUp signUp = new SignUp();
                 signUp.setUsername("sqlalchemist");
                 signUp.setEmail(Play.application().configuration().getString("admin.email"));
                 signUp.setPassword(Play.application().configuration().getString("admin.password"));
-                UserDAO.create(signUp);
+                User user = UserDAO.create(signUp);
+                user.setRole(RoleDAO.getAdmin());
             } else {
                 SignUp signUp1 = new SignUp();
                 signUp1.setUsername("sqlalchemist");
@@ -33,6 +37,7 @@ public class UserBootstrap {
                 signUp1.setPassword("password");
                 User user = UserDAO.create(signUp1);
                 if(user != null) {
+                    user.setRole(RoleDAO.getAdmin());
                     user.setStudent(true);
                     user.setMatNR("12345678");
                     user.update();
@@ -73,6 +78,7 @@ public class UserBootstrap {
                     test2.save();
                 }
             }
+            Logger.info("Done Initialize");
         }
     }
 }

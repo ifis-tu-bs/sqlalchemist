@@ -14,7 +14,7 @@
     - function:
         - customize roles
         - promote & degrade user
-        - create & edit own task/sets
+        - canCreate & edit own task/sets
         - edit all taskSets
         - enable homework mode
         - see admin tool & browse through the tasks

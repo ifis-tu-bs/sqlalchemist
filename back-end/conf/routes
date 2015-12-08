@@ -2,10 +2,17 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-#ControllerSession
-GET         /API/Session/                           controllers.ControllerSession.index()
-POST        /API/Login                              controllers.ControllerSession.login()
-DELETE      /API/Logout                             controllers.ControllerSession.logout()
+#SessionController
+GET         /API/Session/                           controllers.SessionController.index()
+POST        /API/Login                              controllers.SessionController.login()
+DELETE      /API/Logout                             controllers.SessionController.logout()
+
+#RoleController
+POST        /API/Role/                              controllers.RoleController.create()
+GET         /API/Role/                              controllers.RoleController.index()
+GET         /API/Role/:id/                          controllers.RoleController.show(id: Long)
+POST        /API/Role/:id/                          controllers.RoleController.update(id: Long)
+DELETE      /API/Role/:id/                          controllers.RoleController.delete(id: Long)
 
 #UserController
 POST        /API/User/                              controllers.UserController.create()
@@ -27,7 +34,7 @@ POST        /API/Profile/collected                  controllers.ItemController.c
 
 #SettingsController
 GET         /API/User/Settings/                     controllers.SettingsController.index()
-POST        /API/User/Settings/                     controllers.SettingsController.edit()
+POST        /API/User/Settings/                     controllers.SettingsController.update()
 
 #LevelController
 GET         /API/Challenge/story                    controllers.LevelController.story()

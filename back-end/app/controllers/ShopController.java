@@ -27,7 +27,6 @@ import java.util.List;
 public class ShopController extends Controller {
 
     /**
-     * GET /shop
      * GET /shop/avatar
      *
      * @return ok
