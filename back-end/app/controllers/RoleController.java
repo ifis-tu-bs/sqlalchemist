@@ -1,5 +1,6 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.RoleDAO;
 import dao.UserDAO;
 import models.Role;
@@ -8,7 +9,6 @@ import play.libs.Json;
 import secured.UserAuthenticator;
 import secured.role.CanCreateRole;
 
-import play.Logger;
 import play.data.Form;
 import play.mvc.BodyParser;
 import play.mvc.Result;
@@ -19,6 +19,7 @@ import secured.role.CanReadRole;
 import secured.role.CanUpdateRole;
 
 import javax.persistence.PersistenceException;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -30,20 +31,15 @@ public class RoleController extends Controller{
     @BodyParser.Of(BodyParser.Json.class)
     @Authenticated(CanCreateRole.class)
     public Result create() {
-        Logger.info(request().body().asJson().toString());
         Form<Role> roleForm = Form.form(Role.class).bindFromRequest();
 
         if(roleForm.hasErrors()) {
-            Logger.info(roleForm.toString());
-            Logger.info(roleForm.errorsAsJson().toString());
             return badRequest(roleForm.errorsAsJson());
         }
 
         Role role = roleForm.get();
         role.setCreator(UserDAO.getBySession(request().username()));
         role.save();
-
-        Logger.info(Json.toJson(role).toString());
 
         response().setHeader(LOCATION, routes.RoleController.show(role.getId()).url());
         return created();
@@ -72,7 +68,16 @@ public class RoleController extends Controller{
         if(role == null)
             return notFound();
 
-        return badRequest("not yet implemented");
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            mapper.readerForUpdating(role).readValue(request().body().asJson());
+        } catch (IOException e) {
+            e.printStackTrace();
+            return internalServerError("{'message': 'unexpected exception!'}");
+        }
+
+        role.update();
+        return ok();
     }
 
     @Authenticated(CanDeleteRole.class)
