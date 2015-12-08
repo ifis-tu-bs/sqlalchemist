@@ -91,9 +91,9 @@ public class InventoryDAO {
           ObjectNode node = Json.newObject();
           ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-          node.put("slots", user.getPlayerStats().getSlot());
+          node.put("slots", user.getPlayerStats().getSlots());
 
-          for (int i = 1; i <= user.getPlayerStats().getSlot(); i++){
+          for (int i = 1; i <= user.getPlayerStats().getSlots(); i++){
               ObjectNode json = Json.newObject();
               Inventory inv = getBeltSlot(user, i);
               json.put("slot", i);

@@ -1,6 +1,11 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import dao.RoleDAO;
+import play.Logger;
+import play.data.validation.ValidationError;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -29,7 +34,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "own_task_set_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "own_task_set_delete"))
     })
-    private PermissionRules ownTaskSetPermissions;
+    private PermissionRules ownTaskSetPermissions       = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -38,7 +43,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "foreign_task_set_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_set_delete"))
     })
-    private PermissionRules foreignTaskSetPermissions;
+    private PermissionRules foreignTaskSetPermissions   = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -47,7 +52,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "own_task_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "own_task_delete"))
     })
-    private PermissionRules ownTaskPermissions;
+    private PermissionRules ownTaskPermissions          = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -56,7 +61,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "foreign_task_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_delete"))
     })
-    private PermissionRules foreignTaskPermissions;
+    private PermissionRules foreignTaskPermissions      = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -65,7 +70,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "homework_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "homework_delete"))
     })
-    private PermissionRules homeworkPermissions;
+    private PermissionRules homeworkPermissions         = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -74,7 +79,7 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "role_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "role_delete"))
     })
-    private PermissionRules rolePermissions;
+    private PermissionRules rolePermissions             = PermissionRules.getNoControl();
 
     @Embedded
     @AttributeOverrides({
@@ -83,49 +88,148 @@ public class Role extends Model {
             @AttributeOverride(name="update",   column=@Column(name = "user_update")),
             @AttributeOverride(name="delete",   column=@Column(name = "user_delete"))
     })
-    private PermissionRules userPermissions;
+    private PermissionRules userPermissions             = PermissionRules.getNoControl();
 
     private boolean         isDeletable = true;
 
+    @OneToMany(mappedBy = "role")
     private List<User>      assignedUser;
 
+    @ManyToOne
     private User            creator;
 
-    private Calendar        createdAt;
+    private Calendar        createdAt = Calendar.getInstance();
 
-    public Role(
-            int         priority,
-            String      roleName,
-            PermissionRules ownTaskSet,
-            PermissionRules foreignTaskSet,
-            PermissionRules ownTask,
-            PermissionRules foreignTask,
-            PermissionRules homework,
-            PermissionRules role,
-            PermissionRules user,
-            boolean     isDeletable,
-            User        creator) {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Getter
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        this.priority                   = priority;
-        this.roleName                   = roleName;
-        this.ownTaskSetPermissions      = ownTaskSet;
-        this.foreignTaskSetPermissions  = foreignTaskSet;
-        this.ownTaskPermissions         = ownTask;
-        this.foreignTaskPermissions     = foreignTask;
-        this.homeworkPermissions        = homework;
-        this.rolePermissions            = role;
-        this.userPermissions            = user;
-        this.isDeletable                = isDeletable;
-        this.assignedUser               = new ArrayList<>();
-        this.creator                    = creator;
 
-        this.createdAt                  = Calendar.getInstance();
+    public long getId() {
+        return id;
     }
 
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
+    }
+
+    public PermissionRules getOwnTaskSetPermissions() {
+        return ownTaskSetPermissions;
+    }
+
+    public void setOwnTaskSetPermissions(PermissionRules ownTaskSetPermissions) {
+        this.ownTaskSetPermissions = ownTaskSetPermissions;
+    }
+
+    public PermissionRules getForeignTaskSetPermissions() {
+        return foreignTaskSetPermissions;
+    }
+
+    public void setForeignTaskSetPermissions(PermissionRules foreignTaskSetPermissions) {
+        this.foreignTaskSetPermissions = foreignTaskSetPermissions;
+    }
+
+    public PermissionRules getOwnTaskPermissions() {
+        return ownTaskPermissions;
+    }
+
+    public void setOwnTaskPermissions(PermissionRules ownTaskPermissions) {
+        this.ownTaskPermissions = ownTaskPermissions;
+    }
+
+    public PermissionRules getForeignTaskPermissions() {
+        return foreignTaskPermissions;
+    }
+
+    public void setForeignTaskPermissions(PermissionRules foreignTaskPermissions) {
+        this.foreignTaskPermissions = foreignTaskPermissions;
+    }
+
+    public PermissionRules getHomeworkPermissions() {
+        return homeworkPermissions;
+    }
+
+    public void setHomeworkPermissions(PermissionRules homeworkPermissions) {
+        this.homeworkPermissions = homeworkPermissions;
+    }
 
     public PermissionRules getRolePermissions() {
         return rolePermissions;
     }
+
+    public void setRolePermissions(PermissionRules rolePermissions) {
+        this.rolePermissions = rolePermissions;
+    }
+
+    public PermissionRules getUserPermissions() {
+        return userPermissions;
+    }
+
+    public void setUserPermissions(PermissionRules userPermissions) {
+        this.userPermissions = userPermissions;
+    }
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
+    }
+
+    @JsonIgnore
+    public User getCreator() {
+        return creator;
+    }
+
+    @JsonProperty("creator")
+    public String getCreatorName() {
+        return (creator != null) ? creator.getUsername() : null;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Persistence Methods
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @Override
+    public void delete() {
+        Role role = RoleDAO.getLowerRole(priority);
+        if(role == null) {
+            role = RoleDAO.getNextHigherRole(priority);
+        }
+        for(User user : this.assignedUser) {
+            Logger.info(user.getEmail());
+            user.setRole(role);
+            user.update();
+        }
+
+        super.delete();
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Attribute Helper
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void signOffUser(User user) {
         this.assignedUser.remove(user);
@@ -133,5 +237,21 @@ public class Role extends Model {
 
     public void signOnUser(User user) {
         this.assignedUser.add(user);
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Form Helper
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public List<ValidationError> validate() {
+        List<ValidationError> errors = new ArrayList<>();
+
+        if(RoleDAO.getByPriority(priority) != null) {
+            errors.add(new ValidationError("priority", "priority already taken"));
+        }
+        if(RoleDAO.getByRoleName(roleName) != null) {
+            errors.add(new ValidationError("roleName", "roleName already taken"));
+        }
+
+        return errors.isEmpty() ? null : errors;
     }
 }

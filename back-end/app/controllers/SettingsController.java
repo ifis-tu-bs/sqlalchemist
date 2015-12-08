@@ -5,6 +5,7 @@ import dao.UserDAO;
 
 import models.User;
 
+import play.libs.Json;
 import secured.UserAuthenticator;
 import view.SettingsView;
 
@@ -33,7 +34,7 @@ public class SettingsController extends Controller {
     public Result index() {
         User user = UserDAO.getBySession(request().username());
 
-        return ok(SettingsView.toJson(user.getSettings()));
+        return ok(Json.toJson(user.getSettings()));
     }
 
     /**

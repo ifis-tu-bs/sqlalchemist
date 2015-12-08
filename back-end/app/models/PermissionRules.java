@@ -7,10 +7,10 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class PermissionRules {
-    private boolean create;
-    private boolean read;
-    private boolean update;
-    private boolean delete;
+    private boolean create  = false;
+    private boolean read    = false;
+    private boolean update  = false;
+    private boolean delete  = false;
 
     public PermissionRules(boolean create, boolean read, boolean update, boolean delete) {
         this.create = create;
@@ -41,6 +41,9 @@ public class PermissionRules {
         return create;
     }
 
+
+    // Getter & Setter
+
     public void setCreate(boolean create) {
         this.create = create;
     }
@@ -69,6 +72,8 @@ public class PermissionRules {
         this.delete = delete;
     }
 
+    // Fast Creation
+
     public static PermissionRules getFullControl() {
         return new PermissionRules(true, true, true, true);
     }
@@ -79,5 +84,19 @@ public class PermissionRules {
 
     public static PermissionRules getNoControl() {
         return new PermissionRules(false, false, false, false);
+    }
+
+
+    // to String
+
+
+    @Override
+    public String toString() {
+        return "PermissionRules{" +
+                "create=" + create +
+                ", read=" + read +
+                ", update=" + update +
+                ", delete=" + delete +
+                '}';
     }
 }

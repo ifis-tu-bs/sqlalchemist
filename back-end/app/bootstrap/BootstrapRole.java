@@ -15,67 +15,64 @@ public class BootstrapRole {
         if(RoleDAO.getAll().size() == 0) {
             Logger.info("Initializing 'Role' data");
             // Create Admin
-            Role admin = new Role(
-                    10000,
-                    "Admin",
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    false,
-                    null);
+            Role admin = new Role();
+            admin.setPriority(10000);
+            admin.setRoleName("Admin");
+            admin.setOwnTaskSetPermissions(PermissionRules.getFullControl());
+            admin.setForeignTaskSetPermissions(PermissionRules.getFullControl());
+            admin.setOwnTaskPermissions(PermissionRules.getFullControl());
+            admin.setForeignTaskPermissions(PermissionRules.getFullControl());
+            admin.setHomeworkPermissions(PermissionRules.getFullControl());
+            admin.setRolePermissions(PermissionRules.getFullControl());
+            admin.setUserPermissions(PermissionRules.getFullControl());
+            admin.setDeletable(false);
+            admin.setCreator(null);
 
             admin.save();
 
             // Create HiWi
-            Role hiwi = new Role(
-                    1000,
-                    "HiWi",
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getNoControl(),
-                    PermissionRules.getReadControl(),
-                    false,
-                    null);
-
-            hiwi.save();
+            Role hiWi = new Role();
+            hiWi.setPriority(1000);
+            hiWi.setRoleName("HiWi");
+            hiWi.setOwnTaskSetPermissions(PermissionRules.getFullControl());
+            hiWi.setForeignTaskSetPermissions(PermissionRules.getFullControl());
+            hiWi.setOwnTaskPermissions(PermissionRules.getFullControl());
+            hiWi.setForeignTaskPermissions(PermissionRules.getFullControl());
+            hiWi.setHomeworkPermissions(PermissionRules.getReadControl());
+            hiWi.setRolePermissions(PermissionRules.getNoControl());
+            hiWi.setUserPermissions(PermissionRules.getReadControl());
+            hiWi.setDeletable(false);
+            hiWi.setCreator(null);
+            hiWi.save();
 
             // Create Creator
-            Role creator = new Role(
-                    100,
-                    "Creator",
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getFullControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getNoControl(),
-                    PermissionRules.getNoControl(),
-                    PermissionRules.getNoControl(),
-                    false,
-                    null);
-
+            Role creator = new Role();
+            creator.setPriority(100);
+            creator.setRoleName("Creator");
+            creator.setOwnTaskSetPermissions(PermissionRules.getFullControl());
+            creator.setForeignTaskSetPermissions(PermissionRules.getReadControl());
+            creator.setOwnTaskPermissions(PermissionRules.getFullControl());
+            creator.setForeignTaskPermissions(PermissionRules.getReadControl());
+            creator.setHomeworkPermissions(PermissionRules.getNoControl());
+            creator.setRolePermissions(PermissionRules.getNoControl());
+            creator.setUserPermissions(PermissionRules.getNoControl());
+            creator.setDeletable(false);
+            creator.setCreator(null);
             creator.save();
 
             // Create User
-            Role user = new Role(
-                    10,
-                    "User",
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getReadControl(),
-                    PermissionRules.getNoControl(),
-                    PermissionRules.getNoControl(),
-                    PermissionRules.getNoControl(),
-                    false,
-                    null);
-
+            Role user = new Role();
+            user.setPriority(10);
+            user.setRoleName("User");
+            user.setOwnTaskSetPermissions(PermissionRules.getReadControl());
+            user.setForeignTaskSetPermissions(PermissionRules.getReadControl());
+            user.setOwnTaskPermissions(PermissionRules.getReadControl());
+            user.setForeignTaskPermissions(PermissionRules.getReadControl());
+            user.setHomeworkPermissions(PermissionRules.getNoControl());
+            user.setRolePermissions(PermissionRules.getNoControl());
+            user.setUserPermissions(PermissionRules.getNoControl());
+            user.setDeletable(false);
+            user.setCreator(null);
             user.save();
 
             Logger.info("Done Initializing");

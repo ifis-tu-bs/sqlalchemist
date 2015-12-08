@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +18,6 @@ public class Comment extends Model{
     /** auto-generated ID for this comment. */
     @Id
     private long id;
-
 
     @ManyToOne
     private TaskSet taskSet;
@@ -59,6 +59,7 @@ public class Comment extends Model{
         return id;
     }
 
+    @JsonIgnore
     public TaskSet getTaskSet() {
         return taskSet;
     }
@@ -67,6 +68,7 @@ public class Comment extends Model{
         this.taskSet = taskSet;
     }
 
+    @JsonIgnore
     public Task getTask() {
         return task;
     }

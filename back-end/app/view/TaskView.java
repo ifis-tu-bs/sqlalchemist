@@ -35,13 +35,8 @@ public class TaskView {
 
     public static ObjectNode toJson(Task task) {
         ObjectNode json = Json.newObject();
-        ArrayNode commentNode = JsonNodeFactory.instance.arrayNode();
 
         Rating rating_sum = Rating.sum(task.getRatings());
-
-        for(Comment comment : task.getComments()) {
-          commentNode.add(CommentView.toJson(comment));
-        }
 
         json.put("id",                  task.getId());
         json.put("taskName",            task.getTaskName());
@@ -58,7 +53,7 @@ public class TaskView {
         json.set("creator",             task.getCreator().toJsonUser());
 
         json.set("rating",              RatingView.toJson(rating_sum));
-        json.set("comments",            commentNode);
+        json.set("comments",            Json.toJson(task.getComments()));
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
@@ -131,7 +126,7 @@ public class TaskView {
         ObjectNode json = toJson(task);
         SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(user, homework, task);
         if(submittedHomeWork != null) {
-            json.put("submit", SubmittedHomeWorkView.toJson(submittedHomeWork));
+            json.set("submit",      SubmittedHomeWorkView.toJson(submittedHomeWork));
             json.put("done",        submittedHomeWork.getSolve());
         } else {
             json.put("done",        false);
@@ -155,7 +150,7 @@ public class TaskView {
 
         ObjectNode objectNode = Json.newObject();
 
-        objectNode.put("tasks", arrayNode);
+        objectNode.set("tasks", arrayNode);
         objectNode.put("done", done);
         objectNode.put("all", all);
 

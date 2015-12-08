@@ -16,8 +16,8 @@ public class Avatar extends Model {
     @Id
     private Long id;
 
-    @Column(unique = true)
-    private final String title;
+    @Column(unique = true, name = "avatar_name")
+    private final String name;
 
     private final String description;
 
@@ -27,9 +27,7 @@ public class Avatar extends Model {
     private final boolean isTeam;
 
     @Embedded
-    private final PlayerStats playerStats;
-
-    public static final Finder<Long, Avatar> find = new Finder<>(Avatar.class);
+    private final PlayerStats attributes;
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -37,22 +35,23 @@ public class Avatar extends Model {
 
     /**
      * Avatar constructor
-     * @param title                  title of the avatar
-     * @param desc                  avatar description
-     * @param avatarFilename        avatarFilename
-     * @param playerStats           avatar PlayerStats
+     * @param name              name of the avatar
+     * @param description       avatar description
+     * @param avatarFilename    avatarFilename
+     * @param attributes        avatar PlayerStats
      */
     public Avatar(
-            String title,
-            String desc,
+            String name,
+            String description,
             String avatarFilename,
             boolean isTeam,
-            PlayerStats playerStats) {
-        this.title = title;
-        this.description = desc;
-        this.avatarFilename= avatarFilename;
+            PlayerStats attributes) {
+
+        this.name           = name;
+        this.description    = description;
+        this.avatarFilename = avatarFilename;
         this.isTeam         = isTeam;
-        this.playerStats    = playerStats;
+        this.attributes     = attributes;
 
     }
 
@@ -60,10 +59,10 @@ public class Avatar extends Model {
         return this.id;
     }
 
-    public String getTitle() {
-        if(this.title.contains(" 2"))
-            return this.title.replace(" 2", "");
-        return this.title;
+    public String getName() {
+        if(this.name.contains(" 2"))
+            return this.name.replace(" 2", "");
+        return this.name;
     }
 
     public String getDescription() {
@@ -78,8 +77,8 @@ public class Avatar extends Model {
         return this.isTeam;
     }
 
-    public PlayerStats getPlayerStats() {
-        return this.playerStats;
+    public PlayerStats getAttributes() {
+        return this.attributes;
     }
 
 }

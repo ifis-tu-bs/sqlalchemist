@@ -48,7 +48,7 @@ public class UserView {
             arrayNode.add(objectNode1);
         }
 
-        objectNode.put("taskSets", arrayNode);
+        objectNode.set("taskSets", arrayNode);
         objectNode.put("done", done);
         objectNode.put("all", all);
 

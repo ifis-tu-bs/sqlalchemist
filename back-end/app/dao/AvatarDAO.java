@@ -1,19 +1,20 @@
 package dao;
 
+import com.avaje.ebean.Model;
 import models.Avatar;
 import models.PlayerStats;
 
 import play.Logger;
-import view.AvatarView;
+import play.libs.Json;
 
 import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class AvatarDAO {
-
-  //////////////////////////////////////////////////
-  //  Create Method
-  //////////////////////////////////////////////////
+    private static final Model.Finder<Long, Avatar> find = new Model.Finder<>(Avatar.class);
+    //////////////////////////////////////////////////
+    //  Create Method
+    //////////////////////////////////////////////////
   /**
    * This is a create method for an avatar-object
    * @param name                  name of the avatar
@@ -40,12 +41,12 @@ public class AvatarDAO {
             avatar.save();
         } catch (PersistenceException pe) {
             Logger.warn(pe.getMessage());
-            Avatar avatar_res = Avatar.find.where().eq("avatar_name", name).findUnique();
-            if(avatar_res != null && avatar_res.getTitle().equalsIgnoreCase(name)) {
-                Logger.warn("Can't create Avatar(duplicate) " + AvatarView.toJson(avatar).toString());
+            Avatar avatar_res = find.where().eq("avatar_name", name).findUnique();
+            if(avatar_res != null && avatar_res.getName().equalsIgnoreCase(name)) {
+                Logger.warn("Can't create Avatar(duplicate) " + Json.toJson(avatar).toString());
                 return avatar_res;
             }
-            Logger.error("Can't create Avatar: " + AvatarView.toJson(avatar));
+            Logger.error("Can't create Avatar: " + Json.toJson(avatar));
             return null;
         }
         return avatar;
@@ -61,7 +62,7 @@ public class AvatarDAO {
    * @return       Avatar with the id
   */
   public static Avatar getById(long id) {
-    return Avatar.find.byId(id);
+    return find.byId(id);
   }
 
   /**
@@ -71,10 +72,10 @@ public class AvatarDAO {
    * @return      returns the Avatar that matches to the given name
    */
   public static Avatar getByName(String name) {
-    return Avatar.find.where().eq("name", name).findUnique();
+    return find.where().eq("name", name).findUnique();
   }
 
     public static List<Avatar> getAll() {
-        return Avatar.find.all();
+        return find.all();
     }
 }

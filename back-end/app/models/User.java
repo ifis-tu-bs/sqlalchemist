@@ -16,12 +16,10 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.Play;
 import play.libs.Json;
 import service.ServiceUser;
-import view.AvatarView;
-import view.PlayerStatsView;
 import view.ScoreView;
-import view.SettingsView;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +44,7 @@ public class User extends Model {
 
     private String                      password;
 
+    @NotNull
     @ManyToOne
     private Role                        role;
 
@@ -175,7 +174,7 @@ public class User extends Model {
         node.put("coins",       this.coins);
         node.put("score",       this.getScore().getTotalScore());
         node.set("highScore",   ScoreView.toJson(this));
-        node.set("avatar",      AvatarView.toJson(this.avatar));
+        node.set("avatar",      Json.toJson(this.avatar));
 
         return node;
     }
@@ -189,7 +188,7 @@ public class User extends Model {
 
         node.put("id",          this.id);
         node.put("username",    this.username);
-        node.set("settings",    SettingsView.toJson(this.settings));
+        node.set("settings",    Json.toJson(this.settings));
         node.put("student",     this.isStudent());
         node.put("storyDone",   this.storyDone);
         node.put("coins",       this.coins);
@@ -231,7 +230,7 @@ public class User extends Model {
     }
 
     private String getUserRoleString() {
-        String userRole = "User";
+        String userRole = (role != null) ? role.getRoleName() : "???";
 
 
         if(this.isStudent())
@@ -244,8 +243,8 @@ public class User extends Model {
         ObjectNode node = Json.newObject();
         PlayerStats playerStats_sum = this.getPlayerStats();
 
-        node.set("attributes",      PlayerStatsView.toJson(playerStats_sum));
-        node.set("currentAvatar",   AvatarView.toJson(this.avatar));
+        node.set("attributes",      Json.toJson(playerStats_sum));
+        node.set("currentAvatar",   Json.toJson(this.avatar));
         node.set("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
@@ -259,7 +258,7 @@ public class User extends Model {
     public ArrayNode toJsonBoughtAvatars(){
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        this.shopItems.stream().filter(shopItem -> shopItem.isTypeAvatar()).forEach(shopItem -> arrayNode.add(AvatarView.toJson(shopItem.getAvatar())));
+        this.shopItems.stream().filter(ShopItem::isTypeAvatar).forEach(shopItem -> arrayNode.add(Json.toJson(shopItem.getAvatar())));
 
         return arrayNode;
     }
@@ -403,7 +402,7 @@ public class User extends Model {
         PlayerStats playerStats_sum = new PlayerStats();
 
         playerStats_sum.add(this.playerStats);
-        playerStats_sum.add(this.avatar.getPlayerStats());
+        playerStats_sum.add(this.avatar.getAttributes());
 
         List<Scroll> scrollList = ScrollCollectionDAO.getActiveScrolls(this);
 

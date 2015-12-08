@@ -1,6 +1,7 @@
 package controllers;
 
 import dao.RoleDAO;
+import dao.UserDAO;
 import models.Role;
 
 import play.libs.Json;
@@ -17,6 +18,7 @@ import secured.role.CanDeleteRole;
 import secured.role.CanReadRole;
 import secured.role.CanUpdateRole;
 
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 /**
@@ -28,6 +30,7 @@ public class RoleController extends Controller{
     @BodyParser.Of(BodyParser.Json.class)
     @Authenticated(CanCreateRole.class)
     public Result create() {
+        Logger.info(request().body().asJson().toString());
         Form<Role> roleForm = Form.form(Role.class).bindFromRequest();
 
         if(roleForm.hasErrors()) {
@@ -36,12 +39,19 @@ public class RoleController extends Controller{
             return badRequest(roleForm.errorsAsJson());
         }
 
-        response().setHeader(LOCATION, "");
+        Role role = roleForm.get();
+        role.setCreator(UserDAO.getBySession(request().username()));
+        role.save();
+
+        Logger.info(Json.toJson(role).toString());
+
+        response().setHeader(LOCATION, routes.RoleController.show(role.getId()).url());
         return created();
     }
 
     @Authenticated(CanReadRole.class)
     public Result index() {
+
         List<Role> roles = RoleDAO.getAll();
         return ok(Json.toJson(roles));
     }
@@ -71,6 +81,15 @@ public class RoleController extends Controller{
         if(role == null)
             return notFound();
 
-        return badRequest("not yet implemented");
+        if(RoleDAO.getAll().size() <= 1) {
+            return badRequest("{'message': 'You cannot delete the Role if it the last one!'}");
+        }
+        try {
+            role.delete();
+            return ok();
+        } catch (PersistenceException e) {
+            e.printStackTrace();
+            return internalServerError("{'message': 'unexpected exception!'}");
+        }
     }
 }
