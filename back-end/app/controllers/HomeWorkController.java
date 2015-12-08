@@ -34,11 +34,10 @@ public class HomeWorkController extends Controller {
 
 
     public Result getAll() {
-        User user = UserDAO.getBySession(request().username());
 
         List<HomeWork> homeWorkList = HomeWorkDAO.getAll();
 
-        ArrayNode arrayNode = HomeWorkView.toJson(homeWorkList);
+        ArrayNode arrayNode = HomeWorkView.toJsonAdminTool(homeWorkList);
 
         return ok(arrayNode);
     }

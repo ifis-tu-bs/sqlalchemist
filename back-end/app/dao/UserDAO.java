@@ -76,8 +76,8 @@ public class UserDAO {
         return find.where().eq("y_id",y_ID).findUnique();
     }
 
-    public static List<User> getAllStudendts() {
-        List<User> studentList = find.where().eq("isStudent", true).findList();
+    public static List<User> getAllStudents() {
+        List<User> studentList = find.where().or(find.getExpressionFactory().isNotNull("y_id"), find.getExpressionFactory().isNotNull("mat_nr")).findList();
         if (studentList.size() == 0) {
             return null;
         }

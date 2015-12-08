@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
 import dao.TaskSetDAO;
+import dao.UserDAO;
 import models.HomeWork;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
@@ -143,6 +144,25 @@ public class HomeWorkView {
 
         for (HomeWork homeWork : homeWorks) {
             arrayNode.add(toJsonExerciseForUser(homeWork, user));
+        }
+
+        return arrayNode;
+    }
+
+    public static ObjectNode toJsonAdminTool(HomeWork homeWork) {
+        ObjectNode objectNode = toJson(homeWork);
+        objectNode.set("students", UserView.studentToJsonWithHomeWork(homeWork, UserDAO.getAllStudents()));
+        objectNode.remove("taskSets");
+
+
+        return objectNode;
+    }
+
+    public static ArrayNode toJsonAdminTool(List<HomeWork> homeWorkList) {
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (HomeWork homeWork : homeWorkList) {
+            arrayNode.add(toJsonAdminTool(homeWork));
         }
 
         return arrayNode;
