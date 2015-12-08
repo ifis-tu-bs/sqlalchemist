@@ -27,25 +27,8 @@ function createRequest(method, url, callback) {
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.withCredentials = true;
     xhr.onload = function () {
-        if (xhr.status == 400 || xhr.status == 200 || xhr.status == 401) {
-            console.log(xhr);
-            callback(xhr);
-        } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
-                   xhr.status == 503 || xhr.status == 504) {
-            console.log(xhr);
-            alert("Something went wrong, please check your internet connection!");
-            return;
-        } else {
-            if (xhr.status == 403){
-                if (me.state.isCurrent(STATE_LOGIN)) {
-                    alert("wrong e-mail or password!");
-                }
-                return;
-            }
-            console.log(xhr);
-            alert("Internal server error. Please try again, later!");
-            return;
-        }
+        console.log(xhr);
+        callback(xhr);
     };
 
     return xhr;
@@ -59,6 +42,15 @@ function createRequest(method, url, callback) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Session ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
+// ~ POST /API/Session
+function ajaxGetSession(onload) {
+    var xmlHttpRequest = createRequest("GET", "/API/Session/", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
 // ~ POST /API/login ~ jsonData: JSON.login
 function ajaxSendLoginRequest(jsonData, onload) {
     var xmlHttpRequest = createRequest("POST", "/API/Login", onload);
@@ -68,9 +60,9 @@ function ajaxSendLoginRequest(jsonData, onload) {
     return xmlHttpRequest;
 }
 
-// ~ GET /API/logout
+// ~ GET /API/Logout
 function ajaxSendLogoutRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Logout", onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/Logout", onload);
 
     xmlHttpRequest.send();
 
@@ -79,9 +71,9 @@ function ajaxSendLogoutRequest(onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ POST /API/signup ~ jsonData: JSON.signup
+// ~ POST /API/User/ ~ jsonData: JSON.signup
 function ajaxSendSignupRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/signup", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -90,7 +82,7 @@ function ajaxSendSignupRequest(jsonData, onload) {
 
 // ~ POST /API/Users ~ jsonData: JSON.user
 function ajaxSendUsersRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -99,7 +91,7 @@ function ajaxSendUsersRequest(jsonData, onload) {
 
 // ~ GET /API/Users ~ jsonData: JSON.user
 function ajaxSendGetUsersRequest( onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/User/", onload);
 
     xmlHttpRequest.send();
 
@@ -108,7 +100,7 @@ function ajaxSendGetUsersRequest( onload) {
 
 // ~ GET /API/Users/student
 function ajaxSendUserStudentRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Users/student", onload);
+    var xmlHttpRequest = createRequest("GET", "/API/User/student", onload);
 
     xmlHttpRequest.send();
 
@@ -117,16 +109,16 @@ function ajaxSendUserStudentRequest(onload) {
 
 // ~ DELETE /API/Users
 function ajaxSendUsersDeleteRequest(onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/API/Users", onload);
+    var xmlHttpRequest = createRequest("DELETE", "/API/User/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /API/Users/password
+// ~ POST /API/Users/ForgotPassword
 function ajaxSendUsersResetPasswordRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("PATCH", "/API/Users/password", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/User/ForgotPassword", onload);
 
     xmlHttpRequest.send(jsonData);
 
@@ -222,18 +214,18 @@ function ajaxSendProfileCollectedRequest(jsonData, onload) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-// ~ GET /API/Profile/settings
-function ajaxSendProfileSettingsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/Profile/settings", onload);
+// ~ GET /API/User/Settings/
+function ajaxSendUserSettingsRequest(onload) {
+    var xmlHttpRequest = createRequest("GET", "/API/User/Settings/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
 
-// ~ POST /API/Profile/settings ~ jsonData: JSON.settings
-function ajaxSendProfileSettingsSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/Profile/settings", onload);
+// ~ POST /API/User/Settings/ ~ jsonData: JSON.settings
+function ajaxSendUserSettingsSetRequest(jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/User/Settings/", onload);
 
     xmlHttpRequest.send(jsonData);
 

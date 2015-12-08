@@ -32,8 +32,6 @@ body {
 	-ms-interpolation-mode: nearest-neighbor;
 }
 
-
-
 @font-face {
 	font-family: 'NARROW';
 	src: url('/assets/data/img/font/NARROW.eot');

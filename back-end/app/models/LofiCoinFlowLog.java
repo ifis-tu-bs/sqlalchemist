@@ -16,16 +16,14 @@ public class LofiCoinFlowLog extends Model {
     public long id;
 
     @ManyToOne
-    private final Profile profile;
+    private final User user;
 
     private final int lofiCoinsCollected;
 
     private final Calendar collected;
 
-    public static final Finder<Long, LofiCoinFlowLog> find = new Finder<>(LofiCoinFlowLog.class);
-
-    public LofiCoinFlowLog(Profile profile, int coins) {
-        this.profile = profile;
+    public LofiCoinFlowLog(User user, int coins) {
+        this.user = user;
         this.lofiCoinsCollected = coins;
 
         this.collected = Calendar.getInstance();

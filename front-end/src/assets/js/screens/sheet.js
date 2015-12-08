@@ -19,12 +19,10 @@ game.SheetScreen = me.ScreenObject.extend({
             $("#backButton1").fadeOut(100);
             $("#backButton2").fadeOut(100);
             $("[id^=upgrade]").fadeOut(100);
+            $("#skin").fadeOut(100);
             $("#skinLeft").fadeOut(100);
             $("#skinRight").fadeOut(100);
         }
-
-
-
 
         /**
          * Create back-buttons with matching function and effects

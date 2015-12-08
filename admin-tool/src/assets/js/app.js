@@ -67,17 +67,19 @@
             .otherwise({ redirectTo: '/' });
     }
 
-    run.$inject = ['$rootScope', '$location', '$cookies', '$http'];
-    function run($rootScope, $location, $cookies, $http) {
+    run.$inject = ['$rootScope', '$location', '$cookies', '$http', 'AuthenticationService'];
+    function run($rootScope, $location, $cookies, $http, AuthService) {
         // See if we got a Session stored...
         $rootScope.session = $cookies.getObject('session') || {};
         $rootScope.Homework = $rootScope.Homework || {};
         $rootScope.Tasks = $rootScope.Tasks || {};
 
+        AuthService.Session();
+
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login if not having a session stored
             var restrictedPage = $.inArray($location.path(), ['/login']) === -1 && !$location.path().startsWith('/passwordreset/');
-            var loggedIn = $rootScope.session.currentUser;
+            var loggedIn = $rootScope.session.loggedIn;
             if (restrictedPage && !loggedIn) {
                 $location.path('/login');
             }

@@ -2,19 +2,20 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-#SessionController
-POST        /API/Login                              controllers.SessionController.create()
-GET         /API/Logout                             controllers.SessionController.delete()
+#ControllerSession
+GET         /API/Session/                           controllers.ControllerSession.index()
+POST        /API/Login                              controllers.ControllerSession.login()
+DELETE      /API/Logout                             controllers.ControllerSession.logout()
 
 #UserController
-POST        /API/Users                              controllers.UserController.create()
-GET         /API/Users                              controllers.UserController.getAllUsers()
-GET         /API/Users/student                      controllers.UserController.checkStudent()
-PATCH       /API/Users/password                     controllers.UserController.edit()
-GET         /API/Users/verify/:code                 controllers.UserController.verifyEmail(code: String)
-POST        /API/Users/password                     controllers.UserController.sendResetPasswordMail()
-POST        /API/Users/:id                          controllers.UserController.promote(id :Long)
-DELETE      /API/Users                              controllers.UserController.destroy()
+POST        /API/User/                              controllers.UserController.create()
+GET         /API/User/                              controllers.UserController.index()
+GET         /API/User/student                       controllers.UserController.checkStudent()
+POST        /API/User/password                      controllers.UserController.edit()
+GET         /API/User/verify/:code                  controllers.UserController.verifyEmail(code: String)
+POST        /API/User/ForgotPassword                controllers.UserController.sendResetPasswordMail()
+POST        /API/User/:id                           controllers.UserController.promote(id :Long)
+DELETE      /API/User/                              controllers.UserController.destroy()
 
 #ItemController
 GET         /API/Profile/inventory                  controllers.ItemController.inventory()
@@ -25,8 +26,8 @@ GET         /API/Profile/used/:id                   controllers.ItemController.u
 POST        /API/Profile/collected                  controllers.ItemController.collected()
 
 #SettingsController
-GET         /API/Profile/settings                   controllers.SettingsController.index()
-POST        /API/Profile/settings                   controllers.SettingsController.edit()
+GET         /API/User/Settings/                     controllers.SettingsController.index()
+POST        /API/User/Settings/                     controllers.SettingsController.edit()
 
 #LevelController
 GET         /API/Challenge/story                    controllers.LevelController.story()
@@ -72,7 +73,7 @@ POST        /API/SQL/Homework/:TaskID/submit        controllers.SQLController.ho
 GET         /API/Profile                            controllers.ProfileController.read()
 GET         /API/Profile/character                  controllers.ProfileController.character()
 GET         /API/Profile/avatar/:id                 controllers.ProfileController.avatar(id: Long)
-GET         /API/Profile/homework                   controllers.ProfileController.getUserHomeworks()
+GET         /API/Profile/homework                   controllers.ProfileController.getUserHomeworks
 GET         /API/Profile/:id                        controllers.ProfileController.view(id: Long)
 
 #ShopController
@@ -81,19 +82,19 @@ GET         /API/Shop/belt                          controllers.ShopController.b
 GET         /API/Shop/:id                           controllers.ShopController.buy(id: Long)
 
 #HighScoreController
-GET         /API/Highscore/points                   controllers.HighScoreController.byPoints()
-GET         /API/Highscore/time                     controllers.HighScoreController.byTime()
-GET         /API/Highscore/runs                     controllers.HighScoreController.byRuns()
-GET         /API/Highscore/sql                      controllers.HighScoreController.bySQL()
-GET         /API/Highscore/rate                     controllers.HighScoreController.byRate()
-GET         /API/Highscore/coins                    controllers.HighScoreController.byCoins()
+GET         /API/Highscore/points                   controllers.ScoreController.byPoints()
+GET         /API/Highscore/time                     controllers.ScoreController.byTime()
+GET         /API/Highscore/runs                     controllers.ScoreController.byRuns()
+GET         /API/Highscore/sql                      controllers.ScoreController.bySQL()
+GET         /API/Highscore/rate                     controllers.ScoreController.byRate()
+GET         /API/Highscore/coins                    controllers.ScoreController.byCoins()
 
 #HomeWorkController
-GET         /API/Homework/                          controllers.HomeWorkController.getAll()
+GET         /API/Homework/                          controllers.HomeWorkController.getAll
 POST        /API/Homework/                          controllers.HomeWorkController.create()
-GET         /API/Homework/student/                  controllers.HomeWorkController.getHomeWorkForCurrentSession()
+GET         /API/Homework/student/                  controllers.HomeWorkController.getHomeWorkForCurrentSession
 DELETE      /API/Homework/:id/                      controllers.HomeWorkController.delete(id: Long)
-POST        /API/Homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet()
+POST        /API/Homework/result                    controllers.HomeWorkController.getSubmitsForHomeworkTaskSet
 GET         /API/Homework/result/:sid/:hid/         controllers.HomeWorkController.getForTaskInHomeWork(sid: Long, hid: Long)
 
 GET         /API/Download/:file                     controllers.DownloadController.download(file:String)

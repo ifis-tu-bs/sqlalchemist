@@ -4,8 +4,9 @@ import dao.ScrollCollectionDAO;
 import dao.ScrollDAO;
 import dao.UserDAO;
 
+import forms.SignUp;
 import models.Scroll;
-import models.ScrollCollection;
+
 import models.User;
 
 import play.Play;
@@ -20,41 +21,53 @@ public class UserBootstrap {
         if(UserDAO.getAll().size() == 0) {
             // Init residual Classes
             if(play.api.Play.isProd(play.api.Play.current())) {
-                String username = "sqlalchemist";
-                String email = Play.application().configuration().getString("admin.email");
-                String password = Play.application().configuration().getString("admin.password");
-                UserDAO.create(username, email, password, User.ROLE_ADMIN);
+                SignUp signUp = new SignUp();
+                signUp.setUsername("sqlalchemist");
+                signUp.setEmail(Play.application().configuration().getString("admin.email"));
+                signUp.setPassword(Play.application().configuration().getString("admin.password"));
+                UserDAO.create(signUp);
             } else {
-                User user = UserDAO.create("sqlalchemist", "admin@local.de", "password", User.ROLE_ADMIN);
+                SignUp signUp1 = new SignUp();
+                signUp1.setUsername("sqlalchemist");
+                signUp1.setEmail("admin@local.de");
+                signUp1.setPassword("password");
+                User user = UserDAO.create(signUp1);
                 if(user != null) {
-                    user.setStudent();
+                    user.setStudent(true);
                     user.update();
                 }
 
-                User nicole = UserDAO.create("nicnac", "nicole@nicole.de", "1234", User.ROLE_USER);
-                nicole.setStudent();
+                SignUp nicNac = new SignUp();
+                nicNac.setUsername("nicNac");
+                nicNac.setEmail("nicole@nicole.de");
+                nicNac.setPassword("1234");
+                User nicole = UserDAO.create(nicNac);
+                nicole.setStudent(true);
                 nicole.update();
-
                 List<Scroll> scrolls = ScrollDAO.getAll();
                 for(Scroll scroll : scrolls) {
-                    ScrollCollectionDAO.add(nicole.getProfile(), scroll);
+                    ScrollCollectionDAO.add(nicole, scroll);
                 }
 
-                User student = UserDAO.create("student", "student@test.de", "1234", User.ROLE_USER);
-                if(student != null) {
-                    student.setStudent();
-                    student.update();
+                SignUp student = new SignUp();
+                student.setUsername("student");
+                student.setEmail("student@test.de");
+                student.setPassword("1234");
+                User studentU = UserDAO.create(student);
+                if(studentU != null) {
+                    studentU.setStudent(true);
+                    studentU.update();
                 }
 
-                UserDAO.create("test1", "test1@test.de", "test", User.ROLE_CREATOR);
-
-                User test2 = UserDAO.create("test2", "test2@test.de", "test", User.ROLE_USER);
+                SignUp signUp2 = new SignUp();
+                signUp2.setUsername("test2");
+                signUp2.setEmail("test2@test.de");
+                signUp2.setPassword("test");
+                User test2 = UserDAO.create(signUp2);
                 if(test2 != null) {
-                    test2.setStudent();
+                    test2.setStudent(true);
                     test2.save();
                 }
-                
-                UserDAO.create("test3", "test3@test.de", "test", User.ROLE_USER);
             }
         }
     }

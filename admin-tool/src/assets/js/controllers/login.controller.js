@@ -25,14 +25,16 @@
 
         function login() {
             vm.dataLoading = true;
-            AuthenticationService.Login(vm.username, vm.password, function (response) {
-                AuthenticationService.SetCredentials(vm.username, vm.password);
-                $location.path('/');
-            },
-            function (response) {
-                FlashService.Error(response);
-                vm.dataLoading = false;
-            });
+            AuthenticationService.Login(vm.username, vm.password).then(
+                function (response) {
+                    AuthenticationService.SetCredentials(vm.username, vm.password);
+                    $location.path('/');
+                },
+                function (response) {
+                    FlashService.Error(response.data);
+                    vm.dataLoading = false;
+                }
+            );
         }
     }
 
