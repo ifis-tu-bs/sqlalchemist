@@ -87,7 +87,10 @@ public class ControllerSession extends Controller {
                 Session newSession = SessionDAO.create();
                 newSession.setOwner(session.getOwner());
                 newSession.update();
-                session("session", session.getId());
+                session("session", newSession.getId());
+
+
+                return ok(SessionView.toJson(newSession));
             }
 
             return ok(SessionView.toJson(session));

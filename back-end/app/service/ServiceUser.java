@@ -38,7 +38,7 @@ public class ServiceUser {
         if (hms.identifyUser(user.getEmail())) {
             user.setStudent(true);
 
-            user.setyID(hms.getResults().get("ynumber"));
+            //user.setyID(hms.getResults().get("ynumber"));
             user.setMatNR(hms.getResults().get("matnumber"));
             return true;
         }

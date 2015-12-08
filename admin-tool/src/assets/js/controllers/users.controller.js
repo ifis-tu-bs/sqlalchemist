@@ -31,6 +31,7 @@ angular
                 function (result) {
                     vm.users = result;
                 }, function (error) {
+                    console.log(error);
                     FlashService.Error(error);
                 }
             );
