@@ -4,28 +4,26 @@ import dao.ActionDAO;
 import dao.SessionDAO;
 import dao.UserDAO;
 
-import forms.ForgotPassword;
 import forms.SignUp;
-import helper.MailSender;
 
 import models.Action;
 import models.Session;
 import models.User;
 
+import play.libs.Json;
 import secured.SessionAuthenticator;
 import secured.UserAuthenticator;
 
-import play.Logger;
 import play.data.Form;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import secured.user.CanReadUsers;
 import service.ServiceUser;
 import view.ScoreView;
 
@@ -39,18 +37,6 @@ import java.util.List;
 @Authenticated(SessionAuthenticator.class)
 public class UserController extends Controller {
 
-    /**
-     * This method handle the user sign up
-     * POST /signup
-     *
-     * Needs a JSON Body Request with values:
-     *  username:   String
-     *  id:         String (y-ID or E-Mail)
-     *  password:   String
-     *  [role:       int]
-     *
-     * @return this method returns a user
-     */
     @BodyParser.Of(BodyParser.Json.class)
     public Result create() {
         Session session = SessionDAO.getById(request().username());
@@ -61,8 +47,6 @@ public class UserController extends Controller {
         Form<SignUp>signUpForm  = Form.form(SignUp.class).bindFromRequest();
 
         if(signUpForm.hasErrors()) {
-            Logger.error("signUpForm has errors");
-            Logger.error(signUpForm.errorsAsJson().toString());
             return badRequest(signUpForm.errorsAsJson());
         }
 
@@ -80,34 +64,25 @@ public class UserController extends Controller {
         return redirect(routes.ProfileController.read());
     }
 
-    /**
-     * This method handle password changes
-     * POST /users
-     *
-     * Needs a JSON Body Request with values:
-     *  password_old:    String
-     *  password_new:    String
-     *
-     * @return returns a ok if the old password is valid or a badRequest Status
-     */
+
+    @Authenticated(CanReadUsers.class)
+    public Result index() {
+        List<User> users = UserDAO.getAll();
+        return ok(Json.toJson(users));
+    }
+
     @Authenticated(UserAuthenticator.class)
-    public Result edit() {
-        JsonNode  json = request().body().asJson();
-        if (json == null) {
-            return badRequest("Could not retrieve Json from POST body!");
+    public Result show(String username) {
+        User user = UserDAO.getBySession(request().username());
+        if(!user.getUsername().equals(username) && !user.getRole().getUserPermissions().canRead()) {
+            return forbidden(Json.parse("{'message':'you have not to read informations from other users'}"));
+        }
+        User userShow = UserDAO.getByUsername(username);
+        if(userShow == null) {
+            return notFound();
         }
 
-        User user = UserDAO.getByUsername(request().username());
-
-        if (user.setPassword(
-                json.findPath("password_old").textValue(),
-                json.findPath("password_new").textValue())) {
-
-            user.update();
-            return ok("Password successfully changed");
-        }
-
-        return badRequest("Wrong password");
+        return ok(Json.toJson(userShow));
     }
 
     /**
@@ -117,91 +92,21 @@ public class UserController extends Controller {
      * @return ok
      */
     @Authenticated(UserAuthenticator.class)
-    public Result destroy() {
+    public Result destroy(String username) {
         User user = UserDAO.getBySession(request().username());
 
-        user.disable();
+        //user.disable();
         user.update();
 
         session().clear();
 
-        return redirect(routes.ControllerSession.index());
-    }
-
-    /**
-     * This method handles Email verification
-     * @param verifyCode The given Code by URL
-     * @return Success state
-     */
-    @Authenticated(UserAuthenticator.class)
-    public Result verifyEmail(String verifyCode) {
-        if (Long.parseLong(verifyCode, 16) % 97 != 1) {
-            return badRequest("Sorry, this Verify-Code has not been sent");
-        }
-
-        User user = UserDAO.getByVerifyCode(verifyCode);
-        if (user == null) {
-            return badRequest("User not found. Please register again");
-        } else if(user.isEmailVerified()) {
-            return badRequest("User already verified");
-        }
-        user.setEmailVerified();
-        user.update();
-
-        return ok("Successfully verified email");
-    }
-
-    /**
-     * This method sends password changing mail
-     *
-     * @return Success state
-     */
-    public Result sendResetPasswordMail() {
-        Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class).bindFromRequest();
-
-        if(forgotPasswordForm.hasErrors()) {
-            Logger.error("forgetPasswordForm has errors");
-            Logger.error(forgotPasswordForm.errorsAsJson().toString());
-            return badRequest(forgotPasswordForm.errorsAsJson());
-        }
-
-        ForgotPassword forgotPassword = forgotPasswordForm.bindFromRequest().get();
-
-        User user = UserDAO.getByEmail(forgotPassword.getEmail());
-
-        String newPassword = Integer.toHexString(user.getUsername().hashCode());
-
-        user.setPassword(newPassword);
-        user.update();
-
-        MailSender.resetPassword(user.getEmail(), newPassword);
-
-        return ok("Email has been sent");
+        return redirect(routes.SessionController.index());
     }
 
     @Authenticated(UserAuthenticator.class)
-    public Result checkStudent() {
-        User user = UserDAO.getByUsername(request().username());
-
-        if (user == null) {
-            return badRequest("No User found");
-        }
-
-        if (user.isStudent()) {
-            return ok();
-        }
-
-        if (!ServiceUser.updateStudentState(user)) {
-            return badRequest("No user or not found in HMS Database!");
-        }
-
-        return ok();
-    }
-
-    @Authenticated(UserAuthenticator.class)
-    public Result index() {
+    public Result indexOld() {
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
-        List<User> userList = UserDAO.getAllUsers();
+        List<User> userList = UserDAO.getAll();
 
 
         for(User user : userList) {
@@ -214,8 +119,11 @@ public class UserController extends Controller {
         return ok(arrayNode);
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
     @Authenticated(UserAuthenticator.class)
-    public Result promote(long id) {
+    public Result edit(String username) {
+        return temporaryRedirect("out of order");
+        /*
         User        user    = UserDAO.getByUsername(request().username());
         User        user1   = UserDAO.getById(id);
         JsonNode    body    = request().body().asJson();
@@ -225,7 +133,7 @@ public class UserController extends Controller {
             return badRequest("User not found");
         }
 
-        int role = body.path("role").asInt();
+        Role role = body.path("role").asInt();
 
         if(role <= user.getRole() ) {
             user1.promote(role);
@@ -233,5 +141,6 @@ public class UserController extends Controller {
         }
         Logger.warn("UserController.promote - No Valid Role");
         return badRequest("No valid Role");
+        */
     }
 }

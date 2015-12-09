@@ -5,8 +5,8 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', '$location'];
+    function AuthenticationService($http, $cookies, $rootScope, $timeout, $location) {
         var service = {};
 
         service.Session = Session;
@@ -41,8 +41,12 @@
 
         function Session() {
             $http.get('/API/Session/').then(function(response) {
-                    if (response.data.owner !== "")
+                    if (response.data.owner === "") {
+                        service.ClearCredentials();
+                        $location.path('/login');
+                    } else {
                         service.SetCredentials();
+                    }
                 },
                 ClearCredentials
             );

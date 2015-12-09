@@ -8,6 +8,7 @@ import dao.TaskSetDAO;
 import dao.UserDAO;
 import models.*;
 
+import play.libs.Json;
 import play.mvc.Http;
 
 import play.mvc.Security;
@@ -81,7 +82,7 @@ public class TaskSetController extends Controller {
     public Result read() {
         User user = UserDAO.getBySession(request().username());
 
-        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.isAdmin());
+        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.getRole().getHomeworkPermissions().canCreate());
 
         if (taskSetList == null) {
             Logger.warn("TaskSet.index - no TaskSet found");
@@ -263,7 +264,7 @@ public class TaskSetController extends Controller {
 
         taskSet.addComment(comment);
         taskSet.update();
-        return ok(CommentView.toJson(comment));
+        return ok(Json.toJson(comment));
     }
 
     public Result upload() {

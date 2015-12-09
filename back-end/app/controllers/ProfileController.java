@@ -4,8 +4,9 @@ import dao.*;
 
 import models.Avatar;
 import models.HomeWork;
-
 import models.User;
+
+import secured.UserAuthenticator;
 
 import play.Logger;
 import play.mvc.Controller;
@@ -17,8 +18,6 @@ import play.libs.Json;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import secured.UserAuthenticator;
-import view.PlayerStatsView;
 
 import java.util.List;
 import java.text.DateFormat;

@@ -4,6 +4,7 @@ import dao.*;
 
 import models.*;
 
+import play.libs.Json;
 import secured.UserAuthenticator;
 import view.CommentView;
 import view.RatingView;
@@ -192,6 +193,6 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return ok(CommentView.toJson(comment));
+        return ok(Json.toJson(comment));
     }
 }

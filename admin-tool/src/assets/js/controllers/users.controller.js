@@ -31,14 +31,12 @@ angular
                 function (result) {
                     vm.users = result;
                 }, function (error) {
-                    console.log(error);
                     FlashService.Error(error);
                 }
             );
         }
 
         $scope.promote = function(user, role) {
-            console.log(user);
             UserService.promoteUser(user.id, role).then(
                 function (result) {
                     initController();

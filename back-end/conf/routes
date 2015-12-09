@@ -2,20 +2,36 @@
 # This file defines all application routes (Higher priority routes first)
 #
 
-#ControllerSession
-GET         /API/Session/                           controllers.ControllerSession.index()
-POST        /API/Login                              controllers.ControllerSession.login()
-DELETE      /API/Logout                             controllers.ControllerSession.logout()
+#SessionController
+GET         /API/Session/                           controllers.SessionController.index()
+POST        /API/Login                              controllers.SessionController.login()
+DELETE      /API/Logout                             controllers.SessionController.logout()
+
+#RoleController
+POST        /API/Role/                              controllers.RoleController.create()
+GET         /API/Role/                              controllers.RoleController.index()
+GET         /API/Role/:id/                          controllers.RoleController.show(id: Long)
+POST        /API/Role/:id/                          controllers.RoleController.update(id: Long)
+DELETE      /API/Role/:id/                          controllers.RoleController.delete(id: Long)
+
+#PasswordController
+POST        /API/Password/                          controllers.PasswordController.sendResetPasswordMail()
+POST        /API/Password/:username/                controllers.PasswordController.changePassword(username: String)
+
+#ValidationController
+GET         /API/Validate/Email/:code               controllers.ValidationController.verifyEmail(code: String)
+GET         /API/Validate/Student/:username         controllers.ValidationController.checkStudent(username: String)
 
 #UserController
 POST        /API/User/                              controllers.UserController.create()
 GET         /API/User/                              controllers.UserController.index()
-GET         /API/User/student                       controllers.UserController.checkStudent()
-POST        /API/User/password                      controllers.UserController.edit()
-GET         /API/User/verify/:code                  controllers.UserController.verifyEmail(code: String)
-POST        /API/User/ForgotPassword                controllers.UserController.sendResetPasswordMail()
-POST        /API/User/:id                           controllers.UserController.promote(id :Long)
-DELETE      /API/User/                              controllers.UserController.destroy()
+GET         /API/User/:username/                    controllers.UserController.show(username: String)
+POST        /API/User/:username/                    controllers.UserController.edit(username: String)
+DELETE      /API/User/:username/                    controllers.UserController.destroy(username: String)
+
+#SettingsController
+GET         /API/User/:username/Settings/           controllers.SettingsController.index(username: String)
+POST        /API/User/:username/Settings/           controllers.SettingsController.update(username: String)
 
 #ItemController
 GET         /API/Profile/inventory                  controllers.ItemController.inventory()
@@ -24,10 +40,6 @@ GET         /API/Profile/belt                       controllers.ItemController.b
 POST        /API/Profile/belt                       controllers.ItemController.edit()
 GET         /API/Profile/used/:id                   controllers.ItemController.used(id: Integer)
 POST        /API/Profile/collected                  controllers.ItemController.collected()
-
-#SettingsController
-GET         /API/User/Settings/                     controllers.SettingsController.index()
-POST        /API/User/Settings/                     controllers.SettingsController.edit()
 
 #LevelController
 GET         /API/Challenge/story                    controllers.LevelController.story()
@@ -67,7 +79,6 @@ POST        /API/SQL/Trivia/:id/                    controllers.SQLController.tr
 GET         /API/SQL/Homework/:HomeWorkID/:TaskID/  controllers.SQLController.homework(HomeWorkID: Long, TaskID: Long)
 POST        /API/SQL/Homework/:TaskID/              controllers.SQLController.homeworkSolve(TaskID: Long, submit: Boolean = false)
 POST        /API/SQL/Homework/:TaskID/submit        controllers.SQLController.homeworkSolve(TaskID: Long, submit: Boolean = true)
-
 
 #ProfileController
 GET         /API/Profile                            controllers.ProfileController.read()

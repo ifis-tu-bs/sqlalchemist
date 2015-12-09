@@ -3,7 +3,7 @@ package dao;
 import models.Map;
 
 import play.Logger;
-import view.MapView;
+import play.libs.Json;
 
 import javax.persistence.PersistenceException;
 
@@ -31,10 +31,10 @@ public class MapDAO {
           } catch (PersistenceException pe) {
               Map map_res = Map.find.where().eq("path", path).findUnique();
               if(map_res != null && map_res.isBossMap() == isBossMap) {
-                  Logger.warn("Map.create - Can't create Map(duplicate) " + MapView.toJson(map));
+                  Logger.warn("Map.create - Can't create Map(duplicate) " + Json.toJson(map));
                   return map_res;
               }
-              Logger.error("Map.create - Can't create Map: " + MapView.toJson(map));
+              Logger.error("Map.create - Can't create Map: " + Json.toJson(map));
               Logger.error("Map.create - Error: " + pe.getMessage());
               return null;
           }

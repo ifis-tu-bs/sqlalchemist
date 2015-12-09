@@ -1,9 +1,16 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import dao.RoleDAO;
+import play.Logger;
+import play.data.validation.ValidationError;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * the role class
@@ -12,156 +19,249 @@ import java.util.Calendar;
 @Table(name = "role")
 public class Role extends Model {
     @Id
-    private long        id;
+    private long            id;
 
     @Column(unique = true)
-    private String      name;
+    private int             priority;
 
-    private boolean     TasksBrowse     = false;
-    private boolean     TasksCreate     = false;
-    private boolean     TasksAdmin      = false;
+    @Column(unique = true, nullable = false)
+    private String          roleName;
 
-    private boolean     RolesAdmin      = false;
-    private boolean     UserAdmin       = false;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "own_task_set_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "own_task_set_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "own_task_set_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "own_task_set_delete"))
+    })
+    private PermissionRules ownTaskSetPermissions       = PermissionRules.getNoControl();
 
-    private boolean     HomeworkCreate  = false;
-    private boolean     HomeworkBrowse  = false;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "foreign_task_set_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "foreign_task_set_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "foreign_task_set_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_set_delete"))
+    })
+    private PermissionRules foreignTaskSetPermissions   = PermissionRules.getNoControl();
 
-    @OneToOne
-    private Role        followingRole   = null;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "own_task_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "own_task_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "own_task_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "own_task_delete"))
+    })
+    private PermissionRules ownTaskPermissions          = PermissionRules.getNoControl();
 
-    @ManyToOne(targetEntity = User.class)
-    private User        creator;
-    private Calendar    created_at;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "foreign_task_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "foreign_task_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "foreign_task_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "foreign_task_delete"))
+    })
+    private PermissionRules foreignTaskPermissions      = PermissionRules.getNoControl();
 
-    @ManyToOne(targetEntity = User.class)
-    private User        updated_from;
-    private Calendar    updated_at;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "homework_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "homework_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "homework_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "homework_delete"))
+    })
+    private PermissionRules homeworkPermissions         = PermissionRules.getNoControl();
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "role_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "role_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "role_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "role_delete"))
+    })
+    private PermissionRules rolePermissions             = PermissionRules.getNoControl();
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "user_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "user_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "user_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "user_delete"))
+    })
+    private PermissionRules userPermissions             = PermissionRules.getNoControl();
+
+    private int             votes;
+
+    private boolean         isDeletable = true;
+
+    @OneToMany(mappedBy = "role")
+    private List<User>      assignedUser;
+
+    @ManyToOne
+    private User            creator;
+
+    private Calendar        createdAt = Calendar.getInstance();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Constructor
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * the role constructor
-     * @param name      the name of the role
-     * @param creator   the create of the role
-     */
-    public Role(
-            String name,
-            User creator) {
-
-        this.name       = name;
-        this.creator    = creator;
-        this.created_at = Calendar.getInstance();
-    }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Getter & Setter
+// Getter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-    public String getName() {
-        return name;
+    public long getId() {
+        return id;
     }
 
-    public boolean isTasksBrowse() {
-        return TasksBrowse;
+    public int getPriority() {
+        return priority;
     }
 
-    public void setTasksBrowse(boolean tasksBrowse) {
-        TasksBrowse = tasksBrowse;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
-    public boolean isTasksCreate() {
-        return TasksCreate;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setTasksCreate(boolean tasksCreate) {
-        TasksCreate = tasksCreate;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public boolean isTasksAdmin() {
-        return TasksAdmin;
+    public PermissionRules getOwnTaskSetPermissions() {
+        return ownTaskSetPermissions;
     }
 
-    public void setTasksAdmin(boolean tasksAdmin) {
-        TasksAdmin = tasksAdmin;
+    public void setOwnTaskSetPermissions(PermissionRules ownTaskSetPermissions) {
+        this.ownTaskSetPermissions = ownTaskSetPermissions;
     }
 
-    public boolean isRolesAdmin() {
-        return RolesAdmin;
+    public PermissionRules getForeignTaskSetPermissions() {
+        return foreignTaskSetPermissions;
     }
 
-    public void setRolesAdmin(boolean rolesAdmin) {
-        RolesAdmin = rolesAdmin;
+    public void setForeignTaskSetPermissions(PermissionRules foreignTaskSetPermissions) {
+        this.foreignTaskSetPermissions = foreignTaskSetPermissions;
     }
 
-    public boolean isUserAdmin() {
-        return UserAdmin;
+    public PermissionRules getOwnTaskPermissions() {
+        return ownTaskPermissions;
     }
 
-    public void setUserAdmin(boolean userAdmin) {
-        UserAdmin = userAdmin;
+    public void setOwnTaskPermissions(PermissionRules ownTaskPermissions) {
+        this.ownTaskPermissions = ownTaskPermissions;
     }
 
-    public boolean isHomeworkCreate() {
-        return HomeworkCreate;
+    public PermissionRules getForeignTaskPermissions() {
+        return foreignTaskPermissions;
     }
 
-    public void setHomeworkCreate(boolean homeworkCreate) {
-        HomeworkCreate = homeworkCreate;
+    public void setForeignTaskPermissions(PermissionRules foreignTaskPermissions) {
+        this.foreignTaskPermissions = foreignTaskPermissions;
     }
 
-    public boolean isHomeworkBrowse() {
-        return HomeworkBrowse;
+    public PermissionRules getHomeworkPermissions() {
+        return homeworkPermissions;
     }
 
-    public void setHomeworkBrowse(boolean homeworkBrowse) {
-        HomeworkBrowse = homeworkBrowse;
+    public void setHomeworkPermissions(PermissionRules homeworkPermissions) {
+        this.homeworkPermissions = homeworkPermissions;
     }
 
-    public Role getFollowingRole() {
-        return followingRole;
+    public PermissionRules getRolePermissions() {
+        return rolePermissions;
     }
 
-    public void setFollowingRole(Role followingRole) {
-        this.followingRole = followingRole;
+    public void setRolePermissions(PermissionRules rolePermissions) {
+        this.rolePermissions = rolePermissions;
     }
 
+    public PermissionRules getUserPermissions() {
+        return userPermissions;
+    }
+
+    public void setUserPermissions(PermissionRules userPermissions) {
+        this.userPermissions = userPermissions;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
+    }
+
+    public boolean isDeletable() {
+        return isDeletable;
+    }
+
+    public void setDeletable(boolean deletable) {
+        isDeletable = deletable;
+    }
+
+    @JsonIgnore
     public User getCreator() {
         return creator;
     }
 
-    public Calendar getCreated_at() {
-        return created_at;
+    @JsonProperty("creator")
+    public String getCreatorName() {
+        return (creator != null) ? creator.getUsername() : null;
     }
 
-    public Calendar getUpdated_at() {
-        return updated_at;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
-    public User getUpdated_from() {
-        return updated_from;
-    }
-
-    public void setUpdated_from(User updated_from) {
-        this.updated_from = updated_from;
+    public Calendar getCreatedAt() {
+        return createdAt;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Ebean Overrides
+// Persistence Methods
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @Override
-    public void save() {
-        this.updated_at = Calendar.getInstance();
-        super.save();
-    }
 
     @Override
-    public void update() {
-        this.updated_at = Calendar.getInstance();
-        super.update();
+    public void delete() {
+        Role role = RoleDAO.getLowerRole(priority);
+        if(role == null) {
+            role = RoleDAO.getNextHigherRole(priority);
+        }
+        for(User user : this.assignedUser) {
+            Logger.info(user.getEmail());
+            user.setRole(role);
+            user.update();
+        }
+
+        super.delete();
+    }
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Attribute Helper
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public void signOffUser(User user) {
+        this.assignedUser.remove(user);
+    }
+
+    public void signOnUser(User user) {
+        this.assignedUser.add(user);
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Form Helper
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    public List<ValidationError> validate() {
+        List<ValidationError> errors = new ArrayList<>();
+
+        if(RoleDAO.getByPriority(priority) != null) {
+            errors.add(new ValidationError("priority", "priority already taken"));
+        }
+        if(RoleDAO.getByRoleName(roleName) != null) {
+            errors.add(new ValidationError("roleName", "roleName already taken"));
+        }
+
+        return errors.isEmpty() ? null : errors;
     }
 }

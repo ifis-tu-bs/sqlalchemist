@@ -1,10 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import dao.InventoryDAO;
 import dao.ScrollCollectionDAO;
 import dao.ShopItemDAO;
+import dao.StoryChallengeDAO;
 import helper.MailSender;
 
 import com.avaje.ebean.Model;
@@ -16,13 +20,12 @@ import org.mindrot.jbcrypt.BCrypt;
 import play.Play;
 import play.libs.Json;
 import service.ServiceUser;
-import view.AvatarView;
-import view.PlayerStatsView;
 import view.ScoreView;
-import view.SettingsView;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -42,8 +45,13 @@ public class User extends Model {
     @Column(unique = true)
     private String                      email;
     @Column(unique = true)
-    private final String                      username;
+    private String                      username;
+
     private String                      password;
+
+    @NotNull
+    @ManyToOne
+    private Role                        role;
 
     @Column(unique = true)
     private String                      emailVerifyCode;
@@ -99,7 +107,7 @@ public class User extends Model {
     private boolean                     isActive;
 
 
-    private final Calendar                    created_at;
+    private final Calendar createdAt;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
@@ -111,13 +119,17 @@ public class User extends Model {
      * @param password  password
      */
     public User(
-            String email,
-            String username,
-            String password) {
+            String  email,
+            String  username,
+            String  password,
+            Role    role) {
 
         this.email = email;
         this.username = username;
         setPassword(password);
+
+        setRole(role);
+
         emailVerifyCode = UUID.randomUUID().toString();
 
         if(play.api.Play.isProd(play.api.Play.current())) {
@@ -137,7 +149,7 @@ public class User extends Model {
         ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
         this.setAvatar(shopItem.getAvatar());
 
-        this.currentStory   = null;
+        this.currentStory   = StoryChallengeDAO.getFirstLevel();
         this.currentScroll  = null;
         this.currentTaskSet = null;
         this.currentHomeWork= null;
@@ -155,7 +167,7 @@ public class User extends Model {
 
         votes               = 1;
         isActive            = true;
-        created_at          = Calendar.getInstance();
+        createdAt = Calendar.getInstance();
     }
 
 
@@ -167,7 +179,7 @@ public class User extends Model {
         node.put("coins",       this.coins);
         node.put("score",       this.getScore().getTotalScore());
         node.set("highScore",   ScoreView.toJson(this));
-        node.set("avatar",      AvatarView.toJson(this.avatar));
+        node.set("avatar",      Json.toJson(this.avatar));
 
         return node;
     }
@@ -181,7 +193,7 @@ public class User extends Model {
 
         node.put("id",          this.id);
         node.put("username",    this.username);
-        node.set("settings",    SettingsView.toJson(this.settings));
+        node.set("settings",    Json.toJson(this.settings));
         node.put("student",     this.isStudent());
         node.put("storyDone",   this.storyDone);
         node.put("coins",       this.coins);
@@ -205,7 +217,10 @@ public class User extends Model {
 
 
         node.put("email",       this.email);
-        node.put("createdAt",   String.valueOf(this.created_at));
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        node.put("createdAt",   simpleDateFormat.format(this.createdAt.getTime()));
 
         return node;
     }
@@ -223,7 +238,7 @@ public class User extends Model {
     }
 
     private String getUserRoleString() {
-        String userRole = "User";
+        String userRole = (role != null) ? role.getRoleName() : "???";
 
 
         if(this.isStudent())
@@ -236,8 +251,8 @@ public class User extends Model {
         ObjectNode node = Json.newObject();
         PlayerStats playerStats_sum = this.getPlayerStats();
 
-        node.set("attributes",      PlayerStatsView.toJson(playerStats_sum));
-        node.set("currentAvatar",   AvatarView.toJson(this.avatar));
+        node.set("attributes",      Json.toJson(playerStats_sum));
+        node.set("currentAvatar",   Json.toJson(this.avatar));
         node.set("avatars_bought",  this.toJsonBoughtAvatars());
         node.put("scrollLimit",     this.scrollLimit);
         node.put("maxDepth",        this.depth);
@@ -251,7 +266,7 @@ public class User extends Model {
     public ArrayNode toJsonBoughtAvatars(){
         ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
 
-        this.shopItems.stream().filter(shopItem -> shopItem.isTypeAvatar()).forEach(shopItem -> arrayNode.add(AvatarView.toJson(shopItem.getAvatar())));
+        this.shopItems.stream().filter(ShopItem::isTypeAvatar).forEach(shopItem -> arrayNode.add(Json.toJson(shopItem.getAvatar())));
 
         return arrayNode;
     }
@@ -263,19 +278,9 @@ public class User extends Model {
 
     /**
      *
-     * @return returns the role of the user
-     */
-    public int getRole(){
-        return 1;
-    }
-
-    /**
-     *
      * @return returns true if the user is a student
      */
-    public boolean isStudent() {
-        return (this.yID != null || this.matNR != null);
-    }
+
 
     /**
      * This method updates the user
@@ -293,26 +298,6 @@ public class User extends Model {
     //    this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
-    }
-
-    public boolean isAdmin() {
-        return true;
-    }
-
-    public void disable() {
-        this.isActive = false;
-    }
-
-    public boolean isActive() {
-        return this.isActive;
-    }
-
-    public boolean isEmailVerified() {
-        return this.emailVerifyCode == null;
-    }
-
-    public void setEmailVerified() {
-        this.emailVerifyCode = null;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,14 +339,39 @@ public class User extends Model {
         this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonIgnore
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @JsonProperty("role")
+    public String getRoleName() {
+        return this.role.getRoleName();
+    }
+
+    @JsonIgnore
     public String getEmailVerifyCode() {
         return this.emailVerifyCode;
     }
 
+    public boolean isEmailVerified() {
+        return this.emailVerifyCode == null;
+    }
+
+    public void setEmailVerified() {
+        this.emailVerifyCode = null;
+    }
+
+    @JsonIgnore
     public String getMatNR() {
         return matNR;
     }
@@ -370,12 +380,18 @@ public class User extends Model {
         this.matNR = matNR;
     }
 
+    @JsonIgnore
     public String getYID() {
         return yID;
     }
 
     public void setYID(String yID) {
         this.yID = yID;
+    }
+
+    @JsonProperty("student")
+    public boolean isStudent() {
+        return (this.yID != null || this.matNR != null);
     }
 
     public void setStudent(boolean student) {
@@ -394,7 +410,7 @@ public class User extends Model {
         PlayerStats playerStats_sum = new PlayerStats();
 
         playerStats_sum.add(this.playerStats);
-        playerStats_sum.add(this.avatar.getPlayerStats());
+        playerStats_sum.add(this.avatar.getAttributes());
 
         List<Scroll> scrollList = ScrollCollectionDAO.getActiveScrolls(this);
 
@@ -434,6 +450,7 @@ public class User extends Model {
         shopItems.add(item);
     }
 
+    @JsonIgnore
     public List<ShopItem> getShopItems() {
         return shopItems;
     }
@@ -462,13 +479,18 @@ public class User extends Model {
     public void setCurrentScroll(Scroll currentScroll) {
         this.currentScroll = currentScroll;
     }
-
+    @JsonIgnore
     public StoryChallenge getCurrentStory() {
         return currentStory;
     }
 
     public void setCurrentStory(StoryChallenge currentStory) {
         this.currentStory = currentStory;
+    }
+
+    @JsonProperty("currentStory")
+    public String getCurrentStoryName() {
+        return (currentStory != null) ? currentStory.getName() : "";
     }
 
     public TaskSet getCurrentTaskSet() {

@@ -35,13 +35,8 @@ public class TaskView {
 
     public static ObjectNode toJson(Task task) {
         ObjectNode json = Json.newObject();
-        ArrayNode commentNode = JsonNodeFactory.instance.arrayNode();
 
         Rating rating_sum = Rating.sum(task.getRatings());
-
-        for(Comment comment : task.getComments()) {
-          commentNode.add(CommentView.toJson(comment));
-        }
 
         json.put("id",                  task.getId());
         json.put("taskName",            task.getTaskName());
@@ -58,7 +53,7 @@ public class TaskView {
         json.set("creator",             task.getCreator().toJsonUser());
 
         json.set("rating",              RatingView.toJson(rating_sum));
-        json.set("comments",            commentNode);
+        json.set("comments",            Json.toJson(task.getComments()));
 
         json.put("createdAt",           String.valueOf(task.getCreated_at()));
         json.put("updatedAt",           String.valueOf(task.getUpdated_at()));
@@ -122,5 +117,43 @@ public class TaskView {
         }
 
         return taskNode;
+    }
+
+    /**
+     * Examines, whether the Profile has already Submitted (NOT SOLVED) a given Task. Also uses the whole Task (inclusive refStatement
+     */
+    public static ObjectNode toJsonHomeWorkForProfileWithRefStatement(Task task, HomeWork homework, User user) {
+        ObjectNode json = toJson(task);
+        SubmittedHomeWork submittedHomeWork = SubmittedHomeWorkDAO.getSubmitsForProfileHomeWorkTask(user, homework, task);
+        if(submittedHomeWork != null) {
+            json.set("submit",      SubmittedHomeWorkView.toJson(submittedHomeWork));
+            json.put("done",        submittedHomeWork.getSolve());
+        } else {
+            json.put("done",        false);
+        }
+
+
+
+        return json;
+    }
+
+    public static ObjectNode toJsonHomeWorkForProfileWithRefStatement(List<Task> taskList, HomeWork homework, User user) {
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+        int done = 0, all = taskList.size();
+
+        for(Task task : taskList) {
+            ObjectNode objectNode = TaskView.toJsonHomeWorkForProfileWithRefStatement(task, homework, user);
+            if (objectNode.get("done").asBoolean())
+                done++;
+            arrayNode.add(objectNode);
+        }
+
+        ObjectNode objectNode = Json.newObject();
+
+        objectNode.set("tasks", arrayNode);
+        objectNode.put("done", done);
+        objectNode.put("all", all);
+
+        return objectNode;
     }
 }
