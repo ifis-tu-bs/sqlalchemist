@@ -87,7 +87,7 @@ public class RoleController extends Controller{
             return notFound();
 
         if(RoleDAO.getAll().size() <= 1) {
-            return badRequest("{'message': 'You cannot delete the Role if it the last one!'}");
+            return badRequest("{'message': 'You cannot delete the Role if it is the last one!'}");
         }
         try {
             role.delete();
