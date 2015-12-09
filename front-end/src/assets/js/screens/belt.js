@@ -102,7 +102,11 @@ game.BeltScreen = me.ScreenObject.extend({
 
                     function onloadBelt(xmlHttpRequest) {
                         //console.log(xmlHttpRequest);
-                        me.state.change(STATE_BELT);
+                        //me.state.change(STATE_BELT);
+                        //$("[id*='potionInBelt']").remove();
+                        //potionAmount.clear();
+                        repaintPotion();
+                        repaintPotionAmount();
                     }
 
                     this.setBelt = function () {
@@ -174,78 +178,78 @@ game.BeltScreen = me.ScreenObject.extend({
                     potionAmount = new game.TextOutputElement('potionAmountId' + i, 5, 4, -1.787879 + 7.954545 * i, 36.505208, 1);
                     me.game.world.addChild(potionAmount);
                     if (game.potion.potions[i].amount > 9){
-                        potionAmount.writeHTML("#9+");
+                        potionAmount.writeHTML("#9+","Amount");
                     } else {
-                        potionAmount.writeHTML("#" + game.potion.potions[i].amount);
+                        potionAmount.writeHTML("#" + game.potion.potions[i].amount,"Amount"+ 1);
                     }
                 }
                 if (game.potion.potions[i + 5].available) {
                     potionName = getPotionName(game.potion.potions[i + 5]);
 
-                    brewPotion = new game.ClickableElement('brewPotionId' + i + 5, '', this.brewPotion(game.potion.potions[i + 5]),
+                    brewPotion = new game.ClickableElement('brewPotionId' + (i + 5), '', this.brewPotion(game.potion.potions[i + 5]),
                                                                 2.424242, 4.166667, 46.666667 + 7.954545 * i, 30.078125, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
 
-                    setPotion = new game.ClickableElement('setPotionId' + i + 5, '', this.setPotion(game.potion.potions[i + 5]),
+                    setPotion = new game.ClickableElement('setPotionId' + (i + 5), '', this.setPotion(game.potion.potions[i + 5]),
                                                                4.848485, 8.333333, 45.454545 + 7.954545 * i, 35.026042, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
 
-                    potionAmount = new game.TextOutputElement('potionAmountId' + i + 5, 6 , 8, 42.681818 + 7.954545 * i, 36.505208, 2);
+                    potionAmount = new game.TextOutputElement('potionAmountId' + (i + 5), 6 , 8, 42.681818 + 7.954545 * i, 36.505208, 2);
                     me.game.world.addChild(potionAmount);
                     if (game.potion.potions[i + 5].amount > 9){
-                        potionAmount.writeHTML("#9+");
+                        potionAmount.writeHTML("#9+","Amount" + (i + 5));
                     } else {
-                        potionAmount.writeHTML("#" + game.potion.potions[i + 5].amount);
+                        potionAmount.writeHTML("#" + game.potion.potions[i + 5].amount,"Amount" + (i + 5));
                     }
                 }
                 if (game.potion.potions[i + 10].available) {
                     potionName = getPotionName(game.potion.potions[i + 10]);
 
-                    brewPotion = new game.ClickableElement('brewPotionId' + i + 10, '', this.brewPotion(game.potion.potions[i + 10]),
+                    brewPotion = new game.ClickableElement('brewPotionId' + (i + 10), '', this.brewPotion(game.potion.potions[i + 10]),
                                                                 2.424242, 4.166667, 2.19697 + 7.954545 * i, 55.46875, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
 
-                    setPotion = new game.ClickableElement('setPotionId' + i + 10, '', this.setPotion(game.potion.potions[i + 10]),
+                    setPotion = new game.ClickableElement('setPotionId' + (i + 10), '', this.setPotion(game.potion.potions[i + 10]),
                                                                4.848485, 8.333333, 0.984848 + 7.954545 * i, 60.416667, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
 
-                    potionAmount = new game.TextOutputElement('potionAmountId' + i + 10, 5, 4, -1.787879 + 7.954545 * i, 61.895833, 1);
+                    potionAmount = new game.TextOutputElement('potionAmountId' + (i + 10), 5, 4, -1.787879 + 7.954545 * i, 61.895833, 1);
                     me.game.world.addChild(potionAmount);
                     if (game.potion.potions[i + 10].amount > 9){
-                        potionAmount.writeHTML("#9+");
+                        potionAmount.writeHTML("#9+","Amount");
                     } else {
-                        potionAmount.writeHTML("#" + game.potion.potions[i + 10].amount);
+                        potionAmount.writeHTML("#" + game.potion.potions[i + 10].amount,"Amount" + (i + 10));
                     }
                 }
                 if (game.potion.potions[i + 15].available) {
                     potionName = getPotionName(game.potion.potions[i + 15]);
 
-                    brewPotion = new game.ClickableElement('brewPotionId' + i + 15, '', this.brewPotion(game.potion.potions[i + 15]),
+                    brewPotion = new game.ClickableElement('brewPotionId' + (i + 15), '', this.brewPotion(game.potion.potions[i + 15]),
                                                                 2.424242, 4.166667, 46.666667 + 7.954545 * i, 55.46875, 1);
                     brewPotion.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "brew");
                     me.game.world.addChild(brewPotion);
 
-                    setPotion = new game.ClickableElement('setPotionId' + i + 15, '', this.setPotion(game.potion.potions[i + 15]),
+                    setPotion = new game.ClickableElement('setPotionId' + (i + 15), '', this.setPotion(game.potion.potions[i + 15]),
                                                                4.848485, 8.333333, 45.454545 + 7.954545 * i, 60.416667, 1);
                     setPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
                     me.game.world.addChild(setPotion);
 
-                    potionAmount = new game.TextOutputElement('potionAmountId' + i + 15, 5, 4, 42.681818 + 7.954545 * i, 61.895833, 1);
+                    potionAmount = new game.TextOutputElement('potionAmountId' + (i + 15), 5, 4, 42.681818 + 7.954545 * i, 61.895833, 1);
                     me.game.world.addChild(potionAmount);
                     if (game.potion.potions[i + 15].amount > 9){
-                        potionAmount.writeHTML("#9+");
+                        potionAmount.writeHTML("#9+","Amount");
                     } else {
-                        potionAmount.writeHTML("#" + game.potion.potions[i + 15].amount);
+                        potionAmount.writeHTML("#" + game.potion.potions[i + 15].amount,"Amount"+ (i + 15));
                     }
                 }
             }
 
             /**
-             * Function to put potion fromthe belt back into the collection.
+             * Function to put potion from the belt back into the collection.
              * @param potion, the potion to put back
              * @param slot, beltslot from which the potion is put back in the collection
              * @returns {Function}
@@ -260,6 +264,9 @@ game.BeltScreen = me.ScreenObject.extend({
                     function onloadBelt(xmlHttpRequest) {
                         //console.log(xmlHttpRequest);
 
+                        repaintPotion();
+                        repaintPotionAmount();
+                        /*
                         $("#backgroundBeltId").fadeOut(50);
                         $("#backFromBeltId").fadeOut(50);
                         $("[id*='ImageId']").fadeOut(50);
@@ -267,7 +274,7 @@ game.BeltScreen = me.ScreenObject.extend({
                         $("[id*='setPotionId']").fadeOut(50);
                         $("[id*='potionAmountId']").fadeOut(50);
                         $("[id*='beltPotionId']").fadeOut(50);
-                        me.state.change(STATE_BELT);
+                        me.state.change(STATE_BELT);*/
 
                     }
 
@@ -305,15 +312,17 @@ game.BeltScreen = me.ScreenObject.extend({
                         //console.log(this.potion.amount);
                         this.setBelt();
                     }
-
+                    /*
                     $("#backgroundBeltId").fadeOut(50);
                     $("#backFromBeltId").fadeOut(50);
                     $("[id*='ImageId']").fadeOut(50);
                     $("[id*='brewPotionId']").fadeOut(50);
-                    $("[id*='setPotionId']").fadeOut(50);
-                    $("[id*='potionAmountId']").fadeOut(50);
-                    $("[id*='beltPotionId']").fadeOut(50);
+                    $("[id*='setPotionId']")  .fadeOut(50);
+                     $("[id*='potionAmountId']").fadeOut(50);
+                     $("[id*='beltPotionId']").fadeOut(50);
                     me.state.change(STATE_BELT);
+                    */
+
                 };
             };
 
@@ -324,13 +333,73 @@ game.BeltScreen = me.ScreenObject.extend({
                 potionName = getPotionName(game.belt.beltSlots[i]);
 
                 var beltPotion = new game.ClickableElement('beltPotionId' + i, '', this.setBeltPotion(game.belt.beltSlots[i], i),
-                                                            4.848485, 8.333333, 17.121212 + 7.121212 * i, 80.729167, 1);
-                beltPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potion");
+                    4.848485, 8.333333, 17.121212 + 7.121212 * i, 80.729167, 1);
+                beltPotion.setImage("assets/data/img/potion/" + potionName + ".png", "potionInBelt");
                 me.game.world.addChild(beltPotion);
             }
 
-        }
+            //Update Potion Amount
+            function repaintPotionAmount(){
 
+
+
+                for (i = 1; i < 6; i++) {
+                    var potionAmount;
+                    if (game.potion.potions[i].available) {
+
+                        if (game.potion.potions[i].amount > 9) {
+                            $("#potionAmountId" + (i)+" #Amount"+ (i)).text("#9+");
+                        } else {
+                            $("#potionAmountId" + (i)+" #Amount"+ (i)).text("#" + game.potion.potions[i].amount);
+                        }
+
+                    }
+                    if (game.potion.potions[i + 5].available) {
+
+                        if (game.potion.potions[i + 5].amount > 9) {
+                            $("#potionAmountId" + (i + 5)+" #Amount"+ (i + 5)).text("#9+");
+                        } else {
+                            $("#potionAmountId" + (i + 5)+" #Amount"+ (i + 5)).text("#" + game.potion.potions[i + 5].amount);
+                        }
+                    }
+                    if (game.potion.potions[i + 10].available) {
+
+
+                        if (game.potion.potions[i + 10].amount > 9) {
+                            $("#potionAmountId" + (i + 10)+" #Amount"+ (i + 10)).text("#9+");
+                        } else {
+                            $("#potionAmountId" + (i + 10)+" #Amount"+ (i + 10)).text("#" + game.potion.potions[i + 10].amount);
+                        }
+                    }
+                    if (game.potion.potions[i + 15].available) {
+
+
+                        if (game.potion.potions[i + 15].amount > 9) {
+                            $("#potionAmountId" + (i + 15)+" #Amount"+ (i + 15)).text("#9+");
+                        } else {
+                            $("#potionAmountId" + (i + 15)+" #Amount"+ (i + 15)).text("#" + game.potion.potions[i + 15].amount);
+                        }
+                    }
+                }
+            }
+
+            //Update the Potion in the Belt
+            function repaintPotion(){
+
+
+                console.log(game.belt.beltSlots);
+                console.log($("#beltPotionId0"));
+
+                /**
+                 * Create buttons to put the potions back into the collection.
+                 */
+                for (i = 0; i < game.belt.beltSlots.length; i++) {
+                    potionName = getPotionName(game.belt.beltSlots[i]);
+                    console.log(potionName);
+                    $("#beltPotionId"+ i+ " #potionInBelt").attr("src","assets/data/img/potion/" + potionName + ".png");
+                }
+            }
+        }
         ajaxSendChallengeStoryRequest(getAmount);
     }
 });
