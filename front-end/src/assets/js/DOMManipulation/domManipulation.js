@@ -1129,8 +1129,9 @@ game.fdom.CheckBoxElement = me.Renderable.extend({
         this.elem.innerHTML     = text;
         this.elem.type="checkbox";
 
-        $(this.elem).on('click', action());
-
+        $(this.elem).on('click', function() {
+            action();
+        });
 
         this.elem.style.width       = width;
         this.elem.style.height      = height;
