@@ -82,7 +82,7 @@ public class TaskSetController extends Controller {
     public Result read() {
         User user = UserDAO.getBySession(request().username());
 
-        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.isAdmin());
+        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.getRole().getHomeworkPermissions().canCreate());
 
         if (taskSetList == null) {
             Logger.warn("TaskSet.index - no TaskSet found");

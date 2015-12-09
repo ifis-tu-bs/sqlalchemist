@@ -1,10 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import dao.InventoryDAO;
 import dao.ScrollCollectionDAO;
 import dao.ShopItemDAO;
+import dao.StoryChallengeDAO;
 import helper.MailSender;
 
 import com.avaje.ebean.Model;
@@ -145,7 +149,7 @@ public class User extends Model {
         ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
         this.setAvatar(shopItem.getAvatar());
 
-        this.currentStory   = null;
+        this.currentStory   = StoryChallengeDAO.getFirstLevel();
         this.currentScroll  = null;
         this.currentTaskSet = null;
         this.currentHomeWork= null;
@@ -276,9 +280,7 @@ public class User extends Model {
      *
      * @return returns true if the user is a student
      */
-    public boolean isStudent() {
-        return (this.yID != null || this.matNR != null);
-    }
+
 
     /**
      * This method updates the user
@@ -296,26 +298,6 @@ public class User extends Model {
     //    this.role = role;
         this.save();
         MailSender.getInstance().sendPromoteMail(this);
-    }
-
-    public boolean isAdmin() {
-        return true;
-    }
-
-    public void disable() {
-        this.isActive = false;
-    }
-
-    public boolean isActive() {
-        return this.isActive;
-    }
-
-    public boolean isEmailVerified() {
-        return this.emailVerifyCode == null;
-    }
-
-    public void setEmailVerified() {
-        this.emailVerifyCode = null;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -357,10 +339,12 @@ public class User extends Model {
         this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
 
+    @JsonIgnore
     public Role getRole() {
         return role;
     }
@@ -369,11 +353,25 @@ public class User extends Model {
         this.role = role;
     }
 
+    @JsonProperty("role")
+    public String getRoleName() {
+        return this.role.getRoleName();
+    }
 
+    @JsonIgnore
     public String getEmailVerifyCode() {
         return this.emailVerifyCode;
     }
 
+    public boolean isEmailVerified() {
+        return this.emailVerifyCode == null;
+    }
+
+    public void setEmailVerified() {
+        this.emailVerifyCode = null;
+    }
+
+    @JsonIgnore
     public String getMatNR() {
         return matNR;
     }
@@ -382,12 +380,18 @@ public class User extends Model {
         this.matNR = matNR;
     }
 
+    @JsonIgnore
     public String getYID() {
         return yID;
     }
 
     public void setYID(String yID) {
         this.yID = yID;
+    }
+
+    @JsonProperty("student")
+    public boolean isStudent() {
+        return (this.yID != null || this.matNR != null);
     }
 
     public void setStudent(boolean student) {
@@ -446,6 +450,7 @@ public class User extends Model {
         shopItems.add(item);
     }
 
+    @JsonIgnore
     public List<ShopItem> getShopItems() {
         return shopItems;
     }
@@ -474,13 +479,18 @@ public class User extends Model {
     public void setCurrentScroll(Scroll currentScroll) {
         this.currentScroll = currentScroll;
     }
-
+    @JsonIgnore
     public StoryChallenge getCurrentStory() {
         return currentStory;
     }
 
     public void setCurrentStory(StoryChallenge currentStory) {
         this.currentStory = currentStory;
+    }
+
+    @JsonProperty("currentStory")
+    public String getCurrentStoryName() {
+        return (currentStory != null) ? currentStory.getName() : "";
     }
 
     public TaskSet getCurrentTaskSet() {

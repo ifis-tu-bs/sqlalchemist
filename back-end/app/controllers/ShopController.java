@@ -73,7 +73,7 @@ public class ShopController extends Controller {
         } else {
             if (ServiceUser.buyShopItem(user, shopItem)) {
                 user.update();
-                return ok(Json.toJson(user.getPlayerStats()));
+                return ok(Json.toJson(user));
             } else {
                 Logger.warn("ShopController.buy - Not enough coins");
                 return badRequest("Not enough coins");

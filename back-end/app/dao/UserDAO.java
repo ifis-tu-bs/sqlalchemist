@@ -85,10 +85,6 @@ public class UserDAO {
         return studentList;
     }
 
-    public static List<User> getAllUsers() {
-    return find.all();
-  }
-
     public static List<User> getAll() {
         return find.all();
     }

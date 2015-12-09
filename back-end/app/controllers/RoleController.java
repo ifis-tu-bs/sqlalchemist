@@ -1,22 +1,24 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.RoleDAO;
 import dao.UserDAO;
+
 import models.Role;
 
-import play.libs.Json;
 import secured.UserAuthenticator;
 import secured.role.CanCreateRole;
+import secured.role.CanReadRole;
+import secured.role.CanUpdateRole;
+import secured.role.CanDeleteRole;
 
+import play.libs.Json;
 import play.data.Form;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import play.mvc.Controller;
 import play.mvc.Security.Authenticated;
-import secured.role.CanDeleteRole;
-import secured.role.CanReadRole;
-import secured.role.CanUpdateRole;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.persistence.PersistenceException;
 import java.io.IOException;
@@ -47,7 +49,6 @@ public class RoleController extends Controller{
 
     @Authenticated(CanReadRole.class)
     public Result index() {
-
         List<Role> roles = RoleDAO.getAll();
         return ok(Json.toJson(roles));
     }
@@ -73,7 +74,7 @@ public class RoleController extends Controller{
             mapper.readerForUpdating(role).readValue(request().body().asJson());
         } catch (IOException e) {
             e.printStackTrace();
-            return internalServerError("{'message': 'unexpected exception!'}");
+            return internalServerError(Json.parse("{'message': 'unexpected exception!'}"));
         }
 
         role.update();
@@ -85,16 +86,18 @@ public class RoleController extends Controller{
         Role role = RoleDAO.getById(id);
         if(role == null)
             return notFound();
+        else if(!role.isDeletable())
+            return badRequest(Json.parse("{'message'; 'this role is not deletable'}"));
 
         if(RoleDAO.getAll().size() <= 1) {
-            return badRequest("{'message': 'You cannot delete the Role if it is the last one!'}");
+            return badRequest(Json.parse("{'message': 'You cannot delete the Role if it is the last one!'}"));
         }
         try {
             role.delete();
             return ok();
         } catch (PersistenceException e) {
             e.printStackTrace();
-            return internalServerError("{'message': 'unexpected exception!'}");
+            return internalServerError(Json.parse("{'message': 'unexpected exception!'}"));
         }
     }
 }

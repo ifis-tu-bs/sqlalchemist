@@ -3,11 +3,11 @@ package controllers;
 
 import dao.UserDAO;
 
+import models.Settings;
 import models.User;
 
 import play.libs.Json;
 import secured.UserAuthenticator;
-import view.SettingsView;
 
 
 import play.mvc.Security;
@@ -31,9 +31,11 @@ public class SettingsController extends Controller {
      *
      * @return  returns the Player Settings as JSON Object
      */
-    public Result index() {
+    public Result index(String username) {
         User user = UserDAO.getBySession(request().username());
-
+        if(!user.getUsername().equals(username)) {
+            return forbidden();
+        }
         return ok(Json.toJson(user.getSettings()));
     }
 
@@ -42,13 +44,15 @@ public class SettingsController extends Controller {
      *
      * @return  returns a http responds code if the action was successfully or not
      */
-    public Result update() {
+    public Result update(String username) {
         User user = UserDAO.getBySession(request().username());
-
+        if(!user.getUsername().equals(username)) {
+            return forbidden();
+        }
         JsonNode json       = request().body().asJson();
-        user.setSettings(SettingsView.fromJson(json));
+        user.setSettings(Json.fromJson(json, Settings.class));
         user.update();
 
-        return redirect(routes.SettingsController.index());
+        return redirect(routes.SettingsController.index(username));
     }
 }

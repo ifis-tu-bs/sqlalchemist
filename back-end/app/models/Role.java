@@ -90,6 +90,8 @@ public class Role extends Model {
     })
     private PermissionRules userPermissions             = PermissionRules.getNoControl();
 
+    private int             votes;
+
     private boolean         isDeletable = true;
 
     @OneToMany(mappedBy = "role")
@@ -179,6 +181,14 @@ public class Role extends Model {
 
     public void setUserPermissions(PermissionRules userPermissions) {
         this.userPermissions = userPermissions;
+    }
+
+    public int getVotes() {
+        return votes;
+    }
+
+    public void setVotes(int votes) {
+        this.votes = votes;
     }
 
     public boolean isDeletable() {
