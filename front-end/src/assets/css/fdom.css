@@ -5,6 +5,10 @@
     background-size: contain;
 }
 
+.Container {
+    position: relative;
+}
+
 .Image {
     position: absolute;
 }
@@ -54,6 +58,43 @@
     color: black;
 }
 
+.Button.SettingsScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.SettingsScreen.Back:hover {
+    filter: contrast(150%) brightness(150%);
+    -webkit-filter: brightness(150%) contrast(150%);
+}
+
+.CheckBox {
+    position: relative;
+    -webkit-appearance: initial;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+
+.CheckBox.SettingsScreen.Sound {
+    background: url('/assets/data/img/buttons/ButtonsSoundOff.png');
+}
+
+.CheckBox.SettingsScreen.Sound:checked {
+    background: url('/assets/data/img/buttons/ButtonsSound.png');
+}
+
+.CheckBox.SettingsScreen.Music {
+    background: url('/assets/data/img/buttons/ButtonsMusicOff.png');
+}
+
+.CheckBox.SettingsScreen.Music:checked {
+    background: url('/assets/data/img/buttons/ButtonsMusic.png');
+}
+
 .StartScreen.Parchment {
     position: absolute;
     background-position: center;
@@ -70,6 +111,19 @@
     font-family: Trajan_Pro_Regular, sans-serif;
     color: black;
     cursor: default;
+}
+
+.Title.SettingsScreen {
+    color: white;
+}
+
+.Text {
+    position: absolute;
+}
+
+.Text.SettingsScreen {
+    font-size: 6vh;
+    color:black;
 }
 
 .InputField ,.InputPasswordField, .InputField:focus, .InputPasswordField:focus {

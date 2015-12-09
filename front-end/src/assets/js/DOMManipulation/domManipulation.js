@@ -1120,3 +1120,37 @@ game.fdom.ImageElement = me.Renderable.extend({
         this.parent.removeChild(this.elem);
     }
 });
+
+game.fdom.CheckBoxElement = me.Renderable.extend({
+    init: function(parent, width, height, left, top, text, className, action) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('input');
+        this.elem.className     = className;
+        this.elem.innerHTML     = text;
+        this.elem.type="checkbox";
+
+        $(this.elem).on('click', action());
+
+
+        this.elem.style.width       = width;
+        this.elem.style.height      = height;
+        this.elem.style.left        = left;
+        this.elem.style.top         = top;
+
+        this.visibility = true;
+        this.parent.appendChild(this.elem);
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    hide: function() {
+        this.elem.style.display = "none";
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});

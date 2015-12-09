@@ -493,6 +493,7 @@ public class User extends Model {
         return (currentStory != null) ? currentStory.getName() : "";
     }
 
+    @JsonIgnore
     public TaskSet getCurrentTaskSet() {
         return currentTaskSet;
     }
@@ -501,6 +502,7 @@ public class User extends Model {
         this.currentTaskSet = currentTaskSet;
     }
 
+    @JsonIgnore
     public HomeWork getCurrentHomeWork() {
         return currentHomeWork;
     }

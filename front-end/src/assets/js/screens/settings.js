@@ -1,52 +1,43 @@
 game.SettingsScreen = me.ScreenObject.extend({
 
     onResetEvent : function() {
-
         /**
          *  set settings background
          */
-        var backgroundsettings = new game.BackgroundElement('backgroundsettings', 100, 100, 0, 0, 'none');
-        backgroundsettings.setImage("assets/data/img/gui/settings_screen.png", "back");
-        me.game.world.addChild(backgroundsettings);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
+        me.game.world.addChild(rootContainer);
 
-        var settingsBackgroundHeader = new game.TextOutputElement('settingsHeaderId', 40, 10, 30, 3, 1);
-        me.game.world.addChild(settingsBackgroundHeader);
-        settingsBackgroundHeader.writeHTML("SETTINGS");
+        var title = new game.fdom.TitleElement(rootContainer, '30%','10%','35%','5%', 'Settings', 'Title SettingsScreen');
+        me.game.world.addChild(title);
 
-        function fadeOutElements(){
-            $("#studentRequest").fadeOut(100);
-            $("#backgroundsettings").fadeOut(100);
-            $("#storyReset").fadeOut(100);
-            $("#changePassword").fadeOut(100);
-            $("#backFromSettings").fadeOut(100);
-            $("#soundButtonId").fadeOut(100);
-            $("#musicButtonId").fadeOut(100);
-            $("#soundsElement").fadeOut(100);
-            $("#deleteUser").fadeOut(100);
-            $("#submitDeletion").fadeOut(100);
-            $("#verifyGreen").fadeOut(100);
-            $("#submitVerification").fadeOut(100);
-            $("#submitPassword").fadeOut(100);
-            $("#submitReset").fadeOut(100);
-            $("[id*=Header]").fadeOut(100);
-            $("[id^=keyBindings]").fadeOut(100);
-        }
-
-        /**
-         *  add all necessary buttons to screen
-         */
-        this.backToMenu = function () {
-            fadeOutElements();
-            setTimeout( function() {
+        var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
+            $(rootContainer.getNode()).fadeOut(100);
+            setTimeout(function() {
                 me.state.change(me.state.MENU);
-            }, 100);
-        };
+            }, 50);
+        });
+        me.game.world.addChild(backButton);
 
-        var backFromSettings = new game.ClickableElement('backFromSettings','', this.backToMenu, 14.01515, 19.53125, 77, 0, 1);
-        backFromSettings.setImage("assets/data/img/buttons/back_button_ink.png", "back");
-        me.game.world.addChild(backFromSettings);
+        var settingsContainerElement = new game.fdom.ContainerElement(rootContainer, '35%','27%','10%','20%', 'Container SettingsScreen Settings');
+        me.game.world.addChild(settingsContainerElement);
 
-        var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
+        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','20%','10%', 'sound: ', 'Text SettingsScreen Sound ');
+        me.game.world.addChild(settingsTextSound);
+
+        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','20%','50%', 'music: ', 'Text SettingsScreen Music');
+        me.game.world.addChild(settingsTextMusic);
+
+        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','10%', '', 'CheckBox SettingsScreen Sound', function() {
+            console.log("Sound");
+        });
+        me.game.world.addChild(settingsSound);
+
+        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','50%', '', 'CheckBox SettingsScreen Sound', function() {
+            console.log("Music");
+        });
+        me.game.world.addChild(settingsMusic);
+
+        /*var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
         var newPassword       = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);
         var newPasswordAck    = new game.TextInputElement('input','text', 'wNewAck', 'fNewAck', 35, 10, 48, 61, 2);
         var changeHeader      = new game.TextOutputElement('changeHeader', 50, 5, 41, 26, 1);
@@ -104,34 +95,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         deleteUserHeader.hide();
         verifyUserHeader.hide();
 
-        this.sendStudentRequest = function() {
-
-            keyBindingsHeader.hide();
-            keyBindings.hide();
-            keyBindingsDisc.hide();
-            oldPassword.hide();
-            newPassword.hide();
-            newPasswordAck.hide();
-            changeHeader.hide();
-            resetHeader.hide();
-            submitReset.hide();
-            submitPassword.hide();
-            studentRequest.hide();
-            deleteUserHeader.hide();
-            submitDeletion.hide();
-            verifyUserHeader.display();
-            submitVerification.display();
-
-            this.sendVerificationRequest = function (){
-                studentReply = function(xmlHttpRequest) {
-                    studentRequest.changeColor('verifyGreen');
-                    //console.log(xmlHttpRequest);
-                };
-                ajaxSendUserStudentRequest(studentReply);
-            };
-
-        };
-
         var submitVerification = new game.ClickableElement('submitVerification', "verify!", this.sendVerificationRequest, 33, 5, 48, 72, 1);
         me.game.world.addChild(submitVerification);
 
@@ -164,7 +127,7 @@ game.SettingsScreen = me.ScreenObject.extend({
          * check if password change is valid and POST via ajax call
          *
          * @constructor
-         */
+         *
         this.SubmitPasswordClicked = function () {
 
             var oldPasswordData    = document.getElementById("fOld").value;
@@ -184,7 +147,7 @@ game.SettingsScreen = me.ScreenObject.extend({
              *  "password_old" :String
              *  "password_new" :String
              *  on load function: confirmation for password change
-             */
+             *
             function userReply() {
                 fadeOutElements();
                 setTimeout( function() {
@@ -197,7 +160,7 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         /**
          *  params for ClickableElement: (id, name, callback, width, height, left, top)
-         */
+         *
         var submitPassword = new game.ClickableElement('submitPassword', 'submit', this.SubmitPasswordClicked, 15, 5, 58, 75, 1);
         me.game.world.addChild(submitPassword);
         submitPassword.hide();
@@ -205,7 +168,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         /**
          * open necessary elements for password change
          * @constructor
-         */
+         *
         ChangePasswordClicked = function() {
             keyBindingsHeader.hide();
             keyBindings.hide();
@@ -330,7 +293,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         var musicButton = new game.ClickableElement('musicButtonId', '', this.musicClicked, 4.848485, 8.333333, 30, 22, 1);
         me.game.world.addChild(musicButton);
         if (game.data.music) {
-            musicButton.setImage("assets/data/img/buttons/ButtonsMusic.png", "musicImage");
+            musicButton.setImage("/assets/data/img/buttons/ButtonsMusic.png", "musicImage");
         } else {
             musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
         }
@@ -376,7 +339,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         }
 
         setSettings();
-
+*/
     }
 
 });
