@@ -92,9 +92,9 @@ game.BuyScreen = me.ScreenObject.extend({
             }, 100);
         };
 
-        stopDouble = function() {
+        function stopDouble() {
             game.data.playing = false;
-        };
+        }
 
         /**
          * push information about bought item onto the server via ajax PUSH-Request.
@@ -102,7 +102,7 @@ game.BuyScreen = me.ScreenObject.extend({
         this.onBuy = function() {
             function bought(xmlHttpRequest) {
 
-                //console.log(xmlHttpRequest);
+                console.log(xmlHttpRequest);
                 if(xmlHttpRequest.status === 400 && game.data.sound && !game.data.playing){
                     game.data.playing = true;
                     me.audio.play("fail", false, stopDouble, game.data.soundVolume);
@@ -113,7 +113,7 @@ game.BuyScreen = me.ScreenObject.extend({
                 /**
                  * If the user is not able to purchase some item, an other sound will be played.s
                  */
-                //console.log(game.data.lofiCoins);
+                console.log(game.data.lofiCoins, "Session: ",session );
                 if (game.data.lofiCoins > session.coins) {
                     me.audio.play("cash", false, null, game.data.soundVolume);
                     me.state.change(STATE_SHOP);
