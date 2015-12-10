@@ -21,6 +21,8 @@ import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import play.mvc.Security;
+import secured.UserAuthenticator;
 import view.HomeWorkView;
 import view.TaskView;
 
@@ -30,6 +32,7 @@ import java.util.List;
 /**
  * @author Invisible
  */
+@Security.Authenticated(UserAuthenticator.class)
 public class HomeWorkController extends Controller {
 
 
