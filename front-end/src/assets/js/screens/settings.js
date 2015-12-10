@@ -12,6 +12,7 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
             $(rootContainer.getNode()).fadeOut(100);
+            console.log("Push Settings");
             setTimeout(function() {
                 me.state.change(me.state.MENU);
             }, 50);
@@ -27,14 +28,10 @@ game.SettingsScreen = me.ScreenObject.extend({
         var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','20%','50%', 'music: ', 'Text SettingsScreen Music');
         me.game.world.addChild(settingsTextMusic);
 
-        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','10%', '', 'CheckBox SettingsScreen Sound', function() {
-            console.log("Sound");
-        });
+        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','10%', '', 'CheckBox SettingsScreen Sound');
         me.game.world.addChild(settingsSound);
 
-        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','50%', '', 'CheckBox SettingsScreen Sound', function() {
-            console.log("Music");
-        });
+        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','47%', '', 'CheckBox SettingsScreen Music');
         me.game.world.addChild(settingsMusic);
 
         /*var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
@@ -272,73 +269,6 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var deleteUser = new game.ClickableElement('deleteUser', "delete your account", this.deleteUserClicked, 23, 10, 13, 71, 2);
         me.game.world.addChild(deleteUser);
-
-        this.musicClicked = function () {
-            $("[id*='musicImage']").remove();
-            if (game.data.music) {
-                musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
-                game.data.music = false;
-                me.audio.stopTrack();
-            } else {
-                musicButton.setImage("assets/data/img/buttons/ButtonsMusic.png", "musicImage");
-                game.data.music = true;
-                if(me.state.isCurrent(me.state.PLAY)) {
-                    me.audio.playTrack(game.data.recentTitle ,game.data.musicVolume);
-                } else {
-                    me.audio.playTrack("Menu",game.data.musicVolume);
-                }
-            }
-        };
-
-        var musicButton = new game.ClickableElement('musicButtonId', '', this.musicClicked, 4.848485, 8.333333, 30, 22, 1);
-        me.game.world.addChild(musicButton);
-        if (game.data.music) {
-            musicButton.setImage("/assets/data/img/buttons/ButtonsMusic.png", "musicImage");
-        } else {
-            musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
-        }
-
-        this.soundClicked = function (){
-            $("[id*='soundImage']").remove();
-            if (game.data.sound) {
-                soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
-                game.data.sound = false;
-            } else {
-                soundButton.setImage("assets/data/img/buttons/ButtonsSound.png", "soundImage");
-                game.data.sound = true;
-                me.audio.play("cling", false, null, game.data.soundVolume);
-            }
-        };
-
-        var soundButton = new game.ClickableElement('soundButtonId', '', this.soundClicked, 4.848485, 8.333333, 30, 32, 1);
-        me.game.world.addChild(soundButton);
-        if (game.data.music) {
-            soundButton.setImage("assets/data/img/buttons/ButtonsSound.png", "soundImage");
-        } else {
-            soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
-        }
-
-        var soundsElement = new game.TextOutputElement('soundsElement', 15, 20, 15, 21, 4);
-        me.game.world.addChild(soundsElement);
-        soundsElement.writeHTML("music:" + "<br>" + "sound:", 'soundPara');
-    },
-
-    onDestroyEvent: function(){
-
-        //console.log(game.data.music, game.data.sound);
-        function changeSet(xmlHttpRequest) {
-            //console.log(xmlHttpRequest);
-        }
-
-        function setSettings() {
-            var music = game.data.music;
-            var sound = game.data.sound;
-            this.user_json_setting = JSON.stringify({music: music, sound: sound});
-            //console.log("AJAX: ", this.user_json_setting);
-            ajaxSendUserSettingsSetRequest(this.user_json_setting, changeSet);
-        }
-
-        setSettings();
 */
     }
 
