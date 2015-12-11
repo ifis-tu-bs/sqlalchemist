@@ -27,19 +27,19 @@ game.SettingsScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(backButton);
 
-        var settingsContainerElement = new game.fdom.ContainerElement(rootContainer, '35%','27%','10%','20%', 'Container SettingsScreen Settings');
+        var settingsContainerElement = new game.fdom.ContainerElement(rootContainer, '24%','21%','10%','20%', 'Container SettingsScreen Settings');
         me.game.world.addChild(settingsContainerElement);
 
-        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','20%','10%', 'sound: ', 'Text SettingsScreen Sound ');
+        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','10%', 'sound: ', 'Text SettingsScreen Sound ');
         me.game.world.addChild(settingsTextSound);
 
-        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','20%','50%', 'music: ', 'Text SettingsScreen Music');
+        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','60%', 'music: ', 'Text SettingsScreen Music');
         me.game.world.addChild(settingsTextMusic);
 
-        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','10%', '', 'CheckBox SettingsScreen Sound');
+        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','10%', '', 'CheckBox SettingsScreen Sound');
         me.game.world.addChild(settingsSound);
 
-        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','47%', '', 'CheckBox SettingsScreen Music');
+        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','60%', '', 'CheckBox SettingsScreen Music');
         me.game.world.addChild(settingsMusic);
 
         if(game.data.user.settings.sound) {
@@ -47,6 +47,118 @@ game.SettingsScreen = me.ScreenObject.extend({
         }
         if(game.data.user.settings.music) {
             $(settingsMusic.getNode()).addClass('Checked');
+        }
+
+        var menuContainer = new game.fdom.ContainerElement(rootContainer, '24%','46%','10%','41%', 'Container SettingsScreen Menu');
+        me.game.world.addChild(menuContainer);
+
+        var changePasswordButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','6%', 'Change Password', 'Button SettingsScreen Menu changePassword', false, function() {
+            console.log("change Password");
+            changeView(changePasswordContainer);
+        });
+        me.game.world.addChild(changePasswordButton);
+
+        var resetStoryModeButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','39%', 'Reset Story Mode', 'Button SettingsScreen Menu resetStory', false, function() {
+            changeView(resetStoryModeContainer);
+        });
+        me.game.world.addChild(resetStoryModeButton);
+
+        var deleteUserButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','73%', 'delete your account', 'Button SettingsScreen Menu deleteUser', false, function() {
+            console.log("delete User");
+            changeView(deleteUserContainer);
+        });
+        me.game.world.addChild(deleteUserButton);
+
+
+        /* ------------------------------------------------------------------ */
+        var defaultContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(defaultContainer);
+
+        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '70%','10%','15%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
+        me.game.world.addChild(defaultContainerViewTitle);
+
+        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','75%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
+            if(game.data.user.student) {
+                console.log("already verified");
+                return;
+            }
+            console.log("Verify as Student");
+            $(verifyButton.getNode()).addClass("Verified");
+            $(verifyButton.getNode()).text("already verified");
+        });
+        me.game.world.addChild(verifyButton);
+
+        if(game.data.user.student) {
+            $(verifyButton.getNode()).addClass("Verified");
+            $(verifyButton.getNode()).text("already verified");
+        }
+
+        /* ------------------------------------------------------------------ */
+        var changePasswordContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(changePasswordContainer);
+        changePasswordContainer.hide();
+
+        /* ------------------------------------------------------------------ */
+        var resetStoryModeContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(resetStoryModeContainer);
+        resetStoryModeContainer.hide();
+
+        var resetStoryModeContainerText1 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','29%', 'Are you sure you want do reset the story?', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(resetStoryModeContainerText1);
+
+        var resetStoryModeContainerText2 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','43%', 'Your whole progress will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(resetStoryModeContainerText2);
+
+        var resetStoryModePushButton = new game.fdom.ButtonElement(resetStoryModeContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+            ajaxSendChallengeResetRequest(function(xmlHttpRequest) {
+                if(xmlHttpRequest.status != 200) {
+                    alert("Error");
+                    return;
+                }
+            });
+        });
+        me.game.world.addChild(resetStoryModePushButton);
+
+        /* ------------------------------------------------------------------ */
+        var deleteUserContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(deleteUserContainer);
+        deleteUserContainer.hide();
+
+        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','29%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(deleteUserContainerText1);
+
+        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(deleteUserContainerText2);
+
+        var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+            ajaxDeleteUser(game.data.user.username, function(xmlHttpRequest) {
+                if(xmlHttpRequest.status != 200) {
+                    alert("Error");
+                    return;
+                }
+                game.data.session = JSON.parse(xmlHttpRequest.responseText);
+                game.data.user = {};
+                $(rootContainer.getNode()).fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(STATE_SIGNUP);
+                }, 50);
+            });
+        });
+        me.game.world.addChild(deleteUserPushButton);
+
+
+        var currentView = defaultContainer;
+        function changeView(newView) {
+            $(currentView.getNode()).fadeOut(100);
+            if(newView == currentView) {
+                setTimeout( function () {
+                    currentView = defaultContainer;
+                    $(currentView.getNode()).fadeIn(100);
+                }, 50);
+                return;
+            }
+            currentView = newView;
+            $(currentView.getNode()).fadeIn(100);
         }
 
         /*var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);

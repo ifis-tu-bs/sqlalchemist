@@ -88,24 +88,6 @@ public class UserController extends Controller {
         return ok(Json.toJson(userShow));
     }
 
-    /**
-     * This method delete the user
-     * DELETE /users
-     *
-     * @return ok
-     */
-    @Authenticated(UserAuthenticator.class)
-    public Result destroy(String username) {
-        User user = UserDAO.getBySession(request().username());
-
-        //user.disable();
-        user.update();
-
-        session().clear();
-
-        return redirect(routes.SessionController.index());
-    }
-
     @BodyParser.Of(BodyParser.Json.class)
     @Authenticated(UserAuthenticator.class)
     public Result edit(String username) {
@@ -127,5 +109,23 @@ public class UserController extends Controller {
 
         userEdit.update();
         return redirect(routes.UserController.show(username));
+    }
+
+    /**
+     * This method delete the user
+     * DELETE /users
+     *
+     * @return ok
+     */
+    @Authenticated(UserAuthenticator.class)
+    public Result destroy(String username) {
+        User user = UserDAO.getBySession(request().username());
+
+        //user.disable();
+        user.update();
+
+        session().clear();
+
+        return redirect(routes.SessionController.index());
     }
 }
