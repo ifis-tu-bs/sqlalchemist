@@ -182,18 +182,18 @@
     font-size: 5vh;
 }
 
-.Text.SettingsScreen.View.ResetStoryModeView {
+.Text.SettingsScreen.ResetStoryModeView, .Text.SettingsScreen.ChangePasswordView {
     text-align: center;
     font-size: 5vh;
 }
 
-.Button.SettingsScreen.ResetStoryModeView {
+.Button.SettingsScreen.ResetStoryModeView, .Button.SettingsScreen.ChangePasswordView {
     border: solid 2px #a42021;
     border-radius: 40px;
     font-size: 3vh;
 }
 
-.Button.SettingsScreen.ResetStoryModeView:hover {
+.Button.SettingsScreen.ResetStoryModeView:hover, .Button.SettingsScreen.ChangePasswordView:hover {
     background: #a42021;
     color: white;
 }

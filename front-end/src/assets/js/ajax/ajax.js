@@ -141,7 +141,7 @@ function ajaxCreatePasswordResetRequest(jsonData, onload) {
 
 // ~ POST /API/Users/ForgotPassword
 function ajaxUpdatePassword(username, jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/Password/", onload);
+    var xmlHttpRequest = createRequest("POST", "/API/Password/" + username + "/", onload);
 
     xmlHttpRequest.send(jsonData);
 
