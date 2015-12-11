@@ -42,7 +42,6 @@ game.SignUpScreen = me.ScreenObject.extend({
             ajaxCreateUserRequest(signUpData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
-                    console.log(errorMessage);
                     if(typeof errorMessage.email !== 'undefined') {
                         $(formEmailInputField.getNode()).addClass("invalid");
                     }
