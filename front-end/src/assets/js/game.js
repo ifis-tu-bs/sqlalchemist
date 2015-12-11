@@ -29,6 +29,7 @@ var game = {
         //Userstats
         playerStat : 0,
         gotSession: false,
+        session: {},
         score : 0,
         lofiCoins : 0,
         runs: 0,
@@ -207,4 +208,3 @@ var game = {
         me.state.change(STATE_START);
     }
 };
-

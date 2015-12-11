@@ -102,8 +102,6 @@ public class User extends Model {
     @OneToMany(mappedBy = "creator")
     private List<Comment>               comments;
 
-    private int                         votes;
-
     private boolean                     isActive;
 
 
@@ -162,10 +160,6 @@ public class User extends Model {
 
         this.score          = new Score();
 
-
-
-
-        votes               = 1;
         isActive            = true;
         createdAt = Calendar.getInstance();
     }
@@ -353,7 +347,12 @@ public class User extends Model {
         this.role = role;
     }
 
-    @JsonProperty("role")
+    @JsonProperty("roleID")
+    public long getRoleID() {
+        return this.role.getId();
+    }
+
+    @JsonProperty("roleName")
     public String getRoleName() {
         return this.role.getRoleName();
     }
@@ -551,16 +550,5 @@ public class User extends Model {
 
     public void setScore(Score score) {
         this.score = score;
-    }
-
-
-
-
-    public int getVotes() {
-        return votes;
-    }
-
-    public void setVotes(int votes) {
-        this.votes = votes;
     }
 }

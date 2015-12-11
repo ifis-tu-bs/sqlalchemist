@@ -1,6 +1,6 @@
 package dao;
 
-import com.avaje.ebean.Finder;
+import com.avaje.ebean.Model;
 import models.Role;
 
 import java.util.List;
@@ -9,7 +9,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class RoleDAO {
-    private static Finder<Long, Role> find = new Finder<Long, Role>(Role.class);
+    private static Model.Finder<Long, Role> find = new Model.Finder<>(Role.class);
 
     public static List<Role> getAll() {
         return find.all();

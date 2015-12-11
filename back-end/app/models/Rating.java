@@ -38,7 +38,7 @@ public class Rating extends Model {
         if(user != null) {
             this.user = user;
 
-            int votes = user.getVotes();
+            int votes = user.getRole().getVotes();
 
             this.positiveRatings = positive   ? votes : 0;
             this.negativeRatings = negative   ? votes : 0;

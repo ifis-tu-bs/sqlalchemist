@@ -72,18 +72,18 @@
 
 .CheckBox {
     position: absolute;
-    -webkit-appearance: initial;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    outline: none;
+    border: none;
 }
-
 
 .CheckBox.SettingsScreen.Sound {
     background-image: url('/assets/data/img/buttons/ButtonsSoundOff.png');
 }
 
-.CheckBox.SettingsScreen.Sound:checked {
+.CheckBox.SettingsScreen.Sound.Checked {
     background-image: url('/assets/data/img/buttons/ButtonsSound.png');
 }
 
@@ -91,9 +91,10 @@
     background-image: url('/assets/data/img/buttons/ButtonsMusicOff.png');
 }
 
-.CheckBox.SettingsScreen.Music:checked {
+.CheckBox.SettingsScreen.Music.Checked {
     background-image: url('/assets/data/img/buttons/ButtonsMusic.png');
 }
+
 
 .StartScreen.Parchment {
     position: absolute;

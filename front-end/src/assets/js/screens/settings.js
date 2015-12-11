@@ -12,7 +12,9 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
             $(rootContainer.getNode()).fadeOut(100);
-            console.log("Push Settings");
+            var settingsData = { music: settingsMusic.isChecked(), sound: settingsSound.isChecked()};
+            console.log(settingsData);
+            //ajaxUpdateUser(game.data.session.username)
             setTimeout(function() {
                 me.state.change(me.state.MENU);
             }, 50);
