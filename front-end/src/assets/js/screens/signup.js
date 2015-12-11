@@ -39,7 +39,7 @@ game.SignUpScreen = me.ScreenObject.extend({
                 username: username,
                 password: password
             });
-            ajaxSendSignupRequest(signUpData, function(xmlHttpRequest) {
+            ajaxCreateUserRequest(signUpData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
                     console.log(errorMessage);
@@ -60,7 +60,6 @@ game.SignUpScreen = me.ScreenObject.extend({
                     }, 50);
                 }
             });
-            console.log("SignUp");
         });
         me.game.world.addChild(signUpForm);
 

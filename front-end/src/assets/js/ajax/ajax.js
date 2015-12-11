@@ -72,7 +72,7 @@ function ajaxSendLogoutRequest(onload) {
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ User ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // ~ POST /API/User/ ~ jsonData: JSON.signup
-function ajaxSendSignupRequest(jsonData, onload) {
+function ajaxCreateUser(jsonData, onload) {
     var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
 
     xmlHttpRequest.send(jsonData);
@@ -80,23 +80,43 @@ function ajaxSendSignupRequest(jsonData, onload) {
     return xmlHttpRequest;
 }
 
-// ~ POST /API/Users ~ jsonData: JSON.user
-function ajaxSendUsersRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/User/", onload);
-
-    xmlHttpRequest.send(jsonData);
-
-    return xmlHttpRequest;
-}
-
-// ~ GET /API/Users ~ jsonData: JSON.user
-function ajaxSendGetUsersRequest( onload) {
+// ~ GET /API/User/ ~ jsonData: JSON.user
+function ajaxGetUsers( onload) {
     var xmlHttpRequest = createRequest("GET", "/API/User/", onload);
 
     xmlHttpRequest.send();
 
     return xmlHttpRequest;
 }
+
+
+// ~ GET /API/User/:username/ ~ jsonData: JSON.user
+function ajaxGetUser(username, onload) {
+    var xmlHttpRequest = createRequest("GET", "/API/User/" + username + "/", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
+// ~ POST /API/User/:username/ ~ jsonData: JSON.user
+function ajaxUpdateUser(username, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/User/" + username + "/", onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
+// ~ DELETE /API/User/:username/
+function ajaxDeleteUser(username, onload) {
+    var xmlHttpRequest = createRequest("DELETE", "/API/User/" + username + "/", onload);
+
+    xmlHttpRequest.send();
+
+    return xmlHttpRequest;
+}
+
 
 // ~ GET /API/Users/student
 function ajaxSendUserStudentRequest(onload) {
@@ -107,24 +127,26 @@ function ajaxSendUserStudentRequest(onload) {
     return xmlHttpRequest;
 }
 
-// ~ DELETE /API/Users
-function ajaxSendUsersDeleteRequest(onload) {
-    var xmlHttpRequest = createRequest("DELETE", "/API/User/", onload);
 
-    xmlHttpRequest.send();
-
-    return xmlHttpRequest;
-}
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PasswordController~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // ~ POST /API/Users/ForgotPassword
-function ajaxSendUsersResetPasswordRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/User/ForgotPassword", onload);
+function ajaxCreatePasswordResetRequest(jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/Password/", onload);
 
     xmlHttpRequest.send(jsonData);
 
     return xmlHttpRequest;
 }
 
+// ~ POST /API/Users/ForgotPassword
+function ajaxUpdatePassword(username, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/Password/", onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
 
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Profile ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

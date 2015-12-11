@@ -26,10 +26,11 @@ var game = {
      * an object where to store game global data
      */
     data : {
+        session: {},
+        user: {},
         //Userstats
         playerStat : 0,
         gotSession: false,
-        session: {},
         score : 0,
         lofiCoins : 0,
         runs: 0,

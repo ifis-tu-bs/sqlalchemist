@@ -14,7 +14,13 @@ game.SettingsScreen = me.ScreenObject.extend({
             $(rootContainer.getNode()).fadeOut(100);
             var settingsData = { music: settingsMusic.isChecked(), sound: settingsSound.isChecked()};
             console.log(settingsData);
-            //ajaxUpdateUser(game.data.session.username)
+            console.log(game.data.user);
+            console.log(game.data.session);
+            ajaxUpdateUser(game.data.user.username, JSON.stringify({settings: settingsData}), function(xmlHttpRequest) {
+                var user = JSON.parse(xmlHttpRequest.responseText);
+
+                game.data.user = user;
+            });
             setTimeout(function() {
                 me.state.change(me.state.MENU);
             }, 50);
@@ -35,6 +41,13 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '18%','24%','50%','47%', '', 'CheckBox SettingsScreen Music');
         me.game.world.addChild(settingsMusic);
+
+        if(game.data.user.settings.sound) {
+            $(settingsSound.getNode()).addClass('Checked');
+        }
+        if(game.data.user.settings.music) {
+            $(settingsMusic.getNode()).addClass('Checked');
+        }
 
         /*var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
         var newPassword       = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);

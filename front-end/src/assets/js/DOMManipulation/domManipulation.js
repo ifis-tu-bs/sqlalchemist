@@ -1129,7 +1129,6 @@ game.fdom.CheckBoxElement = me.Renderable.extend({
         this.elem.innerHTML     = text;
 
         $(this.elem).click( function() {
-            console.log("Yeah");
             $(this).toggleClass('Checked');
         });
 

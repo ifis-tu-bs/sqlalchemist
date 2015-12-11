@@ -63,7 +63,7 @@ public class SessionController extends Controller {
         session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
 
-        return redirect(routes.ProfileController.read());
+        return redirect(routes.UserController.show(user.getUsername()));
     }
 
     public Result logout() {
