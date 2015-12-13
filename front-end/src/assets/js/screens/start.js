@@ -23,7 +23,6 @@ game.StartScreen = me.ScreenObject.extend({
                     }
                 });
             }
-            console.log(session);
         });
 
 
