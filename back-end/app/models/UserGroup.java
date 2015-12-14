@@ -12,8 +12,8 @@ import java.util.List;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "group")
-public class Group extends Model {
+@Table
+public class UserGroup extends Model {
     @Id
     private long id;
 
@@ -30,7 +30,7 @@ public class Group extends Model {
     // Constructor
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public Group(String name, User tutor) {
+    public UserGroup(String name, User tutor) {
         this.name = name;
         this.tutor = tutor;
     }

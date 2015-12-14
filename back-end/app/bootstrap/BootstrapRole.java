@@ -24,6 +24,7 @@ public class BootstrapRole {
             admin.setForeignTaskPermissions(PermissionRules.getFullControl());
             admin.setHomeworkPermissions(PermissionRules.getFullControl());
             admin.setRolePermissions(PermissionRules.getFullControl());
+            admin.setGroupPermissions(PermissionRules.getFullControl());
             admin.setUserPermissions(PermissionRules.getFullControl());
             admin.setDeletable(false);
             admin.setCreator(null);
@@ -40,6 +41,7 @@ public class BootstrapRole {
             hiWi.setForeignTaskPermissions(PermissionRules.getFullControl());
             hiWi.setHomeworkPermissions(PermissionRules.getReadControl());
             hiWi.setRolePermissions(PermissionRules.getNoControl());
+            hiWi.setGroupPermissions(PermissionRules.getFullControl());
             hiWi.setUserPermissions(PermissionRules.getReadControl());
             hiWi.setDeletable(false);
             hiWi.setCreator(null);
