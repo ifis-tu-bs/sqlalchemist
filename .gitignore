@@ -50,3 +50,4 @@ admin-tool/*.iml
 /admin-tool/admin-tool
 /front-end/tmp
 front-end/src/assets/js/resources.js
+front-end/.idea
