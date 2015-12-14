@@ -82,7 +82,7 @@ public class MailSender {
                     "\n" +
                     "Thanks for registering at theSQLalchemist.\n" +
                     "Please verify your Email address by following the given link:\n" +
-                    "http://sqlalchemist.ifis.cs.tu-bs.de/API/users/verify/" + verifyString + "\n" +
+                    "http://sqlalchemist.ifis.cs.tu-bs.de/API/Validate/Email/" + verifyString + "\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
                     "\n" +
