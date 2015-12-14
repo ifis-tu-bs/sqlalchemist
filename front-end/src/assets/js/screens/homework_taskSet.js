@@ -20,6 +20,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
 
 
 
+        var repaint = [false,false,false,false,false];
 
         currentHomeworkTaskSetsReply = function(xmlHttpRequest) {
             var currentHomeworks = JSON.parse(xmlHttpRequest.responseText);
@@ -84,23 +85,27 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
             game.homework.currentHomework = currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks;
             console.log("Exercises:",game.homework.currentHomework);
 
-            //Schleife verbessern
-            for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks.length ; i++) {
+            if(!repaint[game.homework.page]){
+                for (var i = 0; i < 5 && i < currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks.length ; i++) {
 
-                var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].name,
-                    taskButtonClick(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].id, (i + 5 *(game.homework.page -1)) ), 35, 5, 15, 35 + 6 * i, 1);
-                taskButtons.hide();
-                me.game.world.addChild(taskButtons);
-                $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
+                    var taskButtons = new game.ClickableElement('taskButtonId' + (i + 5 *(game.homework.page -1)), "• " + currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].name,
+                        taskButtonClick(currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].id, (i + 5 *(game.homework.page -1)) ), 35, 5, 15, 35 + 6 * i, 1);
+                    taskButtons.hide();
+                    me.game.world.addChild(taskButtons);
+                    $('#taskButtonId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
 
-                if (currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].done) {
-                    var checkbox = new game.BackgroundElement('checkboxId' + (i + 5 *(game.homework.page -1)), 3.5, 5, 70, 35 + 6 * i, 'none');
-                    checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
-                    checkbox.hide();
-                    me.game.world.addChild(checkbox);
-                    $('#checkboxId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
+                    if (currentHomeworks[choosenHomework].taskSets[choosenTaskSet].tasks[(i + 5 *(game.homework.page -1))].done) {
+                        var checkbox = new game.BackgroundElement('checkboxId' + (i + 5 *(game.homework.page -1)), 3.5, 5, 70, 35 + 6 * i, 'none');
+                        checkbox.setImage("assets/data/img/stuff/check_symbol.png", "checksymbolImage");
+                        checkbox.hide();
+                        me.game.world.addChild(checkbox);
+                        $('#checkboxId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
+                    }
                 }
+            }else{
+                //
             }
+
 
         };
 
