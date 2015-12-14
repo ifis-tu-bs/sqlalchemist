@@ -14,6 +14,13 @@ GET         /API/Role/:id/                          controllers.RoleController.s
 POST        /API/Role/:id/                          controllers.RoleController.update(id: Long)
 DELETE      /API/Role/:id/                          controllers.RoleController.delete(id: Long)
 
+#GroupController
+POST        /API/Group/                              controllers.GroupController.create()
+GET         /API/Group/                              controllers.GroupController.index()
+GET         /API/Group/:id/                          controllers.GroupController.show(id: Long)
+POST        /API/Group/:id/                          controllers.GroupController.update(id: Long)
+DELETE      /API/Group/:id/                          controllers.GroupController.delete(id: Long)
+
 #PasswordController
 POST        /API/Password/                          controllers.PasswordController.sendResetPasswordMail()
 POST        /API/Password/:username/                controllers.PasswordController.changePassword(username: String)

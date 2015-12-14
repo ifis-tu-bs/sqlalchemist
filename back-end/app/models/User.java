@@ -104,6 +104,8 @@ public class User extends Model {
 
     private boolean                     isActive;
 
+    @ManyToOne
+    private Group group;
 
     private final Calendar createdAt;
 
@@ -550,5 +552,18 @@ public class User extends Model {
 
     public void setScore(Score score) {
         this.score = score;
+    }
+
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
     }
 }

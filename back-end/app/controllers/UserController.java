@@ -1,6 +1,5 @@
 package controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import dao.ActionDAO;
 import dao.SessionDAO;
 import dao.UserDAO;
@@ -11,18 +10,18 @@ import models.Action;
 import models.Session;
 import models.User;
 
-import play.libs.Json;
+import secured.user.CanReadUsers;
 import secured.SessionAuthenticator;
 import secured.UserAuthenticator;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-
-import secured.user.CanReadUsers;
-
 
 import java.io.IOException;
 import java.util.List;
