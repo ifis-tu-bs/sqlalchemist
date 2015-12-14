@@ -256,7 +256,10 @@ game.BeltScreen = me.ScreenObject.extend({
              */
             this.setBeltPotion = function(potion, slot){
                 return function() {
-                    this.potion = potion;
+                    console.log("Set Belt Ption: ",potion,slot);
+                    console.log("Belt2: ",game.belt.beltSlots);
+                    //this.potion = potion;
+                    this.potion = game.belt.beltSlots[slot];
                     this.slot = slot;
 
                     //console.log("clicked!beltSlotbelt!" + this.potion + this.slot);
@@ -386,9 +389,7 @@ game.BeltScreen = me.ScreenObject.extend({
             //Update the Potion in the Belt
             function repaintPotion(){
 
-
-                console.log(game.belt.beltSlots);
-                console.log($("#beltPotionId0"));
+                console.log("Belt: ",game.belt.beltSlots);
 
                 /**
                  * Create buttons to put the potions back into the collection.
