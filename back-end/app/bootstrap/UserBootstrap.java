@@ -30,6 +30,7 @@ public class UserBootstrap {
                 signUp.setPassword(Play.application().configuration().getString("admin.password"));
                 User user = UserDAO.create(signUp);
                 user.setRole(RoleDAO.getAdmin());
+                user.update();
             } else {
                 SignUp signUp1 = new SignUp();
                 signUp1.setUsername("sqlalchemist");
