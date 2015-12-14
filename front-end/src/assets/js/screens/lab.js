@@ -27,11 +27,11 @@ game.ReadyScreen = me.ScreenObject.extend({
 
         //gets the playerstate
         function getStats(xmlHttpRequest) {
-            console.log(xmlHttpRequest);
+            //console.log(xmlHttpRequest);
 
             var stat = JSON.parse(xmlHttpRequest.responseText);
             game.data.playerStat = stat;
-            //console.log(game.data.playerStat);
+            console.log("Playerstate:",game.data.playerStat);
 
             //attributes
             game.stats.health = stat.characterState.attributes.health;
@@ -76,7 +76,7 @@ game.ReadyScreen = me.ScreenObject.extend({
             //get avatars
             for (i = 0; i < stat.characterState.avatars_bought.length; i++) {
                 game.skin.skins[stat.characterState.avatars_bought[i].id].available = 1;
-                console.log(i, stat.characterState.avatars_bought[i].id, game.skin.skins[stat.characterState.avatars_bought[i].id].name);
+                //console.log(i, stat.characterState.avatars_bought[i].id, game.skin.skins[stat.characterState.avatars_bought[i].id].name);
             }
 
             //start the Text
@@ -94,28 +94,28 @@ game.ReadyScreen = me.ScreenObject.extend({
 
         //load belt
         function getBelt(xmlHttpRequest) {
-            console.log("belt" + xmlHttpRequest);
+            //console.log("belt" + xmlHttpRequest);
             var belt = JSON.parse(xmlHttpRequest.responseText);
-            console.log(belt.slots.length);
-            console.log(belt);
-            console.log("!!!");
+            //console.log(belt.slots.length);
+            console.log("Belt:",belt);
+            //console.log("!!!");
             for (var i = 0; i < belt.slots.length; i++) {
                 if (i <= game.belt.beltSlots.length) {
-                    console.log("No push" + belt.slots[i].potion);
+                    //console.log("No push" + belt.slots[i].potion);
                     if (belt.slots[i].potion === "empty") {
                         game.belt.beltSlots[i] = null;
                     } else {
                         game.belt.beltSlots[i] = game.potion.potions[belt.slots[i].potion.id];
                     }
                 } else {
-                    console.log("push!!" + belt.slots[i].potion);
+                    //console.log("push!!" + belt.slots[i].potion);
                     if (belt.slots[i].potion === "empty") {
                         game.belt.beltSlots.push(null);
                     } else {
                         game.belt.beltSlots.push(game.potion.potions[belt.slots[i].potion.id]);
                     }
                 }
-                console.log(game.belt.beltSlots);
+                //console.log(game.belt.beltSlots);
             }
         }
 

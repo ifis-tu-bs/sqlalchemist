@@ -1,20 +1,28 @@
 package controllers;
 
-import dao.UserSessionDAO;
+import dao.ActionDAO;
+import dao.SessionDAO;
 
+import forms.Login;
+
+import models.Action;
+import models.Session;
 import models.User;
-import models.UserSession;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import secured.SessionAuthenticator;
 
+import service.ServiceUser;
+
+import view.SessionView;
+
+import play.data.Form;
+import play.mvc.BodyParser;
 import play.Logger;
-import play.Play;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 
-
-import secured.*;
+import java.util.Calendar;
 
 /**
  * The SessionController
@@ -25,69 +33,72 @@ import secured.*;
 public class SessionController extends Controller {
     /**
      * Needs a JSON Body Request with values:
-     *  id: String (y-ID or EMail)
-     *  password: String
+     *  email:      String
+     *  password:   String
      *
      * @return Returns the Global ProfileState
      */
-    public Result create() {
-        JsonNode json = request().body().asJson();
-        if (json == null) {
-            Logger.info("SessionController.create - Could not retrieve Json from POST body");
-            return badRequest("Could not retrieve Json from POST body");
+    @BodyParser.Of(BodyParser.Json.class)
+    @Authenticated(SessionAuthenticator.class)
+    public Result login() {
+        Session session = SessionDAO.getById(request().username());
+        if(session == null) {
+            return forbidden("Your Client is not registered");
         }
 
-        String  id          = json.path("id").textValue();
-        String  password    = json.path("password").textValue();
-        boolean adminTool   = json.path("adminTool").asBoolean();
+        Form<Login> loginForm   = Form.form(Login.class).bindFromRequest();
 
-        if (id.length() == 0 || password.length() == 0) {
-            Logger.info("SessionController.create - Expecting Json data");
-            Logger.info("SessionController.create - Json: " + json.toString());
-            return badRequest("Expecting Json data");
+        if(loginForm.hasErrors()) {
+            return badRequest(loginForm.errorsAsJson());
         }
 
-        id = id.trim();
-        User user;
+        Login       login       = loginForm.bindFromRequest().get();
 
-        if ((user = User.validate(id, password, adminTool)) != null) {
-            if(user.isActive()) {
-                UserSession userSession = UserSession.create(
-                        user,
-                        Play.application().configuration().getInt("UserManagement.SessionDuration"),
-                        request().remoteAddress()
-                );
-
-                if (userSession != null) {
-                    session().put("sessionID", userSession.getSessionID());
-                    return redirect(routes.ProfileController.read());
-                }
-                Logger.warn("SessionController.create - Can't create userSession");
-                return badRequest("Can't create userSession");
-            } else {
-                Logger.warn("Cannot login because it is an disabled User");
-                return badRequest("Cannot login because it is an disabled User");
-            }
-
+        User user = ServiceUser.authenticate(login);
+        if(user == null) {
+            return unauthorized("Wrong email or password, mist");
         }
-        Logger.warn("SessionController.create - Wrong ID or Password: " + id);
-        return forbidden("Wrong ID/Password");
+
+        session.setOwner(user);
+        session.addAction(ActionDAO.create(Action.LOGIN));
+        session.update();
+
+        return redirect(routes.UserController.show(user.getUsername()));
     }
 
-    @Authenticated(UserSecured.class)
-    public Result delete() {
-        String sessionID = session().get("sessionID");
-        UserSession userSession = UserSessionDAO.getBySessionID(sessionID);
-
-        if (userSession == null) {
-            Logger.info("SessionController.delete - No session has been deleted.");
-            return badRequest("Whops, your session has been deleted earlier.");
-        }
-
-        Logger.info("SessionController.delete - Deleting Session: " + userSession.getSessionID());
-        userSession.delete();
+    public Result logout() {
         session().clear();
-        return ok("you are now logged out!");
+        return redirect(routes.SessionController.index());
+    }
+
+    public Result index() {
+        Session session = SessionDAO.getById(session("session"));
+        if(session != null) {
+            Logger.info("Contains an valid Session");
+
+            Calendar yesterday = Calendar.getInstance();
+            yesterday.add(Calendar.DATE, -1);
+
+            if(yesterday.after(session.getCreatedAt())) {
+                Logger.info("Create a new one & assign the user to session");
+                Session newSession = SessionDAO.create();
+                newSession.setOwner(session.getOwner());
+                newSession.update();
+                session("session", newSession.getId());
+
+
+                return ok(SessionView.toJson(newSession));
+            }
+
+            return ok(SessionView.toJson(session));
+        } else {
+            Logger.info("Create a new Session");
+
+            session = SessionDAO.create();
+            session("session", session.getId());
+
+            return ok(SessionView.toJson(session));
+        }
     }
 
 }

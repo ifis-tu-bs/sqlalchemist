@@ -37,17 +37,22 @@ back-end/conf/evolutions/default
 
 ########
 # Front-End
+/front-end/.idea
 /front-end/front-end
-front-end/front-end.iml
-front-end/build
-front-end/front-end.iml
+/front-end/front-end.iml
+/front-end/build
+/front-end/front-end.iml
+/front-end/tmp
+/front-end/src/assets/js/resources.js
 
 ########
 # Admin-Tool
-admin-tool/.idea
-admin-tool/build
-admin-tool/*.iml
+/admin-tool/.idea
+/admin-tool/build
+/admin-tool/*.iml
 /admin-tool/admin-tool
 /front-end/tmp
 front-end/src/assets/js/resources.js
 front-end/.idea
+
+/SQL-Alchemist

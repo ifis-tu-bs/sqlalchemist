@@ -3,7 +3,6 @@ package models;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.avaje.ebean.Model;
 import play.libs.Json;
-import view.PlayerStatsView;
 
 import javax.persistence.*;
 
@@ -123,7 +122,7 @@ public class Potion extends Model {
         node.put("name", this.name);
         node.put("type", this.type);
         node.put("powerLevel", this.powerLevel);
-        node.set("buff_value", PlayerStatsView.toJson(this.playerStats));
+        node.set("buff_value", Json.toJson(this.playerStats));
 
         return node;
     }

@@ -26,6 +26,8 @@ var game = {
      * an object where to store game global data
      */
     data : {
+        session: {},
+        user: {},
         //Userstats
         playerStat : 0,
         gotSession: false,
@@ -207,4 +209,3 @@ var game = {
         me.state.change(STATE_START);
     }
 };
-

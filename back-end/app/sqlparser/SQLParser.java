@@ -83,7 +83,7 @@ public class SQLParser {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);
             } else {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "Errrrrorr");
+                result = new SQLResult(task, SQLResult.SEMANTICS, "Error");
             }
         } else {
             Set<Set<String>> refStatementSetSet = toSetSet(refStatementResult);

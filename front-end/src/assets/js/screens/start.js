@@ -1,74 +1,49 @@
-
+/**
+ * PreGame Screen
+ */
 game.StartScreen = me.ScreenObject.extend({
-
     onResetEvent: function() {
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
+        me.game.world.addChild(rootContainer);
+        var isSignedIn = false;
 
-        me.game.world.addChild(
-            new me.Sprite (
-                0,0,
-                me.loader.getImage('black')
-            ),
-            1
-        );
-        
-        var background = new game.BackgroundElement('background', 100, 100, 0, 0, 'none');
-        background.setImage("assets/data/img/gui/title_screen.png", "back");
-        me.game.world.addChild(background);
-        $("#background").fadeIn(100);
-
-        //get the users settings
-        function getSettings(xmlHttpRequest) {
-
-
-            var profile = JSON.parse(xmlHttpRequest.responseText);
-            console.log(profile);
-            game.data.music = profile.settings.music;
-            game.data.sound = profile.settings.sound;
-            game.data.lofiCoins = profile.coins;
-
-            //starts background music
-            if (game.data.music) {
-                me.audio.playTrack("menu", game.data.musicVolume);
-
+        ajaxGetSession(function(xmlHttpRequest) {
+            if(xmlHttpRequest.status != 200) {
+                console.log("Error");
+                return;
             }
-            if (game.data.sound) {
-                me.audio.play("switch", false, null, game.data.soundVolume);
-            }
-        }
-
-        function checkSession(xmlHttpRequest){
-            console.log(xmlHttpRequest);
-
-            game.data.gotSession = true;
             var session = JSON.parse(xmlHttpRequest.responseText);
-            console.log(session);
-            ajaxSendProfileRequest(getSettings);
+            game.data.session = session;
+            if(session.owner !== "") {
+                isSignedIn = true;
+                ajaxGetUser(game.data.session.owner, function(xmlHttpRequest) {
+                    if(xmlHttpRequest.status == 200) {
+                        var user = JSON.parse(xmlHttpRequest.responseText);
+                        game.data.user = user;
+                    }
+                });
+            }
+        });
 
-        }
-        ajaxSendProfileRequest(checkSession);
 
-
-        /**
-         * these functions are called when buttons are clicked.
-         * Here: simple state change.
-         */
-        this.onStart = function() {
-            $("#background").fadeOut(100);
-            $("#startButton").fadeOut(100);
-            setTimeout( function() {
-                if (game.data.gotSession) {
+        var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
+        titleBanner.hide();
+        var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'START', 'Button StartScreen Start', false, function() {
+            $(startButton.getNode()).fadeOut(50);
+            $(titleBanner.getNode()).fadeOut(50);
+            setTimeout(function() {
+                if(isSignedIn) {
                     me.state.change(me.state.MENU);
                 } else {
+                    me.game.world.removeChild(startButton);
                     me.state.change(STATE_LOGIN);
                 }
             }, 100);
-        };
+        });
+        startButton.hide();
 
-        /**
-         * Add all needed buttons to start screen
-         */
-        var startButton  = new game.ClickableElement('startButton', 'start', this.onStart, 20, 8.7, 43, 50, 1);
+        $(startButton.getNode()).fadeIn(50);
+        $(titleBanner.getNode()).fadeIn(50);
         me.game.world.addChild(startButton);
-        $("#startButton").fadeIn(100);
-    }
+    },
 });

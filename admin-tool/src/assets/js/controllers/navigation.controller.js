@@ -20,7 +20,6 @@
         }
 
         return {
-            restrict: "E",
             replace: true,
             templateUrl: "assets/templates/navigationBar.template.html",
             controller: navigationBarController

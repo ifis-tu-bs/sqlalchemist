@@ -14,7 +14,7 @@ public class PlayerStats {
     private int defense;
     private int speed;
     private int jump;
-    private int slot;
+    private int slots;
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -34,21 +34,21 @@ public class PlayerStats {
      * @param defense   defense
      * @param speed     speed
      * @param jump      jump
-     * @param slot      slot
+     * @param slots      slots
      */
     public PlayerStats(
             int health,
             int defense,
             int speed,
             int jump,
-            int slot) {
+            int slots) {
         super();
 
         this.health = health;
         this.defense = defense;
         this.speed = speed;
         this.jump = jump;
-        this.slot = slot;
+        this.slots = slots;
     }
 
     public static PlayerStats getDefault() {
@@ -64,7 +64,7 @@ public class PlayerStats {
         this.defense    += playerStats.defense;
         this.speed      += playerStats.speed;
         this.jump       += playerStats.jump;
-        this.slot       += playerStats.slot;
+        this.slots += playerStats.slots;
     }
 
 
@@ -93,15 +93,15 @@ public class PlayerStats {
      *
      * @return returns the count of the BeltSlots
      */
-    public int getSlot() {
-        return this.slot;
+    public int getSlots() {
+        return this.slots;
     }
 
     /**
-     * add one slot
+     * add one slots
      */
     public void addBeltSlot() {
-        this.slot++;
+        this.slots++;
     }
 
 }

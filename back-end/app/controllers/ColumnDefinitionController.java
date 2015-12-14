@@ -11,7 +11,6 @@ import play.mvc.Result;
  * @author fabiomazzone
  */
 public class ColumnDefinitionController extends Controller{
-
     public Result dataTypes() {
         ArrayNode dataTypesNode = JsonNodeFactory.instance.arrayNode();
         String[] dataTypes = {"VARCHAR(255)", "BOOLEAN", "INTEGER", "BIGINT", "DECIMAL", "NUMERIC", "FLOAT", "DATE", "TIME", "TIMESTAMP"};

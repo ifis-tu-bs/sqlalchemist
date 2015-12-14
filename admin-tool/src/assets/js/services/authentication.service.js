@@ -5,9 +5,11 @@
         .module('app')
         .factory('AuthenticationService', AuthenticationService);
 
-    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout'];
-    function AuthenticationService($http, $cookies, $rootScope, $timeout) {
+    AuthenticationService.$inject = ['$http', '$cookies', '$rootScope', '$timeout', '$location'];
+    function AuthenticationService($http, $cookies, $rootScope, $timeout, $location) {
         var service = {};
+
+        service.Session = Session;
 
         service.Login = Login;
         service.SetCredentials = SetCredentials;
@@ -15,29 +17,39 @@
 
         return service;
 
-        function Login(username, password, callbackSuccess, callbackError) {
-            $http.post('/API/Login', { id: username, password: password, adminTool: true })
-                .success(function (response) {
-                    callbackSuccess(response);
-                })
-                .error(function (response) {
-                    callbackError(response);
-                });
+        function Login(username, password) {
+            return $http.post('/API/Login', { email: username, password: password, adminTool: true});
         }
 
-        function SetCredentials(username, password) {
-             $rootScope.session = {
-                currentUser: {
-                    sessionValid: true
-                }
-            };
+        function Logout() {
+            $http.delete('/API/Logout').then(
+                    ClearCredentials
+            );
+        }
 
+        function SetCredentials() {
+            $rootScope.session = {
+                loggedIn : true
+            };
             $cookies.putObject('session', $rootScope.session);
         }
 
         function ClearCredentials() {
             $rootScope.session = {};
             $cookies.remove('session');
+        }
+
+        function Session() {
+            $http.get('/API/Session/').then(function(response) {
+                    if (response.data.owner === "") {
+                        service.ClearCredentials();
+                        $location.path('/login');
+                    } else {
+                        service.SetCredentials();
+                    }
+                },
+                ClearCredentials
+            );
         }
     }
 

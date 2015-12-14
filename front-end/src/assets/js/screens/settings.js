@@ -1,382 +1,211 @@
 game.SettingsScreen = me.ScreenObject.extend({
 
     onResetEvent : function() {
-
         /**
          *  set settings background
          */
-        var backgroundsettings = new game.BackgroundElement('backgroundsettings', 100, 100, 0, 0, 'none');
-        backgroundsettings.setImage("assets/data/img/gui/settings_screen.png", "back");
-        me.game.world.addChild(backgroundsettings);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
+        me.game.world.addChild(rootContainer);
 
-        var settingsBackgroundHeader = new game.TextOutputElement('settingsHeaderId', 40, 10, 30, 3, 1);
-        me.game.world.addChild(settingsBackgroundHeader);
-        settingsBackgroundHeader.writeHTML("SETTINGS");
+        var title = new game.fdom.TitleElement(rootContainer, '30%','10%','35%','5%', 'Settings', 'Title SettingsScreen');
+        me.game.world.addChild(title);
 
-        function fadeOutElements(){
-            $("#studentRequest").fadeOut(100);
-            $("#backgroundsettings").fadeOut(100);
-            $("#storyReset").fadeOut(100);
-            $("#changePassword").fadeOut(100);
-            $("#backFromSettings").fadeOut(100);
-            $("#soundButtonId").fadeOut(100);
-            $("#musicButtonId").fadeOut(100);
-            $("#soundsElement").fadeOut(100);
-            $("#deleteUser").fadeOut(100);
-            $("#submitDeletion").fadeOut(100);
-            $("#verifyGreen").fadeOut(100);
-            $("#submitVerification").fadeOut(100);
-            $("#submitPassword").fadeOut(100);
-            $("#submitReset").fadeOut(100);
-            $("[id*=Header]").fadeOut(100);
-            $("[id^=keyBindings]").fadeOut(100);
-        }
+        var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
+            $(rootContainer.getNode()).fadeOut(100);
+            var settingsData = { music: settingsMusic.isChecked(), sound: settingsSound.isChecked()};
+            ajaxUpdateUser(game.data.user.username, JSON.stringify({settings: settingsData}), function(xmlHttpRequest) {
+                var user = JSON.parse(xmlHttpRequest.responseText);
 
-        /**
-         *  add all necessary buttons to screen
-         */
-        this.backToMenu = function () {
-            fadeOutElements();
-            setTimeout( function() {
+                game.data.user = user;
+            });
+            setTimeout(function() {
                 me.state.change(me.state.MENU);
-            }, 100);
-        };
+            }, 50);
+        });
+        me.game.world.addChild(backButton);
 
-        var backFromSettings = new game.ClickableElement('backFromSettings','', this.backToMenu, 14.01515, 19.53125, 77, 0, 1);
-        backFromSettings.setImage("assets/data/img/buttons/back_button_ink.png", "back");
-        me.game.world.addChild(backFromSettings);
+        /* ------------------------------------------------------------------ */
+        var settingsContainerElement = new game.fdom.ContainerElement(rootContainer, '24%','21%','10%','20%', 'Container SettingsScreen Settings');
+        me.game.world.addChild(settingsContainerElement);
 
-        var oldPassword       = new game.TextInputElement('input','text', 'wOld', 'fOld', 35, 10, 48, 35, 2);
-        var newPassword       = new game.TextInputElement('input','text', 'wNew', 'fNew', 35, 10, 48, 48, 2);
-        var newPasswordAck    = new game.TextInputElement('input','text', 'wNewAck', 'fNewAck', 35, 10, 48, 61, 2);
-        var changeHeader      = new game.TextOutputElement('changeHeader', 50, 5, 41, 26, 1);
-        var resetHeader       = new game.TextOutputElement('resetHeader', 50, 20, 41, 36, 4);
-        var keyBindingsHeader = new game.TextOutputElement('keyBindingsHeader', 50, 5, 40, 26, 1);
-        var keyBindings       = new game.TextOutputElement('keyBindings', 30, 25, 45, 36, 5);
-        var keyBindingsDisc   = new game.TextOutputElement('keyBindingsDisc', 25, 25, 62, 36, 5);
-        var deleteUserHeader  = new game.TextOutputElement('deleteUserHeader', 50, 20, 41, 36, 4);
-        var verifyUserHeader  = new game.TextOutputElement('verifyUserHeader', 50, 25, 41, 36, 5);
-        me.game.world.addChild(oldPassword);
-        me.game.world.addChild(newPassword);
-        me.game.world.addChild(newPasswordAck);
-        me.game.world.addChild(changeHeader);
-        me.game.world.addChild(resetHeader);
-        me.game.world.addChild(keyBindingsHeader);
-        me.game.world.addChild(keyBindings);
-        me.game.world.addChild(keyBindingsDisc);
-        me.game.world.addChild(deleteUserHeader);
-        me.game.world.addChild(verifyUserHeader);
+        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','10%', 'sound: ', 'Text SettingsScreen Sound ');
+        me.game.world.addChild(settingsTextSound);
 
-        oldPassword.insertText('old password');
-        newPassword.insertText('new password');
-        newPasswordAck.insertText('password confirmation');
-        changeHeader.writeHTML("change password:");
-        resetHeader.writeHTML("Are you sure you want" + "<br>" +
-                              "to reset the story?" + "<br>" +
-                              "Your whole progress" + "<br>" +
-                              "will be deleted!");
-        keyBindingsHeader.writeHTML("<u>" + "ingame key bindings:" + "<u>");
-        keyBindingsDisc.writeHTML("&quot;m&quot;" + "<br>" +
-                                  "&quot;n&quot;" + "<br>" +
-                                  "&quot;esc&quot;" + "<br>" +
-                                  "&quot;space&quot;" + "<br>" +
-                                  "&quot;num[1-7]&quot;");
-        keyBindings.writeHTML("music on/off:" + "<br>" +
-                              "sounds on/off:" + "<br>" +
-                              "leave dungeon:" + "<br>" +
-                              "jump:" + "<br>" +
-                              "use potion:");
-        deleteUserHeader.writeHTML("Are you sure about" + "<br>" +
-                                   "deleting your account?" + "<br>" +
-                                   "All your data" + "<br>" +
-                                   "will be deleted!");
-        verifyUserHeader.writeHTML("As a student, you have to sign" + "<br>" +
-                                   "up at the HMS first!" + "<br>" +
-                                   "If you signed up here first," + "<br>" +
-                                   "then you have to verify" + "<br>" +
-                                   "yourself as student.");
+        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','60%', 'music: ', 'Text SettingsScreen Music');
+        me.game.world.addChild(settingsTextMusic);
 
-        oldPassword.hide();
-        newPassword.hide();
-        newPasswordAck.hide();
-        changeHeader.hide();
-        resetHeader.hide();
-        deleteUserHeader.hide();
-        verifyUserHeader.hide();
+        var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','10%', '', 'CheckBox SettingsScreen Sound');
+        me.game.world.addChild(settingsSound);
 
-        this.sendStudentRequest = function() {
+        var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','60%', '', 'CheckBox SettingsScreen Music');
+        me.game.world.addChild(settingsMusic);
 
-            keyBindingsHeader.hide();
-            keyBindings.hide();
-            keyBindingsDisc.hide();
-            oldPassword.hide();
-            newPassword.hide();
-            newPasswordAck.hide();
-            changeHeader.hide();
-            resetHeader.hide();
-            submitReset.hide();
-            submitPassword.hide();
-            studentRequest.hide();
-            deleteUserHeader.hide();
-            submitDeletion.hide();
-            verifyUserHeader.display();
-            submitVerification.display();
-
-            this.sendVerificationRequest = function (){
-                studentReply = function(xmlHttpRequest) {
-                    studentRequest.changeColor('verifyGreen');
-                    //console.log(xmlHttpRequest);
-                };
-                ajaxSendUserStudentRequest(studentReply);
-            };
-
-        };
-
-        var submitVerification = new game.ClickableElement('submitVerification', "verify!", this.sendVerificationRequest, 33, 5, 48, 72, 1);
-        me.game.world.addChild(submitVerification);
-
-        var studentRequest;
-        if (game.data.profile.student) {
-            studentRequest = new game.ClickableElement('verifyGreen', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
-            me.game.world.addChild(studentRequest);
-        } else {
-            studentRequest = new game.ClickableElement('studentRequest', "verify as student?", this.sendStudentRequest, 33, 5, 48, 72, 1);
-            me.game.world.addChild(studentRequest);
+        if(game.data.user.settings.sound) {
+            $(settingsSound.getNode()).addClass('Checked');
+        }
+        if(game.data.user.settings.music) {
+            $(settingsMusic.getNode()).addClass('Checked');
         }
 
-        SubmitResetClicked = function(){
+        /* ------------------------------------------------------------------ */
+        var menuContainer = new game.fdom.ContainerElement(rootContainer, '24%','46%','10%','41%', 'Container SettingsScreen Menu');
+        me.game.world.addChild(menuContainer);
 
-            resetReply = function(xmlHttpRequest){
-                fadeOutElements();
-                setTimeout( function() {
-                    window.location.reload();
-                }, 100);
-            };
-            ajaxSendChallengeResetRequest(resetReply);
-        };
+        var changePasswordButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','6%', 'Change Password', 'Button SettingsScreen Menu changePassword', false, function() {
+            changeView(changePasswordContainer);
+        });
+        me.game.world.addChild(changePasswordButton);
+
+        var resetStoryModeButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','39%', 'Reset Story Mode', 'Button SettingsScreen Menu resetStory', false, function() {
+            changeView(resetStoryModeContainer);
+        });
+        me.game.world.addChild(resetStoryModeButton);
+
+        var deleteUserButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','73%', 'delete your account', 'Button SettingsScreen Menu deleteUser', false, function() {
+            changeView(deleteUserContainer);
+        });
+        me.game.world.addChild(deleteUserButton);
 
 
-        var submitReset = new game.ClickableElement('submitReset', 'Yes I\'m sure', SubmitResetClicked, 24, 5, 53.5, 65, 1);
-        me.game.world.addChild(submitReset);
-        submitReset.hide();
+        /* ------------------------------------------------------------------ */
+        var defaultContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(defaultContainer);
 
-        /**
-         * check if password change is valid and POST via ajax call
-         *
-         * @constructor
-         */
-        this.SubmitPasswordClicked = function () {
+        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '70%','10%','15%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
+        me.game.world.addChild(defaultContainerViewTitle);
 
-            var oldPasswordData    = document.getElementById("fOld").value;
-            var newPasswordData    = document.getElementById("fNew").value;
-            var newPasswordAckData = document.getElementById("fNewAck").value;
-            var passwordJSON;
-
-            if (newPasswordData == newPasswordAckData) {
-                passwordJSON = JSON.stringify({password_old: oldPasswordData, password_new: newPasswordData});
-            } else {
-                alert("entered passwords do not match!");
+        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','75%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
+            if(game.data.user.student) {
+                console.log("already verified");
+                return;
             }
+            console.log("Verify as Student");
+            $(verifyButton.getNode()).addClass("Verified");
+            $(verifyButton.getNode()).text("already verified");
+        });
+        me.game.world.addChild(verifyButton);
 
-            /**
-             *  POST new password via ajax function ajaxSendUsersRequest(jsonData, onload);
-             *  JSON.user:
-             *  "password_old" :String
-             *  "password_new" :String
-             *  on load function: confirmation for password change
-             */
-            function userReply() {
-                fadeOutElements();
-                setTimeout( function() {
-                    me.state.change(me.state.SETTINGS);
-                }, 100);
+        if(game.data.user.student) {
+            $(verifyButton.getNode()).addClass("Verified");
+            $(verifyButton.getNode()).text("already verified");
+        }
+
+        /* ------------------------------------------------------------------ */
+        var changePasswordContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(changePasswordContainer);
+        changePasswordContainer.hide();
+
+        var changePasswordForm = new game.fdom.FormElement(changePasswordContainer, '100%','100%','100%','100%', 'Form SettingsScreen ChangePasswordView',  function() {
+            $(formPasswordOldInputField.getNode()).removeClass("invalid");
+            $(formPasswordInputField.getNode()).removeClass("invalid");
+            $(formPasswordRepeatInputField.getNode()).removeClass("invalid");
+
+            var passwordOld = formPasswordOldInputField.getNode().value;
+            var password    = formPasswordInputField.getNode().value;
+            var passwordC   = formPasswordRepeatInputField.getNode().value;
+            if(password != passwordC) {
+                alert("entered passwords do not match");
+                $(formPasswordInputField.getNode()).addClass("invalid");
+                $(formPasswordRepeatInputField.getNode()).addClass("invalid");
+                return;
             }
+            var changePasswordData = {oldPassword: passwordOld, newPassword: password};
 
-            ajaxSendUsersRequest(passwordJSON, userReply);
-        };
-
-        /**
-         *  params for ClickableElement: (id, name, callback, width, height, left, top)
-         */
-        var submitPassword = new game.ClickableElement('submitPassword', 'submit', this.SubmitPasswordClicked, 15, 5, 58, 75, 1);
-        me.game.world.addChild(submitPassword);
-        submitPassword.hide();
-
-        /**
-         * open necessary elements for password change
-         * @constructor
-         */
-        ChangePasswordClicked = function() {
-            keyBindingsHeader.hide();
-            keyBindings.hide();
-            keyBindingsDisc.hide();
-            storyReset.display();
-            oldPassword.display();
-            newPassword.display();
-            newPasswordAck.display();
-            changeHeader.display();
-            resetHeader.hide();
-            submitReset.hide();
-            submitPassword.display();
-            studentRequest.hide();
-            deleteUserHeader.hide();
-            submitDeletion.hide();
-            verifyUserHeader.hide();
-            submitVerification.hide();
-
-
-            clearOldPasswordField = function () {
-                oldPassword.clear();
-                oldPassword.changeType('password');
-                oldPassword.removeEvent('click', clearOldPasswordField);
-            };
-            oldPassword.addEvent('click', clearOldPasswordField);
-
-            clearNewPasswordField = function () {
-                newPassword.clear();
-                newPassword.changeType('password');
-                newPassword.removeEvent('click', clearNewPasswordField);
-            };
-            newPassword.addEvent('click', clearNewPasswordField);
-
-            clearNewPasswordAckField = function () {
-                newPasswordAck.clear();
-                newPasswordAck.changeType('password');
-                newPasswordAck.removeEvent('click', clearNewPasswordAckField);
-            };
-            newPasswordAck.addEvent('click', clearNewPasswordAckField);
-        };
-
-        var changePassword = new game.ClickableElement('changePassword', 'change password', ChangePasswordClicked, 23, 10, 13, 45, 2);
-        me.game.world.addChild(changePassword);
-
-
-        this.resetStoryClicked = function(){
-            keyBindingsHeader.hide();
-            keyBindings.hide();
-            keyBindingsDisc.hide();
-            changePassword.display();
-            oldPassword.hide();
-            newPassword.hide();
-            newPasswordAck.hide();
-            changeHeader.hide();
-            resetHeader.display();
-            submitPassword.hide();
-            submitReset.display();
-            studentRequest.hide();
-            deleteUserHeader.hide();
-            submitDeletion.hide();
-            verifyUserHeader.hide();
-            submitVerification.hide();
-        };
-
-        var storyReset = new game.ClickableElement('storyReset', 'reset story mode', this.resetStoryClicked, 23, 10, 13, 58, 2);
-        me.game.world.addChild(storyReset);
-
-
-        this.submitDeletionClicked = function () {
-            function deletionReply(xmlHttpRequest) {
-                console.log(xmlHttpRequest);
-                fadeOutElements();
-                setTimeout( function() {
-                    window.location.reload();
-                }, 100);
-            }
-            ajaxSendUsersDeleteRequest(deletionReply);
-        };
-
-        var submitDeletion = new game.ClickableElement('submitDeletion', 'Yes I\'m sure', this.submitDeletionClicked, 24, 5, 53.5, 65, 1);
-        me.game.world.addChild(submitDeletion);
-        submitDeletion.hide();
-
-        this.deleteUserClicked = function () {
-            keyBindingsHeader.hide();
-            keyBindings.hide();
-            keyBindingsDisc.hide();
-            oldPassword.hide();
-            newPassword.hide();
-            newPasswordAck.hide();
-            changeHeader.hide();
-            resetHeader.hide();
-            submitPassword.hide();
-            submitReset.hide();
-            studentRequest.hide();
-            verifyUserHeader.hide();
-            deleteUserHeader.display();
-            submitDeletion.display();
-            submitVerification.hide();
-        };
-
-        var deleteUser = new game.ClickableElement('deleteUser', "delete your account", this.deleteUserClicked, 23, 10, 13, 71, 2);
-        me.game.world.addChild(deleteUser);
-
-        this.musicClicked = function () {
-            $("[id*='musicImage']").remove();
-            if (game.data.music) {
-                musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
-                game.data.music = false;
-                me.audio.stopTrack();
-            } else {
-                musicButton.setImage("assets/data/img/buttons/ButtonsMusic.png", "musicImage");
-                game.data.music = true;
-                if(me.state.isCurrent(me.state.PLAY)) {
-                    me.audio.playTrack(game.data.recentTitle ,game.data.musicVolume);
-                } else {
-                    me.audio.playTrack("Menu",game.data.musicVolume);
+            ajaxUpdatePassword(game.data.user.username, JSON.stringify(changePasswordData), function(xmlHttpRequest) {
+                if(xmlHttpRequest.status == 400) {
+                    var errorMessage = JSON.parse(xmlHttpRequest.responseText);
+                    if(typeof errorMessage.oldPassword !== 'undefined') {
+                        $(formPasswordOldInputField.getNode()).addClass("invalid");
+                    }
+                    if(typeof errorMessage.newPassword !== 'undefined') {
+                        $(formPasswordInputField.getNode()).addClass("invalid");
+                        $(formPasswordRepeatInputField.getNode()).addClass("invalid");
+                    }
+                } else if(xmlHttpRequest.status == 200) {
+                    alert("successfully");
                 }
+
+            });
+
+        });
+        me.game.world.addChild(changePasswordForm);
+
+        var changePasswordViewTitle = new game.fdom.TitleElement(changePasswordForm, '60%','10%','20%','10%', 'change password:', 'Text SettingsScreen View ChangePasswordView');
+        me.game.world.addChild(changePasswordViewTitle);
+
+        var formPasswordOldInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','33%', 'old password', 'InputPasswordField SettingsScreen Password');
+        me.game.world.addChild(formPasswordOldInputField);
+
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','47%', 'password', 'InputPasswordField SettingsScreen Password');
+        me.game.world.addChild(formPasswordInputField);
+
+        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','60%', 'repeat password', 'InputPasswordField SettingsScreen Password');
+        me.game.world.addChild(formPasswordRepeatInputField);
+
+        var changePasswordSubmit = new game.fdom.ButtonElement(changePasswordForm, '60%','10%','20%','85%', 'Submit', 'Button SettingsScreen View ChangePasswordView', true);
+        me.game.world.addChild(changePasswordSubmit);
+
+        /* ------------------------------------------------------------------ */
+        var resetStoryModeContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(resetStoryModeContainer);
+        resetStoryModeContainer.hide();
+
+        var resetStoryModeContainerText1 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','29%', 'Are you sure you want do reset the story?', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(resetStoryModeContainerText1);
+
+        var resetStoryModeContainerText2 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','43%', 'Your whole progress will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(resetStoryModeContainerText2);
+
+        var resetStoryModePushButton = new game.fdom.ButtonElement(resetStoryModeContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+            ajaxSendChallengeResetRequest(function(xmlHttpRequest) {
+                if(xmlHttpRequest.status != 200) {
+                    alert("Error");
+                    return;
+                }
+            });
+        });
+        me.game.world.addChild(resetStoryModePushButton);
+
+        /* ------------------------------------------------------------------ */
+        var deleteUserContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
+        me.game.world.addChild(deleteUserContainer);
+        deleteUserContainer.hide();
+
+        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','29%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(deleteUserContainerText1);
+
+        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        me.game.world.addChild(deleteUserContainerText2);
+
+        var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+            ajaxDeleteUser(game.data.user.username, function(xmlHttpRequest) {
+                if(xmlHttpRequest.status != 200) {
+                    alert("Error");
+                    return;
+                }
+                game.data.session = JSON.parse(xmlHttpRequest.responseText);
+                game.data.user = {};
+                $(rootContainer.getNode()).fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(STATE_SIGNUP);
+                }, 50);
+            });
+        });
+        me.game.world.addChild(deleteUserPushButton);
+
+
+        var currentView = defaultContainer;
+        function changeView(newView) {
+            $(currentView.getNode()).fadeOut(100);
+            if(newView == currentView) {
+                setTimeout( function () {
+                    currentView = defaultContainer;
+                    $(currentView.getNode()).fadeIn(100);
+                }, 50);
+                return;
             }
-        };
-
-        var musicButton = new game.ClickableElement('musicButtonId', '', this.musicClicked, 4.848485, 8.333333, 30, 22, 1);
-        me.game.world.addChild(musicButton);
-        if (game.data.music) {
-            musicButton.setImage("assets/data/img/buttons/ButtonsMusic.png", "musicImage");
-        } else {
-            musicButton.setImage("assets/data/img/buttons/ButtonsMusicOff.png", "musicImage");
+            currentView = newView;
+            $(currentView.getNode()).fadeIn(100);
         }
-
-        this.soundClicked = function (){
-            $("[id*='soundImage']").remove();
-            if (game.data.sound) {
-                soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
-                game.data.sound = false;
-            } else {
-                soundButton.setImage("assets/data/img/buttons/ButtonsSound.png", "soundImage");
-                game.data.sound = true;
-                me.audio.play("cling", false, null, game.data.soundVolume);
-            }
-        };
-
-        var soundButton = new game.ClickableElement('soundButtonId', '', this.soundClicked, 4.848485, 8.333333, 30, 32, 1);
-        me.game.world.addChild(soundButton);
-        if (game.data.music) {
-            soundButton.setImage("assets/data/img/buttons/ButtonsSound.png", "soundImage");
-        } else {
-            soundButton.setImage("assets/data/img/buttons/ButtonsSoundOff.png", "soundImage");
-        }
-
-        var soundsElement = new game.TextOutputElement('soundsElement', 15, 20, 15, 21, 4);
-        me.game.world.addChild(soundsElement);
-        soundsElement.writeHTML("music:" + "<br>" + "sound:", 'soundPara');
-    },
-
-    onDestroyEvent: function(){
-
-        //console.log(game.data.music, game.data.sound);
-        function changeSet(xmlHttpRequest) {
-            //console.log(xmlHttpRequest);
-        }
-
-        function setSettings() {
-            var music = game.data.music;
-            var sound = game.data.sound;
-            this.user_json_setting = JSON.stringify({music: music, sound: sound});
-            //console.log("AJAX: ", this.user_json_setting);
-            ajaxSendProfileSettingsSetRequest(this.user_json_setting, changeSet);
-        }
-
-        setSettings();
-
     }
-
 });

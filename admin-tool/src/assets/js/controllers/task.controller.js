@@ -66,8 +66,7 @@ angular
                             $scope.getCurrentPath();
 
                         }, function (error) {
-                            FlashService.Error(result.message);
-
+                            FlashService.Error(error);
                         }
                 );
 

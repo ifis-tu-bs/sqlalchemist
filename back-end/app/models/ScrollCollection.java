@@ -2,8 +2,6 @@ package models;
 
 import dao.ScrollCollectionDAO;
 
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -23,22 +21,21 @@ import java.util.List;
 @Entity
 @Table(
         name = "scrollcollection",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "scroll_id"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "scroll_id"})
 )
-@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class ScrollCollection extends Model {
     @Id
     private long id;
 
     @ManyToOne
-    private final Profile profile;
+    private User user;
 
     @ManyToOne
-    private final Scroll scroll;
+    private Scroll scroll;
 
     private boolean isActive;
 
-    private final Calendar added;
+    private Calendar added;
 
     public static final Finder<Long, ScrollCollection> find = new Finder<>(ScrollCollection.class);
 
@@ -50,11 +47,11 @@ public class ScrollCollection extends Model {
     /**
      * this is the constructor for a ScrollCollection object
      *
-     * @param profile   the owner of the Scroll as profile
+     * @param user   the owner of the Scroll as profile
      * @param scroll    the scroll
      */
-    public ScrollCollection(Profile profile, Scroll scroll) {
-        this.profile    = profile;
+    public ScrollCollection(User user, Scroll scroll) {
+        this.user       = user;
         this.scroll     = scroll;
         this.isActive   = scroll.isRecipe();
         this.added      = Calendar.getInstance();
@@ -63,6 +60,12 @@ public class ScrollCollection extends Model {
 //////////////////////////////////////////////////
 //  getter & setter methods
 //////////////////////////////////////////////////
+
+
+    public User getUser() {
+        return user;
+    }
+
     public Scroll getScroll() {
       return this.scroll;
     }
@@ -103,13 +106,13 @@ public class ScrollCollection extends Model {
     /**
      * convert all objects from the owner to a json object
      *
-     * @param profile   the owner as profile
+     * @param user   the owner as profile
      * @return          returns all objects that the given profile owns as Json object
      */
-    public static ObjectNode toJsonAll(Profile profile) {
+    public static ObjectNode toJsonAll(User user) {
         ArrayNode arrayNode     = JsonNodeFactory.instance.arrayNode();
         ObjectNode objectNode   = Json.newObject();
-        List<ScrollCollection> scrollCollectionList = ScrollCollectionDAO.getScrollCollection(profile);
+        List<ScrollCollection> scrollCollectionList = ScrollCollectionDAO.getScrollCollection(user);
 
         scrollCollectionList.stream().filter(scrollCollection -> !scrollCollection.scroll.isRecipe()).forEach(scrollCollection -> arrayNode.add(scrollCollection.toJson()));
 

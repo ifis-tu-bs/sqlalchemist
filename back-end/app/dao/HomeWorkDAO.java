@@ -1,9 +1,9 @@
 package dao;
 
 import models.HomeWork;
-import models.Profile;
 import models.TaskSet;
 
+import models.User;
 import play.Logger;
 
 import javax.persistence.PersistenceException;
@@ -16,7 +16,7 @@ public class HomeWorkDAO {
 
     public static HomeWork create(
             String name,
-            Profile creator,
+            User creator,
             List<TaskSet> taskSets,
             Date start_at,
             Date expire_at) {

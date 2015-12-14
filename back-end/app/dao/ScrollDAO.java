@@ -37,7 +37,7 @@ public class ScrollDAO {
               scroll.save();
           } catch (PersistenceException pe) {
               Logger.warn("Scroll.create - catches PersistenceException");
-              Scroll scroll_comp = getByPosId(posId);
+              Scroll scroll_comp = getById(posId);
               if (scroll_comp != null
                       && scroll_comp.getPosId() == posId
                       && scroll_comp.getName().equalsIgnoreCase(name)) {
@@ -68,11 +68,11 @@ public class ScrollDAO {
 
       /**
        * Get a scroll by the position id in the game
-       * @param posId position id on the map
+       * @param id position id on the map
        * @return Scroll with the posId
        */
-      public static Scroll getByPosId(int posId) {
-          return Scroll.find.where().eq("posId", posId).findUnique();
+      public static Scroll getByPosId(int id) {
+          return Scroll.find.where().eq("pos_id", id).findUnique();
       }
 
       /**

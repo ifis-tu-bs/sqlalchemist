@@ -16,14 +16,12 @@ public class Inventory extends Model{
     private long id;
 
     @ManyToOne
-    public final Profile profile;
+    private final User user;
 
     @ManyToOne
-    public final Potion potion;
+    private final Potion potion;
 
     private int beltSlot;
-
-    public static final Finder<Long, Inventory> find = new Finder<>(Inventory.class);
 
 //////////////////////////////////////////////////
 //  Constructor
@@ -31,21 +29,34 @@ public class Inventory extends Model{
 
     /**
      * Constructor of the inventory
-     * @param profile Connection to the user profile
+     * @param user Connection to the user profile
      * @param potion Connection to the potion in the slot
      */
     public Inventory(
-            Profile profile,
+            User user,
             Potion potion){
         super();
 
-        this.profile    = profile;
+        this.user       = user;
         this.potion     = potion;
         this.beltSlot   = 0;
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public User getUser() {
+        return user;
+    }
 
+    public Potion getPotion() {
+        return potion;
+    }
+
+    public int getBeltSlot() {
+        return beltSlot;
+    }
 
     public void setBeltSlot(int beltSlot) {
         this.beltSlot = beltSlot;

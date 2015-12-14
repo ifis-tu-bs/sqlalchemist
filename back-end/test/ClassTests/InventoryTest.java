@@ -2,7 +2,7 @@ package ClassTests;
 
 import models.Inventory;
 import models.Potion;
-import models.Profile;
+import Profile;
 import models.User;
 import org.junit.BeforeClass;
 import org.junit.Test;

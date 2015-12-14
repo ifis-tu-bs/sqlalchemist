@@ -1,19 +1,35 @@
 package models;
 
-import com.avaje.ebean.Model;
-import com.avaje.ebean.annotation.ConcurrencyMode;
-import com.avaje.ebean.annotation.EntityConcurrencyMode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import helper.HMSAccessor;
-import org.mindrot.jbcrypt.BCrypt;
-import play.data.validation.Constraints;
-import play.libs.Json;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import dao.InventoryDAO;
+import dao.ScrollCollectionDAO;
+import dao.ShopItemDAO;
+import dao.StoryChallengeDAO;
 import helper.MailSender;
 
+import com.avaje.ebean.Model;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import helper.Random;
+import org.mindrot.jbcrypt.BCrypt;
+
+import play.Play;
+import play.libs.Json;
+import service.ServiceUser;
+import view.ScoreView;
+
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotNull;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
-import java.util.regex.Pattern;
+import java.util.UUID;
 
 /**
  *
@@ -23,119 +39,184 @@ import java.util.regex.Pattern;
  */
 @Entity
 @Table(name = "user")
-@EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class User extends Model {
-    // unique ID
     @Id
-    public Long id;
-
-    //
-    @Constraints.Email
+    private long                        id;
     @Column(unique = true)
-    private String email;
-
-    public static final int USER_EMAIL_VERIFY_NOT_FOUND = -1;
-    public static final int USER_EMAIL_VERIFY_ALREADY_VERIFIED = -2;
-
-    private boolean emailVerified = false;
+    private String                      email;
     @Column(unique = true)
-    private String emailVerifyCode;
+    private String                      username;
+
+    private String                      password;
+
+    @NotNull
+    @ManyToOne
+    private Role                        role;
 
     @Column(unique = true)
-    public String matNR;
-
+    private String                      emailVerifyCode;
     @Column(unique = true)
-    public String y_id;
+    private String                      matNR;
+    @Column(unique = true)
+    private String                      yID;
 
-    public boolean isStudent;
+    @Embedded
+    private Settings                    settings;
 
-    private String password;
+    @Embedded
+    private PlayerStats                 playerStats;
 
-    /**
-     * 1 | User
-     * 2 | Creator
-     * 3 | Admin
-     */
-    private int role;
+    private boolean                     tutorialDone;
+    private boolean                     storyDone;
 
-    public static final int ROLE_USER = 1;
-    public static final int ROLE_CREATOR = 2;
-    public static final int ROLE_ADMIN = 3;
+    @ManyToMany
+    private List<ShopItem>              shopItems;
+    @ManyToOne
+    private Avatar                      avatar;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
-    public List<UserSession> sessions;
 
-    @OneToOne(mappedBy="user", cascade = CascadeType.ALL)
-    public Profile profile;
+    @ManyToOne
+    private StoryChallenge              currentStory;
+    @ManyToOne
+    private Scroll                      currentScroll;
+    @ManyToOne
+    private TaskSet                     currentTaskSet;
+    @ManyToOne
+    private HomeWork                    currentHomeWork;
 
-    private Date created_at;
-    private Date edited_at;
+    private int                         depth;
+    private int                         coins;
 
-    public static final Finder<Long, User> find = new Finder<>(User.class);
-    private boolean isActive = true;
+    private float                       coinScale;
+    private int                         scrollLimit;
 
-//////////////////////////////////////////////////
+    @Embedded
+    private Score                       score;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<SubmittedHomeWork>     submittedHomeWorks;
+    @OneToMany(mappedBy = "creator")
+    private List<TaskSet>               tasks;
+    @OneToMany(mappedBy = "user")
+    private List<Rating>                ratings;
+    @OneToMany(mappedBy = "creator")
+    private List<Comment>               comments;
+
+    private boolean                     isActive;
+
+    @ManyToOne
+    private UserGroup group;
+
+    private final Calendar createdAt;
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
-//////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /**
      *
-     * @param id        email or y-ID
+     * @param email     email
      * @param password  password
-     * @param role      user-role
      */
     public User(
-            String id,
-            String password,
-            int    role) {
-        if( id == null || password == null || !Pattern.matches(".+@.+\\..+", id)) {
-            throw new IllegalArgumentException("Email is invalid");
-        }
+            String  email,
+            String  username,
+            String  password,
+            Role    role) {
 
-        this.email = id;
+        this.email = email;
+        this.username = username;
+        setPassword(password);
 
-        this.emailVerified = false;
+        setRole(role);
 
-        long verifyNumber = (long) this.hashCode();
-        long checksum = (98 - ((verifyNumber * 100) % 97)) % 97;
+        emailVerifyCode = UUID.randomUUID().toString();
 
-        this.emailVerifyCode = Long.toHexString(verifyNumber * 100 + checksum);
-
-        this.setPassword(password);
-
-        this.role = role;
-
-        this.created_at = new Date();
         if(play.api.Play.isProd(play.api.Play.current())) {
-            User.updateStudentState(this);
+            ServiceUser.updateStudentState(this);
         }
+
+        setSettings(new Settings(true, true));
+        setPlayerStats(PlayerStats.getDefault());
+
+        this.setTutorialDone(false);
+        this.setStoryDone(false);
+
+        this.shopItems = new ArrayList<>();
+        List<ShopItem> defaultAvatar = ShopItemDAO.getFreeShopItems();
+        defaultAvatar.forEach(this::addShopItem);
+
+        ShopItem shopItem = this.shopItems.get(Random.randomInt(2));
+        this.setAvatar(shopItem.getAvatar());
+
+        this.currentStory   = StoryChallengeDAO.getFirstLevel();
+        this.currentScroll  = null;
+        this.currentTaskSet = null;
+        this.currentHomeWork= null;
+
+        this.setDepth(0);
+        this.setCoins(0);
+
+        this.setCoinScale(1f);
+        this.setScrollLimit(Play.application().configuration().getInt("Game.ScrollLimit"));
+
+        this.score          = new Score();
+
+        isActive            = true;
+        createdAt = Calendar.getInstance();
     }
 
 
-    public ObjectNode toJson() {
+    public ObjectNode toJsonProfile() {
         ObjectNode node = Json.newObject();
 
         node.put("id",          this.id);
-        node.put("username",    this.getProfile().getUsername());
+        node.put("username",    this.username);
+        node.put("coins",       this.coins);
+        node.put("score",       this.getScore().getTotalScore());
+        node.set("highScore",   ScoreView.toJson(this));
+        node.set("avatar",      Json.toJson(this.avatar));
+
+        return node;
+    }
+
+    /**
+     *
+     * @return  returns PlayerState as JSON
+     */
+    public ObjectNode toJsonPlayerState() {
+        ObjectNode node = Json.newObject();
+
+        node.put("id",          this.id);
+        node.put("username",    this.username);
+        node.set("settings",    Json.toJson(this.settings));
+        node.put("student",     this.isStudent());
+        node.put("storyDone",   this.storyDone);
+        node.put("coins",       this.coins);
+        node.put("coinScale",   this.coinScale);
+
+
+        return node;
+    }
+
+    public ObjectNode toJsonUser() {
+        ObjectNode node = Json.newObject();
+
+        node.put("id",          this.id);
+        node.put("username",    this.username);
         if(this.matNR != null) {
             node.put("matno",       this.matNR);
         } else {
             node.put("matno",       "");
         }
-        switch (this.role) {
-            case ROLE_USER:
-                node.put("role",    "User");
-                break;
-            case ROLE_CREATOR:
-                node.put("role",    "Creator");
-                break;
-            case ROLE_ADMIN:
-                node.put("role",    "Admin");
-                break;
-        }
+        node.put("role",    "User");
+
 
         node.put("email",       this.email);
-        node.put("createdAt",   String.valueOf(this.created_at));
+
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSZ");
+        node.put("createdAt",   simpleDateFormat.format(this.createdAt.getTime()));
 
         return node;
     }
@@ -153,23 +234,37 @@ public class User extends Model {
     }
 
     private String getUserRoleString() {
-        String userRole = "";
-        switch (this.role) {
-            case ROLE_USER:
-                userRole = "User";
-                break;
-            case ROLE_CREATOR:
-                userRole = "Creator";
-                break;
-            case ROLE_ADMIN:
-                userRole = "Admin";
-                break;
-        }
+        String userRole = (role != null) ? role.getRoleName() : "???";
 
-        if(this.isStudent)
+
+        if(this.isStudent())
             userRole += " & Student";
 
         return userRole;
+    }
+
+    public ObjectNode toJsonCharacterState() {
+        ObjectNode node = Json.newObject();
+        PlayerStats playerStats_sum = this.getPlayerStats();
+
+        node.set("attributes",      Json.toJson(playerStats_sum));
+        node.set("currentAvatar",   Json.toJson(this.avatar));
+        node.set("avatars_bought",  this.toJsonBoughtAvatars());
+        node.put("scrollLimit",     this.scrollLimit);
+        node.put("maxDepth",        this.depth);
+        node.set("inventory",       InventoryDAO.getJson_Inventory(this));
+        node.set("belt",            InventoryDAO.getJson_Belt(this));
+        node.set("scrollCollection",ScrollCollection.toJsonAll(this));
+
+        return node;
+    }
+
+    public ArrayNode toJsonBoughtAvatars(){
+        ArrayNode arrayNode = JsonNodeFactory.instance.arrayNode();
+
+        this.shopItems.stream().filter(ShopItem::isTypeAvatar).forEach(shopItem -> arrayNode.add(Json.toJson(shopItem.getAvatar())));
+
+        return arrayNode;
     }
 
 
@@ -179,11 +274,52 @@ public class User extends Model {
 
     /**
      *
+     * @return returns true if the user is a student
+     */
+
+
+    /**
+     * This method updates the user
+     */
+    @Override
+    public void update() {
+        super.update();
+    }
+
+//////////////////////////////////////////////////
+//  Actions Methods
+//////////////////////////////////////////////////
+
+    public void promote(int role) {
+    //    this.role = role;
+        this.save();
+        MailSender.getInstance().sendPromoteMail(this);
+    }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  Getter & Setter
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    public long getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     *  Change Password
+     *
      * @param oldPassword current User Password
      * @param newPassword new User Password
      * @return  returns true if successful
      */
-    public boolean changePassword(String oldPassword, String newPassword) {
+    public boolean setPassword(String oldPassword, String newPassword) {
         if(BCrypt.checkpw(oldPassword, this.password)) {
             this.setPassword(newPassword);
             return true;
@@ -192,155 +328,242 @@ public class User extends Model {
     }
 
     /**
-     * Setting password (used by doResetPassword)
+     * Set Password)
      * @param newPassword    asd
      */
     public void setPassword(String newPassword) {
         this.password = BCrypt.hashpw(newPassword, BCrypt.gensalt());
     }
 
-    /**
-     *
-     * @return asd
-     */
-    public Profile getProfile() {
-        return this.profile;
+    @JsonIgnore
+    public String getPassword() {
+        return password;
     }
 
-    /**
-     *
-     * @return asd
-     */
-    public String getEmail() {
-        return this.email;
+    @JsonIgnore
+    public Role getRole() {
+        return role;
     }
 
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @JsonProperty("roleID")
+    public long getRoleID() {
+        return this.role.getId();
+    }
+
+    @JsonProperty("roleName")
+    public String getRoleName() {
+        return this.role.getRoleName();
+    }
+
+    @JsonIgnore
     public String getEmailVerifyCode() {
         return this.emailVerifyCode;
     }
 
-    /**
-     *
-     * @param profile User Profile
-     */
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
-
-    /**
-     *
-     * @return returns the role of the user
-     */
-    public int getRole(){
-        return this.role;
-    }
-
-    /**
-     *
-     * @return returns true if the user is a student
-     */
-    public boolean isStudent() {
-        return this.isStudent;
-    }
-
-    /**
-     * This method updates the user
-     */
-    @Override
-    public void update() {
-        this.edited_at = new Date();
-
-        super.update();
-    }
-
-    //////////////////////////////////////////////////
-//  Actions Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @param id        User Identifier
-     * @param password  User password
-     * @param adminTool asd
-     * @return  asd
-     */
-    public static User validate(String id, String password, boolean adminTool) {
-
-
-        if(id == null || password == null) {
-            return null;
-        }
-        /*
-        if(id.charAt(0) == 'y'){
-            User user = getByY_ID(id);
-            // ToDo
-            // LDAP Magic
-        } else {
-            User user = getByEmail(id);
-            if (user != null && user.isStudent) {
-                // ToDO WE NEED THIS?
-                // LDAP Magic
-            } else if (user != null &&  BCrypt.checkpw(password, user.password)) {
-                if(adminTool && user.getRole() > ROLE_USER || !adminTool) {
-                    return user;
-                }
-            }
-        }
-           */
-        User user = dao.UserDAO.getByEmail(id);
-        if (user != null &&  BCrypt.checkpw(password, user.password)) {
-            if (adminTool && user.getRole() > ROLE_USER || !adminTool) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    /**
-     *  updates the isStudent flag
-     * @param user asd
-     * @return asd
-     */
-    public static boolean updateStudentState(User user) {
-        HMSAccessor hms = new HMSAccessor();
-        if (hms.identifyUser(user.getEmail())) {
-            user.isStudent = true;
-
-            user.y_id = hms.getResults().get("ynumber");
-            user.matNR = hms.getResults().get("matnumber");
-            return true;
-        }
-        return false;
-    }
-
-    public void setStudent() {
-        this.isStudent = true;
-    }
-
-    public void promote(int role) {
-        this.role = role;
-        this.save();
-        MailSender.getInstance().sendPromoteMail(this);
-    }
-
     public boolean isEmailVerified() {
-        return this.emailVerified;
+        return this.emailVerifyCode == null;
     }
 
     public void setEmailVerified() {
-        this.emailVerified = true;
         this.emailVerifyCode = null;
     }
 
-    public boolean isAdmin() {
-        return this.role == User.ROLE_ADMIN;
+    @JsonIgnore
+    public String getMatNR() {
+        return matNR;
     }
 
-    public void disable() {
-        this.isActive = false;
+    public void setMatNR(String matNR) {
+        this.matNR = matNR;
     }
 
-    public boolean isActive() {
-        return this.isActive;
+    @JsonIgnore
+    public String getYID() {
+        return yID;
+    }
+
+    public void setYID(String yID) {
+        this.yID = yID;
+    }
+
+    @JsonProperty("student")
+    public boolean isStudent() {
+        return (this.yID != null || this.matNR != null);
+    }
+
+    public void setStudent(boolean student) {
+        this.yID = UUID.randomUUID().toString();
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
+
+    public PlayerStats getPlayerStats() {
+        PlayerStats playerStats_sum = new PlayerStats();
+
+        playerStats_sum.add(this.playerStats);
+        playerStats_sum.add(this.avatar.getAttributes());
+
+        List<Scroll> scrollList = ScrollCollectionDAO.getActiveScrolls(this);
+
+        for(Scroll scroll : scrollList) {
+            playerStats_sum.add(scroll.getPlayerStats());
+        }
+
+        this.shopItems.stream().filter(ShopItem::isTypeBeltSlot).forEach(shopItem -> playerStats_sum.addBeltSlot());
+
+        if(this.isStoryDone()) {
+            playerStats_sum.add(new PlayerStats(0,0,0,0,1));
+        }
+        return playerStats_sum;
+    }
+
+    public void setPlayerStats(PlayerStats playerStats) {
+        this.playerStats = playerStats;
+    }
+
+    public boolean isStoryDone() {
+        return storyDone;
+    }
+
+    public void setStoryDone(boolean storyDone) {
+        this.storyDone = storyDone;
+    }
+
+    public boolean isTutorialDone() {
+        return tutorialDone;
+    }
+
+    public void setTutorialDone(boolean tutorialDone) {
+        this.tutorialDone = tutorialDone;
+    }
+
+    public void addShopItem(ShopItem item) {
+        shopItems.add(item);
+    }
+
+    @JsonIgnore
+    public List<ShopItem> getShopItems() {
+        return shopItems;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
+    }
+
+    public boolean setAvatar(Avatar avatar) {
+        boolean contains = false;
+        for(ShopItem shopItem : this.getShopItems()) {
+            if(shopItem.getAvatar().getId() == avatar.getId()) {
+                this.avatar = avatar;
+                contains = true;
+                break;
+            }
+        }
+
+        return contains;
+    }
+
+    public Scroll getCurrentScroll() {
+        return currentScroll;
+    }
+
+    public void setCurrentScroll(Scroll currentScroll) {
+        this.currentScroll = currentScroll;
+    }
+    @JsonIgnore
+    public StoryChallenge getCurrentStory() {
+        return currentStory;
+    }
+
+    public void setCurrentStory(StoryChallenge currentStory) {
+        this.currentStory = currentStory;
+    }
+
+    @JsonProperty("currentStory")
+    public String getCurrentStoryName() {
+        return (currentStory != null) ? currentStory.getName() : "";
+    }
+
+    @JsonIgnore
+    public TaskSet getCurrentTaskSet() {
+        return currentTaskSet;
+    }
+
+    public void setCurrentTaskSet(TaskSet currentTaskSet) {
+        this.currentTaskSet = currentTaskSet;
+    }
+
+    @JsonIgnore
+    public HomeWork getCurrentHomeWork() {
+        return currentHomeWork;
+    }
+
+    public void setCurrentHomeWork(HomeWork currentHomeWork) {
+        this.currentHomeWork = currentHomeWork;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(int depth) {
+        if(depth > this.depth) {
+            this.depth = depth;
+        }
+    }
+
+    public int getCoins() {
+        return coins;
+    }
+
+    public void setCoins(int coins) {
+        this.coins = coins;
+    }
+
+    public float getCoinScale() {
+        return coinScale;
+    }
+
+    public void setCoinScale(float coinScale) {
+        this.coinScale = coinScale;
+    }
+
+    public int getScrollLimit() {
+        return scrollLimit;
+    }
+
+    public void setScrollLimit(int scrollLimit) {
+        this.scrollLimit = scrollLimit;
+    }
+
+    public Score getScore() {
+        return score;
+    }
+
+    public void setScore(Score score) {
+        this.score = score;
+    }
+
+
+    public UserGroup getGroup() {
+        return group;
+    }
+
+    public void setGroup(UserGroup group) {
+        this.group = group;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
     }
 }

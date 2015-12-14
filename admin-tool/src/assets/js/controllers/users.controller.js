@@ -37,7 +37,6 @@ angular
         }
 
         $scope.promote = function(user, role) {
-            console.log(user);
             UserService.promoteUser(user.id, role).then(
                 function (result) {
                     initController();

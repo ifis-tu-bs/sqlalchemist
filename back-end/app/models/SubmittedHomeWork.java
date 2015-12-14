@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @Table(
         name = "submittedhomework",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"profile_id", "task_id", "home_work_id"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "task_id", "home_work_id"})
 )
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SubmittedHomeWork extends Model {
@@ -28,7 +28,7 @@ public class SubmittedHomeWork extends Model {
     private Long id;
 
     @ManyToOne
-    final Profile profile;
+    final User user;
 
     @ManyToOne
     final Task task;
@@ -53,11 +53,11 @@ public class SubmittedHomeWork extends Model {
 
 
     public SubmittedHomeWork (
-            Profile profile,
+            User user,
             Task task,
             HomeWork homeWork) {
 
-        this.profile = profile;
+        this.user = user;
         this.task = task;
         this.homeWork = homeWork;
         this.syntaxChecksDone = 0;
@@ -84,7 +84,7 @@ public class SubmittedHomeWork extends Model {
         objectNode.put("id", this.id);
         objectNode.put("statement", this.statement);
         objectNode.put("solve", this.solve);
-        objectNode.set("student", this.profile.getUser().toJson());
+        objectNode.set("student", this.user.toJsonUser());
         objectNode.put("task", this.task.getId());
 
         return objectNode;
@@ -127,6 +127,7 @@ public class SubmittedHomeWork extends Model {
     }
 
     public void submit(boolean solved, String statement) {
+        this.addSemanticCheck();
         this.solve = solved;
         this.statement = statement;
     }

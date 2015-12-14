@@ -23,22 +23,37 @@ angular
         var vm = this;
 
         $scope.orderReverse = false;
-        $scope.orderHomeWorkPredicate = 'name';
+        $scope.orderHomeworkPredicate = 'name';
         $scope.orderTaskSetPredicate = 'taskSetName';
         $scope.orderTaskPredicate  = 'id';
         $scope.orderSubmitPredicate   = 'student.matno';
         $scope.search = '';
 
-        var states = ['HomeWorkSelection', 'taskSetSelection', 'taskSelection', 'SubmitSelection', 'InspectSubmit'];
-        $scope.state = '';
+        $scope.clearStates = function() {
+            $scope.state.homeworkSelection = false;
+            $scope.state.studentSelection = false;
+            $scope.state.taskSetSelection = false;
+            $scope.state.taskSelection = false;
+            $scope.state.inspectSubmit = false;
+        };
+        $scope.state = {
+            homeworkSelection : true,
+            studentSelection : false,
+            taskSetSelection : false,
+            taskSelection : false,
+            inspectSubmit : false
+        };
+
 
         $scope.animationsEnabled = true;
 
         vm.homeworks = [];
+        vm.students = [];
         vm.taskSets = [];
         vm.tasks  = [];
         vm.submits   = [];
         $scope.selectedHomework = {};
+        $scope.selectedStudent = {};
         $scope.selectedTaskSet = {};
         $scope.selectedTask  = {};
         $scope.selectedSubmit   = {};
@@ -57,75 +72,73 @@ angular
             TaskService.getAllHomeworks().then(
                 function (result) {
                     vm.homeworks = result;
-                    getCurrentPath();
-                }, function (error) {
+                    console.log($scope.state);
+                },
+                function (error) {
                     FlashService.Error(result.message);
                 }
             );
         }
 
+        /* Landing in HomeworkSelection */
 
         $scope.selectHomework = function(homework) {
-            var index = findInArray(vm.homeworks, homework);
-            selectHomework(index);
-            $scope.state = 'taskSetSelection';
+            $scope.selectedHomework = vm.homeworks[findInArray(vm.homeworks, homework)];
+            vm.students = $scope.selectedHomework.students;
+            $scope.clearStates();
+            $scope.state.studentSelection = true;
         };
+
+        $scope.deselectToHomeworkSelection = function() {
+            $scope.selectedHomework = undefined;
+            $scope.clearStates();
+            $scope.state.homeworkSelection = true;
+        };
+
+        /* Landing in StudentSelection */
+
+        $scope.selectStudent = function(student) {
+            $scope.selectedStudent = vm.students[findInArray(vm.students, student)];
+            vm.taskSets = $scope.selectedStudent.taskSets;
+            $scope.clearStates();
+            $scope.state.taskSetSelection = true;
+        };
+
+        $scope.deselectToStudentSelection = function() {
+            $scope.selectedStudent = undefined;
+            $scope.clearStates();
+            $scope.state.studentSelection = true;
+        };
+
+        /* Landing in TaskSetSelection*/
 
         $scope.selectTaskSet = function(taskSet) {
-            var index = findInArray(vm.taskSets, taskSet);
-            selectTaskSet(index);
-            $scope.state = 'taskSelection';
+            $scope.selectedTaskSet = vm.taskSets[findInArray(vm.taskSets, taskSet)];
+            vm.tasks = $scope.selectedTaskSet.tasks.tasks;
+            $scope.clearStates();
+            $scope.state.taskSelection = true;
         };
 
-        $scope.selectTask = function(task){
-            var taskIndex = findInArray(vm.tasks, task);
-            selectTask(taskIndex).then(
-                function (result) {
-                    $scope.selectedTask = vm.tasks[taskIndex];
-                    vm.submits = result;
-                    $rootScope.Homework.selectedTask = $scope.selectedTask;
-                    $scope.state = 'SubmitSelection';
-                }, function (error) {
-                        FlashService.Error(result.message);
-                }
-            );
+        $scope.deselectToTaskSetSelection = function() {
+            $scope.selectedTaskSet = undefined;
+            $scope.clearStates();
+            $scope.state.taskSetSelection = true;
         };
 
-        $scope.selectSubmit = function (submit) {
-            var index = findInArray(vm.submits, submit);
-            selectSubmit(index);
+        /* Landing in SubmitInspection */
+
+        $scope.selectTask = function(task) {
+            $scope.selectedTask = vm.tasks[findInArray(vm.tasks, task)];
+            vm.submits = null;
+            $scope.clearStates();
+            $scope.state.inspectSubmit = true;
         };
 
-        function selectHomework (homeworkIndex) {
-            $scope.selectedHomework = vm.homeworks[homeworkIndex];
-            vm.taskSets = $scope.selectedHomework.taskSets;
-            $rootScope.Homework.selectedHomework = $scope.selectedHomework;
-            $scope.state = 'taskSetSelection';
-        }
-
-        function selectTaskSet (taskSetIndex) {
-            $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
-            vm.tasks = $scope.selectedTaskSet.tasks;
-            $rootScope.Homework.selectedTaskSet = $scope.selectedTaskSet;
-            $scope.state = 'taskSelection';
-        }
-
-
-        function selectTask (taskIndex) {
-            $scope.selectedTask = vm.tasks[taskIndex];
-
-            return TaskService.getSubmitsForTaskInHomeWork(
-                    $scope.selectedTask.id,
-                    $scope.selectedHomework.id);
-
-        }
-
-        function selectSubmit(SubmitIndex) {
-            $scope.state = 'InspectSubmit';
-            $scope.selectedSubmit = vm.submits[SubmitIndex];
-            $rootScope.Homework.selectedSubmit = $scope.selectedSubmit;
-            $scope.selectedTask.refStatement += " ";
-        }
+        $scope.deselectToTaskSelection = function() {
+            $scope.selectedTask = undefined;
+            $scope.clearStates();
+            $scope.state.taskSelection = true;
+        };
 
         //////////////////////////////777
         //  Path Functions (Changing STATES)
@@ -157,112 +170,35 @@ angular
             );
         };
 
-        $scope.goSelectHomework = function() {
-            $scope.selectedHomework = undefined;
-            $scope.selectedTaskSet = undefined;
-            $scope.selectedTask = undefined;
-            $scope.selectedSubmit = undefined;
-            vm.taskSets = undefined;
-            vm.tasks = undefined;
-            vm.submits = undefined;
-            $rootScope.Homework.selectedHomework = undefined;
-            $rootScope.Homework.selectedTaskSet = undefined;
-            $rootScope.Homework.selectedTask = undefined;
-            $rootScope.Homework.selectedSubmit = undefined;
-            getCurrentPath();
-        };
-
-        $scope.goSelectTaskSet = function() {
-            $scope.selectedTaskSet = undefined;
-            $scope.selectedTask = undefined;
-            $scope.selectedSubmit = undefined;
-            vm.tasks = undefined;
-            vm.submits = undefined;
-            $rootScope.Homework.selectedTaskSet = undefined;
-            $rootScope.Homework.selectedTask = undefined;
-            $rootScope.Homework.selectedSubmit = undefined;
-            getCurrentPath();
-        };
-
-        $scope.goSelectTask = function() {
-            $scope.selectedTask = undefined;
-            $scope.selectedSubmit = undefined;
-            vm.submits = undefined;
-            $rootScope.Homework.selectedTask = undefined;
-            $rootScope.Homework.selectedSubmit = undefined;
-            getCurrentPath();
-        };
-
-        $scope.goSelectSubmit = function() {
-            $scope.selectedSubmit = undefined;
-            $rootScope.Homework.selectedSubmit = undefined;
-            getCurrentPath();
-        };
-
         //////////////////////////////777
         //  Path Finding and Display organization
         //////////////////////////////777
 
-        function getCurrentPath () {
-            var path = $rootScope.Homework;
-
-            if (path.selectedHomework) {
-                selectHomework(findInArray(vm.homeworks, path.selectedHomework));
-
-                if (path.selectedTaskSet) {
-                    selectTaskSet(findInArray(vm.taskSets, path.selectedTaskSet));
-
-                    if (path.selectedTask) {
-                        selectTaskIndex = findInArray(vm.tasks, path.selectedTask);
-                        selectTask(selectTaskIndex).then(
-                            function (result) {
-                                $scope.selectedTask = vm.tasks[selectTaskIndex];
-                                vm.submits = result;
-                                $rootScope.Homework.selectedTask = $scope.selectedTask;
-
-                                if (path.selectSubmit) {
-                                    selectSubmit(findInArray(vm.submits, path.selectedSubmit));
-                                    $scope.state = 'InspectSubmit';
-                                } else {
-                                    $scope.state = 'SubmitSelection';
-                                }
-                            }, function (error) {
-                                FlashService.Error(result.message);
-                                $scope.state = 'taskSelection';
-                            }
-                        );
-                    } else {
-                        $scope.state = 'taskSelection';
-                    }
-                } else {
-                    $scope.state = 'taskSetSelection';
-                }
-            } else {
-                $scope.state = 'HomeWorkSelection';
-            }
-        }
-
         $scope.shouldIBeDisplayed = function(me) {
-            var answer = false;
-            for (var i = states.length; i >= 0; i--) {
-                answer |= states[i] === $scope.state;
-                if (states[i] === me) {
-                    break;
-                }
+            switch (me) {
+                case (1) : return true;
+                /* falls through */
+                case (2) : if ($scope.state.studentSelection) return true;
+                /* falls through */
+                case (3) : if ($scope.state.taskSetSelection) return true;
+                /* falls through */
+                case (4) : if ($scope.state.taskSelection) return true;
+                /* falls through */
+                case (5) : if ($scope.state.inspectSubmit) return true;
             }
-            return answer;
+            return false;
         };
 
-        $scope.prevSubmit = function() {
-            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
-            currentSpot = (currentSpot + vm.submits.length - 1) % vm.submits.length;
-            selectSubmit(currentSpot);
+        $scope.prevTask = function() {
+            var currentSpot = findInArray(vm.tasks, $scope.selectedTask);
+            currentSpot = (currentSpot + vm.tasks.length - 1) % vm.tasks.length;
+            $scope.selectTask(vm.tasks[currentSpot]);
         };
 
-        $scope.nextSubmit = function() {
-            var currentSpot = findInArray(vm.submits, $scope.selectedSubmit);
-            currentSpot = (currentSpot + 1) % vm.submits.length;
-            selectSubmit(currentSpot);
+        $scope.nextTask = function() {
+            var currentSpot = findInArray(vm.tasks, $scope.selectedTask);
+            currentSpot = (currentSpot + 1) % vm.tasks.length;
+            $scope.selectTask(vm.tasks[currentSpot]);
         };
 
         //////////////////////////////777
@@ -358,7 +294,7 @@ angular
 
         function findInArray(array, item) {
             for (var i = 0; i < array.length; i++) {
-                if (array[i].id === item.id) {
+                if (array[i].$$hashKey === item.$$hashKey) {
                     return i;
                 }
             }

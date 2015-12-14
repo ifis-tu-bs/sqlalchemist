@@ -18,7 +18,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class TaskSetView {
-    public static TaskSet fromJsonForm(Profile profile, JsonNode jsonNode) {
+    public static TaskSet fromJsonForm(User user, JsonNode jsonNode) {
         String                  taskSetName             = jsonNode.path("taskSetName").asText();
         JsonNode                tableDefinitionArray    = jsonNode.path("tableDefinitions");
         JsonNode                foreignKeyArray         = jsonNode.path("foreignKeyRelations");
@@ -38,11 +38,11 @@ public class TaskSetView {
             foreignKeyRelations.add(ForeignKeyRelationView.fromJsonForm(foreignKeyNode));
         }
 
-        taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, profile, isHomework);
+        taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, user, isHomework);
 
         for(int i = 0; i < taskArray.size(); i++) {
             JsonNode taskNode = taskArray.get(i);
-            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, profile);
+            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, user);
             task.setTaskSet(taskSet);
             tasks.add(task);
         }
@@ -58,7 +58,6 @@ public class TaskSetView {
         ArrayNode   foreignKeyRelationNode  = JsonNodeFactory.instance.arrayNode();
         ArrayNode   taskNode                = TaskView.toJsonList(taskSet.getTasks());
         Rating      rating                  = Rating.sum(taskSet.getRatings());
-        ArrayNode   commentNode             = JsonNodeFactory.instance.arrayNode();
 
 
         for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {
@@ -69,20 +68,16 @@ public class TaskSetView {
             foreignKeyRelationNode.add(ForeignKeyRelationView.toJson(foreignKeyRelation));
         }
 
-        for(Comment comment : taskSet.getComments()) {
-            commentNode.add(CommentView.toJson(comment));
-        }
-
         taskSetJson.put("id",                   taskSet.getId());
         taskSetJson.put("taskSetName",          taskSet.getTaskSetName());
         taskSetJson.set("tableDefinitions",     tableDefNode);
         taskSetJson.set("foreignKeyRelations",  foreignKeyRelationNode);
         taskSetJson.put("relationsFormatted",   taskSet.getRelationsFormatted());
         taskSetJson.set("tasks",                taskNode);
-        taskSetJson.set("creator",              taskSet.getCreator().toJson()); // ToDo
+        taskSetJson.set("creator",              taskSet.getCreator().toJsonProfile()); // ToDo
         taskSetJson.put("isHomeWork",           taskSet.isHomework());
         taskSetJson.set("rating",               RatingView.toJson(rating));
-        taskSetJson.set("comments",             commentNode);
+        taskSetJson.set("comments",             Json.toJson(taskSet.getComments()));
         taskSetJson.put("createdAt",            String.valueOf(taskSet.getCreatedAt()));
         taskSetJson.put("updatedAt",            String.valueOf(taskSet.getUpdatedAt()));
 

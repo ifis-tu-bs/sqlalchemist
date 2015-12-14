@@ -4,9 +4,8 @@ import dao.*;
 
 import models.*;
 
-import secured.CreatorSecured;
-import secured.UserSecured;
-
+import play.libs.Json;
+import secured.UserAuthenticator;
 import view.CommentView;
 import view.RatingView;
 import view.TaskView;
@@ -23,7 +22,7 @@ import java.util.List;
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(UserSecured.class)
+@Security.Authenticated(UserAuthenticator.class)
 public class TaskController extends Controller {
 
     /**
@@ -32,9 +31,8 @@ public class TaskController extends Controller {
      * @param taskSetId     the id of the taskSet
      * @return              returns an redirection to the new task
      */
-    @Security.Authenticated(CreatorSecured.class)
     public Result create(Long taskSetId) {
-        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        User        user        = UserDAO.getBySession(request().username());
         JsonNode    taskNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(taskSetId);
         if(taskSet == null) {
@@ -42,7 +40,7 @@ public class TaskController extends Controller {
             return badRequest("cannot find TaskSet");
         }
         String      taskName    = taskSet.getTaskSetName() + "" + taskSet.getTasks().size();
-        Task        task        = TaskView.fromJsonForm(taskNode, taskName, profile);
+        Task        task        = TaskView.fromJsonForm(taskNode, taskName, user);
 
         if(task == null) {
             Logger.warn("TaskController.create - invalid json");
@@ -92,9 +90,8 @@ public class TaskController extends Controller {
         return ok(TaskView.toJson(task));
     }
 
-    @Security.Authenticated(CreatorSecured.class)
     public Result update(Long taskId) {
-        Profile     profile     = ProfileDAO.getByUsername(request().username());
+        User        user        = UserDAO.getBySession(request().username());
         Task        task        = TaskDAO.getById(taskId);
 
         if(task == null) {
@@ -102,7 +99,7 @@ public class TaskController extends Controller {
             return badRequest("cannot find Task");
         }
         JsonNode    taskNode    = request().body().asJson();
-        Task        taskNew     = TaskView.fromJsonForm(taskNode, "", profile);
+        Task        taskNew     = TaskView.fromJsonForm(taskNode, "", user);
 
         task.setTaskName(taskNew.getTaskName());
         task.setTaskText(taskNew.getTaskText());
@@ -118,7 +115,6 @@ public class TaskController extends Controller {
         return redirect(routes.TaskController.view(task.getId()));
     }
 
-    @Security.Authenticated(CreatorSecured.class)
     public Result delete(Long taskId) {
         Task task = TaskDAO.getById(taskId);
 
@@ -140,10 +136,10 @@ public class TaskController extends Controller {
      * @return      returns a http code with a result of the operation
      */
     public Result rate(Long id) {
-        JsonNode body       = request().body().asJson();
-        Task task           = TaskDAO.getById(id);
-        Profile profile     = ProfileDAO.getByUsername(request().username());
-        Rating rating       = RatingView.fromJsonForm(body, profile);
+        JsonNode    body        = request().body().asJson();
+        Task        task        = TaskDAO.getById(id);
+        User        user        = UserDAO.getBySession(request().username());
+        Rating      rating      = RatingView.fromJsonForm(body, user);
 
         if (task == null) {
             Logger.warn("TaskController.rate("+id+") - no Task found");
@@ -180,10 +176,10 @@ public class TaskController extends Controller {
      * @return      returns a http code with a result message
      */
     public Result comment(Long id) {
-        Profile     profile = ProfileDAO.getByUsername(request().username());
+        User        user        = UserDAO.getBySession(request().username());
         JsonNode    body    = request().body().asJson();
         Task        task    = TaskDAO.getById(id);
-        Comment     comment  = CommentView.fromJsonForm(body, profile);
+        Comment     comment  = CommentView.fromJsonForm(body, user);
 
         if (task == null) {
             Logger.warn("TaskController.comment("+id+") - no Task found");
@@ -197,6 +193,6 @@ public class TaskController extends Controller {
 
         task.addComment(comment);
         task.update();
-        return ok(CommentView.toJson(comment));
+        return ok(Json.toJson(comment));
     }
 }

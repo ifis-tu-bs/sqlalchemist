@@ -3,9 +3,10 @@ package dao;
 import helper.SimpleText;
 
 import models.Map;
-import models.Profile;
+
 import models.StoryChallenge;
 
+import models.User;
 import play.Logger;
 
 import javax.persistence.PersistenceException;
@@ -60,19 +61,19 @@ public class StoryChallengeDAO {
   //////////////////////////////////////////////////
   //  Object Getter Methods
   //////////////////////////////////////////////////
-      public static StoryChallenge getForProfile(Profile profile) {
+      public static StoryChallenge getForUser(User user) {
           StoryChallenge challenge;
-          if (!profile.isTutorialDone()) {
+          if (!user.isTutorialDone()) {
               challenge = StoryChallenge.find.where().eq("isTutorial", true).findList().get(0);
-              profile.setCurrentStory(challenge);
+              user.setCurrentStory(challenge);
           } else {
-              challenge = profile.getCurrentStory();
+              challenge = user.getCurrentStory();
           }
 
 
-          profile.update();
+          user.update();
           if(challenge != null)
-              challenge.setProfile(profile);
+              challenge.setUser(user);
 
           return challenge;
       }
