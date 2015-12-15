@@ -1,0 +1,102 @@
+
+<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message" style="float:left;width:68%"></div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th style="border-right: 2px solid #BBB">
+                Name
+            </th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Own TaskSets</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Foreign TaskSets</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Own Tasks</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Foreign Tasks</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Homeworks</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Roles</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Groups</th>
+            <th colspan=4 style="border-right: 2px solid #BBB">Users</th>
+            <th colspan=2>Save / Delete</th>
+        </tr>
+        <tr>
+        <th style="border-right: 2px solid #BBB"></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th><span uib-tooltip="Create">C</span></th>
+        <th><span uib-tooltip="Read">R</span></th>
+        <th><span uib-tooltip="Update">U</span></th>
+        <th style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="role in vm.roles">
+            <td style="border-right: 2px solid #BBB"><input type="text" ng-model="role.roleName" style="width:10em"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskSetPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskSetPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskSetPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.ownTaskSetPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskSetPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskSetPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskSetPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.ownTaskPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.ownTaskPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.foreignTaskPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.foreignTaskPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.homeworkPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.homeworkPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.homeworkPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.homeworkPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.rolePermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.rolePermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.rolePermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.rolePermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.groupPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.groupPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.groupPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.groupPermissions.delete"></td>
+            <td><input type="checkbox" ng-model="role.userPermissions.create"></td>
+            <td><input type="checkbox" ng-model="role.userPermissions.read"></td>
+            <td><input type="checkbox" ng-model="role.userPermissions.update"></td>
+            <td style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.userPermissions.delete"></td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-info btn-xs" ng-click="saveRole(role); $event.stopPropagation();" style="font-size:11pt">Save</button>
+                    <button type="button" ng-enabled="role.deletable" class="btn btn-danger btn-xs" ng-click="deleteRole(role); $event.stopPropagation();" style="font-size: 11pt;float:right">Delete</button>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="33"><button class="btn btn-small btn-primary" ng-click="pushNewRole();">New...</button></td>
+        </tr>
+    </tbody>
+</table>

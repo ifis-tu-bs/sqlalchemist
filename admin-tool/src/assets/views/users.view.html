@@ -18,23 +18,30 @@
     <thead>
       <tr>
         <th ng-click="orderPredicate = 'role'; orderReverse = !orderReverse" style="cursor: pointer">Role</th>
-        <th ng-click="orderPredicate = 'profile.solvedSQL'; orderReverse = !orderReverse" style="cursor: pointer">Statements solved</th>
-        <th ng-click="orderPredicate = 'profile.quote'; orderReverse = !orderReverse" style="cursor: pointer">Success rate</th>
+        <th ng-click="orderPredicate = 'student'; orderReverse = !orderReverse" style="cursor: pointer">Student</th>
+        <th ng-click="orderPredicate = 'score.solvedSQL'; orderReverse = !orderReverse" style="cursor: pointer">Statements solved</th>
+        <th ng-click="orderPredicate = 'score.doneSQL'; orderReverse = !orderReverse" style="cursor: pointer">Statements done</th>
+        <th ng-click="orderPredicate = 'score.successRate'; orderReverse = !orderReverse" style="cursor: pointer">Success rate</th>
         <th ng-click="orderPredicate = 'email'; orderReverse = !orderReverse" style="cursor: pointer">Email</th>
         <th>Change role to...</th>
         </tr>
     </thead>
     <tbody>
       <tr ng-repeat="user in vm.users | orderBy:orderPredicate:orderReverse | filter:search">
-        <td>{{user.role}}</td>
-        <td style="text-align: right">{{user.profile.solvedSQL}}</td>
-        <td style="text-align: right">{{user.profile.quote}}</td>
+        <td>{{user.roleName}}</td>
+        <td><input type="checkbox" disabled ng-model="user.student"></td>
+        <td style="text-align: right">{{ user.score.solvedSQL }}</td>
+        <td style="text-align: right">{{ user.score.doneSQL }}</td>
+        <td style="text-align: right">{{ user.score.successRate }}</td>
         <td>{{user.email}}</td>
         <td>
-          <div class="btn-group" role="group" style="text-align: center">
-            <button type="button" class="btn btn-default" ng-click="promote(user, 1)">User</button>
-            <button type="button" class="btn btn-default" ng-click="promote(user, 2)">Creator</button>
-            <button type="button" class="btn btn-default" ng-click="promote(user, 3)">Admin</button>
+          <div class="btn-group" uib-dropdown is-open="taskPointsDropDownStatus">
+            <button type="button" class="btn btn-default btn-small" uib-dropdown-toggle ng-click="$event.stopPropagation();">
+              {{ user.roleName }} <span class="caret"></span>
+            </button>
+            <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskPointsDropDownStatus = !taskPointsDropDownStatus">
+              <li role="menuitem" ng-click="user.roleID = role.id; user.roleName = role.roleName; promote(user);" ng-repeat="role in vm.roles" style="cursor:pointer"> {{ role.roleName }} </li>
+            </ul>
           </div>
         </td>
       </tr>

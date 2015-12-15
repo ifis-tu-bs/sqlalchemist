@@ -15,16 +15,31 @@ angular
     function UsersController($scope, UserService, FlashService, $filter) {
         var vm = this;
         vm.users = [];
+        vm.roles = [];
 
         $scope.search = '';
         $scope.orderReverse = false;
         $scope.orderPredicate = 'email';
 
-        initController();
+        console.log(UserService.getAllRoles);
 
         function initController() {
             getAllUsers();
+            $scope.getAllRoles();
         }
+
+
+        $scope.getAllRoles = function() {
+            UserService.getAllRoles().then(
+                function (data) {
+                    vm.roles = data;
+                },
+                function (error) {
+                    console.log(error);
+                    FlashService.Error(error);
+                }
+            );
+        };
 
         function getAllUsers() {
             UserService.getAllUsers().then(
@@ -36,8 +51,8 @@ angular
             );
         }
 
-        $scope.promote = function(user, role) {
-            UserService.promoteUser(user.id, role).then(
+        $scope.promote = function(user) {
+            UserService.promoteUser(user).then(
                 function (result) {
                     initController();
                 }, function (error) {
@@ -45,6 +60,8 @@ angular
                 }
             );
         };
+
+        initController();
 
         //////////////////////////////777
         //  Array functions

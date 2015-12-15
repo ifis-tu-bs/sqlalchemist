@@ -64,6 +64,14 @@
                 controllerAs: 'vm'
             })
 
+            .when('/roles', {
+                controller: 'RoleController',
+                templateUrl: 'assets/views/role.view.html',
+                controllerAs: 'vm',
+                name: 'Roles',
+                see: true
+            })
+
             .otherwise({ redirectTo: '/' });
     }
 
