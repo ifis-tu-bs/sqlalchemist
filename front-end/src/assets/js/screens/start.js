@@ -25,6 +25,8 @@ game.StartScreen = me.ScreenObject.extend({
             }
         });
 
+        var notificationElement = new game.fdom.NotificationElement(rootContainer, "Failed", "Nice Error Message");
+        me.game.world.addChild(notificationElement);
 
         var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
         titleBanner.hide();
