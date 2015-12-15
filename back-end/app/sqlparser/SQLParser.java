@@ -79,24 +79,25 @@ public class SQLParser {
 
         SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
 
-        if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
+
+        if(refStatementResult.size() != userStatementResult.size()) {
+            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to less rows");
+        } else if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
+            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to less columns");
+        } else if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);
             } else {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "Error");
+                result = new SQLResult(task, SQLResult.SEMANTICS, "your result set is not equal to the asked one, maybe the order is incorrect ?");
             }
         } else {
             Set<Set<String>> refStatementSetSet = toSetSet(refStatementResult);
             Set<Set<String>> userStatementSetSet = toSetSet(userStatementResult);
 
-            if(refStatementResult.size() != userStatementResult.size()) {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less rows");
-            } else if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "to much or to less columns");
-            } else if(refStatementSetSet.equals(userStatementSetSet)) {
+            if(refStatementSetSet.equals(userStatementSetSet)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);
             } else {
-                result = new SQLResult(task, SQLResult.SEMANTICS, "Error");
+                result = new SQLResult(task, SQLResult.SEMANTICS, "your result set is not equal to the asked one");
             }
         }
 

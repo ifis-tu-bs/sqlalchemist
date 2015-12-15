@@ -43,7 +43,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         me.game.world.addChild(settingsMusic);
 
         $(settingsMusic.getNode()).on('click', function() {
-            console.log("music");
             if(settingsMusic.isChecked()) {
                 game.data.music = true;
                 game.data.musicAlreadyPlaying = true;
@@ -56,7 +55,6 @@ game.SettingsScreen = me.ScreenObject.extend({
         });
 
         $(settingsSound.getNode()).on('click', function() {
-            console.log("sound");
             if(settingsSound.isChecked()) {
                 game.data.sound = true;
                 me.audio.play("cling", false, null, game.data.soundVolume);
