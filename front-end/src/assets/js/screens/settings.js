@@ -13,6 +13,8 @@ game.SettingsScreen = me.ScreenObject.extend({
         var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
             $(rootContainer.getNode()).fadeOut(100);
             var settingsData = { music: settingsMusic.isChecked(), sound: settingsSound.isChecked()};
+            game.data.user.settings.music = settingsMusic.isChecked();
+            game.data.user.settings.sound = settingsSound.isChecked();
             ajaxUpdateUser(game.data.user.username, JSON.stringify({settings: settingsData}), function(xmlHttpRequest) {
                 var user = JSON.parse(xmlHttpRequest.responseText);
 
@@ -39,6 +41,29 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var settingsMusic = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','60%', '', 'CheckBox SettingsScreen Music');
         me.game.world.addChild(settingsMusic);
+
+        $(settingsMusic.getNode()).on('click', function() {
+            console.log("music");
+            if(settingsMusic.isChecked()) {
+                game.data.music = true;
+                game.data.musicAlreadyPlaying = true;
+                me.audio.playTrack("Menu",game.data.musicVolume);
+            } else {
+                game.data.music = false;
+                game.data.musicAlreadyPlaying = false;
+                me.audio.stopTrack();
+            }
+        });
+
+        $(settingsSound.getNode()).on('click', function() {
+            console.log("sound");
+            if(settingsSound.isChecked()) {
+                game.data.sound = true;
+                me.audio.play("cling", false, null, game.data.soundVolume);
+            } else {
+                game.data.sound = false;
+            }
+        });
 
         if(game.data.user.settings.sound) {
             $(settingsSound.getNode()).addClass('Checked');
@@ -73,6 +98,32 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '70%','10%','15%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
         me.game.world.addChild(defaultContainerViewTitle);
+
+        var keyBindingsTable = new game.fdom.ContainerElement(defaultContainer, "50%", "33%", "25%", "25%", "Table SettingsScreen");
+        me.game.world.addChild(keyBindingsTable);
+
+        // Create Table;
+        keyBindingsTableRaw = [
+            ["music toggle",    "m"],
+            ["sound toggle",    "n"],
+            ["leave dungeon",   "esc"],
+            ["jump",            "space"],
+            ["use potion",      "num[1-7]"]
+
+        ];
+
+        var tableElement = document.createElement("table");
+        keyBindingsTable.getNode().appendChild(tableElement);
+
+        for (var i = 0; i < keyBindingsTableRaw.length; i++) {
+            var rowElement = document.createElement("tr");
+            tableElement.appendChild(rowElement);
+            for (var j = 0; j < keyBindingsTableRaw[i].length; j++) {
+                var colElement = document.createElement("td");
+                rowElement.appendChild(colElement);
+                $(colElement).text(keyBindingsTableRaw[i][j]);
+            }
+        }
 
         var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','75%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
             if(game.data.user.student) {

@@ -76,6 +76,17 @@
     background-image: url('/assets/data/img/gui/parchment.png');
 }
 
+.Table {
+    position: absolute;
+}
+
+.Table table{
+    height: 100%;
+    width: 100%;
+    color: black;
+    font-size: 4vh;
+}
+
 .Title {
     position: absolute;
     text-align: center;
@@ -166,6 +177,10 @@
 
 .CheckBox.SettingsScreen.Music.Checked {
     background-image: url('/assets/data/img/buttons/ButtonsMusic.png');
+}
+
+.Table.SettingsScreen {
+
 }
 
 .Title.SettingsScreen {
