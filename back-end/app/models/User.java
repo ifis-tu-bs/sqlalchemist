@@ -102,10 +102,10 @@ public class User extends Model {
     @OneToMany(mappedBy = "creator")
     private List<Comment>               comments;
 
-    private int                         votes;
-
     private boolean                     isActive;
 
+    @ManyToOne
+    private UserGroup group;
 
     private final Calendar createdAt;
 
@@ -162,10 +162,6 @@ public class User extends Model {
 
         this.score          = new Score();
 
-
-
-
-        votes               = 1;
         isActive            = true;
         createdAt = Calendar.getInstance();
     }
@@ -353,7 +349,12 @@ public class User extends Model {
         this.role = role;
     }
 
-    @JsonProperty("role")
+    @JsonProperty("roleID")
+    public long getRoleID() {
+        return this.role.getId();
+    }
+
+    @JsonProperty("roleName")
     public String getRoleName() {
         return this.role.getRoleName();
     }
@@ -554,13 +555,15 @@ public class User extends Model {
     }
 
 
-
-
-    public int getVotes() {
-        return votes;
+    public UserGroup getGroup() {
+        return group;
     }
 
-    public void setVotes(int votes) {
-        this.votes = votes;
+    public void setGroup(UserGroup group) {
+        this.group = group;
+    }
+
+    public Calendar getCreatedAt() {
+        return createdAt;
     }
 }

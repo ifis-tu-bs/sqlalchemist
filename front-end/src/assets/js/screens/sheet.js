@@ -51,6 +51,8 @@ game.SheetScreen = me.ScreenObject.extend({
         me.game.world.addChild(sheetAttribute);
         me.game.world.addChild(sheetValues);
         me.game.world.addChild(sheetName);
+
+        var repaint = false;
         /**
          * Ajax-Call to get the characters stats.
          * @param xmlHttpRequest: contains the characterState
@@ -93,23 +95,36 @@ game.SheetScreen = me.ScreenObject.extend({
              * The position of the avatars need to be set differently. If the current avatar is a team or not.
              */
              var avatar;
-            if (!team) {
-                avatar1.hide();
+            if(!repaint){
+                repaint = true;
                 avatar1 = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
-
-                avatar1.display();
-                avatar2.hide();
-                avatar1.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                me.game.world.addChild(avatar1);
-            } else {
-                avatar2.hide();
                 avatar2 = new game.BackgroundElement('avatar2', 6.363636, 8.33333, 46.212121, 16.927083, 'none');
 
-                avatar2.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
-                avatar2.display();
-                avatar1.hide();
+                if (!team) {
+
+                    avatar1.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    avatar1.display();
+                } else {
+
+                    avatar2.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
+                    avatar2.display();
+                }
+                me.game.world.addChild(avatar1);
                 me.game.world.addChild(avatar2);
+            }else{
+                if (!team) {
+
+                    avatar2.hide();
+                    $("#avatar1 #skin").attr("src","assets/data/img/avatare/" + filename + "_front.png");
+                    avatar1.display();
+                } else {
+
+                    avatar1.hide();
+                    $("#avatar2 #skin").attr("src","assets/data/img/avatare/" + filename + "_front.png");
+                    avatar2.display();
+                }
             }
+
         }
         ajaxSendChallengeStoryRequest(getStats);
 

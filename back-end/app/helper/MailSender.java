@@ -76,13 +76,13 @@ public class MailSender {
             message.setFrom(new InternetAddress("thesqlalchemist@ifis.cs.tu-bs.de"));
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(email));
-            message.setSubject("Verify your Email for theSQLalchemist");
+            message.setSubject("Verify your Email for the SQLalchemist");
             message.setText("" +
                     "Dear User\n" +
                     "\n" +
-                    "Thanks for registering at theSQLalchemist.\n" +
+                    "Thanks for registering at the SQLalchemist.\n" +
                     "Please verify your Email address by following the given link:\n" +
-                    "http://sqlalchemist.ifis.cs.tu-bs.de/users/verify/" + verifyString + "\n" +
+                    "http://sqlalchemist.ifis.cs.tu-bs.de/API/Validate/Email/" + verifyString + "\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
                     "\n" +
@@ -122,8 +122,8 @@ public class MailSender {
             message.setText("" +
                     "Dear User\n" +
                     "\n" +
-                    "Here is your password reset link for the SQL Alchemist.\n" +
-                    "If you did not order a reset simply ignore this Mail!\n" +
+                    "Here is your password new password for the SQL Alchemist.\n" +
+                    "If you did not order a new password please send us a mail to: sqlalchemist@ifis.cs.tu-bs,de !\n" +
                     "Your new password is: " + newPassword + ", please change it\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
@@ -180,40 +180,4 @@ public class MailSender {
             e.printStackTrace();
         }
     }
-
-
-    public void sendPasswordChanged(String email) {
-        Session session = Session.getInstance(this.props,
-                new javax.mail.Authenticator() {
-                    protected PasswordAuthentication getPasswordAuthentication() {
-                        return new PasswordAuthentication(
-                                MailSender.this.props.getProperty("username"),
-                                MailSender.this.props.getProperty("password")
-                        );
-                    }
-                });
-
-        try {
-            Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("thesqlalchemist@ifis.cs.tu-bs.de"));
-            message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(email));
-            message.setSubject("Reset your Password for SQL-Alchemist");
-            message.setText("" +
-                    "Dear User\n" +
-                    "\n" +
-                    "Your Password for theSQLalchemist has been changed.\n" +
-                    "\n" +
-                    "Have fun training your SQL skills.\n" +
-                    "\n" +
-                    "Greetings, your SQLalchemist Admin\n" +
-                    "");
-
-            Transport.send(message);
-
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
-
 }

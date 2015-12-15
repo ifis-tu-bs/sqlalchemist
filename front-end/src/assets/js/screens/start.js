@@ -3,7 +3,6 @@
  */
 game.StartScreen = me.ScreenObject.extend({
     onResetEvent: function() {
-        //var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/title_screen.png');
         var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
         me.game.world.addChild(rootContainer);
         var isSignedIn = false;
@@ -14,10 +13,16 @@ game.StartScreen = me.ScreenObject.extend({
                 return;
             }
             var session = JSON.parse(xmlHttpRequest.responseText);
+            game.data.session = session;
             if(session.owner !== "") {
                 isSignedIn = true;
+                ajaxGetUser(game.data.session.owner, function(xmlHttpRequest) {
+                    if(xmlHttpRequest.status == 200) {
+                        var user = JSON.parse(xmlHttpRequest.responseText);
+                        game.data.user = user;
+                    }
+                });
             }
-            console.log(session);
         });
 
 

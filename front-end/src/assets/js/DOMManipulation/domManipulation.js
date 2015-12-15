@@ -1122,15 +1122,14 @@ game.fdom.ImageElement = me.Renderable.extend({
 });
 
 game.fdom.CheckBoxElement = me.Renderable.extend({
-    init: function(parent, width, height, left, top, text, className, action) {
+    init: function(parent, width, height, left, top, text, className) {
         this.parent             = parent.getNode();
-        this.elem               = document.createElement('input');
+        this.elem               = document.createElement('div');
         this.elem.className     = className;
         this.elem.innerHTML     = text;
-        this.elem.type="checkbox";
 
-        $(this.elem).on('click', function() {
-            action();
+        $(this.elem).click( function() {
+            $(this).toggleClass('Checked');
         });
 
         this.elem.style.width       = width;
@@ -1149,6 +1148,9 @@ game.fdom.CheckBoxElement = me.Renderable.extend({
     },
     hide: function() {
         this.elem.style.display = "none";
+    },
+    isChecked: function() {
+        return this.elem.classList.contains("Checked");
     },
     destroy : function () {
         // remove element

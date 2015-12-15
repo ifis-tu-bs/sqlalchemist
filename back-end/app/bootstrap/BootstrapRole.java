@@ -24,10 +24,11 @@ public class BootstrapRole {
             admin.setForeignTaskPermissions(PermissionRules.getFullControl());
             admin.setHomeworkPermissions(PermissionRules.getFullControl());
             admin.setRolePermissions(PermissionRules.getFullControl());
+            admin.setGroupPermissions(PermissionRules.getFullControl());
             admin.setUserPermissions(PermissionRules.getFullControl());
             admin.setDeletable(false);
             admin.setCreator(null);
-
+            admin.setVotes(200);
             admin.save();
 
             // Create HiWi
@@ -40,9 +41,11 @@ public class BootstrapRole {
             hiWi.setForeignTaskPermissions(PermissionRules.getFullControl());
             hiWi.setHomeworkPermissions(PermissionRules.getReadControl());
             hiWi.setRolePermissions(PermissionRules.getNoControl());
+            hiWi.setGroupPermissions(PermissionRules.getFullControl());
             hiWi.setUserPermissions(PermissionRules.getReadControl());
             hiWi.setDeletable(false);
             hiWi.setCreator(null);
+            hiWi.setVotes(100);
             hiWi.save();
 
             // Create Creator
@@ -58,6 +61,7 @@ public class BootstrapRole {
             creator.setUserPermissions(PermissionRules.getNoControl());
             creator.setDeletable(false);
             creator.setCreator(null);
+            creator.setVotes(2);
             creator.save();
 
             // Create User
@@ -73,6 +77,7 @@ public class BootstrapRole {
             user.setUserPermissions(PermissionRules.getNoControl());
             user.setDeletable(false);
             user.setCreator(null);
+            user.setVotes(1);
             user.save();
 
             Logger.info("Done Initializing");

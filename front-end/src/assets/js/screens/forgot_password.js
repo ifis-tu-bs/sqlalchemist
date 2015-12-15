@@ -14,7 +14,7 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form PasswordResetScreen', function() {
             $(formEmailInputField.getNode()).removeClass("invalid");
             var resetPasswordData = JSON.stringify({ email: formEmailInputField.getNode().value });
-            ajaxSendUsersResetPasswordRequest(resetPasswordData, function(xmlHttpRequest) {
+            ajaxCreatePasswordResetRequest(resetPasswordData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 200) {
                     $(parchment.getNode()).fadeOut(100);
                     setTimeout(function() {

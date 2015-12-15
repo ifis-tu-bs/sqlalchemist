@@ -39,10 +39,9 @@ game.SignUpScreen = me.ScreenObject.extend({
                 username: username,
                 password: password
             });
-            ajaxSendSignupRequest(signUpData, function(xmlHttpRequest) {
+            ajaxCreateUser(signUpData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
-                    console.log(errorMessage);
                     if(typeof errorMessage.email !== 'undefined') {
                         $(formEmailInputField.getNode()).addClass("invalid");
                     }
@@ -54,13 +53,15 @@ game.SignUpScreen = me.ScreenObject.extend({
                         $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                     }
                 } else if(xmlHttpRequest.status == 200) {
+                    var user = JSON.parse(xmlHttpRequest.responseText);
+                    game.data.user = user;
+                    game.data.session.owner = user.username;
                     $(rootContainer.getNode()).fadeOut(100);
                     setTimeout(function() {
                         me.state.change(me.state.MENU);
                     }, 50);
                 }
             });
-            console.log("SignUp");
         });
         me.game.world.addChild(signUpForm);
 
