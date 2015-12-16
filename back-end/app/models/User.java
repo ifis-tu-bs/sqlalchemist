@@ -5,10 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import dao.InventoryDAO;
-import dao.ScrollCollectionDAO;
-import dao.ShopItemDAO;
-import dao.StoryChallengeDAO;
+import dao.*;
 import helper.MailSender;
 
 import com.avaje.ebean.Model;
@@ -17,6 +14,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import helper.Random;
 import org.mindrot.jbcrypt.BCrypt;
 
+import play.Logger;
 import play.Play;
 import play.libs.Json;
 import service.ServiceUser;
@@ -340,7 +338,6 @@ public class User extends Model {
         return password;
     }
 
-    @JsonIgnore
     public Role getRole() {
         return role;
     }
@@ -355,12 +352,9 @@ public class User extends Model {
     }
 
     public void setRoleID(long id) {
-        
-    }
-
-    @JsonProperty("roleName")
-    public String getRoleName() {
-        return this.role.getRoleName();
+        Logger.info("Test");
+        Role role = RoleDAO.getById(id);
+        this.setRole(role);
     }
 
     @JsonIgnore
