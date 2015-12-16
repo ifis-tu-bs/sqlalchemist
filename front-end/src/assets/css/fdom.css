@@ -6,7 +6,7 @@
 }
 
 .Container {
-    position: relative;
+    position: absolute;
 }
 
 .Image {
@@ -58,42 +58,15 @@
     color: black;
 }
 
-.Button.SettingsScreen.Back {
-    background: url('/assets/data/img/buttons/back_button_ink.png');
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: contain;
-}
-
-.Button.SettingsScreen.Back:hover {
-    filter: contrast(150%) brightness(150%);
-    -webkit-filter: brightness(150%) contrast(150%);
-}
-
 .CheckBox {
     position: absolute;
-    -webkit-appearance: initial;
     background-position: center;
     background-repeat: no-repeat;
     background-size: contain;
+    outline: none;
+    border: none;
 }
 
-
-.CheckBox.SettingsScreen.Sound {
-    background-image: url('/assets/data/img/buttons/ButtonsSoundOff.png');
-}
-
-.CheckBox.SettingsScreen.Sound:checked {
-    background-image: url('/assets/data/img/buttons/ButtonsSound.png');
-}
-
-.CheckBox.SettingsScreen.Music {
-    background-image: url('/assets/data/img/buttons/ButtonsMusicOff.png');
-}
-
-.CheckBox.SettingsScreen.Music:checked {
-    background-image: url('/assets/data/img/buttons/ButtonsMusic.png');
-}
 
 .StartScreen.Parchment {
     position: absolute;
@@ -101,6 +74,55 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-image: url('/assets/data/img/gui/parchment.png');
+}
+
+div.NotificationElement {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    height: 28%;
+    width: 41%;
+    background-image: url('/assets/data/img/gui/tutorial_box.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 1% 2%;
+    color: black;
+}
+
+p.Notification.Title {
+    position: initial;
+}
+
+p.Notification.Body {
+    font-size: 6vh;
+}
+
+.Notification.ExitButton {
+    position: absolute;
+    top: 6%;
+    right: 5%;
+    height: 20%;
+    width: 8%;
+    background: url('/assets/data/img/buttons/cross.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+
+.Notification.ExitButton:hover {
+    filter: contrast(150%) brightness(150%);
+    -webkit-filter: brightness(150%) contrast(150%);
+}
+
+.Table {
+    position: absolute;
+}
+
+.Table table{
+    height: 100%;
+    width: 100%;
+    color: black;
+    font-size: 4vh;
 }
 
 .Title {
@@ -113,19 +135,9 @@
     cursor: default;
 }
 
-.Title.SettingsScreen {
-    color: white;
-}
-
 .Text {
     position: absolute;
 }
-
-.Text.SettingsScreen {
-    font-size: 6vh;
-    color:black;
-}
-
 .InputField ,.InputPasswordField, .InputField:focus, .InputPasswordField:focus {
     color: black;
     position: absolute;
@@ -143,4 +155,98 @@
 
 .InputField.invalid, .InputPasswordField.invalid {
     border: solid 1px red;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Settings Screen */
+/* -------------------------------------------------------------------------- */
+
+.Button.SettingsScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.SettingsScreen.Menu {
+    font-size: 4vh;
+    border: solid 2px #919191;
+    border-radius: 60px;
+}
+
+.Button.SettingsScreen.Menu:hover {
+    color: white;
+    background: #919191;
+}
+
+.Button.SettingsScreen.Back:hover {
+    filter: contrast(150%) brightness(150%);
+    -webkit-filter: brightness(150%) contrast(150%);
+}
+
+.Button.SettingsScreen.VerifyButton {
+    border: solid 2px #919191;
+    border-radius: 40px;
+    font-size: 3vh;
+}
+
+.Button.SettingsScreen.VerifyButton:hover {
+    color: white;
+    background: #919191;
+}
+
+.Button.SettingsScreen.VerifyButton.Verified, .Button.SettingsScreen.VerifyButton.Verified:hover {
+    border-color: green;
+    color: white;
+    background: green;
+}
+
+.CheckBox.SettingsScreen.Sound {
+    background-image: url('/assets/data/img/buttons/ButtonsSoundOff.png');
+}
+
+.CheckBox.SettingsScreen.Sound.Checked {
+    background-image: url('/assets/data/img/buttons/ButtonsSound.png');
+}
+
+.CheckBox.SettingsScreen.Music {
+    background-image: url('/assets/data/img/buttons/ButtonsMusicOff.png');
+}
+
+.CheckBox.SettingsScreen.Music.Checked {
+    background-image: url('/assets/data/img/buttons/ButtonsMusic.png');
+}
+
+.Table.SettingsScreen {
+
+}
+
+.Title.SettingsScreen {
+    color: white;
+}
+
+.Text.SettingsScreen {
+    font-size: 6vh;
+    color:black;
+}
+
+.Text.SettingsScreen.DefaultView {
+    text-decoration: underline;
+    font-size: 5vh;
+}
+
+.Text.SettingsScreen.ResetStoryModeView, .Text.SettingsScreen.ChangePasswordView {
+    text-align: center;
+    font-size: 5vh;
+}
+
+.Button.SettingsScreen.ResetStoryModeView, .Button.SettingsScreen.ChangePasswordView {
+    border: solid 2px #a42021;
+    border-radius: 40px;
+    font-size: 3vh;
+}
+
+.Button.SettingsScreen.ResetStoryModeView:hover, .Button.SettingsScreen.ChangePasswordView:hover {
+    background: #a42021;
+    color: white;
 }

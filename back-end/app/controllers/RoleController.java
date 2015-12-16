@@ -74,7 +74,7 @@ public class RoleController extends Controller{
             mapper.readerForUpdating(role).readValue(request().body().asJson());
         } catch (IOException e) {
             e.printStackTrace();
-            return internalServerError(Json.parse("{'message': 'unexpected exception!'}"));
+            return internalServerError(Json.parse("{\"message\": \"unexpected exception!\"}"));
         }
 
         role.update();
@@ -87,17 +87,17 @@ public class RoleController extends Controller{
         if(role == null)
             return notFound();
         else if(!role.isDeletable())
-            return badRequest(Json.parse("{'message'; 'this role is not deletable'}"));
+            return badRequest(Json.parse("{\"message\"; \"this role is not deletable\"}"));
 
         if(RoleDAO.getAll().size() <= 1) {
-            return badRequest(Json.parse("{'message': 'You cannot delete the Role if it is the last one!'}"));
+            return badRequest(Json.parse("{\"message\": \"You cannot delete the Role if it is the last one!\"}"));
         }
         try {
             role.delete();
             return ok();
         } catch (PersistenceException e) {
             e.printStackTrace();
-            return internalServerError(Json.parse("{'message': 'unexpected exception!'}"));
+            return internalServerError(Json.parse("{\"message\": \"unexpected exception!\"}"));
         }
     }
 }

@@ -3,7 +3,6 @@
  */
 game.StartScreen = me.ScreenObject.extend({
     onResetEvent: function() {
-        //var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/title_screen.png');
         var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
         me.game.world.addChild(rootContainer);
         var isSignedIn = false;
@@ -14,12 +13,20 @@ game.StartScreen = me.ScreenObject.extend({
                 return;
             }
             var session = JSON.parse(xmlHttpRequest.responseText);
+            game.data.session = session;
             if(session.owner !== "") {
                 isSignedIn = true;
+                ajaxGetUser(game.data.session.owner, function(xmlHttpRequest) {
+                    if(xmlHttpRequest.status == 200) {
+                        var user = JSON.parse(xmlHttpRequest.responseText);
+                        game.data.user = user;
+                    }
+                });
             }
-            console.log(session);
         });
 
+        var notificationElement = new game.fdom.NotificationElement(rootContainer, "Failed", "Nice Error Message");
+        me.game.world.addChild(notificationElement);
 
         var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
         titleBanner.hide();

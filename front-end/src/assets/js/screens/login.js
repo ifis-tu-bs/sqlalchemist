@@ -18,6 +18,9 @@ game.LoginScreen = me.ScreenObject.extend({
             var loginFormData = JSON.stringify({email: formEmailInputField.getNode().value, password: formPasswordInputField.getNode().value});
             ajaxSendLoginRequest(loginFormData, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status == 200) {
+                    var user = JSON.parse(xmlHttpRequest.responseText);
+                    game.data.user = user;
+                    game.data.session.owner = user.username;
                     $(rootContainer.getNode()).fadeOut(100);
                     setTimeout(function() {
                         me.state.change(me.state.MENU);

@@ -2,15 +2,15 @@ package controllers;
 
 import dao.UserDAO;
 
+import forms.ChangePassword;
 import forms.ForgotPassword;
 
 import helper.MailSender;
 
 import models.User;
 
+import play.libs.Json;
 import secured.UserAuthenticator;
-
-import com.fasterxml.jackson.databind.JsonNode;
 
 import play.Logger;
 import play.data.Form;
@@ -28,26 +28,31 @@ public class PasswordController extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     @Authenticated(UserAuthenticator.class)
     public Result changePassword(String username) {
-        User user = UserDAO.getByUsername(username);
-        if(user == null) {
+        User userEdit = UserDAO.getByUsername(username);
+        if(userEdit == null) {
             return notFound();
         }
-        JsonNode json = request().body().asJson();
-        if (json == null) {
-            return badRequest("Could not retrieve Json from POST body!");
+        User user = UserDAO.getBySession(request().username());
+        if(user.getId() != userEdit.getId() && !user.getRole().getUserPermissions().canUpdate()) {
+            return forbidden("you have not the permissions to change passwords from another user");
         }
 
-
-
-        if (user.setPassword(
-                json.findPath("password_old").textValue(),
-                json.findPath("password_new").textValue())) {
-
-            user.update();
-            return ok("Password successfully changed");
+        Form<ChangePassword> changePasswordForm = Form.form(ChangePassword.class).bindFromRequest();
+        if(changePasswordForm.hasErrors()) {
+            return badRequest(changePasswordForm.errorsAsJson());
         }
 
-        return badRequest("Wrong password");
+        ChangePassword changePassword = changePasswordForm.get();
+
+        if(changePassword.oldPassword.isEmpty() && userEdit.getId() != user.getId()) {
+            Logger.info("Test");
+            userEdit.setPassword(changePassword.newPassword);
+        } else if (!userEdit.setPassword(changePassword.oldPassword, changePassword.newPassword)) {
+            return badRequest(Json.parse("{\"oldPassword\":\"the password was incorrect\"}"));
+        }
+        userEdit.update();
+
+        return ok();
     }
 
     /**
@@ -55,6 +60,7 @@ public class PasswordController extends Controller {
      *
      * @return Success state
      */
+    @BodyParser.Of(BodyParser.Json.class)
     public Result sendResetPasswordMail() {
         Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class).bindFromRequest();
 

@@ -9,15 +9,13 @@ import models.Action;
 import models.Session;
 import models.User;
 
+import play.libs.Json;
 import secured.SessionAuthenticator;
 
 import service.ServiceUser;
 
-import view.SessionView;
-
 import play.data.Form;
 import play.mvc.BodyParser;
-import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
@@ -63,7 +61,7 @@ public class SessionController extends Controller {
         session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
 
-        return redirect(routes.ProfileController.read());
+        return redirect(routes.UserController.show(user.getUsername()));
     }
 
     public Result logout() {
@@ -74,30 +72,27 @@ public class SessionController extends Controller {
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
         if(session != null) {
-            Logger.info("Contains an valid Session");
 
             Calendar yesterday = Calendar.getInstance();
             yesterday.add(Calendar.DATE, -1);
 
             if(yesterday.after(session.getCreatedAt())) {
-                Logger.info("Create a new one & assign the user to session");
                 Session newSession = SessionDAO.create();
                 newSession.setOwner(session.getOwner());
                 newSession.update();
                 session("session", newSession.getId());
 
 
-                return ok(SessionView.toJson(newSession));
+                return ok(Json.toJson(newSession));
             }
 
-            return ok(SessionView.toJson(session));
+            return ok(Json.toJson(session));
         } else {
-            Logger.info("Create a new Session");
 
             session = SessionDAO.create();
             session("session", session.getId());
 
-            return ok(SessionView.toJson(session));
+            return ok(Json.toJson(session));
         }
     }
 

@@ -985,6 +985,51 @@ game.fdom.ContainerElement = me.Renderable.extend({
         this.parent.removeChild(this.elem);
     }
 });
+
+game.fdom.NotificationElement = me.Renderable.extend({
+    init: function(parent, title, body) {
+        this.parent             = parent.getNode();
+        this.elem               = document.createElement('div');
+        this.elem.className     = "NotificationElement";
+
+        this.parent.appendChild(this.elem);
+
+        var mainElement = this.elem;
+
+        var titleElement = document.createElement('p');
+        titleElement.className = "Notification Title";
+        titleElement.textContent = title;
+        this.elem.appendChild(titleElement);
+
+        var bodyElement = document.createElement('p');
+        bodyElement.className = "Notification Body";
+        bodyElement.textContent = body;
+        this.elem.appendChild(bodyElement);
+
+        var exitButton = document.createElement('div');
+        exitButton.className = "Notification ExitButton";
+        this.elem.appendChild(exitButton);
+
+        $(exitButton).on('click', function() {
+            console.log("click");
+            $(mainElement).fadeOut(100);
+        });
+
+        $(mainElement).fadeIn(100);
+
+    },
+    getNode : function () {
+        return this.elem;
+    },
+    update : function () {
+        game.scaleElement(this);
+    },
+    destroy : function () {
+        // remove element
+        this.parent.removeChild(this.elem);
+    }
+});
+
 game.fdom.TitleElement = me.Renderable.extend({
     init: function(parent, width, height, left, top, text, className) {
         this.parent             = parent.getNode();
@@ -1122,15 +1167,14 @@ game.fdom.ImageElement = me.Renderable.extend({
 });
 
 game.fdom.CheckBoxElement = me.Renderable.extend({
-    init: function(parent, width, height, left, top, text, className, action) {
+    init: function(parent, width, height, left, top, text, className) {
         this.parent             = parent.getNode();
-        this.elem               = document.createElement('input');
+        this.elem               = document.createElement('div');
         this.elem.className     = className;
         this.elem.innerHTML     = text;
-        this.elem.type="checkbox";
 
-        $(this.elem).on('click', function() {
-            action();
+        $(this.elem).click( function() {
+            $(this).toggleClass('Checked');
         });
 
         this.elem.style.width       = width;
@@ -1149,6 +1193,9 @@ game.fdom.CheckBoxElement = me.Renderable.extend({
     },
     hide: function() {
         this.elem.style.display = "none";
+    },
+    isChecked: function() {
+        return this.elem.classList.contains("Checked");
     },
     destroy : function () {
         // remove element

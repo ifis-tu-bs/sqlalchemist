@@ -83,6 +83,15 @@ public class Role extends Model {
 
     @Embedded
     @AttributeOverrides({
+            @AttributeOverride(name="create",   column=@Column(name = "group_create")),
+            @AttributeOverride(name="read",     column=@Column(name = "group_read")),
+            @AttributeOverride(name="update",   column=@Column(name = "group_update")),
+            @AttributeOverride(name="delete",   column=@Column(name = "group_delete"))
+    })
+    private PermissionRules groupPermissions             = PermissionRules.getNoControl();
+
+    @Embedded
+    @AttributeOverrides({
             @AttributeOverride(name="create",   column=@Column(name = "user_create")),
             @AttributeOverride(name="read",     column=@Column(name = "user_read")),
             @AttributeOverride(name="update",   column=@Column(name = "user_update")),
@@ -173,6 +182,14 @@ public class Role extends Model {
 
     public void setRolePermissions(PermissionRules rolePermissions) {
         this.rolePermissions = rolePermissions;
+    }
+
+    public PermissionRules getGroupPermissions() {
+        return groupPermissions;
+    }
+
+    public void setGroupPermissions(PermissionRules groupPermissions) {
+        this.groupPermissions = groupPermissions;
     }
 
     public PermissionRules getUserPermissions() {

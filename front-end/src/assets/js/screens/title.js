@@ -7,6 +7,13 @@ game.TitleScreen = me.ScreenObject.extend({
          * here: simple state changes.
          */
 
+         if(game.data.user.settings.music) {
+             if(!game.data.musicAlreadyPlaying) {
+                 me.audio.playTrack("Menu",game.data.musicVolume);
+                 game.data.musicAlreadyPlaying = true;
+             }
+         }
+
         function fadeOutElements() {
             $("[id^=background]").fadeOut(100);
             $("[id$=Button]").fadeOut(100);
@@ -170,6 +177,3 @@ game.TitleScreen = me.ScreenObject.extend({
         $("#logoutButton").fadeIn(100);
     }
 });
-
-
-
