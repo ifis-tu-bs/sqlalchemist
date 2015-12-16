@@ -41,7 +41,7 @@
         }
 
         function updateRole(role) {
-            return $http.post("/API/Role/" + role.id + "/").then(handleSuccess, handleError);
+            return $http.post("/API/Role/" + role.id + "/", role).then(handleSuccess, handleError);
         }
 
         function deleteRole(role) {
