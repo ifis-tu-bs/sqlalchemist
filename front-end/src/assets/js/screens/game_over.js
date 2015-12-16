@@ -106,6 +106,30 @@ game.GameOverScreen = me.ScreenObject.extend({
             me.game.world.addChild(backgroundGameOver);
             $("#backgroundGameOverId").fadeIn(100);
 
+            console.log("VOR UNIQUE: ",game.data.scrolls );
+
+            //Duplikate aus Arrays entfernen
+            var unique = function(origArr) {
+                var newArr = [],
+                    origLen = origArr.length,
+                    found,
+                    x, y;
+
+                for ( x = 0; x < origLen; x++ ) {
+                    found = undefined;
+                    for ( y = 0; y < newArr.length; y++ ) {
+                        if ( origArr[x] === newArr[y] ) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if ( !found) newArr.push( origArr[x] );
+                }
+                return newArr;
+            };
+
+            game.data.scrolls = unique(game.data.scrolls);
+            console.log("NACH UNIQUE: ", game.data.scrolls);
             var slots = [];
             var coins = 0;
 

@@ -65,7 +65,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
                 console.log("current");
             };
 
-            var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 3, 42, 25, 1);
+            var currentHomeworkButton = new game.ClickableElement('currentButton', 'current', this.showCurrentHomework, 7, 5, 42, 25, 2);
             $('#currentButton').fadeIn(100);
             me.game.world.addChild(currentHomeworkButton);
 
@@ -75,7 +75,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
                 console.log("previous");
             };
 
-            var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 3, 50, 25, 1);
+            var previousHomeworkButton = new game.ClickableElement('previousButton', 'previous', this.showPreviousHomework, 7, 5, 50, 25, 2);
             $('#previousButton').fadeIn(100);
             me.game.world.addChild(previousHomeworkButton);
 
@@ -84,8 +84,6 @@ game.HomeworkScreen = me.ScreenObject.extend({
         };
 
         ajaxSendCurrentHomeworkRequest(currentHomeworkReply);
-
-
 
     }
 });
