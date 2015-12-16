@@ -8,6 +8,7 @@ game.PlayScreen = me.ScreenObject.extend({
             me.audio.stopTrack();
             me.audio.playTrack("credits", game.data.musicVolume);
         }
+        game.data.recentTitle = "credits";
         //reset the Ingame Memory
         game.data.scrolls = [];
         game.data.collectedScrolls = 0;

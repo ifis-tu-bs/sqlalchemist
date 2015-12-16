@@ -48,7 +48,7 @@ game.TaskScreen = me.ScreenObject.extend({
         //(id, width, height, left, top, rows)
         textOut          = new game.TextOutputElement('task', 55, 30, 3, 10, 10);
         textOutHead      = new game.TextOutputElement('head', 73, 4, 10, 5, 1);
-        textOutSchema    = new game.TextOutputElement('schemaa', 35, 80, 61, 5, 32);
+        textOutSchema    = new game.TextOutputElement('schemaa', 39, 80, 61, 5, 32);
 
         checksLeft          = new game.TextOutputElement('checksleft', 8, 4.6, 33, 90.7, 2);
         submitsLeft         = new game.TextOutputElement('submitsleft', 8, 4.6, 47, 90.7, 2);
@@ -56,9 +56,9 @@ game.TaskScreen = me.ScreenObject.extend({
         submitButton     = new game.ClickableElement('submit', 'Submit', submitAnswer, 10, 6, 38, 90, 2);
         backButton       = new game.ClickableElement('mainmenu', 'Back', backTo, 10, 6, 3, 90, 2);
         tryButton        = new game.ClickableElement('trybutton', 'Retry', getTaskFromServer, 10, 6, 38, 90, 2);
-        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Show Task Again', showSameTask, 12, 6, 38, 88, 2);
+        sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Show Task Again', showSameTask, 12, 6, 12, 88, 2);
 
-        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 10, 6, 52, 90, 2);
+        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 11, 6, 52, 90, 2);
         nextExerciseButton= new game.ClickableElement('nextexercisebutton', 'Next Exercise', getNextExerciseFromServer, 10, 6, 52, 88, 2);
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 90, 2);
@@ -348,7 +348,7 @@ game.TaskScreen = me.ScreenObject.extend({
 		 * Init Ace editor
 		 */
 		function getAceEditor() {
-			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 40, 3, 45, 10);
+			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 40, 3, 45, 12);
 			me.game.world.addChild(aceEditor);
 			textIn = aceEditor;
             aceEditor.hide();
@@ -602,13 +602,12 @@ game.TaskScreen = me.ScreenObject.extend({
         function handlePostTask(xhr) {
 
             dataResult = JSON.parse(xhr.responseText);
-            console.log(dataResult);
+            console.log("RESULT: ",dataResult);
             // write data
             textOut.clear();
 
             if(dataResult.SQLError) {
                 textOut.writeHTML(dataResult.terry + "<br>" + dataResult.SQLError, 'taskbody');
-                sameTaskButton.display();
             } else {
                 console.log( dataResult.score, (game.task.kind == 1 || game.task.kind === 0) && dataResult.score);
                 if ((game.task.kind == 1 || game.task.kind === 0) && dataResult.score ) {
@@ -622,8 +621,10 @@ game.TaskScreen = me.ScreenObject.extend({
             }
 
 
-            submitButton.hide();
-            checkButton.hide();
+
+            sameTaskButton.display();
+            //submitButton.hide();
+            //checkButton.hide();
 
             // buttons to display and hide
             if(game.task.kind !== 3){
@@ -638,8 +639,6 @@ game.TaskScreen = me.ScreenObject.extend({
                 dislikeButtonSet.display();
                 reviewButtonSet.display();
             }else{
-                checksLeft.hide();
-                submitsLeft.hide();
                 displayTries();
             }
 

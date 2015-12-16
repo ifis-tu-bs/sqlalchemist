@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dao.RoleDAO;
 import play.Logger;
 import play.data.validation.ValidationError;
@@ -200,6 +201,7 @@ public class Role extends Model {
         this.userPermissions = userPermissions;
     }
 
+    @JsonProperty("votes")
     public int getVotes() {
         return votes;
     }
@@ -208,6 +210,7 @@ public class Role extends Model {
         this.votes = votes;
     }
 
+    @JsonProperty("deletable")
     public boolean isDeletable() {
         return isDeletable;
     }
@@ -226,6 +229,7 @@ public class Role extends Model {
         return (creator != null) ? creator.getUsername() : null;
     }
 
+    @JsonIgnore
     public void setCreator(User creator) {
         this.creator = creator;
     }
@@ -253,15 +257,38 @@ public class Role extends Model {
         super.delete();
     }
 
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", priority=" + priority +
+                ", roleName='" + roleName + '\'' +
+                ", ownTaskSetPermissions=" + ownTaskSetPermissions +
+                ", foreignTaskSetPermissions=" + foreignTaskSetPermissions +
+                ", ownTaskPermissions=" + ownTaskPermissions +
+                ", foreignTaskPermissions=" + foreignTaskPermissions +
+                ", homeworkPermissions=" + homeworkPermissions +
+                ", rolePermissions=" + rolePermissions +
+                ", groupPermissions=" + groupPermissions +
+                ", userPermissions=" + userPermissions +
+                ", votes=" + votes +
+                ", isDeletable=" + isDeletable +
+                ", assignedUser=" + assignedUser +
+                ", creator=" + creator +
+                ", createdAt=" + createdAt +
+                '}';
+    }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Attribute Helper
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @JsonIgnore
     public void signOffUser(User user) {
         this.assignedUser.remove(user);
     }
 
+    @JsonIgnore
     public void signOnUser(User user) {
         this.assignedUser.add(user);
     }
@@ -269,6 +296,7 @@ public class Role extends Model {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Form Helper
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    @JsonIgnore
     public List<ValidationError> validate() {
         List<ValidationError> errors = new ArrayList<>();
 
