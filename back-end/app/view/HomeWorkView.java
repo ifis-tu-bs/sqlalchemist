@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 
+import dao.HomeWorkDAO;
 import dao.TaskSetDAO;
 import dao.UserDAO;
 import models.HomeWork;
@@ -52,8 +53,11 @@ public class HomeWorkView {
         Date end = new Date(utcTimeTo);
         Logger.info(String.valueOf(start) + "//" + String.valueOf(end) + "::" + taskSets.toString());
 
-        HomeWork homeWork;
-        if ((homeWork = new HomeWork(name, user, taskSets, start, end)) == null) {
+
+
+        HomeWork homeWork = HomeWorkDAO.create(name, user, taskSets, start, end);
+
+        if (homeWork == null) {
             Logger.info("HomeWorkController.Create got null for create. Some data have not been matching constraints!");
             return null;
         }
@@ -71,7 +75,11 @@ public class HomeWorkView {
         objectNode.put("id",    homeWork.getId());
         objectNode.put("homeWorkName",  homeWork.getHomeWorkName());
         objectNode.set("taskSets",  arrayNode);
-        objectNode.set("creator",   homeWork.getCreator().toJsonUser());
+        if(homeWork.getCreator() != null) {
+            objectNode.set("creator", homeWork.getCreator().toJsonUser());
+        } else {
+            objectNode.put("creator", "None");
+        }
         objectNode.put("start_at",  String.valueOf(homeWork.getStart_at()));
         objectNode.put("expire_at", String.valueOf(homeWork.getExpire_at()));
 
