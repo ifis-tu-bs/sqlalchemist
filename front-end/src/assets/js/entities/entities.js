@@ -24,21 +24,21 @@ game.LevelEntity = me.LevelEntity.extend({
 
         //Play the background music
         var title;
-        if(game.data.music) {
-            if (game.persistent.depth % 5 === 2 && game.persistent.depth !== 52) {
-                title = "level".concat(Math.ceil(Math.random() * 7));
-                me.audio.stopTrack();
-                me.audio.playTrack(title, game.data.musicVolume);
-            } else if (game.persistent.depth % 5 === 1 && game.data.score !== 0 ) {
-                title = "boss".concat(Math.ceil(Math.random() * 5));
-                me.audio.stopTrack();
-                me.audio.playTrack(title, game.data.musicVolume);
-            } else if (game.persistent.depth === 52) {
-                me.audio.stopTrack();
-                me.audio.playTrack("credits", game.data.musicVolume);
-            }
-            game.data.recentTitle = title;
+        if (game.persistent.depth % 5 === 2 && game.persistent.depth !== 52) {
+            title = "level".concat(Math.ceil(Math.random() * 7));
+        } else if (game.persistent.depth % 5 === 1 && game.data.score !== 0 ) {
+            title = "boss".concat(Math.ceil(Math.random() * 5));
+        } else if (game.persistent.depth === 52) {
+            title = "credits";
         }
+        if( title !== undefined){
+            game.data.recentTitle = title;
+            if(game.data.music && game.persistent.depth !== 1) {
+                me.audio.stopTrack();
+                me.audio.playTrack(title, game.data.musicVolume);
+            }
+        }
+
 
         //fading settings
         this.fade = "#333333";

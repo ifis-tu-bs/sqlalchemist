@@ -234,26 +234,6 @@ function ajaxSendProfileCollectedRequest(jsonData, onload) {
     return xmlHttpRequest;
 }
 
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-// ~ GET /API/User/Settings/
-function ajaxSendUserSettingsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/User/Settings/", onload);
-
-    xmlHttpRequest.send();
-
-    return xmlHttpRequest;
-}
-
-// ~ POST /API/User/Settings/ ~ jsonData: JSON.settings
-function ajaxSendUserSettingsSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/User/Settings/", onload);
-
-    xmlHttpRequest.send(jsonData);
-
-    return xmlHttpRequest;
-}
-
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Challenge ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 // ~ GET /API/Challenge/reset

@@ -8,9 +8,11 @@ game.TitleScreen = me.ScreenObject.extend({
          */
 
          if(game.data.user.settings.music) {
+             game.data.music = true;
              if(!game.data.musicAlreadyPlaying) {
                  me.audio.playTrack("Menu",game.data.musicVolume);
                  game.data.musicAlreadyPlaying = true;
+
              }
          }
 
