@@ -36,10 +36,6 @@ GET         /API/User/:username/                    controllers.UserController.s
 POST        /API/User/:username/                    controllers.UserController.edit(username: String)
 DELETE      /API/User/:username/                    controllers.UserController.destroy(username: String)
 
-#SettingsController
-GET         /API/User/:username/Settings/           controllers.SettingsController.index(username: String)
-POST        /API/User/:username/Settings/           controllers.SettingsController.update(username: String)
-
 #ItemController
 GET         /API/Profile/inventory                  controllers.ItemController.inventory()
 GET         /API/Profile/scrolls                    controllers.ItemController.scrollCollection()

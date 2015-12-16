@@ -354,6 +354,10 @@ public class User extends Model {
         return this.role.getId();
     }
 
+    public void setRoleID(long id) {
+        
+    }
+
     @JsonProperty("roleName")
     public String getRoleName() {
         return this.role.getRoleName();

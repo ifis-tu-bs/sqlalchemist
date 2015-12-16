@@ -11,6 +11,8 @@ import secured.role.CanReadRole;
 import secured.role.CanUpdateRole;
 import secured.role.CanDeleteRole;
 
+
+import play.Logger;
 import play.libs.Json;
 import play.data.Form;
 import play.mvc.BodyParser;
@@ -19,6 +21,7 @@ import play.mvc.Controller;
 import play.mvc.Security.Authenticated;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 
 import javax.persistence.PersistenceException;
 import java.io.IOException;
@@ -69,14 +72,17 @@ public class RoleController extends Controller{
         if(role == null)
             return notFound();
 
+        Logger.info(request().body().asJson().toString());
+        Logger.info(role.toString());
         ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         try {
             mapper.readerForUpdating(role).readValue(request().body().asJson());
         } catch (IOException e) {
             e.printStackTrace();
             return internalServerError(Json.parse("{\"message\": \"unexpected exception!\"}"));
         }
-
+        Logger.info(role.toString());
         role.update();
         return ok();
     }
