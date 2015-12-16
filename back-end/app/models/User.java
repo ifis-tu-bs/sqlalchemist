@@ -130,10 +130,6 @@ public class User extends Model {
 
         emailVerifyCode = UUID.randomUUID().toString();
 
-        if(play.api.Play.isProd(play.api.Play.current())) {
-            ServiceUser.updateStudentState(this);
-        }
-
         setSettings(new Settings(true, true));
         setPlayerStats(PlayerStats.getDefault());
 
@@ -391,10 +387,6 @@ public class User extends Model {
     @JsonProperty("student")
     public boolean isStudent() {
         return (this.yID != null || this.matNR != null);
-    }
-
-    public void setStudent(boolean student) {
-        this.yID = UUID.randomUUID().toString();
     }
 
     public Settings getSettings() {

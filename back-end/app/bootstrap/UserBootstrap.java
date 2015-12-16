@@ -39,7 +39,6 @@ public class UserBootstrap {
                 User user = UserDAO.create(signUp1);
                 if(user != null) {
                     user.setRole(RoleDAO.getAdmin());
-                    user.setStudent(true);
                     user.setMatNR("12345678");
                     user.update();
                 }
@@ -49,7 +48,6 @@ public class UserBootstrap {
                 nicNac.setEmail("nicole@nicole.de");
                 nicNac.setPassword("1234");
                 User nicole = UserDAO.create(nicNac);
-                nicole.setStudent(true);
                 nicole.setMatNR("11100131");
                 nicole.update();
                 List<Scroll> scrolls = ScrollDAO.getAll();
@@ -63,7 +61,6 @@ public class UserBootstrap {
                 student.setPassword("1234");
                 User studentU = UserDAO.create(student);
                 if(studentU != null) {
-                    studentU.setStudent(true);
                     studentU.setMatNR("87654567");
                     studentU.update();
                 }
@@ -74,8 +71,6 @@ public class UserBootstrap {
                 signUp2.setPassword("test");
                 User test2 = UserDAO.create(signUp2);
                 if(test2 != null) {
-                    test2.setStudent(true);
-                    test2.setMatNR("98765432");
                     test2.save();
                 }
             }

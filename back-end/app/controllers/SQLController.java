@@ -234,15 +234,19 @@ public class SQLController extends Controller {
             }
         }
 
-        if((task.getAvailableSyntaxChecks() - submittedHomeWork.getSyntaxChecksDone()) <= 0) {
-            Logger.warn("You have no SyntaxChecks left");
-            return badRequest("You have no SyntaxChecks left");
+        if(submit) {
+            if((task.getAvailableSemanticChecks()- submittedHomeWork.getSemanticChecksDone()) <= 0) {
+                Logger.warn("You have no SemanticChecks left");
+                return badRequest("You have no SemanticChecks left");
+            }
+        } else {
+            if ((task.getAvailableSyntaxChecks() - submittedHomeWork.getSyntaxChecksDone()) <= 0) {
+                Logger.warn("You have no SyntaxChecks left");
+                return badRequest("You have no SyntaxChecks left");
+            }
         }
 
-        if((task.getAvailableSemanticChecks()- submittedHomeWork.getSemanticChecksDone()) <= 0) {
-            Logger.warn("You have no SemanticChecks left");
-            return badRequest("You have no SemanticChecks left");
-        }
+
 
         SQLResult   sqlResult   = SQLParser.checkUserStatement(task, userStatement);
         ObjectNode  resultNode;
