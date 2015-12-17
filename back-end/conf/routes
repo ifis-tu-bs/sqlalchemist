@@ -27,7 +27,7 @@ POST        /API/Password/:username/                controllers.PasswordControll
 
 #ValidationController
 GET         /API/Validate/Email/:code               controllers.ValidationController.verifyEmail(code: String)
-GET         /API/Validate/Student/:username         controllers.ValidationController.checkStudent(username: String)
+POST        /API/Validate/Student/:username         controllers.ValidationController.checkStudent(username: String)
 
 #UserController
 POST        /API/User/                              controllers.UserController.create()

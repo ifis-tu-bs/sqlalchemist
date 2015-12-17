@@ -123,14 +123,21 @@ game.SettingsScreen = me.ScreenObject.extend({
             }
         }
 
-        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','75%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
-            if(game.data.user.student) {
-                console.log("already verified");
-                return;
+        var yIDInputField = new game.fdom.InputFieldElement(defaultContainer, '50%','10%','25%','68%', "GITZ Y-ID", "InputField");
+        me.game.world.addChild(yIDInputField);
+
+        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','88%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
+            if(!game.data.user.student) {
+                ajaxVerifyStudent(game.data.user.username, JSON.stringify({yID: yIDInputField.getNode().value }), function(xmlHttpRequest) {
+                    if(xmlHttpRequest.status == 200) {
+                        console.log("Verify as Student");
+                        $(verifyButton.getNode()).addClass("Verified");
+                        $(verifyButton.getNode()).text("already verified");
+                    }
+                });
+            } else {
+                console.log("alredy Verified");
             }
-            console.log("Verify as Student");
-            $(verifyButton.getNode()).addClass("Verified");
-            $(verifyButton.getNode()).text("already verified");
         });
         me.game.world.addChild(verifyButton);
 

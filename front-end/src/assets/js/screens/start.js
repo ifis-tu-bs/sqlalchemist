@@ -6,10 +6,12 @@ game.StartScreen = me.ScreenObject.extend({
         var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/preGameBackground.png');
         me.game.world.addChild(rootContainer);
         var isSignedIn = false;
+        var gotSession = false;
 
         ajaxGetSession(function(xmlHttpRequest) {
             if(xmlHttpRequest.status != 200) {
-                console.log("Error");
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "Server Error", "Your request cannot proceed");
+                me.game.world.addChild(notificationElement);
                 return;
             }
             var session = JSON.parse(xmlHttpRequest.responseText);
@@ -20,27 +22,36 @@ game.StartScreen = me.ScreenObject.extend({
                     if(xmlHttpRequest.status == 200) {
                         var user = JSON.parse(xmlHttpRequest.responseText);
                         game.data.user = user;
+                        gotSession = true;
                     }
                 });
+                return;
+            } else {
+                gotSession = true;
+                return;
             }
         });
 
-        var notificationElement = new game.fdom.NotificationElement(rootContainer, "Failed", "Nice Error Message");
-        me.game.world.addChild(notificationElement);
+
 
         var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
         titleBanner.hide();
         var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'START', 'Button StartScreen Start', false, function() {
-            $(startButton.getNode()).fadeOut(50);
-            $(titleBanner.getNode()).fadeOut(50);
-            setTimeout(function() {
-                if(isSignedIn) {
-                    me.state.change(me.state.MENU);
-                } else {
-                    me.game.world.removeChild(startButton);
-                    me.state.change(STATE_LOGIN);
-                }
-            }, 100);
+            if(gotSession) {
+                $(startButton.getNode()).fadeOut(50);
+                $(titleBanner.getNode()).fadeOut(50);
+                setTimeout(function() {
+                    if(isSignedIn) {
+                        me.state.change(me.state.MENU);
+                    } else {
+                        me.game.world.removeChild(startButton);
+                        me.state.change(STATE_LOGIN);
+                    }
+                }, 100);
+            } else {
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "Please Wait", "try again in a few seconds");
+                me.game.world.addChild(notificationElement);
+            }
         });
         startButton.hide();
 

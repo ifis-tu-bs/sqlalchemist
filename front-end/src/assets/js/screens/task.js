@@ -58,8 +58,8 @@ game.TaskScreen = me.ScreenObject.extend({
         tryButton        = new game.ClickableElement('trybutton', 'Retry', getTaskFromServer, 10, 6, 38, 90, 2);
         sameTaskButton   = new game.ClickableElement('sametaskbutton', 'Show Task Again', showSameTask, 12, 6, 12, 88, 2);
 
-        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 11, 6, 52, 90, 2);
-        nextExerciseButton= new game.ClickableElement('nextexercisebutton', 'Next Exercise', getNextExerciseFromServer, 10, 6, 52, 88, 2);
+        nextTaskButton   = new game.ClickableElement('nexttaskbutton', 'New Task', getTaskFromServer, 11, 6, 50, 90, 2);
+        nextExerciseButton= new game.ClickableElement('nextexercisebutton', 'Next Exercise', getNextExerciseFromServer, 10, 6, 50, 88, 2);
 
         checkButton      = new game.ClickableElement('checkbutton', 'Check', checkAnswer, 10, 6, 24, 90, 2);
         stayButton      = new game.ClickableElement('submit', 'stay in Schema', stayInSchema, 10, 6, 24, 88, 2);
@@ -105,6 +105,8 @@ game.TaskScreen = me.ScreenObject.extend({
 
         textIn = {};
 
+        checksLeft.hide();
+        submitsLeft.hide();
 
         submitButton.hide();
         tryButton.hide();
@@ -348,7 +350,7 @@ game.TaskScreen = me.ScreenObject.extend({
 		 * Init Ace editor
 		 */
 		function getAceEditor() {
-			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 40, 3, 45, 12);
+			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 41, 3, 45, 12);
 			me.game.world.addChild(aceEditor);
 			textIn = aceEditor;
             aceEditor.hide();
