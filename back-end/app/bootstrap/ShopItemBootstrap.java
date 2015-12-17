@@ -119,7 +119,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "James and Oliver Uniform",
-                "Uniforms seam to make one weak.\\nYeah maybe, but those two\\nare still some formidable runners.",
+                "Uniforms seem to make one weak.\\nYeah maybe, but those two\\nare still some formidable runners.",
                 "fred_and_george_2",
                 true,
                 new PlayerStats(1,1,0,0,0));
