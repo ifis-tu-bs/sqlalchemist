@@ -66,7 +66,7 @@ game.GameOverScreen = me.ScreenObject.extend({
                   }
 
               } else {
-                  this.scrollsObtained.writeHTML("<br>" + "No Scrolls For You!!!" + "<br><br>" + "Sorry :(",
+                  this.scrollsObtained.writeHTML("<br>" + "No scrolls for you!!!" + "<br><br>" + "Sorry :(",
                                                  'noScrollsPara');
               }
 
@@ -76,8 +76,8 @@ game.GameOverScreen = me.ScreenObject.extend({
                                        " scrolls today.", 'coinLimitPara');
 
           } else {
-              this.scrollsObtained.writeHTML("<br><br>" + "You collected all Scrolls for today, come back tomorrow" +
-                                             " to earn new Scrolls!", 'allScrollsPara');
+              this.scrollsObtained.writeHTML("<br><br>" + "You collected all scrolls for today, come back tomorrow" +
+                                             " to earn new scrolls!", 'allScrollsPara');
           }
       }
 

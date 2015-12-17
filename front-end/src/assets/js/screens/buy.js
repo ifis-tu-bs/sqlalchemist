@@ -48,7 +48,7 @@ game.BuyScreen = me.ScreenObject.extend({
             nameAndPrice.writeHTML("Name: " + game.data.beltShop[game.data.shopId].name  + "<br><br>" +
                                    "Price: " + game.data.beltShop[game.data.shopId].price, 'namePara');
             discriptiontext.writeHTML("Get a brand new beltslot! The more slots you have in your belt, the more potions " +
-                                      "you can take into the dungeon!", 'discPara');
+                                      "you can take into the dungeon with you!", 'discPara');
 
             var buyBeltPotion = new game.BackgroundElement('buyBeltPotion', 7.272727, 12.5, 26.015152, 26.041667, 'none');
             buyBeltPotion.setImage("assets/data/img/potion/GREAT_JUMPPOTION.png", "skin");

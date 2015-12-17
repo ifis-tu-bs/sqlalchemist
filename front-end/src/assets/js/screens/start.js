@@ -49,7 +49,7 @@ game.StartScreen = me.ScreenObject.extend({
                     }
                 }, 100);
             } else {
-                var notificationElement = new game.fdom.NotificationElement(rootContainer, "Please Wait", "try again in a few seconds");
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "Please wait", "try again in a few seconds");
                 me.game.world.addChild(notificationElement);
             }
         });

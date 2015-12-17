@@ -87,11 +87,11 @@ game.ResultScreen = me.ScreenObject.extend({
 
         switch(game.task.kind) {
             case 0 : {
-                result.writeHTML("You Crafted: " + "<br><br>" + "1 x " + game.potion.potions[game.task.potionId].name, 'resultCraftedPara');
+                result.writeHTML("You crafted: " + "<br><br>" + "1 x " + game.potion.potions[game.task.potionId].name, 'resultCraftedPara');
                 break;
             }
             case 1 : {
-                result.writeHTML("You Got: " + "<br><br>" + game.task.name, 'resultGotPara');
+                result.writeHTML("You got: " + "<br><br>" + game.task.name, 'resultGotPara');
             }
         }
 

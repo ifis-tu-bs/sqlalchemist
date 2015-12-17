@@ -28,7 +28,7 @@ game.SignUpScreen = me.ScreenObject.extend({
             var passwordC= formPasswordRepeatInputField.getNode().value;
 
             if(password !== passwordC) {
-                alert("entered passwords do not match");
+                alert("entered passwords does not match");
                 $(formPasswordInputField.getNode()).addClass("invalid");
                 $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                 return;
