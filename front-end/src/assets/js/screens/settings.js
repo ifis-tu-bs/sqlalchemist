@@ -130,8 +130,6 @@ game.SettingsScreen = me.ScreenObject.extend({
             if(!game.data.user.student) {
                 ajaxVerifyStudent(game.data.user.username, JSON.stringify({yID: yIDInputField.getNode().value }), function(xmlHttpRequest) {
                     if(xmlHttpRequest.status == 200) {
-                        var data = JSON.parse(xmlHttpRequest.responseText);
-                        console.log(data);
                         console.log("Verify as Student");
                         $(verifyButton.getNode()).addClass("Verified");
                         $(verifyButton.getNode()).text("already verified");
