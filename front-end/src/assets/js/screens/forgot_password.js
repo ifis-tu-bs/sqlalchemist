@@ -31,7 +31,7 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(loginForm);
 
-        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '60%','10%','20%','49%', 'Email Address', 'InputField PasswordResetScreen');
+        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '60%','10%','20%','49%', 'email', 'InputField PasswordResetScreen');
         me.game.world.addChild(formEmailInputField);
 
         // Password Reset Button

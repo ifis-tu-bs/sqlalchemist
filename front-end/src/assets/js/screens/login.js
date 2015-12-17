@@ -26,7 +26,7 @@ game.LoginScreen = me.ScreenObject.extend({
                         me.state.change(me.state.MENU);
                     }, 50);
                 } else if(xmlHttpRequest.status == 401) {
-                    alert("Wrong EMAIL or Password");
+                    alert("wrong email or password");
                 } else if(xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
                     if(typeof errorMessage.email !== 'undefined') {
@@ -40,10 +40,10 @@ game.LoginScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(loginForm);
 
-        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '64%','10%','17%','31%', 'Email Address', 'InputField LoginScreen');
+        var formEmailInputField = new game.fdom.InputFieldElement(loginForm, '64%','10%','17%','31%', 'email', 'InputField LoginScreen');
         me.game.world.addChild(formEmailInputField);
 
-        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(loginForm, '64%','10%','17%','47%', 'Password', 'InputPasswordField LoginScreen');
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(loginForm, '64%','10%','17%','47%', 'password', 'InputPasswordField LoginScreen');
         me.game.world.addChild(formPasswordInputField);
 
         // Login Button

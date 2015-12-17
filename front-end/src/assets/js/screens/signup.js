@@ -65,16 +65,16 @@ game.SignUpScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(signUpForm);
 
-        var formEmailInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','21%', 'Email Address', 'InputField SignUpScreen Email');
+        var formEmailInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','21%', 'email', 'InputField SignUpScreen Email');
         me.game.world.addChild(formEmailInputField);
 
-        var formUsernameInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','34%', 'Username', 'InputField SignUpScreen Username');
+        var formUsernameInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','34%', 'username', 'InputField SignUpScreen Username');
         me.game.world.addChild(formUsernameInputField);
 
-        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','47%', 'Password', 'InputPasswordField SignUpScreen Password');
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','47%', 'password', 'InputPasswordField SignUpScreen Password');
         me.game.world.addChild(formPasswordInputField);
 
-        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','60%', 'Password Confirmation', 'InputPasswordField SignUpScreen Password');
+        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','60%', 'password confirmation', 'InputPasswordField SignUpScreen Password');
         me.game.world.addChild(formPasswordRepeatInputField);
 
         // Password Reset Button
