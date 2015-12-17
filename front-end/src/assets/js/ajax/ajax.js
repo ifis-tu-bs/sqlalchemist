@@ -148,6 +148,17 @@ function ajaxUpdatePassword(username, jsonData, onload) {
     return xmlHttpRequest;
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PasswordController~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+// ~ POST /API/Validate/Student/:username
+function ajaxVerifyStudent(username, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/Validate/Student/" + username, onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Profile ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
