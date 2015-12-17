@@ -31,12 +31,13 @@ public class HomeWorkDAO {
     taskSets,
     start_at,
     expire_at);
+        Logger.info("Creator: " + creator.getUsername());
 
     try {
-    homeWork.save();
+        homeWork.save();
     } catch (PersistenceException pe) {
-    Logger.info("HomeWorkDAO.java - create: could not save homeWork: " + homeWork.getHomeWorkName());
-    return null;
+        Logger.info("HomeWorkDAO.java - create: could not save homeWork: " + homeWork.getHomeWorkName());
+        return null;
     }
     return homeWork;
     }

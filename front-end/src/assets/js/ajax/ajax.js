@@ -148,6 +148,17 @@ function ajaxUpdatePassword(username, jsonData, onload) {
     return xmlHttpRequest;
 }
 
+/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ PasswordController~~~~~~~~~~~~~~~~~~~~~~~~ */
+
+// ~ POST /API/Validate/Student/:username
+function ajaxVerifyStudent(username, jsonData, onload) {
+    var xmlHttpRequest = createRequest("POST", "/API/Validate/Student/" + username, onload);
+
+    xmlHttpRequest.send(jsonData);
+
+    return xmlHttpRequest;
+}
+
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Profile ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
@@ -228,26 +239,6 @@ function ajaxSendProfileUsedRequest( slot, onload) {
 // ~ POST /API/Profile/collected ~ jsonData: JSON.collected
 function ajaxSendProfileCollectedRequest(jsonData, onload) {
     var xmlHttpRequest = createRequest("POST", "/API/Profile/collected", onload);
-
-    xmlHttpRequest.send(jsonData);
-
-    return xmlHttpRequest;
-}
-
-/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Settings ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
-
-// ~ GET /API/User/Settings/
-function ajaxSendUserSettingsRequest(onload) {
-    var xmlHttpRequest = createRequest("GET", "/API/User/Settings/", onload);
-
-    xmlHttpRequest.send();
-
-    return xmlHttpRequest;
-}
-
-// ~ POST /API/User/Settings/ ~ jsonData: JSON.settings
-function ajaxSendUserSettingsSetRequest(jsonData, onload) {
-    var xmlHttpRequest = createRequest("POST", "/API/User/Settings/", onload);
 
     xmlHttpRequest.send(jsonData);
 

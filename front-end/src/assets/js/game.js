@@ -26,6 +26,7 @@ var game = {
      * an object where to store game global data
      */
     data : {
+        musicAlreadyPlaying: false,
         session: {},
         user: {},
         //Userstats

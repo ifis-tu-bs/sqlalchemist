@@ -2,6 +2,8 @@ package controllers;
 
 import dao.UserDAO;
 import models.User;
+import play.Logger;
+import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -9,6 +11,7 @@ import secured.UserAuthenticator;
 import service.ServiceUser;
 
 /**
+ *
  * Created by fabiomazzone on 09/12/15.
  */
 public class ValidationController extends Controller {
@@ -17,12 +20,7 @@ public class ValidationController extends Controller {
      * @param verifyCode The given Code by URL
      * @return Success state
      */
-    @Security.Authenticated(UserAuthenticator.class)
     public Result verifyEmail(String verifyCode) {
-        if (Long.parseLong(verifyCode, 16) % 97 != 1) {
-            return badRequest("Sorry, this Verify-Code has not been sent");
-        }
-
         User user = UserDAO.getByVerifyCode(verifyCode);
         if (user == null) {
             return badRequest("User not found. Please register again");
@@ -35,11 +33,12 @@ public class ValidationController extends Controller {
         return ok("Successfully verified email");
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
     @Security.Authenticated(UserAuthenticator.class)
     public Result checkStudent(String username) {
-        User user = UserDAO.getByUsername(request().username());
+        User user = UserDAO.getBySession(request().username());
 
-        if (user == null) {
+        if (user == null || !user.getUsername().equals(username)) {
             return badRequest("No User found");
         }
 
@@ -47,9 +46,18 @@ public class ValidationController extends Controller {
             return ok();
         }
 
-        if (!ServiceUser.updateStudentState(user)) {
+        Logger.info(request().body().asJson().toString());
+
+        String yID = request().body().asJson().path("yID").asText();
+        if (yID == null || yID.isEmpty()) {
+            return badRequest("no valid request !");
+        }
+
+        if (!ServiceUser.updateStudentState(user, yID)) {
             return badRequest("No user or not found in HMS Database!");
         }
+
+        user.update();
 
         return ok();
     }

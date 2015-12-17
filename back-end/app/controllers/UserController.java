@@ -10,6 +10,7 @@ import models.Action;
 import models.Session;
 import models.User;
 
+import play.Logger;
 import secured.user.CanReadUsers;
 import secured.SessionAuthenticator;
 import secured.UserAuthenticator;
@@ -93,6 +94,7 @@ public class UserController extends Controller {
             return forbidden(Json.parse("{\"message\": \"you have not the permissions to edit other user data\"}"));
         }
 
+        Logger.info(request().body().asJson().toString());
         ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.readerForUpdating(userEdit).readValue(request().body().asJson());

@@ -90,6 +90,6 @@ public class UserDAO {
     }
 
     public static User getByVerifyCode(String verifyCode) {
-        return find.where().eq("emailVerifyCode", verifyCode).findUnique();
+        return find.where().eq("email_verify_code", verifyCode).findUnique();
     }
 }

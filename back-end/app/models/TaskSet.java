@@ -261,7 +261,7 @@ public class TaskSet extends Model {
         for(int i = 0; i < this.getTableDefinitions().size(); i++)  {
             relationsFormatted = relationsFormatted + TableDefinitionView.toString(this.getTableDefinitions().get(i));
             if(i < this.getTableDefinitions().size() - 1)
-                relationsFormatted = relationsFormatted + ",";
+                relationsFormatted = relationsFormatted + " ";
         }
         return relationsFormatted;
     }

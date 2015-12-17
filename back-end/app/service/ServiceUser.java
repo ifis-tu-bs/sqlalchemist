@@ -33,13 +33,15 @@ public class ServiceUser {
      * @param user asd
      * @return asd
      */
-    public static boolean updateStudentState(User user) {
+    public static boolean updateStudentState(User user, String yID) {
         HMSAccessor hms = new HMSAccessor();
-        if (hms.identifyUser(user.getEmail())) {
-            user.setStudent(true);
 
-            //user.setyID(hms.getResults().get("ynumber"));
-            user.setMatNR(hms.getResults().get("matnumber"));
+
+        if (hms.identifyUser(yID)) {
+            user.setYID(hms.getResults().get("username"));
+            user.setMatNR(hms.getResults().get("mat_no"));
+            Logger.info(hms.getResults().get("username"));
+            Logger.info(hms.getResults().get("mat_no"));
             return true;
         }
         return false;

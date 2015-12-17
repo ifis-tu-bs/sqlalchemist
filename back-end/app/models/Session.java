@@ -1,6 +1,8 @@
 package models;
 
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Calendar;
@@ -41,10 +43,12 @@ public class Session extends Model {
 //  Getter & Setter
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    @JsonProperty("sessionID")
     public String getId() {
         return id;
     }
 
+    @JsonIgnore
     public User getOwner() {
         return owner;
     }
@@ -53,10 +57,17 @@ public class Session extends Model {
         this.owner = owner;
     }
 
+    @JsonProperty("owner")
+    public String getOwnerName() {
+        return (this.owner != null)? this.owner.getUsername(): "";
+    }
+
+    @JsonIgnore
     public Calendar getCreatedAt() {
         return createdAt;
     }
 
+    @JsonIgnore
     public Action getLastAction() {
         return lastAction;
     }
