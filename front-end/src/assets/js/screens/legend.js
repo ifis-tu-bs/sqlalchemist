@@ -62,9 +62,9 @@ game.LegendScreen = me.ScreenObject.extend({
                     explanationHeader.clear();
                     explanationHeader.writeHTML("Homework");
                     explanation.clear();
-                    explanation.writeHTML("Every week there will be a homework challenge for students. You can start it" +
-                        " by clicking START. Before you finally submit your homework, you can check your statement" +
-                        " first. Remember you can submit wrong answers too!");
+                    explanation.writeHTML("Every week there will be a homework challenge for students. You can begin" +
+                        " by clicking START. Before you make the final submission, you can check your statement" +
+                        " first. Remember: you can submit wrong answers too!");
                 };
 
                 var homeworks = new game.ClickableElement('homeworks','Homework', this.homeworkClick, 17, 4, 80, 91, 1);
@@ -93,11 +93,11 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.writeHTML("Fat Lady");
             explanation.clear();
             explanation.writeHTML("Perenelle Flamel was the wife of the famous alchemist, Nicolas Flamel, who created" +
-                " the Philosopher's Stone. Perenelle drank the Elixir of Life which was produced by the stone, and was immortal," +
+                " the Philosopher's Stone. Perenelle drank the Elixir of Life which was produced by the stone, and became immortal," +
                 " until the stone was destroyed. She died the following year at the"+
                 " age of six hundred and fifty-eight." + "<br>" + "After her death, she became a permanent" +
-                " visitor in a portrait, and the " +
-                "guard of the Laboratory.");
+                " resident in a portrait, and the" +
+                " guard of the Laboratory.");
         };
         var fatLady = new game.ClickableElement('fatLady', 'Fat Lady', this.fatLadyClick, 14, 4, 81.5, 25, 1);
         me.game.world.addChild(fatLady);
@@ -112,11 +112,11 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.clear();
             explanationHeader.writeHTML("Scroll Collection");
             explanation.clear();
-            explanation.writeHTML("A white Scroll represents a recipe for an enchantment, one with a red ribbon is a recipe"+
-                " for a potion. Unlike a potion, an enchantment increases the attributes of the" +
-                " player permanently." + "<br>" + "The Scroll Collection shows the progress you have made during the whole story and"+
-                " all levels of the Dungeon. If you collected all scrolls, used the enchantments in the" +
-                " Mirror and beaten the Boss, you will skip that level.");
+            explanation.writeHTML("White Scrolls are recipes for an enchantments, whereas those with a red ribbon are recipe"+
+                " for a potion. Unlike a potion, enchantments increase the players attributes permanently" +
+                "<br>" + "The Scroll Collection shows the progress you made during the whole story and"+
+                " all levels of the Dungeon. After you collected all scrolls, used the enchantments in the" +
+                " Mirror and beaten the Boss, you can skip that level in the future.");
         };
         var scrollCol = new game.ClickableElement('scrollCol', "Scroll Collection", this.scrollClick, 16, 8, 80.7, 31, 2);
         me.game.world.addChild(scrollCol);
@@ -131,11 +131,11 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.clear();
             explanationHeader.writeHTML("Door to Dungeon");
             explanation.clear();
-            explanation.writeHTML("By clicking the door you are going to start your run in the Dungeon. Down there you"  +
-                " can find new scrolls you need for brewing potions. The Dungeon is devided into multiple levels"        +
+            explanation.writeHTML("By clicking the door you are going to start your run in the Dungeon. Down there, you"  +
+                " can find new scrolls you need for brewing potions. The Dungeon is divided into multiple levels,"        +
                 " all consisting of 5 different maps. The last stage of each level is a very difficult Bossmap. For these" +
-                " maps you need your best potions." + "<br>" + "So don't forget: You have to brew a lot of potions to" +
-                " get through the story!");
+                " maps you need your best potions." + "<br>" + "So don't forget: You need to brew a lot of potions to" +
+                " get through the whole story!");
         };
         var door = new game.ClickableElement('door', 'Door to Dungeon', this.doorClick, 16, 8, 80.8, 40.8, 2);
         me.game.world.addChild(door);
@@ -168,11 +168,11 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.clear();
             explanationHeader.writeHTML("Belt");
             explanation.clear();
-            explanation.writeHTML("The belt shows all the potion recipes you have obtained so far and the number of" +
+            explanation.writeHTML("The belt shows all the potion recipes you have obtained and the number of" +
                 " potions you have brewed yet." +
-                " You will also see your belt which contains the potions you chose to take with you into the dungeon. By clicking on a"  +
+                " You will also see your belt, which contains the potions you chose to take with you into the dungeon. By clicking on a"  +
                 " potion bottle, the potion will be inserted into the first free belt slot. By clicking on the scroll" +
-                " above it, you can keep more supplies coming." + "<br>" + "New belt slots can also be bought in the shop in the main menu.");
+                " above it, you can keep more supplies coming." + "<br>" + "New belt slots can be bought in the shop in the main menu.");
         };
         var belt = new game.ClickableElement('belt', 'Belt', this.beltClick, 8, 4, 84.5, 60, 1);
         me.game.world.addChild(belt);
@@ -190,7 +190,7 @@ game.LegendScreen = me.ScreenObject.extend({
             explanation.writeHTML("The tutorial is supposed to give you a small tour around the game. If you accidentally" +
                 " skipped the whole tutorial and would like to revise it, you can reset the story in the settings." + 
                 "<br>" +
-                "Be aware, that you entire progress will be deleted!");
+                "Be aware that you entire progress will be deleted!");
         };
         var tutorial = new game.ClickableElement('tutorial', 'Tutorial', this.tutorialClick, 15, 4, 81, 68, 1);
         me.game.world.addChild(tutorial);
@@ -205,13 +205,13 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.clear();
             explanationHeader.writeHTML("Quiz Mode");
             explanation.clear();
-            explanation.writeHTML("The Quiz-Mode represents the SQL-Trainer of the game. There you can solve" +
-                " as many SQL-Statements as you like. You just have to write your answer in the existing editor and click" +
-                " the submit button." + "<br>" + "If your statement is correct, you can choose between answering this statement " +
-                " again or you can choose the next task. If your statement is wrong, you have to do it until " +
-                " solve it, or you can simply give up by clicking the back button." + "<br>" +
-                " For each solved statement you get a certain amount of coins and score. You can exchange your coins " +
-                " in the shop for several characters or additional belt slots.");
+            explanation.writeHTML("The Quiz Mode represents the SQL-Trainer of the game. In there you can solve" +
+                " as many SQL-Statements as you like. You just have to type your answer in the editor and click" +
+                " the submit button." + "<br>" + "If your statement is correct, you can choose between answering this statement" +
+                " again or you can choose the next task. If your statement is wrong, you can to re-do it until you" +
+                " solve it, or you can give up by clicking the back button." + "<br>" +
+                "For each solved statement you get a certain amount of coins and score. In the shop" +
+                " you can exchange your coins for different characters or additional belt slots.");
         };
         var task = new game.ClickableElement('triviamode','Quiz Mode', this.taskClick, 18, 4, 79.5, 76, 1);
         me.game.world.addChild(task);
@@ -226,10 +226,10 @@ game.LegendScreen = me.ScreenObject.extend({
             explanationHeader.clear();
             explanationHeader.writeHTML("Rating");
             explanation.clear();
-            explanation.writeHTML("In the Qiuz Mode you can also rate the tasks! If you think a tasks is " +
-                " either to difficult or maybe even to easy, you can rate them with a thumbs-up (the green one), or a" +
-                " thumbs-down (the red one). If you think that a tasks is complete nonsense, click on the magnifying glass" +
-                " and some HiWi from IfIs will review and correct them.");
+            explanation.writeHTML("In the Quiz Mode you can also rate the tasks! If you think a tasks is" +
+                " either too difficult or maybe even too easy, you can give them a thumbs-down (the red hand)." +
+                " If you think the task is good, you give a thumbs-up (the green hand). If you think that a tasks is complete nonsense," +
+                " click on the magnifying glass and some HiWi from IfIs will review and correct them.");
         };
         var rating    = new game.ClickableElement('rating','Rating', this.ratingClick, 12, 4, 82.5, 84, 1);
         me.game.world.addChild(rating);
