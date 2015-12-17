@@ -1,155 +1,154 @@
 
-<div class="container-fluid">
-  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
-  <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
 
-  <div class="btn-group" style="float:left;width:70%">
-    <button type="button" class="btn btn-default" ng-click="deselectToHomeworkSelection();" ng-show="shouldIBeDisplayed(1)" uib-tooltip="Select a new Homework"> > </button>
-    <button type="button" class="btn btn-default" ng-click="deselectToStudentSelection()" ng-show="shouldIBeDisplayed(2)" ng-disabled="state.studentSelection" uib-tooltip="Select a new Student"><b>{{selectedHomework.homeWorkName}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="deselectToTaskSetSelection()" ng-show="shouldIBeDisplayed(3)" ng-disabled="state.taskSetSelection" uib-tooltip="Select a new TaskSet"><b>{{selectedStudent.matNr}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="deselectToTaskSelection()" ng-show="shouldIBeDisplayed(4)" ng-disabled="state.taskSelection" uib-tooltip="Select a new Task"><b>{{selectedTaskSet.taskSetName}}</b></button>
-    <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed(5)" ng-disabled="state.inspectSubmit"><b>{{selectedTask.taskName}} : {{selectedTask.done ? "Solved" : "Not Solved" }}</b></button>
-  </div>
+<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
+<div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
 
-  <div class="container-fluid" style="float:right;width:30%">
-    <form ng-show="!shouldIBeDisplayed('InspectSubmit')">
-      <div class="form-group">
-        <div class="input-group">
-          <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-          <input type="text" class="form-control" placeholder="Search..." ng-model="search">
-        </div>
+<div class="btn-group" style="float:left;width:70%">
+  <button type="button" class="btn btn-default" ng-click="deselectToHomeworkSelection();" ng-show="shouldIBeDisplayed(1)" uib-tooltip="Select a new Homework"> > </button>
+  <button type="button" class="btn btn-default" ng-click="deselectToStudentSelection()" ng-show="shouldIBeDisplayed(2)" ng-disabled="state.studentSelection" uib-tooltip="Select a new Student"><b>{{selectedHomework.homeWorkName}}</b></button>
+  <button type="button" class="btn btn-default" ng-click="deselectToTaskSetSelection()" ng-show="shouldIBeDisplayed(3)" ng-disabled="state.taskSetSelection" uib-tooltip="Select a new TaskSet"><b>{{selectedStudent.matNr}}</b></button>
+  <button type="button" class="btn btn-default" ng-click="deselectToTaskSelection()" ng-show="shouldIBeDisplayed(4)" ng-disabled="state.taskSelection" uib-tooltip="Select a new Task"><b>{{selectedTaskSet.taskSetName}}</b></button>
+  <button type="button" class="btn btn-default" ng-click="goSelectSubmit()" ng-show="shouldIBeDisplayed(5)" ng-disabled="state.inspectSubmit"><b>{{selectedTask.taskName}} : {{selectedTask.done ? "Solved" : "Not Solved" }}</b></button>
+</div>
+
+<div class="container-fluid" style="float:right;width:30%">
+  <form ng-show="!shouldIBeDisplayed('InspectSubmit')">
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+        <input type="text" class="form-control" placeholder="Search..." ng-model="search">
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
+</div>
 
-  <div style="width:100%;height:8px;float:right"></div>
+<div style="width:100%;height:8px;float:right"></div>
 
-  <div class="ng-hide" ng-show="state.homeworkSelection" style="width:100%;float:right">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th ng-click="orderHomeworkPredicate = 'homeWorkName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-          <th ng-click="orderHomeworkPredicate = 'creator.name'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
-          <th ng-click="orderHomeworkPredicate = 'start_at'; orderReverse = !orderReverse" style="cursor: pointer">Start at</th>
-          <th ng-click="orderHomeworkPredicate = 'expire_at'; orderReverse = !orderReverse" style="cursor: pointer">Expire at</th>
-          <th>View</th>
-          </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="homework in vm.homeworks | orderBy:orderHomeworkPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectHomework(homework)">
-          <td>{{homework.homeWorkName}}</td>
-          <td>{{homework.creator.username}}</td>
-          <td>{{homework.start_at}}</td>
-          <td>{{homework.expire_at}}</td>
-          <td>
-              <button type="button" class="btn btn-default" ng-click="deleteHomework(homework);  $event.stopPropagation();">
-                <span class="glyphicon glyphicon-trash"></span></button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <button type="button" class="btn btn-primary btn-sm" ng-click="newHomeWork();">New...</button>
-          </td>
-          <td/>
-          <td/>
-          <td/>
-          <td/>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="ng-hide" ng-show="state.studentSelection" style="width:100%;float:right">
-
-    <table class="table table-hover">
-      <thead>
+<div class="ng-hide" ng-show="state.homeworkSelection" style="width:100%;float:right">
+  <table class="table table-hover">
+    <thead>
       <tr>
-        <th ng-click="orderTaskSetPredicate = 'matNr'; orderReverse = !orderReverse" style="cursor: pointer">Mat-Nr</th>
-        <th ng-click="orderTaskSetPredicate = 'done'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">Completed Tasks</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="student in vm.students | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectStudent(student)">
-        <td>{{ student.matNr }}</td>
-        <td style="text-align:right">{{ student.done }} / {{ student.all }}</td>
-      </tr>
-      </tbody>
-    </table>
-
-  </div>
-
-  <div class="ng-hide" ng-show="state.taskSetSelection" style="width:100%;float:right">
-    <table class="table table-hover">
-      <thead>
-      <tr>
-        <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name of TaskSet</th>
-        <th ng-click="orderTaskSetPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
-        <th ng-click="orderTaskSetPredicate = 'refStatement'; orderReverse = !orderReverse" style="cursor: pointer;text-align : right">Completed Tasks</th>
-        <th ng-click="orderTaskSetPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="taskSet in vm.taskSets  | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet)">
-        <td>{{taskSet.taskSetName}}</td>
-        <td>{{taskSet.creator.username}}</td>
-        <td style="text-align : right">{{taskSet.tasks.done}} / {{ taskSet.tasks.all}}</td>
+        <th ng-click="orderHomeworkPredicate = 'homeWorkName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
+        <th ng-click="orderHomeworkPredicate = 'creator.name'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+        <th ng-click="orderHomeworkPredicate = 'start_at'; orderReverse = !orderReverse" style="cursor: pointer">Start at</th>
+        <th ng-click="orderHomeworkPredicate = 'expire_at'; orderReverse = !orderReverse" style="cursor: pointer">Expire at</th>
+        <th>View</th>
+        </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="homework in vm.homeworks | orderBy:orderHomeworkPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectHomework(homework)">
+        <td>{{homework.homeWorkName}}</td>
+        <td>{{homework.creator.username}}</td>
+        <td>{{homework.start_at}}</td>
+        <td>{{homework.expire_at}}</td>
         <td>
-          <div class="btn-group" role="group" aria-label="...">
-            <span class="glyphicon glyphicon-thumbs-up"></span> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
-            <span class="glyphicon glyphicon-search"></span> <span style="width: 2px"></span> {{ taskSet.rating.needReview }} <span style="width: 6px"></span>
-            <span class="glyphicon glyphicon-thumbs-down"></span> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
-          </div>
+            <button type="button" class="btn btn-default" ng-click="deleteHomework(homework);  $event.stopPropagation();">
+              <span class="glyphicon glyphicon-trash"></span></button>
         </td>
       </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="ng-hide" ng-show="state.taskSelection" style="width:100%;float:right">
-    <table style="max-width:100%"class="table table-hover">
-      <thead>
       <tr>
-        <th ng-click="orderTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">Task Name</th>
-        <th ng-click="orderTaskPredicate = 'solve'; orderReverse = !orderReverse" style="cursor: pointer">Solved</th>
-        <th ng-click="orderTaskPredicate = 'availableSyntaxChecks'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">SyntaxChecks left</th>
-        <th ng-click="orderTaskPredicate = 'availableSemanticChecks'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">SemanticChecks left</th>
-        <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task)">
-        <td>{{ task.taskName }}</td>
-        <td><input type="checkbox" ng-model="task.done" disabled></td>
-        <td style="text-align : right">{{ task.availableSyntaxChecks }}</td>
-        <td style="text-align : right">{{ task.availableSemanticChecks }}</td>
         <td>
-          <div class="btn-group" role="group" aria-label="...">
-            <span class="glyphicon glyphicon-thumbs-up"></span> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
-            <span class="glyphicon glyphicon-search"></span> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
-            <span class="glyphicon glyphicon-thumbs-down"></span> <span style="width: 2px"></span> {{ task.rating.negative }}
-          </div>
+          <button type="button" class="btn btn-primary btn-sm" ng-click="newHomeWork();">New...</button>
         </td>
+        <td/>
+        <td/>
+        <td/>
+        <td/>
       </tr>
-      </tbody>
-    </table>
-  </div>
+    </tbody>
+  </table>
+</div>
 
-  <div class="ng-hide" ng-show="state.inspectSubmit"  style="width:100%;float:right">
-    <div style="width:100%;height: 8px"> </div>
-    <div style="width:45%; float:left">
-      <button class="btn btn-default" ng-click="prevTask()" uib-tooltip="View previous Task of this TaskSet" style="float:left">Previous Task</button>
-      <label style="float:right">Student's Statement:</label>
-    </div>
-    <div style="width:45%; float:right">
-      <label style="float:left">Reference Statement:</label>
-      <button class="btn btn-default" ng-click="nextTask()" uib-tooltip="View next Task of this TaskSet" style="float:right">Next Task</button>
-    </div>
-    <div style="width:100%;"> <br /><br /></div>
-    <div style="width:45%; float:left">
-      <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLUser" class="homeWorkEditor" ng-model="selectedTask.submit.statement" style="resize:none; width:100%" disabled></div>
-    </div>
-    <div style="width:45%; float:right">
-      <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLRef" class="homeWorkEditor" ng-model="selectedTask.refStatement" style="resize:none; width:100%" disabled></div>
-    </div>
+<div class="ng-hide" ng-show="state.studentSelection" style="width:100%;float:right">
+
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th ng-click="orderTaskSetPredicate = 'matNr'; orderReverse = !orderReverse" style="cursor: pointer">Mat-Nr</th>
+      <th ng-click="orderTaskSetPredicate = 'done'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">Completed Tasks</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="student in vm.students | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectStudent(student)">
+      <td>{{ student.matNr }}</td>
+      <td style="text-align:right">{{ student.done }} / {{ student.all }}</td>
+    </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="ng-hide" ng-show="state.taskSetSelection" style="width:100%;float:right">
+  <table class="table table-hover">
+    <thead>
+    <tr>
+      <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name of TaskSet</th>
+      <th ng-click="orderTaskSetPredicate = 'points'; orderReverse = !orderReverse" style="cursor: pointer">Creator</th>
+      <th ng-click="orderTaskSetPredicate = 'refStatement'; orderReverse = !orderReverse" style="cursor: pointer;text-align : right">Completed Tasks</th>
+      <th ng-click="orderTaskSetPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="taskSet in vm.taskSets  | orderBy:orderTaskSetPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTaskSet(taskSet)">
+      <td>{{taskSet.taskSetName}}</td>
+      <td>{{taskSet.creator.username}}</td>
+      <td style="text-align : right">{{taskSet.tasks.done}} / {{ taskSet.tasks.all}}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="...">
+          <span class="glyphicon glyphicon-thumbs-up"></span> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
+          <span class="glyphicon glyphicon-search"></span> <span style="width: 2px"></span> {{ taskSet.rating.needReview }} <span style="width: 6px"></span>
+          <span class="glyphicon glyphicon-thumbs-down"></span> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ng-hide" ng-show="state.taskSelection" style="width:100%;float:right">
+  <table style="max-width:100%"class="table table-hover">
+    <thead>
+    <tr>
+      <th ng-click="orderTaskPredicate = 'id'; orderReverse = !orderReverse" style="cursor: pointer">Task Name</th>
+      <th ng-click="orderTaskPredicate = 'solve'; orderReverse = !orderReverse" style="cursor: pointer">Solved</th>
+      <th ng-click="orderTaskPredicate = 'availableSyntaxChecks'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">SyntaxChecks left</th>
+      <th ng-click="orderTaskPredicate = 'availableSemanticChecks'; orderReverse = !orderReverse" style="cursor: pointer; text-align : right">SemanticChecks left</th>
+      <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTask(task)">
+      <td>{{ task.taskName }}</td>
+      <td><input type="checkbox" ng-model="task.done" disabled></td>
+      <td style="text-align : right">{{ task.availableSyntaxChecks }}</td>
+      <td style="text-align : right">{{ task.availableSemanticChecks }}</td>
+      <td>
+        <div class="btn-group" role="group" aria-label="...">
+          <span class="glyphicon glyphicon-thumbs-up"></span> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
+          <span class="glyphicon glyphicon-search"></span> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
+          <span class="glyphicon glyphicon-thumbs-down"></span> <span style="width: 2px"></span> {{ task.rating.negative }}
+        </div>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="ng-hide" ng-show="state.inspectSubmit"  style="width:100%;float:right">
+  <div style="width:100%;height: 8px"> </div>
+  <div style="width:45%; float:left">
+    <button class="btn btn-default" ng-click="prevTask()" uib-tooltip="View previous Task of this TaskSet" style="float:left">Previous Task</button>
+    <label style="float:right">Student's Statement:</label>
+  </div>
+  <div style="width:45%; float:right">
+    <label style="float:left">Reference Statement:</label>
+    <button class="btn btn-default" ng-click="nextTask()" uib-tooltip="View next Task of this TaskSet" style="float:right">Next Task</button>
+  </div>
+  <div style="width:100%;"> <br /><br /></div>
+  <div style="width:45%; float:left">
+    <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLUser" class="homeWorkEditor" ng-model="selectedTask.submit.statement" style="resize:none; width:100%" disabled></div>
+  </div>
+  <div style="width:45%; float:right">
+    <div ui-ace="{ mode: 'sql', theme:'twilight', onLoad: setAceReadOnly }" id="CodeMirrorSQLRef" class="homeWorkEditor" ng-model="selectedTask.refStatement" style="resize:none; width:100%" disabled></div>
   </div>
 </div>

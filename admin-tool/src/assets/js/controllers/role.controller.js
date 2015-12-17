@@ -22,6 +22,13 @@ angular
     function RoleController($scope, FlashService, UserService) {
         var vm = this;
         vm.roles = [];
+        $scope.show = {
+            task: false,
+            homework: true,
+            role: true,
+            group: true,
+            user: true
+        };
 
         initController();
 
