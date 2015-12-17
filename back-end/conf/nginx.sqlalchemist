@@ -25,6 +25,17 @@ server {
 	location = /50x.html { 
 		root /usr/share/nginx/html; 
 	}
+
+	location / {
+		alias /var/www/sqlalchemist/front-end/;
+		index index.html;
+	}
+
+	location /admin {
+		alias /var/www/sqlalchemist/admin-tool;
+		index index.html;
+	}
+
 	location /phpmyadmin {
 		alias /var/www/sqlalchemist/phpmyadmin/;
 		index index.php;
@@ -39,7 +50,7 @@ server {
         	fastcgi_index  index.php;
     	}
 
-	location / {
+	location /API {
                 proxy_pass http://backend;
         }
 } 
