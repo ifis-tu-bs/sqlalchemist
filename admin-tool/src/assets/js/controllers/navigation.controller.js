@@ -16,7 +16,6 @@
         navigationBarController.$inject = ['$scope'];
         function navigationBarController($scope) {
             initController();
-            console.log($scope);
 
             function initController() {
                 routeNavigation.update();

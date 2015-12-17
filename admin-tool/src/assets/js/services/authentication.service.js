@@ -67,14 +67,7 @@
                 }
             ).then(
                 function (data) {
-                    return UserService.getRoleById(data.roleID);
-                },
-                function(error) {
-                    return $q.reject(error);
-                }
-            ).then(
-                function (data) {
-                    service.SetCredentials(data);
+                    service.SetCredentials(data.role);
                     if ($location.url() === "/login"){
                         $location.path("/home");
                     }
