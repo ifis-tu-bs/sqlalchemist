@@ -13,7 +13,7 @@
     text-overflow : ellipsis;
     -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
-    z-Index : 3;
+    z-Index : 10;
 }
 
 #skipOne, #skipAll {
@@ -37,7 +37,7 @@
     transition-duration: 0.2s;
     -webkit-transition-property: color, background-color;
     transition-property: color, background-color;
-    z-Index: 4;
+    z-Index: 12;
 }
 #skipAll:hover, #skipAll:focus, #skipAll:active {
     background-color: transparent;
@@ -47,6 +47,10 @@
 #skipOne:hover, #skipOne:focus, #skipOne:active {
     background-color: transparent;
     color: #10a30c;
+}
+
+#fade {
+    z-Index: 9;
 }
 
 
@@ -64,7 +68,7 @@
     text-overflow: ellipsis;
     -webkit-line-clamp: 8;
     -webkit-box-orient: vertical;
-    z-Index: 3;
+    z-Index: 10;
 }
 
 #textbody {
@@ -83,5 +87,5 @@
     overflow : visible;
     position : absolute;
     vertical-align : middle;
-    z-Index : 4;
+    z-Index : 11;
 }

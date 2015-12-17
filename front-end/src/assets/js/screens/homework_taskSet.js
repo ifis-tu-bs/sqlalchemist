@@ -18,6 +18,11 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
         $('#returnFromHWTaskButton').fadeIn(100);
         me.game.world.addChild(returnFromHWTaskButton);
 
+        //flag if you have done
+        submited         = new game.TextOutputElement('submited', 10, 10, 68, 30, 3);
+        submited.writeHTML("submited", 'pagebody');
+        me.game.world.addChild(submited);
+
 
 
         var repaint = [false,false,false,false,false];
@@ -177,29 +182,5 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
         me.game.world.addChild(nextPageButton);
         nextPageButton.setImage("assets/data/img/buttons/chalk_arrow_right.png", "chalkRightImage");
         nextPageButton.hide();
-
-
-
-        /**
-
-
-
-         for (var i = 0; i < currentHomework.taskSets[0].tasks.length; i++ ) {
-                console.log(currentHomework.taskSets[0].tasks.id);
-
-
-                }
-
-            }
-
-         var doneCounter = new game.TextOutputElement('doneCounter', 25, 5, 38, 25, 1);
-         me.game.world.addChild(doneCounter);
-         doneCounter.writeHTML(donetask + "/" + currentHomework.taskSets[0].tasks.length);
-
-         var expireDate = new game.TextOutputElement('expireDate', 35, 5, 60, 25, 1);
-         me.game.world.addChild(expireDate);
-         expireDate.writeHTML("due to: " + currentHomework.expire_at);*/
-
-
     }
 });

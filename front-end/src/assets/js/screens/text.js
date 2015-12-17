@@ -231,7 +231,7 @@ game.TextScreen = me.ScreenObject.extend({
             console.log("leave Switch");
 
             var BackgroundText = new game.BackgroundElement('BackgroundTextId', 100, 100, 0, 0, 'none');
-             BackgroundText.setImage("assets/data/img/gui/" + image + ".png", "backgroundscreen");
+             BackgroundText.setImage("assets/data/img/gui/" + image + ".png", "fade");
              me.game.world.addChild(BackgroundText);
              $("#BackgroundTextId").fadeIn(100);
 
