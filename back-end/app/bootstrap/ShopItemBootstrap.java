@@ -29,7 +29,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Fresh D!",
-                "You might think he is not so nimble,\\nbecause of his advanced age.\\nBut he ist Airbus P. W. B. Fumbledoor!\\nHe is the best!",
+                "You might think he is not so agile,\\nbecause of his advanced age.\\nBut he ist Airbus P. W. B. Fumbledoor!\\nHe is the best!",
                 "albus_dumbledore",
                 false,
                 new PlayerStats(2, 1, 2, 2, 0));
@@ -38,7 +38,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Art Weasleby",
-                "Art has worked in the Ministry \\nOf Magic for several years, but as you \\nwill see, he has not lost his touch.",
+                "Art has worked for the Ministry \\nOf Magic for several years, but as you \\nwill see, he has not lost his touch.",
                 "arthur_weasley",
                 false,
                 new PlayerStats(2,0,0,1,0));
@@ -74,7 +74,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Dolly P.",
-                "Little women in pink.\\nJust do not underestimate her,\\nshe is really robust.",
+                "Little women in pink.\\nJust do not underestimate her,\\nshe is really tough.",
                 "dolores_umbridge",
                 false,
                 new PlayerStats(0,1,1,0,0));
@@ -101,7 +101,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Tour de la Flur",
-                "The Beauty and a Beast, when it comes \\nto Agility. She really shows, why \\nshe is the Peauxpatons Champion",
+                "The Beauty and a Beast, when it comes \\nto agility. She really proves why \\nshe is the Peauxpatons Champion.",
                 "fleur_delacour",
                 false,
                 new PlayerStats(0,0,1,2,0));
@@ -119,7 +119,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "James and Oliver Uniform",
-                "Uniform seam to make one weak.\\nYeah maybe,but those two\\nare still some formidable runners.",
+                "Uniforms seam to make one weak.\\nYeah maybe, but those two\\nare still some formidable runners.",
                 "fred_and_george_2",
                 true,
                 new PlayerStats(1,1,0,0,0));
@@ -128,7 +128,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Gilderoyal Ockhard",
-                "Simply the greatest Wizard of all time,\\nknown from all his adventures,\\nso this one is right up his alley.",
+                "Simply the greatest wizard of all time,\\nknown for all his adventures,\\nso this one is right up his alley.",
                 "gilderoy_lockhart",
                 false,
                 new PlayerStats(0,0,0,0,0));
@@ -155,7 +155,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Hairy P. 2",
-                "The boy who lived. This is a upgraded \\nversion of the previous one. Let \\nus see how the parsel-mouth \\nwill do in the dungeon.",
+                "The boy who lived. This is an upgraded \\nversion of the original one. Let \\nus see how the parselmouth \\nwill do in the dungeon.",
                 "harry__potter",
                 false,
                 new PlayerStats(0,1,1,1,0));
@@ -173,7 +173,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Hermene Mine Moe 2",
-                "The smartest girl you will ever see,\\nunfortunately intelligence \\nis not one of the attributes, \\nbut she is still awesome.",
+                "The smartest girl you will ever know, \\nunfortunately, intelligence \\nis not one of the attributes, \\nbut she is still awesome.",
                 "hermione__granger",
                 false,
                 new PlayerStats(1,1,0,1,0));
@@ -182,7 +182,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Borace Jelzhorn",
-                "The Oldtimer. Still got some tricks\\nup his sleeves. Know to be slightly \\ncoward, he got great Speed.",
+                "The Oldtimer. Still got some tricks \\nup his sleeve. Known to be a slight \\ncoward, he got great speed.",
                 "horace_slughorn",
                 false,
                 new PlayerStats(1,0,2,1,0));
@@ -191,7 +191,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Usain Shacklebolt",
-                "The famous Auror, is a great fighter,\\nwhen it comes to small beasts.\\nTry to dodge the big ones with your exeptional speed.",
+                "The famous auror is a great fighter \\nwhen it comes to small beasts.\\nTry to dodge the big ones with your exceptional speed.",
                 "kingsley_shacklebolt",
                 false,
                 new PlayerStats(-4,1,5,0,0));
@@ -200,7 +200,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Student 72",
-                "Mrs. Lawntreeney's favourite student.\\nBrave and loyal. A typical Gryffindor.",
+                "Mrs. Lawntreeney's favourite student.\\nBrave and loyal. A typical Gryffinsnore.",
                 "lavender_brown",
                 false,
                 new PlayerStats(1,0,1,0,0));
@@ -209,7 +209,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Lucy Femalfoy",
-                "„Wait till his father hears about this.“\\nLet us see what he has to offer.",
+                "„Wait 'til his father hears about this.“\\nThen let us see what he has to offer.",
                 "lucius_malfoy",
                 false,
                 new PlayerStats(2,0,1,0,0));
@@ -227,7 +227,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Ms. McKittycat",
-                "The Professor for Transfiguration,\\nis also an Animagus,\\nshe got the velocity of a cat and\\nmaybe some lives to spare as well.",
+                "The professor for Transfiguration,\\nis also an animagus.\\nShe has got the velocity of a cat and\\nmaybe some lives to spare as well.",
                 "minerva_mcGonagel",
                 false,
                 new PlayerStats(2,0,0,2,0));
@@ -245,7 +245,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Mother Weasleby",
-                "Having 7 children, she knows how to \\ntake care of all kind of injuries.",
+                "Having 7 children, she knows how to \\ntake care of all kinds of injuries.",
                 "molly_weasley",
                 false,
                 new PlayerStats(4,0,0,0,0));
@@ -254,7 +254,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Mr. Beans",
-                "Mr. Beans is so boring, that all students \\nfall asleep. He died centenaries \\nyet he still teaches History.",
+                "Mr. Beans is so boring, that all students \\nfall asleep. He died centuries ago, \\nyet he still teaches History.",
                 "mr_binns2",
                 false,
                 new PlayerStats(0,0,0,3,0));
@@ -263,7 +263,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Narziss Femalfoy",
-                "The pure blood, she is not officially \\nevil, but nice is something different.\\nGreat mobility, low health.",
+                "Being a pure blood, she is not officially \\nevil, but nice is something different.\\nGreat mobility, low health.",
                 "narcissa_malfoy",
                 false,
                 new PlayerStats(-1,0,2,2,0));
@@ -272,7 +272,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Neville Strongbottom",
-                "I've always hoped that he is\\nthe one from the prophecy.\\nChoose him, he is really good.",
+                "I've always hoped that he is\\nthe one in the prophecy.\\nChoose him, he is really good.",
                 "neville_longbottom",
                 false,
                 new PlayerStats(0,1,0,0,0));
@@ -281,7 +281,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Nymphadora Tongues",
-                "The girl of many colors, she is an Auror\\nwith bad temper, but great tempo.",
+                "The girl of many colors, she is an auror\\nwith a bad temper, but great tempo.",
                 "nymphadora_tonks",
                 false,
                 new PlayerStats(0,0,3,1,0));
@@ -308,7 +308,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Wolfgang Wolf",
-                "Full moon or not, this Lykanthrop is on \\nthe prowl. No one is as swift as him.",
+                "Full moon or not, this lykanthrope is on \\nthe prowl. No one is as swift as he is.",
                 "remus_lupin",
                 false,
                 new PlayerStats(-2,0,3,3,0));
@@ -326,7 +326,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Bon Weasleby 2",
-                "The muscle of the gang. Quidditch \\nkeeper and the greatest Chess-player \\nof Hogwarts, you might think.",
+                "The muscles of the gang. Quidditch \\nkeeper and the greatest chess player \\nof Hogwarts, you might think.",
                 "ron__weasley",
                 false,
                 new PlayerStats(3,1,-1,0,0));
@@ -335,7 +335,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Hoga",
-                "Due to his giant half,\\nhe is a real juggernaut.\\nNot very fast, but unstoppable,\\nonce he got some momentum.",
+                "Due to his giant half,\\nhe is a real juggernaut.\\nNot very fast, but unstoppable \\nonce he got some momentum.",
                 "rubeus_hagrid",
                 false,
                 new PlayerStats(5,2,-2,0,0));
@@ -344,7 +344,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Seamus Gallagher",
-                "Seamus is quite an explosive character and \\nhas often been in mortal danger.\\nNobody knows why he is still standing.",
+                "Seamus is quite an explosive character and \\nhas often been in mortal danger.\\nNobody knows how he is still standing.",
                 "seamus_finnigan",
                 false,
                 new PlayerStats(5,-1,0,0,0));
@@ -363,7 +363,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Sloop Dogg",
-                "The only wizzard who escaped azkaban\\non his own with the speed of a hound.\\nHe should be able to escape the \\ndungeon, and all it throws at him.",
+                "The only wizard who escaped Azkaban\\non his own with the speed of a hound.\\nHe should be able to escape the \\ndungeon and everything it throws at him.",
                 "sirius_black",
                 false,
                 new PlayerStats(3,2,3,-2,0));
