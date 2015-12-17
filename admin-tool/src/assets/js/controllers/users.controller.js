@@ -21,8 +21,6 @@ angular
         $scope.orderReverse = false;
         $scope.orderPredicate = 'email';
 
-        console.log(UserService.getAllRoles);
-
         function initController() {
             getAllUsers();
             $scope.getAllRoles();

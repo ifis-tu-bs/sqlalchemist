@@ -5,18 +5,20 @@
         .module('app')
         .factory('UserService', UserService);
 
-    UserService.$inject = ['$http'];
-    function UserService($http) {
+    UserService.$inject = ['$http', '$q', '$timeout'];
+    function UserService($http, $q, $timeout) {
         var service = {};
 
         service.getAllUsers = getAllUsers;
         service.resetPassword = resetPassword;
         service.promoteUser = promoteUser;
+        service.getUserByUsername = getUserByUsername;
 
         service.getAllRoles = getAllRoles;
         service.updateRole = updateRole;
         service.deleteRole = deleteRole;
         service.createRole = createRole;
+        service.getRoleById = getRoleById;
 
         return service;
 
@@ -31,6 +33,12 @@
         function promoteUser(user) {
             return $http.post("/API/User/"+ user.username + "/", {roleID: user.roleID}).then(handleSuccess, handleError);
         }
+
+        function getUserByUsername(username) {
+            return $http.get("/API/User/" + username + "/").then(handleSuccess, handleError);
+        }
+
+        /* Role Calls */
 
         function getAllRoles() {
             return $http.get("/API/Role/").then(handleSuccess, handleError);
@@ -47,7 +55,12 @@
         function deleteRole(role) {
             return $http.delete("/API/Role/" + role.id + "/").then(handleSuccess, handleError);
         }
-        // private Funktionen
+
+        function getRoleById(roleID) {
+            return $http.get("/API/Role/" + roleID + "/").then(handleSuccess, handleError);
+        }
+
+        /* decapsulate XHR - Methods */
 
         function handleSuccess(data) {
             return data.data;

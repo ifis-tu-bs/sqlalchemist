@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="col-md-10 col-md-offset-1">
   <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message"></div>
   <div ng-show="vm.error" class="alert alert-danger">{{vm.error}}</div>
 

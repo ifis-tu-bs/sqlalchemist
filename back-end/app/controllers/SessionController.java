@@ -9,6 +9,7 @@ import models.Action;
 import models.Session;
 import models.User;
 
+import play.Logger;
 import play.libs.Json;
 import secured.SessionAuthenticator;
 
@@ -44,13 +45,19 @@ public class SessionController extends Controller {
             return forbidden("Your Client is not registered");
         }
 
+        Logger.info("Jup");
+
         Form<Login> loginForm   = Form.form(Login.class).bindFromRequest();
+
+        Logger.info(loginForm.toString());
 
         if(loginForm.hasErrors()) {
             return badRequest(loginForm.errorsAsJson());
         }
 
         Login       login       = loginForm.bindFromRequest().get();
+
+        Logger.info(login.toString());
 
         User user = ServiceUser.authenticate(login);
         if(user == null) {

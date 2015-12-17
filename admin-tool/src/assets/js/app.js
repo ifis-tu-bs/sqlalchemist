@@ -39,7 +39,8 @@
                 templateUrl: 'assets/views/task.view.html',
                 controllerAs: 'vm',
                 name : 'Tasks',
-                see: ['/home', '/task', '/homework', '/users']
+                see: true,
+                needsPermissionOn: ['ownTaskSetPermissions', 'foreignTaskSetPermissions', 'ownTaskPermissions', 'foreignTaskPermissions']
             })
 
             .when('/homework', {
@@ -47,7 +48,8 @@
                 templateUrl: 'assets/views/homework.view.html',
                 controllerAs: 'vm',
                 name : 'Homework',
-                see: ['/home', '/task', '/homework', '/users']
+                see: true,
+                needsPermissionOn: ['homeworkPermissions']
             })
 
             .when('/users', {
@@ -55,7 +57,17 @@
                 templateUrl: 'assets/views/users.view.html',
                 controllerAs: 'vm',
                 name : 'Users',
-                see: ['/home', '/task', '/homework', '/users']
+                see: true,
+                needsPermissionOn: ['userPermissions']
+            })
+
+            .when('/roles', {
+                controller: 'RoleController',
+                templateUrl: 'assets/views/role.view.html',
+                controllerAs: 'vm',
+                name: 'Roles',
+                see: true,
+                needsPermissionOn: ['rolePermissions']
             })
 
             .when('/passwordreset/:code', {
@@ -64,13 +76,7 @@
                 controllerAs: 'vm'
             })
 
-            .when('/roles', {
-                controller: 'RoleController',
-                templateUrl: 'assets/views/role.view.html',
-                controllerAs: 'vm',
-                name: 'Roles',
-                see: true
-            })
+
 
             .otherwise({ redirectTo: '/' });
     }
@@ -83,6 +89,7 @@
         $rootScope.Tasks = $rootScope.Tasks || {};
 
         AuthService.Session();
+
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login if not having a session stored

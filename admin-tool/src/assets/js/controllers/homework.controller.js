@@ -72,7 +72,6 @@ angular
             TaskService.getAllHomeworks().then(
                 function (result) {
                     vm.homeworks = result;
-                    console.log($scope.state);
                 },
                 function (error) {
                     FlashService.Error(result.message);

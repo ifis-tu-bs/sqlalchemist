@@ -17,6 +17,6 @@ public class CanReadUsers extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return forbidden(Json.parse("'message':'you have not the permissions to view all users'"));
+        return forbidden("you do not own the permissions to view users");
     }
 }

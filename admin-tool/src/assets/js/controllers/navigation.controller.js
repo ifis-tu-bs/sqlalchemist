@@ -15,8 +15,18 @@
     function directNavigationBar(routeNavigation) {
         navigationBarController.$inject = ['$scope'];
         function navigationBarController($scope) {
-            $scope.routes = routeNavigation.routes;
-            $scope.activeRoute = routeNavigation.activeRoute;
+            initController();
+            console.log($scope);
+
+            function initController() {
+                routeNavigation.update();
+                $scope.routes = routeNavigation.getRoutes();
+                $scope.activeRoute = routeNavigation.getActiveRoute();
+            }
+
+            $scope.$watch(function(){return routeNavigation.getRoutes();}, function() {
+                initController();
+            }, $scope.routes);
         }
 
         return {
