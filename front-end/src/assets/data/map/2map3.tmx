@@ -4,10 +4,10 @@
   <image source="../img/map/oppcastle.png" width="480" height="352"/>
  </tileset>
  <tileset firstgid="166" name="castle1" tilewidth="32" tileheight="32">
-  <image source="../../../../../../SEP/Prototyp/assets/data/img/map/castle1.png" width="512" height="1344"/>
+  <image source="../img/map/castle1.png" width="512" height="1344"/>
  </tileset>
  <tileset firstgid="838" name="castle2" tilewidth="32" tileheight="32">
-  <image source="../../../../../../SEP/Prototyp/assets/data/img/map/castle2.png" width="512" height="672"/>
+  <image source="../img/map/castle2.png" width="512" height="672"/>
  </tileset>
  <imagelayer name="Parallax_layer1">
   <image source="../img/background/tree.png"/>
@@ -162,7 +162,7 @@
     <property name="spritewidth" value="64"/>
    </properties>
   </object>
-  <object id="194" name="EnemyEntity" x="1999" y="735" width="67" height="314">
+  <object id="194" name="EnemyEntity" x="2007" y="734" width="67" height="314">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -222,7 +222,7 @@
     <property name="spritewidth" value="70"/>
    </properties>
   </object>
-  <object id="227" name="EnemyEntity" x="1775" y="797" width="65" height="247">
+  <object id="227" name="EnemyEntity" x="1784" y="796" width="65" height="247">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -232,7 +232,7 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="235" name="EnemyEntity" x="2225.5" y="671" width="62" height="373">
+  <object id="235" name="EnemyEntity" x="2233.5" y="670" width="62" height="373">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
@@ -242,7 +242,7 @@
     <property name="spritewidth" value="45"/>
    </properties>
   </object>
-  <object id="236" name="EnemyEntity" x="2456" y="554.5" width="59" height="439">
+  <object id="236" name="EnemyEntity" x="2459" y="551.5" width="59" height="439">
    <properties>
     <property name="attack" value="0"/>
     <property name="image" value="saber"/>
