@@ -221,6 +221,8 @@ game.TextScreen = me.ScreenObject.extend({
                     me.state.change(state);
                 } else {
                     game.data.wait = true;
+                    skipOneButton.hide();
+
                 }
             } else {
                 me.state.change(me.state.READY);
@@ -231,7 +233,7 @@ game.TextScreen = me.ScreenObject.extend({
             console.log("leave Switch");
 
             var BackgroundText = new game.BackgroundElement('BackgroundTextId', 100, 100, 0, 0, 'none');
-             BackgroundText.setImage("assets/data/img/gui/" + image + ".png", "fade");
+             BackgroundText.setImage("assets/data/img/gui/" + image + ".png", "backgroundscreen");
              me.game.world.addChild(BackgroundText);
              $("#BackgroundTextId").fadeIn(100);
 
@@ -241,11 +243,11 @@ game.TextScreen = me.ScreenObject.extend({
                 var runButton        = new game.BackgroundElement('runtut', 17.2, 49.6, 31.7, 14.5);
                 var colButton        = new game.BackgroundElement('coltut', 20, 13, 60, 70);
                 var sheetButton      = new game.BackgroundElement('sheettut', 12, 27.2, 16.3, 8.3);
-                var terryButton      = new game.BackgroundElement('terrytut', 19.32, 66.15, 53.3, 10.29);
                 var scrollColButton  = new game.BackgroundElement('scrollColtut', 29.7, 23.7, 17.6, 76.3);
                 var backButton       = new game.BackgroundElement('backtut', 14.6, 43.2, 83.5, 9.8);
                 var bookButton       = new game.BackgroundElement('booktut', 18.6, 46.5, 81.74, 53.5);
                 var catButton        = new game.BackgroundElement('cattut', 9.24, 20.96, 46.89, 52.99);
+                var terryButton      = new game.BackgroundElement('terrytut', 19.32, 66.15, 53.3, 10.29);
             
                 runButton.setImage("assets/data/img/buttons/menubuttons/dungeon_door.png", "dungeonImage");
                 colButton.setImage("assets/data/img/buttons/menubuttons/scroll_collection.png", "scrollsImage");
@@ -260,17 +262,17 @@ game.TextScreen = me.ScreenObject.extend({
                 me.game.world.addChild(sheetButton);
                 me.game.world.addChild(colButton);
                 me.game.world.addChild(terryButton);
-                me.game.world.addChild(scrollColButton);
                 me.game.world.addChild(backButton);
                 me.game.world.addChild(bookButton);
                 me.game.world.addChild(catButton);
+                me.game.world.addChild(scrollColButton);
             }
         
 
-             var fadeBackgroundText = new game.BackgroundElement('fadeBackgroundTextId', 100, 100, 0, 0, 'none');
-            fadeBackgroundText.setImage("assets/data/img/gui/faded_lab_screen.png", "backgroundscreen");
+             var fadeBackgroundText = new game.BackgroundElement('fade', 100, 100, 0, 0, 'none');
+            fadeBackgroundText.setImage("assets/data/img/gui/faded_lab_screen.png", "fade");
             me.game.world.addChild(fadeBackgroundText);
-            $("#fadeBackgroundTextId").fadeIn(100);
+            $("#fade").fadeIn(100);
 
             skipAllButton      = new game.ClickableElement('skipAll', 'skip All', skipAll, 10, 6, 85, 90, 2);
             skipOneButton      = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
@@ -288,20 +290,16 @@ game.TextScreen = me.ScreenObject.extend({
                 newTutorialButton.display();
             }
 
-            if (game.data.playerStat.isTutorial) {
-                me.game.world.addChild(skipAllButton);
-                me.game.world.addChild(skipOneButton);
-                skipAllButton.display();
-                skipOneButton.display();
-            }
+            me.game.world.addChild(skipAllButton);
+            me.game.world.addChild(skipOneButton);
+            skipAllButton.display();
+            skipOneButton.display();
 
 
             var audio;
             if (game.data.playerStat.isTutorial) {
                 audio = "take".concat(game.data.text + 1);
             } else {
-                skipAllButton.hide();
-                skipOneButton.hide();
                 audio = "bosstext".concat(Math.floor((game.persistent.depth - 1) / 5));
             }
 

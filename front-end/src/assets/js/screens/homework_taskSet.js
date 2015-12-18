@@ -107,8 +107,10 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
                         $('#checkboxId' + (i + 5 *(game.homework.page -1))).fadeIn(100);
                     }
                 }
+                //repaint[game.homework.page] = true;
             }else{
-                //
+                //Hier könnte in Zukunft eine Schöne repaint aufforderung stehen
+                
             }
 
 
