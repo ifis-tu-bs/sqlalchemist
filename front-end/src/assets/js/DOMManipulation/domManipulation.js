@@ -1017,6 +1017,10 @@ game.fdom.NotificationElement = me.Renderable.extend({
 
         $(mainElement).fadeIn(100);
 
+        setTimeout(function() {
+            $(mainElement).fadeOut(100);
+        }, 5 * 1000);
+
     },
     getNode : function () {
         return this.elem;
