@@ -40,7 +40,7 @@
    <property name="duration" value="300"/>
    <property name="fade" value="#300000"/>
   </properties>
-  <object id="3" name="mainPlayer" x="14" y="301" width="32" height="64">
+  <object id="3" name="mainPlayer" x="-19" y="315" width="32" height="64">
    <properties>
     <property name="image" value="gripe_run_right"/>
     <property name="spritewidth" value="64"/>

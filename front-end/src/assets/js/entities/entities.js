@@ -207,7 +207,7 @@ game.PlayerEntity = me.Entity.extend({
                     //Damage to take once only
                     var damage = Math.ceil(game.persistent.depth / 5) - game.stats.defense - game.stats.adddefense + game.persistent.damage;
                     if(damage > 0){
-                        game.stats.hp -= damage;
+                        game.stats.hp -= (damage + (Math.floor(Math.random() * 1,13)));
                         this.renderable.flicker(1500);
                         //play audio
                         if(game.data.sound){
