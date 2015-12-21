@@ -16,10 +16,10 @@ public class SQLResultView {
         sqlResultNode.put("type", sqlResult.getType());
         sqlResultNode.put("time", userStatement.getTime());
         if(sqlResult.getType() == SQLResult.ERROR) {
-            sqlResultNode.put("terry", "syntax error");
+            sqlResultNode.put("terry", "Your query's syntax is incorrect");
             sqlResultNode.put("SQLError", sqlResult.getSqlStatus().getSqlException().getMessage());
         } else {
-            sqlResultNode.put("terry", "semantic error");
+            sqlResultNode.put("terry", "Your query was semantically incorrect");
             sqlResultNode.put("SQLError", sqlResult.getMessage());
         }
 
@@ -30,7 +30,7 @@ public class SQLResultView {
         ObjectNode sqlResultNode = Json.newObject();
 
         sqlResultNode.put("type",       sqlResult.getType());
-        sqlResultNode.put("terry",      "your answer was correct");
+        sqlResultNode.put("terry",      "Your query is correct");
         sqlResultNode.put("time",       userStatement.getTime());
         sqlResultNode.put("score",      sqlResult.getTask().getScore() / userStatement.getTime());
         sqlResultNode.put("coins",      coins);
@@ -44,18 +44,22 @@ public class SQLResultView {
 
         sqlResultNode.put("type",       sqlResult.getType());
 
-        if ( sqlResult.getType() == SQLResult.SEMANTICS) {
+        if ( sqlResult.getType() == SQLResult.SEMANTICS ) {
             if( submit ) {
-                sqlResultNode.put("terry", "semantic error");
+                sqlResultNode.put("terry", "Your query was semantically incorrect");
                 sqlResultNode.put("SQLError", sqlResult.getMessage());
             } else {
-                sqlResultNode.put("terry", "Your Syntax is correct");
+                sqlResultNode.put("terry", "Your query is semantically correct");
             }
-       } else if(sqlResult.getType() == SQLResult.ERROR) {
-            sqlResultNode.put("terry", "syntax error");
+        } else if(sqlResult.getType() == SQLResult.ERROR) {
+            sqlResultNode.put("terry", "Your query's syntax is incorrect");
             sqlResultNode.put("SQLError", sqlResult.getSqlStatus().getSqlException().getMessage());
         } else {
-            sqlResultNode.put("terry",      "your answer was correct");
+            if( submit ) {
+                sqlResultNode.put("terry", "Your query is correct");
+            } else {
+                sqlResultNode.put("terry", "Your query's syntax is correct");
+            }
         }
 
         sqlResultNode.put("time",       userStatement.getTime());
