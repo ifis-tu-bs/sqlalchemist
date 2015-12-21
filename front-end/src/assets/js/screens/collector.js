@@ -32,7 +32,7 @@ game.CollectorScreen = me.ScreenObject.extend({
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 2.8, 2.5, 1);
+        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 80, 2.5, 1);
         backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
         me.game.world.addChild(backToLabButton);
 
@@ -127,5 +127,9 @@ game.CollectorScreen = me.ScreenObject.extend({
         var scrollLimit = new game.TextOutputElement('limtext', 70, 12, 15, 77, 2);
         me.game.world.addChild(scrollLimit);
         scrollLimit.writeHTML("You can only collect 3 scrolls a day!", 'limtextbody');
+
+        var info = new game.TextOutputElement('infotext', 80, 10, 10, 85, 3);
+        me.game.world.addChild(info);
+        info.writeHTML("To finish a level you have to use all of its enchantments and beat its boss.", 'infotextbody');
     }
 });

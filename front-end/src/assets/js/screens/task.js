@@ -618,7 +618,7 @@ game.TaskScreen = me.ScreenObject.extend({
                     me.state.change(STATE_RESULT);
                 }
 
-                textOut.writeHTML(dataResult.terry + "<br>" + "Time: " + dataResult.time, 'taskbody');
+                textOut.writeHTML(dataResult.terry + "<br>" + "Time: " + convertTime(dataResult.time), 'taskbody');
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 

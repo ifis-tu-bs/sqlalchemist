@@ -11,7 +11,7 @@
 	z-Index : 4;
 }
 
-#limtext, #protext {
+#limtext, #protext, #infotext {
 	background-color: transparent;
 	border-style: none;
 	color: #03001f;
@@ -29,7 +29,7 @@
 	z-Index: 3;
 }
 
-#limtextbody, #protextbody {
+#limtextbody, #protextbody, #infotextbody {
 	width: 100%;
 	height: 100%;
 	overflow: auto;
