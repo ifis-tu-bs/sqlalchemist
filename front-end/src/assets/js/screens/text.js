@@ -290,16 +290,20 @@ game.TextScreen = me.ScreenObject.extend({
                 newTutorialButton.display();
             }
 
-            me.game.world.addChild(skipAllButton);
-            me.game.world.addChild(skipOneButton);
-            skipAllButton.display();
-            skipOneButton.display();
+            if (game.data.playerStat.isTutorial) {
+                me.game.world.addChild(skipAllButton);
+                me.game.world.addChild(skipOneButton);
+                skipAllButton.display();
+                skipOneButton.display();
+            }
 
 
             var audio;
             if (game.data.playerStat.isTutorial) {
                 audio = "take".concat(game.data.text + 1);
             } else {
+                skipAllButton.hide();
+                skipOneButton.hide();
                 audio = "bosstext".concat(Math.floor((game.persistent.depth - 1) / 5));
             }
 
