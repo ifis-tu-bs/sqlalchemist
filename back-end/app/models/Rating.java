@@ -61,11 +61,11 @@ public class Rating extends Model {
     }
 
     public long getUserId() {
-        return user.getId();
+        return  (user != null)? user.getId(): 0;
     }
 
     public String getUserName() {
-        return user.getUsername();
+        return (user != null)? user.getUsername(): "";
     }
 
     @JsonIgnore
