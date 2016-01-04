@@ -51,3 +51,12 @@
     vertical-align : middle;
     z-Index : 4;
 }
+
+.Button.SignUpScreen, .Button.PasswordResetScreen{
+    font-size: 6vh;
+    color: black;
+}
+
+.Button.SignUpScreen:hover, .Button.PasswordResetScreen:hover {
+    color: red;
+}

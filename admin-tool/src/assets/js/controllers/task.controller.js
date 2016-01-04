@@ -433,7 +433,7 @@ angular
                             FlashService.Success("Created new Task");
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                 );

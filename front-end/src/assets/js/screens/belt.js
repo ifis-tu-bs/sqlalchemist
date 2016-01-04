@@ -8,7 +8,10 @@ game.BeltScreen = me.ScreenObject.extend({
         var backgroundBelt = new game.BackgroundElement('backgroundBeltId', 100, 100, 0, 0, 'none');
         backgroundBelt.setImage("assets/data/img/gui/belt_screen.png", "backgroundbelt");
         me.game.world.addChild(backgroundBelt);
-        $("#backgroundBeltId").fadeIn(100);
+
+        var potionLegend = new game.BackgroundElement('potionLegendId', 2.4242, 4,1666, 90, 4, 'none');
+        potionLegend.setImage("assets/data/img/potion/WEAK_DEFENSEPOTION.png", "potionLegendImage");
+        me.game.world.addChild(potionLegend);    
 
         /**
          * Create button and according callback-function to go back to teh Laboratory.
@@ -138,7 +141,7 @@ game.BeltScreen = me.ScreenObject.extend({
                     var i = 0;
 
                     while (i < game.belt.beltSlots.length && game.belt.beltSlots[i] !== null) {
-                        console.log("giveMeThe i: " + i + "and slot: " + game.belt.beltSlots[i]);
+                        //console.log("giveMeThe i: " + i + "and slot: " + game.belt.beltSlots[i]);
                         i++;
                     }
 
@@ -343,8 +346,6 @@ game.BeltScreen = me.ScreenObject.extend({
 
             //Update Potion Amount
             function repaintPotionAmount(){
-
-
 
                 for (i = 1; i < 6; i++) {
                     var potionAmount;

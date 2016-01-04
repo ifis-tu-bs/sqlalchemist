@@ -9,7 +9,7 @@ game.LoginScreen = me.ScreenObject.extend({
         me.game.world.addChild(parchment);
         parchment.hide();
 
-        var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','10%', 'Login', 'Title LoginScreen');
+        var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','15%', 'Login', 'Title LoginScreen');
         me.game.world.addChild(title);
 
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form LoginScreen', function() {

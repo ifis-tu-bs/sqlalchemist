@@ -33,6 +33,7 @@ game.CollectorScreen = me.ScreenObject.extend({
         };
 
         var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 80, 2.5, 1);
+
         backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
         me.game.world.addChild(backToLabButton);
 

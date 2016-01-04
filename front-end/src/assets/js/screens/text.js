@@ -71,7 +71,7 @@ game.TextScreen = me.ScreenObject.extend({
                 console.log("we entered: " + game.data.text);
                 nextState = 0;
                 buttonImage = "potion_belt_cut";
-                position = [ 20, 13, 60, 70];
+                position = [ 29.7, 23.7, 17.6, 76.3];
                 //me.game.world.addChild(new tutorialButton(98, 590, "lab_belt", 507, 430, 0));
                 y = 26;
                 change = false;
@@ -240,32 +240,33 @@ game.TextScreen = me.ScreenObject.extend({
 
 //------------------>
             if (image ==="new_lab") { 
-                var runButton        = new game.BackgroundElement('runtut', 17.2, 49.6, 31.7, 14.5);
-                var colButton        = new game.BackgroundElement('coltut', 20, 13, 60, 70);
-                var sheetButton      = new game.BackgroundElement('sheettut', 12, 27.2, 16.3, 8.3);
-                var scrollColButton  = new game.BackgroundElement('scrollColtut', 29.7, 23.7, 17.6, 76.3);
-                var backButton       = new game.BackgroundElement('backtut', 14.6, 43.2, 83.5, 9.8);
-                var bookButton       = new game.BackgroundElement('booktut', 18.6, 46.5, 81.74, 53.5);
-                var catButton        = new game.BackgroundElement('cattut', 9.24, 20.96, 46.89, 52.99);
-                var terryButton      = new game.BackgroundElement('terrytut', 19.32, 66.15, 53.3, 10.29);
+
+                var runTutorial        = new game.BackgroundElement('runtut', 17.2, 49.6, 31.7, 14.5);
+                var beltTutorial       = new game.BackgroundElement('belttut', 29.7, 23.7, 17.6, 76.3);
+                var sheetTutorial      = new game.BackgroundElement('sheettut', 12, 27.2, 16.3, 8.3);
+                var terryTutorial      = new game.BackgroundElement('terrytut', 19.32, 66.15, 53.3, 10.29);
+                var scrollColTutorial  = new game.BackgroundElement('scrollColtut', 20, 13, 60, 70, 2);
+                var backTutorial       = new game.BackgroundElement('backtut', 14.6, 43.2, 83.5, 9.8);
+                var bookTutorial       = new game.BackgroundElement('booktut', 18.6, 46.5, 81.74, 53.5);
+                var catTutorial        = new game.BackgroundElement('cattut', 9.24, 20.96, 46.89, 52.99);
             
-                runButton.setImage("assets/data/img/buttons/menubuttons/dungeon_door.png", "dungeonImage");
-                colButton.setImage("assets/data/img/buttons/menubuttons/scroll_collection.png", "scrollsImage");
-                sheetButton.setImage("assets/data/img/buttons/menubuttons/mirror.png", "sheetImage");
-                terryButton.setImage("assets/data/img/buttons/menubuttons/schrank.png", "terryImage");
-                scrollColButton.setImage("assets/data/img/buttons/menubuttons/potion_belt_cut.png", "beltImage");
-                backButton.setImage("assets/data/img/buttons/menubuttons/fat_lady.png", "fatLadyImage");
-                bookButton.setImage("assets/data/img/buttons/menubuttons/table.png", "tableImage");
-                catButton.setImage("assets/data/img/buttons/menubuttons/cat.png", "catImage");
-            
-                me.game.world.addChild(runButton);
-                me.game.world.addChild(sheetButton);
-                me.game.world.addChild(colButton);
-                me.game.world.addChild(terryButton);
-                me.game.world.addChild(backButton);
-                me.game.world.addChild(bookButton);
-                me.game.world.addChild(catButton);
-                me.game.world.addChild(scrollColButton);
+                runTutorial.setImage("assets/data/img/buttons/menubuttons/dungeon_door.png", "dungeonImage");
+                beltTutorial.setImage("assets/data/img/buttons/menubuttons/potion_belt_cut.png", "beltImage");
+                sheetTutorial.setImage("assets/data/img/buttons/menubuttons/mirror.png", "sheetImage");
+                terryTutorial.setImage("assets/data/img/buttons/menubuttons/schrank.png", "terryImage");
+                scrollColTutorial.setImage("assets/data/img/buttons/menubuttons/scroll_collection.png", "scrollsImage");
+                backTutorial.setImage("assets/data/img/buttons/menubuttons/fat_lady.png", "fatLadyImage");
+                bookTutorial.setImage("assets/data/img/buttons/menubuttons/table.png", "tableImage");
+                catTutorial.setImage("assets/data/img/buttons/menubuttons/cat.png", "catImage");
+
+                me.game.world.addChild(runTutorial);
+                me.game.world.addChild(sheetTutorial);
+                me.game.world.addChild(beltTutorial);
+                me.game.world.addChild(terryTutorial);
+                me.game.world.addChild(scrollColTutorial);
+                me.game.world.addChild(backTutorial);
+                me.game.world.addChild(bookTutorial);
+                me.game.world.addChild(catTutorial);
             }
         
 

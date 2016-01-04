@@ -40,14 +40,15 @@
 .Button.LoginScreen.Enter {
     font-size: 6vh;
     color: black;
-    background: url('/assets/data/img/buttons/key.png');
+    background-image: url('/assets/data/img/buttons/key.png');
     background-repeat: no-repeat;
     background-size: contain;
     background-position: bottom;
 }
 
 .Button.LoginScreen.Enter:hover {
-    color: black;
+    color: red;
+    background-image: url('/assets/data/img/buttons/key_red.png');
 }
 
 .Button.SignUpScreen, .Button.PasswordResetScreen{
