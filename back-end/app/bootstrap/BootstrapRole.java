@@ -68,10 +68,10 @@ public class BootstrapRole {
             Role user = new Role();
             user.setPriority(10);
             user.setRoleName("User");
-            user.setOwnTaskSetPermissions(PermissionRules.getReadControl());
-            user.setForeignTaskSetPermissions(PermissionRules.getReadControl());
-            user.setOwnTaskPermissions(PermissionRules.getReadControl());
-            user.setForeignTaskPermissions(PermissionRules.getReadControl());
+            user.setOwnTaskSetPermissions(PermissionRules.getNoControl());
+            user.setForeignTaskSetPermissions(PermissionRules.getNoControl());
+            user.setOwnTaskPermissions(PermissionRules.getNoControl());
+            user.setForeignTaskPermissions(PermissionRules.getNoControl());
             user.setHomeworkPermissions(PermissionRules.getNoControl());
             user.setRolePermissions(PermissionRules.getNoControl());
             user.setUserPermissions(PermissionRules.getNoControl());

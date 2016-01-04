@@ -348,7 +348,6 @@ public class User extends Model {
     }
 
     public void setRoleID(long id) {
-        Logger.info("Test");
         Role role = RoleDAO.getById(id);
         this.setRole(role);
     }
