@@ -152,7 +152,6 @@ public class User extends Model {
         this.setCoins(0);
 
         this.setCoinScale(1f);
-        this.setScrollLimit(Play.application().configuration().getInt("Game.ScrollLimit"));
 
         this.score          = new Score();
 
@@ -334,6 +333,7 @@ public class User extends Model {
         return password;
     }
 
+    @JsonIgnore
     public Role getRole() {
         return role;
     }
@@ -529,11 +529,7 @@ public class User extends Model {
     }
 
     public int getScrollLimit() {
-        return scrollLimit;
-    }
-
-    public void setScrollLimit(int scrollLimit) {
-        this.scrollLimit = scrollLimit;
+        return ScrollCollectionDAO.getLimit(this);
     }
 
     public Score getScore() {

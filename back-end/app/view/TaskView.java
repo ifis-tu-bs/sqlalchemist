@@ -66,6 +66,7 @@ public class TaskView {
         TaskSet     taskSet     = task.getTaskSet();
 
         json.put("id",                  task.getId());
+        json.put("taskSet",             taskSet.getId());
         json.put("name",            task.getTaskName());
         json.put("relationsFormatted",  taskSet.getRelationsFormatted());
         json.put("taskText",            task.getTaskText());

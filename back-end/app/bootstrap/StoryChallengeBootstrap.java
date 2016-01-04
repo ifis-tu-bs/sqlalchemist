@@ -141,7 +141,7 @@ public class StoryChallengeBootstrap {
                            "   according to the time it took you to solve the task. Once" + "<br>" +
                            "   you finished the task, you will receive the Potion which you" + "<br>" +
                            "   afterwards can use in the Dungeons and then you maybe won't die that often." + "<br>" +
-						   "   - In the next screen, click on the small scroll -" +,
+						   "   - In the next screen, click on the small scroll -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_BELT_SUCCESSFULL, 4));
 
 

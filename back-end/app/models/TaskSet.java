@@ -4,6 +4,7 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import view.TableDefinitionView;
 
 import javax.persistence.*;
@@ -51,8 +52,6 @@ public class TaskSet extends Model {
 
     private Date                        createdAt;
     private Date                        updatedAt;
-
-    public static final Finder<Long, TaskSet> find = new Finder<>(TaskSet.class);
 
 //////////////////////////////////////////////////
 //  constructor
@@ -170,6 +169,7 @@ public class TaskSet extends Model {
         this.foreignKeyRelations = foreignKeyRelations;
     }
 
+    @JsonIgnore
     public List<Task> getTasks() {
         return tasks;
     }
@@ -186,8 +186,17 @@ public class TaskSet extends Model {
         return isHomework;
     }
 
+    @JsonIgnore
     public User getCreator() {
         return creator;
+    }
+
+    public long getCreatorId() {
+        return creator.getId();
+    }
+
+    public String getCreatorName() {
+        return creator.getUsername();
     }
 
     public List<Rating> getRatings() {

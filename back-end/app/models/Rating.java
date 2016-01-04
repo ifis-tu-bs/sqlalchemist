@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.Play;
 import com.avaje.ebean.Model;
 
@@ -54,10 +55,20 @@ public class Rating extends Model {
         return id;
     }
 
+    @JsonIgnore
     public User getUser() {
         return user;
     }
 
+    public long getUserId() {
+        return user.getId();
+    }
+
+    public String getUserName() {
+        return user.getUsername();
+    }
+
+    @JsonIgnore
     public TaskSet getTaskSet() {
         return taskSet;
     }
@@ -66,6 +77,7 @@ public class Rating extends Model {
         this.taskSet = taskSet;
     }
 
+    @JsonIgnore
     public Task getTask() {
         return task;
     }

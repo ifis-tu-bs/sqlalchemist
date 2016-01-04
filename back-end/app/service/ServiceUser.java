@@ -78,10 +78,8 @@ public class ServiceUser {
     }
 
     public static void addScroll(User user, Scroll scroll) {
-        user.setScrollLimit(ScrollCollectionDAO.getLimit(user));
         if(user.getScrollLimit() > 0) {
             ScrollCollectionDAO.add(user, scroll);
-            user.setScrollLimit(ScrollCollectionDAO.getLimit(user));
         }
     }
 }

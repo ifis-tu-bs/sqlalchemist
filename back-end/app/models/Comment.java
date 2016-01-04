@@ -77,8 +77,17 @@ public class Comment extends Model{
         this.task = task;
     }
 
+    @JsonIgnore
     public User getCreator() {
         return creator;
+    }
+
+    public long getCreatorId() {
+        return creator.getId();
+    }
+
+    public String getCreatorName() {
+        return creator.getUsername();
     }
 
     public String getComment() {

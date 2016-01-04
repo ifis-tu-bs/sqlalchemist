@@ -28,8 +28,7 @@ class HomeWorkBootstrap {
 
                 Date tempDate = calendar.getTime();
 
-                List<TaskSet> taskSetList = TaskSetDAO.getAll(true);
-                taskSetList.remove(1);
+                List<TaskSet> taskSetList = TaskSetDAO.getAllHomeWorkTaskSets();
 
                 HomeWorkDAO.create("DefaultHomeWork 1", UserDAO.getByUsername("sqlalchemist"), taskSetList, new Date(), tempDate);
 

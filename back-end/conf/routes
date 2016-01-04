@@ -66,7 +66,7 @@ GET         /API/ColumnDefinition/DataTypes/        controllers.ColumnDefinition
 
 #TaskController
 POST        /API/TaskSet/:id/Task                   controllers.TaskController.create(id :Long)
-GET         /API/Task/                              controllers.TaskController.read()
+GET         /API/TaskSet/:id/Task/                  controllers.TaskController.read(id: Long)
 GET         /API/Task/:id/                          controllers.TaskController.view(id: Long)
 PATCH       /API/Task/:id/                          controllers.TaskController.update(id: Long)
 DELETE      /API/Task/:id/                          controllers.TaskController.delete(id: Long)

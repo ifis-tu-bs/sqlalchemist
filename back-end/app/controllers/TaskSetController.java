@@ -81,15 +81,32 @@ public class TaskSetController extends Controller {
      */
     public Result read() {
         User user = UserDAO.getBySession(request().username());
+        Role role = user.getRole();
+        List<TaskSet> taskSetList;
 
-        List<TaskSet> taskSetList = TaskSetDAO.getAll(user.getRole().getHomeworkPermissions().canCreate());
+        if(role.getForeignTaskSetPermissions().canRead() && role.getOwnTaskSetPermissions().canRead()) {
+            taskSetList = TaskSetDAO.getAllExceptHomeworks();
+        } else if (role.getForeignTaskSetPermissions().canRead()) {
+            taskSetList = TaskSetDAO.getAllExceptOwn(user);
+        } else if (role.getOwnTaskSetPermissions().canRead()) {
+            taskSetList = TaskSetDAO.getAllOwn(user);
+        } else {
+            Logger.warn("TaskSetController - you have not the permission to read TaskSets");
+            return forbidden("you have not the permission to read TaskSets");
+        }
 
-        if (taskSetList == null) {
+        if(taskSetList == null) {
             Logger.warn("TaskSet.index - no TaskSet found");
             return badRequest("no TaskSet found");
         }
 
-        return ok(TaskSetView.toJson(taskSetList));
+        if(role.getHomeworkPermissions().canRead()) {
+            List<TaskSet> homeworks = TaskSetDAO.getAllHomeWorkTaskSets();
+            if(homeworks != null)
+                taskSetList.addAll(homeworks);
+        }
+
+        return ok(Json.toJson(taskSetList));
     }
 
     /**
@@ -107,7 +124,7 @@ public class TaskSetController extends Controller {
             Logger.warn("TaskFileController.view("+id+") - no TaskSet found");
             return badRequest("no TaskSet found");
         }
-        return ok(TaskSetView.toJson(taskSet));
+        return ok(Json.toJson(taskSet));
     }
     /**
      * This method returns all created TaskFiles

@@ -213,6 +213,7 @@ game.TaskScreen = me.ScreenObject.extend({
             id         : 0,
             schema     : '\nrel1((Integer)!key1!,(String)attr1,(String)attr2)\nrel2((String)!key2! -> attr1, (Integer)!key3! -> attr3)',
             exercise   : 'Aufgabe',
+            taskSet    : 0,
             points     : 0,
             timelimit  : 0,
             difficulty : 0,
@@ -368,7 +369,7 @@ game.TaskScreen = me.ScreenObject.extend({
             dataTaskRating.positive = 1;
             dataTaskRating.needReview = 0;
             var jsonData = JSON.stringify(dataTaskRating);
-            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+            ajaxSendTaskSetIdRatingRequest(dataTask.taskSet, jsonData, handleRatingSet);
         }
 
         /**
@@ -380,7 +381,7 @@ game.TaskScreen = me.ScreenObject.extend({
             dataTaskRating.positive = 0;
             dataTaskRating.needReview = 0;
             var jsonData = JSON.stringify(dataTaskRating);
-            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+            ajaxSendTaskSetIdRatingRequest(dataTask.taskSet, jsonData, handleRatingSet);
         }
 
         /**
@@ -392,7 +393,7 @@ game.TaskScreen = me.ScreenObject.extend({
             dataTaskRating.positive = 0;
             dataTaskRating.needReview = 1;
             var jsonData = JSON.stringify(dataTaskRating);
-            ajaxSendTaskSetIdRatingRequest(dataTask.id, jsonData, handleRatingSet);
+            ajaxSendTaskSetIdRatingRequest(dataTask.taskSet, jsonData, handleRatingSet);
         }
 
         /**

@@ -60,7 +60,7 @@ public class TaskController extends Controller {
      *
      * @return returns a JSON Array filled with all Task
      */
-    public Result read() {
+    public Result read(long id) {
         List<Task>  taskList = TaskDAO.getAll();
 
         if (taskList == null) {
@@ -117,10 +117,11 @@ public class TaskController extends Controller {
 
     public Result delete(Long taskId) {
         Task task = TaskDAO.getById(taskId);
+        long taskSetId = task.getTaskSet().getId();
 
         task.delete();
 
-        return redirect(routes.TaskController.read());
+        return redirect(routes.TaskController.read(taskId));
     }
 
     /**
