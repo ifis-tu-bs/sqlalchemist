@@ -11,8 +11,8 @@ angular
     .module('app')
     .controller('UsersController', UsersController);
 
-    UsersController.$inject = ['$scope', 'UserService', 'FlashService', '$filter'];
-    function UsersController($scope, UserService, FlashService, $filter) {
+    UsersController.$inject = ['$scope', 'UserService', 'FlashService', '$filter', '$rootScope'];
+    function UsersController($scope, UserService, FlashService, $filter, $rootScope) {
         var vm = this;
         vm.users = [];
         vm.roles = [];
@@ -24,8 +24,8 @@ angular
         function initController() {
             getAllUsers();
             $scope.getAllRoles();
+            $scope.mayChangeRoles = $rootScope.session.loggedIn.rolePermissions.read;
         }
-
 
         $scope.getAllRoles = function() {
             UserService.getAllRoles().then(
@@ -51,9 +51,8 @@ angular
 
         $scope.promote = function(user) {
             UserService.promoteUser(user).then(
-                function (result) {
-                    initController();
-                }, function (error) {
+                initController
+                , function (error) {
                     FlashService.Error(error);
                 }
             );

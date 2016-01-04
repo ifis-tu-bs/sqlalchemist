@@ -28,7 +28,7 @@
     </thead>
     <tbody>
       <tr ng-repeat="user in vm.users | orderBy:orderPredicate:orderReverse | filter:search">
-        <td>{{user.role.roleName}}</td>
+        <td>{{user.roleName}}</td>
         <td><input type="checkbox" disabled ng-model="user.student"></td>
         <td style="text-align: right">{{ user.score.solvedSQL }}</td>
         <td style="text-align: right">{{ user.score.doneSQL }}</td>
@@ -37,9 +37,9 @@
         <td>
           <div class="btn-group" uib-dropdown is-open="taskPointsDropDownStatus">
             <button type="button" class="btn btn-default btn-small" uib-dropdown-toggle ng-click="$event.stopPropagation();">
-              {{ user.role.roleName }} <span class="caret"></span>
+              {{ user.roleName }} <span class="caret"></span>
             </button>
-            <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskPointsDropDownStatus = !taskPointsDropDownStatus">
+            <ul class="uib-dropdown-menu" role="menu" ng-click="$event.stopPropagation(); taskPointsDropDownStatus = !taskPointsDropDownStatus" ng-disabled="mayChangeRoles">
               <li role="menuitem" ng-click="user.roleID = role.id; user.roleName = role.roleName; promote(user);" ng-repeat="role in vm.roles" style="cursor:pointer"> {{ role.roleName }} </li>
             </ul>
 
