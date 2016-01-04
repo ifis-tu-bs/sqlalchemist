@@ -76,7 +76,8 @@ public class StoryChallengeBootstrap {
             texts0.add(new SimpleText(
                            "Secreterry, the magical cabinet:" + "<br>" +
                            "   In this mirror you can choose your avatar." + "<br>" +
-                           "   So you can make yourself prettier.",
+                           "   So you can make yourself prettier." + "<br>" +
+						   "   - Click on the mirror to continue -"	,
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_LAB_SUCCESSFULL, 1));
 
             //(Spotlight on mirror: Click on mirror) 5
@@ -100,7 +101,8 @@ public class StoryChallengeBootstrap {
                            "   or by clicking on the screen, you can jump. Enemies will hurt" + "<br>" +
                            "   you if you don't jump over or directly on to them. The 'M' and" + "<br>" +
                            "   'N' keys and the buttons on the upper left corner control the" + "<br>" +
-                           "   music and sounds. So, off you go!",
+                           "   music and sounds. So, off you go!" + "<br>" +
+						   "   - Click on the door in the background to continue -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_LAB_BACK, 4));
 
             //(highlight door)
@@ -123,10 +125,11 @@ public class StoryChallengeBootstrap {
                            "   get you hooked and you run the risk of building up a serious" + "<br>" +
                            "   drinking habit, never the less chuck those suckers down as" + "<br>" +
                            "   much as you can, you do need every help you can get." + "<br>" +
-                           "   To brew the Potion you have to visit the Potion Collection.",
+                           "   To brew the Potion you have to visit the Potion Collection." + "<br>" +
+						   "   - Click on the belt to continue -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_BELT, 3));
 
-            //(Click on the potion bottle) 9
+            //(Click on the potion scroll) 9
 
             texts0.add(new SimpleText(
                            "Secreterry, the magical cabinet:" + "<br>" +
@@ -137,7 +140,8 @@ public class StoryChallengeBootstrap {
                            "   You will be awarded with points and additional Potions" + "<br>" +
                            "   according to the time it took you to solve the task. Once" + "<br>" +
                            "   you finished the task, you will receive the Potion which you" + "<br>" +
-                           "   afterwards can use in the Dungeons and then you maybe won't die that often.",
+                           "   afterwards can use in the Dungeons and then you maybe won't die that often." + "<br>" +
+						   "   - In the next screen, click on the small scroll -" +,
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_BELT_SUCCESSFULL, 4));
 
 
@@ -151,7 +155,8 @@ public class StoryChallengeBootstrap {
                            "   To put them into your belt, you simply have to click on the" + "<br>" +
                            "   Potion under the number and it will go directly to the first free" + "<br>" +
                            "   slot in your Belt. Click on the Potion in your belt and the" + "<br>" +
-                           "   Potion goes back to your Potion Collection.",
+                           "   Potion goes back to your Potion Collection." + "<br>" +
+						   "   - Assign the potion to your belt to continue -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_TASK, 4));
 
             //(Clicked Back)
@@ -165,14 +170,16 @@ public class StoryChallengeBootstrap {
                            "   itself on the lower left corner. So kiddo, that really was" + "<br>" +
                            "   an explanation for 3-year-olds. So do not screw this up." + "<br>" +
                            "   Don't get me wrong, it is funny when you screw up and die, " + "<br>" +
-                           "   but we do not have all day.",
+                           "   but we do not have all day." + "<br>" +
+						   "   - Click on the door in the background to continue -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_DUNGEON_SECOND_TRY, 3));
 
             //(Not beaten the tutorial) 12
 
             texts0.add(new SimpleText(
                            "Secreterry, the magical cabinet:" + "<br>" +
-                           "   For Franks sake, how can you have been beaten again, I told you: just use the Potion! ",
+                           "   For Franks sake, how can you have been beaten again, I told you: just use the Potion! " + "<br>" +
+						   "   - Click on the door in the background to continue -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_TUTORIAL_POTION, 3));
 
             //(Clicked Dungeon or Potion-Collection) 13
@@ -195,7 +202,8 @@ public class StoryChallengeBootstrap {
                            "Secreterry, the magical cabinet:" + "<br>" +
                            "   Haha, the itsy bitsy student climbed up the castle. Well you need" + "<br>" +
                            "   to get the weak Jump-Potion. You have collected the Scroll with" + "<br>" +
-                           "   the red ribbon? But do not forget that you can only get 3 Scrolls a day.",
+                           "   the red ribbon? But do not forget that you can only get 3 Scrolls a day." + "<br>" +
+						   "   - Use a weak jump potion to beat the last level -",
                            SimpleText.SIMPLE_TEXT_PREREQUISITE_BOSSMAP_1, 2));
 
             //After 2bossmap:
