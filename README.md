@@ -11,7 +11,7 @@ This is the Repository of the SQL-Alchemist project
 ## Installation
 ```bash
 # Download the Repository
-git clone https://github.com/ifis-tu-bs/SQL-Alchemist-Teamprojekt.git
+git clone https://github.com/ifis-tu-bs/sqlalchemist.git
 ```
 
 ## Usage
