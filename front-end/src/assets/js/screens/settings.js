@@ -217,6 +217,10 @@ game.SettingsScreen = me.ScreenObject.extend({
                 if(xmlHttpRequest.status != 200) {
                     alert("Error");
                     return;
+                } else {
+                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "reset success", "please reload the page");
+                    me.game.world.addChild(notificationElement);
+                    changeView(resetStoryModeContainer);
                 }
             });
         });
