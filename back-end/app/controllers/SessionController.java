@@ -9,7 +9,6 @@ import models.Action;
 import models.Session;
 import models.User;
 
-import play.Logger;
 import play.libs.Json;
 import secured.SessionAuthenticator;
 

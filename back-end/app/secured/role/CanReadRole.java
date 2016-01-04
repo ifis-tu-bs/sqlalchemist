@@ -2,6 +2,7 @@ package secured.role;
 
 import dao.UserDAO;
 import models.User;
+import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -18,6 +19,7 @@ public class CanReadRole extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Http.Context context) {
-        return forbidden("You have not the permissions to read Roles");
+        User user = UserDAO.getBySession(context.session().get("session"));
+        return ok(Json.toJson(user.getRole()));
     }
 }
