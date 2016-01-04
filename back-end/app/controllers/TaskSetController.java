@@ -141,7 +141,7 @@ public class TaskSetController extends Controller {
             return badRequest("no TaskSet found");
         }
 
-        return ok(TaskSetView.toJson(taskSetList));
+        return ok(Json.toJson(taskSetList));
     }
 
     /**
@@ -348,7 +348,7 @@ public class TaskSetController extends Controller {
             //outputFile.createNewFile();
             PrintWriter printWriter = new PrintWriter(outputFile);
 
-            printWriter.print(TaskSetView.toJson(taskSets));
+            printWriter.print(Json.toJson(taskSets));
 
             printWriter.close();
 
