@@ -352,6 +352,10 @@ public class User extends Model {
         this.setRole(role);
     }
 
+    public String getRoleName() {
+        return this.role.getRoleName();
+    }
+
     @JsonIgnore
     public String getEmailVerifyCode() {
         return this.emailVerifyCode;
