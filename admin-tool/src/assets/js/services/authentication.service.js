@@ -19,7 +19,7 @@
         return service;
 
         function Login(username, password) {
-            return $http.post('/API/Login', { email: username, password: password});
+            return $http.post('/API/Login', { email: username, password: password}).then(function (data){console.log(data);});
         }
 
         function Logout() {
@@ -48,6 +48,7 @@
 
         function Session() {
             return $http.get('/API/Session/').then(function(response) {
+                console.log(response.data);
                     if (response.data.owner === "") {
                         service.ClearCredentials();
                         $location.path('/login');
@@ -66,8 +67,16 @@
                     return $q.reject(error);
                 }
             ).then(
-                function (data) {
-                    service.SetCredentials(data.role);
+                function(data) {
+                    return UserService.getRoleById(data.roleID);
+                },
+                function(error) {
+                    return $q.reject(error);
+                }
+            ).then(
+                function(data) {
+                    console.log(data);
+                    service.SetCredentials(data);
                     if ($location.url() === "/login"){
                         $location.path("/home");
                     }

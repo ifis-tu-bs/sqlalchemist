@@ -29,9 +29,10 @@
                 AuthenticationService.Session,
                 function (response) {
                     FlashService.Error(response.data);
-                    vm.dataLoading = false;
                 }
-            );
+            ).then(function() {
+                vm.dataLoading = false;
+            });
         }
     }
 
