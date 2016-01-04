@@ -65,7 +65,7 @@ POST        /API/TaskSet/download                   controllers.TaskSetControlle
 GET         /API/ColumnDefinition/DataTypes/        controllers.ColumnDefinitionController.dataTypes()
 
 #TaskController
-POST        /API/TaskSet/:id/Task                   controllers.TaskController.create(id :Long)
+POST        /API/TaskSet/:id/Task/                  controllers.TaskController.create(id :Long)
 GET         /API/TaskSet/:id/Task/                  controllers.TaskController.read(id: Long)
 GET         /API/Task/:id/                          controllers.TaskController.view(id: Long)
 PATCH       /API/Task/:id/                          controllers.TaskController.update(id: Long)

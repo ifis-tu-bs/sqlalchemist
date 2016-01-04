@@ -49,6 +49,7 @@ angular
 
         function initController() {
             getAllTaskSets();
+            getColumnDefinitionDataTypes();
         }
 
         //////////////////////////////777
@@ -69,17 +70,28 @@ angular
                             FlashService.Error(error);
                         }
                 );
-
             }
+        }
 
+        function getColumnDefinitionDataTypes() {
             TaskService.getColumnDefinitionDataTypes().then(
-                    function (result) {
-                        vm.dataTypes = result;
-                    },
-                    null
+                function (result) {
+                    vm.dataTypes = result;
+                },
+                null
             );
         }
 
+        function getTasksForTaskSet(taskSet) {
+            TaskService.getAllTasksForTaskSet(taskSet.id).then(
+                function(result) {
+                    vm.tasks = result;
+                },
+                function(error) {
+                    FlashService.Error(error);
+                }
+            );
+        }
         //////////////////////////////777
         //  Saving data when leaving View
         //  Restoring saved Data and Displaying the correct screen
@@ -140,13 +152,13 @@ angular
             var index = findInArray(vm.taskSets, taskSet);
             selectTaskSet(index);
             $scope.tabActive.intensionTables = true;
+            getTasksForTaskSet(taskSet);
         };
 
         function selectTaskSet (taskSetIndex) {
             $scope.selectedTable = undefined;
             $scope.selectedTask = undefined;
             $scope.selectedTaskSet = vm.taskSets[taskSetIndex];
-            vm.tasks = $scope.selectedTaskSet.tasks;
             vm.tables = $scope.selectedTaskSet.tableDefinitions;
             vm.foreignKeyRelations = $scope.selectedTaskSet.foreignKeyRelations;
             $rootScope.Tasks.selectedTaskSet = $scope.selectedTaskSet;

@@ -19,6 +19,7 @@
         service.exportTaskSets = exportTaskSets;
 
         /* TaskControlls */
+        service.getAllTasksForTaskSet = getAllTasksForTaskSet;
         service.createTask = createTask;
         service.editTask = editTask;
         service.rateTask = rateTask;
@@ -84,8 +85,12 @@
 
         /* Task Controlls */
 
+        function getAllTasksForTaskSet(taskSetId) {
+            return $http.get('/API/TaskSet/' + taskSetId + '/Task/').then(handleSuccess, handleError);
+        }
+
         function createTask(taskSetId, taskJson) {
-            return $http.post('/API/TaskSet/' + taskSetId + '/Task', taskJson).then(handleSuccess, handleError);
+            return $http.post('/API/TaskSet/' + taskSetId + '/Task/', taskJson).then(handleSuccess, handleError);
         }
 
         function editTask(taskId, taskJson) {
