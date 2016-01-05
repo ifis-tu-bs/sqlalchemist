@@ -46,6 +46,30 @@ public class SQLParser {
         return null;
     }
 
+    public static SQLResult checkRefStatement(TaskSet taskSet, Task task) {
+        DBConnection    dbConnection = new DBConnection(taskSet);
+        SQLStatus       status;
+
+
+        if((status = dbConnection.initDBConn()) != null) {
+            return new SQLResult(task, status);
+        }
+
+        if((status = dbConnection.createDB()) != null) {
+            return new SQLResult(task, status);
+        }
+
+        if((status = dbConnection.runnable(task.getRefStatement())) != null) {
+            Logger.warn("Statement not runnable: " + task.getRefStatement());
+            dbConnection.closeDBConn();
+            return new SQLResult(task, status);
+        }
+
+        dbConnection.deleteDB();
+        dbConnection.closeDBConn();
+        return new SQLResult(task, SQLResult.SUCCESSFULL);
+    }
+
     public static SQLResult checkUserStatement(Task task, UserStatement userStatement) {
         DBConnection    dbConnection    = new DBConnection(task.getTaskSet());
         SQLStatus       status;
@@ -59,7 +83,7 @@ public class SQLParser {
         }
 
         if((status = dbConnection.runnable(userStatement.getStatement())) != null) {
-            Logger.warn("Statement not runnable: " + task.getRefStatement());
+            Logger.warn("Statement not runnable: " + userStatement.getStatement());
             //dbConnection.deleteDB();
             dbConnection.closeDBConn();
             return new SQLResult(task, status);

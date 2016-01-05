@@ -7,6 +7,7 @@ import models.*;
 import play.libs.Json;
 import play.mvc.BodyParser;
 import secured.UserAuthenticator;
+import sqlparser.SQLParser;
 import view.CommentView;
 import view.RatingView;
 import view.TaskView;
@@ -62,6 +63,13 @@ public class TaskController extends Controller {
         if(task == null) {
             Logger.warn("TaskController.create - invalid json");
             return badRequest("invalid json");
+        }
+
+        SQLResult result = SQLParser.checkRefStatement(taskSet, task);
+
+        if(result.getType() != SQLResult.SUCCESSFULL) {
+            Logger.info("RefStatement not runnable");
+            return badRequest("Reference Statement not runnable");
         }
 
         task.setTaskSet(taskSet);
@@ -166,7 +174,6 @@ public class TaskController extends Controller {
             }
         }
 
-
         JsonNode    taskNode    = request().body().asJson();
         Task        taskNew     = TaskView.fromJsonForm(taskNode, "", user);
 
@@ -178,6 +185,13 @@ public class TaskController extends Controller {
         task.setRequiredTerm(taskNew.getRequiredTerm());
         task.setAvailableSyntaxChecks(taskNew.getAvailableSyntaxChecks());
         task.setAvailableSemanticChecks(taskNew.getAvailableSemanticChecks());
+
+        SQLResult result = SQLParser.checkRefStatement(task.getTaskSet(), task);
+
+        if(result.getType() != SQLResult.SUCCESSFULL) {
+            Logger.info("RefStatement not runnable");
+            return badRequest("Reference Statement not runnable");
+        }
 
         task.update();
 
