@@ -22,10 +22,10 @@ public class TaskSetView {
         String                  taskSetName             = jsonNode.path("taskSetName").asText();
         JsonNode                tableDefinitionArray    = jsonNode.path("tableDefinitions");
         JsonNode                foreignKeyArray         = jsonNode.path("foreignKeyRelations");
-        JsonNode                taskArray               = jsonNode.path("tasks");
+        //JsonNode                taskArray               = jsonNode.path("tasks");
         List<TableDefinition>   tableDefinitions        = new ArrayList<>();
         List<ForeignKeyRelation>foreignKeyRelations     = new ArrayList<>();
-        List<Task>              tasks                   = new ArrayList<>();
+        //List<Task>              tasks                   = new ArrayList<>();
         boolean                 isHomework              = jsonNode.path("isHomeWork").asBoolean();
         TaskSet                 taskSet;
 
@@ -40,14 +40,14 @@ public class TaskSetView {
 
         taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, user, isHomework);
 
-        for(int i = 0; i < taskArray.size(); i++) {
-            JsonNode taskNode = taskArray.get(i);
+        /*for(int i = 0; i < taskArray.size(); i++) {
+        /*    JsonNode taskNode = taskArray.get(i);
             Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, user);
             task.setTaskSet(taskSet);
             tasks.add(task);
-        }
+        }*/
 
-        taskSet.setTasks(tasks);
+        //taskSet.setTasks(tasks);
 
         return taskSet;
     }

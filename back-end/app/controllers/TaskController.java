@@ -5,6 +5,7 @@ import dao.*;
 import models.*;
 
 import play.libs.Json;
+import play.mvc.BodyParser;
 import secured.UserAuthenticator;
 import view.CommentView;
 import view.RatingView;
@@ -17,7 +18,9 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author fabiomazzone
@@ -31,15 +34,28 @@ public class TaskController extends Controller {
      * @param taskSetId     the id of the taskSet
      * @return              returns an redirection to the new task
      */
-    @Authenticated
+    @BodyParser.Of(BodyParser.Json.class)
     public Result create(Long taskSetId) {
         User        user        = UserDAO.getBySession(request().username());
+        Role        role        = user.getRole();
         JsonNode    taskNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(taskSetId);
+
         if(taskSet == null) {
             Logger.warn("TaskController.create - cannot find TaskSet");
-            return badRequest("cannot find TaskSet");
+            return notFound("cannot find TaskSet");
         }
+
+        if(taskSet.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskPermissions().canCreate()) {
+                return forbidden("You have not the permissions to create a task to this taskSet");
+            }
+        } else {
+            if(!role.getForeignTaskPermissions().canCreate()) {
+                return forbidden("You have not the permissions to create a task to this taskSet");
+            }
+        }
+
         String      taskName    = taskSet.getTaskSetName() + "" + taskSet.getTasks().size();
         Task        task        = TaskView.fromJsonForm(taskNode, taskName, user);
 
@@ -62,20 +78,41 @@ public class TaskController extends Controller {
      * @return returns a JSON Array filled with all Task
      */
     public Result read(long id) {
-        TaskSet taskSet = TaskSetDAO.getById(id);
+        User        user        = UserDAO.getBySession(request().username());
+        Role        role        = user.getRole();
+        TaskSet     taskSet     = TaskSetDAO.getById(id);
+
         if(taskSet == null) {
             Logger.warn("TaskController.read - TaskSet not found");
             return notFound();
         }
 
-        List<Task>  taskList = taskSet.getTasks();
+        List<Task>  taskList = new ArrayList<>();
 
-        if (taskList == null) {
-            Logger.warn("TaskSet.index - no TaskSet found");
+        if(taskSet.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskSetPermissions().canRead()) {
+                return forbidden("You have not the permissions to read the tasks of this taskset");
+            }
+        } else {
+            if(!role.getForeignTaskSetPermissions().canRead()) {
+                return forbidden("You have not the permissions to read the tasks of this taskset");
+            }
+        }
+
+        if(role.getOwnTaskPermissions().canRead()) {
+            taskList.addAll(taskSet.getTasks().stream().filter(task -> task.getCreator().getId() == user.getId()).collect(Collectors.toList()));
+        }
+        if(role.getForeignTaskPermissions().canRead()) {
+            taskList.addAll(taskSet.getTasks().stream().filter(task -> task.getCreator().getId() == user.getId()).collect(Collectors.toList()));
+        }
+
+
+        if (taskList.size() == 0) {
+            Logger.warn("TaskSet.index - no tasks found");
             return ok();
         }
 
-        return ok(TaskView.toJsonList(taskList));
+        return ok(Json.toJson(taskList));
     }
 
     /**
@@ -87,24 +124,49 @@ public class TaskController extends Controller {
      * @return      returns a Task
      */
     public Result view(Long taskId) {
-        Task task = TaskDAO.getById(taskId);
+        User        user        = UserDAO.getBySession(request().username());
+        Role        role        = user.getRole();
+        Task        task        = TaskDAO.getById(taskId);
 
         if (task == null) {
             Logger.warn("TaskController.view("+taskId+") - no task found");
-            return badRequest("no task found");
+            return notFound("no task found");
         }
 
-        return ok(TaskView.toJson(task));
+        if(task.getCreator().getId() == user.getId()) {
+            if(role.getOwnTaskPermissions().canRead()) {
+                return forbidden("you have not the permission to view this task");
+            }
+        } else {
+            if(role.getForeignTaskPermissions().canRead()) {
+                return forbidden("you have not the permission to view this task");
+            }
+        }
+
+        return ok(Json.toJson(task));
     }
 
     public Result update(Long taskId) {
         User        user        = UserDAO.getBySession(request().username());
+        Role        role        = user.getRole();
         Task        task        = TaskDAO.getById(taskId);
 
         if(task == null) {
             Logger.warn("TaskController.update - cannot find Task");
-            return badRequest("cannot find Task");
+            return notFound();
         }
+
+        if(task.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskPermissions().canUpdate()) {
+                return forbidden("You have not the permissions to update this task");
+            }
+        } else {
+            if(!role.getForeignTaskPermissions().canUpdate()) {
+                return forbidden("You have not the permissions to update this task");
+            }
+        }
+
+
         JsonNode    taskNode    = request().body().asJson();
         Task        taskNew     = TaskView.fromJsonForm(taskNode, "", user);
 
@@ -122,9 +184,22 @@ public class TaskController extends Controller {
         return redirect(routes.TaskController.view(task.getId()));
     }
 
+
     public Result delete(Long taskId) {
+        User user = UserDAO.getBySession(request().username());
+        Role role = user.getRole();
         Task task = TaskDAO.getById(taskId);
         long taskSetId = task.getTaskSet().getId();
+
+        if(task.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskPermissions().canDelete()) {
+                return forbidden("you have not the permissions to delete this tasks");
+            }
+        } else {
+            if(!role.getForeignTaskPermissions().canDelete()) {
+                return forbidden("you have not the permissions to delete this task");
+            }
+        }
 
         task.delete();
 
