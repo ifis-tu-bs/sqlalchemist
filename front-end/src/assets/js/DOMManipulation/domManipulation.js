@@ -910,6 +910,7 @@ game.fdom.RootContainer = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
 
@@ -944,6 +945,7 @@ game.fdom.ButtonElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     hide: function() {
@@ -978,6 +980,7 @@ game.fdom.ContainerElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1026,6 +1029,7 @@ game.fdom.NotificationElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1052,6 +1056,7 @@ game.fdom.TitleElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        console.log("resize");
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1081,6 +1086,7 @@ game.fdom.FormElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1106,6 +1112,7 @@ game.fdom.InputFieldElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1133,6 +1140,7 @@ game.fdom.InputPasswordFieldElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1162,6 +1170,7 @@ game.fdom.ImageElement = me.Renderable.extend({
         this.elem.style.display = "none";
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
@@ -1193,6 +1202,7 @@ game.fdom.CheckBoxElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     hide: function() {
