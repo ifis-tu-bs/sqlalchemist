@@ -20,20 +20,25 @@ angular
         $scope.search = '';
         $scope.orderReverse = false;
         $scope.orderPredicate = 'email';
+        $scope.mayChangeRoles = true;
 
         function initController() {
             getAllUsers();
             $scope.getAllRoles();
-            $scope.mayChangeRoles = $rootScope.session.loggedIn.rolePermissions.read;
         }
 
         $scope.getAllRoles = function() {
             UserService.getAllRoles().then(
                 function (data) {
-                    vm.roles = data;
+                console.log(data);
+                    if (data.id) {
+                        console.log("Yep");
+                        $scope.mayChangeRoles = false;
+                    } else {
+                        vm.roles = data;
+                    }
                 },
                 function (error) {
-                    console.log(error);
                     FlashService.Error(error);
                 }
             );
@@ -51,8 +56,8 @@ angular
 
         $scope.promote = function(user) {
             UserService.promoteUser(user).then(
-                initController
-                , function (error) {
+                initController,
+                function (error) {
                     FlashService.Error(error);
                 }
             );
