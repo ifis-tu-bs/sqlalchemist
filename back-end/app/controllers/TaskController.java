@@ -15,14 +15,14 @@ import com.fasterxml.jackson.databind.JsonNode;
 import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
 
 import java.util.List;
 
 /**
  * @author fabiomazzone
  */
-@Security.Authenticated(UserAuthenticator.class)
+@Authenticated(UserAuthenticator.class)
 public class TaskController extends Controller {
 
     /**
@@ -31,6 +31,7 @@ public class TaskController extends Controller {
      * @param taskSetId     the id of the taskSet
      * @return              returns an redirection to the new task
      */
+    @Authenticated
     public Result create(Long taskSetId) {
         User        user        = UserDAO.getBySession(request().username());
         JsonNode    taskNode    = request().body().asJson();
@@ -54,18 +55,24 @@ public class TaskController extends Controller {
     }
 
     /**
-     * This method returns all created Task
+     * This method returns all Task from a TaskSet
      *
      * GET      /task
      *
      * @return returns a JSON Array filled with all Task
      */
     public Result read(long id) {
-        List<Task>  taskList = TaskDAO.getAll();
+        TaskSet taskSet = TaskSetDAO.getById(id);
+        if(taskSet == null) {
+            Logger.warn("TaskController.read - TaskSet not found");
+            return notFound();
+        }
+
+        List<Task>  taskList = taskSet.getTasks();
 
         if (taskList == null) {
             Logger.warn("TaskSet.index - no TaskSet found");
-            return badRequest("no TaskSet found");
+            return ok();
         }
 
         return ok(TaskView.toJsonList(taskList));

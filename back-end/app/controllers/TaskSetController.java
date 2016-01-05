@@ -8,10 +8,14 @@ import dao.TaskSetDAO;
 import dao.UserDAO;
 import models.*;
 
+import play.api.mvc.BodyParser$;
 import play.libs.Json;
+import play.mvc.BodyParser;
 import play.mvc.Http;
 
-import play.mvc.Security;
+import play.mvc.Security.Authenticated;
+import secured.homework.CanReadHomeworks;
+import secured.taskset.CanCreateTaskSet;
 import secured.UserAuthenticator;
 import sqlparser.SQLParser;
 import sqlparser.SQLStatus;
@@ -34,7 +38,7 @@ import java.util.List;
  *
  * @author fabiomazzone
  */
-@Security.Authenticated(UserAuthenticator.class)
+@Authenticated(UserAuthenticator.class)
 public class TaskSetController extends Controller {
     /**
      * This method creates TaskFile objects from Json
@@ -44,7 +48,8 @@ public class TaskSetController extends Controller {
      *
      * @return returns the created TaskSet
      */
-
+    @BodyParser.Of(BodyParser.Json.class)
+    @Authenticated(CanCreateTaskSet.class)
     public Result create() {
         User user = UserDAO.getBySession(request().username());
         JsonNode jsonNode = request().body().asJson();
@@ -118,12 +123,26 @@ public class TaskSetController extends Controller {
      * @return      returns a TaskSet
      */
     public Result view(Long id) {
+        User user = UserDAO.getBySession(request().username());
+        Role role = user.getRole();
         TaskSet taskSet = TaskSetDAO.getById(id);
 
         if (taskSet == null) {
             Logger.warn("TaskFileController.view("+id+") - no TaskSet found");
-            return badRequest("no TaskSet found");
+            return notFound("no TaskSet found");
         }
+
+        if(taskSet.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskSetPermissions().canRead()) {
+                return forbidden("You have not the permissions to read this TaskSet");
+            }
+        } else {
+            if(!role.getForeignTaskSetPermissions().canRead()) {
+                return forbidden("You have not the permissions to read this TaskSet");
+            }
+        }
+
+
         return ok(Json.toJson(taskSet));
     }
     /**
@@ -133,6 +152,7 @@ public class TaskSetController extends Controller {
      *
      * @return returns a JSON Array filled with all taskSets
      */
+    @Authenticated(CanReadHomeworks.class)
     public Result readHomeWorks() {
         List<TaskSet> taskSetList = TaskSetDAO.getAllHomeWorkTaskSets();
 
@@ -150,14 +170,30 @@ public class TaskSetController extends Controller {
      * @param id        the if of the taskSet
      * @return          returns an redirection to the updated taskSet
      */
+    @BodyParser.Of(BodyParser.Json.class)
     public Result update(Long id) {
+        User user = UserDAO.getBySession(request().username());
+        Role role = user.getRole();
         JsonNode    jsonNode    = request().body().asJson();
         TaskSet     taskSet     = TaskSetDAO.getById(id);
 
         if(taskSet == null ) {
             Logger.warn("TaskSetController - no TaskSet found for id: " + id);
-            return badRequest("no TaskSet found");
+            return notFound("no TaskSet found");
         }
+
+        if(taskSet.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskSetPermissions().canUpdate()) {
+                Logger.warn("TaskSetController.update - you have not the permissions to update this TaskSet");
+                return forbidden("you have not the permissions to update this TaskSet");
+            }
+        } else {
+            if(!role.getForeignTaskSetPermissions().canUpdate()) {
+                Logger.warn("TaskSetController.update - you have not the permissions to update this TaskSet");
+                return forbidden("you have not the permissions to update this TaskSet");
+            }
+        }
+
         List<TableDefinition>   tableDefinitionsOld    = new ArrayList<>(taskSet.getTableDefinitions());
         List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
 
@@ -194,11 +230,25 @@ public class TaskSetController extends Controller {
      * This method deletes an TaskSet object
      */
     public Result delete(Long id) {
+        User user = UserDAO.getBySession(request().username());
+        Role role = user.getRole();
         TaskSet taskSet = TaskSetDAO.getById(id);
 
         if(taskSet == null) {
             Logger.warn("TaskSetController.delete - no TaskSet found for id: " + id);
-            return badRequest("no TaskSet found");
+            return notFound("no TaskSet found");
+        }
+
+        if(taskSet.getCreator().getId() == user.getId()) {
+            if(!role.getOwnTaskSetPermissions().canDelete()) {
+                Logger.warn("TaskSetController.update - you have not the permissions to delete this TaskSet");
+                return forbidden("you have not the permissions to delete this TaskSet");
+            }
+        } else {
+            if(!role.getForeignTaskSetPermissions().canDelete()) {
+                Logger.warn("TaskSetController.update - you have not the permissions to delete this TaskSet");
+                return forbidden("you have not the permissions to delete this TaskSet");
+            }
         }
 
         try {
