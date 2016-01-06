@@ -167,6 +167,7 @@ game.TextScreen = me.ScreenObject.extend({
                     game.data.wait = true;
                     game.data.text++;
                 }
+                skipOneButton.hide();
             }
         }
 
@@ -238,7 +239,6 @@ game.TextScreen = me.ScreenObject.extend({
              $("#BackgroundTextId").fadeIn(100);
 
 
-//------------------>
             if (image ==="new_lab") { 
 
                 var runTutorial        = new game.BackgroundElement('runtut', 17.2, 49.6, 31.7, 14.5);

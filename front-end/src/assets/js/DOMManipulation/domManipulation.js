@@ -297,7 +297,7 @@ game.TextInputElement = me.Renderable.extend ({
         		this.field.innerHTML = '&nbsp;'; // set magic character
         	}
         }
-        else if (this.isCodeMirror) {
+        else if (this.isCodeMirror || this.isAce) {
         	this.editor.setValue('');
         }
         else {
