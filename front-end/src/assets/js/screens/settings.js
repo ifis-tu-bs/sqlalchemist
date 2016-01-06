@@ -94,10 +94,10 @@ game.SettingsScreen = me.ScreenObject.extend({
         var defaultContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
         me.game.world.addChild(defaultContainer);
 
-        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '70%','10%','15%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
+        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '86%','10%','7%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
         me.game.world.addChild(defaultContainerViewTitle);
 
-        var keyBindingsTable = new game.fdom.ContainerElement(defaultContainer, "50%", "33%", "25%", "25%", "Table SettingsScreen");
+        var keyBindingsTable = new game.fdom.ContainerElement(defaultContainer, "60%", "33%", "20%", "25%", "Table SettingsScreen");
         me.game.world.addChild(keyBindingsTable);
 
         // Create Table;
@@ -231,10 +231,10 @@ game.SettingsScreen = me.ScreenObject.extend({
         me.game.world.addChild(deleteUserContainer);
         deleteUserContainer.hide();
 
-        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','29%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
+        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '65%','20%','20%','16%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(deleteUserContainerText1);
 
-        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '60%','10%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '60%','20%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(deleteUserContainerText2);
 
         var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {

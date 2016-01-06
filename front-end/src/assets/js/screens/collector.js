@@ -67,7 +67,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                   game.potion.potions[game.level.scrolls[k + j * 5][5]].available)*/
 
                 if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used &&
-                    game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used && 
+                    game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used &&
                     game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used &&
                     game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used &&
                     game.potion.potions[game.level.scrolls[k + j * 5][4]].available &&
@@ -125,9 +125,9 @@ game.CollectorScreen = me.ScreenObject.extend({
         me.game.world.addChild(scrollProgress);
         scrollProgress.writeHTML(level + " of 10 levels cleared." + "<br>" + progress + " of 60 scrolls collected.", 'protextbody');
 
-        var scrollLimit = new game.TextOutputElement('limtext', 70, 12, 15, 77, 2);
+        var scrollLimit = new game.TextOutputElement('limtext', 86, 10, 7, 77, 2);
         me.game.world.addChild(scrollLimit);
-        scrollLimit.writeHTML("You can only collect 6 scrolls a day!", 'limtextbody');
+        scrollLimit.writeHTML("You can only collect 6 scrolls a day! " + game.data.user.scrollLimit + " Scrolls left", 'limtextbody');
 
         var info = new game.TextOutputElement('infotext', 80, 10, 10, 85, 3);
         me.game.world.addChild(info);
