@@ -81,7 +81,7 @@ public class TaskController extends Controller {
     /**
      * This method returns all Task from a TaskSet
      *
-     * GET      /task
+     * GET      /TaskSet/:id/Task/
      *
      * @return returns a JSON Array filled with all Task
      */
@@ -107,11 +107,13 @@ public class TaskController extends Controller {
             }
         }
 
+
+
         if(role.getOwnTaskPermissions().canRead()) {
             taskList.addAll(taskSet.getTasks().stream().filter(task -> task.getCreator().getId() == user.getId()).collect(Collectors.toList()));
         }
         if(role.getForeignTaskPermissions().canRead()) {
-            taskList.addAll(taskSet.getTasks().stream().filter(task -> task.getCreator().getId() == user.getId()).collect(Collectors.toList()));
+            taskList.addAll(taskSet.getTasks().stream().filter(task -> task.getCreator().getId() != user.getId()).collect(Collectors.toList()));
         }
 
 
