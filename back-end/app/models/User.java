@@ -243,8 +243,8 @@ public class User extends Model {
         node.set("attributes",      Json.toJson(playerStats_sum));
         node.set("currentAvatar",   Json.toJson(this.avatar));
         node.set("avatars_bought",  this.toJsonBoughtAvatars());
-        node.put("scrollLimit",     this.scrollLimit);
-        node.put("maxDepth",        this.depth);
+        node.put("scrollLimit",     getScrollLimit());
+        node.put("maxDepth",        getDepth());
         node.set("inventory",       InventoryDAO.getJson_Inventory(this));
         node.set("belt",            InventoryDAO.getJson_Belt(this));
         node.set("scrollCollection",ScrollCollection.toJsonAll(this));
