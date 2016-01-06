@@ -1056,7 +1056,7 @@ game.fdom.TitleElement = me.Renderable.extend({
         return this.elem;
     },
     update : function () {
-        console.log("resize");
+        this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
     destroy : function () {
