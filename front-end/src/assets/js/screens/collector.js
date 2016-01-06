@@ -127,7 +127,7 @@ game.CollectorScreen = me.ScreenObject.extend({
 
         var scrollLimit = new game.TextOutputElement('limtext', 86, 10, 7, 77, 2);
         me.game.world.addChild(scrollLimit);
-        scrollLimit.writeHTML("You can only collect 6 scrolls a day! " + game.data.user.scrollLimit + " Scrolls left", 'limtextbody');
+        scrollLimit.writeHTML("You can only collect 6 scrolls a day! " + game.data.scollLimit + " Scrolls left", 'limtextbody');
 
         var info = new game.TextOutputElement('infotext', 80, 10, 10, 85, 3);
         me.game.world.addChild(info);
