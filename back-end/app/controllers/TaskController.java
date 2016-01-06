@@ -144,11 +144,11 @@ public class TaskController extends Controller {
         }
 
         if(task.getCreator().getId() == user.getId()) {
-            if(role.getOwnTaskPermissions().canRead()) {
+            if(!role.getOwnTaskPermissions().canRead()) {
                 return forbidden("you have not the permission to view this task");
             }
         } else {
-            if(role.getForeignTaskPermissions().canRead()) {
+            if(!role.getForeignTaskPermissions().canRead()) {
                 return forbidden("you have not the permission to view this task");
             }
         }
