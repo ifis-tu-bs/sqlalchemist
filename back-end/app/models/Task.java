@@ -8,6 +8,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -244,12 +246,16 @@ public class Task extends Model {
         comment.save();
     }
 
-    public Date getCreated_at() {
-        return created_at;
+    public String getCreated_at() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        return df.format(this.created_at);
     }
 
-    public Date getUpdated_at() {
-        return updated_at;
+    public String getUpdated_at() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        return df.format(this.updated_at);
     }
 
     //////////
