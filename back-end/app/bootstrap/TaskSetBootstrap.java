@@ -39,7 +39,7 @@ public class TaskSetBootstrap {
                                        "    \"tableDefinitions\": [\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"User\",\n" +
-                                       "            \"columns\": [\n" +
+                                       "            \"columnDefinitions\": [\n" +
                                        "                {\n" +
                                        "                    \"columnName\": \"EMail\",\n" +
                                        "                    \"dataType\": \"Varchar(255)\",\n" +
@@ -66,7 +66,7 @@ public class TaskSetBootstrap {
                                        "        },\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"Profile\",\n" +
-                                       "            \"columns\": [\n" +
+                                       "            \"columnDefinitions\": [\n" +
                                        "                {\n" +
                                        "                    \"columnName\": \"user\",\n" +
                                        "                    \"dataType\": \"VARCHAR(255)\",\n" +
@@ -160,7 +160,7 @@ public class TaskSetBootstrap {
                                        "    \"tableDefinitions\": [\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"User\",\n" +
-                                       "            \"columns\": [\n" +
+                                       "            \"columnDefinitions\": [\n" +
                                        "                {\n" +
                                        "                    \"columnName\": \"EMail\",\n" +
                                        "                    \"dataType\": \"Varchar(255)\",\n" +
@@ -187,7 +187,7 @@ public class TaskSetBootstrap {
                                        "        },\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"Profile\",\n" +
-                                       "            \"columns\": [\n" +
+                                       "            \"columnDefinitions\": [\n" +
                                        "                {\n" +
                                        "                    \"columnName\": \"user\",\n" +
                                        "                    \"dataType\": \"VARCHAR(255)\",\n" +
