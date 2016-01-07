@@ -117,7 +117,7 @@
               <thead>
                 <tr>
                   <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                  <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                  <th ng-click="orderTablePredicate = 'columnDefinitions.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
                 </tr>
               </thead>
               <tbody>
@@ -154,7 +154,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
+                <tr ng-repeat="column in vm.columnDefinitions | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
                   <td><input type="text" ng-model="column.dataType" uib-typeahead="dataTypeObj.dataType as dataTypeObj.dataType for dataTypeObj in vm.dataTypes | filter:$viewValue | limitTo:5"> </td>
                   <td><input type="number" ng-model="column.datagenSet"></td>
@@ -236,7 +236,7 @@
               <thead>
               <tr>
                 <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                <th ng-click="orderTablePredicate = 'columnDefinitions.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
               </tr>
               </thead>
               <tbody>

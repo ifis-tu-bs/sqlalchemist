@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import view.TableDefinitionView;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -183,7 +185,8 @@ public class TaskSet extends Model {
         return this.tasks.contains(task);
     }
 
-    public boolean isHomework() {
+    @JsonProperty("isHomeWork")
+    public boolean getIsHomework() {
         return isHomework;
     }
 
@@ -250,12 +253,16 @@ public class TaskSet extends Model {
     }
 
 
-    public Date getCreatedAt() {
-        return createdAt;
+    public String getCreatedAt() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        return df.format(this.createdAt);
     }
 
-    public Date getUpdatedAt() {
-        return updatedAt;
+    public String getUpdatedAt() {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+
+        return df.format(this.updatedAt);
     }
 
 //////////////////////////////////////////////////

@@ -315,7 +315,7 @@ angular
 
         var DefaultTable = function () {
             this.tableName = "";
-            this.columns = [];
+            this.columnDefinitions = [];
             this.extension = "";
         };
 
@@ -334,7 +334,7 @@ angular
         function selectTable(tableIndex) {
             $scope.selectedTable = vm.tables[tableIndex];
             $rootScope.Tasks.selectedTable = $scope.selectedTable;
-            vm.columns = $scope.selectedTable.columns;
+            vm.columnDefinitions = $scope.selectedTable.columnDefinitions;
         }
 
         /* Changes are only changed on the Server via TaskSet Actions */
@@ -356,12 +356,12 @@ angular
 
         /* Methods */
         $scope.pushNewColumn = function () {
-            vm.columns.push(new DefaultColumn());
+            vm.columnDefinitions.push(new DefaultColumn());
         };
 
         /* Changes are only changed on the Server via TaskSet Actions */
         $scope.deleteColumn = function (column) {
-            vm.columns.splice(findInArray(vm.columns, column), 1);
+            vm.columnDefinitions.splice(findInArray(vm.columnDefinitions, column), 1);
         };
 
         //////////////////////////////777
@@ -558,7 +558,7 @@ angular
             return -1;
         }
 
-        $scope.findColumnsForTableName = function (tableName) {
+        $scope.findForTableName = function (tableName) {
             var columns = [];
             for (var i = 0; i < vm.tables.length; i++) {
                 if (vm.tables[i].tableName === tableName) {
