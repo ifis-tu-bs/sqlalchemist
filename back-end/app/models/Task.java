@@ -5,6 +5,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -204,8 +205,14 @@ public class Task extends Model {
         return creator;
     }
 
+    @JsonIgnore
     public List<Rating> getRatings() {
         return ratings;
+    }
+
+    @JsonProperty("rating")
+    public Rating getAllRating() {
+        return Rating.sum(this.getRatings());
     }
 
     public void addRating(Rating rating) {
