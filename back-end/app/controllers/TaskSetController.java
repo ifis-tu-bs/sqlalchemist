@@ -193,8 +193,6 @@ public class TaskSetController extends Controller {
             }
         }
 
-        Logger.info(jsonNode.toString());
-
         List<TableDefinition>   tableDefinitionsOld    = new ArrayList<>(taskSet.getTableDefinitions());
         List<ForeignKeyRelation>foreignKeyRelationsOld = new ArrayList<>(taskSet.getForeignKeyRelations());
 
