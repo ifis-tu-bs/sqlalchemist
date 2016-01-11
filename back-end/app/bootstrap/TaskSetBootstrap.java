@@ -62,7 +62,7 @@ public class TaskSetBootstrap {
                                        "                    \"datagenSet\": 3\n" +
                                        "                }\n" +
                                        "            ],\n" +
-                                       "            \"extensions\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
+                                       "            \"extension\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
                                        "        },\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"Profile\",\n" +
@@ -82,7 +82,7 @@ public class TaskSetBootstrap {
                                        "                    \"datagenSet\": 3\n" +
                                        "                }\n" +
                                        "            ],\n" +
-                                       "            \"extensions\": \"INSERT INTO Profile(user, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone'); \\n \"\n" +
+                                       "            \"extension\": \"INSERT INTO Profile(user, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone'); \\n \"\n" +
                                        "        } \n" +
                                        "    ],\n" +
                                        "    \"foreignKeyRelations\": [\n" +
@@ -183,7 +183,7 @@ public class TaskSetBootstrap {
                                        "                    \"datagenSet\": 3\n" +
                                        "                }\n" +
                                        "            ],\n" +
-                                       "            \"extensions\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
+                                       "            \"extension\": \"INSERT INTO User(EMail, FirstName, LastName) VALUES ('fabio.mazzone@me.com', 'Fabio', 'Mazzone');\\n \"\n" +
                                        "        },\n" +
                                        "        {\n" +
                                        "            \"tableName\": \"Profile\",\n" +
@@ -203,7 +203,7 @@ public class TaskSetBootstrap {
                                        "                    \"datagenSet\": 3\n" +
                                        "                }\n" +
                                        "            ],\n" +
-                                       "            \"extensions\": \"INSERT INTO Profile(user, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone'); \\n \"\n" +
+                                       "            \"extension\": \"INSERT INTO Profile(user, username) VALUES ('fabio.mazzone@me.com', 'fabiomazzone'); \\n \"\n" +
                                        "        } \n" +
                                        "    ],\n" +
                                        "    \"foreignKeyRelations\": [\n" +
