@@ -9,9 +9,11 @@ game.BeltScreen = me.ScreenObject.extend({
         backgroundBelt.setImage("assets/data/img/gui/belt_screen.png", "backgroundbelt");
         me.game.world.addChild(backgroundBelt);
 
-        var potionLegend = new game.BackgroundElement('potionLegendId', 2.4242, 4,1666, 90, 4, 'none');
+        //TODO: Potion Legend
+        /**var potionLegend = new game.BackgroundElement('potionLegendId', 2.4242, 4.1666, 10, 4, 'none');
         potionLegend.setImage("assets/data/img/potion/WEAK_DEFENSEPOTION.png", "potionLegendImage");
         me.game.world.addChild(potionLegend);    
+        */
 
         /**
          * Create button and according callback-function to go back to teh Laboratory.

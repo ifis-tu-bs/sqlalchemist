@@ -40,7 +40,6 @@ game.SheetScreen = me.ScreenObject.extend({
         me.game.world.addChild(backButton2);
 
 
-
         var sheetName      = new game.TextOutputElement('sheetName',      42, 11.25, 28.5, 30, 2);
         var sheetAttribute = new game.TextOutputElement('sheetAttribute', 20, 45,    30.5, 45, 8);
         var sheetValues    = new game.TextOutputElement('sheetValues',    5,  45,    63.5, 45, 8);
@@ -69,14 +68,9 @@ game.SheetScreen = me.ScreenObject.extend({
             //console.log(stat.characterState.currentAvatar.id);
 
 
-            /*
-
-            */
             /**
              * set values to according TextOutPutElements
              */
-
-
             sheetAttribute.clear();
             sheetValues.clear();
             sheetName.clear();
@@ -94,7 +88,7 @@ game.SheetScreen = me.ScreenObject.extend({
             /**
              * The position of the avatars need to be set differently. If the current avatar is a team or not.
              */
-             var avatar;
+            var avatar;
             if(!repaint){
                 repaint = true;
                 avatar1 = new game.BackgroundElement('avatar1', 4.84848, 8.33333, 46.969697, 16.927083, 'none');
@@ -150,16 +144,16 @@ game.SheetScreen = me.ScreenObject.extend({
             var j = Math.floor(i/10);
             /*console.log(game.scroll.enchantments[i].name,
                         game.scroll.enchantments[i].id,
-                        "  used: " + game.scroll.enchantments[i].used,
-                        " availible: " + game.scroll.enchantments[i].available,
-                        "position: " + kind[j]);*/
+                        "used: "      + game.scroll.enchantments[i].used,
+                        "availible: " + game.scroll.enchantments[i].available,
+                        "position: "  + kind[j]);*/
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
 
 
                 var name = game.scroll.enchantments[i].name;
                 var id   = game.scroll.enchantments[i].id;
-                var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 4.848485, 8.333333,
-                                                        57.575757, 44.921875 + 13.020833 * j, 1);
+                var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 3.5, 5.5,
+                                                        57.575757, 50 + 11 * j, 1);
                 upgrade.setImage("assets/data/img/collectables/upgrade_scroll.png", "scroll");
                 me.game.world.addChild(upgrade);
                 kind[j] = 1;

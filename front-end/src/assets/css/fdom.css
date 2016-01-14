@@ -32,8 +32,9 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    font-size: 7vh;
-    padding-bottom: 3%;
+    font-size: 6vh;
+    padding-bottom: 2%;
+    padding-right: 2%;
     text-shadow: -1px 0px 5px rgba(133, 133, 133, 0.75);
 }
 

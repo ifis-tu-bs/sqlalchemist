@@ -36,7 +36,7 @@ game.StartScreen = me.ScreenObject.extend({
 
         var titleBanner     = new game.fdom.ImageElement(rootContainer, '46%', '25%', '27%', '15%', 'Image StartScreen TitleBanner', '/assets/data/img/buttons/StartScreenBanner.png');
         titleBanner.hide();
-        var startButton     = new game.fdom.ButtonElement(rootContainer, '31%','23%','35%','46%', 'START', 'Button StartScreen Start', false, function() {
+        var startButton     = new game.fdom.ButtonElement(rootContainer, '35%','19%','34%','47%', 'START', 'Button StartScreen Start', false, function() {
             if(gotSession) {
                 $(startButton.getNode()).fadeOut(50);
                 $(titleBanner.getNode()).fadeOut(50);

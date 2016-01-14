@@ -14,6 +14,9 @@ game.CollectorScreen = me.ScreenObject.extend({
         backgroundCollector.setImage("assets/data/img/gui/scrollcollection_screen.png", "backgroundCollectorImg");
         me.game.world.addChild(backgroundCollector);
 
+        var title = new game.fdom.TitleElement(rootContainer, '30%','10%','35%','5%', 'Scroll Collection', 'Title ScrollCollection');
+        me.game.world.addChild(title);
+
         /**
          * Create element with according callback function to get back into the Laboratory.
          */

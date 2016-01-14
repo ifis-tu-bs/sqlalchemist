@@ -9,7 +9,7 @@ game.LoginScreen = me.ScreenObject.extend({
         me.game.world.addChild(parchment);
         parchment.hide();
 
-        var title = new game.fdom.TitleElement(parchment, '20%','10%','40%','15%', 'Login', 'Title LoginScreen');
+        var title = new game.fdom.TitleElement(parchment, '20%','20%','40%','15%', 'Login', 'Title LoginScreen');
         me.game.world.addChild(title);
 
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form LoginScreen', function() {
@@ -48,11 +48,11 @@ game.LoginScreen = me.ScreenObject.extend({
         me.game.world.addChild(formPasswordInputField);
 
         // Login Button
-        var loginButton = new game.fdom.ButtonElement(loginForm, '28%','17%','35%','74%', 'Enter', 'Button LoginScreen Enter', true);
+        var loginButton = new game.fdom.ButtonElement(loginForm, '28%','17%','35%','71%', 'Enter', 'Button LoginScreen Enter', true);
         me.game.world.addChild(loginButton);
 
         // Password Reset Button
-        var passwordReset = new game.fdom.ButtonElement(loginForm, '27%','5%','54%','65%', 'Forgot Password? Click Here!', 'Button LoginScreen PasswordReset', false, function() {
+        var passwordReset = new game.fdom.ButtonElement(loginForm, '27%','6%','54%','65%', 'Forgot Password? Click Here!', 'Button LoginScreen PasswordReset', false, function() {
             $(parchment.getNode()).fadeOut(100);
             setTimeout(function() {
                 me.state.change(STATE_FORGOTPASSWORD);
@@ -60,7 +60,7 @@ game.LoginScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(passwordReset);
         // SignUp Button
-        var signUpButton = new game.fdom.ButtonElement(loginForm, '31%','5%','17%','65%', 'No Login Yet? You Can Sign Up Here!', 'Button LoginScreen SignUp', false, function() {
+        var signUpButton = new game.fdom.ButtonElement(loginForm, '36%','6%','14%','65%', 'No Login Yet? You Can Sign Up Here!', 'Button LoginScreen SignUp', false, function() {
             $(parchment.getNode()).fadeOut(100);
             setTimeout(function() {
                 me.state.change(STATE_SIGNUP);
