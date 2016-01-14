@@ -20,7 +20,7 @@ game.HomeworkTaskSetScreen = me.ScreenObject.extend({
 
         //flag if you have done
         submited         = new game.TextOutputElement('submited', 10, 10, 68, 30, 3);
-        submited.writeHTML("submited", 'pagebody');
+        submited.writeHTML("submitted", 'pagebody');
         me.game.world.addChild(submited);
 
 
