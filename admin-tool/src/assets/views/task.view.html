@@ -51,7 +51,7 @@
                   <th ng-click="orderTaskSetPredicate = 'taskSetName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
                   <th ng-click="orderTaskSetPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                   <th ng-click="orderTaskSetPredicate = 'updatedAt'; orderReverse = !orderReverse" style="cursor: pointer">Last Update</th>
-                  <th ng-click="orderTaskSetPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                  <th ng-click="orderTaskSetPredicate = 'rating.positiveRatings'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                   <th ng-click="orderTaskSetPredicate = 'isHomeWork'; orderReverse = !orderReverse" style="cursor: pointer" uib-tooltip="Will be marked as HomeWork and not be visible to Creators!">Restricted</th>
                 </tr>
                 </thead>
@@ -62,9 +62,9 @@
                   <td>{{taskSet.updatedAt}}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="...">
-                      <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positive }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.needReview }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negative }}
+                      <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positiveRatings }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.editRatings }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negativeRatings }}
                     </div>
                   </td>
                   <td>
@@ -117,13 +117,13 @@
               <thead>
                 <tr>
                   <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                  <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                  <th ng-click="orderTablePredicate = 'columnDefinitions.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
                 </tr>
               </thead>
               <tbody>
                 <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
                   <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
-                  <td>{{table.columns.length}}</td>
+                  <td>{{table.columnDefinitions.length}}</td>
 
                   <td>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
@@ -154,7 +154,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="column in vm.columns | orderBy:orderTableEditPredicate:orderReverse | filter:search">
+                <tr ng-repeat="column in vm.columnDefinitions | orderBy:orderTableEditPredicate:orderReverse | filter:search">
                   <td><input type="text" ng-model="column.columnName"></td>
                   <td><input type="text" ng-model="column.dataType" uib-typeahead="dataTypeObj.dataType as dataTypeObj.dataType for dataTypeObj in vm.dataTypes | filter:$viewValue | limitTo:5"> </td>
                   <td><input type="number" ng-model="column.datagenSet"></td>
@@ -236,13 +236,13 @@
               <thead>
               <tr>
                 <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
-                <th ng-click="orderTablePredicate = 'columns.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                <th ng-click="orderTablePredicate = 'columnDefinitions.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
               </tr>
               </thead>
               <tbody>
               <tr ng-repeat="table in vm.tables | orderBy:orderTablePredicate:orderReverse | filter:search" style="cursor: pointer" ng-click="selectTable(table); tableSelected = true;">
                 <td><input type="text" ng-click="$event.stopPropagation();" ng-model="table.tableName"></td>
-                <td>{{table.columns.length}}</td>
+                <td>{{table.columnDefinitions.length}}</td>
 
                 <td>
                   <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
@@ -255,7 +255,7 @@
             <uib-accordion-heading>
               Edit Extension
             </uib-accordion-heading>
-            <div id="extensionEditor" ng-model="selectedTable.extensions" ui-ace="{
+            <div id="extensionEditor" ng-model="selectedTable.extension" ui-ace="{
               mode : 'sql',
               theme : 'twilight'
             }"></div>
@@ -263,7 +263,7 @@
 
             <div class="container" ng-repeat="table in vm.tables">
               <b>{{table.tableName}}</b><br>
-              <div class="container" ng-repeat="column in table.columns">
+              <div class="container" ng-repeat="column in table.columnDefinitions">
                 <u ng-if="column.primaryKey">{{column.columnName}}</u><span ng-if="column.primaryKey === false">{{column.columnName}}</span> : <i>{{column.dataType}}</i> <span ng-if="column.foreignKey">-> {{column.foreignKey}}</span>
               </div>
             </div>
@@ -293,7 +293,7 @@
                     <th ng-hide="selectedTaskSet.isHomeWork === false" ng-click="orderTaskPredicate = 'availableSyntaxChecks'; orderReverse = !orderReverse" style="cursor: pointer;text-align:right">Nr. Syntax</th>
                     <th ng-hide="selectedTaskSet.isHomeWork === false" ng-click="orderTaskPredicate = 'availableSemanticChecks'; orderReverse = !orderReverse" style="cursor: pointer">Nr. Semantic</th>
                     <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
-                    <th ng-click="orderTaskPredicate = 'rating.positive'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
+                    <th ng-click="orderTaskPredicate = 'rating.positiveRatings'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
                     <th></th>
                   </tr>
                 </thead>
@@ -336,9 +336,9 @@
                   <td>{{task.createdAt}}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positive }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.needReview }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negative }}
+                      <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positiveRatings }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.editRatings }} <span style="width: 6px"></span>
+                      <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negativeRatings }}
                     </div>
                   </td>
                 <td>

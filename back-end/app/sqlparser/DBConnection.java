@@ -93,7 +93,6 @@ class DBConnection{
 
 
             dataGenSetInsertStatement = dataGenSetInsertStatement + ");";
-            Logger.debug("DBConnection.create - dataGenInsertStatement: " + dataGenSetInsertStatement);
 
             // Execute the Statements
             try {
@@ -102,7 +101,6 @@ class DBConnection{
                 List<String> tableExtensions = new ArrayList<>(Arrays.asList(tableDefinition.getExtension().split("\n")));
 
                 for(String tableExtension : tableExtensions) {
-                    Logger.debug(tableExtension);
                     this.statement.execute(tableExtension);
                 }
 
@@ -113,7 +111,7 @@ class DBConnection{
         }
         for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
             String addForeignKey = "ALTER TABLE " + foreignKeyRelation.getSourceTable() + " ADD FOREIGN KEY (" + foreignKeyRelation.getSourceColumn() + ") REFERENCES " + foreignKeyRelation.getDestinationTable() + "(" + foreignKeyRelation.getDestinationColumn() + ");";
-            Logger.debug(addForeignKey) ;
+            Logger.debug(addForeignKey);
 
             // Execute the Statements
             try {
@@ -144,8 +142,6 @@ class DBConnection{
                 String statement = "DROP TABLE IF EXISTS " + tableDefinition.getTableName() + ";";
 
                 this.statement.execute(statement);
-
-                Logger.debug(statement);
             } catch (SQLException e) {
                 Logger.error("DBConnection.delete: " + e.getMessage());
                 status = false;
@@ -201,18 +197,5 @@ class DBConnection{
             table.add(row);
         }
         return table;
-    }
-
-    /**
-     * Method printResultSet.
-     *
-     * Prints out the ResultSet of a SELECT-statement.
-     *
-     * @throws java.sql.SQLException, SQLException se
-     */
-    public static void printResult(List<Set<String>> result) {
-        for(Set<String> column : result) {
-            column.forEach(Logger::info);
-        }
     }
 }

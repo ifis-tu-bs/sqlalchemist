@@ -5,6 +5,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.List;
@@ -91,8 +92,14 @@ public class ColumnDefinition extends Model {
         return (this.foreignKey != null);
     }
 
+    @JsonIgnore
     public ColumnDefinition getForeignKey() {
         return foreignKey;
+    }
+
+    @JsonProperty("foreignKey")
+    public String getForeigenKeyTableName() {
+        return (this.foreignKey != null)? this.foreignKey.getTableDefinition().getTableName() : null;
     }
 
     public void setForeignKey(ColumnDefinition foreignKey) {
