@@ -10,12 +10,16 @@ game.CollectorScreen = me.ScreenObject.extend({
         /**
          * Create background-div and add image to it.
          */
-        var backgroundCollector = new game.BackgroundElement('backgroundCollectorId', 100, 100, 0, 0, 'none');
+        /**var backgroundCollector = new game.BackgroundElement('backgroundCollectorId', 100, 100, 0, 0, 'none');
         backgroundCollector.setImage("assets/data/img/gui/scrollcollection_screen.png", "backgroundCollectorImg");
-        me.game.world.addChild(backgroundCollector);
+        me.game.world.addChild(backgroundCollector);*/
 
-        var title = new game.fdom.TitleElement(rootContainer, '30%','10%','35%','5%', 'Scroll Collection', 'Title ScrollCollection');
+        var rootContainer   = new game.fdom.RootContainer('/assets/data/img/gui/scrollcollection_screen.png');
+        me.game.world.addChild(rootContainer);
+
+        var title = new game.fdom.TitleElement(rootContainer, '70%','19%','13%','7%', 'Scroll Collection', 'Title ScrollCollection');
         me.game.world.addChild(title);
+
 
         /**
          * Create element with according callback function to get back into the Laboratory.
@@ -35,7 +39,7 @@ game.CollectorScreen = me.ScreenObject.extend({
             }, 100);
         };
 
-        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 80, 2.5, 1);
+        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 80, 4, 1);
 
         backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
         me.game.world.addChild(backToLabButton);
@@ -81,7 +85,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                         41 + j * 30.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
                     me.game.world.addChild(checkSymbol);
-                    console.log('check' + k);
+                    //console.log('check' + k);
                     checkSymbol.display();
 
                 }
@@ -94,7 +98,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                                 23.272727 + 3.030303 * i + j * 30.878788, 41.666667 + 6.510417 * k, 'none');
                             scrolls.setImage("assets/data/img/stuff/spinning_scroll_32.png", "scrollImg");
                             me.game.world.addChild(scrolls);
-                            console.log('scrolls' + i + k * 4 + j * 20);
+                            //console.log('scrolls' + i + k * 4 + j * 20);
 
                             progress++;
                             /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,

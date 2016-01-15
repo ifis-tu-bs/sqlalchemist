@@ -7,7 +7,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
         me.game.world.addChild(rootContainer);
 
-        var title = new game.fdom.TitleElement(rootContainer, '30%','10%','35%','5%', 'Settings', 'Title SettingsScreen');
+        var title = new game.fdom.TitleElement(rootContainer, '30%','20%','35%','5%', 'Settings', 'Title SettingsScreen');
         me.game.world.addChild(title);
 
         var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {

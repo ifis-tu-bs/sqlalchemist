@@ -13,7 +13,7 @@ game.SignUpScreen = me.ScreenObject.extend({
         me.game.world.addChild(parchment);
         parchment.hide();
 
-        var title = new game.fdom.TitleElement(parchment, '24%','20%','38%','10%', 'Sign Up', 'Title SignUpScreen resetPasword');
+        var title = new game.fdom.TitleElement(parchment, '26%','20%','38%','10%', 'Sign Up', 'Title SignUpScreen resetPasword');
         me.game.world.addChild(title);
 
         var signUpForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form SignUpScreen',  function() {

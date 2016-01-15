@@ -149,7 +149,6 @@ game.SheetScreen = me.ScreenObject.extend({
                         "position: "  + kind[j]);*/
             if(!game.scroll.enchantments[i].used && game.scroll.enchantments[i].available && kind[j] === 0){
 
-
                 var name = game.scroll.enchantments[i].name;
                 var id   = game.scroll.enchantments[i].id;
                 var upgrade = new game.ClickableElement('upgrade' + i, '', onUpgrade(name, id), 3.5, 5.5,

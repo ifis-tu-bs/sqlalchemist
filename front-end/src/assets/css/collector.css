@@ -43,3 +43,7 @@
 	-webkit-filter: brightness(150%);
 }
 
+.Title.ScrollCollection {
+    font-family: Amethysta-Regular, sans-serif;
+    color: white;
+}

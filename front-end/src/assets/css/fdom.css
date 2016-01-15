@@ -6,6 +6,7 @@
 }
 
 .Container {
+    font-family: Amethysta-Regular,sans-serif;
     position: absolute;
 }
 
@@ -164,6 +165,10 @@ p.Notification.Body {
 /* Settings Screen */
 /* -------------------------------------------------------------------------- */
 
+.Button.SettingsScreen {
+    font-family: Amethysta-Regular, sans-serif;
+}
+
 .Button.SettingsScreen.Back {
     background: url('/assets/data/img/buttons/back_button_ink.png');
     background-position: center;
@@ -204,6 +209,10 @@ p.Notification.Body {
     background: green;
 }
 
+.Container.SettingsScreen {
+    font-family: Amethysta-Regular, sans-serif;
+}
+
 .CheckBox.SettingsScreen.Sound {
     background-image: url('/assets/data/img/buttons/ButtonsSoundOff.png');
 }
@@ -229,6 +238,7 @@ p.Notification.Body {
 }
 
 .Text.SettingsScreen {
+
     font-size: 6vh;
     color:black;
 }
