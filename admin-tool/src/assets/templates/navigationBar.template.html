@@ -19,6 +19,11 @@
                         <a href="#{{ route.path }}" ng-if="route.allowed">{{ route.name }}</a>
                     </li>
                 </ul>
+                <ul style="float:right" class="nav navbar-nav" >
+                    <li ng-show="isLoggedIn" style="background:#31B0D5" ng-click="logout();">
+                        <a href="" style="color:#FFF">Logout</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

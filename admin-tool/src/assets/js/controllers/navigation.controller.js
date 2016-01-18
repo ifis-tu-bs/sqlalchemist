@@ -13,19 +13,31 @@
 
     directNavigationBar.$inject = ['routeNavigation'];
     function directNavigationBar(routeNavigation) {
-        navigationBarController.$inject = ['$scope'];
-        function navigationBarController($scope) {
+        navigationBarController.$inject = ['$scope', 'AuthenticationService'];
+        function navigationBarController($scope, AuthenticationService) {
             initController();
 
+
             function initController() {
+                $scope.isLoggedIn = AuthenticationService.IsLoggedIn();
                 routeNavigation.update();
                 $scope.routes = routeNavigation.getRoutes();
                 $scope.activeRoute = routeNavigation.getActiveRoute();
             }
 
+            $scope.logout = function () {
+                AuthenticationService.Logout();
+            };
+
             $scope.$watch(function(){return routeNavigation.getRoutes();}, function() {
                 initController();
             }, $scope.routes);
+
+            $scope.$watch(function(){
+                return AuthenticationService.IsLoggedIn();
+            }, function() {
+                initController();
+            }, $scope.isLoggedIn);
         }
 
         return {

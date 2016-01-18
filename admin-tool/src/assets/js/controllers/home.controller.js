@@ -13,9 +13,6 @@
 
     HomeController.$inject = ['$scope', 'AuthenticationService'];
     function HomeController($scope, AuthenticationService) {
-        $scope.logout = function () {
-            AuthenticationService.Logout();
-        };
 
     }
 
