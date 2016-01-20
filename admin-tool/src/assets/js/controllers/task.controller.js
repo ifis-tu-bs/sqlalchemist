@@ -193,7 +193,7 @@ angular
                             FlashService.Success("Updated TaskSet");
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                 );
@@ -205,7 +205,7 @@ angular
                             vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                 );
@@ -511,7 +511,7 @@ angular
                             vm.tasks[findInArray(vm.tasks, task)] = result;
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                     );
