@@ -106,7 +106,7 @@
         }
 
         function deleteTask(taskId) {
-            $http.delete('/API/Task/'+ taskId + '/').then(handleSuccess, handleError);
+            return $http.delete('/API/Task/'+ taskId + '/').then(handleSuccess, handleError);
         }
 
 

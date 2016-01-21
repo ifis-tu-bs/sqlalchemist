@@ -74,6 +74,7 @@ angular
         }
 
         function getColumnDefinitionDataTypes() {
+
             TaskService.getColumnDefinitionDataTypes().then(
                 function (result) {
                     vm.dataTypes = result;
@@ -484,7 +485,7 @@ angular
                     return $q.reject({noerror: true});
                 }
             ).then(
-                function () {
+                function (result) {
                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
                 },
                 function (error) {
