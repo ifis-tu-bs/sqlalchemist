@@ -165,6 +165,46 @@ p.Notification.Body {
 /* Settings Screen */
 /* -------------------------------------------------------------------------- */
 
+.Button.CollectorScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.CollectorScreen.Back:hover{
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+.Button.ProfileScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.ProfileScreen.Back:hover{
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+.Title.BeltScreen {
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: white;
+    text-align: right;
+}
+
+.Title.ProfileScreen {
+    font-family: Amethysta-Regular, sans-serif;
+    color: #F7E6D0;
+}
+
+
 .Button.SettingsScreen {
     font-family: Amethysta-Regular, sans-serif;
 }
@@ -180,6 +220,7 @@ p.Notification.Body {
     font-size: 4vh;
     border: solid 2px #919191;
     border-radius: 60px;
+    padding: 4%;
 }
 
 .Button.SettingsScreen.Menu:hover {
@@ -230,15 +271,15 @@ p.Notification.Body {
 }
 
 .Table.SettingsScreen {
-
+    font-size: inherit;
 }
 
 .Title.SettingsScreen {
-    color: white;
+    color: #F7E6D0;
 }
 
 .Text.SettingsScreen {
-
+    font-family: Amethysta-Regular, sans-serif;
     font-size: 6vh;
     color:black;
 }
