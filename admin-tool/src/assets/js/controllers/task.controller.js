@@ -85,7 +85,11 @@ angular
         function getTasksForTaskSet(taskSet) {
             TaskService.getAllTasksForTaskSet(taskSet.id).then(
                 function(result) {
-                    vm.tasks = result;
+                    if (result) {
+                        vm.tasks = result;
+                    } else {
+                        vm.tasks = [];
+                    }
                 },
                 function(error) {
                     FlashService.Error(error);
@@ -535,7 +539,7 @@ angular
                     }
             });
 
-            modalInstance.result.then(function (result) {
+            modalInstance.then(function (result) {
                 if (result == true) {
                     TaskService.deleteHomework(vm.taskSets[taskSetIndex].id).then(
                         initController
