@@ -17,40 +17,50 @@ game.ResultScreen = me.ScreenObject.extend({
          */
         this.onNext = function () {
             console.log("clicked! Next with:" + game.task.kind);
-            switch(game.task.kind) {
-                case 0 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(me.state.READY);
-                    }, 100);
-                    return true;
+            if (!game.data.playerStat.isTutorial) {
+                switch(game.task.kind) {
+                    case 0 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(me.state.READY);
+                        }, 100);
+                        return true;
+                    }
+                    case 1 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(me.state.READY);
+                        }, 100);
+                        return true;
+                    }
+                    case 2 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(STATE_TRIVIA);
+                        }, 100);
+                        return true;
+                    }
+                    case 3 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(STATE_HOMEWORK);
+                        }, 100);
+                        return true;
+                    }
                 }
-                case 1 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(me.state.READY);
-                    }, 100);
-                    return true;
-                }
-                case 2 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(STATE_TRIVIA);
-                    }, 100);
-                    return true;
-                }
-                case 3 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(STATE_HOMEWORK);
-                    }, 100);
-                    return true;
-                }
+            }else{
+                game.potion.potions[16].amount++;
+                $("#backgroundResultId").fadeOut(100);
+                $("#nextFromResult").fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(STATE_TEXT);
+                }, 100);
             }
+
         };
 
         var nextButton = new game.ClickableElement('nextFromResult', 'NEXT', this.onNext, 25, 10, 37, 80.5, 1);

@@ -106,7 +106,7 @@ game.TextScreen = me.ScreenObject.extend({
             case 11 :
             {
                 console.log("we entered: !!!!!!!!!" + game.data.text);
-                console.log(game.belt.beltSlots[0].id);
+                console.log(game.belt.beltSlots[0]);
                 if(game.belt.beltSlots[0] === null){
                     console.log("Potion nicht attached");
                     game.data.text = 10;
@@ -159,16 +159,22 @@ game.TextScreen = me.ScreenObject.extend({
         function skipOne() {
 
             me.audio.pause(game.data.audio);
-            if(change){
-                me.state.change(state);
-                game.data.text++;
-            }else{
-                if(!game.data.wait){
-                    game.data.wait = true;
+            if(game.data.playerStat.isTutorial){
+                if(change){
+                    me.state.change(state);
                     game.data.text++;
+                }else{
+                    if(!game.data.wait){
+                        game.data.wait = true;
+                        game.data.text++;
+                    }
+                    skipOneButton.hide();
                 }
-                skipOneButton.hide();
+            }else{
+                escapeButton.hide();
+                me.state.change(me.state.READY);
             }
+
         }
 
         function skipAll() {
@@ -277,6 +283,9 @@ game.TextScreen = me.ScreenObject.extend({
 
             skipAllButton      = new game.ClickableElement('skipAll', 'skip All', skipAll, 10, 6, 85, 90, 2);
             skipOneButton      = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
+            if (!game.data.playerStat.isTutorial) {
+                escapeButton = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
+            }
 
             textOut          = new game.TextOutputElement('text', 80, 60, x, y, 18);
             me.game.world.addChild(textOut);
@@ -296,6 +305,9 @@ game.TextScreen = me.ScreenObject.extend({
                 me.game.world.addChild(skipOneButton);
                 skipAllButton.display();
                 skipOneButton.display();
+            }else{
+                me.game.world.addChild(escapeButton);
+                escapeButton.display();
             }
 
 
