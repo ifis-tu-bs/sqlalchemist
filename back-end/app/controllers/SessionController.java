@@ -74,20 +74,28 @@ public class SessionController extends Controller {
         return redirect(routes.UserController.show(user.getUsername()));
     }
 
+    @Authenticated(SessionAuthenticator.class)
     public Result logout() {
         session().clear();
+        Session session = SessionDAO.getById(session("session"));
+        session.disable();
+        session.update();
+        
         return redirect(routes.SessionController.index());
     }
 
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
         if(session != null) {
+            List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
+            for(Session sessionI : sessionList) {
+                sessionI.disable();
+                sessionI.update();
+            }
+
             Session newSession = SessionDAO.create();
             newSession.setOwner(session.getOwner());
             newSession.update();
-
-            session.disable();
-            session.update();
 
             session("session", newSession.getId());
             return ok(Json.toJson(newSession));
