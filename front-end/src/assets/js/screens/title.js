@@ -15,6 +15,9 @@ game.TitleScreen = me.ScreenObject.extend({
 
              }
          }
+        if(game.data.user.settings.sound) {
+            game.data.sound = true;
+        }
 
         function fadeOutElements() {
             $("[id^=background]").fadeOut(100);

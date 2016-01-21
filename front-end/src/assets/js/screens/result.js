@@ -73,8 +73,6 @@ game.ResultScreen = me.ScreenObject.extend({
          * @type {number}
          */
         this.time = Math.floor((game.task.finishTime - game.task.startTime)/1000);
-        this.difficulty = game.task.difficulty + 1;
-        this.score = game.data.gainScore;
 
         var resultTime = new game.TextOutputElement('resultTimeId', 19, 5.3, 29, 26, 1);
         me.game.world.addChild(resultTime);
@@ -82,11 +80,11 @@ game.ResultScreen = me.ScreenObject.extend({
 
         var resultScore = new game.TextOutputElement('resultScoreId', 25, 5.3, 54, 26, 1);
         me.game.world.addChild(resultScore);
-        resultScore.writeHTML("Score: " + this.score, 'resultScorePara');
+        resultScore.writeHTML("Score: " + game.data.gainScore, 'resultScorePara');
 
         var resultDifficulty = new game.TextOutputElement('resultDifficultyId', 25, 5.3, 20, 39, 1);
         me.game.world.addChild(resultDifficulty);
-        resultDifficulty.writeHTML("Difficulty: " + this.difficulty, 'resultDifficultyPara');
+        resultDifficulty.writeHTML("Difficulty: " + game.task.difficulty, 'resultDifficultyPara');
 
         var resultCoins = new game.TextOutputElement('resultCoinsId', 35, 5.3, 56, 39, 1);
         me.game.world.addChild(resultCoins);

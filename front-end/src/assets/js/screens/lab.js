@@ -45,19 +45,6 @@ game.ReadyScreen = me.ScreenObject.extend({
             game.skin.currentSkin = stat.characterState.currentAvatar.id;
             //get scrolls
             var i;
-            for (i = 0; i < stat.characterState.scrollCollection.scrolls.length; i++) {
-
-                if (stat.characterState.scrollCollection.scrolls[i].scroll.id > 19) {
-                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].available = true;
-                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].used = stat.characterState.scrollCollection.scrolls[i].isActive;
-                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].id = stat.characterState.scrollCollection.scrolls[i].scroll.id;
-                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].name = stat.characterState.scrollCollection.scrolls[i].scroll.name;
-                        //console.log("ent:"+ (stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20));
-                }
-                    //console.log("ent:"+ (stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20), i);
-
-            }
-            game.data.scollLimit = stat.characterState.scrollLimit;
 
             //get Potions 1-20
             for (i = 0; i < stat.characterState.inventory.potions.length; i++) {
@@ -72,6 +59,21 @@ game.ReadyScreen = me.ScreenObject.extend({
                     game.potion.potions[i + 1].available = true;
                 }
             }
+
+            for (i = 0; i < stat.characterState.scrollCollection.scrolls.length; i++) {
+
+                if (stat.characterState.scrollCollection.scrolls[i].scroll.id > 19) {
+                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].available = true;
+                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].used = stat.characterState.scrollCollection.scrolls[i].isActive;
+                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].id = stat.characterState.scrollCollection.scrolls[i].scroll.id;
+                    game.scroll.enchantments[stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20].name = stat.characterState.scrollCollection.scrolls[i].scroll.name;
+                        //console.log("ent:"+ (stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20));
+                }
+                    //console.log("ent:"+ (stat.characterState.scrollCollection.scrolls[i].scroll.posId - 20), i);
+
+            }
+            game.data.scollLimit = stat.characterState.scrollLimit;
+
 
             //get avatars
             for (i = 0; i < stat.characterState.avatars_bought.length; i++) {
@@ -238,7 +240,9 @@ game.ReadyScreen = me.ScreenObject.extend({
             console.log(game.data.to );
             var state = game.data.to;
             game.data.to = null;
-            me.state.change(state);
+            setTimeout(function(){
+                me.state.change(state);
+            }, 100);
         }
 
     }
