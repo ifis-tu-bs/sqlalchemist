@@ -25,6 +25,6 @@ public class SessionDAO {
     }
 
     public static List<Session> getByOwner(User user) {
-        return (user != null) ? find.where().eq("Owner", user).findList() : null;
+        return (user != null) ? find.where().eq("owner_id", user.getId()).findList() : null;
     }
 }

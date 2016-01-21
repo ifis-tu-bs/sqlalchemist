@@ -86,7 +86,6 @@ public class User extends Model {
     private int                         coins;
 
     private float                       coinScale;
-    private int                         scrollLimit;
 
     @Embedded
     private Score                       score;

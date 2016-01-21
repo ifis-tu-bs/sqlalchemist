@@ -59,15 +59,17 @@ public class SessionController extends Controller {
             return unauthorized("Wrong email or password");
         }
 
+        List<Session> sessionList = SessionDAO.getByOwner(user);
+        for(Session sessionI : sessionList) {
+            if(!sessionI.getId().equals(session.getId())) {
+                sessionI.disable();
+                sessionI.update();
+            }
+        }
+
         session.setOwner(user);
         session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
-
-        List<Session> sessionList = SessionDAO.getByOwner(user);
-        for(Session sessionI : sessionList) {
-            sessionI.disable();
-            sessionI.update();
-        }
 
         return redirect(routes.UserController.show(user.getUsername()));
     }

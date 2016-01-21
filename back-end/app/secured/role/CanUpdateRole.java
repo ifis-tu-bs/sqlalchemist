@@ -1,6 +1,8 @@
 package secured.role;
 
+import dao.SessionDAO;
 import dao.UserDAO;
+import models.Session;
 import models.User;
 import play.mvc.Http;
 import play.mvc.Result;
@@ -12,8 +14,10 @@ import play.mvc.Security;
 public class CanUpdateRole extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context context) {
-        User user = UserDAO.getBySession(context.session().get("session"));
-        return (user != null && user.getRole().getRolePermissions().canUpdate() ) ? context.session().get("session") : null;
+        Session session = SessionDAO.getById(context.session().get("session"));
+        User    user    = (session != null)? session.getOwner() : null;
+
+        return (user != null && session.isActive() && user.getRole().getRolePermissions().canUpdate() ) ? context.session().get("session") : null;
     }
 
     @Override

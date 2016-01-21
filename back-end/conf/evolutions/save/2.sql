@@ -4,7 +4,7 @@ ALTER TABLE tabledefinition
  MODIFY COLUMN extension MEDIUMTEXT;
 
 ALTER TABLE session
- ADD active TINYINT;
+ ADD active tinyint(1) default 0;
 
 ALTER TABLE user
  DROP COLUMN scroll_limit;
