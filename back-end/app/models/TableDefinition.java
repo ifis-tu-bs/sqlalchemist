@@ -24,7 +24,7 @@ public class TableDefinition extends Model {
     @OneToMany(mappedBy = "tableDefinition", cascade = CascadeType.ALL)
     private List<ColumnDefinition>  columnDefinitions;
 
-    @Column(columnDefinition = "Text")
+    @Column(columnDefinition = "MEDIUMTEXT")
     private final String                  extension;
 
 //////////////////////////////////////////////////
