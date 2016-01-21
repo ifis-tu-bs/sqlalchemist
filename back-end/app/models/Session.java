@@ -24,6 +24,8 @@ public class Session extends Model {
     @OneToMany(mappedBy = "session")
     private List<Action> actions;
 
+    private boolean active;
+
     private Calendar createdAt;
 
     @OneToOne
@@ -35,7 +37,8 @@ public class Session extends Model {
 
     public Session() {
         this.id         = UUID.randomUUID().toString();
-        this.createdAt = Calendar.getInstance();
+        this.active     = true;
+        this.createdAt  = Calendar.getInstance();
         this.lastAction = null;
     }
 
@@ -60,6 +63,14 @@ public class Session extends Model {
     @JsonProperty("owner")
     public String getOwnerName() {
         return (this.owner != null)? this.owner.getUsername(): "";
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void disable() {
+        this.active = false;
     }
 
     @JsonIgnore

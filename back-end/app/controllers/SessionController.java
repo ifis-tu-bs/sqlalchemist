@@ -73,21 +73,15 @@ public class SessionController extends Controller {
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
         if(session != null) {
+            Session newSession = SessionDAO.create();
+            newSession.setOwner(session.getOwner());
+            newSession.update();
 
-            Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DATE, -1);
+            session.disable();
+            session.update();
 
-            if(yesterday.after(session.getCreatedAt())) {
-                Session newSession = SessionDAO.create();
-                newSession.setOwner(session.getOwner());
-                newSession.update();
-                session("session", newSession.getId());
-
-
-                return ok(Json.toJson(newSession));
-            }
-
-            return ok(Json.toJson(session));
+            session("session", newSession.getId());
+            return ok(Json.toJson(newSession));
         } else {
 
             session = SessionDAO.create();
