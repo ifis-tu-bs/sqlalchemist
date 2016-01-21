@@ -65,7 +65,7 @@ angular
                         function (result) {
                             vm.taskSets = result;
                             $scope.getCurrentPath();
-
+                            console.log(result);
                         }, function (error) {
                             FlashService.Error(error);
                         }
@@ -85,7 +85,11 @@ angular
         function getTasksForTaskSet(taskSet) {
             TaskService.getAllTasksForTaskSet(taskSet.id).then(
                 function(result) {
-                    vm.tasks = result;
+                    if (result) {
+                        vm.tasks = result;
+                    } else {
+                        vm.tasks = [];
+                    }
                 },
                 function(error) {
                     FlashService.Error(error);
@@ -535,7 +539,7 @@ angular
                     }
             });
 
-            modalInstance.result.then(function (result) {
+            modalInstance.then(function (result) {
                 if (result == true) {
                     TaskService.deleteHomework(vm.taskSets[taskSetIndex].id).then(
                         initController
@@ -558,12 +562,12 @@ angular
             return -1;
         }
 
-        $scope.findForTableName = function (tableName) {
+        $scope.findColumnsForTableName = function (tableName) {
             var columns = [];
             for (var i = 0; i < vm.tables.length; i++) {
                 if (vm.tables[i].tableName === tableName) {
-                    for (var j = 0; j < vm.tables[i].columns.length; j++) {
-                        columns.push(vm.tables[i].columns[j].columnName);
+                    for (var j = 0; j < vm.tables[i].columnDefinitions.length; j++) {
+                        columns.push(vm.tables[i].columnDefinitions[j].columnName);
                     }
                 }
             }
