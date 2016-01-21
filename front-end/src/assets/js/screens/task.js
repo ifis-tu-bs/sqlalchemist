@@ -613,7 +613,8 @@ game.TaskScreen = me.ScreenObject.extend({
         function handlePostTask(xhr) {
 
             dataResult = JSON.parse(xhr.responseText);
-            console.log("RESULT: ",dataResult);
+            console.log("RESULT: ",dataResult,"Thats it?",dataResult.score );
+            game.data.gainScore = dataResult.score;
             // write data
             textOut.clear();
 

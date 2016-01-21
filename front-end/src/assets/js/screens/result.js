@@ -17,40 +17,50 @@ game.ResultScreen = me.ScreenObject.extend({
          */
         this.onNext = function () {
             console.log("clicked! Next with:" + game.task.kind);
-            switch(game.task.kind) {
-                case 0 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(me.state.READY);
-                    }, 100);
-                    return true;
+            if (!game.data.playerStat.isTutorial) {
+                switch(game.task.kind) {
+                    case 0 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(me.state.READY);
+                        }, 100);
+                        return true;
+                    }
+                    case 1 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(me.state.READY);
+                        }, 100);
+                        return true;
+                    }
+                    case 2 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(STATE_TRIVIA);
+                        }, 100);
+                        return true;
+                    }
+                    case 3 : {
+                        $("#backgroundResultId").fadeOut(100);
+                        $("#nextFromResult").fadeOut(100);
+                        setTimeout( function() {
+                            me.state.change(STATE_HOMEWORK);
+                        }, 100);
+                        return true;
+                    }
                 }
-                case 1 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(me.state.READY);
-                    }, 100);
-                    return true;
-                }
-                case 2 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(STATE_TRIVIA);
-                    }, 100);
-                    return true;
-                }
-                case 3 : {
-                    $("#backgroundResultId").fadeOut(100);
-                    $("#nextFromResult").fadeOut(100);
-                    setTimeout( function() {
-                        me.state.change(STATE_HOMEWORK);
-                    }, 100);
-                    return true;
-                }
+            }else{
+                game.potion.potions[16].amount++;
+                $("#backgroundResultId").fadeOut(100);
+                $("#nextFromResult").fadeOut(100);
+                setTimeout( function() {
+                    me.state.change(STATE_TEXT);
+                }, 100);
             }
+
         };
 
         var nextButton = new game.ClickableElement('nextFromResult', 'NEXT', this.onNext, 25, 10, 37, 80.5, 1);
@@ -63,8 +73,6 @@ game.ResultScreen = me.ScreenObject.extend({
          * @type {number}
          */
         this.time = Math.floor((game.task.finishTime - game.task.startTime)/1000);
-        this.difficulty = game.task.difficulty + 1;
-        this.score = game.data.gainScore;
 
         var resultTime = new game.TextOutputElement('resultTimeId', 19, 5.3, 29, 26, 1);
         me.game.world.addChild(resultTime);
@@ -72,11 +80,11 @@ game.ResultScreen = me.ScreenObject.extend({
 
         var resultScore = new game.TextOutputElement('resultScoreId', 25, 5.3, 54, 26, 1);
         me.game.world.addChild(resultScore);
-        resultScore.writeHTML("Score: " + this.score, 'resultScorePara');
+        resultScore.writeHTML("Score: " + game.data.gainScore, 'resultScorePara');
 
         var resultDifficulty = new game.TextOutputElement('resultDifficultyId', 25, 5.3, 20, 39, 1);
         me.game.world.addChild(resultDifficulty);
-        resultDifficulty.writeHTML("Difficulty: " + this.difficulty, 'resultDifficultyPara');
+        resultDifficulty.writeHTML("Difficulty: " + game.task.difficulty, 'resultDifficultyPara');
 
         var resultCoins = new game.TextOutputElement('resultCoinsId', 35, 5.3, 56, 39, 1);
         me.game.world.addChild(resultCoins);
