@@ -8,30 +8,36 @@ game.ProfileScreen = me.ScreenObject.extend({
         /**
          * Create background-div and add image to it.
          */
-        var backgroundProfile = new game.BackgroundElement('backgroundProfileId', 100, 100, 0, 0, 'none');
-        backgroundProfile.setImage("assets/data/img/gui/profile_screen.png", "backgroundprofile");
-        me.game.world.addChild(backgroundProfile);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
+        me.game.world.addChild(rootContainer);
+
+        var title = new game.fdom.TitleElement(rootContainer, '100%','19%','0%','5%', 'Profile', 'Title ProfileScreen');
+        me.game.world.addChild(title);
+
+        var avatarBox = new game.fdom.ImageElement(rootContainer, '17.8%', '26.7%', '16.2%', '4.1%', 'Image ProfileScreen AvatarBox', 'assets/data/img/stuff/schokofrosch.png');
+        avatarBox.hide();
+        $(avatarBox.getNode()).fadeIn(100);
+        me.game.world.addChild(avatarBox);
 
         /**
          * Create button for state change back to the menu with corresponding callback function.
          */
-        this.backToMenu = function () {
+        var backToLabButton = new game.fdom.ButtonElement(rootContainer, '20%','20%','73%','2%', '', 'Button ProfileScreen Back', false, function() {
             $("#backgroundProfileId").fadeOut(100);
             $("#backFromProfile").fadeOut(100);
             $("#avatar").fadeOut(100);
+            $(rootContainer.getNode()).fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.MENU);
             }, 100);
-        };
-        var backFromProfile = new game.ClickableElement('backFromProfile','', this.backToMenu, 18.1818, 17.7083, 72, -5, 1);
-        backFromProfile.setImage("assets/data/img/buttons/new_back_button.png", "back");
-        me.game.world.addChild(backFromProfile);
-
+        });
+        backToLabButton.hide();
+        $(backToLabButton.getNode()).fadeIn(100);
+        me.game.world.addChild(backToLabButton);
 
         /**
          * Create TextOutputElements to draw some useful information
          */
-
         var attribute = new game.TextOutputElement('attribute', 36, 58, 14, 34, 9);
         var values    = new game.TextOutputElement('valuesProfile', 36, 58, 48, 33.1, 9);
         me.game.world.addChild(attribute);
@@ -67,16 +73,16 @@ game.ProfileScreen = me.ScreenObject.extend({
             function profileID_Reply(xmlHttpRequest) {
 
                 var profile_JSON = JSON.parse(xmlHttpRequest.responseText);
-                console.log("Kahn",profile_JSON);
+                //console.log("Kahn",profile_JSON);
                 var filename = profile_JSON.avatar.avatarFilename;
                 var isTeam = profile_JSON.avatar.isTeam;
                 var avatar;
                 if (!isTeam) {
-                    avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 26.4394, 18.75, 'none');
+                    avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 23.4394, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 } else {
-                    avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 25.6818, 18.75, 'none');
+                    avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 22.6818, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 }

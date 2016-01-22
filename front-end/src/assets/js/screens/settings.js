@@ -30,10 +30,10 @@ game.SettingsScreen = me.ScreenObject.extend({
         var settingsContainerElement = new game.fdom.ContainerElement(rootContainer, '24%','21%','10%','20%', 'Container SettingsScreen Settings');
         me.game.world.addChild(settingsContainerElement);
 
-        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','10%', 'sound: ', 'Text SettingsScreen Sound ');
+        var settingsTextSound = new game.fdom.TitleElement(settingsContainerElement, '45%','50%','15%','11%', 'sound: ', 'Text SettingsScreen Sound ');
         me.game.world.addChild(settingsTextSound);
 
-        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '30%','24%','10%','60%', 'music: ', 'Text SettingsScreen Music');
+        var settingsTextMusic = new game.fdom.TitleElement(settingsContainerElement, '45%','50%','15%','61%', 'music: ', 'Text SettingsScreen Music');
         me.game.world.addChild(settingsTextMusic);
 
         var settingsSound = new game.fdom.CheckBoxElement(settingsContainerElement, '20%','30%','65%','10%', '', 'CheckBox SettingsScreen Sound');
@@ -94,18 +94,18 @@ game.SettingsScreen = me.ScreenObject.extend({
         var defaultContainer = new game.fdom.ContainerElement(rootContainer, '55%','67%','34%','20%', 'Container SettingsScreen View');
         me.game.world.addChild(defaultContainer);
 
-        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '86%','10%','7%','5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
+        var defaultContainerViewTitle = new game.fdom.TitleElement(defaultContainer, '86%','15%','7%','2.5%', 'ingame key bindings:', 'Text SettingsScreen View DefaultView Title');
         me.game.world.addChild(defaultContainerViewTitle);
 
-        var keyBindingsTable = new game.fdom.ContainerElement(defaultContainer, "60%", "33%", "20%", "25%", "Table SettingsScreen");
+        var keyBindingsTable = new game.fdom.ContainerElement(defaultContainer, "70%", "45%", "15%", "15%", "Table SettingsScreen");
         me.game.world.addChild(keyBindingsTable);
 
         // Create Table;
         keyBindingsTableRaw = [
-            ["music toggle",    "m"],
-            ["sound toggle",    "n"],
-            ["leave dungeon",   "esc"],
-            ["jump",            "space"],
+            ["music toggle",    "[m]"],
+            ["sound toggle",    "[n]"],
+            ["leave dungeon",   "[esc]"],
+            ["jump",            "[space]"],
             ["use potion",      "num[1-7]"]
 
         ];
