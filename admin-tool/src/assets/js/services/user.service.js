@@ -68,7 +68,7 @@
 
         function handleError(error) {
             if (error.status === 500) {
-                throw "500 Internal Server Error"
+                throw "500 Internal Server Error";
             }
             throw error.data;
         }
