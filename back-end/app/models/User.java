@@ -509,9 +509,7 @@ public class User extends Model {
     }
 
     public void setDepth(int depth) {
-        if(depth > this.depth) {
-            this.depth = depth;
-        }
+        this.depth = depth;
     }
 
     public int getCoins() {
