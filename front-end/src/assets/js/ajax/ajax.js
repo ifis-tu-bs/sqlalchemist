@@ -27,6 +27,25 @@ function createRequest(method, url, callback) {
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.withCredentials = true;
     xhr.onload = function () {
+        if (xhr.status == 400 || xhr.status == 200 || xhr.status == 401) {
+            console.log(xhr);
+            callback(xhr);
+        } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
+                   xhr.status == 503 || xhr.status == 504) {
+            console.log(xhr);
+            alert("Something went wrong, please check your internet connection!");
+            return;
+        } else {
+            if (xhr.status == 403){
+                if (me.state.isCurrent(STATE_LOGIN)) {
+                    alert("wrong e-mail or password!");
+                }
+                return;
+            }
+            console.log(xhr);
+            alert("Internal server error. Please try again, later!");
+            return;
+        }
         console.log(xhr);
         callback(xhr);
     };
