@@ -1,6 +1,10 @@
 import play.*;
 
 import bootstrap.*;
+import play.mvc.Action;
+import play.mvc.Http;
+
+import java.lang.reflect.Method;
 
 public class Global extends GlobalSettings {
   public void onStart(Application app) {
@@ -11,4 +15,5 @@ public class Global extends GlobalSettings {
   public void onStop(Application app) {
     Logger.info("Application shutdown...");
   }
+
 }
