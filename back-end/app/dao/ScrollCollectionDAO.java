@@ -8,6 +8,7 @@ import play.Logger;
 import play.Play;
 
 import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Calendar;
 import java.util.stream.Collectors;
@@ -123,18 +124,24 @@ public class ScrollCollectionDAO {
 
       public static int getLimit(User user) {
           List<ScrollCollection> scrollCollectionList = getScrollCollection(user);
-          Calendar yesterday = Calendar.getInstance();
-          yesterday.add(Calendar.DATE, -1);
+          Calendar today4oClock = new GregorianCalendar();
+          int GlobalScrollLimit =
+                  Play.application().configuration().getInt("Game.ScrollLimit");
           int count = 0;
+          today4oClock.set(Calendar.HOUR_OF_DAY, 4);
+          today4oClock.set(Calendar.MINUTE, 0);
+          today4oClock.set(Calendar.SECOND, 0);
+          today4oClock.set(Calendar.MILLISECOND, 0);
+
+
 
           for(ScrollCollection scrollCollectionItem : scrollCollectionList) {
-              if(yesterday.before(scrollCollectionItem.getAdded())) {
+              if(today4oClock.before(scrollCollectionItem.getAdded())) {
                   count++;
               }
           }
 
-          int ScrollLimit = Play.application().configuration().getInt("Game.ScrollLimit");
-          return ScrollLimit - count;
+          return GlobalScrollLimit - count;
       }
 
       public static void reset(User user) {
