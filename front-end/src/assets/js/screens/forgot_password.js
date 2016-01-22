@@ -24,6 +24,8 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
                     if(typeof errorMessage.email !== 'undefined') {
                         $(formEmailInputField.getNode()).addClass("invalid");
+                        var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "entered email does not exist!");
+                        me.game.world.addChild(notificationElement);
                     }
                     console.log(errorMessage);
                 }
