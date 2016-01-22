@@ -28,7 +28,8 @@ game.SignUpScreen = me.ScreenObject.extend({
             var passwordC= formPasswordRepeatInputField.getNode().value;
 
             if(password !== passwordC) {
-                alert("entered passwords does not match");
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "SignUp failed", "entered passwords do not match");
+                me.game.world.addChild(notificationElement);
                 $(formPasswordInputField.getNode()).addClass("invalid");
                 $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                 return;

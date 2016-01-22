@@ -291,7 +291,6 @@ p.Notification.Body {
 
 .Text.SettingsScreen.ResetStoryModeView, .Text.SettingsScreen.ChangePasswordView {
     text-align: center;
-    font-size: 5vh;
 }
 
 .Button.SettingsScreen.ResetStoryModeView, .Button.SettingsScreen.ChangePasswordView {

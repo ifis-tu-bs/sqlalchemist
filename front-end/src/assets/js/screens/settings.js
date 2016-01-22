@@ -74,12 +74,12 @@ game.SettingsScreen = me.ScreenObject.extend({
         var menuContainer = new game.fdom.ContainerElement(rootContainer, '24%','46%','10%','41%', 'Container SettingsScreen Menu');
         me.game.world.addChild(menuContainer);
 
-        var changePasswordButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','6%', 'Change Password', 'Button SettingsScreen Menu changePassword', false, function() {
+        var changePasswordButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','6%', 'change password', 'Button SettingsScreen Menu changePassword', false, function() {
             changeView(changePasswordContainer);
         });
         me.game.world.addChild(changePasswordButton);
 
-        var resetStoryModeButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','39%', 'Reset Story Mode', 'Button SettingsScreen Menu resetStory', false, function() {
+        var resetStoryModeButton = new game.fdom.ButtonElement(menuContainer, '100%','25%','0%','39%', 'reset story mode', 'Button SettingsScreen Menu resetStory', false, function() {
             changeView(resetStoryModeContainer);
         });
         me.game.world.addChild(resetStoryModeButton);
@@ -126,7 +126,7 @@ game.SettingsScreen = me.ScreenObject.extend({
         var yIDInputField = new game.fdom.InputFieldElement(defaultContainer, '50%','10%','25%','68%', "GITZ Y-ID", "InputField");
         me.game.world.addChild(yIDInputField);
 
-        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','25%','88%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
+        var verifyButton = new game.fdom.ButtonElement(defaultContainer, '50%','10%','27%','88%', 'Verify as Student', 'Button SettingsScreen View DefaultView VerifyButton', false, function() {
             if(!game.data.user.student) {
                 ajaxVerifyStudent(game.data.user.username, JSON.stringify({yID: yIDInputField.getNode().value }), function(xmlHttpRequest) {
                     if(xmlHttpRequest.status == 200) {
@@ -186,19 +186,19 @@ game.SettingsScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(changePasswordForm);
 
-        var changePasswordViewTitle = new game.fdom.TitleElement(changePasswordForm, '60%','10%','20%','10%', 'change password:', 'Text SettingsScreen View ChangePasswordView');
+        var changePasswordViewTitle = new game.fdom.TitleElement(changePasswordForm, '60%','16%','21.5%','10%', 'change password:', 'Text SettingsScreen View ChangePasswordView');
         me.game.world.addChild(changePasswordViewTitle);
 
-        var formPasswordOldInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','33%', 'old password', 'InputPasswordField SettingsScreen Password');
+        var formPasswordOldInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','30%', 'old password', 'InputPasswordField SettingsScreen Password');
         me.game.world.addChild(formPasswordOldInputField);
 
         var formPasswordInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','47%', 'password', 'InputPasswordField SettingsScreen Password');
         me.game.world.addChild(formPasswordInputField);
 
-        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','60%', 'repeat password', 'InputPasswordField SettingsScreen Password');
+        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(changePasswordForm, '60%','10%','20%','63%', 'repeat password', 'InputPasswordField SettingsScreen Password');
         me.game.world.addChild(formPasswordRepeatInputField);
 
-        var changePasswordSubmit = new game.fdom.ButtonElement(changePasswordForm, '60%','10%','20%','85%', 'Submit', 'Button SettingsScreen View ChangePasswordView', true);
+        var changePasswordSubmit = new game.fdom.ButtonElement(changePasswordForm, '60%','10%','21.5%','85%', 'submit', 'Button SettingsScreen View ChangePasswordView', true);
         me.game.world.addChild(changePasswordSubmit);
 
         /* ------------------------------------------------------------------ */
@@ -231,15 +231,16 @@ game.SettingsScreen = me.ScreenObject.extend({
         me.game.world.addChild(deleteUserContainer);
         deleteUserContainer.hide();
 
-        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '65%','20%','20%','16%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
+        var deleteUserContainerText1 = new game.fdom.TitleElement(deleteUserContainer, '65%','16%','20%','27%', 'Are you sure about deleting your account?', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(deleteUserContainerText1);
 
-        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '60%','20%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        var deleteUserContainerText2 = new game.fdom.TitleElement(deleteUserContainer, '65%','16%','20%','43%', 'All your data will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(deleteUserContainerText2);
 
-        var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+        var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '65%','10%','21.5%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
             ajaxDeleteUser(game.data.user.username, function(xmlHttpRequest) {
                 if(xmlHttpRequest.status != 200) {
+
                     alert("Error");
                     return;
                 }

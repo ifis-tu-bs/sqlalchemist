@@ -33,17 +33,20 @@ function createRequest(method, url, callback) {
         } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
                    xhr.status == 503 || xhr.status == 504) {
             console.log(xhr);
-            alert("Something went wrong, please check your internet connection!");
+            var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Something went wrong, please check your internet connection!");
+            me.game.world.addChild(notificationElement);
             return;
         } else {
             if (xhr.status == 403){
                 if (me.state.isCurrent(STATE_LOGIN)) {
-                    alert("wrong e-mail or password!");
+                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "LogIn failed!", "wrong e-mail or password!");
+                    me.game.world.addChild(notificationElement);
                 }
                 return;
             }
             console.log(xhr);
-            alert("Internal server error. Please try again, later!");
+            var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Internal server error. Please try again, later!");
+            me.game.world.addChild(notificationElement);
             return;
         }
         console.log(xhr);
