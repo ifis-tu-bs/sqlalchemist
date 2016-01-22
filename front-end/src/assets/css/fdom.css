@@ -39,6 +39,21 @@
     text-shadow: -1px 0px 5px rgba(133, 133, 133, 0.75);
 }
 
+.Button.ResultScreen.Next {
+    font-size: 6vh;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    background-image: url('/assets/data/img/buttons/key.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.ResultScreen.Next:hover {
+    color: red;
+    background-image: url('/assets/data/img/buttons/key_red.png');
+}
+
 .Button.LoginScreen.Enter {
     font-size: 6vh;
     color: black;
@@ -207,6 +222,11 @@ p.Notification.Body {
 .Title.ProfileScreen {
     font-family: Amethysta-Regular, sans-serif;
     color: #F7E6D0;
+}
+
+.Title.ResultScreen {
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
 }
 
 
