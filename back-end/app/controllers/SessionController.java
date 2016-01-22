@@ -76,17 +76,19 @@ public class SessionController extends Controller {
 
     @Authenticated(SessionAuthenticator.class)
     public Result logout() {
-        session().clear();
         Session session = SessionDAO.getById(session("session"));
         session.disable();
         session.update();
         
-        return redirect(routes.SessionController.index());
+        session().remove("session");
+        session().clear();
+
+        return ok();
     }
 
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
-        if(session != null) {
+        if(session != null && session.isActive()) {
             List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
             for(Session sessionI : sessionList) {
                 sessionI.disable();

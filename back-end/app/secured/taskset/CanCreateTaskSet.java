@@ -17,7 +17,7 @@ public class CanCreateTaskSet extends Security.Authenticator {
         Session session = SessionDAO.getById(context.session().get("session"));
         User    user    = (session != null)? session.getOwner() : null;
 
-        return (user != null && session.isActive() && user.getRole().getOwnTaskSetPermissions().canCreate() ) ? context.session().get("session") : null;
+        return (user != null && session.isActive() && !context.session().isDirty && user.getRole().getOwnTaskSetPermissions().canCreate() ) ? context.session().get("session") : null;
     }
 
     @Override

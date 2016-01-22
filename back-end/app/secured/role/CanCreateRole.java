@@ -17,7 +17,7 @@ public class CanCreateRole extends Security.Authenticator {
         Session session = SessionDAO.getById(context.session().get("session"));
         User    user    = (session != null)? session.getOwner() : null;
 
-        return (user != null && session.isActive() && user.getRole().getRolePermissions().canCreate() ) ? context.session().get("session") : null;
+        return (user != null && session.isActive() && !context.session().isDirty && user.getRole().getRolePermissions().canCreate() ) ? context.session().get("session") : null;
     }
 
     @Override

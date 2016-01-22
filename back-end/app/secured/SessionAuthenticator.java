@@ -13,7 +13,7 @@ public class SessionAuthenticator extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context context) {
         Session session = (context.session().get("session") != null)?  SessionDAO.getById(context.session().get("session")) : null;
-        return (session != null && session.isActive()) ? context.session().get("session") : null ;
+        return (session != null && !context.session().isDirty && session.isActive()) ? context.session().get("session") : null ;
     }
 
     @Override
