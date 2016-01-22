@@ -89,10 +89,12 @@ public class SessionController extends Controller {
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
         if(session != null && session.isActive()) {
-            List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
-            for(Session sessionI : sessionList) {
-                sessionI.disable();
-                sessionI.update();
+            if(session.getOwner() != null) {
+                List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
+                for (Session sessionI : sessionList) {
+                    sessionI.disable();
+                    sessionI.update();
+                }
             }
 
             Session newSession = SessionDAO.create();
