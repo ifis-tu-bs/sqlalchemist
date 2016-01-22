@@ -27,25 +27,26 @@ function createRequest(method, url, callback) {
     xhr.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     xhr.withCredentials = true;
     xhr.onload = function () {
+        var notificationElement;
         if (xhr.status == 400 || xhr.status == 200 || xhr.status == 401) {
             console.log(xhr);
             callback(xhr);
         } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
                    xhr.status == 503 || xhr.status == 504) {
             console.log(xhr);
-            var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Something went wrong, please check your internet connection!");
+            notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Something went wrong, please check your internet connection!");
             me.game.world.addChild(notificationElement);
             return;
         } else {
             if (xhr.status == 403){
                 if (me.state.isCurrent(STATE_LOGIN)) {
-                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "LogIn failed!", "wrong e-mail or password!");
+                    notificationElement = new game.fdom.NotificationElement(rootContainer, "LogIn failed!", "wrong e-mail or password!");
                     me.game.world.addChild(notificationElement);
                 }
                 return;
             }
             console.log(xhr);
-            var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Internal server error. Please try again, later!");
+            notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Internal server error. Please try again, later!");
             me.game.world.addChild(notificationElement);
             return;
         }

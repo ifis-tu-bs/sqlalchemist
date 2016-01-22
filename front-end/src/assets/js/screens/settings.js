@@ -159,8 +159,9 @@ game.SettingsScreen = me.ScreenObject.extend({
             var passwordOld = formPasswordOldInputField.getNode().value;
             var password    = formPasswordInputField.getNode().value;
             var passwordC   = formPasswordRepeatInputField.getNode().value;
-            if(password != passwordC) {
-                alert("entered passwords do not match");
+            if (password != passwordC) {
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Entered passwords do not match!");
+                me.game.world.addChild(notificationElement);
                 $(formPasswordInputField.getNode()).addClass("invalid");
                 $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                 return;
@@ -168,7 +169,7 @@ game.SettingsScreen = me.ScreenObject.extend({
             var changePasswordData = {oldPassword: passwordOld, newPassword: password};
 
             ajaxUpdatePassword(game.data.user.username, JSON.stringify(changePasswordData), function(xmlHttpRequest) {
-                if(xmlHttpRequest.status == 400) {
+                if (xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
                     if(typeof errorMessage.oldPassword !== 'undefined') {
                         $(formPasswordOldInputField.getNode()).addClass("invalid");
@@ -178,7 +179,8 @@ game.SettingsScreen = me.ScreenObject.extend({
                         $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                     }
                 } else if(xmlHttpRequest.status == 200) {
-                    alert("successfully");
+                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "Yo!", "Password changed successfully!");
+                    me.game.world.addChild(notificationElement);
                 }
 
             });
@@ -214,11 +216,13 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var resetStoryModePushButton = new game.fdom.ButtonElement(resetStoryModeContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
             ajaxSendChallengeResetRequest(function(xmlHttpRequest) {
-                if(xmlHttpRequest.status != 200) {
-                    alert("Error");
+                var notificationElement;
+                if(xmlHttpRequest.status == 400) {
+                    notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Could not reset your progress!");
+                    me.game.world.addChild(notificationElement);
                     return;
-                } else {
-                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "reset success", "please reload the page");
+                } else if (xmlHttpRequest.status == 200) {
+                    notificationElement = new game.fdom.NotificationElement(rootContainer, "Yo!", "please reload the page");
                     me.game.world.addChild(notificationElement);
                     changeView(resetStoryModeContainer);
                 }
@@ -239,9 +243,9 @@ game.SettingsScreen = me.ScreenObject.extend({
 
         var deleteUserPushButton = new game.fdom.ButtonElement(deleteUserContainer, '65%','10%','21.5%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
             ajaxDeleteUser(game.data.user.username, function(xmlHttpRequest) {
-                if(xmlHttpRequest.status != 200) {
-
-                    alert("Error");
+                if(xmlHttpRequest.status == 400) {
+                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "Could not delete your account! Try again, later!");
+                    me.game.world.addChild(notificationElement);
                     return;
                 }
                 game.data.session = JSON.parse(xmlHttpRequest.responseText);
