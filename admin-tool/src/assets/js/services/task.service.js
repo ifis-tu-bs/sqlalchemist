@@ -147,6 +147,9 @@
         }
 
         function handleError(data) {
+            if (data.status === 500) {
+                throw "500 Internal Server Error";
+            }
             throw data.data;
         }
 
