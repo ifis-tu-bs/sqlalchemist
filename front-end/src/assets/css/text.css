@@ -16,7 +16,7 @@
     z-Index : 10;
 }
 
-#skipOne, #skipAll {
+#skipOne,#escape, #skipAll {
     font-family: Trajan_Pro_Regular, sans-serif;
     cursor: pointer;
     color: white;
@@ -45,6 +45,11 @@
 }
 
 #skipOne:hover, #skipOne:focus, #skipOne:active {
+    background-color: transparent;
+    color: #10a30c;
+}
+
+#escape:hover, #escape:focus, #escape:active {
     background-color: transparent;
     color: #10a30c;
 }
