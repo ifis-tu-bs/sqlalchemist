@@ -115,6 +115,13 @@ module.exports = function(grunt) {
             expand: true
           }
         ]
+      },
+      debug: {
+        files: {
+          '<%= globalConfig.dest %>/assets/js/app.min.js': [
+            '<%= globalConfig.build %>/assets/js/app.min.js'
+          ]
+        }
       }
     },
     clean: {
@@ -132,5 +139,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
-  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy', 'clean:app']);
+  grunt.registerTask('dist', ['jshint', 'concat', 'processhtml', 'uglify', 'cssmin', 'htmlmin', 'copy:dist', 'clean:app']);
+  grunt.registerTask('default', ['jshint', 'concat', 'processhtml', 'copy:debug', 'cssmin', 'htmlmin', 'copy:dist', 'clean:app']);
 };

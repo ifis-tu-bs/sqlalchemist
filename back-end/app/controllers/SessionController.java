@@ -19,6 +19,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import play.Logger;
 
 import java.util.Calendar;
 import java.util.List;
@@ -90,6 +91,11 @@ public class SessionController extends Controller {
         Session session = SessionDAO.getById(session("session"));
         if(session != null && session.isActive()) {
             List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
+
+            if (sessionList == null) {
+                return badRequest("Not a valid session");
+            }
+
             for(Session sessionI : sessionList) {
                 sessionI.disable();
                 sessionI.update();

@@ -219,7 +219,7 @@ public class TaskController extends Controller {
 
         task.delete();
 
-        return redirect(routes.TaskController.read(taskId));
+        return ok();
     }
 
     /**
