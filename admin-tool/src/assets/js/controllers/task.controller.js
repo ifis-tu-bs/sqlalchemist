@@ -486,6 +486,7 @@ angular
                 }
             ).then(
                 function (result) {
+                    FlashService.Success("Deleted Task.");
                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
                 },
                 function (error) {
