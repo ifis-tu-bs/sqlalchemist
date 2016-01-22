@@ -208,13 +208,13 @@ game.SettingsScreen = me.ScreenObject.extend({
         me.game.world.addChild(resetStoryModeContainer);
         resetStoryModeContainer.hide();
 
-        var resetStoryModeContainerText1 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','29%', 'Are you sure you want do reset the story?', 'Text SettingsScreen View ResetStoryModeView');
+        var resetStoryModeContainerText1 = new game.fdom.TitleElement(resetStoryModeContainer, '65%','16%','20%','27%', 'Are you sure you want do reset the story?', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(resetStoryModeContainerText1);
 
-        var resetStoryModeContainerText2 = new game.fdom.TitleElement(resetStoryModeContainer, '60%','10%','20%','43%', 'Your whole progress will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
+        var resetStoryModeContainerText2 = new game.fdom.TitleElement(resetStoryModeContainer, '65%','16%','20%','43%', 'Your whole progress will be deleted!', 'Text SettingsScreen View ResetStoryModeView');
         me.game.world.addChild(resetStoryModeContainerText2);
 
-        var resetStoryModePushButton = new game.fdom.ButtonElement(resetStoryModeContainer, '40%','8%','30%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
+        var resetStoryModePushButton = new game.fdom.ButtonElement(resetStoryModeContainer, '65%','10%','21.5%','75%', "Yes I'm sure", 'Button SettingsScreen View ResetStoryModeView ResetStoryMode', false, function() {
             ajaxSendChallengeResetRequest(function(xmlHttpRequest) {
                 var notificationElement;
                 if(xmlHttpRequest.status == 400) {
