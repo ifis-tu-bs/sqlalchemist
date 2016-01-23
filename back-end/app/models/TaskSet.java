@@ -185,6 +185,25 @@ public class TaskSet extends Model {
         return this.tasks.contains(task);
     }
 
+  @JsonProperty
+  public List<String> getSQLStatements() {
+    List<String> sqlStatements = new ArrayList<>();
+
+    for(TableDefinition tableDefinition : this.tableDefinitions) {
+      sqlStatements.add(tableDefinition.getSQLStatement());
+    }
+
+    for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
+      sqlStatements.add(foreignKeyRelation.getSQLStatement());
+    }
+
+    for(TableDefinition tableDefinition : this.tableDefinitions) {
+      sqlStatements.add(tableDefinition.getExtension());
+    }
+
+    return sqlStatements;
+  }
+
     @JsonProperty("isHomeWork")
     public boolean getIsHomework() {
         return isHomework;
