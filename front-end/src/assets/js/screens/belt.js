@@ -5,13 +5,26 @@ game.BeltScreen = me.ScreenObject.extend({
         /**
          * Create background-div and add image to it.
          */
-        var backgroundBelt = new game.BackgroundElement('backgroundBeltId', 100, 100, 0, 0, 'none');
-        backgroundBelt.setImage("assets/data/img/gui/belt_screen.png", "backgroundbelt");
-        me.game.world.addChild(backgroundBelt);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/belt_screen.png');
+        me.game.world.addChild(rootContainer);
 
-        var potionLegend = new game.BackgroundElement('potionLegendId', 2.4242, 4,1666, 90, 4, 'none');
-        potionLegend.setImage("assets/data/img/potion/WEAK_DEFENSEPOTION.png", "potionLegendImage");
-        me.game.world.addChild(potionLegend);    
+
+        var potionLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '3%', 'Image BeltScreen PotionLegend', 'assets/data/img/potion/weak_greypotion.png');
+        potionLegend.hide();
+        $(potionLegend.getNode()).fadeIn(100);
+        me.game.world.addChild(potionLegend);
+
+        var potionLegendText = new game.fdom.TitleElement(rootContainer, '23%','4.1%','3%','4%', 'to attach potion to belt, click: ', 'Title BeltScreen PotionLegendText');
+        me.game.world.addChild(potionLegendText);
+
+        var scrollLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '8%', 'Image BeltScreen ScrollLegend', 'assets/data/img/stuff/spinning_scroll_red_32.png');
+        scrollLegend.hide();
+        $(scrollLegend.getNode()).fadeIn(100);
+        me.game.world.addChild(scrollLegend);
+
+        var scrollLegendText = new game.fdom.TitleElement(rootContainer, '23%','4.1%','3%','9%', 'to brew potion, click: ', 'Title BeltScreen ScrollLegendText');
+        me.game.world.addChild(scrollLegendText);
+
 
         /**
          * Create button and according callback-function to go back to teh Laboratory.
@@ -24,12 +37,13 @@ game.BeltScreen = me.ScreenObject.extend({
             $("[id*='setPotionId']").fadeOut(100);
             $("[id*='potionAmountId']").fadeOut(100);
             $("[id*='beltPotionId']").fadeOut(100);
+            $(rootContainer.getNode()).fadeIn(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
         };
 
-        var backFromBelt = new game.ClickableElement('backFromBeltId','', this.backToMenu, 18.1818, 17.7083, 1.893939, -5, 1);
+        var backFromBelt = new game.ClickableElement('backFromBeltId','', this.backToMenu, 18.1818, 17.7083, 80, -5, 1);
         backFromBelt.setImage("assets/data/img/buttons/new_back_button.png", "back");
         me.game.world.addChild(backFromBelt);
 

@@ -1,6 +1,7 @@
 package service;
 
 import dao.InventoryDAO;
+import dao.RoleDAO;
 import dao.ScrollCollectionDAO;
 import forms.Login;
 import helper.HMSAccessor;
@@ -80,6 +81,20 @@ public class ServiceUser {
     public static void addScroll(User user, Scroll scroll) {
         if(user.getScrollLimit() > 0) {
             ScrollCollectionDAO.add(user, scroll);
+        }
+    }
+
+    public static void disable(User user) {
+        user.isActive(false);
+
+        user.setEmail(user.getId() + " # " + user.getEmail());
+        user.setUsername(user.getId() + " # " + user.getUsername());
+
+        user.setRole(RoleDAO.getUser());
+
+        if(user.isStudent()) {
+            user.setMatNR(user.getId() + " # " + user.getMatNR());
+            user.setYID(user.getId() + " # " + user.getYID());
         }
     }
 }

@@ -105,9 +105,9 @@ public class SQLParser {
 
 
         if(refStatementResult.size() != userStatementResult.size()) {
-            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to less rows");
+            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to few rows");
         } else if(refStatementResult.get(0).size() != userStatementResult.get(0).size()) {
-            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to less columns");
+            result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to few columns");
         } else if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
                 result = new SQLResult(task, SQLResult.SUCCESSFULL);

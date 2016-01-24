@@ -86,7 +86,6 @@ public class User extends Model {
     private int                         coins;
 
     private float                       coinScale;
-    private int                         scrollLimit;
 
     @Embedded
     private Score                       score;
@@ -301,8 +300,17 @@ public class User extends Model {
         return this.email;
     }
 
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getUsername() {
         return username;
+    }
+
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -510,9 +518,7 @@ public class User extends Model {
     }
 
     public void setDepth(int depth) {
-        if(depth > this.depth) {
-            this.depth = depth;
-        }
+        this.depth = depth;
     }
 
     public int getCoins() {
@@ -543,6 +549,13 @@ public class User extends Model {
         this.score = score;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void isActive(boolean active) {
+        isActive = active;
+    }
 
     public UserGroup getGroup() {
         return group;

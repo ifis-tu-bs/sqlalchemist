@@ -1,5 +1,7 @@
 package secured;
 
+import dao.SessionDAO;
+import models.Session;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -10,7 +12,8 @@ import play.mvc.Security;
 public class SessionAuthenticator extends Security.Authenticator {
     @Override
     public String getUsername(Http.Context context) {
-        return (context.session().get("session") != null) ? context.session().get("session") : null ;
+        Session session = (context.session().get("session") != null)?  SessionDAO.getById(context.session().get("session")) : null;
+        return (session != null && !context.session().isDirty && session.isActive()) ? context.session().get("session") : null ;
     }
 
     @Override

@@ -23,6 +23,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import service.ServiceUser;
 
 import java.io.IOException;
 import java.util.List;
@@ -116,12 +117,15 @@ public class UserController extends Controller {
     @Authenticated(UserAuthenticator.class)
     public Result destroy(String username) {
         User user = UserDAO.getBySession(request().username());
+        if(user.getUsername().equals(username)
+                || user.getRole().getUserPermissions().canDelete()) {
 
-        //user.disable();
-        user.update();
+            ServiceUser.disable(user);
+            user.update();
 
-        session().clear();
-
-        return redirect(routes.SessionController.index());
+            session().clear();
+            return ok();
+        }
+        return forbidden();
     }
 }

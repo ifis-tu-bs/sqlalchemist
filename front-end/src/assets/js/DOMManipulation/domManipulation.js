@@ -297,7 +297,7 @@ game.TextInputElement = me.Renderable.extend ({
         		this.field.innerHTML = '&nbsp;'; // set magic character
         	}
         }
-        else if (this.isCodeMirror) {
+        else if (this.isCodeMirror || this.isAce) {
         	this.editor.setValue('');
         }
         else {
@@ -738,7 +738,7 @@ game.BackgroundElement = me.Renderable.extend ({
         // append child
         parent.appendChild(this.elem);
 
-        $("#" + id).fadeIn();
+        $("#" + id).fadeIn(100);
 
     },
 
@@ -779,14 +779,11 @@ game.BackgroundElement = me.Renderable.extend ({
 
     getNode : function () {
         return this.elem;
-
     },
 
     update : function () {
         // scale element
         game.scaleElement(this);
-
-
     },
 
     setImage : function (src, id) {
@@ -807,82 +804,6 @@ game.BackgroundElement = me.Renderable.extend ({
 
 });
 
-game.DropDownElement = me.Renderable.extend ({
-
-    /**
-     * constructor
-     * @param : id       : a unique alphanumeric string
-     *          width    : the width of the element in percent of the width of the canvas
-     *          height   : the height of the element in percent of the height of the canvas
-     *          left     : the left margin of the element in percent of the width of the canvas
-     *          top      : the top margin of the element in percent of the height of the canvas
-     */
-    init : function (id, width, height, left, top, optionLength, text) {
-
-        // get parent
-        var parent = document.getElementById('screen');
-        this.updateWhenPaused = true;
-
-
-        this.elem                = document.createElement("SELECT");
-        this.elem.id             = id;
-        this.elem.style.position = 'absolute';
-
-        for (var i = 0; i < optionLength; i++){
-
-        // create child
-            this.elem.option = document.createElement('option');
-            this.elem.option.text = text[i];
-            this.elem.options.add(this.elem.option, i);
-        }
-
-
-
-        //scale element
-        this.relWidth  = width;
-        this.relHeight = height;
-        this.relLeft   = left;
-        this.relTop    = top;
-        game.scaleElement(this);
-
-        // visibility
-        this.visibility = true;
-
-        //display background
-        this.elem.style.display = 'block';
-
-        // append child
-        parent.appendChild(this.elem);
-
-    },
-
-    getNode : function () {
-        return this.elem;
-
-    },
-
-    update : function () {
-        // scale element
-        game.scaleElement(this);
-    },
-
-    /*setImage : function (src, id) {
-        var image = document.createElement("img");
-        image.src = src;
-        image.id = id;
-        image.style.height = 'inherit';
-        image.style.width = 'inherit';
-        this.elem.appendChild(image);
-
-    },*/
-
-    destroy : function () {
-        // remove element
-        this.elem.parentNode.removeChild(this.elem);
-
-    }
-
-});
 ////////////////////////////////////////////////////////////////////////////////
 // Fabios DOMmanipulation
 ////////////////////////////////////////////////////////////////////////////////
@@ -893,7 +814,6 @@ game.fdom.RootContainer = me.Renderable.extend({
         this.elem               = document.createElement('div');
         this.elem.id            = 'rootContainer';
         this.elem.style.backgroundImage = "url('" + backgroundImage + "')";
-
 
         //scale element
         this.relWidth  = 100;
@@ -1014,7 +934,7 @@ game.fdom.NotificationElement = me.Renderable.extend({
         this.elem.appendChild(exitButton);
 
         $(exitButton).on('click', function() {
-            console.log("click");
+            //console.log("click");
             $(mainElement).fadeOut(100);
         });
 

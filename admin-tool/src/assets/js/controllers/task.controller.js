@@ -65,7 +65,7 @@ angular
                         function (result) {
                             vm.taskSets = result;
                             $scope.getCurrentPath();
-
+                            console.log(result);
                         }, function (error) {
                             FlashService.Error(error);
                         }
@@ -74,6 +74,7 @@ angular
         }
 
         function getColumnDefinitionDataTypes() {
+
             TaskService.getColumnDefinitionDataTypes().then(
                 function (result) {
                     vm.dataTypes = result;
@@ -85,8 +86,11 @@ angular
         function getTasksForTaskSet(taskSet) {
             TaskService.getAllTasksForTaskSet(taskSet.id).then(
                 function(result) {
-                    vm.tasks = result;
-                    console.log(result[0].taskText);
+                    if (result) {
+                        vm.tasks = result;
+                    } else {
+                        vm.tasks = [];
+                    }
                 },
                 function(error) {
                     FlashService.Error(error);
@@ -480,7 +484,8 @@ angular
                     return $q.reject({noerror: true});
                 }
             ).then(
-                function () {
+                function (result) {
+                    FlashService.Success("Deleted Task.");
                     vm.tasks.splice(findInArray(vm.tasks, task), 1);
                 },
                 function (error) {
@@ -491,59 +496,30 @@ angular
         };
 
         $scope.rateTask = function (task, decision) {
-                    var ratingJson = {};
-                    switch (decision) {
-                        case 'positive': {
-                            ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
-                            break;
-                        }
-                        case 'needReview': {
-                            ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
-                            break;
-                        }
-                        case 'negative': {
-                            ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
-                            break;
-                        }
-                    }
-                    TaskService.rateTask(task.id, ratingJson).then(
-                        function (result) {
-                            vm.tasks[findInArray(vm.tasks, task)] = result;
-
-                        }, function (error) {
-                            FlashService.Error(error);
-
-                        }
-                    );
-                };
-
-        //////////////////////////////777
-        //  HomeWork Deletion
-        //////////////////////////////777
-
-/*
-        $scope.deleteHomework = function (taskSet) {
-            var taskSetIndex = findInArray(vm.taskSets, taskSet);
-            var modalInstance = $uibModal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'assets/templates/sure.template.html',
-                    controller: 'sureTemplateController',
-                    resolve: {
-                        sureTemplateMessage: function () {
-                                return "Are you sure you want to delete Homework: " + vm.taskSets[taskSetIndex].name + "?\nRemember, that only Homeworks with no submits until now can be deleted.";
-                            }
-                    }
-            });
-
-            modalInstance.result.then(function (result) {
-                if (result == true) {
-                    TaskService.deleteHomework(vm.taskSets[taskSetIndex].id).then(
-                        initController
-                    );
+            var ratingJson = {};
+            switch (decision) {
+                case 'positive': {
+                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
+                    break;
                 }
-            });
-        }
-*/
+                case 'needReview': {
+                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
+                    break;
+                }
+                case 'negative': {
+                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
+                    break;
+                }
+            }
+            TaskService.rateTask(task.id, ratingJson).then(
+                function (result) {
+                    vm.tasks[findInArray(vm.tasks, task)] = result;
+
+                }, function (error) {
+                    FlashService.Error(error);
+                }
+            );
+        };
 
         //////////////////////////////777
         //  Array functions

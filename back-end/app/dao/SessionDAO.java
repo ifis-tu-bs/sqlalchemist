@@ -2,6 +2,9 @@ package dao;
 
 import com.avaje.ebean.Model;
 import models.Session;
+import models.User;
+
+import java.util.List;
 
 /**
  * @author fabiomazzone
@@ -19,5 +22,9 @@ public class SessionDAO {
 
     public static Session getById(String sessionID) {
         return (sessionID != null && !sessionID.isEmpty()) ? find.byId(sessionID) : null;
+    }
+
+    public static List<Session> getByOwner(User user) {
+        return (user != null) ? find.where().eq("owner_id", user.getId()).findList() : null;
     }
 }

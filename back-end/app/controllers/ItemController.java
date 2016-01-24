@@ -78,7 +78,9 @@ public class ItemController extends Controller {
 
         int coinsDifference = ServiceScore.addScore(user, score * 50);
         ServiceScore.addRun(user);
-        user.setDepth(depth);
+        if(depth > user.getDepth()) {
+            user.setDepth(depth);
+        }
         user.update();
 
         ObjectNode node = Json.newObject();

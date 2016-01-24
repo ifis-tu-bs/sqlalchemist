@@ -58,4 +58,16 @@ public class ForeignKeyRelation extends Model {
     public String getDestinationColumn() {
         return destinationColumn;
     }
+
+  public String getSQLStatement() {
+    return "ALTER TABLE "
+        + this.sourceTable
+        + " ADD FOREIGN KEY ("
+        + this.sourceColumn
+        + ") REFERENCES "
+        + this.destinationTable
+        + "("
+        + this.destinationColumn
+        + ");";
+  }
 }

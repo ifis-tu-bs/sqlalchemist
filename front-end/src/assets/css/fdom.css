@@ -6,6 +6,7 @@
 }
 
 .Container {
+    font-family: Amethysta-Regular,sans-serif;
     position: absolute;
 }
 
@@ -32,9 +33,25 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
-    font-size: 7vh;
-    padding-bottom: 3%;
+    font-size: 6vh;
+    padding-bottom: 2%;
+    padding-right: 2%;
     text-shadow: -1px 0px 5px rgba(133, 133, 133, 0.75);
+}
+
+.Button.ResultScreen.Next {
+    font-size: 6vh;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    background-image: url('/assets/data/img/buttons/key.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.ResultScreen.Next:hover {
+    color: red;
+    background-image: url('/assets/data/img/buttons/key_red.png');
 }
 
 .Button.LoginScreen.Enter {
@@ -68,7 +85,6 @@
     border: none;
 }
 
-
 .StartScreen.Parchment {
     position: absolute;
     background-position: center;
@@ -91,16 +107,22 @@ div.NotificationElement {
 }
 
 p.Notification.Title {
-    position: initial;
+    position: relative;
+    top: 10%;
+    font-size: 0.5em;
 }
 
 p.Notification.Body {
-    font-size: 6vh;
+    font-size: 0.3em;
+    text-align: center;
+    font-family: Amethysta-Regular, sans-serif;
+    position: relative;
+    top: 15%;
 }
 
 .Notification.ExitButton {
     position: absolute;
-    top: 6%;
+    top: 13%;
     right: 5%;
     height: 20%;
     width: 8%;
@@ -163,6 +185,55 @@ p.Notification.Body {
 /* Settings Screen */
 /* -------------------------------------------------------------------------- */
 
+.Button.CollectorScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.CollectorScreen.Back:hover{
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+.Button.ProfileScreen.Back {
+    background: url('/assets/data/img/buttons/back_button_ink.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.Button.ProfileScreen.Back:hover{
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
+
+.Title.BeltScreen {
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: white;
+    text-align: right;
+}
+
+.Title.ProfileScreen {
+    font-family: Amethysta-Regular, sans-serif;
+    color: #F7E6D0;
+}
+
+.Title.ResultScreen {
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+}
+
+
+.Button.SettingsScreen {
+    font-family: Amethysta-Regular, sans-serif;
+}
+
 .Button.SettingsScreen.Back {
     background: url('/assets/data/img/buttons/back_button_ink.png');
     background-position: center;
@@ -174,6 +245,7 @@ p.Notification.Body {
     font-size: 4vh;
     border: solid 2px #919191;
     border-radius: 60px;
+    padding: 4%;
 }
 
 .Button.SettingsScreen.Menu:hover {
@@ -203,6 +275,10 @@ p.Notification.Body {
     background: green;
 }
 
+.Container.SettingsScreen {
+    font-family: Amethysta-Regular, sans-serif;
+}
+
 .CheckBox.SettingsScreen.Sound {
     background-image: url('/assets/data/img/buttons/ButtonsSoundOff.png');
 }
@@ -220,14 +296,15 @@ p.Notification.Body {
 }
 
 .Table.SettingsScreen {
-
+    font-size: inherit;
 }
 
 .Title.SettingsScreen {
-    color: white;
+    color: #F7E6D0;
 }
 
 .Text.SettingsScreen {
+    font-family: Amethysta-Regular, sans-serif;
     font-size: 6vh;
     color:black;
 }
@@ -239,7 +316,6 @@ p.Notification.Body {
 
 .Text.SettingsScreen.ResetStoryModeView, .Text.SettingsScreen.ChangePasswordView {
     text-align: center;
-    font-size: 5vh;
 }
 
 .Button.SettingsScreen.ResetStoryModeView, .Button.SettingsScreen.ChangePasswordView {

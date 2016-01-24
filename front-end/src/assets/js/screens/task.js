@@ -37,6 +37,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
 
         game.data.count = 0;
+        var solved = false;
     	// workaround fuer android bug CB-4404
     	if (me.device.android || me.device.android2) {
 	        if (me.device.isFullscreen) {
@@ -129,22 +130,22 @@ game.TaskScreen = me.ScreenObject.extend({
         if(game.task.kind === 2){
             switch(game.task.difficulty){
                 case 1:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "one");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "Difficulty");
                     break;
                 case 2:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_2.png", "two");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_2.png", "Difficulty");
                     break;
                 case 3:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_3.png", "three");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_3.png", "Difficulty");
                     break;
                 case 4:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_4.png", "four");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_4.png", "Difficulty");
                     break;
                 case 5:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_5.png", "five");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_5.png", "Difficulty");
                     break;
                 case 6:
-                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "six");
+                    setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "Difficulty");
 
             }
             setDifficultyButton.display();
@@ -299,22 +300,22 @@ game.TaskScreen = me.ScreenObject.extend({
 
                                         switch(difficulty){
                                             case 1:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "one");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_1.png", "Difficulty");
                                                 break;
                                             case 2:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_2.png", "two");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_2.png", "Difficulty");
                                                 break;
                                             case 3:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_3.png", "three");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_3.png", "Difficulty");
                                                 break;
                                             case 4:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_4.png", "four");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_4.png", "Difficulty");
                                                 break;
                                             case 5:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_5.png", "five");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_5.png", "Difficulty");
                                                 break;
                                             case 6:
-                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "six");
+                                                setDifficultyButton.setImage("assets/data/img/buttons/difficulty_coins/coin_6.png", "Difficulty");
 
                                         }
                                     }, 100);
@@ -444,8 +445,12 @@ game.TaskScreen = me.ScreenObject.extend({
             handleRatingSet();
             handleRating();
 
-            submitButton.display();
+            if(!solved){
+                submitButton.display();
+                nextTaskButton.display();
+            }
             if(game.task.kind === 3){
+                submitButton.display();
                 checkButton.display();
                 checksLeft.display();
                 submitsLeft.display();
@@ -463,17 +468,13 @@ game.TaskScreen = me.ScreenObject.extend({
 	    function renderSchema(schema) {
 
             res = schema;
-            console.log("1: ", schema);
             //# wird entfernt, ^ startet einfach so.
 	    	//res = res.replace(/#(^\w+\b)/gmi, '<div class="relation" style="display: inline">$1</div>');
             res = res.replace(/#(\w+\b)/gmi, '<div class="relation" style="display: inline;">$1</div>');
-            //console.log("2: ", res);
 	    	res = res.replace(/!(.+?)!/g, '<div class="keyattribute" style="display: inline">$1</div>');
-            //console.log("3: ", res);
             res = res.replace(/%/gmi, '<br />' + '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             res = res.replace(/}/gmi, '<br />' + ')' + '<br /><br />');
             res = res.replace(/{/gmi, '(');
-            //console.log("4: ", res);
 
 	        return res;
 
@@ -533,19 +534,28 @@ game.TaskScreen = me.ScreenObject.extend({
         function handleGetTask(xhr) {
             if (xhr.status == 200 || xhr.status ==  400) {
                 dataTask = JSON.parse(xhr.responseText);
-                console.log(dataTask);
-                //dataTask.schema = renderSchema(dataTask.schema);
+                console.log("Task: ",dataTask);
+
+                if(game.task.difficulty !== dataTask.points){
+                    game.task.difficulty = dataTask.points;
+                    if(game.task.kind === 2) {
+                        console.log("Change");
+                        $("#setDifficultyButton #Difficulty").attr("src","assets/data/img/buttons/difficulty_coins/coin_" + dataTask.points +".png");
+                        //setDifficulty(dataTask.points);
+                    }
+                }
 
                 // write data
                 writeHeadline();
                 textOut.clear();
+                textIn.clear();
                 textOut.writeHTML(dataTask.taskText, 'taskbody');
 
                 //write Schema
                 textOutSchema.clear();
                 textOutSchema.writeHTML('Schema', 'schematitle');
                 var schematext = renderSchema(dataTask.relationsFormatted);
-                console.log("SchemaText: ",schematext);
+                //console.log("SchemaText: ",schematext);
                 textOutSchema.writeHTML(schematext, 'taskbody');
 
 
@@ -557,9 +567,6 @@ game.TaskScreen = me.ScreenObject.extend({
                 game.homework.checks = dataTask.availableSyntaxChecks - dataTask.syntaxChecksDone;
                 game.homework.submits = dataTask.availableSemanticChecks - dataTask.semanticChecksDone;
 
-                if(game.task.kind === 3){
-                    displayTries();
-                }
 
                 handleRatingSet();
                 handleRating();
@@ -571,6 +578,7 @@ game.TaskScreen = me.ScreenObject.extend({
 
                 if (game.task.kind == 3) {
                     // Homework !!!!!!!!!
+                    displayTries();
                     checksLeft.display();
                     submitsLeft.display();
                     checkButton.display();
@@ -605,7 +613,8 @@ game.TaskScreen = me.ScreenObject.extend({
         function handlePostTask(xhr) {
 
             dataResult = JSON.parse(xhr.responseText);
-            console.log("RESULT: ",dataResult);
+            console.log("RESULT: ",dataResult,"Thats it?",dataResult.score );
+            game.data.gainScore = dataResult.score;
             // write data
             textOut.clear();
 
@@ -620,6 +629,11 @@ game.TaskScreen = me.ScreenObject.extend({
                 }
 
                 textOut.writeHTML(dataResult.terry + "<br>" + "Time: " + convertTime(dataResult.time), 'taskbody');
+
+                if(game.task.kind == 2){
+                    submitButton.hide();
+                    solved = true;
+                }
                 //textOut.writeHTML("Time: " + dataResult.time, 'taskbody');
             }
 
@@ -773,6 +787,7 @@ game.TaskScreen = me.ScreenObject.extend({
         	sameTaskButton.hide();
         	nextTaskButton.hide();
         	submitButton.hide();
+            solved = false;
 
         	// clear output
         	textOut.clear();

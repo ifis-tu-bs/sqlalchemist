@@ -11,12 +11,17 @@
 
         service.Session = Session;
 
+        service.IsLoggedIn = IsLoggedIn;
         service.Login = Login;
         service.Logout = Logout;
         service.SetCredentials = SetCredentials;
         service.ClearCredentials = ClearCredentials;
 
         return service;
+
+        function IsLoggedIn() {
+            return $rootScope.session.loggedIn !== undefined;
+        }
 
         function Login(username, password) {
             return $http.post('/API/Login', { email: username, password: password}).then(function (data){console.log(data);});

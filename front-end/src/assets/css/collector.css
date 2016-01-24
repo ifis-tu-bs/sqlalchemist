@@ -36,10 +36,7 @@
 	padding-right: 17px;
 }
 
-#backToFromCollector:hover, #backToFromCollector:focus, #backToFromCollector:active {
-	filter: contrast(150%);
-	filter: brightness(150%);
-	-webkit-filter: contrast(150%);
-	-webkit-filter: brightness(150%);
+.Title.ScrollCollection {
+    font-family: Amethysta-Regular, sans-serif;
+    color: #F7E6D0;
 }
-

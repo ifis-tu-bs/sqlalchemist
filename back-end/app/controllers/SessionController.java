@@ -19,8 +19,10 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
+import play.Logger;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * The SessionController
@@ -58,6 +60,14 @@ public class SessionController extends Controller {
             return unauthorized("Wrong email or password");
         }
 
+        List<Session> sessionList = SessionDAO.getByOwner(user);
+        for(Session sessionI : sessionList) {
+            if(!sessionI.getId().equals(session.getId())) {
+                sessionI.disable();
+                sessionI.update();
+            }
+        }
+
         session.setOwner(user);
         session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
@@ -65,29 +75,35 @@ public class SessionController extends Controller {
         return redirect(routes.UserController.show(user.getUsername()));
     }
 
+    @Authenticated(SessionAuthenticator.class)
     public Result logout() {
+        Session session = SessionDAO.getById(session("session"));
+        session.disable();
+        session.update();
+        
+        session().remove("session");
         session().clear();
-        return redirect(routes.SessionController.index());
+
+        return ok();
     }
 
     public Result index() {
         Session session = SessionDAO.getById(session("session"));
-        if(session != null) {
-
-            Calendar yesterday = Calendar.getInstance();
-            yesterday.add(Calendar.DATE, -1);
-
-            if(yesterday.after(session.getCreatedAt())) {
-                Session newSession = SessionDAO.create();
-                newSession.setOwner(session.getOwner());
-                newSession.update();
-                session("session", newSession.getId());
-
-
-                return ok(Json.toJson(newSession));
+        if(session != null && session.isActive()) {
+            if(session.getOwner() != null) {
+                List<Session> sessionList = SessionDAO.getByOwner(session.getOwner());
+                for (Session sessionI : sessionList) {
+                    sessionI.disable();
+                    sessionI.update();
+                }
             }
 
-            return ok(Json.toJson(session));
+            Session newSession = SessionDAO.create();
+            newSession.setOwner(session.getOwner());
+            newSession.update();
+
+            session("session", newSession.getId());
+            return ok(Json.toJson(newSession));
         } else {
 
             session = SessionDAO.create();

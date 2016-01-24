@@ -11,5 +11,5 @@
 }
 
 #startButton:hover, #startButton:focus, #startButton:active {
-
+    filter: invert(100%);
 }

@@ -8,7 +8,7 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         me.game.world.addChild(parchment);
         parchment.hide();
 
-        var title = new game.fdom.TitleElement(parchment, '50%','10%','25%','25%', 'Reset Password', 'Title PasswordReset');
+        var title = new game.fdom.TitleElement(parchment, '55%','20%','23%','27%', 'Reset Password', 'Title PasswordReset');
         me.game.world.addChild(title);
 
         var loginForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form PasswordResetScreen', function() {
@@ -24,6 +24,8 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);
                     if(typeof errorMessage.email !== 'undefined') {
                         $(formEmailInputField.getNode()).addClass("invalid");
+                        var notificationElement = new game.fdom.NotificationElement(rootContainer, "Sorry!", "entered email does not exist!");
+                        me.game.world.addChild(notificationElement);
                     }
                     console.log(errorMessage);
                 }
@@ -35,10 +37,10 @@ game.ForgotPasswordScreen = me.ScreenObject.extend({
         me.game.world.addChild(formEmailInputField);
 
         // Password Reset Button
-        var passwordReset = new game.fdom.ButtonElement(loginForm, '15%','9%','66%','71%', 'Reset', 'Button PasswordResetScreen Submit', true);
+        var passwordReset = new game.fdom.ButtonElement(loginForm, '17%','15%','59%','68%', 'Reset', 'Button PasswordResetScreen Submit', true);
         me.game.world.addChild(passwordReset);
         // Back Button
-        var backButton = new game.fdom.ButtonElement(loginForm, '14%','9%','19%','71%', 'Back', 'Button PasswordResetScreen Back', false, function() {
+        var backButton = new game.fdom.ButtonElement(loginForm, '14%','15%','23%','68%', 'Back', 'Button PasswordResetScreen Back', false, function() {
             $(parchment.getNode()).fadeOut(100);
             setTimeout(function() {
                 me.state.change(STATE_LOGIN);

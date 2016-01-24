@@ -74,7 +74,7 @@ angular
                     vm.homeworks = result;
                 },
                 function (error) {
-                    FlashService.Error(result.message);
+                    FlashService.Error(error);
                 }
             );
         }

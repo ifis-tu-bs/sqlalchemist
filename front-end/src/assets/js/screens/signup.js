@@ -13,7 +13,7 @@ game.SignUpScreen = me.ScreenObject.extend({
         me.game.world.addChild(parchment);
         parchment.hide();
 
-        var title = new game.fdom.TitleElement(parchment, '24%','10%','38%','10%', 'Sign Up', 'Title SignUpScreen resetPasword');
+        var title = new game.fdom.TitleElement(parchment, '26%','20%','38%','10%', 'Sign Up', 'Title SignUpScreen resetPasword');
         me.game.world.addChild(title);
 
         var signUpForm = new game.fdom.FormElement(parchment, '100%','100%','100%','100%', 'Form SignUpScreen',  function() {
@@ -28,7 +28,8 @@ game.SignUpScreen = me.ScreenObject.extend({
             var passwordC= formPasswordRepeatInputField.getNode().value;
 
             if(password !== passwordC) {
-                alert("entered passwords does not match");
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "SignUp failed", "entered passwords do not match");
+                me.game.world.addChild(notificationElement);
                 $(formPasswordInputField.getNode()).addClass("invalid");
                 $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                 return;
@@ -65,23 +66,23 @@ game.SignUpScreen = me.ScreenObject.extend({
         });
         me.game.world.addChild(signUpForm);
 
-        var formEmailInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','21%', 'email', 'InputField SignUpScreen Email');
+        var formEmailInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','24%', 'email', 'InputField SignUpScreen Email');
         me.game.world.addChild(formEmailInputField);
 
-        var formUsernameInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','34%', 'username', 'InputField SignUpScreen Username');
+        var formUsernameInputField = new game.fdom.InputFieldElement(signUpForm, '60%','10%','20%','38%', 'username', 'InputField SignUpScreen Username');
         me.game.world.addChild(formUsernameInputField);
 
-        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','47%', 'password', 'InputPasswordField SignUpScreen Password');
+        var formPasswordInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','51%', 'password', 'InputPasswordField SignUpScreen Password');
         me.game.world.addChild(formPasswordInputField);
 
-        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','60%', 'password confirmation', 'InputPasswordField SignUpScreen Password');
+        var formPasswordRepeatInputField = new game.fdom.InputPasswordFieldElement(signUpForm, '60%','10%','20%','64%', 'password confirmation', 'InputPasswordField SignUpScreen Password');
         me.game.world.addChild(formPasswordRepeatInputField);
 
         // Password Reset Button
-        var SignUp = new game.fdom.ButtonElement(signUpForm, '17%','9%','64%','76%', 'Enter', 'Button SignUpScreen Submit', true);
+        var SignUp = new game.fdom.ButtonElement(signUpForm, '17%','15%','59%','77%', 'Enter', 'Button SignUpScreen Submit', true);
         me.game.world.addChild(SignUp);
         // Back Button
-        var backButton = new game.fdom.ButtonElement(signUpForm, '14%','9%','19%','76%', 'Back', 'Button SignUpScreen Back', false, function() {
+        var backButton = new game.fdom.ButtonElement(signUpForm, '14%','15%','23%','77%', 'Back', 'Button SignUpScreen Back', false, function() {
             $(parchment.getNode()).fadeOut(100);
             setTimeout(function() {
                 me.state.change(STATE_LOGIN);

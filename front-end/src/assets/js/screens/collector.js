@@ -8,16 +8,18 @@ game.CollectorScreen = me.ScreenObject.extend({
 
 
         /**
-         * Create background-div and add image to it.
+         * Create background-div and add image and title to it.
          */
-        var backgroundCollector = new game.BackgroundElement('backgroundCollectorId', 100, 100, 0, 0, 'none');
-        backgroundCollector.setImage("assets/data/img/gui/scrollcollection_screen.png", "backgroundCollectorImg");
-        me.game.world.addChild(backgroundCollector);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/scrollcollection_screen.png');
+        me.game.world.addChild(rootContainer);
+
+        var title = new game.fdom.TitleElement(rootContainer, '70%','19%','14.5%','7%', 'Scroll Collection', 'Title ScrollCollection');
+        me.game.world.addChild(title);
 
         /**
          * Create element with according callback function to get back into the Laboratory.
          */
-        this.backToLab = function(){
+        var backToLabButton = new game.fdom.ButtonElement(rootContainer, '20%','20%','76%','2%', '', 'Button CollectorScreen Back', false, function() {
             if (game.data.sound) {
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }
@@ -25,16 +27,17 @@ game.CollectorScreen = me.ScreenObject.extend({
             $("[id*='scrollsRed']").fadeOut(100);
             $("[id*='checkSymbol']").fadeOut(100);
             $("[id*='collectionBox']").fadeOut(100);
+            $("[id$='text']").fadeOut(100);
             $("#backgroundCollectorId").fadeOut(100);
             $("#backFromCollector").fadeOut(100);
+            $(rootContainer.getNode()).fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
-        };
+        });
 
-        var backToLabButton = new game.ClickableElement('backFromCollector', '', this.backToLab, 15.22, 13.15, 80, 2.5, 1);
-
-        backToLabButton.setImage("assets/data/img/buttons/paper_back_button.png", "backFromCollector");
+        backToLabButton.hide();
+        $(backToLabButton.getNode()).fadeIn(100);
         me.game.world.addChild(backToLabButton);
 
 
@@ -66,7 +69,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                   game.potion.potions[game.level.scrolls[k + j * 5][4]].available,
                   game.potion.potions[game.level.scrolls[k + j * 5][5]].available)*/
 
-                if(game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used &&
+                if (game.scroll.enchantments[game.level.scrolls[k + j * 5][0]].used &&
                     game.scroll.enchantments[game.level.scrolls[k + j * 5][1]].used &&
                     game.scroll.enchantments[game.level.scrolls[k + j * 5][2]].used &&
                     game.scroll.enchantments[game.level.scrolls[k + j * 5][3]].used &&
@@ -78,7 +81,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                         41 + j * 30.878788, 40 + 6.510417 * k, 'none');
                     checkSymbol.setImage("assets/data/img/stuff/check_symbol.png", "checksymbol");
                     me.game.world.addChild(checkSymbol);
-                    console.log('check' + k);
+                    //console.log('check' + k);
                     checkSymbol.display();
 
                 }
@@ -91,7 +94,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                                 23.272727 + 3.030303 * i + j * 30.878788, 41.666667 + 6.510417 * k, 'none');
                             scrolls.setImage("assets/data/img/stuff/spinning_scroll_32.png", "scrollImg");
                             me.game.world.addChild(scrolls);
-                            console.log('scrolls' + i + k * 4 + j * 20);
+                            //console.log('scrolls' + i + k * 4 + j * 20);
 
                             progress++;
                             /*console.log(game.scroll.enchantments[game.level.scrolls[k + j * 5][i]].available,
