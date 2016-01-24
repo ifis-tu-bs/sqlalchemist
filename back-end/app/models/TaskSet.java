@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -198,7 +199,7 @@ public class TaskSet extends Model {
     }
 
     for(TableDefinition tableDefinition : this.tableDefinitions) {
-      sqlStatements.add(tableDefinition.getExtension());
+      sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
     }
 
     return sqlStatements;

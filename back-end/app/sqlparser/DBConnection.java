@@ -7,6 +7,7 @@ import models.TaskSet;
 import play.Logger;
 import play.Play;
 
+import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
 
@@ -53,8 +54,9 @@ class DBConnection{
     List<String> sqlStatements = this.taskSet.getSQLStatements();
 
     try {
-      for(String sqlstatement : sqlStatements) {
-        this.statement.execute(sqlstatement);
+      for(String sqlStatement : sqlStatements) {
+        Logger.info(sqlStatement);
+        this.statement.execute(sqlStatement);
       }
     } catch (SQLException e) {
       Logger.error("DBConnection.create: " + e.getMessage());
