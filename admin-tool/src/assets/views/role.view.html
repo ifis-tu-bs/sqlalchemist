@@ -5,7 +5,8 @@
     <div class="col-xs-1"></div>
     <div class="col-xs-10">
         <div class="btn-group" role="group">
-            <button ng-class="{'btn': true, 'btn-default': !show.task, 'btn-primary': show.task}" type="button" ng-click="show.task = !show.task;">TaskSets/Tasks</button>
+            <button ng-class="{'btn': true, 'btn-default': !show.taskSet, 'btn-primary': show.taskSet}" type="button" ng-click="show.taskSet = !show.taskSet;">TaskSets</button>
+            <button ng-class="{'btn': true, 'btn-default': !show.task, 'btn-primary': show.task}" type="button" ng-click="show.task = !show.task;">Tasks</button>
             <button ng-class="{'btn': true, 'btn-default': !show.homework, 'btn-primary': show.homework}" type="button" ng-click="show.homework = !show.homework;">Homeworks</button>
             <button ng-class="{'btn': true, 'btn-default': !show.role, 'btn-primary': show.role}" type="button" ng-click="show.role = !show.role;">Roles</button>
             <button ng-class="{'btn': true, 'btn-default': !show.group, 'btn-primary': show.group}" type="button" ng-click="show.group = !show.group;">Groups</button>
@@ -14,32 +15,36 @@
     </div>
 </div>
 
+<span style="padding:1rem"></span>
+
 <table class="table">
     <thead>
         <tr>
             <th style="border-right: 2px solid #BBB">
                 Name
             </th>
-            <th ng-show="show.task" colspan=4 style="border-right: 2px solid #BBB">Own TaskSets</th>
-            <th ng-show="show.task" colspan=4 style="border-right: 2px solid #BBB">Foreign TaskSets</th>
+            <th ng-show="show.taskSet" colspan=4 style="border-right: 2px solid #BBB">Own TaskSets</th>
+            <th ng-show="show.taskSet" colspan=4 style="border-right: 2px solid #BBB">Foreign TaskSets</th>
             <th ng-show="show.task" colspan=4 style="border-right: 2px solid #BBB">Own Tasks</th>
             <th ng-show="show.task" colspan=4 style="border-right: 2px solid #BBB">Foreign Tasks</th>
             <th ng-show="show.homework" colspan=4 style="border-right: 2px solid #BBB">Homeworks</th>
             <th ng-show="show.role" colspan=4 style="border-right: 2px solid #BBB">Roles</th>
             <th ng-show="show.group" colspan=4 style="border-right: 2px solid #BBB">Groups</th>
             <th ng-show="show.user" colspan=4 style="border-right: 2px solid #BBB">Users</th>
+            <th  style="border-right: 2px solid #BBB">Priority</th>
+            <th  style="border-right: 2px solid #BBB">Votes</th>
             <th colspan=2>Save / Delete</th>
         </tr>
-        <tr>
+        <tr ng-show="show.taskSet || show.task || show.homework || show.role || show.group || show.user">
         <th style="border-right: 2px solid #BBB"></th>
-        <th ng-show="show.task"><span uib-tooltip="Create">C</span></th>
-        <th ng-show="show.task"><span uib-tooltip="Read">R</span></th>
-        <th ng-show="show.task"><span uib-tooltip="Update">U</span></th>
-        <th ng-show="show.task" style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
-        <th ng-show="show.task"><span uib-tooltip="Create">C</span></th>
-        <th ng-show="show.task"><span uib-tooltip="Read">R</span></th>
-        <th ng-show="show.task"><span uib-tooltip="Update">U</span></th>
-        <th ng-show="show.task" style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Create">C</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Read">R</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Update">U</span></th>
+        <th ng-show="show.taskSet" style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Create">C</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Read">R</span></th>
+        <th ng-show="show.taskSet"><span uib-tooltip="Update">U</span></th>
+        <th ng-show="show.taskSet" style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
         <th ng-show="show.task"><span uib-tooltip="Create">C</span></th>
         <th ng-show="show.task"><span uib-tooltip="Read">R</span></th>
         <th ng-show="show.task"><span uib-tooltip="Update">U</span></th>
@@ -64,20 +69,22 @@
         <th ng-show="show.user"><span uib-tooltip="Read">R</span></th>
         <th ng-show="show.user"><span uib-tooltip="Update">U</span></th>
         <th ng-show="show.user" style="border-right: 2px solid #BBB"><span uib-tooltip="Delete">D</span></th>
+        <th style="border-right: 2px solid #BBB"></th>
+        <th style="border-right: 2px solid #BBB"></th>
         <th></th>
     </tr>
     </thead>
     <tbody>
         <tr ng-repeat="role in vm.roles">
             <td style="border-right: 2px solid #BBB"><input type="text" ng-model="role.roleName"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskSetPermissions.create"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskSetPermissions.read"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskSetPermissions.update"></td>
-            <td ng-show="show.task" style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.ownTaskSetPermissions.delete"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.create"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.read"></td>
-            <td ng-show="show.task"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.update"></td>
-            <td ng-show="show.task" style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.delete"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.ownTaskSetPermissions.create"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.ownTaskSetPermissions.read"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.ownTaskSetPermissions.update"></td>
+            <td ng-show="show.taskSet" style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.ownTaskSetPermissions.delete"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.create"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.read"></td>
+            <td ng-show="show.taskSet"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.update"></td>
+            <td ng-show="show.taskSet" style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.foreignTaskSetPermissions.delete"></td>
             <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskPermissions.create"></td>
             <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskPermissions.read"></td>
             <td ng-show="show.task"><input type="checkbox" ng-model="role.ownTaskPermissions.update"></td>
@@ -102,6 +109,12 @@
             <td ng-show="show.user"><input type="checkbox" ng-model="role.userPermissions.read"></td>
             <td ng-show="show.user"><input type="checkbox" ng-model="role.userPermissions.update"></td>
             <td ng-show="show.user" style="border-right: 2px solid #BBB"><input type="checkbox" ng-model="role.userPermissions.delete"></td>
+            <td style="border-right: 2px solid #BBB">
+                <input type="number" ng-model="role.priority">
+            </td>
+            <td style="border-right: 2px solid #BBB">
+                <input type="number" ng-model="role.votes">
+            </td>
             <td>
                 <div class="btn-group">
                     <button type="button" class="btn btn-info btn-xs" ng-click="saveRole(role); $event.stopPropagation();" style="font-size:11pt">Save</button>
@@ -110,7 +123,7 @@
             </td>
         </tr>
         <tr>
-            <td colspan="{{ 2 + 16 * show.task + 4 * show.homework + 4 * show.role + 4 * show.group + 4 * show.user }}"><button class="btn btn-small btn-primary" ng-click="pushNewRole();">New...</button></td>
+            <td colspan="{{ 4 + 16 * show.task + 4 * show.homework + 4 * show.role + 4 * show.group + 4 * show.user }}"><button class="btn btn-small btn-primary" ng-click="pushNewRole();">New...</button></td>
         </tr>
     </tbody>
 </table>

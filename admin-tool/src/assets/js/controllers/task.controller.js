@@ -86,6 +86,7 @@ angular
             TaskService.getAllTasksForTaskSet(taskSet.id).then(
                 function(result) {
                     vm.tasks = result;
+                    console.log(result[0].taskText);
                 },
                 function(error) {
                     FlashService.Error(error);
@@ -193,8 +194,7 @@ angular
                             FlashService.Success("Updated TaskSet");
 
                         }, function (error) {
-                            FlashService.Error(result.message);
-
+                            FlashService.Error(error);
                         }
                 );
 
@@ -205,7 +205,7 @@ angular
                             vm.taskSets[findInArray(vm.taskSets, taskSet)] = result;
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                 );
@@ -511,7 +511,7 @@ angular
                             vm.tasks[findInArray(vm.tasks, task)] = result;
 
                         }, function (error) {
-                            FlashService.Error(result.message);
+                            FlashService.Error(error);
 
                         }
                     );
@@ -558,12 +558,12 @@ angular
             return -1;
         }
 
-        $scope.findForTableName = function (tableName) {
+        $scope.findColumnsForTableName = function (tableName) {
             var columns = [];
             for (var i = 0; i < vm.tables.length; i++) {
                 if (vm.tables[i].tableName === tableName) {
-                    for (var j = 0; j < vm.tables[i].columns.length; j++) {
-                        columns.push(vm.tables[i].columns[j].columnName);
+                    for (var j = 0; j < vm.tables[i].columnDefinitions.length; j++) {
+                        columns.push(vm.tables[i].columnDefinitions[j].columnName);
                     }
                 }
             }
