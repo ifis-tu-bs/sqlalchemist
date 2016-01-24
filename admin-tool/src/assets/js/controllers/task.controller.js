@@ -191,8 +191,8 @@ angular
 
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {
+            taskSet.sqlstatements = undefined;
             if (taskSet.id !== undefined) {
-
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
                             FlashService.Success("Updated TaskSet");
