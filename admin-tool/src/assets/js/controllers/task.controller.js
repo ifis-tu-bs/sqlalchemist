@@ -191,15 +191,14 @@ angular
 
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {
+            taskSet.sqlstatements = undefined;
             if (taskSet.id !== undefined) {
-
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
                             FlashService.Success("Updated TaskSet");
 
                         }, function (error) {
                             FlashService.Error(error);
-
                         }
                 );
 
@@ -497,59 +496,30 @@ angular
         };
 
         $scope.rateTask = function (task, decision) {
-                    var ratingJson = {};
-                    switch (decision) {
-                        case 'positive': {
-                            ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
-                            break;
-                        }
-                        case 'needReview': {
-                            ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
-                            break;
-                        }
-                        case 'negative': {
-                            ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
-                            break;
-                        }
-                    }
-                    TaskService.rateTask(task.id, ratingJson).then(
-                        function (result) {
-                            vm.tasks[findInArray(vm.tasks, task)] = result;
-
-                        }, function (error) {
-                            FlashService.Error(error);
-
-                        }
-                    );
-                };
-
-        //////////////////////////////777
-        //  HomeWork Deletion
-        //////////////////////////////777
-
-/*
-        $scope.deleteHomework = function (taskSet) {
-            var taskSetIndex = findInArray(vm.taskSets, taskSet);
-            var modalInstance = $uibModal.open({
-                    animation: $scope.animationsEnabled,
-                    templateUrl: 'assets/templates/sure.template.html',
-                    controller: 'sureTemplateController',
-                    resolve: {
-                        sureTemplateMessage: function () {
-                                return "Are you sure you want to delete Homework: " + vm.taskSets[taskSetIndex].name + "?\nRemember, that only Homeworks with no submits until now can be deleted.";
-                            }
-                    }
-            });
-
-            modalInstance.then(function (result) {
-                if (result == true) {
-                    TaskService.deleteHomework(vm.taskSets[taskSetIndex].id).then(
-                        initController
-                    );
+            var ratingJson = {};
+            switch (decision) {
+                case 'positive': {
+                    ratingJson = {'positive': 1, 'needReview': 0, 'negative': 0};
+                    break;
                 }
-            });
-        }
-*/
+                case 'needReview': {
+                    ratingJson = {'positive': 0, 'needReview': 1, 'negative': 0};
+                    break;
+                }
+                case 'negative': {
+                    ratingJson = {'positive': 0, 'needReview': 0, 'negative': 1};
+                    break;
+                }
+            }
+            TaskService.rateTask(task.id, ratingJson).then(
+                function (result) {
+                    vm.tasks[findInArray(vm.tasks, task)] = result;
+
+                }, function (error) {
+                    FlashService.Error(error);
+                }
+            );
+        };
 
         //////////////////////////////777
         //  Array functions
