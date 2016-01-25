@@ -380,7 +380,7 @@ angular
             this.destinationTable = "";
             this.destinationColumn = "";
             this.isCombined = false;
-            this.combinedKeyId = 0;
+            this.combinedKeyId = -1;
         };
 
         /* Methods */
