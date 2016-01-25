@@ -5,6 +5,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import com.avaje.ebean.Model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.*;
@@ -14,60 +15,75 @@ import javax.persistence.*;
  * @author fabiomazzone
  */
 @Entity
-@Table(name = "solvedsubtask")
+@Table(name = "solvedtask")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SolvedTask extends Model {
     @Id
-    private long id;
+    private long        id;
 
     @ManyToOne
-    private User user;
+    private User        user;
 
     @ManyToOne
-    private final Task task;
+    private final Task  task;
 
-    private int solved;
-    private int trys;
-
-    private Date lastSolved;
-
-    public static final Finder<Long, SolvedTask> find = new Finder<>(SolvedTask.class);
+    private boolean     solved;
+    private int         timeNeeded;
+    private Calendar    timestamp;
 
     public SolvedTask(
             User user,
-            Task task) {
+            Task task,
+            boolean solved,
+            int     timeNeeded) {
         super();
 
         this.user = user;
         this.task = task;
 
-        this.solved = 0;
-        this.trys = 0;
+        this.solved = solved;
+        this.timeNeeded = timeNeeded;
+
+        this.timestamp = Calendar.getInstance();
     }
 
-    public Task getTask() {
-      return this.task;
-    }
+  public long getId() {
+    return id;
+  }
 
-    public void pushSolved() {
-        this.solved = this.solved +  1;
-    }
+  public User getUser() {
+    return user;
+  }
 
+  public void setUser(User user) {
+    this.user = user;
+  }
 
-    public int getTrys() {
-      return this.trys;
-    }
+  public Task getTask() {
+    return task;
+  }
 
-    public void pushTrys() {
-        this.trys = this.trys + 1;
-    }
+  public boolean isSolved() {
+    return solved;
+  }
 
-    public void setLastSolved(Date date) {
-      this.lastSolved = date;
-    }
+  public void setSolved(boolean solved) {
+    this.solved = solved;
+  }
 
-    public Date getLastSolved() {
-      return this.lastSolved;
-    }
+  public int getTimeNeeded() {
+    return timeNeeded;
+  }
 
+  public void setTimeNeeded(int timeNeeded) {
+    this.timeNeeded = timeNeeded;
+  }
+
+  public Calendar getTimestamp() {
+    return timestamp;
+  }
+
+  public void setTimestamp(Calendar timestamp) {
+    this.timestamp = timestamp;
+  }
 }

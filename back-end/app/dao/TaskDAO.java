@@ -42,12 +42,7 @@ public class TaskDAO {
                     .eq("taskSet.isHomework", false)
                     .findList();
         }
-        List<SolvedTask>    solvedTasks = SolvedTask.find
-                .fetch("task")
-                .where()
-                .eq("user", user)
-                .in("task", taskList)
-                .findList();
+        List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, taskList);
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)
