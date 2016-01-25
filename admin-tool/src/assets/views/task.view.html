@@ -188,7 +188,7 @@
             <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
             <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
             <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
-            <th ng-click="orderTableEditPredicate = 'groupedKeyId'" style="cursor: pointer">Combined Key Settings</th>
+            <th ng-click="orderTableEditPredicate = 'combinedKeyId'" style="cursor: pointer" uib-tooltip="ForeignKeys with the same Combined Key Id will be handled as one Key.">Combined Key</th>
           </tr>
           </thead>
           <tbody>
@@ -199,11 +199,12 @@
               <td><input type="text" ng-model="foreignKey.destinationTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
               <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
               <td>
-                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+                  <input type="checkbox" ng-model="foreignKey.isCombined"style="float:left">
+                  <input type="number" ng-disabled="!foreignKey.isCombined" ng-model="foreignKey.combinedKeyId"
+                         style="width:7em;float:right">
               </td>
               <td>
-                <input type="checkbox" ng-model="foreignKey.isCombined">
-                <input type="number" ng-disabled="!foreignkey.isCombined" ng-model="foreignKey.groupedKeyId">
+                <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
               </td>
             </tr>
             <tr>

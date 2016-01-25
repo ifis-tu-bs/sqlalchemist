@@ -64,8 +64,6 @@ angular
                 TaskService.getAllTaskSets().then(
                         function (result) {
                             vm.taskSets = result;
-                            $scope.getCurrentPath();
-                            console.log(result);
                         }, function (error) {
                             FlashService.Error(error);
                         }
@@ -192,6 +190,9 @@ angular
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {
             taskSet.sqlstatements = undefined;
+
+            console.log(taskSet);
+
             if (taskSet.id !== undefined) {
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
@@ -378,6 +379,8 @@ angular
             this.sourceColumn = "";
             this.destinationTable = "";
             this.destinationColumn = "";
+            this.isCombined = false;
+            this.combinedKeyId = 0;
         };
 
         /* Methods */
