@@ -31,7 +31,7 @@ public class SolvedTaskDAO {
       return null;
     }
     try {
-      List<SolvedTask> solvedTasks = find.where().eq("user", user).in("task", task).findList();
+      List<SolvedTask> solvedTasks = find.where().eq("user", user).eq("task", task).findList();
       if(solvedTasks == null ||solvedTasks.isEmpty()) {
         Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
         return null;

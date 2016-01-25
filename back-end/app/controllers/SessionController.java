@@ -1,11 +1,9 @@
 package controllers;
 
-import dao.ActionDAO;
 import dao.SessionDAO;
 
 import forms.Login;
 
-import models.Action;
 import models.Session;
 import models.User;
 
@@ -73,7 +71,6 @@ public class SessionController extends Controller {
         }
 
         session.setOwner(user);
-        session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
 
         return redirect(routes.UserController.show(user.getUsername()));
