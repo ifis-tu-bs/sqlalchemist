@@ -232,6 +232,7 @@ game.TextScreen = me.ScreenObject.extend({
 
                 }
             } else {
+                escapeButton.hide();
                 me.state.change(me.state.READY);
             }
         }
@@ -281,10 +282,11 @@ game.TextScreen = me.ScreenObject.extend({
             me.game.world.addChild(fadeBackgroundText);
             $("#fade").fadeIn(100);
 
-            skipAllButton      = new game.ClickableElement('skipAll', 'skip All', skipAll, 10, 6, 85, 90, 2);
-            skipOneButton      = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
-            if (!game.data.playerStat.isTutorial) {
-                escapeButton = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
+            if (game.data.playerStat.isTutorial){
+                skipAllButton      = new game.ClickableElement('skipAll', 'skip All', skipAll, 10, 6, 85, 90, 2);
+                skipOneButton      = new game.ClickableElement('skipOne', 'skip One', skipOne, 10, 6, 75, 90, 2);
+            }else{
+                escapeButton       = new game.ClickableElement('escape', 'skip One', skipOne, 10, 6, 75, 90, 2);
             }
 
             textOut          = new game.TextOutputElement('text', 80, 60, x, y, 18);
