@@ -55,7 +55,6 @@ class DBConnection{
 
     try {
       for(String sqlStatement : sqlStatements) {
-        Logger.info(sqlStatement);
         this.statement.execute(sqlStatement);
       }
     } catch (SQLException e) {

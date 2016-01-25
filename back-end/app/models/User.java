@@ -67,7 +67,7 @@ public class User extends Model {
     private boolean                     tutorialDone;
     private boolean                     storyDone;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<ShopItem>              shopItems;
     @ManyToOne
     private Avatar                      avatar;
@@ -104,7 +104,7 @@ public class User extends Model {
     @ManyToOne
     private UserGroup group;
 
-    private final Calendar createdAt;
+    private Calendar createdAt;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
@@ -567,5 +567,9 @@ public class User extends Model {
 
     public Calendar getCreatedAt() {
         return createdAt;
+    }
+
+    public void setCreatedAt(Calendar createdAt) {
+        this.createdAt = createdAt;
     }
 }

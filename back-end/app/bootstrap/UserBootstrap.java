@@ -13,6 +13,7 @@ import models.User;
 import play.Logger;
 import play.Play;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -71,6 +72,10 @@ public class UserBootstrap {
                 signUp2.setPassword("test");
                 User test2 = UserDAO.create(signUp2);
                 if(test2 != null) {
+                    Calendar calendar = Calendar.getInstance();
+
+                    calendar.add(Calendar.DAY_OF_YEAR, -10);
+                    test2.setCreatedAt(calendar);
                     test2.save();
                 }
             }
