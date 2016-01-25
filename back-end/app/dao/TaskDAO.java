@@ -6,6 +6,7 @@ import models.SolvedTask;
 import models.Task;
 import models.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDAO {
@@ -42,7 +43,6 @@ public class TaskDAO {
                     .eq("taskSet.isHomework", false)
                     .findList();
         }
-        List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, taskList);
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)
@@ -51,22 +51,22 @@ public class TaskDAO {
                 return null;
         }
 
-        if(taskList.size() > solvedTasks.size()) {
-            for(SolvedTask solvedTask : solvedTasks) {
-                taskList.remove(solvedTask.getTask());
-            }
-        } else {
-            int avg = 0;
-            for(SolvedTask solvedTask : solvedTasks) {
-                avg += solvedTask.getTrys();
-            }
-            avg /= solvedTasks.size();
-            for(SolvedTask solvedTask : solvedTasks) {
-                if(solvedTask.getTrys() > avg) {
-                    taskList.remove(solvedTask.getTask());
-                }
-            }
+      int avg = 0;
+      int size = 0;
+      for(Task task : taskList) {
+        List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, task);
+        avg += solvedTasks.size();
+        size += solvedTasks.size();
+      }
+      avg /= size;
+      List<Task> tasksToRemove = new ArrayList<>();
+      for(Task task : taskList) {
+        List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, task);
+        if(solvedTasks.size() > avg) {
+          tasksToRemove.add(task);
         }
+      }
+      taskList.remove(tasksToRemove);
 
         if((taskList.size() == 0)) {
             if(difficulty > 1)

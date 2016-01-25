@@ -25,18 +25,36 @@ public class SolvedTaskDAO {
       return solvedTask;
   }
 
-  public static SolvedTask getByUserAndTask(User user, List<Task> task) {
-      if(user == null || task == null) {
+  public static List<SolvedTask> getByUserAndTask(User user, Task task) {
+    if(user == null || task == null) {
+      Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
+      return null;
+    }
+    try {
+      List<SolvedTask> solvedTasks = find.where().eq("user", user).in("task", task).findList();
+      if(solvedTasks == null ||solvedTasks.isEmpty()) {
+        Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
+        return null;
+      }
+      return solvedTasks;
+    } catch (NullPointerException e) {
+      Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
+      return null;
+    }
+  }
+
+  public static List<SolvedTask> getByUserAndTask(User user, List<Task> tasks) {
+      if(user == null || tasks == null || tasks.isEmpty()) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
           return null;
       }
       try {
-          SolvedTask solvedTask = find.where().eq("user", user).("task", task).findList();
-          if(solvedTask == null) {
+          List<SolvedTask> solvedTasks = find.where().eq("user", user).in("task", tasks).findList();
+          if(solvedTasks == null ||solvedTasks.isEmpty()) {
               Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
               return null;
           }
-          return solvedTask;
+          return solvedTasks;
       } catch (NullPointerException e) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
           return null;
