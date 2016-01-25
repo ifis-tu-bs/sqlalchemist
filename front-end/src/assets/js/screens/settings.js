@@ -4,11 +4,18 @@ game.SettingsScreen = me.ScreenObject.extend({
         /**
          *  set settings background
          */
-        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/wood_screen.png');
         me.game.world.addChild(rootContainer);
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
 
         var title = new game.fdom.TitleElement(rootContainer, '30%','20%','35%','5%', 'Settings', 'Title SettingsScreen');
         me.game.world.addChild(title);
+
+        var settingsParchment = new game.fdom.ImageElement(rootContainer, '96.1%', '89.7%', '0%', '10.3%', 'Image SettingsScreen Parchment', 'assets/data/img/gui/settings_screen_transparent.png');
+        settingsParchment.hide();
+        $(settingsParchment.getNode()).fadeIn(100);
+        me.game.world.addChild(settingsParchment);
 
         var backButton = new game.fdom.ButtonElement(rootContainer, '18%','20%','75%','0%', '', 'Button SettingsScreen Back', false, function() {
             $(rootContainer.getNode()).fadeOut(100);

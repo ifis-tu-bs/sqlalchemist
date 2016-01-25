@@ -121,6 +121,9 @@ game.potion.usePotion = function(potion, slot) {
 
 
     function deletePotion(xmlHttpRequest){
+        if(xmlHttpRequest.status === 400){
+            me.state.change(me.state.READY);
+        }
     }
 
     return false;

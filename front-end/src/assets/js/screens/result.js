@@ -6,6 +6,8 @@ game.ResultScreen = me.ScreenObject.extend({
          */
         var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/result_screen.png');
         me.game.world.addChild(rootContainer);
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
 
         var title = new game.fdom.TitleElement(rootContainer, '100%','25%','0%','10%', 'Result', 'Title ResultScreen');
         me.game.world.addChild(title);

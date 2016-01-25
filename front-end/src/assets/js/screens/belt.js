@@ -7,7 +7,8 @@ game.BeltScreen = me.ScreenObject.extend({
          */
         var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/belt_screen.png');
         me.game.world.addChild(rootContainer);
-
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
 
         var potionLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '3%', 'Image BeltScreen PotionLegend', 'assets/data/img/potion/weak_greypotion.png');
         potionLegend.hide();
@@ -37,7 +38,7 @@ game.BeltScreen = me.ScreenObject.extend({
             $("[id*='setPotionId']").fadeOut(100);
             $("[id*='potionAmountId']").fadeOut(100);
             $("[id*='beltPotionId']").fadeOut(100);
-            $(rootContainer.getNode()).fadeIn(100);
+            $(rootContainer.getNode()).fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);

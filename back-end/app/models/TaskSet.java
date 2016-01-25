@@ -211,12 +211,12 @@ public class TaskSet extends Model {
       sqlStatements.add(tableDefinition.getSQLStatement());
     }
 
-    for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
-      sqlStatements.add(foreignKeyRelation.getSQLStatement());
-    }
-
     for(TableDefinition tableDefinition : this.tableDefinitions) {
       sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
+    }
+
+    for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
+      sqlStatements.add(foreignKeyRelation.getSQLStatement());
     }
 
     return sqlStatements;

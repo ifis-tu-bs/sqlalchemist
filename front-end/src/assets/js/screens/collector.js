@@ -10,11 +10,18 @@ game.CollectorScreen = me.ScreenObject.extend({
         /**
          * Create background-div and add image and title to it.
          */
-        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/scrollcollection_screen.png');
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/wood_screen.png');
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
         me.game.world.addChild(rootContainer);
 
         var title = new game.fdom.TitleElement(rootContainer, '70%','19%','14.5%','7%', 'Scroll Collection', 'Title ScrollCollection');
         me.game.world.addChild(title);
+
+        var collectorParchment = new game.fdom.ImageElement(rootContainer, '98%', '96.2%', '0%', '0%', 'Image CollectorScreen Parchment', 'assets/data/img/gui/scrollcollection_screen_transparent.png');
+        collectorParchment.hide();
+        $(collectorParchment.getNode()).fadeIn(100);
+        me.game.world.addChild(collectorParchment);
 
         /**
          * Create element with according callback function to get back into the Laboratory.
@@ -107,7 +114,7 @@ game.CollectorScreen = me.ScreenObject.extend({
                                 23.272727 + 3.030303 * i + j * 30.878788, 41.666667 + 6.510417 * k, 'none');
                             scrollsRed.setImage("assets/data/img/stuff/spinning_scroll_red_32.png", "scrollRedImg");
                             me.game.world.addChild(scrollsRed);
-                            console.log('scrollsRed' + i + k * 2 + j * 10);
+                            //console.log('scrollsRed' + i + k * 2 + j * 10);
 
                             progress++;
                             /*console.log(game.potion.potions[game.level.scrolls[k + j * 5][i]].available,

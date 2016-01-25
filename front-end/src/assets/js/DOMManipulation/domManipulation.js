@@ -833,7 +833,9 @@ game.fdom.RootContainer = me.Renderable.extend({
         this.elem.style.fontSize = $(this.elem).height() / 2 + "px";
         game.scaleElement(this);
     },
-
+    hide: function() {
+        this.elem.style.display = "none";
+    },
     destroy : function () {
         // remove element
         this.parent.removeChild(this.elem);

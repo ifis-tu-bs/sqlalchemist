@@ -3,6 +3,7 @@ package models;
 import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -63,6 +64,7 @@ public class TableDefinition extends Model {
         return extension;
     }
 
+  @JsonIgnore
   public String getSQLStatement() {
     String tableStatement = "CREATE TABLE "
         + this.tableName
