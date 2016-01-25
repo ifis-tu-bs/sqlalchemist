@@ -24,6 +24,7 @@ public class ForeignKeyRelation extends Model {
     private final String destinationTable;
     private final String destinationColumn;
 
+    private Integer combinedKeyId;
 
     /**
      *  This is the constructor for ForeignKeyRelations
@@ -32,11 +33,13 @@ public class ForeignKeyRelation extends Model {
             String sourceTable,
             String sourceColumn,
             String destinationTable,
-            String destinationColumn) {
+            String destinationColumn,
+            Integer combinedKeyId) {
         this.sourceTable = sourceTable;
         this.sourceColumn = sourceColumn;
         this.destinationTable = destinationTable;
         this.destinationColumn = destinationColumn;
+        this.combinedKeyId = null;
     }
 
     public long getId() {
@@ -58,4 +61,24 @@ public class ForeignKeyRelation extends Model {
     public String getDestinationColumn() {
         return destinationColumn;
     }
+
+    public Integer getCombinedKeyId() {
+        return this.combinedKeyId;
+    }
+
+    public void setCombinedKeyId(Integer combinedKeyId) {
+        this.combinedKeyId = combinedKeyId;
+    }
+
+    public String getSQLStatement() {
+    return "ALTER TABLE "
+        + this.sourceTable
+        + " ADD FOREIGN KEY ("
+        + this.sourceColumn
+        + ") REFERENCES "
+        + this.destinationTable
+        + "("
+        + this.destinationColumn
+        + ");";
+  }
 }

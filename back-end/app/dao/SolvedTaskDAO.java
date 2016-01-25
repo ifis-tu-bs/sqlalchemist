@@ -1,5 +1,6 @@
 package dao;
 
+import com.avaje.ebean.Model;
 import models.SolvedTask;
 import models.Task;
 import models.User;
@@ -7,83 +8,56 @@ import models.User;
 import play.Logger;
 
 import java.util.List;
-import java.util.Date;
 
 public class SolvedTaskDAO {
+  private static final Model.Finder<Long, SolvedTask> find = new Model.Finder<>(SolvedTask.class);
 
-  private static SolvedTask create(User user, Task task) {
-      SolvedTask solvedTask = new SolvedTask(user, task);
+  public static SolvedTask create(
+      User user,
+      Task task,
+      boolean solved,
+      int     timeSpend) {
+      SolvedTask solvedTask =
+          new SolvedTask(user, task, solved, timeSpend);
 
       solvedTask.save();
 
       return solvedTask;
   }
 
-  public static void update(
-          User user,
-          Task task,
-          boolean solved ) {
-
-      SolvedTask solvedTask = getByProfileAndTask(user, task);
-      if (solvedTask == null) {
-          solvedTask = create(user, task);
+  public static List<SolvedTask> getByUserAndTask(User user, Task task) {
+    if(user == null || task == null) {
+      Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
+      return null;
+    }
+    try {
+      List<SolvedTask> solvedTasks = find.where().eq("user", user).eq("task", task).findList();
+      if(solvedTasks == null ||solvedTasks.isEmpty()) {
+        Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
+        return null;
       }
-
-      solvedTask.pushTrys();
-
-      if(solved) {
-          solvedTask.pushSolved();
-          solvedTask.setLastSolved(new Date());
-      }
-      solvedTask.update();
+      return solvedTasks;
+    } catch (NullPointerException e) {
+      Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
+      return null;
+    }
   }
 
-  public static SolvedTask getByProfileAndTask(User user, Task task) {
-      if(user == null || task == null) {
+  public static List<SolvedTask> getByUserAndTask(User user, List<Task> tasks) {
+      if(user == null || tasks == null || tasks.isEmpty()) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - profile or subTask is null");
           return null;
       }
       try {
-          SolvedTask solvedTask = SolvedTask.find.where().eq("user", user).eq("task", task).findUnique();
-          if(solvedTask == null) {
+          List<SolvedTask> solvedTasks = find.where().eq("user", user).in("task", tasks).findList();
+          if(solvedTasks == null ||solvedTasks.isEmpty()) {
               Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedTask object!");
               return null;
           }
-          return solvedTask;
+          return solvedTasks;
       } catch (NullPointerException e) {
           Logger.warn("SolvedTask.getByProfileAndSubTask - Can't find existing solvedSubTask object!");
           return null;
       }
   }
-
-  public static List<SolvedTask> getAllDoneTask(User user) {
-      try {
-          float mittelwert_try = 0;
-          int i = 0;
-
-          List<SolvedTask> solvedTaskList = SolvedTask.find.where().eq("user", user).findList();
-
-          for(SolvedTask solvedTask : solvedTaskList) {
-              if(i == 0) {
-                  mittelwert_try = solvedTask.getTrys();
-              } else {
-                  mittelwert_try = (mittelwert_try + solvedTask.getTrys()) / 2;
-              }
-
-              i++;
-          }
-
-          List<SolvedTask> solvedTasks = SolvedTask.find.where().eq("user", user).ge("trys", mittelwert_try).findList();
-          if(solvedTasks == null || solvedTaskList.size() == 0) {
-              Logger.warn("SolvedTask.getAllDoneSubTask - no SubTaskCandidates found");
-              return null;
-          }
-
-          return solvedTasks;
-      } catch (NullPointerException e) {
-          Logger.warn("SolvedTask.getAllDoneSubTask - no SubTaskCandidates found");
-          return null;
-      }
-  }
-
 }

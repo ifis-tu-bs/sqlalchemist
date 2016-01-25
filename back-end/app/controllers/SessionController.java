@@ -1,11 +1,9 @@
 package controllers;
 
-import dao.ActionDAO;
 import dao.SessionDAO;
 
 import forms.Login;
 
-import models.Action;
 import models.Session;
 import models.User;
 
@@ -60,6 +58,10 @@ public class SessionController extends Controller {
             return unauthorized("Wrong email or password");
         }
 
+        if(!user.isEmailVerified()) {
+          return unauthorized("you must verify your email before you can enter");
+        }
+
         List<Session> sessionList = SessionDAO.getByOwner(user);
         for(Session sessionI : sessionList) {
             if(!sessionI.getId().equals(session.getId())) {
@@ -69,7 +71,6 @@ public class SessionController extends Controller {
         }
 
         session.setOwner(user);
-        session.addAction(ActionDAO.create(Action.LOGIN));
         session.update();
 
         return redirect(routes.UserController.show(user.getUsername()));

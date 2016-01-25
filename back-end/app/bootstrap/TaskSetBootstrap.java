@@ -90,7 +90,8 @@ public class TaskSetBootstrap {
                                        "            \"sourceTable\":\"Profile\",\n" +
                                        "            \"sourceColumn\":\"user\",\n" +
                                        "            \"destinationTable\":\"User\",\n" +
-                                       "            \"destinationColumn\":\"EMail\"\n" +
+                                       "            \"destinationColumn\":\"EMail\",\n" +
+                                       "            \"combinedKeyId\":\"null\"" +
                                        "        }\n" +
                                        "    ],\n" +
                                        "    \"isHomeWork\":   true\n" +
@@ -242,6 +243,7 @@ public class TaskSetBootstrap {
             taskSet = TaskSetView.fromJsonForm(user, node);
             taskSet.setAvailable(true);
             taskSet.save();
+
             if((err = SQLParser.createDB(taskSet)) != null) {
                 Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());
                 taskSet.delete();

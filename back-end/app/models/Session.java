@@ -21,15 +21,10 @@ public class Session extends Model {
     @ManyToOne
     private User owner;
 
-    @OneToMany(mappedBy = "session")
-    private List<Action> actions;
-
     private boolean active;
 
     private Calendar createdAt;
 
-    @OneToOne
-    private Action lastAction;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Constructor
@@ -39,7 +34,6 @@ public class Session extends Model {
         this.id         = UUID.randomUUID().toString();
         this.active     = true;
         this.createdAt  = Calendar.getInstance();
-        this.lastAction = null;
     }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,21 +70,5 @@ public class Session extends Model {
     @JsonIgnore
     public Calendar getCreatedAt() {
         return createdAt;
-    }
-
-    @JsonIgnore
-    public Action getLastAction() {
-        return lastAction;
-    }
-
-    public void setLastAction(Action lastAction) {
-        this.lastAction = lastAction;
-    }
-
-    public void addAction(Action action) {
-        action.setSession(this);
-        action.save();
-        this.actions.add(action);
-        this.setLastAction(action);
     }
 }

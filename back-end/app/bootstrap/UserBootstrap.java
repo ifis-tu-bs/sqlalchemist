@@ -13,6 +13,7 @@ import models.User;
 import play.Logger;
 import play.Play;
 
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -39,6 +40,7 @@ public class UserBootstrap {
                 User user = UserDAO.create(signUp1);
                 if(user != null) {
                     user.setRole(RoleDAO.getAdmin());
+                  user.setEmailVerified();
                     user.setMatNR("12345678");
                     user.update();
                 }
@@ -49,6 +51,7 @@ public class UserBootstrap {
                 nicNac.setPassword("1234");
                 User nicole = UserDAO.create(nicNac);
                 nicole.setMatNR("11100131");
+                nicole.setEmailVerified();
                 nicole.update();
                 List<Scroll> scrolls = ScrollDAO.getAll();
                 for(Scroll scroll : scrolls) {
@@ -62,6 +65,7 @@ public class UserBootstrap {
                 User studentU = UserDAO.create(student);
                 if(studentU != null) {
                     studentU.setMatNR("87654567");
+                    studentU.setEmailVerified();
                     studentU.update();
                 }
 
@@ -71,6 +75,10 @@ public class UserBootstrap {
                 signUp2.setPassword("test");
                 User test2 = UserDAO.create(signUp2);
                 if(test2 != null) {
+                    Calendar calendar = Calendar.getInstance();
+
+                    calendar.add(Calendar.DAY_OF_YEAR, -10);
+                    test2.setCreatedAt(calendar);
                     test2.save();
                 }
             }

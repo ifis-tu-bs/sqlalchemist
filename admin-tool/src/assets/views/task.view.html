@@ -19,13 +19,8 @@
 
   <div style="width:100%;float:left">
 
-
-
     <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || tabActive.tasks" style="float:right">Save current TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
     <uib-tabset tpye="tabs">
-
-
-
 
       <uib-tab id="TaskSets" deselect="keepTaskSets();">
         <uib-tab-heading>
@@ -62,9 +57,9 @@
                   <td>{{taskSet.updatedAt}}</td>
                   <td>
                     <div class="btn-group" role="group" aria-label="...">
-                      <a href="" ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positiveRatings }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.editRatings }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negativeRatings }}
+                      <span ng-click="rateTaskSet(taskSet, 'positive');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.positiveRatings }}</span> <span style="width: 6px"></span>
+                      <span ng-click="rateTaskSet(taskSet, 'needReview');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.editRatings }} </span> <span style="width: 6px"></span>
+                      <span ng-click="rateTaskSet(taskSet, 'negative');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ taskSet.rating.negativeRatings }} </span>
                     </div>
                   </td>
                   <td>
@@ -193,6 +188,7 @@
             <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
             <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
             <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+            <th ng-click="orderTableEditPredicate = 'combinedKeyId'" style="cursor: pointer" uib-tooltip="ForeignKeys with the same Combined Key Id will be handled as one Key.">Combined Key</th>
           </tr>
           </thead>
           <tbody>
@@ -202,6 +198,11 @@
               <td><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></td>
               <td><input type="text" ng-model="foreignKey.destinationTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
               <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
+              <td>
+                  <input type="checkbox" ng-model="foreignKey.isCombined"style="float:left">
+                  <input type="number" ng-disabled="!foreignKey.isCombined" ng-model="foreignKey.combinedKeyId"
+                         style="width:7em;float:right">
+              </td>
               <td>
                 <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
               </td>
@@ -333,12 +334,12 @@
                   <td ng-hide="selectedTaskSet.isHomeWork === false">
                     <input type="number" ng-model="task.availableSemanticChecks" ng-click="$event.stopPropagation();" style="width:55px">
                   </td>
-                  <td>{{task.createdAt}}</td>
+                  <td>{{task.created_at}}</td>
                   <td>
                     <div class="btn-group" role="group">
-                      <a href="" ng-click="rateTask(task, 'positive');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positiveRatings }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.editRatings }} <span style="width: 6px"></span>
-                      <a href="" ng-click="rateTask(task, 'negative');  $event.stopPropagation();"> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negativeRatings }}
+                      <span ng-click="rateTask(task, 'positive');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-thumbs-up"></span> </a> <span style="width: 2px"></span> {{ task.rating.positiveRatings }}</span> <span style="width: 6px"></span>
+                      <span ng-click="rateTask(task, 'needReview');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-search"></span> </a> <span style="width: 2px"></span> {{ task.rating.editRatings }} </span> <span style="width: 6px"></span>
+                      <span ng-click="rateTask(task, 'negative');  $event.stopPropagation();"><a href=""> <span class="glyphicon glyphicon-thumbs-down"></span> </a> <span style="width: 2px"></span> {{ task.rating.negativeRatings }} </span>
                     </div>
                   </td>
                 <td>

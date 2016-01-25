@@ -29,7 +29,7 @@ public class ShopItemBootstrap {
 
             avatar = AvatarDAO.create(
                 "Fresh D!",
-                "You might think he is not so agile,\\nbecause of his advanced age.\\nBut he ist Airbus P. W. B. Fumbledoor!\\nHe is the best!",
+                "You might think he is not so agile,\\nbecause of his advanced age.\\nBut he is Airbus P. W. B. Fumbledoor!\\nHe is the best!",
                 "albus_dumbledore",
                 false,
                 new PlayerStats(2, 1, 2, 2, 0));

@@ -28,7 +28,8 @@ game.SignUpScreen = me.ScreenObject.extend({
             var passwordC= formPasswordRepeatInputField.getNode().value;
 
             if(password !== passwordC) {
-                alert("entered passwords does not match");
+                var notificationElement = new game.fdom.NotificationElement(rootContainer, "SignUp failed", "entered passwords do not match");
+                me.game.world.addChild(notificationElement);
                 $(formPasswordInputField.getNode()).addClass("invalid");
                 $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                 return;
@@ -53,12 +54,9 @@ game.SignUpScreen = me.ScreenObject.extend({
                         $(formPasswordRepeatInputField.getNode()).addClass("invalid");
                     }
                 } else if(xmlHttpRequest.status == 200) {
-                    var user = JSON.parse(xmlHttpRequest.responseText);
-                    game.data.user = user;
-                    game.data.session.owner = user.username;
                     $(rootContainer.getNode()).fadeOut(100);
                     setTimeout(function() {
-                        me.state.change(me.state.MENU);
+                        me.state.change(STATE_LOGIN);
                     }, 50);
                 }
             });

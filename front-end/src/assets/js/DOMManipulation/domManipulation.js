@@ -815,7 +815,6 @@ game.fdom.RootContainer = me.Renderable.extend({
         this.elem.id            = 'rootContainer';
         this.elem.style.backgroundImage = "url('" + backgroundImage + "')";
 
-
         //scale element
         this.relWidth  = 100;
         this.relHeight = 100;
@@ -935,7 +934,7 @@ game.fdom.NotificationElement = me.Renderable.extend({
         this.elem.appendChild(exitButton);
 
         $(exitButton).on('click', function() {
-            console.log("click");
+            //console.log("click");
             $(mainElement).fadeOut(100);
         });
 

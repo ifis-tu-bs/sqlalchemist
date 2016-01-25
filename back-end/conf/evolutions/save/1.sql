@@ -1,13 +1,5 @@
 # --- !Ups
 
-create table action (
-  id                            bigint auto_increment not null,
-  action                        integer,
-  session_id                    varchar(255),
-  date                          datetime(6),
-  constraint pk_action primary key (id)
-);
-
 create table avatar (
   id                            bigint auto_increment not null,
   avatar_name                   varchar(255),
@@ -198,9 +190,8 @@ create table scrollcollection (
 create table session (
   id                            varchar(255) not null,
   owner_id                      bigint,
+  active                        tinyint(1) default 0,
   created_at                    datetime(6),
-  last_action_id                bigint,
-  constraint uq_session_last_action_id unique (last_action_id),
   constraint pk_session primary key (id)
 );
 
@@ -216,14 +207,14 @@ create table shopitem (
   constraint pk_shopitem primary key (id)
 );
 
-create table solvedsubtask (
+create table solvedtask (
   id                            bigint auto_increment not null,
   user_id                       bigint,
   task_id                       bigint,
-  solved                        integer,
-  trys                          integer,
-  last_solved                   datetime(6),
-  constraint pk_solvedsubtask primary key (id)
+  solved                        tinyint(1) default 0,
+  time_needed                   integer,
+  timestamp                     datetime(6),
+  constraint pk_solvedtask primary key (id)
 );
 
 create table storychallenge (
@@ -266,7 +257,7 @@ create table tabledefinition (
   id                            bigint auto_increment not null,
   task_set_id                   bigint,
   table_name                    varchar(255),
-  extension                     Text,
+  extension                     MEDIUMTEXT,
   constraint pk_tabledefinition primary key (id)
 );
 
@@ -297,12 +288,6 @@ create table taskset (
   created_at                    datetime(6),
   updated_at                    datetime(6),
   constraint pk_taskset primary key (id)
-);
-
-create table taskset_homework (
-  taskset_id                    bigint not null,
-  homework_id                   bigint not null,
-  constraint pk_taskset_homework primary key (taskset_id,homework_id)
 );
 
 create table text (
@@ -342,7 +327,6 @@ create table user (
   depth                         integer,
   coins                         integer,
   coin_scale                    float,
-  scroll_limit                  integer,
   total_score                   integer,
   played_time                   integer,
   played_runs                   integer,
@@ -373,9 +357,6 @@ create table user_group (
   tutor_id                      bigint,
   constraint pk_user_group primary key (id)
 );
-
-alter table action add constraint fk_action_session_id foreign key (session_id) references session (id) on delete restrict on update restrict;
-create index ix_action_session_id on action (session_id);
 
 alter table columndefinition add constraint fk_columndefinition_table_definition_id foreign key (table_definition_id) references tabledefinition (id) on delete restrict on update restrict;
 create index ix_columndefinition_table_definition_id on columndefinition (table_definition_id);
@@ -436,15 +417,13 @@ create index ix_scrollcollection_scroll_id on scrollcollection (scroll_id);
 alter table session add constraint fk_session_owner_id foreign key (owner_id) references user (id) on delete restrict on update restrict;
 create index ix_session_owner_id on session (owner_id);
 
-alter table session add constraint fk_session_last_action_id foreign key (last_action_id) references action (id) on delete restrict on update restrict;
-
 alter table shopitem add constraint fk_shopitem_avatar_id foreign key (avatar_id) references avatar (id) on delete restrict on update restrict;
 
-alter table solvedsubtask add constraint fk_solvedsubtask_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
-create index ix_solvedsubtask_user_id on solvedsubtask (user_id);
+alter table solvedtask add constraint fk_solvedtask_user_id foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_solvedtask_user_id on solvedtask (user_id);
 
-alter table solvedsubtask add constraint fk_solvedsubtask_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
-create index ix_solvedsubtask_task_id on solvedsubtask (task_id);
+alter table solvedtask add constraint fk_solvedtask_task_id foreign key (task_id) references task (id) on delete restrict on update restrict;
+create index ix_solvedtask_task_id on solvedtask (task_id);
 
 alter table storychallenge add constraint fk_storychallenge_next_id foreign key (next_id) references storychallenge (id) on delete restrict on update restrict;
 
@@ -481,12 +460,6 @@ create index ix_task_creator_id on task (creator_id);
 alter table taskset add constraint fk_taskset_creator_id foreign key (creator_id) references user (id) on delete restrict on update restrict;
 create index ix_taskset_creator_id on taskset (creator_id);
 
-alter table taskset_homework add constraint fk_taskset_homework_taskset foreign key (taskset_id) references taskset (id) on delete restrict on update restrict;
-create index ix_taskset_homework_taskset on taskset_homework (taskset_id);
-
-alter table taskset_homework add constraint fk_taskset_homework_homework foreign key (homework_id) references homework (id) on delete restrict on update restrict;
-create index ix_taskset_homework_homework on taskset_homework (homework_id);
-
 alter table user add constraint fk_user_role_id foreign key (role_id) references role (id) on delete restrict on update restrict;
 create index ix_user_role_id on user (role_id);
 
@@ -519,9 +492,6 @@ create index ix_user_group_tutor_id on user_group (tutor_id);
 
 
 # --- !Downs
-
-alter table action drop foreign key fk_action_session_id;
-drop index ix_action_session_id on action;
 
 alter table columndefinition drop foreign key fk_columndefinition_table_definition_id;
 drop index ix_columndefinition_table_definition_id on columndefinition;
@@ -582,15 +552,13 @@ drop index ix_scrollcollection_scroll_id on scrollcollection;
 alter table session drop foreign key fk_session_owner_id;
 drop index ix_session_owner_id on session;
 
-alter table session drop foreign key fk_session_last_action_id;
-
 alter table shopitem drop foreign key fk_shopitem_avatar_id;
 
-alter table solvedsubtask drop foreign key fk_solvedsubtask_user_id;
-drop index ix_solvedsubtask_user_id on solvedsubtask;
+alter table solvedtask drop foreign key fk_solvedtask_user_id;
+drop index ix_solvedtask_user_id on solvedtask;
 
-alter table solvedsubtask drop foreign key fk_solvedsubtask_task_id;
-drop index ix_solvedsubtask_task_id on solvedsubtask;
+alter table solvedtask drop foreign key fk_solvedtask_task_id;
+drop index ix_solvedtask_task_id on solvedtask;
 
 alter table storychallenge drop foreign key fk_storychallenge_next_id;
 
@@ -627,12 +595,6 @@ drop index ix_task_creator_id on task;
 alter table taskset drop foreign key fk_taskset_creator_id;
 drop index ix_taskset_creator_id on taskset;
 
-alter table taskset_homework drop foreign key fk_taskset_homework_taskset;
-drop index ix_taskset_homework_taskset on taskset_homework;
-
-alter table taskset_homework drop foreign key fk_taskset_homework_homework;
-drop index ix_taskset_homework_homework on taskset_homework;
-
 alter table user drop foreign key fk_user_role_id;
 drop index ix_user_role_id on user;
 
@@ -662,8 +624,6 @@ drop index ix_user_shopitem_shopitem on user_shopitem;
 
 alter table user_group drop foreign key fk_user_group_tutor_id;
 drop index ix_user_group_tutor_id on user_group;
-
-drop table if exists action;
 
 drop table if exists avatar;
 
@@ -697,7 +657,7 @@ drop table if exists session;
 
 drop table if exists shopitem;
 
-drop table if exists solvedsubtask;
+drop table if exists solvedtask;
 
 drop table if exists storychallenge;
 
@@ -712,8 +672,6 @@ drop table if exists tabledefinition;
 drop table if exists task;
 
 drop table if exists taskset;
-
-drop table if exists taskset_homework;
 
 drop table if exists text;
 

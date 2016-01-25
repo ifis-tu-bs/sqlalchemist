@@ -9,7 +9,7 @@ game.BeltScreen = me.ScreenObject.extend({
         me.game.world.addChild(rootContainer);
 
 
-        var potionLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '4%', 'Image BeltScreen PotionLegend', 'assets/data/img/potion/weak_greypotion.png');
+        var potionLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '3%', 'Image BeltScreen PotionLegend', 'assets/data/img/potion/weak_greypotion.png');
         potionLegend.hide();
         $(potionLegend.getNode()).fadeIn(100);
         me.game.world.addChild(potionLegend);
@@ -17,7 +17,7 @@ game.BeltScreen = me.ScreenObject.extend({
         var potionLegendText = new game.fdom.TitleElement(rootContainer, '23%','4.1%','3%','4%', 'to attach potion to belt, click: ', 'Title BeltScreen PotionLegendText');
         me.game.world.addChild(potionLegendText);
 
-        var scrollLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '9%', 'Image BeltScreen ScrollLegend', 'assets/data/img/stuff/spinning_scroll_red_32.png');
+        var scrollLegend = new game.fdom.ImageElement(rootContainer, '2.4%', '4.1%', '26.5%', '8%', 'Image BeltScreen ScrollLegend', 'assets/data/img/stuff/spinning_scroll_red_32.png');
         scrollLegend.hide();
         $(scrollLegend.getNode()).fadeIn(100);
         me.game.world.addChild(scrollLegend);

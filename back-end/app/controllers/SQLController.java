@@ -104,7 +104,7 @@ public class SQLController extends Controller {
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
 
-        SolvedTaskDAO.update(user, task, status);
+        SolvedTaskDAO.create(user, task, status, userStatement.getTime());
 
         user.update();
         return result;
@@ -127,6 +127,7 @@ public class SQLController extends Controller {
             Logger.warn("SQLController.trivia - no task available");
             return badRequest("no task available");
         }
+
         user.setCurrentTaskSet(task.getTaskSet());
         user.update();
         return ok(TaskView.toJsonExercise(task));
@@ -167,9 +168,8 @@ public class SQLController extends Controller {
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
 
-        SolvedTaskDAO.update(user, task, status);
+        SolvedTaskDAO.create(user, task, status, userStatement.getTime());
 
-        user.update();
         return result;
     }
 

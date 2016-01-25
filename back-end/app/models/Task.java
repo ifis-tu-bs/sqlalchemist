@@ -48,13 +48,15 @@ public class Task extends Model {
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "task")
-
-
     private List<Comment>   comments;
+
     @OneToMany(
             cascade = CascadeType.ALL,
             mappedBy = "task")
     private List<Rating>    ratings;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "task")
+    private List<SolvedTask> solvedTaskList;
 
     private boolean available;
 

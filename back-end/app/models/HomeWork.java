@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Model;
+import play.Logger;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,7 +20,7 @@ public class HomeWork extends Model {
     @ManyToOne
     private final User creator;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     private final List<TaskSet> taskSets;
 
     private List<SubmittedHomeWork> submittedHomeWorks;
@@ -103,4 +104,12 @@ public class HomeWork extends Model {
         return answer;
     }
 
+    public void removeTaskSet(TaskSet taskSet) {
+        for(TaskSet taskSet1 : taskSets) {
+            if(taskSet.getId() == taskSet1.getId()) {
+              taskSets.remove(taskSet1);
+              break;
+            }
+        }
+    }
 }
