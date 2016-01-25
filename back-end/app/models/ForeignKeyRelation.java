@@ -28,7 +28,15 @@ public class ForeignKeyRelation extends Model {
 
     private Integer combinedKeyId;
 
-    /**
+
+  public ForeignKeyRelation(String sourceTable, String sourceColumn, String destinationTable, String destinationColumn) {
+    this.sourceTable = sourceTable;
+    this.sourceColumn = sourceColumn;
+    this.destinationTable = destinationTable;
+    this.destinationColumn = destinationColumn;
+  }
+
+  /**
      *  This is the constructor for ForeignKeyRelations
      */
     public ForeignKeyRelation(
