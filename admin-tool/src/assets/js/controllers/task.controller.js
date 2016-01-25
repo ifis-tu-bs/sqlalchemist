@@ -72,7 +72,6 @@ angular
         }
 
         function getColumnDefinitionDataTypes() {
-
             TaskService.getColumnDefinitionDataTypes().then(
                 function (result) {
                     vm.dataTypes = result;
@@ -370,7 +369,7 @@ angular
         };
 
         //////////////////////////////777
-        //  Tasks: Control
+        //  Intension: Foreign Keys - Control
         //////////////////////////////777
 
         /* Data */
@@ -380,12 +379,22 @@ angular
             this.destinationTable = "";
             this.destinationColumn = "";
             this.isCombined = false;
-            this.combinedKeyId = -1;
+            this.combinedKeyId = null;
         };
 
         /* Methods */
         $scope.pushNewForeignKey = function () {
             vm.foreignKeyRelations.push(new DefaultForeignKey());
+        };
+
+        $scope.switchCombined = function(foreignKey) {
+            if (foreignKey.isCombined) {
+                if (foreignKey.combinedKeyId === null) {
+                    foreignKey.combinedKeyId = 0;
+                }
+            } else {
+                foreignKey.combinedKeyId = null;
+            }
         };
 
         /* Changes are only changed on the Server via TaskSet Actions */
