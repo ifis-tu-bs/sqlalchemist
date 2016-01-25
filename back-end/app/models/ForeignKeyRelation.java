@@ -3,6 +3,8 @@ package models;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.avaje.ebean.Model;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
@@ -39,7 +41,7 @@ public class ForeignKeyRelation extends Model {
         this.sourceColumn = sourceColumn;
         this.destinationTable = destinationTable;
         this.destinationColumn = destinationColumn;
-        this.combinedKeyId = null;
+        this.combinedKeyId = combinedKeyId;
     }
 
     public long getId() {
@@ -62,6 +64,11 @@ public class ForeignKeyRelation extends Model {
         return destinationColumn;
     }
 
+    @JsonProperty("isCombined")
+    public boolean getIsCombined() {
+        return this.combinedKeyId != null;
+    }
+
     public Integer getCombinedKeyId() {
         return this.combinedKeyId;
     }
@@ -70,6 +77,7 @@ public class ForeignKeyRelation extends Model {
         this.combinedKeyId = combinedKeyId;
     }
 
+    @JsonIgnore
     public String getSQLStatement() {
     return "ALTER TABLE "
         + this.sourceTable

@@ -14,8 +14,7 @@ class ForeignKeyRelationView {
         String sourceColumn        = foreignKeyNode.path("sourceColumn").asText();
         String destinationTable    = foreignKeyNode.path("destinationTable").asText();
         String destinationColumn   = foreignKeyNode.path("destinationColumn").asText();
-
-        Integer combinedKeyId          = foreignKeyNode.path("combinedKeyId").asInt();
+        Integer combinedKeyId      = foreignKeyNode.path("combinedKeyId").asInt();
 
         return new ForeignKeyRelation(
                 sourceTable,

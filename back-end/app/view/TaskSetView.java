@@ -40,15 +40,6 @@ public class TaskSetView {
 
         taskSet = new TaskSet(taskSetName, tableDefinitions, foreignKeyRelations, user, isHomework);
 
-        /*for(int i = 0; i < taskArray.size(); i++) {
-        /*    JsonNode taskNode = taskArray.get(i);
-            Task task = TaskView.fromJsonForm(taskNode, taskSetName + " " + i, user);
-            task.setTaskSet(taskSet);
-            tasks.add(task);
-        }*/
-
-        //taskSet.setTasks(tasks);
-
         return taskSet;
     }
 
