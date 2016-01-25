@@ -23,11 +23,12 @@ angular
         var vm = this;
         vm.roles = [];
         $scope.show = {
+            taskSet: true,
             task: false,
             homework: true,
-            role: true,
-            group: true,
-            user: true
+            role: false,
+            group: false,
+            user: false
         };
 
         initController();
@@ -36,9 +37,6 @@ angular
             UserService.getAllRoles().then(
                 function (data) {
                     vm.roles = data;
-
-        console.log(vm.roles);
-
                 }, function(error) {
                     FlashService.Error(error);
                 }

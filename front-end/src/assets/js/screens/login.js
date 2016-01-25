@@ -26,7 +26,7 @@ game.LoginScreen = me.ScreenObject.extend({
                         me.state.change(me.state.MENU);
                     }, 50);
                 } else if(xmlHttpRequest.status == 401) {
-                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "log in failed", "incorrect email or password");
+                    var notificationElement = new game.fdom.NotificationElement(rootContainer, "log in failed", xmlHttpRequest.responseText);
                     me.game.world.addChild(notificationElement);
                 } else if(xmlHttpRequest.status == 400) {
                     var errorMessage = JSON.parse(xmlHttpRequest.responseText);

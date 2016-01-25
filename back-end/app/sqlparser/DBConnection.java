@@ -7,6 +7,7 @@ import models.TaskSet;
 import play.Logger;
 import play.Play;
 
+import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
 
@@ -49,80 +50,20 @@ class DBConnection{
         }
     }
 
-    public SQLStatus createDB() {
-        for(TableDefinition tableDefinition : this.taskSet.getTableDefinitions()) {
-            List<String>    primKeys                    = new ArrayList<>();
-            String          dataGenSetInsertStatement    = "INSERT INTO " + tableDefinition.getTableName() + "(";
-            String          statement                   = "CREATE TABLE " + tableDefinition.getTableName() + "( ";
+  public SQLStatus createDB() {
+    List<String> sqlStatements = this.taskSet.getSQLStatements();
 
-            for(int i = 0; i < tableDefinition.getColumnDefinitions().size(); i++) {
-                ColumnDefinition columnDefinition = tableDefinition.getColumnDefinitions().get(i);
-                dataGenSetInsertStatement   = dataGenSetInsertStatement + columnDefinition.getColumnName();
-                statement                   = statement + columnDefinition.getColumnName() + " ";
-                statement                   = statement + " " + columnDefinition.getDataType();
-
-                if(columnDefinition.isNotNullable()) {
-                    statement = statement + " NOT NULL";
-                }
-                if(columnDefinition.isPrimaryKey()) {
-                    primKeys.add(columnDefinition.getColumnName());
-                }
-
-                if(i < tableDefinition.getColumnDefinitions().size() -1) {
-                    statement = statement + ",";
-                    dataGenSetInsertStatement = dataGenSetInsertStatement + ", ";
-                }
-
-            }
-
-            dataGenSetInsertStatement = dataGenSetInsertStatement + ") VALUES (";
-            // Set Primary Keys if necessary;
-            if(primKeys.size() > 0) {
-                String primaryKey = ", PRIMARY KEY (";
-                for (int i = 0; i < primKeys.size(); i++) {
-                    String primKey = primKeys.get(i);
-                    primaryKey = primaryKey + primKey;
-                    if(i < primKeys.size() - 1)
-                        primaryKey = primaryKey + ",";
-                }
-                primaryKey = primaryKey + ")";
-                statement = statement + primaryKey;
-            }
-            // Close the statements
-            statement = statement + " );";
-
-
-            dataGenSetInsertStatement = dataGenSetInsertStatement + ");";
-
-            // Execute the Statements
-            try {
-                this.statement.execute(statement);
-
-                List<String> tableExtensions = new ArrayList<>(Arrays.asList(tableDefinition.getExtension().split("\n")));
-
-                for(String tableExtension : tableExtensions) {
-                    this.statement.execute(tableExtension);
-                }
-
-            } catch (SQLException e) {
-                Logger.error("DBConnection.create: " + e.getMessage());
-                return new SQLStatus(e);
-            }
-        }
-        for(ForeignKeyRelation foreignKeyRelation : this.taskSet.getForeignKeyRelations()) {
-            String addForeignKey = "ALTER TABLE " + foreignKeyRelation.getSourceTable() + " ADD FOREIGN KEY (" + foreignKeyRelation.getSourceColumn() + ") REFERENCES " + foreignKeyRelation.getDestinationTable() + "(" + foreignKeyRelation.getDestinationColumn() + ");";
-            Logger.debug(addForeignKey);
-
-            // Execute the Statements
-            try {
-                this.statement.execute(addForeignKey);
-            } catch (SQLException e) {
-                Logger.error("DBConnection.create: " + e.getMessage());
-                return new SQLStatus(e);
-            }
-        }
-        return null;
+    try {
+      for(String sqlStatement : sqlStatements) {
+        this.statement.execute(sqlStatement);
+      }
+    } catch (SQLException e) {
+      Logger.error("DBConnection.create: " + e.getMessage());
+      return new SQLStatus(e);
     }
+
+    return null;
+  }
 
     public SQLStatus runnable(String statement) {
         try {

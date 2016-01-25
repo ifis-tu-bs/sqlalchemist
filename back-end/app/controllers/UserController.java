@@ -1,12 +1,10 @@
 package controllers;
 
-import dao.ActionDAO;
 import dao.SessionDAO;
 import dao.UserDAO;
 
 import forms.SignUp;
 
-import models.Action;
 import models.Session;
 import models.User;
 
@@ -56,11 +54,7 @@ public class UserController extends Controller {
             return unauthorized("Wrong  email or password");
         }
 
-        session.setOwner(user);
-        session.addAction(ActionDAO.create(Action.LOGIN));
-        session.update();
-
-        return redirect(routes.UserController.show(user.getUsername()));
+        return ok();
     }
 
 

@@ -6,12 +6,14 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import play.Logger;
 import view.TableDefinitionView;
 
 import javax.persistence.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -40,7 +42,7 @@ public class TaskSet extends Model {
 
     private final boolean               isHomework;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "taskSets")
     private List<HomeWork>              homeWorks;
 
     // Social Information's
@@ -50,6 +52,9 @@ public class TaskSet extends Model {
     private List<Rating>                ratings;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Comment>               comments;
+
+  @OneToMany(mappedBy = "currentTaskSet")
+  private List<User>  currentTaskSetUser;
 
     private boolean                     available;
 
@@ -136,7 +141,20 @@ public class TaskSet extends Model {
         this.updatedAt = new Date();
     }
 
-//////////////////////////////////////////////////
+  @Override
+  public void delete() {
+    for(User user: currentTaskSetUser) {
+      user.setCurrentTaskSet(null);
+      user.update();
+    }
+    for(HomeWork homeWork :homeWorks) {
+      homeWork.removeTaskSet(this);
+      homeWork.update();
+    }
+    super.delete();
+  }
+
+  //////////////////////////////////////////////////
 //  getter & setter methods
 //////////////////////////////////////////////////
 
@@ -184,6 +202,25 @@ public class TaskSet extends Model {
     public boolean contains(Task task) {
         return this.tasks.contains(task);
     }
+
+  @JsonProperty
+  public List<String> getSQLStatements() {
+    List<String> sqlStatements = new ArrayList<>();
+
+    for(TableDefinition tableDefinition : this.tableDefinitions) {
+      sqlStatements.add(tableDefinition.getSQLStatement());
+    }
+
+    for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
+      sqlStatements.add(foreignKeyRelation.getSQLStatement());
+    }
+
+    for(TableDefinition tableDefinition : this.tableDefinitions) {
+      sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
+    }
+
+    return sqlStatements;
+  }
 
     @JsonProperty("isHomeWork")
     public boolean getIsHomework() {

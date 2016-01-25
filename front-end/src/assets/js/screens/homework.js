@@ -11,7 +11,7 @@ game.HomeworkScreen = me.ScreenObject.extend({
          * Create background-div and add image to it.
          */
         var backgroundHomework = new game.BackgroundElement('backgroundHomeworkId', 100, 100, 0, 0, 'none');
-        backgroundHomework.setImage("assets/data/img/gui/homework_screen.png", "backgroundhomework");
+        backgroundHomework.setImage("assets/data/img/gui/task_screen_new.png", "backgroundhomework");
         me.game.world.addChild(backgroundHomework);
         $("#backgroundHomeworkId").fadeIn(100);
 
