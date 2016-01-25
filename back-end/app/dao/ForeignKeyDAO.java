@@ -19,4 +19,8 @@ public class ForeignKeyDAO {
     public static List<ForeignKeyRelation> getAllUncombinedRelations(TaskSet taskSet) {
         return find.query().where().eq("taskSet", taskSet).isNull("combinedKeyId").findList();
     }
+
+    public static List<ForeignKeyRelation> getAllCombinedKeyIds(TaskSet taskSet) {
+        return find.query().setDistinct(true).select("combinedKeyId").where().eq("taskSet", taskSet).isNotNull("combinedKeyId").findList();
+    }
 }
