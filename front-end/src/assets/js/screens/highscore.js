@@ -8,10 +8,15 @@ game.HighscoreScreen = me.ScreenObject.extend({
         /**
          * Set screen-image for Rankings-Screen
          */
-        var backgroundRanking = new game.BackgroundElement('backgroundRankingId', 100, 100, 0, 0, 'none');
-        backgroundRanking.setImage("assets/data/img/gui/ranking_screen.png", "backgroundRanking");
-        me.game.world.addChild(backgroundRanking);
-        $("#backgroundRankingId").fadeIn(100);
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/wood_screen.png');
+        me.game.world.addChild(rootContainer);
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
+
+        var backgroundBook = new game.fdom.ImageElement(rootContainer, '79.77%', '99.6%', '0%', '0%', 'Image HighscoreScreen Book', 'assets/data/img/gui/ranking_screen_transparent.png');
+        backgroundBook.hide();
+        $(backgroundBook.getNode()).fadeIn(100);
+        me.game.world.addChild(backgroundBook);
 
         this.backToMenu = function() {
             $("#backgroundRankingId").fadeOut(100);
@@ -23,6 +28,7 @@ game.HighscoreScreen = me.ScreenObject.extend({
             $("#numberOfRuns").fadeOut(100);
             $("#sqlStatements").fadeOut(100);
             $("#sqlRate").fadeOut(100);
+            $(rootContainer.getNode()).fadeOut(100);
             setTimeout(function () {
                 me.state.change(me.state.MENU);
             }, 100);

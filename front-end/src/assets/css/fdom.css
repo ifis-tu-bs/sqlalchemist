@@ -185,6 +185,11 @@ p.Notification.Body {
 /* Settings Screen */
 /* -------------------------------------------------------------------------- */
 
+
+td:last-child {
+    text-align: right;
+}
+
 .Button.CollectorScreen.Back {
     background: url('/assets/data/img/buttons/back_button_ink.png');
     background-position: center;
@@ -221,7 +226,7 @@ p.Notification.Body {
 
 .Title.ProfileScreen {
     font-family: Amethysta-Regular, sans-serif;
-    color: #F7E6D0;
+    color: white;
 }
 
 .Title.ResultScreen {

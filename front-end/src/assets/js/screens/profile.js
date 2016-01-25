@@ -10,6 +10,8 @@ game.ProfileScreen = me.ScreenObject.extend({
          */
         var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/settings_screen.png');
         me.game.world.addChild(rootContainer);
+        rootContainer.hide();
+        $(rootContainer.getNode()).fadeIn(100);
 
         var title = new game.fdom.TitleElement(rootContainer, '100%','19%','0%','5%', 'Profile', 'Title ProfileScreen');
         me.game.world.addChild(title);
@@ -25,7 +27,7 @@ game.ProfileScreen = me.ScreenObject.extend({
         var backToLabButton = new game.fdom.ButtonElement(rootContainer, '20%','20%','73%','2%', '', 'Button ProfileScreen Back', false, function() {
             $("#backgroundProfileId").fadeOut(100);
             $("#backFromProfile").fadeOut(100);
-            $("#avatar").fadeOut(100);
+            $("#profileAvatar").fadeOut(100);
             $(rootContainer.getNode()).fadeOut(100);
             setTimeout( function() {
                 me.state.change(me.state.MENU);
@@ -78,11 +80,11 @@ game.ProfileScreen = me.ScreenObject.extend({
                 var isTeam = profile_JSON.avatar.isTeam;
                 var avatar;
                 if (!isTeam) {
-                    avatar = new game.BackgroundElement('avatar', 4.84848, 8.33333, 23.4394, 18.75, 'none');
+                    avatar = new game.BackgroundElement('profileAvatar', 4.84848, 8.33333, 23.4394, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 } else {
-                    avatar = new game.BackgroundElement('avatar', 6.36363, 8.33333, 22.6818, 18.75, 'none');
+                    avatar = new game.BackgroundElement('profileAvatar', 6.36363, 8.33333, 22.6818, 18.75, 'none');
                     avatar.setImage("assets/data/img/avatare/" + filename + "_front.png", "skin");
                     me.game.world.addChild(avatar);
                 }
@@ -103,11 +105,10 @@ game.ProfileScreen = me.ScreenObject.extend({
                                   solvedSQL + "<br>" +
                                   quote + "%" + "<br>";
                 values.writeHTML(valuesText + valuesStats, "valuesPara");
-                }
+            }
 
             ajaxSendProfileIdRequest(id, profileID_Reply);
         }
-
         ajaxSendProfileRequest(profileReply);
 
     }

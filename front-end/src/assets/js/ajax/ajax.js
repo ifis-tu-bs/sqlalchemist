@@ -30,7 +30,6 @@ function createRequest(method, url, callback) {
         var notificationElement;
         if (xhr.status == 400 || xhr.status == 200 || xhr.status == 401) {
             console.log(xhr);
-            callback(xhr);
         } else if (xhr.status == 404 || xhr.status == 408 || xhr.status == 444 ||
                    xhr.status == 503 || xhr.status == 504) {
             console.log(xhr);
