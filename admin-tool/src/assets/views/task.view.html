@@ -193,6 +193,7 @@
             <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
             <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
             <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
+            <th ng-click="orderTableEditPredicate = 'groupedKeyId'" style="cursor: pointer">Combined Key Settings</th>
           </tr>
           </thead>
           <tbody>
@@ -204,6 +205,10 @@
               <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
               <td>
                 <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
+              </td>
+              <td>
+                <input type="checkbox" ng-model="foreignKey.isCombined">
+                <input type="number" ng-disabled="!foreignkey.isCombined" ng-model="foreignKey.groupedKeyId">
               </td>
             </tr>
             <tr>
