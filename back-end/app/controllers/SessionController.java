@@ -61,7 +61,7 @@ public class SessionController extends Controller {
         }
 
         if(!user.isEmailVerified()) {
-          return unauthorized("you must verify your email adress before you can play");
+          return unauthorized("you must verify your email before you can enter");
         }
 
         List<Session> sessionList = SessionDAO.getByOwner(user);

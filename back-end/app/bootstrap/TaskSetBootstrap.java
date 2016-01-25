@@ -242,9 +242,6 @@ public class TaskSetBootstrap {
             taskSet = TaskSetView.fromJsonForm(user, node);
             taskSet.setAvailable(true);
             taskSet.save();
-            for(String statement : taskSet.getSQLStatements()) {
-              Logger.info(statement);
-            }
 
             if((err = SQLParser.createDB(taskSet)) != null) {
                 Logger.warn("TaskSetController.create - " + err.getSqlException().getMessage());

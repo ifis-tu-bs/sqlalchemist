@@ -6,6 +6,7 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import play.Logger;
 import view.TableDefinitionView;
 
 import javax.persistence.*;
@@ -41,7 +42,7 @@ public class TaskSet extends Model {
 
     private final boolean               isHomework;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "taskSets")
     private List<HomeWork>              homeWorks;
 
     // Social Information's
@@ -51,6 +52,9 @@ public class TaskSet extends Model {
     private List<Rating>                ratings;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "taskSet")
     private List<Comment>               comments;
+
+  @OneToMany(mappedBy = "currentTaskSet")
+  private List<User>  currentTaskSetUser;
 
     private boolean                     available;
 
@@ -137,7 +141,20 @@ public class TaskSet extends Model {
         this.updatedAt = new Date();
     }
 
-//////////////////////////////////////////////////
+  @Override
+  public void delete() {
+    for(User user: currentTaskSetUser) {
+      user.setCurrentTaskSet(null);
+      user.update();
+    }
+    for(HomeWork homeWork :homeWorks) {
+      homeWork.removeTaskSet(this);
+      homeWork.update();
+    }
+    super.delete();
+  }
+
+  //////////////////////////////////////////////////
 //  getter & setter methods
 //////////////////////////////////////////////////
 
