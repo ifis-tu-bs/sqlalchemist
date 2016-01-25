@@ -21,7 +21,7 @@ public class Global extends GlobalSettings {
     system = Akka.system(app.getWrappedApplication());
     userCleanUpActor = system.actorOf(UserCleanupActor.props);
     system.scheduler().schedule(
-        Duration.create(0, TimeUnit.MILLISECONDS),
+        Duration.create(1, TimeUnit.DAYS),
         Duration.create(1, TimeUnit.DAYS),
         userCleanUpActor,
         "tick",

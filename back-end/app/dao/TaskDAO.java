@@ -55,14 +55,18 @@ public class TaskDAO {
       int size = 0;
       for(Task task : taskList) {
         List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, task);
-        avg += solvedTasks.size();
-        size += solvedTasks.size();
+        avg += (solvedTasks == null) ? 0 : solvedTasks.size();
+        size += (solvedTasks == null) ? 0 : solvedTasks.size();
       }
-      avg /= size;
+
+      if(size != 0) {
+        avg /= size;
+      }
+
       List<Task> tasksToRemove = new ArrayList<>();
       for(Task task : taskList) {
         List<SolvedTask>    solvedTasks = SolvedTaskDAO.getByUserAndTask(user, task);
-        if(solvedTasks.size() > avg) {
+        if(((solvedTasks == null) ? 0 : solvedTasks.size()) > avg) {
           tasksToRemove.add(task);
         }
       }
