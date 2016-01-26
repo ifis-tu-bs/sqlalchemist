@@ -101,10 +101,13 @@ game.GameOverScreen = me.ScreenObject.extend({
             /**
              * Create background-div and add image to it.
              */
-            var backgroundGameOver = new game.BackgroundElement('backgroundGameOverId', 100, 100, 0, 0, 'none');
-            backgroundGameOver.setImage("assets/data/img/gui/game_over_screen.png", "backgroundgameover");
-            me.game.world.addChild(backgroundGameOver);
-            $("#backgroundGameOverId").fadeIn(100);
+            var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/game_over_screen.png');
+            me.game.world.addChild(rootContainer);
+            rootContainer.hide();
+            $(rootContainer.getNode()).fadeIn(100);
+
+            var title = new game.fdom.TitleElement(rootContainer, '100%','22%','0%','10%', 'Game Over', 'Title GameOverScreen');
+            me.game.world.addChild(title);
 
             console.log("VOR UNIQUE: ",game.data.scrolls );
 
@@ -166,17 +169,14 @@ game.GameOverScreen = me.ScreenObject.extend({
             /**
              * Create button and according  callback function to go to the next screen.
              */
-            this.onLab = function () {
+            var nextButton = new game.fdom.ButtonElement(rootContainer, '20%','15%','40%','77%', "Next", 'Button LoginScreen Enter', false, function() {
                 $("#backgroundGameOverId").fadeOut(100);
-                $("#next").fadeOut(100);
+                $(rootContainer.getNode()).fadeIn(100);
                 setTimeout( function() {
                     me.state.change(me.state.READY);
                 }, 100);
-            };
-
-            var nextButton = new game.ClickableElement('next', 'NEXT', this.onLab, 25, 10, 37, 80.5, 1);
+            });
             me.game.world.addChild(nextButton);
-            $("#next").fadeIn(100);
 
             //maxdepth verwenden
             if (Math.floor((game.persistent.depth - 1) % 5) === 0 &&
