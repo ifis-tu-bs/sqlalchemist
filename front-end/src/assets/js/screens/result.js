@@ -4,7 +4,7 @@ game.ResultScreen = me.ScreenObject.extend({
         /**
          * Create background-div and add image to it.
          */
-        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/result_screen.png');
+        var rootContainer = new game.fdom.RootContainer('/assets/data/img/gui/game_over_screen.png');
         me.game.world.addChild(rootContainer);
         rootContainer.hide();
         $(rootContainer.getNode()).fadeIn(100);
@@ -14,7 +14,7 @@ game.ResultScreen = me.ScreenObject.extend({
 
         game.data.cheat = false;
 
-        this.fadeOutElements = function () {
+        fadeOutElements = function () {
             $("#backgroundResultId").fadeOut(100);
             $("#nextFromResult").fadeOut(100);
             $(rootContainer.getNode()).fadeOut(100);
@@ -29,28 +29,28 @@ game.ResultScreen = me.ScreenObject.extend({
             if (!game.data.playerStat.isTutorial) {
                 switch(game.task.kind) {
                     case 0 : {
-                        this.fadeOutElements();
+                        fadeOutElements();
                         setTimeout( function() {
                             me.state.change(me.state.READY);
                         }, 100);
                         return true;
                     }
                     case 1 : {
-                        this.fadeOutElements();
+                        fadeOutElements();
                         setTimeout( function() {
                             me.state.change(me.state.READY);
                         }, 100);
                         return true;
                     }
                     case 2 : {
-                        this.fadeOutElements();
+                        fadeOutElements();
                         setTimeout( function() {
                             me.state.change(STATE_TRIVIA);
                         }, 100);
                         return true;
                     }
                     case 3 : {
-                        this.fadeOutElements();
+                        fadeOutElements();
                         setTimeout( function() {
                             me.state.change(STATE_HOMEWORK);
                         }, 100);
@@ -59,7 +59,7 @@ game.ResultScreen = me.ScreenObject.extend({
                 }
             } else {
                 game.potion.potions[16].amount++;
-                this.fadeOutElements();
+                fadeOutElements();
                 setTimeout( function() {
                     me.state.change(STATE_TEXT);
                 }, 100);
