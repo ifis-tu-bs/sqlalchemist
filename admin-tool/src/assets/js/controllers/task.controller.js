@@ -185,6 +185,26 @@ angular
             );
         };
 
+        $scope.viewSQLStatements = function(taskSet) {
+        console.log("here");
+            var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'assets/templates/statements.template.html',
+                    controller: 'StatementsController',
+                    size: 'lg',
+                    resolve: {
+                        sqlStatementsObject: function() {
+                            return taskSet.sqlstatements;
+                        }
+                    }
+            });
+
+
+            modalInstance.result.then(
+                FlashService.Clear
+            );
+        };
+
 
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {

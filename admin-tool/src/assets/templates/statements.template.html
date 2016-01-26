@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <button type="button" class="close" aria-label="Close" ng-click="close()"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title">SQL-Statements</h4>
+</div>
+<div class="modal-body">
+    <div class="container" style="width:100%">
+        <div ui-ace="{
+                theme: 'twilight',
+                mode:'sql',
+                onLoad: aceLoaded
+                }" ng-model="sqlStatements" style="float:left;width:100%"></div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-primary btn-lg" ng-click="ok()" >
+        Ok
+    </button>
+</div>
