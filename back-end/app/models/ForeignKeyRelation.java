@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author fabiomazzone
@@ -28,7 +29,15 @@ public class ForeignKeyRelation extends Model {
 
     private Integer combinedKeyId;
 
-    /**
+
+  public ForeignKeyRelation(String sourceTable, String sourceColumn, String destinationTable, String destinationColumn) {
+    this.sourceTable = sourceTable;
+    this.sourceColumn = sourceColumn;
+    this.destinationTable = destinationTable;
+    this.destinationColumn = destinationColumn;
+  }
+
+  /**
      *  This is the constructor for ForeignKeyRelations
      */
     public ForeignKeyRelation(
@@ -87,6 +96,34 @@ public class ForeignKeyRelation extends Model {
         + this.destinationTable
         + "("
         + this.destinationColumn
+        + ");";
+  }
+
+  public static String getSQLStatement(List<ForeignKeyRelation> combinedForeignKeyRelation) {
+    String sourceTable  = combinedForeignKeyRelation.get(0).getSourceTable();
+    String destTable    = combinedForeignKeyRelation.get(0).getDestinationTable();
+
+    String sourceColumn = "";
+    String destinationColumn = "";
+
+    for(ForeignKeyRelation foreignKeyRelation : combinedForeignKeyRelation) {
+      sourceColumn = sourceColumn + foreignKeyRelation.getSourceColumn();
+      destinationColumn = destinationColumn + foreignKeyRelation.getDestinationColumn();
+
+      if(combinedForeignKeyRelation.indexOf(foreignKeyRelation) < combinedForeignKeyRelation.size() - 1) {
+        sourceColumn = sourceColumn + ", ";
+        destinationColumn = destinationColumn + ", ";
+      }
+    }
+
+    return "ALTER TABLE "
+        + sourceTable
+        + " ADD FOREIGN KEY ("
+        + sourceColumn
+        + ") REFERENCES "
+        + destTable
+        + "("
+        + destinationColumn
         + ");";
   }
 }

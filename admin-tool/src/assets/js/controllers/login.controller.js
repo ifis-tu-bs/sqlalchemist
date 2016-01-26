@@ -16,6 +16,8 @@
     function LoginController($location, AuthenticationService, FlashService) {
         var vm = this;
 
+        vm.regexMail = /.+@.+\..+/;
+
         vm.login = login;
 
         (function initController() {

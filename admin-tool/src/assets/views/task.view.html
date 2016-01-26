@@ -199,7 +199,7 @@
               <td><input type="text" ng-model="foreignKey.destinationTable" uib-typeahead="table.tableName as table.tableName for table in vm.tables | filter:$viewValue | limitTo:5"></td>
               <td><input type="text" ng-model="foreignKey.destinationColumn" uib-typeahead="item for item in findColumnsForTableName(foreignKey.destinationTable) | filter:$viewValue | limitTo:5" ng-disabled="foreignKey.destinationTable === ''"></td>
               <td>
-                  <input type="checkbox" ng-model="foreignKey.isCombined"style="float:left">
+                  <input type="checkbox" ng-model="foreignKey.isCombined" ng-click="switchCombined(foreignKey);" style="float:left">
                   <input type="number" ng-disabled="!foreignKey.isCombined" ng-model="foreignKey.combinedKeyId"
                          style="width:7em;float:right">
               </td>

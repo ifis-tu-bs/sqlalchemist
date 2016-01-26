@@ -4,8 +4,10 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
+import com.avaje.ebean.dbmigration.migration.ForeignKey;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import dao.ForeignKeyDAO;
 import play.Logger;
 import view.TableDefinitionView;
 
@@ -211,12 +213,21 @@ public class TaskSet extends Model {
       sqlStatements.add(tableDefinition.getSQLStatement());
     }
 
-    for(ForeignKeyRelation foreignKeyRelation : this.foreignKeyRelations) {
+    for(TableDefinition tableDefinition : this.tableDefinitions) {
+      sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
+    }
+
+    List<ForeignKeyRelation> foreignKeyRelations = ForeignKeyDAO.getAllUncombinedRelations(this);
+    for(ForeignKeyRelation foreignKeyRelation : foreignKeyRelations) {
       sqlStatements.add(foreignKeyRelation.getSQLStatement());
     }
 
-    for(TableDefinition tableDefinition : this.tableDefinitions) {
-      sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
+    List<ForeignKeyRelation> foreignKeyRelationCombinedId = ForeignKeyDAO.getAllCombinedKeyIds(this);
+    if(foreignKeyRelationCombinedId != null && !foreignKeyRelationCombinedId.isEmpty()) {
+      for (ForeignKeyRelation foreignKeyRelation : foreignKeyRelationCombinedId) {
+        List<ForeignKeyRelation> combinedForeignKeyRelation = ForeignKeyDAO.getAllCombinedRelations(this, foreignKeyRelation.getCombinedKeyId());
+        sqlStatements.add(ForeignKeyRelation.getSQLStatement(combinedForeignKeyRelation));
+      }
     }
 
     return sqlStatements;

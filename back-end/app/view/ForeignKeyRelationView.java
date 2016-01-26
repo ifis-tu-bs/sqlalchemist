@@ -14,14 +14,22 @@ class ForeignKeyRelationView {
         String sourceColumn        = foreignKeyNode.path("sourceColumn").asText();
         String destinationTable    = foreignKeyNode.path("destinationTable").asText();
         String destinationColumn   = foreignKeyNode.path("destinationColumn").asText();
-        Integer combinedKeyId      = foreignKeyNode.path("combinedKeyId").asInt();
-
-        return new ForeignKeyRelation(
+        if(!foreignKeyNode.path("combinedKeyId").isNull()) {
+            Integer combinedKeyId = foreignKeyNode.path("combinedKeyId").asInt();
+            return new ForeignKeyRelation(
                 sourceTable,
                 sourceColumn,
                 destinationTable,
                 destinationColumn,
                 combinedKeyId);
+        }
+
+        return new ForeignKeyRelation(
+            sourceTable,
+            sourceColumn,
+            destinationTable,
+            destinationColumn);
+
 
     }
 

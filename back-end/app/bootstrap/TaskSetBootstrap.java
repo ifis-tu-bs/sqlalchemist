@@ -90,8 +90,7 @@ public class TaskSetBootstrap {
                                        "            \"sourceTable\":\"Profile\",\n" +
                                        "            \"sourceColumn\":\"user\",\n" +
                                        "            \"destinationTable\":\"User\",\n" +
-                                       "            \"destinationColumn\":\"EMail\",\n" +
-                                       "            \"combinedKeyId\":\"null\"" +
+                                       "            \"destinationColumn\":\"EMail\"\n" +
                                        "        }\n" +
                                        "    ],\n" +
                                        "    \"isHomeWork\":   true\n" +
