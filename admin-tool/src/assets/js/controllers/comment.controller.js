@@ -20,7 +20,7 @@ angular
         console.log(commentTaskObject.content);
 
         var addCommentToTextArea = function (comment) {
-            $scope.textAreaDataComments += comment.profile.username + " wrote:\n" + comment.text + "\nat: " + comment.createdAt + "\n\n";
+            $scope.textAreaDataComments += comment.creatorName + " wrote:\n" + comment.comment + "\nat: " + new Date(comment.created_at) + "\n\n";
         };
 
         for (var i = 0; i < commentTaskObject.content.comments.length; i++) {

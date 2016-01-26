@@ -63,7 +63,7 @@
         }
 
         function postTaskSetComment(id, comment) {
-            return $http.post('/API/TaskSet/' + id + '/comment', {text: comment}).then(handleSuccess, handleError);
+            return $http.post('/API/TaskSet/' + id + '/comment', {comment: comment}).then(handleSuccess, handleError);
         }
 
         function deleteTaskSet(taskId) {

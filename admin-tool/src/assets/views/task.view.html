@@ -1,7 +1,10 @@
 
-<div class="container-fluid">
-  <div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message" style="float:left;width:68%"></div>
+<div ng-class="{ 'alert': flash, 'alert-success': flash.type === 'success', 'alert-danger': flash.type === 'error' }" ng-if="flash" ng-bind="flash.message" style="float:left;width:100%"></div>
+<div class="container" style="width:100%">
 
+
+</div>
+<div class="container-fluid">
   <div class="container-fluid" style="float:right;width:30%">
     <form ng-show="true">
       <div class="form-group">
@@ -13,13 +16,14 @@
     </form>
   </div>
 
-  <hr/>
-  <hr/>
+  <div class="container-fluid" style="width:70%;float:left">
+    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || tabActive.tasks" style="float:left">Save current TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
+  </div>
 
+</div>
 
-  <div style="width:100%;float:left">
+<div class="container-fluid" style="width:100%;float:left">
 
-    <button class="btn btn-info" ng-click="saveSelectedTaskSet();" ng-disabled="selectedTaskSet.$$hashKey === undefined || tabActive.tasks" style="float:right">Save current TaskSet: <b>{{selectedTaskSet.taskSetName}}</b></button>
     <uib-tabset tpye="tabs">
 
       <uib-tab id="TaskSets" deselect="keepTaskSets();">
@@ -47,7 +51,10 @@
                   <th ng-click="orderTaskSetPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                   <th ng-click="orderTaskSetPredicate = 'updatedAt'; orderReverse = !orderReverse" style="cursor: pointer">Last Update</th>
                   <th ng-click="orderTaskSetPredicate = 'rating.positiveRatings'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
-                  <th ng-click="orderTaskSetPredicate = 'isHomeWork'; orderReverse = !orderReverse" style="cursor: pointer" uib-tooltip="Will be marked as HomeWork and not be visible to Creators!">Restricted</th>
+                  <th ng-click="orderTaskSetPredicate = 'isHomeWork'; orderReverse = !orderReverse" style="cursor: pointer" ><span uib-tooltip="Will be marked as HomeWork and not be visible to Creators!">Restricted</span></th>
+                  <th>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTaskSet(); $event.stopPropagation();" style="width:60%;float:right"><span class="glyphicon glyphicon-plus"></span> New...</button>
+                  </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,14 +73,14 @@
                     <input type="checkbox" ng-model="taskSet.isHomeWork" ng-disabled="taskSet.id !== undefined" ng-click="$event.stopPropagation();">
                   </td>
                   <td>
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-info btn-xs" ng-click="saveTaskSet(taskSet); $event.stopPropagation();" style="font-size:11pt">Save</button>
+                    <div class="btn-group" style="float:right">
+                      <button type="button" class="btn btn-info btn-xs" ng-click="viewSQLStatements(taskSet); $event.stopPropagation();">
+                        <span class="glyphicon glyphicon-search" style="width:20px;"></span>
+                      </button>
+                      <button type="button" class="btn btn-primary btn-xs" ng-click="saveTaskSet(taskSet); $event.stopPropagation();" style="font-size:11pt">Save</button>
                       <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTaskSet(taskSet); $event.stopPropagation();" style="font-size: 11pt;float:right"> Delete</button>
                       <button type="button" class="btn btn-warning btn-xs" ng-click="viewTaskSetComments(taskSet); $event.stopPropagation();">
-                        <span class="glyphicon glyphicon-comment" style="width:20px;"></span>
-                      </button>
-                      <button type="button" class="btn btn-warning btn-xs" ng-click="viewSQLStatements(taskSet); $event.stopPropagation();">
-                        <span class="glyphicon glyphicon-search" style="width:20px;"></span>
+                        {{ taskSet.comments.length }}<span class="glyphicon glyphicon-comment" style="width:20px;"></span>
                       </button>
                     </div>
                   </td>
@@ -83,16 +90,6 @@
                     <button type="button" class="btn btn-default" ng-click="deleteHomework(taskSet);  $event.stopPropagation();">
                       <span class="glyphicon glyphicon-trash"></span></button>
                   </td>-->
-                </tr>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTaskSet(); $event.stopPropagation();">New...</button>
-                  </td>
-                  <td/>
-                  <td/>
-                  <td/>
-                  <td/>
-                  <td/>
                 </tr>
                 </tbody>
               </table>
@@ -116,6 +113,9 @@
                 <tr>
                   <th ng-click="orderTablePredicate = 'tableName'; orderReverse = !orderReverse" style="cursor: pointer">Name</th>
                   <th ng-click="orderTablePredicate = 'columnDefinitions.length'; orderReverse = !orderReverse" style="cursor: pointer">Columns</th>
+                  <th>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTable(); $event.stopPropagation();" style="width:60%;float:right"><span class="glyphicon glyphicon-plus"></span> New...</button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -126,13 +126,6 @@
                   <td>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTable(table); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
                   </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTable(); $event.stopPropagation();">New...</button>
-                  </td>
-                  <td/>
-                  <td/>
                 </tr>
               </tbody>
             </table>
@@ -149,6 +142,9 @@
                   <th ng-click="orderTableEditPredicate = 'datagenSet'; orderReverse = !orderReverse" style="cursor: pointer">GenSet</th>
                   <th ng-click="orderTableEditPredicate = 'notNull'; orderReverse = !orderReverse" style="cursor: pointer">Not Null?</th>
                   <th ng-click="orderTableEditPredicate = 'primaryKey'; orderReverse = !orderReverse" style="cursor: pointer">Primary?</th>
+                  <th>
+                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewColumn(); $event.stopPropagation();" style="float:right"><span class="glyphicon glyphicon-plus"></span> New...</button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -161,16 +157,6 @@
                   <td>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteColumn(column); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
                   </td>
-                </tr>
-                <tr>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewColumn(); $event.stopPropagation();">New...</button>
-                  </td>
-                  <td/>
-                  <td/>
-                  <td/>
-                  <td/>
-                  <td/>
                 </tr>
               </tbody>
             </table>
@@ -191,7 +177,10 @@
             <th><span class="glyphicon glyphicon-minus"></span><span class="glyphicon glyphicon-arrow-right"></span></th>
             <th ng-click="orderTableEditPredicate = 'destinationTable'; orderReverse = !orderReverse" style="cursor: pointer">Table</th>
             <th ng-click="orderTableEditPredicate = 'destinationColumn'; orderReverse = !orderReverse" style="cursor: pointer">Column</th>
-            <th ng-click="orderTableEditPredicate = 'combinedKeyId'" style="cursor: pointer" uib-tooltip="ForeignKeys with the same Combined Key Id will be handled as one Key.">Combined Key</th>
+            <th ng-click="orderTableEditPredicate = 'combinedKeyId'" style="cursor: pointer"><span uib-tooltip="ForeignKeys with the same Combined Key Id will be handled as one Key.">Combined Key</span></th>
+            <th>
+              <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewForeignKey(); $event.stopPropagation();" style="float:right"><span class="glyphicon glyphicon-plus"></span> New...</button>
+            </th>
           </tr>
           </thead>
           <tbody>
@@ -209,19 +198,6 @@
               <td>
                 <button type="button" class="btn btn-danger btn-xs" ng-click="deleteForeignKey(foreignKey); $event.stopPropagation();" style="font-size:11pt;float:right">Delete</button>
               </td>
-            </tr>
-            <tr>
-              <td>
-                <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewForeignKey(); $event.stopPropagation();">New...</button>
-              </td>
-              <td/>
-              <td/>
-              <td/>
-              <td/>
-              <td/>
-              <td/>
-              <td/>
-              <td/>
             </tr>
           </tbody>
         </table>
@@ -298,7 +274,9 @@
                     <th ng-hide="selectedTaskSet.isHomeWork === false" ng-click="orderTaskPredicate = 'availableSemanticChecks'; orderReverse = !orderReverse" style="cursor: pointer">Nr. Semantic</th>
                     <th ng-click="orderTaskPredicate = 'createdAt'; orderReverse = !orderReverse" style="cursor: pointer">Creation Date</th>
                     <th ng-click="orderTaskPredicate = 'rating.positiveRatings'; orderReverse = !orderReverse" style="cursor: pointer">Rating</th>
-                    <th></th>
+                    <th>
+                      <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTask(); $event.stopPropagation();" style="width:60%;float:right"><span class="glyphicon glyphicon-plus"></span> New...</button>
+                    </th>
                   </tr>
                 </thead>
                 <tbody ng-repeat="task in vm.tasks | orderBy:orderTaskPredicate:orderReverse | filter:search">
@@ -346,11 +324,11 @@
                     </div>
                   </td>
                 <td>
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-info btn-xs" ng-click="saveTask(task); $event.stopPropagation();" style="font-size:11pt">Save</button>
+                  <div class="btn-group" style="float:right">
+                    <button type="button" class="btn btn-primary btn-xs" ng-click="saveTask(task); $event.stopPropagation();" style="font-size:11pt">Save</button>
                     <button type="button" class="btn btn-danger btn-xs" ng-click="deleteTask(task); $event.stopPropagation();" style="font-size: 11pt;float:right">Delete</button>
                     <button type="button" class="btn btn-warning btn-xs" ng-click="viewTaskComments(task); $event.stopPropagation();">
-                      <span class="glyphicon glyphicon-comment" style="width:20px;"></span>
+                      {{ task.comments.length }}<span class="glyphicon glyphicon-comment" style="width:20px;"></span>
                     </button>
                   </div>
                 </td>
@@ -375,16 +353,6 @@
                   </tr>
                 </tr>
                 </tbody>
-                <tbody>
-                  <tr>
-                    <td>
-                      <button type="button" class="btn btn-primary btn-sm" ng-click="pushNewTask(); $event.stopPropagation();">New...</button>
-                    </td>
-                    <td/>
-                    <td/>
-                    <td/>
-                  </tr>
-                </tbody>
               </table>
             </div>
           </div>
@@ -393,5 +361,5 @@
 
       </uib-tab>
     </uib-tabset>
-  </div>
+</div>
 </div>
