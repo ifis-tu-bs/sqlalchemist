@@ -54,6 +54,22 @@
     background-image: url('/assets/data/img/buttons/key_red.png');
 }
 
+
+.ButtonGameOverScreen.Next {
+    font-size: 6vh;
+    font-family: Trajan_Pro_Regular, sans-serif;
+    color: black;
+    background-image: url('/assets/data/img/buttons/key.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.GameOverScreen.Next:hover {
+    color: red;
+    background-image: url('/assets/data/img/buttons/key_red.png');
+}
+
 .Button.LoginScreen.Enter {
     font-size: 6vh;
     color: black;
