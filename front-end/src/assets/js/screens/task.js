@@ -352,7 +352,7 @@ game.TaskScreen = me.ScreenObject.extend({
 		 * Init Ace editor
 		 */
 		function getAceEditor() {
-			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 41, 3, 45, 12);
+			var aceEditor = new game.TextInputElement('pre', 'ace', 'wrapperInputAce', 'fieldInputAce', 55, 41, 3, 43.2, 12);
 			me.game.world.addChild(aceEditor);
 			textIn = aceEditor;
             aceEditor.hide();
