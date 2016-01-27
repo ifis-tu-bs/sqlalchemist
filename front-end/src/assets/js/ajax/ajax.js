@@ -41,6 +41,10 @@ function createRequest(method, url, callback) {
                 if (me.state.isCurrent(STATE_LOGIN)) {
                     notificationElement = new game.fdom.NotificationElement(rootContainer, "LogIn failed!", "wrong e-mail or password!");
                     me.game.world.addChild(notificationElement);
+                } else {
+                    //notificationElement = new game.fdom.NotificationElement(rootContainer, "403", xhr.responseText);
+                    resetTemp();
+                    me.state.change(STATE_START);
                 }
                 return;
             }

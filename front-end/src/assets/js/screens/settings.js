@@ -278,18 +278,20 @@ game.SettingsScreen = me.ScreenObject.extend({
             currentView = newView;
             $(currentView.getNode()).fadeIn(100);
         }
-        function resetTemp() {
-            console.log("Reset Temp");
-            game.data.text = 0;
-            for (var i = 0; i <= 20; i++) {
-                game.potion.potions[i].available = false;
 
-            }
-            for (var j = 0; j <= 60; j++) {
-                game.scroll.enchantments[j].available = false;
-                game.scroll.enchantments[j].used = false;
-
-            }
-        }
     }
 });
+
+function resetTemp() {
+    console.log("Reset Temp");
+    game.data.text = 0;
+    for (var i = 0; i <= 20; i++) {
+        game.potion.potions[i].available = false;
+
+    }
+    for (var j = 0; j <= 60; j++) {
+        game.scroll.enchantments[j].available = false;
+        game.scroll.enchantments[j].used = false;
+
+    }
+}
