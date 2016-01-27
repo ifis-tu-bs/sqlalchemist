@@ -252,14 +252,14 @@ public class TaskSet extends Model {
     }
 
     @JsonIgnore
-    public List<Rating> getRatings() {
+    public List<Rating> getRatingList() {
         return ratings;
     }
 
 
     @JsonProperty("rating")
-    public Rating getAllRating() {
-        return Rating.sum(this.getRatings());
+    public Rating getRating() {
+        return Rating.sum(this.getRatingList());
     }
 
     /**

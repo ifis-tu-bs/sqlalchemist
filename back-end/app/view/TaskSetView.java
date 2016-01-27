@@ -48,7 +48,7 @@ public class TaskSetView {
         ArrayNode   tableDefNode            = JsonNodeFactory.instance.arrayNode();
         ArrayNode   foreignKeyRelationNode  = JsonNodeFactory.instance.arrayNode();
         ArrayNode   taskNode                = TaskView.toJsonList(taskSet.getTasks());
-        Rating      rating                  = Rating.sum(taskSet.getRatings());
+        Rating      rating                  = taskSet.getRating();
 
 
         for(TableDefinition tableDefinition : taskSet.getTableDefinitions()) {

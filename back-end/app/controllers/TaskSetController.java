@@ -260,23 +260,23 @@ public class TaskSetController extends Controller {
         return ok();
     }
 
-    /**
-     * this method controls the rating of the TaskSet
-     *
-     * POST      /TaskSet/:id/rate
-     * Needs a JSON Body Request with values:
-     *  positive    :int
-     *  negative    :int
-     *  needReview  :int
-     *
-     * @param id    the id of the TaskFile
-     * @return      returns a http code with a result of the operation
-     */
-    public Result rate(Long id) {
-        JsonNode   ratingBody  = request().body().asJson();
-        TaskSet    taskSet     = TaskSetDAO.getById(id);
-        User user = UserDAO.getBySession(request().username());
-        Rating     rating      = RatingView.fromJsonForm(ratingBody, user);
+  /**
+   * this method controls the rating of the TaskSet
+   *
+   * POST      /TaskSet/:id/rate
+   * Needs a JSON Body Request with values:
+   *  positive    :boolean
+   *  negative    :boolean
+   *  needReview  :boolean
+   *
+   * @param id    the id of the TaskFile
+   * @return      if the operation fails the function returns a bad request with an error message
+   */
+  public Result rate(Long id) {
+    JsonNode    ratingBody  = request().body().asJson();
+    TaskSet     taskSet     = TaskSetDAO.getById(id);
+    User        user        = UserDAO.getBySession(request().username());
+    Rating      rating      = RatingView.fromJsonForm(ratingBody, user);
 
         if(taskSet == null) {
             Logger.warn("TaskSetController.rate("+id+") - no task found");
@@ -290,7 +290,7 @@ public class TaskSetController extends Controller {
         taskSet.addRating(rating);
         taskSet.update();
 
-        Rating      rating_sum  = Rating.sum(taskSet.getRatings());
+        Rating      rating_sum  = taskSet.getRating();
         if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
             taskSet.setAvailable(false);
         } else if(rating_sum.getPositiveRatings() >= 200) {

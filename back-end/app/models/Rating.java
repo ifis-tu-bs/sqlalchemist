@@ -86,34 +86,52 @@ public class Rating extends Model {
         this.task = task;
     }
 
-    public long getPositiveRatings() {
-        return positiveRatings;
+  public long getPositiveRatings() {
+    return positiveRatings;
+  }
+
+  public void setPositiveRatings(long positiveRatings) {
+    this.positiveRatings = positiveRatings;
+  }
+
+  public long getNegativeRatings() {
+    return negativeRatings;
+  }
+
+  public void setNegativeRatings(long negativeRatings) {
+    this.negativeRatings = negativeRatings;
+  }
+
+  public long getEditRatings() {
+    return editRatings;
+  }
+
+  public void setEditRatings(long editRatings) {
+    this.editRatings = editRatings;
+  }
+
+  public static Rating sum(List<Rating> ratings) {
+    if(ratings == null || ratings.size() == 0) {
+      return new Rating(false, false, false, null);
+    }
+    Rating rating_sum = new Rating(false, false, false, null);
+
+    for(Rating rating : ratings) {
+      rating_sum.positiveRatings += rating.positiveRatings;
+      rating_sum.negativeRatings += rating.negativeRatings;
+      rating_sum.editRatings += rating.editRatings;
     }
 
-    public long getNegativeRatings() {
-        return negativeRatings;
+    if(rating_sum.getPositiveRatings() - rating_sum.getNegativeRatings() < 0) {
+      rating_sum.setNegativeRatings(rating_sum.getNegativeRatings() - rating_sum.getPositiveRatings());
+    } else {
+      rating_sum.setPositiveRatings(rating_sum.getPositiveRatings() - rating_sum.getNegativeRatings());
     }
 
-    public long getEditRatings() {
-        return editRatings;
-    }
+    return rating_sum;
+  }
 
-    public static Rating sum(List<Rating> ratings) {
-        if(ratings == null || ratings.size() == 0) {
-            return new Rating(false, false, false, null);
-        }
-        Rating rating_sum = new Rating(false, false, false, null);
-
-        for(Rating rating : ratings) {
-            rating_sum.positiveRatings += rating.positiveRatings;
-            rating_sum.negativeRatings += rating.negativeRatings;
-            rating_sum.editRatings += rating.editRatings;
-        }
-
-        return rating_sum;
-    }
-
-    public void setRating(Rating rating) {
+  public void setRating(Rating rating) {
         this.positiveRatings = rating.positiveRatings;
         this.editRatings = rating.editRatings;
         this.negativeRatings = rating.negativeRatings;
