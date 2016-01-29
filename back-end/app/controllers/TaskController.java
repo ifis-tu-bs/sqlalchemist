@@ -67,7 +67,7 @@ public class TaskController extends Controller {
 
         SQLResult result = SQLParser.checkRefStatement(taskSet, task);
 
-        if(result.getType() != SQLResult.SUCCESSFULL) {
+        if(result.getType() != SQLResult.SUCCESSFUL) {
             Logger.info("RefStatement not runnable");
             return badRequest("Reference Statement not runnable");
         }
@@ -190,7 +190,7 @@ public class TaskController extends Controller {
 
         SQLResult result = SQLParser.checkRefStatement(task.getTaskSet(), task);
 
-        if(result.getType() != SQLResult.SUCCESSFULL) {
+        if(result.getType() != SQLResult.SUCCESSFUL) {
             Logger.info("RefStatement not runnable");
             return badRequest("Reference Statement not runnable");
         }
