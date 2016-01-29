@@ -1,9 +1,5 @@
 package ServerTests;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
 /**
 *
 * Simple (JUnit) tests that can call all parts of a play app.

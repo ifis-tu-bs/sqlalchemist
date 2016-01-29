@@ -304,7 +304,7 @@ public class TaskSetController extends Controller {
   }
 
     /**
-     * this method handels the comments for TaskFiles
+     * this method handles the comments for TaskFiles
      *
      * GET      /taskFile/:id/comment
      * Needs a JSON Body Request with values:
@@ -351,10 +351,6 @@ public class TaskSetController extends Controller {
                 taskSet.save();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -6,9 +6,9 @@ import models.TaskSet;
 import models.UserStatement;
 import play.Logger;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -144,10 +144,7 @@ public class SQLParser {
     }
 
     private static Set<Set<String>> toSetSet(List<Set<String>> listSet) {
-        Set<Set<String>> setSet = new HashSet<>();
-        for(Set<String> set : listSet) {
-            setSet.add(set);
-        }
+        Set<Set<String>> setSet = listSet.stream().collect(Collectors.toSet());
         return setSet;
     }
 }

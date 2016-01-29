@@ -1,10 +1,8 @@
 package secured.user;
 
 import dao.SessionDAO;
-import dao.UserDAO;
 import models.Session;
 import models.User;
-import play.libs.Json;
 import play.mvc.Http;
 import play.mvc.Result;
 import play.mvc.Security;

@@ -3,7 +3,6 @@ package view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import dao.SolvedTaskDAO;
 import dao.SubmittedHomeWorkDAO;
 import models.*;
 

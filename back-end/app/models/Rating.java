@@ -1,13 +1,14 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import play.Play;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
+ *
+ *
  * @author fabiomazzone
  */
 @Entity

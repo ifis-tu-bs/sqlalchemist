@@ -6,7 +6,6 @@ import com.avaje.ebean.annotation.EntityConcurrencyMode;
 import com.avaje.ebean.Model;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import javax.persistence.*;
 

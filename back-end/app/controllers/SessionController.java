@@ -17,9 +17,7 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security.Authenticated;
-import play.Logger;
 
-import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -63,12 +61,10 @@ public class SessionController extends Controller {
         }
 
         List<Session> sessionList = SessionDAO.getByOwner(user);
-        for(Session sessionI : sessionList) {
-            if(!sessionI.getId().equals(session.getId())) {
-                sessionI.disable();
-                sessionI.update();
-            }
-        }
+        sessionList.stream().filter(sessionI -> !sessionI.getId().equals(session.getId())).forEach(sessionI -> {
+            sessionI.disable();
+            sessionI.update();
+        });
 
         session.setOwner(user);
         session.update();

@@ -4,11 +4,9 @@ import com.avaje.ebean.Model;
 import com.avaje.ebean.annotation.ConcurrencyMode;
 import com.avaje.ebean.annotation.EntityConcurrencyMode;
 
-import com.avaje.ebean.dbmigration.migration.ForeignKey;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import dao.ForeignKeyDAO;
-import play.Logger;
 import view.TableDefinitionView;
 
 import javax.persistence.*;
@@ -18,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * this entity holds the schema and a set of tasks thats operate on it
@@ -207,20 +206,14 @@ public class TaskSet extends Model {
 
   @JsonProperty
   public List<String> getSQLStatements() {
-    List<String> sqlStatements = new ArrayList<>();
-
-    for(TableDefinition tableDefinition : this.tableDefinitions) {
-      sqlStatements.add(tableDefinition.getSQLStatement());
-    }
+    List<String> sqlStatements = this.tableDefinitions.stream().map(TableDefinition::getSQLStatement).collect(Collectors.toList());
 
     for(TableDefinition tableDefinition : this.tableDefinitions) {
       sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
     }
 
     List<ForeignKeyRelation> foreignKeyRelations = ForeignKeyDAO.getAllUncombinedRelations(this);
-    for(ForeignKeyRelation foreignKeyRelation : foreignKeyRelations) {
-      sqlStatements.add(foreignKeyRelation.getSQLStatement());
-    }
+    sqlStatements.addAll(foreignKeyRelations.stream().map(foreignKeyRelation -> foreignKeyRelation.getSQLStatement()).collect(Collectors.toList()));
 
     List<ForeignKeyRelation> foreignKeyRelationCombinedId = ForeignKeyDAO.getAllCombinedKeyIds(this);
     if(foreignKeyRelationCombinedId != null && !foreignKeyRelationCombinedId.isEmpty()) {
@@ -233,38 +226,43 @@ public class TaskSet extends Model {
     return sqlStatements;
   }
 
-    @JsonProperty("isHomeWork")
-    public boolean getIsHomework() {
+  @JsonProperty("isHomeWork")
+  public boolean getIsHomework() {
         return isHomework;
     }
 
-    @JsonIgnore
-    public User getCreator() {
+  @JsonIgnore
+  public User getCreator() {
         return creator;
     }
 
-    public long getCreatorId() {
+  public long getCreatorId() {
         return creator.getId();
     }
 
-    public String getCreatorName() {
+  public String getCreatorName() {
         return creator.getUsername();
     }
 
-    @JsonIgnore
-    public List<Rating> getRatingList() {
+  @JsonIgnore
+  public List<Rating> getRatingList() {
         return ratings;
     }
 
 
-    @JsonProperty("rating")
-    public Rating getRating() {
+  @JsonProperty("rating")
+  public Rating getRating() {
         return Rating.sum(this.getRatingList());
     }
 
-    /**
-     * This is the method to add a rating to this entity
-     */
+  @JsonProperty("evaluatorCount")
+  public int getEvaluatorCount() {
+    return (this.ratings == null)? 0 : this.ratings.size();
+  }
+
+  /**
+   * This is the method to add a rating to this entity
+   */
   public void addRating(Rating rating) {
     if(this.ratings != null && this.ratings.size() > 0) {
       for(Rating ratingI : this.ratings) {
@@ -285,36 +283,36 @@ public class TaskSet extends Model {
     }
   }
 
-    public List<Comment> getComments() {
+  public List<Comment> getComments() {
         return comments;
     }
 
-    /**
-     * this method adds comments to the TaskFile
-     *
-     * @param comment   the comment to be added
-     */
-    public void addComment(Comment comment)  {
-        if(this.comments == null) {
-            this.comments = new ArrayList<>();
-        }
-        this.comments.add(comment);
-        comment.setTaskSet(this);
-        comment.save();
+  /**
+   * this method adds comments to the TaskFile
+   *
+   * @param comment   the comment to be added
+   */
+  public void addComment(Comment comment)  {
+    if(this.comments == null) {
+      this.comments = new ArrayList<>();
     }
+    this.comments.add(comment);
+    comment.setTaskSet(this);
+    comment.save();
+  }
 
 
-    public String getCreatedAt() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+  public String getCreatedAt() {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        return df.format(this.createdAt);
-    }
+    return df.format(this.createdAt);
+  }
 
-    public String getUpdatedAt() {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+  public String getUpdatedAt() {
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
-        return df.format(this.updatedAt);
-    }
+    return df.format(this.updatedAt);
+  }
 
 //////////////////////////////////////////////////
 //  create methods

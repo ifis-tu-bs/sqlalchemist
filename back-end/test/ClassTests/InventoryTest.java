@@ -2,13 +2,9 @@ package ClassTests;
 
 import models.Inventory;
 import models.Potion;
-import Profile;
 import models.User;
-import org.junit.BeforeClass;
-import org.junit.Test;
 import play.test.FakeApplication;
 
-import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;
