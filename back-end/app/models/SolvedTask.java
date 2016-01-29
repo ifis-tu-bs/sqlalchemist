@@ -33,6 +33,7 @@ public class SolvedTask extends Model {
   private String      sqlStatus;
   private String      mode;
 
+  @Column(columnDefinition = "Text")
   private String      statement;
 
   private Calendar    timestamp;
