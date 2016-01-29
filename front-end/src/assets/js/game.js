@@ -11,7 +11,6 @@ var STATE_PROFILE = me.state.USER + 8;
 var STATE_LOGIN = me.state.USER + 9;
 var STATE_SIGNUP = me.state.USER + 10;
 var STATE_HOMEWORK = me.state.USER + 11;
-var STATE_ALERT = me.state.USER + 12;
 var STATE_BUY = me.state.USER + 13;
 var STATE_FORGOTPASSWORD = me.state.USER + 14;
 var STATE_TEXT = me.state.USER + 15;
@@ -177,7 +176,6 @@ var game = {
         me.state.set(STATE_LOGIN, new game.LoginScreen());
         me.state.set(STATE_SIGNUP, new game.SignUpScreen());
         me.state.set(STATE_HOMEWORK, new game.HomeworkScreen());
-        me.state.set(STATE_ALERT, new game.AlertScreen());
         me.state.set(STATE_BUY, new game.BuyScreen());
         me.state.set(STATE_FORGOTPASSWORD, new game.ForgotPasswordScreen());
         me.state.set(STATE_TEXT, new game.TextScreen());

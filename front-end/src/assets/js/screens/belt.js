@@ -30,7 +30,7 @@ game.BeltScreen = me.ScreenObject.extend({
         /**
          * Create button and according callback-function to go back to teh Laboratory.
          */
-        this.backToMenu = function () {
+        var backButton = new game.fdom.ButtonElement(rootContainer, '18.1818%','17.7083%','80%','-5%', '', 'Button BeltScreen Back', false, function() {
             $("#backgroundBeltId").fadeOut(100);
             $("#backFromBeltId").fadeOut(100);
             $("[id*='ImageId']").fadeOut(100);
@@ -42,11 +42,8 @@ game.BeltScreen = me.ScreenObject.extend({
             setTimeout( function() {
                 me.state.change(me.state.READY);
             }, 100);
-        };
-
-        var backFromBelt = new game.ClickableElement('backFromBeltId','', this.backToMenu, 18.1818, 17.7083, 80, -5, 1);
-        backFromBelt.setImage("assets/data/img/buttons/new_back_button.png", "back");
-        me.game.world.addChild(backFromBelt);
+        });
+        me.game.world.addChild(backButton);
 
 
         /**
@@ -284,18 +281,8 @@ game.BeltScreen = me.ScreenObject.extend({
 
                     function onloadBelt(xmlHttpRequest) {
                         //console.log(xmlHttpRequest);
-
                         repaintPotion();
                         repaintPotionAmount();
-                        /*
-                        $("#backgroundBeltId").fadeOut(50);
-                        $("#backFromBeltId").fadeOut(50);
-                        $("[id*='ImageId']").fadeOut(50);
-                        $("[id*='brewPotionId']").fadeOut(50);
-                        $("[id*='setPotionId']").fadeOut(50);
-                        $("[id*='potionAmountId']").fadeOut(50);
-                        $("[id*='beltPotionId']").fadeOut(50);
-                        me.state.change(STATE_BELT);*/
 
                     }
 
@@ -327,23 +314,11 @@ game.BeltScreen = me.ScreenObject.extend({
                         ajaxSendProfileBeltSetRequest(this.user_json, onloadBelt);
                     };
 
-                    if( game.belt.beltSlots[this.slot] !== null){
+                    if (game.belt.beltSlots[this.slot] !== null) {
                         game.belt.beltSlots[this.slot] = null;
                         this.potion.amount ++;
-                        //console.log(this.potion.amount);
                         this.setBelt();
                     }
-                    /*
-                    $("#backgroundBeltId").fadeOut(50);
-                    $("#backFromBeltId").fadeOut(50);
-                    $("[id*='ImageId']").fadeOut(50);
-                    $("[id*='brewPotionId']").fadeOut(50);
-                    $("[id*='setPotionId']")  .fadeOut(50);
-                     $("[id*='potionAmountId']").fadeOut(50);
-                     $("[id*='beltPotionId']").fadeOut(50);
-                    me.state.change(STATE_BELT);
-                    */
-
                 };
             };
 
@@ -404,15 +379,9 @@ game.BeltScreen = me.ScreenObject.extend({
 
             //Update the Potion in the Belt
             function repaintPotion(){
-
-                console.log("Belt: ",game.belt.beltSlots);
-
-                /**
-                 * Create buttons to put the potions back into the collection.
-                 */
                 for (i = 0; i < game.belt.beltSlots.length; i++) {
                     potionName = getPotionName(game.belt.beltSlots[i]);
-                    console.log(potionName);
+                    //console.log(potionName);
                     $("#beltPotionId"+ i+ " #potionInBelt").attr("src","assets/data/img/potion/" + potionName + ".png");
                 }
             }

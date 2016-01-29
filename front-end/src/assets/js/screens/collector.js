@@ -26,7 +26,7 @@ game.CollectorScreen = me.ScreenObject.extend({
         /**
          * Create element with according callback function to get back into the Laboratory.
          */
-        var backToLabButton = new game.fdom.ButtonElement(rootContainer, '20%','20%','76%','2%', '', 'Button CollectorScreen Back', false, function() {
+         var backToLabButton = new game.fdom.ButtonElement(rootContainer, '20%','20%','76%','2%', '', 'Button CollectorScreen Back', false, function() {
             if (game.data.sound) {
                 me.audio.play("scroll", false, null, game.data.soundVolume);
             }

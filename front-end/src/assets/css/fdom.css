@@ -49,11 +49,24 @@
     background-position: bottom;
 }
 
+.Button.BeltScreen.Back {
+    background-image: url('/assets/data/img/buttons/new_back_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
 .Button.ResultScreen.Next:hover {
     color: red;
     background-image: url('/assets/data/img/buttons/key_red.png');
 }
 
+.Button.BeltScreen.Back:hover {
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
+}
 
 .ButtonGameOverScreen.Next {
     font-size: 6vh;
