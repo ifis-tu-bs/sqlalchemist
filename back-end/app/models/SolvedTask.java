@@ -18,34 +18,47 @@ import javax.persistence.*;
 @Table(name = "solvedtask")
 @EntityConcurrencyMode(ConcurrencyMode.NONE)
 public class SolvedTask extends Model {
-    @Id
-    private long        id;
+  @Id
+  private long        id;
 
-    @ManyToOne
-    private User        user;
+  @ManyToOne
+  private User        user;
 
-    @ManyToOne
-    private final Task  task;
+  @ManyToOne
+  private final Task  task;
 
-    private boolean     solved;
-    private int         timeNeeded;
-    private Calendar    timestamp;
+  private boolean     solved;
+  private int         timeNeeded;
 
-    public SolvedTask(
-            User user,
-            Task task,
-            boolean solved,
-            int     timeNeeded) {
-        super();
+  private String      sqlStatus;
+  private String      mode;
 
-        this.user = user;
-        this.task = task;
+  private String      statement;
 
-        this.solved = solved;
-        this.timeNeeded = timeNeeded;
+  private Calendar    timestamp;
 
-        this.timestamp = Calendar.getInstance();
-    }
+  public SolvedTask(
+      User user,
+      Task task,
+      boolean solved,
+      int     timeNeeded,
+      String  sqlStatus,
+      String  mode,
+      String  statement) {
+    super();
+
+    this.user = user;
+    this.task = task;
+
+    this.solved     = solved;
+    this.timeNeeded = timeNeeded;
+
+    this.sqlStatus  = sqlStatus;
+    this.mode       = mode;
+    this.statement  = statement;
+
+    this.timestamp = Calendar.getInstance();
+  }
 
   public long getId() {
     return id;
@@ -77,6 +90,30 @@ public class SolvedTask extends Model {
 
   public void setTimeNeeded(int timeNeeded) {
     this.timeNeeded = timeNeeded;
+  }
+
+  public String getSqlStatus() {
+    return sqlStatus;
+  }
+
+  public void setSqlStatus(String sqlStatus) {
+    this.sqlStatus = sqlStatus;
+  }
+
+  public String getMode() {
+    return mode;
+  }
+
+  public void setMode(String mode) {
+    this.mode = mode;
+  }
+
+  public String getStatement() {
+    return statement;
+  }
+
+  public void setStatement(String statement) {
+    this.statement = statement;
   }
 
   public Calendar getTimestamp() {

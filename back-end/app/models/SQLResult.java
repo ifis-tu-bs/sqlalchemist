@@ -8,7 +8,7 @@ import sqlparser.SQLStatus;
 public class SQLResult {
     public static final int ERROR = 2;
     public static final int SEMANTICS = 1;
-    public static final int SUCCESSFULL = 0;
+    public static final int SUCCESSFUL = 0;
 
     private final Task task;
 
