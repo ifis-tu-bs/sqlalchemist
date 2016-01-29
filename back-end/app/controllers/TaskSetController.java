@@ -292,7 +292,7 @@ public class TaskSetController extends Controller {
     taskSet.update();
 
     Rating      rating_sum  = taskSet.getRating();
-    if(rating_sum.getEditRatings() >= 200 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
+    if(rating_sum.getEditRatings() >= 200 || rating_sum.getNegativeRatings() > 200) {
       taskSet.setAvailable(false);
     } else if(rating_sum.getPositiveRatings() >= 200) {
       taskSet.setAvailable(true);

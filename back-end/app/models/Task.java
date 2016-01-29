@@ -214,27 +214,30 @@ public class Task extends Model {
         return ratings;
     }
 
-    @JsonProperty("rating")
-    public Rating getAllRating() {
+  @JsonProperty("rating")
+  public Rating getRating() {
         return Rating.sum(this.getRatings());
     }
 
-    public void addRating(Rating rating) {
-        if(this.ratings != null && this.ratings.size() > 0) {
-            for(Rating ratingI : this.ratings) {
-                if(ratingI.getUser().getId() == rating.getUser().getId()) {
-                    ratingI.setRating(rating);
-                    ratingI.update();
-                    break;
-                }
-            }
-        } else {
-            this.ratings = new ArrayList<>();
-            this.ratings.add(rating);
-            rating.setTask(this);
-            rating.save();
+  public void addRating(Rating rating) {
+    if(this.ratings != null && this.ratings.size() > 0) {
+      for(Rating ratingI : this.ratings) {
+        if(ratingI.getUser().getId() == rating.getUser().getId()) {
+          ratingI.setRating(rating);
+          ratingI.update();
+          return;
         }
+      }
+      this.ratings.add(rating);
+      rating.setTask(this);
+      rating.save();
+    } else {
+      this.ratings = new ArrayList<>();
+      this.ratings.add(rating);
+      rating.setTask(this);
+      rating.save();
     }
+  }
 
     public List<Comment> getComments() {
         return this.comments;
