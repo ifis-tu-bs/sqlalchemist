@@ -265,22 +265,25 @@ public class TaskSet extends Model {
     /**
      * This is the method to add a rating to this entity
      */
-    public void addRating(Rating rating) {
-        if(this.ratings != null && this.ratings.size() > 0) {
-            for(Rating ratingI : this.ratings) {
-                if(ratingI.getUser().getId() == rating.getUser().getId()) {
-                    ratingI.setRating(rating);
-                    ratingI.update();
-                    break;
-                }
-            }
-        } else {
-            this.ratings = new ArrayList<>();
-            this.ratings.add(rating);
-            rating.setTaskSet(this);
-            rating.save();
+  public void addRating(Rating rating) {
+    if(this.ratings != null && this.ratings.size() > 0) {
+      for(Rating ratingI : this.ratings) {
+        if(ratingI.getUser().getId() == rating.getUser().getId()) {
+          ratingI.setRating(rating);
+          ratingI.update();
+          return;
         }
+      }
+      this.ratings.add(rating);
+      rating.setTaskSet(this);
+      rating.save();
+    } else {
+      this.ratings = new ArrayList<>();
+      this.ratings.add(rating);
+      rating.setTaskSet(this);
+      rating.save();
     }
+  }
 
     public List<Comment> getComments() {
         return comments;
