@@ -3,7 +3,6 @@ package models;
 import com.avaje.ebean.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dao.RoleDAO;
 import play.Logger;
 import play.data.validation.ValidationError;

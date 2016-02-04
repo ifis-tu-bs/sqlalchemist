@@ -49,9 +49,37 @@
     background-position: bottom;
 }
 
+.Button.BeltScreen.Back {
+    background-image: url('/assets/data/img/buttons/new_back_button.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.BeltScreen.Brew {
+    background-image: url('/assets/data/img/stuff/spinning_scroll_red_32.png');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+.Button.BeltScreen.SetPotion {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: bottom;
+}
+
+
 .Button.ResultScreen.Next:hover {
     color: red;
     background-image: url('/assets/data/img/buttons/key_red.png');
+}
+
+.Button.BeltScreen:hover {
+    filter: contrast(150%);
+    filter: brightness(150%);
+    -webkit-filter: contrast(150%);
+    -webkit-filter: brightness(150%);
 }
 
 

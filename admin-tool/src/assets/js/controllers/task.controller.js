@@ -208,6 +208,7 @@ angular
 
         /* Server Side Methods */
         $scope.saveTaskSet = function(taskSet) {
+
             taskSet.sqlstatements = undefined;
 
             console.log(taskSet);
@@ -216,7 +217,7 @@ angular
                 return TaskService.editTaskSet(taskSet, taskSet.id).then(
                         function (result) {
                             FlashService.Success("Updated TaskSet");
-
+                            taskSet.sqlstatements = result.sqlstatements;
                         }, function (error) {
                             FlashService.Error(error);
                         }

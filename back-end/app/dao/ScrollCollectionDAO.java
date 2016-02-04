@@ -1,10 +1,8 @@
 package dao;
 
-import com.avaje.ebean.Model;
 import models.Scroll;
 import models.ScrollCollection;
 
-import models.SolvedTask;
 import models.User;
 import play.Logger;
 import play.Play;

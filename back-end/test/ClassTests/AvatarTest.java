@@ -2,12 +2,9 @@ package ClassTests;
 
 import models.Avatar;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
 import play.Logger;
 import play.test.FakeApplication;
 
-import static org.junit.Assert.assertTrue;
 import static play.test.Helpers.fakeApplication;
 import static play.test.Helpers.inMemoryDatabase;
 import static play.test.Helpers.start;

@@ -1,13 +1,10 @@
 package sqlparser;
 
-import models.ColumnDefinition;
-import models.ForeignKeyRelation;
 import models.TableDefinition;
 import models.TaskSet;
 import play.Logger;
 import play.Play;
 
-import java.lang.reflect.*;
 import java.sql.*;
 import java.util.*;
 

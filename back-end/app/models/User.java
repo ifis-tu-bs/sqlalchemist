@@ -14,10 +14,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import helper.Random;
 import org.mindrot.jbcrypt.BCrypt;
 
-import play.Logger;
-import play.Play;
 import play.libs.Json;
-import service.ServiceUser;
 import view.ScoreView;
 
 import javax.persistence.*;
@@ -257,25 +254,6 @@ public class User extends Model {
         this.shopItems.stream().filter(ShopItem::isTypeAvatar).forEach(shopItem -> arrayNode.add(Json.toJson(shopItem.getAvatar())));
 
         return arrayNode;
-    }
-
-
-//////////////////////////////////////////////////
-//  Object Methods
-//////////////////////////////////////////////////
-
-    /**
-     *
-     * @return returns true if the user is a student
-     */
-
-
-    /**
-     * This method updates the user
-     */
-    @Override
-    public void update() {
-        super.update();
     }
 
 //////////////////////////////////////////////////

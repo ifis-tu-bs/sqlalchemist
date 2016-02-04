@@ -278,32 +278,33 @@ public class TaskSetController extends Controller {
     User        user        = UserDAO.getBySession(request().username());
     Rating      rating      = RatingView.fromJsonForm(ratingBody, user);
 
-        if(taskSet == null) {
-            Logger.warn("TaskSetController.rate("+id+") - no task found");
-            return badRequest("no SubTask found");
-        }
-        if(rating == null) {
-            Logger.warn("TaskSetController.rate() - invalid json body");
-            return badRequest("invalid json body");
-        }
-
-        taskSet.addRating(rating);
-        taskSet.update();
-
-        Rating      rating_sum  = taskSet.getRating();
-        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
-            taskSet.setAvailable(false);
-        } else if(rating_sum.getPositiveRatings() >= 200) {
-            taskSet.setAvailable(true);
-        }
-
-        taskSet.update();
-
-        return redirect(routes.TaskSetController.view(taskSet.getId()));
+    if(taskSet == null) {
+      Logger.warn("TaskSetController.rate("+id+") - no task found");
+      return badRequest("no SubTask found");
+    }
+    if(rating == null) {
+      Logger.warn("TaskSetController.rate() - invalid json body");
+      return badRequest("invalid json body");
     }
 
+
+    taskSet.addRating(rating);
+    taskSet.update();
+
+    Rating      rating_sum  = taskSet.getRating();
+    if(rating_sum.getEditRatings() >= 200 || rating_sum.getNegativeRatings() > 200) {
+      taskSet.setAvailable(false);
+    } else if(rating_sum.getPositiveRatings() >= 200) {
+      taskSet.setAvailable(true);
+    }
+
+    taskSet.update();
+
+    return redirect(routes.TaskSetController.view(taskSet.getId()));
+  }
+
     /**
-     * this method handels the comments for TaskFiles
+     * this method handles the comments for TaskFiles
      *
      * GET      /taskFile/:id/comment
      * Needs a JSON Body Request with values:
@@ -350,10 +351,6 @@ public class TaskSetController extends Controller {
                 taskSet.save();
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

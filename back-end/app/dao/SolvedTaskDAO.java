@@ -1,6 +1,7 @@
 package dao;
 
 import com.avaje.ebean.Model;
+import models.SQLResult;
 import models.SolvedTask;
 import models.Task;
 import models.User;
@@ -16,13 +17,37 @@ public class SolvedTaskDAO {
       User user,
       Task task,
       boolean solved,
-      int     timeSpend) {
-      SolvedTask solvedTask =
-          new SolvedTask(user, task, solved, timeSpend);
+      int     timeSpend,
+      SQLResult sqlResult,
+      String  mode,
+      String  statement) {
 
-      solvedTask.save();
+    String sqlStatusText = "";
 
-      return solvedTask;
+    switch (sqlResult.getType()) {
+      case SQLResult.ERROR:
+        sqlStatusText = "SYNTAX";
+        break;
+      case SQLResult.SEMANTICS:
+        sqlStatusText = "SEMANTIC";
+        break;
+      case SQLResult.SUCCESSFUL:
+        sqlStatusText = "SUCCESSFUL";
+        break;
+    }
+
+    SolvedTask solvedTask =
+        new SolvedTask(user,
+            task,
+            solved,
+            timeSpend,
+            sqlStatusText,
+            mode,
+            statement);
+
+    solvedTask.save();
+
+    return solvedTask;
   }
 
   public static List<SolvedTask> getByUserAndTask(User user, Task task) {

@@ -67,7 +67,7 @@ public class TaskController extends Controller {
 
         SQLResult result = SQLParser.checkRefStatement(taskSet, task);
 
-        if(result.getType() != SQLResult.SUCCESSFULL) {
+        if(result.getType() != SQLResult.SUCCESSFUL) {
             Logger.info("RefStatement not runnable");
             return badRequest("Reference Statement not runnable");
         }
@@ -190,7 +190,7 @@ public class TaskController extends Controller {
 
         SQLResult result = SQLParser.checkRefStatement(task.getTaskSet(), task);
 
-        if(result.getType() != SQLResult.SUCCESSFULL) {
+        if(result.getType() != SQLResult.SUCCESSFUL) {
             Logger.info("RefStatement not runnable");
             return badRequest("Reference Statement not runnable");
         }
@@ -252,8 +252,8 @@ public class TaskController extends Controller {
         task.addRating(rating);
         task.update();
 
-        Rating      rating_sum  = Rating.sum(task.getRatings());
-        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > rating_sum.getPositiveRatings()) {
+        Rating      rating_sum  = task.getRating();
+        if(rating_sum.getEditRatings() >= 500 || rating_sum.getNegativeRatings() > 200) {
             task.setAvailable(false);
         } else if(rating_sum.getPositiveRatings() >= 200) {
             task.setAvailable(true);

@@ -1,13 +1,14 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import play.Play;
 import com.avaje.ebean.Model;
 
 import javax.persistence.*;
 import java.util.List;
 
 /**
+ *
+ *
  * @author fabiomazzone
  */
 @Entity
@@ -124,8 +125,10 @@ public class Rating extends Model {
 
     if(rating_sum.getPositiveRatings() - rating_sum.getNegativeRatings() < 0) {
       rating_sum.setNegativeRatings(rating_sum.getNegativeRatings() - rating_sum.getPositiveRatings());
+      rating_sum.setPositiveRatings(0);
     } else {
       rating_sum.setPositiveRatings(rating_sum.getPositiveRatings() - rating_sum.getNegativeRatings());
+      rating_sum.setNegativeRatings(0);
     }
 
     return rating_sum;

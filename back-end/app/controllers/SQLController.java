@@ -89,7 +89,7 @@ public class SQLController extends Controller {
         Result      result;
         boolean     status;
 
-        if(sqlResult.getType() != SQLResult.SUCCESSFULL) {
+        if(sqlResult.getType() != SQLResult.SUCCESSFUL) {
             status = false;
             resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
@@ -104,7 +104,7 @@ public class SQLController extends Controller {
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
 
-        SolvedTaskDAO.create(user, task, status, userStatement.getTime());
+        SolvedTaskDAO.create(user, task, status, userStatement.getTime(), sqlResult, "STORY", userStatement.getStatement());
 
         user.update();
         return result;
@@ -153,7 +153,7 @@ public class SQLController extends Controller {
         Result      result;
         boolean     status;
 
-        if(sqlResult.getType() != SQLResult.SUCCESSFULL) {
+        if(sqlResult.getType() != SQLResult.SUCCESSFUL) {
             status = false;
             resultNode = SQLResultView.toJson(sqlResult, userStatement);
             result = badRequest(resultNode);
@@ -168,7 +168,7 @@ public class SQLController extends Controller {
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
 
-        SolvedTaskDAO.create(user, task, status, userStatement.getTime());
+        SolvedTaskDAO.create(user, task, status, userStatement.getTime(), sqlResult, "TRIVIA", userStatement.getStatement());
 
         return result;
     }

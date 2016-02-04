@@ -124,7 +124,7 @@ public class TaskSetBootstrap {
 
             task.save();
 
-            if(result.getType() != SQLResult.SUCCESSFULL) {
+            if(result.getType() != SQLResult.SUCCESSFUL) {
                 Logger.info("RefStatement not runnable");
                 task.delete();
             }
@@ -149,7 +149,7 @@ public class TaskSetBootstrap {
 
             task.save();
 
-            if(result.getType() != SQLResult.SUCCESSFULL) {
+            if(result.getType() != SQLResult.SUCCESSFUL) {
                 Logger.info("RefStatement not runnable");
                 task.delete();
             }
@@ -267,7 +267,7 @@ public class TaskSetBootstrap {
 
             task.save();
 
-            if(result.getType() != SQLResult.SUCCESSFULL) {
+            if(result.getType() != SQLResult.SUCCESSFUL) {
                 Logger.info("RefStatement not runnable");
                 task.delete();
             }
@@ -292,7 +292,7 @@ public class TaskSetBootstrap {
 
             task.save();
 
-            if(result.getType() != SQLResult.SUCCESSFULL) {
+            if(result.getType() != SQLResult.SUCCESSFUL) {
                 Logger.info("RefStatement not runnable");
                 task.delete();
             }

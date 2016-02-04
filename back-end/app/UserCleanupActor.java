@@ -25,13 +25,10 @@ public class UserCleanupActor extends UntypedActor{
 
       List<User> userList = UserDAO.getAllUnverifiedUser();
 
-      for(User user : userList) {
-        if(user.getCreatedAt().before(calendar)) {
-          Logger.info("Delete User: " + user.getUsername());
-          user.delete();
-        }
-
-      }
+      userList.stream().filter(user -> user.getCreatedAt().before(calendar)).forEach(user -> {
+        Logger.info("Delete User: " + user.getUsername());
+        user.delete();
+      });
 
       Logger.info("User Cleanup - Done");
     }

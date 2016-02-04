@@ -1,7 +1,6 @@
 package secured.taskset;
 
 import dao.SessionDAO;
-import dao.UserDAO;
 import models.Session;
 import models.User;
 import play.mvc.Http;

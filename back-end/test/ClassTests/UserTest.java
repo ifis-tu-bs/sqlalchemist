@@ -3,9 +3,7 @@ package ClassTests;
 import bootstrap.ShopItemBootstrap;
 import dao.UserDAO;
 import models.*;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.assertTrue;
+
 import play.Logger;
 import play.test.*;
 

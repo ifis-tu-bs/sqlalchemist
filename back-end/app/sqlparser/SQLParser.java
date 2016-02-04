@@ -6,9 +6,9 @@ import models.TaskSet;
 import models.UserStatement;
 import play.Logger;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 /**
@@ -67,7 +67,7 @@ public class SQLParser {
 
         dbConnection.deleteDB();
         dbConnection.closeDBConn();
-        return new SQLResult(task, SQLResult.SUCCESSFULL);
+        return new SQLResult(task, SQLResult.SUCCESSFUL);
     }
 
     public static SQLResult checkUserStatement(Task task, UserStatement userStatement) {
@@ -101,7 +101,7 @@ public class SQLParser {
 
 
 
-        SQLResult result = new SQLResult(task, SQLResult.SUCCESSFULL);
+        SQLResult result = new SQLResult(task, SQLResult.SUCCESSFUL);
 
 
         if(refStatementResult.size() != userStatementResult.size()) {
@@ -110,7 +110,7 @@ public class SQLParser {
             result = new SQLResult(task, SQLResult.SEMANTICS, "your result set has too many or to few columns");
         } else if(task.getEvaluationStrategy() == Task.EVALUATIONSTRATEGY_LIST) {
             if(userStatementResult.equals(refStatementResult)) {
-                result = new SQLResult(task, SQLResult.SUCCESSFULL);
+                result = new SQLResult(task, SQLResult.SUCCESSFUL);
             } else {
                 result = new SQLResult(task, SQLResult.SEMANTICS, "your result set is not equal to the asked one, maybe the order is incorrect ?");
             }
@@ -119,7 +119,7 @@ public class SQLParser {
             Set<Set<String>> userStatementSetSet = toSetSet(userStatementResult);
 
             if(refStatementSetSet.equals(userStatementSetSet)) {
-                result = new SQLResult(task, SQLResult.SUCCESSFULL);
+                result = new SQLResult(task, SQLResult.SUCCESSFUL);
             } else {
                 result = new SQLResult(task, SQLResult.SEMANTICS, "your result set is not equal to the asked one");
             }
@@ -144,10 +144,7 @@ public class SQLParser {
     }
 
     private static Set<Set<String>> toSetSet(List<Set<String>> listSet) {
-        Set<Set<String>> setSet = new HashSet<>();
-        for(Set<String> set : listSet) {
-            setSet.add(set);
-        }
+        Set<Set<String>> setSet = listSet.stream().collect(Collectors.toSet());
         return setSet;
     }
 }

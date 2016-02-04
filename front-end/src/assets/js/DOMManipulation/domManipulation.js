@@ -873,6 +873,9 @@ game.fdom.ButtonElement = me.Renderable.extend({
     hide: function() {
         this.elem.style.display = "none";
     },
+    setImage : function(imageURL){
+      this.elem.style.backgroundImage = "url(" + imageURL + ")";
+    },
     destroy : function () {
         // remove element
         this.parent.removeChild(this.elem);

@@ -10,7 +10,7 @@ import java.util.List;
  * @author fabiomazzone
  */
 public class SessionDAO {
-    private static Model.Finder<String, Session> find = new Model.Finder<String, Session>(Session.class);
+    private static Model.Finder<String, Session> find = new Model.Finder<>(Session.class);
 
     public static Session create() {
         Session session = new Session();
