@@ -25,7 +25,7 @@ public class ForgotPassword {
 
         } else if (UserDAO.getByEmail(email) == null) {
 
-            errors.add(new ValidationError("email", "email address is unknown"));
+            errors.add(new ValidationError("email", "No user with this email was found"));
 
         }
 

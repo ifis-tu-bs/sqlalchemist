@@ -5,6 +5,7 @@ import dao.UserDAO;
 
 import forms.SignUp;
 
+import helper.MailSender;
 import models.Session;
 import models.User;
 

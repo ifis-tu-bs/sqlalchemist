@@ -1,12 +1,13 @@
 package helper;
 
+import com.typesafe.config.Config;
+import com.typesafe.config.ConfigFactory;
 import models.User;
-import play.Logger;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.io.*;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -29,16 +30,20 @@ public class MailSender {
         this.props = new Properties();
 
         // For testin purpose I currently use another email account
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("smtp.properties");
         //InputStream inputStream = getClass().getClassLoader().getResourceAsStream("smtp.properties");
+        //InputStream inputStream = getClass().getClassLoader().getResourceAsStream("smtp.properties");
+        Config conf = ConfigFactory.load();
+        Map config = conf.getObject("mailAccount").unwrapped();
 
-        if (inputStream != null) {
+        this.props.putAll(config);
+
+        /*if (inputStream != null) {
             try {
                 this.props.load(inputStream);
             } catch (IOException e) {
                 Logger.warn("Could not find or read smtp configuration file!");
             }
-        }
+        }*/
     }
 
     /**

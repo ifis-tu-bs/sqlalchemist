@@ -48,7 +48,7 @@ public class User extends Model {
     @ManyToOne
     private Role                        role;
 
-    @Column(unique = true)
+    @Column(unique = true, name = "email_verify_code")
     private String                      emailVerifyCode;
     @Column(unique = true)
     private String                      matNR;
