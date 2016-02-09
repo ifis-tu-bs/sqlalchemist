@@ -103,10 +103,10 @@ public class SQLController extends Controller {
         }
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
+        user.update();
 
         SolvedTaskDAO.create(user, task, status, userStatement.getTime(), sqlResult, "STORY", userStatement.getStatement());
 
-        user.update();
         return result;
 
     }
@@ -167,6 +167,7 @@ public class SQLController extends Controller {
 
         ServiceScore.addStatement(user);
         ServiceScore.addTime(user, userStatement.getTime());
+        user.update();
 
         SolvedTaskDAO.create(user, task, status, userStatement.getTime(), sqlResult, "TRIVIA", userStatement.getStatement());
 
@@ -274,6 +275,7 @@ public class SQLController extends Controller {
         }
 
         submittedHomeWork.update();
+      user.update();
         return result;
     }
 }

@@ -54,12 +54,6 @@ public class ServiceScore {
         score.setSolvedSQL(score.getSolvedSQL() + 1);
         score.setSuccessRate((int) (((float) score.getSolvedSQL() / (float) score.getDoneSQL()) * 100));
         user.setScore(score);
-        /*if (this.solvedSQL > Play.application().configuration().getInt("User.AutoPromote")) {
-            User user = this.getUser();
-            if (user.getRole() < User.ROLE_CREATOR) {
-                user.promote(User.ROLE_CREATOR);
-            }
-        }*/
     }
 
     public static void addStatement(User user) {
