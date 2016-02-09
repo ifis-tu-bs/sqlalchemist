@@ -212,13 +212,31 @@ public class TaskSet extends Model {
       sqlStatements.addAll(Arrays.asList(tableDefinition.getExtension().split("\\r?\\n")));
     }
 
-    List<ForeignKeyRelation> foreignKeyRelations = ForeignKeyDAO.getAllUncombinedRelations(this);
-    sqlStatements.addAll(foreignKeyRelations.stream().map(foreignKeyRelation -> foreignKeyRelation.getSQLStatement()).collect(Collectors.toList()));
+      /*
+        Hab alle Datenbankzugriffe zu Filtern auf den Lists umgebaut :)
+       */
 
-    List<ForeignKeyRelation> foreignKeyRelationCombinedId = ForeignKeyDAO.getAllCombinedKeyIds(this);
+    //List<ForeignKeyRelation> foreignKeyRelations = ForeignKeyDAO.getAllUncombinedRelations(this);
+    List<ForeignKeyRelation> foreignKeyRelations = this.getForeignKeyRelations().stream()
+            .filter(foreignKeyRelation -> !foreignKeyRelation.getIsCombined())
+            .collect(Collectors.toList());
+
+    sqlStatements.addAll(foreignKeyRelations.stream()
+            .map(foreignKeyRelation -> foreignKeyRelation.getSQLStatement())
+            .collect(Collectors.toList()));
+
+    //List<ForeignKeyRelation> foreignKeyRelationCombinedId = ForeignKeyDAO.getAllCombinedKeyIds(this);
+    List<Integer> foreignKeyRelationCombinedId = this.getForeignKeyRelations().stream()
+            .filter(foreignKeyRelation -> !foreignKeyRelations.contains(foreignKeyRelation))
+            .map(foreignKeyRelation -> foreignKeyRelation.getCombinedKeyId())
+            .distinct().collect(Collectors.toList());
+
     if(foreignKeyRelationCombinedId != null && !foreignKeyRelationCombinedId.isEmpty()) {
-      for (ForeignKeyRelation foreignKeyRelation : foreignKeyRelationCombinedId) {
-        List<ForeignKeyRelation> combinedForeignKeyRelation = ForeignKeyDAO.getAllCombinedRelations(this, foreignKeyRelation.getCombinedKeyId());
+      for (Integer foreignKeyRelationId : foreignKeyRelationCombinedId) {
+    //List<ForeignKeyRelation> combinedForeignKeyRelation = ForeignKeyDAO.getAllCombinedRelations(this, foreignKeyRelationId);
+        List<ForeignKeyRelation> combinedForeignKeyRelation = this.getForeignKeyRelations().stream()
+                .filter(foreignKeyRelation -> foreignKeyRelationId == foreignKeyRelation.getCombinedKeyId())
+                .collect(Collectors.toList());
         sqlStatements.add(ForeignKeyRelation.getSQLStatement(combinedForeignKeyRelation));
       }
     }

@@ -127,9 +127,8 @@ public class MailSender {
             message.setText("" +
                     "Dear User\n" +
                     "\n" +
-                    "Here is your password new password for the SQL Alchemist.\n" +
-                    "If you did not order a new password please send us a mail to: sqlalchemist@ifis.cs.tu-bs,de !\n" +
-                    "Your new password is: " + newPassword + ", please change it\n" +
+                    "Here is your new password for the SQL Alchemist.\n" +
+                    "Your new password is: " + newPassword + ", please change it.\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
                     "\n" +
@@ -172,7 +171,7 @@ public class MailSender {
                     "You now have new Features, that you may use in our AdminTool.\n" +
                     "\n" +
                     "Check your new Abilities at:\n" +
-                    "http://sqlalchemist.ifis.cs.tu-bs.de/admin\n" +
+                    "https://sqlalchemist.ifis.cs.tu-bs.de/admin\n" +
                     "\n" +
                     "Have fun training your SQL skills.\n" +
                     "\n" +
