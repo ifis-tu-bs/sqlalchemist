@@ -65,7 +65,7 @@ public class PasswordController extends Controller {
         Form<ForgotPassword> forgotPasswordForm = Form.form(ForgotPassword.class).bindFromRequest();
 
         if(forgotPasswordForm.hasErrors()) {
-            Logger.error("forgetPasswordForm has errors");
+            Logger.error("forgotPasswordForm has errors");
             Logger.error(forgotPasswordForm.errorsAsJson().toString());
             return badRequest(forgotPasswordForm.errorsAsJson());
         }
